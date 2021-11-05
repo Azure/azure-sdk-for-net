@@ -44,7 +44,6 @@ namespace Azure.Data.AppConfiguration.Tests
             ConfigurationClient.BuildBatchQuery(builder, selector, null);
 
             Assert.AreEqual(@"http://localhost/?key=my_key%2Ckey%5C%2Ckey&label=my_label%2Clabel%5C%2Clabel", builder.ToUri().AbsoluteUri);
-
         }
 
         [Test]
@@ -190,6 +189,16 @@ namespace Azure.Data.AppConfiguration.Tests
 
             Assert.IsTrue(comparer.Equals(s_testSetting, deserialized[s_testSetting.Key]));
             Assert.IsNull(deserialized["null_key"]);
+        }
+
+        [Test]
+        public void ConfigurationSettingEtagConstructor()
+        {
+            var configurationSetting = new ConfigurationSetting("key", "value", "label", new ETag("etag"));
+            Assert.AreEqual("key", configurationSetting.Key);
+            Assert.AreEqual("value", configurationSetting.Value);
+            Assert.AreEqual("label", configurationSetting.Label);
+            Assert.AreEqual("etag", configurationSetting.ETag.ToString());
         }
     }
 }

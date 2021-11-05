@@ -17,7 +17,7 @@ namespace ApiManagement.Tests.ManagementApiTests
     public class GatewayTests : TestBase
     {
         [Fact]
-        [Trait("owner", "vifedo")]
+        [Trait("owner", "jikang")]
         public async Task CreateListUpdateDelete()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
@@ -124,8 +124,6 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.Single(apiGatewaysResponse);
                     Assert.Equal(echoApi.Name, apiGatewaysResponse.First().Name);
 
-
-                    //hostnameConfiguration:
                     //certificate first:
                     var base64ArrayCertificate = Convert.FromBase64String(testBase.base64EncodedTestCertificateData);
                     var cert = new X509Certificate2(base64ArrayCertificate, testBase.testCertificatePassword);
@@ -141,6 +139,42 @@ namespace ApiManagement.Tests.ManagementApiTests
                         },
                         null);
 
+                    //GatewayCertificateAuthority:
+                    var gatewayCertificateAuthority = new GatewayCertificateAuthorityContract()
+                    {
+                        IsTrusted = true
+                    };
+
+                    var gatewayCertificateAuthorityCreateResponse = await testBase.client.GatewayCertificateAuthority.CreateOrUpdateWithHttpMessagesAsync(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        gatewayId,
+                        certificateId,
+                        gatewayCertificateAuthority
+                        );
+                    Assert.NotNull(gatewayCertificateAuthorityCreateResponse);
+                    Assert.Equal(certificateId, gatewayCertificateAuthorityCreateResponse.Body.Name);
+                    Assert.True(gatewayCertificateAuthorityCreateResponse.Body.IsTrusted);
+
+                    var gatewayCertificateAuthorityResponse = await testBase.client.GatewayCertificateAuthority.GetAsync(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        gatewayId,
+                        certificateId
+                        );
+                    Assert.NotNull(gatewayCertificateAuthorityResponse);
+                    Assert.Equal(certificateId, gatewayCertificateAuthorityResponse.Name);
+                    Assert.True(gatewayCertificateAuthorityResponse.IsTrusted);
+
+                    //delete 
+                    testBase.client.GatewayCertificateAuthority.Delete(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        gatewayId,
+                        certificateId,
+                        "*");
+
+                    //hostnameConfiguration:
                     var hostnameConfig = new GatewayHostnameConfigurationContract()
                     {
                         CertificateId = certCreateResponse.Id,
@@ -179,7 +213,8 @@ namespace ApiManagement.Tests.ManagementApiTests
                         testBase.rgName,
                         testBase.serviceName,
                         gatewayId,
-                        hostnameConfigId);
+                        hostnameConfigId,
+                        "*");
 
                     //get latest etag for delete
                     getResponse = await testBase.client.Gateway.GetWithHttpMessagesAsync(
@@ -207,7 +242,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                 {
                     try
                     {
-                        testBase.client.GatewayHostnameConfiguration.Delete(testBase.rgName, testBase.serviceName, gatewayId, hostnameConfigId);
+                        testBase.client.GatewayHostnameConfiguration.Delete(testBase.rgName, testBase.serviceName, gatewayId, hostnameConfigId, "*");
                     }
                     catch (ErrorResponseException) { }
                     testBase.client.Gateway.Delete(testBase.rgName, testBase.serviceName, gatewayId, "*");
@@ -218,7 +253,7 @@ namespace ApiManagement.Tests.ManagementApiTests
 
 
         [Fact]
-        [Trait("owner", "vifedo")]
+        [Trait("owner", "jikang")]
 
         public async Task GetRegenerateKeys()
         {

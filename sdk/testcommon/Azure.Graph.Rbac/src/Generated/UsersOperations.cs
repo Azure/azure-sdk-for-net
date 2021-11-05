@@ -21,10 +21,12 @@ namespace Azure.Graph.Rbac
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         internal UsersRestOperations RestClient { get; }
+
         /// <summary> Initializes a new instance of UsersOperations for mocking. </summary>
         protected UsersOperations()
         {
         }
+
         /// <summary> Initializes a new instance of UsersOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
@@ -264,6 +266,7 @@ namespace Azure.Graph.Rbac
         /// <param name="objectId"> The object ID of the user for which to get group membership. </param>
         /// <param name="parameters"> User filtering parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> or <paramref name="parameters"/> is null. </exception>
         public virtual AsyncPageable<string> GetMemberGroupsAsync(string objectId, UserGetMemberGroupsParameters parameters, CancellationToken cancellationToken = default)
         {
             if (objectId == null)
@@ -297,6 +300,7 @@ namespace Azure.Graph.Rbac
         /// <param name="objectId"> The object ID of the user for which to get group membership. </param>
         /// <param name="parameters"> User filtering parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> or <paramref name="parameters"/> is null. </exception>
         public virtual Pageable<string> GetMemberGroups(string objectId, UserGetMemberGroupsParameters parameters, CancellationToken cancellationToken = default)
         {
             if (objectId == null)
@@ -329,6 +333,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets a list of users for the current tenant. </summary>
         /// <param name="nextLink"> Next link for the list operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public virtual AsyncPageable<User> ListNextAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -372,6 +377,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets a list of users for the current tenant. </summary>
         /// <param name="nextLink"> Next link for the list operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public virtual Pageable<User> ListNext(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

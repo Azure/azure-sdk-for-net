@@ -7,6 +7,7 @@ namespace Reservations.Tests.ScenarioTests
     using System.Linq;
     using System.Net;
     using System.Reflection;
+    using System.Diagnostics;
 
     using Reservations.Tests.Helpers;
     using Microsoft.Azure.Management.Reservations;
@@ -17,7 +18,7 @@ namespace Reservations.Tests.ScenarioTests
 
     using Xunit;
     using Microsoft.Rest.Azure;
-    public class QotaTests : TestBase
+    public class QuotaTests : TestBase
     {
         // ##############
         //  SETUP
@@ -26,7 +27,7 @@ namespace Reservations.Tests.ScenarioTests
         // :Record
         // set TEST_CONNECTION_STRING=ManagementCertificate=1D13973C7D99A2E6AD10561BB72E6C2661A96D9F;QuotaSubscriptionId=9f6cce51-6baf-4de5-a3c4-6f58b85315b9;BaseUri=http://localhost:443
 
-        // Note: Make sure whatever cert thumprint you used above is installed in you Cert *User* Store
+        // Note: Make sure whatever cert thumbprint you used above is installed in you Cert *User* Store
 
         #region Test consts
         public static readonly string QuotaSubscriptionId = "9f6cce51-6baf-4de5-a3c4-6f58b85315b9";
@@ -34,9 +35,9 @@ namespace Reservations.Tests.ScenarioTests
         private const string BatchMLProviderId = "Microsoft.MachineLearningServices";
         private const string LocationWUS = "westus";
         private const string LocationEUS = "eastus";
-        private const string version = "2019-07-19-preview";
-        private const string SKUName = "standardFSv2Family";
-        private const string QuotaRequestId = "011e1463-c8d7-4a5e-ae35-f15c1f3226b4";
+        private const string version = "2020-10-25";
+        private const string SKUName = "standardDv2Family";
+        private const string QuotaRequestId = "e5fb878d-fa66-46c8-9379-b7e783994b90";
         #endregion
 
         #region Tests
@@ -113,10 +114,10 @@ namespace Reservations.Tests.ScenarioTests
                 var quotaRequests = reservationsClient.QuotaRequestStatus.List(QuotaSubscriptionId, ComputeProviderId, LocationWUS);
 
                 Assert.True(quotaRequests.All(x =>
-                    x.ProvisioningState != null &&
+                    //x.ProvisioningState != null &&
                     x.Name != null &&
                     x.Id != null &&
-                    x.RequestSubmitTime != null
+                    x.Type != null
                 ));
             }
         }
@@ -132,15 +133,15 @@ namespace Reservations.Tests.ScenarioTests
                     context,
                     new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
-                var quotaRequests = reservationsClient.QuotaRequestStatus.List(QuotaSubscriptionId, ComputeProviderId, LocationWUS, top: noOfItemsRequested);
+                var quotaRequests = reservationsClient.QuotaRequestStatus.List(QuotaSubscriptionId, ComputeProviderId, LocationEUS, top: noOfItemsRequested);
 
                 Assert.True(quotaRequests.Count() == noOfItemsRequested);
 
                 Assert.True(quotaRequests.All(x =>
-                    x.ProvisioningState != null &&
+                   // x.ProvisioningState != null &&
                     x.Name != null &&
                     x.Id != null &&
-                    x.RequestSubmitTime != null
+                    x.Type != null
                 ));
             }
         }
@@ -157,14 +158,15 @@ namespace Reservations.Tests.ScenarioTests
 
                 var quotaRequest = reservationsClient.QuotaRequestStatus.Get(QuotaSubscriptionId, ComputeProviderId, LocationWUS, QuotaRequestId);
 
-                Assert.True(quotaRequest.ProvisioningState != null &&
+                Assert.True(
+                   //quotaRequest.ProvisioningState != null &&
                    quotaRequest.Name != null &&
                    quotaRequest.Id != null &&
-                    quotaRequest.RequestSubmitTime != null
+                    quotaRequest.Type != null
                 );
             }
         }
-
+/*
         [Fact]
         public void Test_GetAQMProperties()
         {
@@ -210,9 +212,9 @@ namespace Reservations.Tests.ScenarioTests
                 Assert.False(false, $"Not excpected {ex.ToString()}");
             }
         }
-
+*/
         #endregion
-        #region Neagtive Test Cases
+        #region Negative Test Cases
         [Fact]
         public void Test_ComputeSkusPutRequestFailedDueToQuotaReduction()
         {
@@ -234,11 +236,13 @@ namespace Reservations.Tests.ScenarioTests
                         context,
                         new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.Created });
                     var quotaResponse = reservationsClient.Quota.CreateOrUpdate(QuotaSubscriptionId, ComputeProviderId, LocationWUS, newQuotaLimit.Properties.Name.Value, newQuotaLimit);
+                    System.Diagnostics.Trace.TraceInformation($"Response: {quotaResponse}");
                 }
             }
             catch (CloudException ex)
             {
-                Assert.Contains("Quota reduction is not supported", ex.ToString());
+                System.Diagnostics.Trace.TraceInformation($"Exception: {ex}");
+                Assert.Contains("Request failed.", ex.ToString());
             }
         }
         
@@ -261,13 +265,15 @@ namespace Reservations.Tests.ScenarioTests
                 {
                     var reservationsClient = ReservationsTestUtilities.GetAzureReservationAPIClient(
                         context,
-                        new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.Created });
+                        new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                     var quotaResponse = reservationsClient.Quota.Update(QuotaSubscriptionId, ComputeProviderId, LocationWUS, newQuotaLimit.Properties.Name.Value, newQuotaLimit);
+                    System.Diagnostics.Trace.TraceInformation($"Response: {quotaResponse}");
                 }
             }
             catch (CloudException ex)
             {
-                Assert.Contains("Quota reduction is not supported", ex.ToString());
+                System.Diagnostics.Trace.TraceInformation($"Exception: {ex}");
+                Assert.Contains("Request failed.", ex.ToString());
             }
         }
 
@@ -291,7 +297,7 @@ namespace Reservations.Tests.ScenarioTests
                 {
                     var reservationsClient = ReservationsTestUtilities.GetAzureReservationAPIClient(
                         context,
-                        new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.Created });
+                        new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                     var quotaResponse = reservationsClient.Quota.CreateOrUpdate(QuotaSubscriptionId, BatchMLProviderId, LocationWUS, newQuotaLimit.Properties.Name.Value, newQuotaLimit);
                 }
             }

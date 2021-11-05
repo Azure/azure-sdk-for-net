@@ -4,18 +4,14 @@
 namespace BatchClientIntegrationTests
 {
     using System;
-    using System.Collections.Generic;
     using System.IO;
-    using System.Linq;
     using System.Security.Cryptography.X509Certificates;
     using BatchTestCommon;
     using Microsoft.Azure.Batch;
     using Microsoft.Azure.Batch.Auth;
-    using Microsoft.Azure.Batch.Common;
     using IntegrationTestCommon;
     using Xunit;
     using Xunit.Abstractions;
-    using Protocol = Microsoft.Azure.Batch.Protocol;
 
     //
     // NOTE: These are really unit tests but they cannot live in the unit tests project right now because the method we use to generate certificates is not
@@ -78,17 +74,15 @@ namespace BatchClientIntegrationTests
 
             try
             {
-                using (BatchClient batchClient = CreateDummyClient())
-                {
-                    X509Certificate2 x509Certificate = password == null ? new X509Certificate2(certificateFileLocation) : new X509Certificate2(certificateFileLocation, password);
-                    byte[] cerBytes = x509Certificate.Export(X509ContentType.Cert);
+                using BatchClient batchClient = CreateDummyClient();
+                X509Certificate2 x509Certificate = password == null ? new X509Certificate2(certificateFileLocation) : new X509Certificate2(certificateFileLocation, password);
+                byte[] cerBytes = x509Certificate.Export(X509ContentType.Cert);
 
-                    Certificate certificate = batchClient.CertificateOperations.CreateCertificateFromCer(cerBytes);
+                Certificate certificate = batchClient.CertificateOperations.CreateCertificateFromCer(cerBytes);
 
-                    Assert.Equal(x509Certificate.Thumbprint.ToUpper(), certificate.Thumbprint.ToUpper());
-                    Assert.Equal("sha1", certificate.ThumbprintAlgorithm);
-                    Assert.Equal(expectedSignatureAlgorithm, x509Certificate.SignatureAlgorithm.FriendlyName);
-                }
+                Assert.Equal(x509Certificate.Thumbprint.ToUpper(), certificate.Thumbprint.ToUpper());
+                Assert.Equal("sha1", certificate.ThumbprintAlgorithm);
+                Assert.Equal(expectedSignatureAlgorithm, x509Certificate.SignatureAlgorithm.FriendlyName);
             }
             finally
             {

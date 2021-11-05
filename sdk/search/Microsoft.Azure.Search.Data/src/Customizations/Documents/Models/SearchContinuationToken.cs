@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Search.Models
     /// fulfill a search request with a single response.
     /// </summary>
     /// <remarks>
-    /// This class supports using <c cref="JsonConvert">JsonConvert</c> to convert to and from a JSON payload. This can be useful if you
+    /// This class supports using <see cref="JsonConvert" /> to convert to and from a JSON payload. This can be useful if you
     /// call Azure Cognitive Search from a web application and you need to exchange continuation tokens with a browser or mobile client while paging
     /// through search results.
     /// </remarks>
@@ -33,14 +33,14 @@ namespace Microsoft.Azure.Search.Models
         internal SearchRequest NextPageParameters { get; }
 
         /// <summary>
-        /// Creates a new <c cref="SearchContinuationToken">SearchContinuationToken</c> for test purposes.
+        /// Creates a new <see cref="SearchContinuationToken" /> for test purposes.
         /// </summary>
         /// <param name="nextLink">The @odata.nextLink of the continuation token.</param>
         /// <returns>A new continuation token for test purposes only.</returns>
         public static SearchContinuationToken CreateTestToken(string nextLink) => CreateTestToken(nextLink, null, null);
 
         /// <summary>
-        /// Creates a new <c cref="SearchContinuationToken">SearchContinuationToken</c> for test purposes.
+        /// Creates a new <see cref="SearchContinuationToken" /> for test purposes.
         /// </summary>
         /// <param name="nextLink">The @odata.nextLink of the continuation token.</param>
         /// <param name="searchText">Optional; The search text of the request represented by this token.</param>

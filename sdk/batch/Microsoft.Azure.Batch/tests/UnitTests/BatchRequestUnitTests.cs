@@ -99,23 +99,21 @@
         public async Task TestDefaultBatchRequestTimeoutSet()
         {
             TimeSpan requestTimeout = TimeSpan.MinValue;
-            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
-            {
-                Protocol.RequestInterceptor interceptor = new Protocol.RequestInterceptor(req =>
-                    {
-                        requestTimeout = req.Timeout;
-                        var castRequest = (Protocol.BatchRequest<
-                            Protocol.Models.JobGetOptions,
-                            AzureOperationResponse<Protocol.Models.CloudJob, Protocol.Models.JobGetHeaders>>)req;
-                        castRequest.ServiceRequestFunc = (token) =>
-                            {
-                                return Task.FromResult(new AzureOperationResponse<Protocol.Models.CloudJob, Protocol.Models.JobGetHeaders>() { Body = new Protocol.Models.CloudJob() });
-                            };
-                    });
-                await client.JobOperations.GetJobAsync("foo", additionalBehaviors: new List<BatchClientBehavior>{interceptor});
+            using BatchClient client = ClientUnitTestCommon.CreateDummyClient();
+            Protocol.RequestInterceptor interceptor = new Protocol.RequestInterceptor(req =>
+                {
+                    requestTimeout = req.Timeout;
+                    var castRequest = (Protocol.BatchRequest<
+                        Protocol.Models.JobGetOptions,
+                        AzureOperationResponse<Protocol.Models.CloudJob, Protocol.Models.JobGetHeaders>>)req;
+                    castRequest.ServiceRequestFunc = (token) =>
+                        {
+                            return Task.FromResult(new AzureOperationResponse<Protocol.Models.CloudJob, Protocol.Models.JobGetHeaders>() { Body = new Protocol.Models.CloudJob() });
+                        };
+                });
+            await client.JobOperations.GetJobAsync("foo", additionalBehaviors: new List<BatchClientBehavior> { interceptor });
 
-                Assert.Equal(Constants.DefaultSingleRestRequestClientTimeout, requestTimeout);
-            }
+            Assert.Equal(Constants.DefaultSingleRestRequestClientTimeout, requestTimeout);
         }
 
         [Fact]
@@ -136,9 +134,8 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
         public async Task TestCancellationViaParameter()
         {
-            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
-            {
-                List<IInheritedBehaviors> objectsToExamineForMethods = new List<IInheritedBehaviors>()
+            using BatchClient client = ClientUnitTestCommon.CreateDummyClient();
+            List<IInheritedBehaviors> objectsToExamineForMethods = new List<IInheritedBehaviors>()
                     {
                         client.JobOperations,
                         client.JobScheduleOperations,
@@ -146,19 +143,18 @@
                         client.PoolOperations,
                     };
 
-                foreach (IInheritedBehaviors o in objectsToExamineForMethods)
+            foreach (IInheritedBehaviors o in objectsToExamineForMethods)
+            {
+                List<MethodInfo> methodsToCall = DiscoverCancellableMethods(o.GetType());
+                foreach (MethodInfo method in methodsToCall)
                 {
-                    List<MethodInfo> methodsToCall = DiscoverCancellableMethods(o.GetType());
-                    foreach (MethodInfo method in methodsToCall)
+                    foreach (IInheritedBehaviors behaviorContainer in objectsToExamineForMethods)
                     {
-                        foreach (IInheritedBehaviors behaviorContainer in objectsToExamineForMethods)
-                        {
-                            behaviorContainer.CustomBehaviors.Clear();
-                            behaviorContainer.CustomBehaviors.Add(CreateRequestInterceptorForCancellationMonitoring());
-                        }
-
-                        await this.BatchRequestCancellationViaParameterTestAsync(method, o, TimeSpan.FromSeconds(0));
+                        behaviorContainer.CustomBehaviors.Clear();
+                        behaviorContainer.CustomBehaviors.Add(CreateRequestInterceptorForCancellationMonitoring());
                     }
+
+                    await this.BatchRequestCancellationViaParameterTestAsync(method, o, TimeSpan.FromSeconds(0));
                 }
             }
         }
@@ -167,9 +163,8 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
         public async Task TestCancellationViaParameterForLists()
         {
-            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
-            {
-                List<IInheritedBehaviors> objectsToExamineForMethods = new List<IInheritedBehaviors>()
+            using BatchClient client = ClientUnitTestCommon.CreateDummyClient();
+            List<IInheritedBehaviors> objectsToExamineForMethods = new List<IInheritedBehaviors>()
                     {
                         client.JobOperations,
                         client.JobScheduleOperations,
@@ -177,27 +172,26 @@
                         client.PoolOperations,
                     };
 
-                foreach (IInheritedBehaviors behaviorContainer in objectsToExamineForMethods)
+            foreach (IInheritedBehaviors behaviorContainer in objectsToExamineForMethods)
+            {
+                List<MethodInfo> listMethods = DiscoverListMethods(behaviorContainer.GetType());
+
+                //Call the list methods to build the enumerable
+                foreach (MethodInfo listMethod in listMethods)
                 {
-                    List<MethodInfo> listMethods = DiscoverListMethods(behaviorContainer.GetType());
+                    behaviorContainer.CustomBehaviors.Clear();
+                    behaviorContainer.CustomBehaviors.Add(CreateRequestInterceptorForCancellationMonitoring());
 
-                    //Call the list methods to build the enumerable
-                    foreach (MethodInfo listMethod in listMethods)
-                    {
-                        behaviorContainer.CustomBehaviors.Clear();
-                        behaviorContainer.CustomBehaviors.Add(CreateRequestInterceptorForCancellationMonitoring());
+                    object pagedEnumerable = ReflectionHelpers.InvokeMethodWithDefaultArguments(listMethod, behaviorContainer);
 
-                        object pagedEnumerable = ReflectionHelpers.InvokeMethodWithDefaultArguments(listMethod, behaviorContainer);
+                    //PagedEnumerable will have a method called: "GetPagedEnumerator"
+                    MethodInfo getEnumeratorMethod = pagedEnumerable.GetType().GetMethod("GetPagedEnumerator");
+                    object pagedEnumerator = getEnumeratorMethod.Invoke(pagedEnumerable, null);
 
-                        //PagedEnumerable will have a method called: "GetPagedEnumerator"
-                        MethodInfo getEnumeratorMethod = pagedEnumerable.GetType().GetMethod("GetPagedEnumerator");
-                        object pagedEnumerator = getEnumeratorMethod.Invoke(pagedEnumerable, null);
+                    //pagedEnumerator has the method to call "MoveNextAsync"
+                    MethodInfo moveNextAsyncMethod = pagedEnumerator.GetType().GetMethod("MoveNextAsync");
 
-                        //pagedEnumerator has the method to call "MoveNextAsync"
-                        MethodInfo moveNextAsyncMethod = pagedEnumerator.GetType().GetMethod("MoveNextAsync");
-
-                        await this.BatchRequestCancellationViaParameterTestAsync(moveNextAsyncMethod, pagedEnumerator, TimeSpan.FromSeconds(0));
-                    }
+                    await this.BatchRequestCancellationViaParameterTestAsync(moveNextAsyncMethod, pagedEnumerator, TimeSpan.FromSeconds(0));
                 }
             }
         }
@@ -262,28 +256,26 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
         public async Task TestBatchRequestCannotBeModifiedAfterExecutionStarted()
         {
-            using (BatchClient batchClient = ClientUnitTestCommon.CreateDummyClient())
-            {
-                Protocol.RequestInterceptor interceptor = new Protocol.RequestInterceptor(req =>
-                    {
-                        PoolAddBatchRequest addPoolRequest = req as PoolAddBatchRequest;
-                        addPoolRequest.ServiceRequestFunc = token =>
-                            {
-                                Assert.Throws<InvalidOperationException>(() => addPoolRequest.CancellationToken = CancellationToken.None);
-                                Assert.Throws<InvalidOperationException>(() => addPoolRequest.Options = null);
-                                Assert.Throws<InvalidOperationException>(() => addPoolRequest.RetryPolicy = null);
-                                Assert.Throws<InvalidOperationException>(() => addPoolRequest.ServiceRequestFunc = null);
-                                Assert.Throws<InvalidOperationException>(() => addPoolRequest.Timeout = TimeSpan.FromSeconds(0));
-                                Assert.Throws<InvalidOperationException>(() => addPoolRequest.ClientRequestIdProvider = null);
-                                Assert.Throws<InvalidOperationException>(() => addPoolRequest.Parameters = null);
+            using BatchClient batchClient = ClientUnitTestCommon.CreateDummyClient();
+            Protocol.RequestInterceptor interceptor = new Protocol.RequestInterceptor(req =>
+                {
+                    PoolAddBatchRequest addPoolRequest = req as PoolAddBatchRequest;
+                    addPoolRequest.ServiceRequestFunc = token =>
+                        {
+                            Assert.Throws<InvalidOperationException>(() => addPoolRequest.CancellationToken = CancellationToken.None);
+                            Assert.Throws<InvalidOperationException>(() => addPoolRequest.Options = null);
+                            Assert.Throws<InvalidOperationException>(() => addPoolRequest.RetryPolicy = null);
+                            Assert.Throws<InvalidOperationException>(() => addPoolRequest.ServiceRequestFunc = null);
+                            Assert.Throws<InvalidOperationException>(() => addPoolRequest.Timeout = TimeSpan.FromSeconds(0));
+                            Assert.Throws<InvalidOperationException>(() => addPoolRequest.ClientRequestIdProvider = null);
+                            Assert.Throws<InvalidOperationException>(() => addPoolRequest.Parameters = null);
 
-                                return Task.FromResult(new AzureOperationHeaderResponse<Protocol.Models.PoolAddHeaders>());
-                            };
-                    });
+                            return Task.FromResult(new AzureOperationHeaderResponse<Protocol.Models.PoolAddHeaders>());
+                        };
+                });
 
-                CloudPool pool = batchClient.PoolOperations.CreatePool("dummy", "small", default(CloudServiceConfiguration), targetDedicatedComputeNodes: 0);
-                await pool.CommitAsync(additionalBehaviors: new[] { interceptor });
-            }
+            CloudPool pool = batchClient.PoolOperations.CreatePool("dummy", "small", default(CloudServiceConfiguration), targetDedicatedComputeNodes: 0);
+            await pool.CommitAsync(additionalBehaviors: new[] { interceptor });
         }
 
         #endregion
@@ -316,107 +308,105 @@
 
             int observedRequestCount = 0;
             CancellationToken customToken = CancellationToken.None;
-            using (CancellationTokenSource source = new CancellationTokenSource(timeoutViaCancellationTokenValue))
+            using CancellationTokenSource source = new CancellationTokenSource(timeoutViaCancellationTokenValue);
+            if (clientRequestTimeoutViaCustomToken.HasValue)
             {
-                if (clientRequestTimeoutViaCustomToken.HasValue)
-                {
-                    customToken = source.Token;
-                }
+                customToken = source.Token;
+            }
 
-                //Determine which timeout should hit first and create the requestCancellationOptions object
-                if (clientRequestTimeoutViaCustomToken.HasValue && clientRequestTimeoutViaTimeout.HasValue)
-                {
-                    expectedCustomTokenTimeoutToHitFirst = clientRequestTimeoutViaCustomToken < clientRequestTimeoutViaTimeout;
-                }
-                else if (clientRequestTimeoutViaCustomToken.HasValue)
-                {
-                    expectedCustomTokenTimeoutToHitFirst = true;
-                }
-                else if (clientRequestTimeoutViaTimeout.HasValue)
-                {
-                    expectedCustomTokenTimeoutToHitFirst = false;
-                }
-                else
-                {
-                    Assert.True(false, "Both clientRequestTimeoutViaCustomToken and clientRequestTimeoutViaTimeout cannot be null");
-                }
+            //Determine which timeout should hit first and create the requestCancellationOptions object
+            if (clientRequestTimeoutViaCustomToken.HasValue && clientRequestTimeoutViaTimeout.HasValue)
+            {
+                expectedCustomTokenTimeoutToHitFirst = clientRequestTimeoutViaCustomToken < clientRequestTimeoutViaTimeout;
+            }
+            else if (clientRequestTimeoutViaCustomToken.HasValue)
+            {
+                expectedCustomTokenTimeoutToHitFirst = true;
+            }
+            else if (clientRequestTimeoutViaTimeout.HasValue)
+            {
+                expectedCustomTokenTimeoutToHitFirst = false;
+            }
+            else
+            {
+                Assert.True(false, "Both clientRequestTimeoutViaCustomToken and clientRequestTimeoutViaTimeout cannot be null");
+            }
 
-                using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
-                {
-                    //Add a retry policy to the client if required
-                    if (retryPolicy != null)
-                    {
-                        client.CustomBehaviors.Add(new RetryPolicyProvider(retryPolicy));
-                    }
-
-                    //
-                    // Set the interceptor to catch the request before it really goes to the Batch service and hook the cancellation token to find when it times out
-                    //
-                    Protocol.RequestInterceptor requestInterceptor = new Protocol.RequestInterceptor(req =>
-                    {
-                        if (clientRequestTimeoutViaTimeout.HasValue)
-                        {
-                            req.Timeout = clientRequestTimeoutViaTimeout.Value;
-                        }
-
-                        req.CancellationToken = customToken;
-
-                        var castRequest = (Protocol.BatchRequests.JobGetBatchRequest)req;
-                        castRequest.ServiceRequestFunc = async (token) =>
-                        {
-                            TaskCompletionSource<TimeSpan> taskCompletionSource = new TaskCompletionSource<TimeSpan>();
-                            observedRequestCount++;
-                            if (!expectedCustomTokenTimeoutToHitFirst)
-                            {
-                                startTime = DateTime.UtcNow;
-                            }
-
-                            token.Register(() =>
-                            {
-                                DateTime endTime = DateTime.UtcNow;
-                                TimeSpan duration = endTime.Subtract(startTime);
-                                taskCompletionSource.SetResult(duration);
-                            });
-
-                            cancellationDuration = await taskCompletionSource.Task;
-
-                            token.ThrowIfCancellationRequested(); //Force an exception
-
-                            return new AzureOperationResponse<Protocol.Models.CloudJob, Protocol.Models.JobGetHeaders>() { Body = new Protocol.Models.CloudJob() };
-                        };
-                    });
-
-                    await Assert.ThrowsAsync<OperationCanceledException>(async () => await client.JobOperations.GetJobAsync("dummy", additionalBehaviors: new List<BatchClientBehavior> { requestInterceptor }));
-                }
-                this.testOutputHelper.WriteLine("There were {0} requests executed", observedRequestCount);
-                this.testOutputHelper.WriteLine("Took {0} to cancel task", cancellationDuration);
-
-                Assert.NotNull(cancellationDuration);
-                if (expectedCustomTokenTimeoutToHitFirst)
-                {
-                    this.testOutputHelper.WriteLine("Expected custom token timeout to hit first");
-                    Assert.True(Math.Abs(clientRequestTimeoutViaCustomToken.Value.TotalSeconds - cancellationDuration.Value.TotalSeconds) < TimeTolerance,
-                        string.Format("Expected timeout: {0}, Observed timeout: {1}", clientRequestTimeoutViaCustomToken, cancellationDuration));
-                }
-                else
-                {
-                    this.testOutputHelper.WriteLine("Expected client side timeout to hit first");
-                    Assert.True(Math.Abs(clientRequestTimeoutViaTimeout.Value.TotalSeconds - cancellationDuration.Value.TotalSeconds) < TimeTolerance,
-                        string.Format("Expected timeout: {0}, Observed timeout: {1}", clientRequestTimeoutViaTimeout, cancellationDuration));
-                }
-
-                //Confirm the right number of retries were reached (if applicable)
+            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
+            {
+                //Add a retry policy to the client if required
                 if (retryPolicy != null)
                 {
-                    if (expectedCustomTokenTimeoutToHitFirst)
+                    client.CustomBehaviors.Add(new RetryPolicyProvider(retryPolicy));
+                }
+
+                //
+                // Set the interceptor to catch the request before it really goes to the Batch service and hook the cancellation token to find when it times out
+                //
+                Protocol.RequestInterceptor requestInterceptor = new Protocol.RequestInterceptor(req =>
+                {
+                    if (clientRequestTimeoutViaTimeout.HasValue)
                     {
-                        //This terminates the retry so there should just be 1 request (0 retries)
-                        Assert.Equal(0, observedRequestCount - 1);
+                        req.Timeout = clientRequestTimeoutViaTimeout.Value;
                     }
-                    else
+
+                    req.CancellationToken = customToken;
+
+                    var castRequest = (Protocol.BatchRequests.JobGetBatchRequest)req;
+                    castRequest.ServiceRequestFunc = async (token) =>
                     {
-                        Assert.Equal(expectedMaxRetries, observedRequestCount - 1);
-                    }
+                        TaskCompletionSource<TimeSpan> taskCompletionSource = new TaskCompletionSource<TimeSpan>();
+                        observedRequestCount++;
+                        if (!expectedCustomTokenTimeoutToHitFirst)
+                        {
+                            startTime = DateTime.UtcNow;
+                        }
+
+                        token.Register(() =>
+                        {
+                            DateTime endTime = DateTime.UtcNow;
+                            TimeSpan duration = endTime.Subtract(startTime);
+                            taskCompletionSource.SetResult(duration);
+                        });
+
+                        cancellationDuration = await taskCompletionSource.Task;
+
+                        token.ThrowIfCancellationRequested(); //Force an exception
+
+                            return new AzureOperationResponse<Protocol.Models.CloudJob, Protocol.Models.JobGetHeaders>() { Body = new Protocol.Models.CloudJob() };
+                    };
+                });
+
+                await Assert.ThrowsAsync<OperationCanceledException>(async () => await client.JobOperations.GetJobAsync("dummy", additionalBehaviors: new List<BatchClientBehavior> { requestInterceptor }));
+            }
+            this.testOutputHelper.WriteLine("There were {0} requests executed", observedRequestCount);
+            this.testOutputHelper.WriteLine("Took {0} to cancel task", cancellationDuration);
+
+            Assert.NotNull(cancellationDuration);
+            if (expectedCustomTokenTimeoutToHitFirst)
+            {
+                this.testOutputHelper.WriteLine("Expected custom token timeout to hit first");
+                Assert.True(Math.Abs(clientRequestTimeoutViaCustomToken.Value.TotalSeconds - cancellationDuration.Value.TotalSeconds) < TimeTolerance,
+                    string.Format("Expected timeout: {0}, Observed timeout: {1}", clientRequestTimeoutViaCustomToken, cancellationDuration));
+            }
+            else
+            {
+                this.testOutputHelper.WriteLine("Expected client side timeout to hit first");
+                Assert.True(Math.Abs(clientRequestTimeoutViaTimeout.Value.TotalSeconds - cancellationDuration.Value.TotalSeconds) < TimeTolerance,
+                    string.Format("Expected timeout: {0}, Observed timeout: {1}", clientRequestTimeoutViaTimeout, cancellationDuration));
+            }
+
+            //Confirm the right number of retries were reached (if applicable)
+            if (retryPolicy != null)
+            {
+                if (expectedCustomTokenTimeoutToHitFirst)
+                {
+                    //This terminates the retry so there should just be 1 request (0 retries)
+                    Assert.Equal(0, observedRequestCount - 1);
+                }
+                else
+                {
+                    Assert.Equal(expectedMaxRetries, observedRequestCount - 1);
                 }
             }
         }
@@ -466,22 +456,20 @@
         {
             Assert.NotNull(clientRequestTimeoutViaCustomToken);
 
-            using (CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(clientRequestTimeoutViaCustomToken.Value))
-            {
-                this.testOutputHelper.WriteLine("Invoking {0}", method.Name);
+            using CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(clientRequestTimeoutViaCustomToken.Value);
+            this.testOutputHelper.WriteLine("Invoking {0}", method.Name);
 
-                //Invoke the method with default parameters and a cancellationToken
-                BatchUnitTestCancellationException e = await Assert.ThrowsAsync<BatchUnitTestCancellationException>(
-                            async () => await InvokeCancellationTokenMethodAsync(method, o, cancellationTokenSource.Token));
+            //Invoke the method with default parameters and a cancellationToken
+            BatchUnitTestCancellationException e = await Assert.ThrowsAsync<BatchUnitTestCancellationException>(
+                        async () => await InvokeCancellationTokenMethodAsync(method, o, cancellationTokenSource.Token));
 
-                this.testOutputHelper.WriteLine("There were {0} requests executed", e.ObservedRequestCount);
-                this.testOutputHelper.WriteLine("Took {0} to cancel task", e.CancellationDuration);
+            this.testOutputHelper.WriteLine("There were {0} requests executed", e.ObservedRequestCount);
+            this.testOutputHelper.WriteLine("Took {0} to cancel task", e.CancellationDuration);
 
-                Assert.NotNull(e.CancellationDuration);
+            Assert.NotNull(e.CancellationDuration);
 
-                Assert.True(Math.Abs(clientRequestTimeoutViaCustomToken.Value.TotalSeconds - e.CancellationDuration.TotalSeconds) < TimeTolerance,
-                    string.Format("Expected timeout: {0}, Observed timeout: {1}", clientRequestTimeoutViaCustomToken, e.CancellationDuration));
-            }
+            Assert.True(Math.Abs(clientRequestTimeoutViaCustomToken.Value.TotalSeconds - e.CancellationDuration.TotalSeconds) < TimeTolerance,
+                string.Format("Expected timeout: {0}, Observed timeout: {1}", clientRequestTimeoutViaCustomToken, e.CancellationDuration));
         }
 
         /// <summary>
@@ -534,44 +522,44 @@
 
         private static async Task InvokeCancellationTokenMethodAsync(MethodInfo method, object objectInstance, CancellationToken cancellationToken)
         {
-            Func<ParameterInfo, object> objectCreationFunc = (parameter) =>
+            object objectCreationFunc(ParameterInfo parameter)
+            {
+                object result;
+
+                if (parameter.ParameterType == typeof(CancellationToken))
                 {
-                    object result;
+                    result = cancellationToken;
+                }
+                else if (parameter.ParameterType.GetTypeInfo().IsValueType)
+                {
+                    result = Activator.CreateInstance(parameter.ParameterType);
+                }
+                //The below list is a list of types which are null-checked in some methods and so must not be null
+                //This is a bit of a hack but it's the easiest way currecntly...
+                else if (parameter.ParameterType == typeof(CloudTask))
+                {
+                    result = new CloudTask("bar", "baz");
+                }
+                else if (parameter.Name == "computeNodeIds")
+                {
+                    result = new List<string>();
+                }
+                else if (parameter.Name == "computeNodes")
+                {
+                    result = new List<ComputeNode>();
+                }
+                else if (parameter.Name == "rdpFileNameToCreate")
+                {
+                    result = "temp";
+                }
+                //Default to null if there is no special handling required
+                else
+                {
+                    result = null;
+                }
 
-                    if (parameter.ParameterType == typeof (CancellationToken))
-                    {
-                        result = cancellationToken;
-                    }
-                    else if (parameter.ParameterType.GetTypeInfo().IsValueType)
-                    {
-                        result = Activator.CreateInstance(parameter.ParameterType);
-                    }
-                    //The below list is a list of types which are null-checked in some methods and so must not be null
-                    //This is a bit of a hack but it's the easiest way currecntly...
-                    else if (parameter.ParameterType == typeof (CloudTask))
-                    {
-                        result = new CloudTask("bar", "baz");
-                    }
-                    else if (parameter.Name == "computeNodeIds")
-                    {
-                        result = new List<string>();
-                    }
-                    else if (parameter.Name == "computeNodes")
-                    {
-                        result = new List<ComputeNode>();
-                    }
-                    else if (parameter.Name == "rdpFileNameToCreate")
-                    {
-                        result = "temp";
-                    }
-                    //Default to null if there is no special handling required
-                    else
-                    {
-                        result = null;
-                    }
-
-                    return result;
-                };
+                return result;
+            }
 
             await (Task)ReflectionHelpers.InvokeMethodWithDefaultArguments(method, objectInstance, objectCreationFunc);
         }

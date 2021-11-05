@@ -14,20 +14,21 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static DeploymentExportResult DeserializeDeploymentExportResult(JsonElement element)
         {
-            object template = default;
+            Optional<object> template = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("template"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     template = property.Value.GetObject();
                     continue;
                 }
             }
-            return new DeploymentExportResult(template);
+            return new DeploymentExportResult(template.Value);
         }
     }
 }

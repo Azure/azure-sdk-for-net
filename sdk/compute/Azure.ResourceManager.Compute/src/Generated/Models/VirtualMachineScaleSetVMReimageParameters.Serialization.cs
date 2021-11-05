@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (TempDisk != null)
+            if (Optional.IsDefined(TempDisk))
             {
                 writer.WritePropertyName("tempDisk");
                 writer.WriteBooleanValue(TempDisk.Value);

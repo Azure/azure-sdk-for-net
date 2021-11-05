@@ -59,41 +59,41 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the type of resource the SKU applies to.
+        /// Gets or sets the type of resource the SKU applies to.
         /// </summary>
         [JsonProperty(PropertyName = "resourceType")]
-        public string ResourceType { get; private set; }
+        public string ResourceType { get; set; }
 
         /// <summary>
-        /// Gets the name of SKU.
+        /// Gets or sets the name of SKU.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
-        public string Name { get; private set; }
+        public string Name { get; set; }
 
         /// <summary>
-        /// Gets specifies the tier of Cognitive Services account.
+        /// Gets or sets specifies the tier of Cognitive Services account.
         /// </summary>
         [JsonProperty(PropertyName = "tier")]
-        public string Tier { get; private set; }
+        public string Tier { get; set; }
 
         /// <summary>
-        /// Gets the Kind of resources that are supported in this SKU.
+        /// Gets or sets the Kind of resources that are supported in this SKU.
         /// </summary>
         [JsonProperty(PropertyName = "kind")]
-        public string Kind { get; private set; }
+        public string Kind { get; set; }
 
         /// <summary>
-        /// Gets the set of locations that the SKU is available.
+        /// Gets or sets the set of locations that the SKU is available.
         /// </summary>
         [JsonProperty(PropertyName = "locations")]
-        public IList<string> Locations { get; private set; }
+        public IList<string> Locations { get; set; }
 
         /// <summary>
-        /// Gets the restrictions because of which SKU cannot be used. This is
-        /// empty if there are no restrictions.
+        /// Gets or sets the restrictions because of which SKU cannot be used.
+        /// This is empty if there are no restrictions.
         /// </summary>
         [JsonProperty(PropertyName = "restrictions")]
-        public IList<ResourceSkuRestrictions> Restrictions { get; private set; }
+        public IList<ResourceSkuRestrictions> Restrictions { get; set; }
 
     }
 }

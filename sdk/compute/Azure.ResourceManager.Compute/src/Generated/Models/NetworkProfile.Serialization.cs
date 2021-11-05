@@ -16,11 +16,26 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (NetworkInterfaces != null)
+            if (Optional.IsCollectionDefined(NetworkInterfaces))
             {
                 writer.WritePropertyName("networkInterfaces");
                 writer.WriteStartArray();
                 foreach (var item in NetworkInterfaces)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(NetworkApiVersion))
+            {
+                writer.WritePropertyName("networkApiVersion");
+                writer.WriteStringValue(NetworkApiVersion.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(NetworkInterfaceConfigurations))
+            {
+                writer.WritePropertyName("networkInterfaceConfigurations");
+                writer.WriteStartArray();
+                foreach (var item in NetworkInterfaceConfigurations)
                 {
                     writer.WriteObjectValue(item);
                 }
@@ -31,32 +46,53 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static NetworkProfile DeserializeNetworkProfile(JsonElement element)
         {
-            IList<NetworkInterfaceReference> networkInterfaces = default;
+            Optional<IList<NetworkInterfaceReference>> networkInterfaces = default;
+            Optional<NetworkApiVersion> networkApiVersion = default;
+            Optional<IList<VirtualMachineNetworkInterfaceConfiguration>> networkInterfaceConfigurations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("networkInterfaces"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<NetworkInterfaceReference> array = new List<NetworkInterfaceReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(NetworkInterfaceReference.DeserializeNetworkInterfaceReference(item));
-                        }
+                        array.Add(NetworkInterfaceReference.DeserializeNetworkInterfaceReference(item));
                     }
                     networkInterfaces = array;
                     continue;
                 }
+                if (property.NameEquals("networkApiVersion"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    networkApiVersion = new NetworkApiVersion(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("networkInterfaceConfigurations"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<VirtualMachineNetworkInterfaceConfiguration> array = new List<VirtualMachineNetworkInterfaceConfiguration>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(VirtualMachineNetworkInterfaceConfiguration.DeserializeVirtualMachineNetworkInterfaceConfiguration(item));
+                    }
+                    networkInterfaceConfigurations = array;
+                    continue;
+                }
             }
-            return new NetworkProfile(networkInterfaces);
+            return new NetworkProfile(Optional.ToList(networkInterfaces), Optional.ToNullable(networkApiVersion), Optional.ToList(networkInterfaceConfigurations));
         }
     }
 }

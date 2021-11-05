@@ -18,6 +18,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="name"> Activity name. </param>
         /// <param name="method"> Rest API method for target endpoint. </param>
         /// <param name="url"> Web activity target endpoint and path. Type: string (or Expression with resultType string). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="url"/> is null. </exception>
         public WebActivity(string name, WebActivityMethod method, object url) : base(name)
         {
             if (name == null)
@@ -42,7 +43,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="description"> Activity description. </param>
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="policy"> Activity policy. </param>
         /// <param name="method"> Rest API method for target endpoint. </param>

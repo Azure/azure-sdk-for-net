@@ -53,9 +53,10 @@ namespace Microsoft.Azure.Management.Network.Models
         /// 'Deleting', 'Failed'</param>
         /// <param name="isSecuritySite">IsSecuritySite flag.</param>
         /// <param name="vpnSiteLinks">List of all vpn site links.</param>
+        /// <param name="o365Policy">Office365 Policy.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public VpnSite(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SubResource virtualWan = default(SubResource), DeviceProperties deviceProperties = default(DeviceProperties), string ipAddress = default(string), string siteKey = default(string), AddressSpace addressSpace = default(AddressSpace), BgpSettings bgpProperties = default(BgpSettings), string provisioningState = default(string), bool? isSecuritySite = default(bool?), IList<VpnSiteLink> vpnSiteLinks = default(IList<VpnSiteLink>), string etag = default(string))
+        public VpnSite(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SubResource virtualWan = default(SubResource), DeviceProperties deviceProperties = default(DeviceProperties), string ipAddress = default(string), string siteKey = default(string), AddressSpace addressSpace = default(AddressSpace), BgpSettings bgpProperties = default(BgpSettings), string provisioningState = default(string), bool? isSecuritySite = default(bool?), IList<VpnSiteLink> vpnSiteLinks = default(IList<VpnSiteLink>), O365PolicyProperties o365Policy = default(O365PolicyProperties), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             VirtualWan = virtualWan;
@@ -67,6 +68,7 @@ namespace Microsoft.Azure.Management.Network.Models
             ProvisioningState = provisioningState;
             IsSecuritySite = isSecuritySite;
             VpnSiteLinks = vpnSiteLinks;
+            O365Policy = o365Policy;
             Etag = etag;
             CustomInit();
         }
@@ -131,6 +133,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.vpnSiteLinks")]
         public IList<VpnSiteLink> VpnSiteLinks { get; set; }
+
+        /// <summary>
+        /// Gets or sets office365 Policy.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.o365Policy")]
+        public O365PolicyProperties O365Policy { get; set; }
 
         /// <summary>
         /// Gets a unique read-only string that changes whenever the resource

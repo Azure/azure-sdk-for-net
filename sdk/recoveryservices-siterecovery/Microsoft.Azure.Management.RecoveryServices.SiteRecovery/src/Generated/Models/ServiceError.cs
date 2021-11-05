@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     using System.Linq;
 
     /// <summary>
-    /// ASR error model
+    /// ASR error model.
     /// </summary>
     public partial class ServiceError
     {

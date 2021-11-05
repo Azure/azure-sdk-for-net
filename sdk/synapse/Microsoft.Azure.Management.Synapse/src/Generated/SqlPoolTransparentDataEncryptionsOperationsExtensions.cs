@@ -133,5 +133,97 @@ namespace Microsoft.Azure.Management.Synapse
                 }
             }
 
+            /// <summary>
+            /// SQL pool's transparent data encryption configurations
+            /// </summary>
+            /// <remarks>
+            /// Get list of SQL pool's transparent data encryption configurations.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace
+            /// </param>
+            /// <param name='sqlPoolName'>
+            /// SQL pool name
+            /// </param>
+            public static IPage<TransparentDataEncryption> List(this ISqlPoolTransparentDataEncryptionsOperations operations, string resourceGroupName, string workspaceName, string sqlPoolName)
+            {
+                return operations.ListAsync(resourceGroupName, workspaceName, sqlPoolName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// SQL pool's transparent data encryption configurations
+            /// </summary>
+            /// <remarks>
+            /// Get list of SQL pool's transparent data encryption configurations.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace
+            /// </param>
+            /// <param name='sqlPoolName'>
+            /// SQL pool name
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<TransparentDataEncryption>> ListAsync(this ISqlPoolTransparentDataEncryptionsOperations operations, string resourceGroupName, string workspaceName, string sqlPoolName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, workspaceName, sqlPoolName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// SQL pool's transparent data encryption configurations
+            /// </summary>
+            /// <remarks>
+            /// Get list of SQL pool's transparent data encryption configurations.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<TransparentDataEncryption> ListNext(this ISqlPoolTransparentDataEncryptionsOperations operations, string nextPageLink)
+            {
+                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// SQL pool's transparent data encryption configurations
+            /// </summary>
+            /// <remarks>
+            /// Get list of SQL pool's transparent data encryption configurations.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<TransparentDataEncryption>> ListNextAsync(this ISqlPoolTransparentDataEncryptionsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
     }
 }

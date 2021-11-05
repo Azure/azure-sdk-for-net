@@ -21,9 +21,9 @@ namespace ContentModeratorTests
         IList<string> ReviewIds = new List<string>();
         static ReviewAPI api;
         static ReviewStatus rvwStatus;
-        static Content content; 
+        static Content content;
 
-        
+
         public ReviewAPIs()
         {
             TestSetUpConfiguration();
@@ -60,10 +60,9 @@ namespace ContentModeratorTests
 
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
-
-                throw e;
+                throw;
             }
 
         }
@@ -92,10 +91,9 @@ namespace ContentModeratorTests
 
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
-
-                throw e;
+                throw;
             }
 
         }
@@ -127,14 +125,13 @@ namespace ContentModeratorTests
                     Assert.True(Helpers.Utilities.VerifyJob(Content.IMAGE, job), " " + TestBase.ErrorMessage);
 
 
-                    
+
 
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
-
-                throw e;
+                throw;
             }
 
         }
@@ -167,10 +164,9 @@ namespace ContentModeratorTests
 
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
-
-                throw e;
+                throw;
             }
 
         }
@@ -199,10 +195,9 @@ namespace ContentModeratorTests
                     Assert.NotNull(ReviewIds[0]);
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
-
-                throw e;
+                throw;
             }
 
         }
@@ -227,14 +222,13 @@ namespace ContentModeratorTests
                     Assert.NotNull(ReviewIds[0]);
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
-
-                throw e;
+                throw;
             }
 
         }
-         
+
         [Fact]
         public void CreateVideoReview()
         {
@@ -255,10 +249,9 @@ namespace ContentModeratorTests
                     Assert.NotNull(ReviewIds[0]);
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
-
-                throw e;
+                throw;
             }
 
         }
@@ -286,17 +279,16 @@ namespace ContentModeratorTests
                     //Assert.Equal(reviewid, r.ReviewId);
                     Assert.True(Helpers.Utilities.VerifyReview(Content.IMAGE, r), " " + TestBase.ErrorMessage);
 
-                    
 
-                    
+
+
 
 
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
-
-                throw e;
+                throw;
             }
 
         }
@@ -308,7 +300,7 @@ namespace ContentModeratorTests
             {
                 using (MockContext context = MockContext.Start("ReviewAPIs"))
                 {
-                    
+
                     //CreateTextReview();
                     wait(2);
                     //string reviewid = ReviewIds.Count > 0 ? ReviewIds[0] : null;
@@ -323,13 +315,12 @@ namespace ContentModeratorTests
                     Assert.Equal("201712t9c7880135e834a939e4902ab82b5e97e", r.ReviewId);
                     //Assert.Equal(reviewid, r.ReviewId);
                     Assert.True(Helpers.Utilities.VerifyReview(Content.TEXT, r), " " + TestBase.ErrorMessage);
-                    
+
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
-
-                throw e;
+                throw;
             }
         }
 
@@ -359,9 +350,9 @@ namespace ContentModeratorTests
 
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw e;
+                throw;
             }
         }
         #endregion
@@ -388,9 +379,9 @@ namespace ContentModeratorTests
                     Assert.Equal(HttpStatusCode.NoContent, review.Response.StatusCode);
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw e;
+                throw;
             }
 
         }
@@ -410,15 +401,15 @@ namespace ContentModeratorTests
                     client = Constants.GenerateClient(api, HttpMockServer.CreateInstance());
                     //results = Constants.GetVideoFramesReviewResponse(client, api, Content.VIDEO, MIMETypes.MULTI_PART_FORM_DATA.GetDescription(), teamName, ReviewIds[0], false);
                     results = Constants.GetVideoFramesReviewResponse(client, api, Content.VIDEO, MIMETypes.MULTI_PART_FORM_DATA.GetDescription(), teamName, "201712vc779930a65dc4de993d25bc21f53f928", false);
-                    
+
                     var review = results.AddFrames;
                     Assert.NotNull(review);
                     Assert.Equal(HttpStatusCode.NoContent, review.Response.StatusCode);
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw e;
+                throw;
             }
 
         }
@@ -444,9 +435,9 @@ namespace ContentModeratorTests
                     Assert.True(Helpers.Utilities.VerifyGetFrames(frames.Body), "Frames verification failed" + TestBase.ErrorMessage);
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw e;
+                throw;
             }
 
         }
@@ -471,9 +462,9 @@ namespace ContentModeratorTests
                     Assert.Equal(HttpStatusCode.NoContent, review.Response.StatusCode);
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw e;
+                throw;
             }
 
         }
@@ -489,11 +480,11 @@ namespace ContentModeratorTests
                     //CreateVideoReview();
 
                     api = ReviewAPI.TRANSCRIPTS_ADD;
-                    using (Stream s = new FileStream(currentExecutingDirectory + @"\TestDataSources\vttF.vtt", FileMode.Open, FileAccess.Read)) 
+                    using (Stream s = new FileStream(currentExecutingDirectory + @"\TestDataSources\vttF.vtt", FileMode.Open, FileAccess.Read))
                     {
                         HttpMockServer.Initialize("ReviewAPIs", "AddTranscripts");
                         client = Constants.GenerateClient(api, HttpMockServer.CreateInstance());
-                        
+
                         //results = Constants.GetTranscriptReviewResponse(client, api, Content.VIDEO, MIMETypes.TEXT_PLAIN.GetDescription(), teamName, ReviewIds[0], s);
                         results = Constants.GetTranscriptReviewResponse(client, api, Content.VIDEO, MIMETypes.TEXT_PLAIN.GetDescription(), teamName, "201712v67b52dea7aa94a669c766af506fd55d5", s);
                     }
@@ -502,9 +493,9 @@ namespace ContentModeratorTests
                     Assert.Equal(HttpStatusCode.NoContent, addTransacripts.Response.StatusCode);
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw e;
+                throw;
             }
 
         }
@@ -531,9 +522,9 @@ namespace ContentModeratorTests
                     Assert.Equal(HttpStatusCode.NoContent, review.Response.StatusCode);
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw e;
+                throw;
             }
 
         }
@@ -542,13 +533,13 @@ namespace ContentModeratorTests
         #endregion
 
 
-      
-
-
-      
 
 
 
-      
+
+
+
+
+
     }
 }

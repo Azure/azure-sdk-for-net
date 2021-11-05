@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStartObject();
             writer.WritePropertyName("actions");
             writer.WriteObjectValue(Actions);
-            if (Filters != null)
+            if (Optional.IsDefined(Filters))
             {
                 writer.WritePropertyName("filters");
                 writer.WriteObjectValue(Filters);
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Storage.Models
         internal static ManagementPolicyDefinition DeserializeManagementPolicyDefinition(JsonElement element)
         {
             ManagementPolicyAction actions = default;
-            ManagementPolicyFilter filters = default;
+            Optional<ManagementPolicyFilter> filters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("actions"))
@@ -40,13 +40,14 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     filters = ManagementPolicyFilter.DeserializeManagementPolicyFilter(property.Value);
                     continue;
                 }
             }
-            return new ManagementPolicyDefinition(actions, filters);
+            return new ManagementPolicyDefinition(actions, filters.Value);
         }
     }
 }

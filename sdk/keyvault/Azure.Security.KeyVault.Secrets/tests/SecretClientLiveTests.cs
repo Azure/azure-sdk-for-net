@@ -4,10 +4,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using Azure.Core;
 using Azure.Core.TestFramework;
-using System.Text;
 using NUnit.Framework.Constraints;
 
 namespace Azure.Security.KeyVault.Secrets.Tests
@@ -16,7 +17,8 @@ namespace Azure.Security.KeyVault.Secrets.Tests
     {
         private const int PagedSecretCount = 50;
 
-        public SecretClientLiveTests(bool isAsync, SecretClientOptions.ServiceVersion serviceVersion) : base(isAsync, serviceVersion)
+        public SecretClientLiveTests(bool isAsync, SecretClientOptions.ServiceVersion serviceVersion)
+            : base(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -29,7 +31,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             {
                 Client = GetClient();
 
-                ChallengeBasedAuthenticationPolicy.AuthenticationChallenge.ClearCache();
+                ChallengeBasedAuthenticationPolicy.ClearCache();
             }
         }
 
@@ -52,7 +54,9 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         public async Task SetSecretWithExtendedProps()
         {
             string secretName = Recording.GenerateId();
-            IResolveConstraint createdUpdatedConstraint = Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1565114301));
+
+            // TODO: Update this value whenever you re-record tests. Both the sync and async JSON recordings need to use the same value.
+            IResolveConstraint createdUpdatedConstraint = Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1626221282));
 
             KeyVaultSecret setResult = null;
 
@@ -95,7 +99,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
                 Assert.AreEqual(secretName, setResult.Name);
                 Assert.AreEqual("CrudWithExtendedPropsValue1", setResult.Value);
                 Assert.AreEqual(VaultUri, setResult.Properties.VaultUri);
-                Assert.AreEqual("Recoverable+Purgeable", setResult.Properties.RecoveryLevel);
+                Assert.IsNotNull(setResult.Properties.RecoveryLevel); // Value changes based on how the Key Vault is configured.
                 Assert.That(setResult.Properties.CreatedOn, createdUpdatedConstraint);
                 Assert.That(setResult.Properties.UpdatedOn, createdUpdatedConstraint);
 
@@ -426,7 +430,6 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             }
         }
 
-
         [Test]
         public async Task GetDeletedSecrets()
         {
@@ -436,24 +439,45 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             for (int i = 0; i < PagedSecretCount; i++)
             {
                 KeyVaultSecret secret = await Client.SetSecretAsync(secretName + i, i.ToString());
-                deletedSecrets.Add(secret);
-                await Client.StartDeleteSecretAsync(secret.Name);
-
                 RegisterForCleanup(secret.Name);
+
+                deletedSecrets.Add(secret);
+                await TestRetryHelper.RetryAsync(async () =>
+                {
+                    // Try a few times since it sometimes fails when trying to delete right away.
+                    return await Client.StartDeleteSecretAsync(secret.Name);
+                }, maxIterations: 3);
             }
 
+            List<Task> deletingSecrets = new List<Task>();
             foreach (KeyVaultSecret deletedSecret in deletedSecrets)
             {
-                await WaitForDeletedSecret(deletedSecret.Name);
+                // WaitForDeletedSecret disables recording, so we can wait concurrently.
+                deletingSecrets.Add(WaitForDeletedSecret(deletedSecret.Name));
             }
 
-            List<DeletedSecret> allSecrets = await Client.GetDeletedSecretsAsync().ToEnumerableAsync();
+            await Task.WhenAll(deletingSecrets);
 
+            List<DeletedSecret> allSecrets = await Client.GetDeletedSecretsAsync().ToEnumerableAsync();
             foreach (KeyVaultSecret deletedSecret in deletedSecrets)
             {
                 KeyVaultSecret returnedSecret = allSecrets.Single(s => s.Name == deletedSecret.Name);
                 AssertSecretPropertiesEqual(deletedSecret.Properties, returnedSecret.Properties, compareId: false);
             }
+        }
+
+        [Test]
+        public async Task AuthenticateCrossTenant()
+        {
+            TokenCredential credential = GetCredential(Recording.Random.NewGuid().ToString());
+            SecretClient client = GetClient(credential);
+
+            string secretName = Recording.GenerateId();
+
+            Response<KeyVaultSecret> response = await client.SetSecretAsync(secretName, "secret");
+            RegisterForCleanup(secretName);
+
+            Assert.AreEqual(200, response.GetRawResponse().Status);
         }
     }
 }

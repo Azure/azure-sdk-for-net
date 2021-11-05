@@ -7,11 +7,13 @@
     <PackageId>Microsoft.Azure.Management.PolicyInsights</PackageId>
     <Description>Provides policy insights operations for Microsoft Azure.</Description>
     <AssemblyName>Microsoft.Azure.Management.PolicyInsights</AssemblyName>
-    <Version>3.1.0</Version>
+    <Version>4.0.0</Version>
     <PackageTags>Azure;Policy;PolicyInsights;PolicyEvent;PolicyState;Compliance;</PackageTags>
     <PackageReleaseNotes><![CDATA[
-      - Added support for triggering compliance evaluations
-      - Added policyDefinitionVersion, policySetDefinitionVersion, and policyAssignmentVersion columns to policy states query results
+      - Added pagination support for policy states and events 
+      - Added support for retrieving resource component compliance state
+      - Added support for retrieving resource component events
+      - Added tests for States and Events APIs
     ]]></PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>

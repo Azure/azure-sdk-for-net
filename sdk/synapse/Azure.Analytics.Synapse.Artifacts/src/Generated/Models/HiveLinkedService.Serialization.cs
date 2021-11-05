@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(HiveLinkedServiceConverter))]
     public partial class HiveLinkedService : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -164,7 +167,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<object> allowSelfSignedServerCert = default;
             Optional<object> encryptedCredential = default;
             IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -174,6 +177,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("connectVia"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property.Value);
                     continue;
                 }
@@ -184,6 +192,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("parameters"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, ParameterSpecification> dictionary = new Dictionary<string, ParameterSpecification>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -194,6 +207,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("annotations"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<object> array = new List<object>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -204,6 +222,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("typeProperties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("host"))
@@ -213,16 +236,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         }
                         if (property0.NameEquals("port"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             port = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("serverType"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             serverType = new HiveServerType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("thriftTransportProtocol"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             thriftTransportProtocol = new HiveThriftTransportProtocol(property0.Value.GetString());
                             continue;
                         }
@@ -233,72 +271,144 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         }
                         if (property0.NameEquals("serviceDiscoveryMode"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             serviceDiscoveryMode = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("zooKeeperNameSpace"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             zooKeeperNameSpace = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("useNativeQuery"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             useNativeQuery = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("username"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             username = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("password"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             password = SecretBase.DeserializeSecretBase(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("httpPath"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             httpPath = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("enableSsl"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             enableSsl = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("trustedCertPath"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             trustedCertPath = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("useSystemTrustStore"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             useSystemTrustStore = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("allowHostNameCNMismatch"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             allowHostNameCNMismatch = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("allowSelfSignedServerCert"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             allowSelfSignedServerCert = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             encryptedCredential = property0.Value.GetObject();
                             continue;
                         }
                     }
                     continue;
                 }
-                additionalPropertiesDictionary ??= new Dictionary<string, object>();
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
             return new HiveLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, host, port.Value, Optional.ToNullable(serverType), Optional.ToNullable(thriftTransportProtocol), authenticationType, serviceDiscoveryMode.Value, zooKeeperNameSpace.Value, useNativeQuery.Value, username.Value, password.Value, httpPath.Value, enableSsl.Value, trustedCertPath.Value, useSystemTrustStore.Value, allowHostNameCNMismatch.Value, allowSelfSignedServerCert.Value, encryptedCredential.Value);
+        }
+
+        internal partial class HiveLinkedServiceConverter : JsonConverter<HiveLinkedService>
+        {
+            public override void Write(Utf8JsonWriter writer, HiveLinkedService model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override HiveLinkedService Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeHiveLinkedService(document.RootElement);
+            }
         }
     }
 }

@@ -1,5 +1,89 @@
 ## Microsoft.Azure.Management.Storage release notes
 
+### Changes in 23.0.0
+- Upgrade to rest api version 2021-06-01.
+- Support Storage account HierarchicalNamespace migration.
+- Support create/update Storage account with enable/disable PublicNetworkAccess.
+- Support create/update account with ImmutableStorageWithVersioning.
+- Support create/update account with defaultToOAuthAuthentication.
+- Support blob Inventory new schema fields: AccessTierInferred and Tags.
+- Support create/update Blob Container with enableNfsV3RootSquash and enableNfsV3AllSquash.
+- Support AllowProtectedAppendWritesAll in set container ImmutabilityPolicy and set container LegalHold.
+
+**Breaking changes**
+
+- Remove StorageFileDataSmbShareOwner from Microsoft.Azure.Management.Storage.Models.DefaultSharePermission.
+- In StorageManagementClient.BlobContainers.CreateOrUpdateImmutabilityPolicy(), StorageManagementClient.BlobContainers.ExtendImmutabilityPolicy(), add a madatory parameter with type Microsoft.Azure.Management.Storage.Models.ImmutabilityPolicy, to input all ImmutabilityPolicy properties, and remove 2 parameters to input ImmutabilityPolicy properties: immutabilityPeriodSinceCreationInDays, allowProtectedAppendWrites.
+- In Microsoft.Azure.Management.Storage.Models.AccessPolicy, rename Start to StartTime, Expiry to ExpiryTime.
+
+### Changes in 22.0.0
+- Upgrade to rest api version 2021-04-01.
+- Support File Share lease and delete share with leased share snapshots.
+- Support File Share access policy
+- Support Blob Container with ImmutableStorageWithVersioning enabled.
+- Support new account property AllowCrossTenantReplication
+- Support DefaultSharePermission
+- Support Blob Inventory GA policy
+
+**Breaking changes**
+
+- BlobInventoryPolicySchema property Destination is removed, and Destination is added to BlobInventoryPolicyRule.
+- Following Enum are removed: PutSharesExpand, GetShareExpand, ListSharesExpand. Need to input the expand string in Put/Get/List file share API according to the parameter description.
+
+### Changes in 21.0.0
+
+**Breaking changes**
+
+- StorageAccount.KeyCreationTime type change from Dictionary to 'Microsoft.Azure.Management.Storage.Models.KeyCreationTime'.
+
+### Changes in 20.0.0
+- Upgrade to rest api version 2021-02-01.
+- Support KeyPolicy,SasPolicy in create/update Storage account.
+- Added a new property "CreationTime" to Microsoft.Azure.Management.Storage.Models.StorageAccountKey object.
+
+**Breaking changes**
+
+- StorageManagementClient.FileShares.List() parameter "expand" type change to enum to string.
+- StorageManagementClient.FileShares.Create() parameter "expand" type change to enum to string.
+
+### Changes in 19.0.0
+- Upgrade to rest api version 2021-01-01
+- Support create/get/delete/list File share snapshot
+- Support ChangeFeed.RetentionInDays
+- Support User Identity in create and update Storage account
+- Support RequireInfrastructureEncryption in create Encryption Scope
+- Add 2 new properties to Encryption Scope KeyVaultProperties: CurrentVersionedKeyIdentifier, LastKeyRotationTimestamp
+- Support add ManagementPolicy action to blob version
+- Support ManagementPolicy action TierToCool, TierToArchive on blob snapshot.
+- Support add ManagementPolicy with filter blob type as AppendBlob
+- Support Update File Service properties with SMB settings: Versions, AuthenticationMethods, KerberosTicketEncryption, ChannelEncryption
+- Support EnableNfsV3 in create Storage account
+- Support AllowSharedKeyAccess in create/update Storage account
+
+**Breaking changes**
+
+- StorageManagementClient.StorageAccounts.ListByResourceGroup() output type change from IEnumerable<StorageAccount> to IPage<StorageAccount>, to support list account with nextlink.
+- Microsoft.Azure.Management.Storage.Models.StorageAccountUpdateParameters.Identity.Type, Microsoft.Azure.Management.Storage.Models.StorageAccountCreateParameters.Identity.Type have default single value as IdentityType.SystemAssigned before. Now must assign value to be used in create or update storage account, since it support multiple value now.
+- Microsoft.Azure.Management.Storage.Models.VirtualNetworkRule.State type change from enum to string.
+
+### Changes in 18.0.0-beta
+- Upgrade to rest api version 2020-08-01-preview
+- Support enanble ContainerDeleteRetentionPolicy in BlobServices properties
+- Support enable LastAccessTimeTrackingPolicy in BlobServices properties
+- Support DaysAfterLastAccessTimeGreaterThan,EnableAutoTierToHotFromCool in ManagementPolicy BaseBlob Actions
+- Support List deleted containers
+- Support enable ProtocolSettings.Smb.Multichannel on FileServices properties
+- Support ResourceAccessRule in Microsoft.Azure.Management.Storage.Models.NetworkRuleSet
+- Support Set ExtendedLocation in create storage account
+- Support Blob Inventory rule of storage account
+
+**Breaking changes**
+
+- In StorageManagementClient.FileServices.SetServiceProperties(), add a madatory parameter with type Microsoft.Azure.Management.Storage.Models.FileServiceProperties, to input all FileService properties, and remove 2 parameters to input FileService properties: cors， shareDeleteRetentionPolicy.
+
+### Changes in 17.2.0
+- Update BlobServiceProperties.RestorePolicy: add new property "MinRestoreTime", deprecate old property "LastEnabledTime"
+
 ### Changes in 17.1.0
 
 - Support Create or Update Storage Account with MinimumTlsVersion, AllowBlobPublicAccess

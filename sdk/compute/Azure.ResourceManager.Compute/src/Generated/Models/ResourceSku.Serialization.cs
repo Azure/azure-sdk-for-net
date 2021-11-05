@@ -15,72 +15,48 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static ResourceSku DeserializeResourceSku(JsonElement element)
         {
-            string resourceType = default;
-            string name = default;
-            string tier = default;
-            string size = default;
-            string family = default;
-            string kind = default;
-            ResourceSkuCapacity capacity = default;
-            IReadOnlyList<string> locations = default;
-            IReadOnlyList<ResourceSkuLocationInfo> locationInfo = default;
-            IReadOnlyList<string> apiVersions = default;
-            IReadOnlyList<ResourceSkuCosts> costs = default;
-            IReadOnlyList<ResourceSkuCapabilities> capabilities = default;
-            IReadOnlyList<ResourceSkuRestrictions> restrictions = default;
+            Optional<string> resourceType = default;
+            Optional<string> name = default;
+            Optional<string> tier = default;
+            Optional<string> size = default;
+            Optional<string> family = default;
+            Optional<string> kind = default;
+            Optional<ResourceSkuCapacity> capacity = default;
+            Optional<IReadOnlyList<string>> locations = default;
+            Optional<IReadOnlyList<ResourceSkuLocationInfo>> locationInfo = default;
+            Optional<IReadOnlyList<string>> apiVersions = default;
+            Optional<IReadOnlyList<ResourceSkuCosts>> costs = default;
+            Optional<IReadOnlyList<ResourceSkuCapabilities>> capabilities = default;
+            Optional<IReadOnlyList<ResourceSkuRestrictions>> restrictions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     resourceType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("tier"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     tier = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("size"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     size = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("family"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     family = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("kind"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     kind = property.Value.GetString();
                     continue;
                 }
@@ -88,6 +64,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     capacity = ResourceSkuCapacity.DeserializeResourceSkuCapacity(property.Value);
@@ -97,19 +74,13 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     locations = array;
                     continue;
@@ -118,19 +89,13 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ResourceSkuLocationInfo> array = new List<ResourceSkuLocationInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ResourceSkuLocationInfo.DeserializeResourceSkuLocationInfo(item));
-                        }
+                        array.Add(ResourceSkuLocationInfo.DeserializeResourceSkuLocationInfo(item));
                     }
                     locationInfo = array;
                     continue;
@@ -139,19 +104,13 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     apiVersions = array;
                     continue;
@@ -160,19 +119,13 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ResourceSkuCosts> array = new List<ResourceSkuCosts>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ResourceSkuCosts.DeserializeResourceSkuCosts(item));
-                        }
+                        array.Add(ResourceSkuCosts.DeserializeResourceSkuCosts(item));
                     }
                     costs = array;
                     continue;
@@ -181,19 +134,13 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ResourceSkuCapabilities> array = new List<ResourceSkuCapabilities>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ResourceSkuCapabilities.DeserializeResourceSkuCapabilities(item));
-                        }
+                        array.Add(ResourceSkuCapabilities.DeserializeResourceSkuCapabilities(item));
                     }
                     capabilities = array;
                     continue;
@@ -202,25 +149,19 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ResourceSkuRestrictions> array = new List<ResourceSkuRestrictions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ResourceSkuRestrictions.DeserializeResourceSkuRestrictions(item));
-                        }
+                        array.Add(ResourceSkuRestrictions.DeserializeResourceSkuRestrictions(item));
                     }
                     restrictions = array;
                     continue;
                 }
             }
-            return new ResourceSku(resourceType, name, tier, size, family, kind, capacity, locations, locationInfo, apiVersions, costs, capabilities, restrictions);
+            return new ResourceSku(resourceType.Value, name.Value, tier.Value, size.Value, family.Value, kind.Value, capacity.Value, Optional.ToList(locations), Optional.ToList(locationInfo), Optional.ToList(apiVersions), Optional.ToList(costs), Optional.ToList(capabilities), Optional.ToList(restrictions));
         }
     }
 }

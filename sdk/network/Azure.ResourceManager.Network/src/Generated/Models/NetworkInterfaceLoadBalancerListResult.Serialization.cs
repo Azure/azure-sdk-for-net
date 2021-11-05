@@ -8,49 +8,40 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class NetworkInterfaceLoadBalancerListResult
+    internal partial class NetworkInterfaceLoadBalancerListResult
     {
         internal static NetworkInterfaceLoadBalancerListResult DeserializeNetworkInterfaceLoadBalancerListResult(JsonElement element)
         {
-            IReadOnlyList<LoadBalancer> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<LoadBalancerData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<LoadBalancer> array = new List<LoadBalancer>();
+                    List<LoadBalancerData> array = new List<LoadBalancerData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(LoadBalancer.DeserializeLoadBalancer(item));
-                        }
+                        array.Add(LoadBalancerData.DeserializeLoadBalancerData(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new NetworkInterfaceLoadBalancerListResult(value, nextLink);
+            return new NetworkInterfaceLoadBalancerListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

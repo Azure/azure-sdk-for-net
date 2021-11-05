@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    internal static class ProvisioningOperationExtensions
+    internal static partial class ProvisioningOperationExtensions
     {
         public static string ToSerialString(this ProvisioningOperation value) => value switch
         {

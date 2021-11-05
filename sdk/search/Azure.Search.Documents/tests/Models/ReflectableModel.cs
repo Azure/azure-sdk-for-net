@@ -4,47 +4,45 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
-#if EXPERIMENTAL_SPATIAL
-using Azure.Core.Spatial;
-#else
+using Azure.Core.GeoJson;
+using Azure.Search.Documents.Indexes;
+using Azure.Search.Documents.Indexes.Models;
 using Microsoft.Spatial;
-#endif
 using KeyFieldAttribute = System.ComponentModel.DataAnnotations.KeyAttribute;
 
 #pragma warning disable SA1402 // File may only contain a single type
 #pragma warning disable SA1649 // File name should match first type name
 
 // TODO: Remove when https://github.com/Azure/azure-sdk-for-net/issues/11166 is completed.
-namespace Azure.Search.Documents.Samples.Tests
+namespace Azure.Search.Documents.Tests
 {
     public class ReflectableAddress
     {
-        [IsSearchable]
+        [SearchableField]
         public string City { get; set; }
 
-        [IsFilterable, IsFacetable]
+        [SimpleField(IsFilterable = true, IsFacetable = true)]
         public string Country { get; set; }
     }
 
     public class ReflectableComplexObject
     {
-        [IsSearchable]
-        [Analyzer("en.microsoft")]
+        [SearchableField(AnalyzerName = LexicalAnalyzerName.Values.EnMicrosoft)]
         public string Name { get; set; }
 
-        [IsFilterable]
+        [SimpleField(IsFilterable = true)]
         public int Rating { get; set; }
 
         // Ensure that leaf-field-specific attributes are ignored by FieldBuilder on complex fields.
-        [IsSearchable]
-        [IsFilterable]
-        [IsSortable]
-        [IsFacetable]
-        [IsRetrievable(false)]
-        [Analyzer("zh-Hant.lucene")]
-        [IndexAnalyzer("zh-Hant.lucene")]
-        [SearchAnalyzer("zh-Hant.lucene")]
-        [SynonymMaps("myMap")]
+        [SearchableField(
+            IsFilterable = true,
+            IsSortable = true,
+            IsFacetable = true,
+            IsHidden = true,
+            AnalyzerName = LexicalAnalyzerName.Values.ZhHantLucene,
+            SearchAnalyzerName = LexicalAnalyzerName.Values.ZhHantLucene,
+            IndexAnalyzerName = LexicalAnalyzerName.Values.ZhHantLucene,
+            SynonymMapNames = new[] { "myMap" })]
         public ReflectableAddress Address { get; set; }
     }
 
@@ -63,37 +61,36 @@ namespace Azure.Search.Documents.Samples.Tests
 
         public DateTime TimeWithoutOffset { get; set; }
 
-        [IsSearchable]
-        [SynonymMaps("myMap")]
+        [SearchableField(SynonymMapNames = new[] { "myMap" })]
         public string Text { get; set; }
 
         public string UnsearchableText { get; set; }
 
-        [IsSearchable]
+        [SearchableField]
         public string MoreText { get; set; }
 
-        [IsFilterable]
+        [SimpleField(IsFilterable = true)]
         public string FilterableText { get; set; }
 
-        [IsSortable]
+        [SimpleField(IsSortable = true)]
         public string SortableText { get; set; }
 
-        [IsFacetable]
+        [SimpleField(IsFacetable = true)]
         public string FacetableText { get; set; }
 
-        [IsRetrievable(false)]
+        [SimpleField(IsHidden = true)]
         public string IrretrievableText { get; set; }
 
-        [IsRetrievable(true)]
+        [SimpleField(IsHidden = false)]
         public string ExplicitlyRetrievableText { get; set; }
 
-        [Analyzer("en.microsoft")]
+        [SearchableField(AnalyzerName = LexicalAnalyzerName.Values.EnMicrosoft)]
         public string TextWithAnalyzer { get; set; }
 
-        [SearchAnalyzer("es.lucene")]
+        [SearchableField(SearchAnalyzerName = LexicalAnalyzerName.Values.EsLucene)]
         public string TextWithSearchAnalyzer { get; set; }
 
-        [IndexAnalyzer("whitespace")]
+        [SearchableField(IndexAnalyzerName = LexicalAnalyzerName.Values.Whitespace)]
         public string TextWithIndexAnalyzer { get; set; }
 
         public string[] StringArray { get; set; }
@@ -108,11 +105,9 @@ namespace Azure.Search.Documents.Samples.Tests
 
         public int? NullableInt { get; set; }
 
-#if EXPERIMENTAL_SPATIAL
-        public PointGeometry GeographyPoint { get; set; }
-#else
+        public GeoPoint GeoPoint { get; set; }
+
         public GeographyPoint GeographyPoint { get; set; }
-#endif
 
         public int[] IntArray { get; set; }
 
@@ -174,17 +169,16 @@ namespace Azure.Search.Documents.Samples.Tests
 
         public ICollection<DateTimeOffset> DateTimeOffsetICollection { get; set; }
 
-#if EXPERIMENTAL_SPATIAL
-        public PointGeometry[] GeographyPointArray { get; set; }
+        public GeoPoint[] GeoPointArray { get; set; }
 
-        public IList<PointGeometry> GeographyPointIList { get; set; }
+        public IList<GeoPoint> GeoPointIList { get; set; }
 
-        public List<PointGeometry> GeographyPointList { get; set; }
+        public List<GeoPoint> GeoPointList { get; set; }
 
-        public IEnumerable<PointGeometry> GeographyPointIEnumerable { get; set; }
+        public IEnumerable<GeoPoint> GeoPointIEnumerable { get; set; }
 
-        public ICollection<PointGeometry> GeographyPointICollection { get; set; }
-#else
+        public ICollection<GeoPoint> GeoPointICollection { get; set; }
+
         public GeographyPoint[] GeographyPointArray { get; set; }
 
         public IList<GeographyPoint> GeographyPointIList { get; set; }
@@ -194,7 +188,6 @@ namespace Azure.Search.Documents.Samples.Tests
         public IEnumerable<GeographyPoint> GeographyPointIEnumerable { get; set; }
 
         public ICollection<GeographyPoint> GeographyPointICollection { get; set; }
-#endif
 
         public ReflectableComplexObject Complex { get; set; }
 
@@ -209,7 +202,7 @@ namespace Azure.Search.Documents.Samples.Tests
         public ICollection<ReflectableComplexObject> ComplexICollection { get; set; }
 
         [JsonIgnore]
-        [IsRetrievable(false)]
+        [SimpleField(IsHidden = true)]
 #pragma warning disable IDE1006 // Naming Styles
         public RecordEnum recordEnum { get; set; }
 #pragma warning restore IDE1006 // Naming Styles

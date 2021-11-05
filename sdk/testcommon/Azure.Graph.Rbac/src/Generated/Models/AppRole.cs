@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Graph.Rbac.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.Graph.Rbac.Models
         /// <summary> Initializes a new instance of AppRole. </summary>
         public AppRole()
         {
+            AllowedMemberTypes = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of AppRole. </summary>
@@ -37,7 +39,7 @@ namespace Azure.Graph.Rbac.Models
         /// <summary> Unique role identifier inside the appRoles collection. </summary>
         public string Id { get; set; }
         /// <summary> Specifies whether this app role definition can be assigned to users and groups by setting to &apos;User&apos;, or to other applications (that are accessing this application in daemon service scenarios) by setting to &apos;Application&apos;, or to both. </summary>
-        public IList<string> AllowedMemberTypes { get; set; }
+        public IList<string> AllowedMemberTypes { get; }
         /// <summary> Permission help text that appears in the admin app assignment and consent experiences. </summary>
         public string Description { get; set; }
         /// <summary> Display name for the permission that appears in the admin consent and app assignment experiences. </summary>

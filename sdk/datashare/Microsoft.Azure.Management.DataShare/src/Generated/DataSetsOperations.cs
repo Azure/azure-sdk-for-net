@@ -555,6 +555,12 @@ namespace Microsoft.Azure.Management.DataShare
         /// <param name='skipToken'>
         /// continuation token
         /// </param>
+        /// <param name='filter'>
+        /// Filters the results using OData syntax.
+        /// </param>
+        /// <param name='orderby'>
+        /// Sorts the results using OData syntax.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -576,7 +582,7 @@ namespace Microsoft.Azure.Management.DataShare
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<DataSet>>> ListByShareWithHttpMessagesAsync(string resourceGroupName, string accountName, string shareName, string skipToken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<DataSet>>> ListByShareWithHttpMessagesAsync(string resourceGroupName, string accountName, string shareName, string skipToken = default(string), string filter = default(string), string orderby = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -609,6 +615,8 @@ namespace Microsoft.Azure.Management.DataShare
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("shareName", shareName);
                 tracingParameters.Add("skipToken", skipToken);
+                tracingParameters.Add("filter", filter);
+                tracingParameters.Add("orderby", orderby);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListByShare", tracingParameters);
             }
@@ -627,6 +635,14 @@ namespace Microsoft.Azure.Management.DataShare
             if (skipToken != null)
             {
                 _queryParameters.Add(string.Format("$skipToken={0}", System.Uri.EscapeDataString(skipToken)));
+            }
+            if (filter != null)
+            {
+                _queryParameters.Add(string.Format("$filter={0}", System.Uri.EscapeDataString(filter)));
+            }
+            if (orderby != null)
+            {
+                _queryParameters.Add(string.Format("$orderby={0}", System.Uri.EscapeDataString(orderby)));
             }
             if (_queryParameters.Count > 0)
             {

@@ -11,36 +11,30 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class UsageListResult
+    internal partial class UsageListResult
     {
         internal static UsageListResult DeserializeUsageListResult(JsonElement element)
         {
-            IReadOnlyList<Usage> value = default;
+            Optional<IReadOnlyList<Usage>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<Usage> array = new List<Usage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(Usage.DeserializeUsage(item));
-                        }
+                        array.Add(Usage.DeserializeUsage(item));
                     }
                     value = array;
                     continue;
                 }
             }
-            return new UsageListResult(value);
+            return new UsageListResult(Optional.ToList(value));
         }
     }
 }

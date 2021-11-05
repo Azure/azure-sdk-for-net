@@ -16,7 +16,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>The maximum number of retry attempts before considering the associated operation to have failed.</summary>
         private int _maxRetries = 3;
 
-        /// <summary>The delay or back-off factor to apply between retry attempts.</summary>
+        /// <summary>The delay or backoff factor to apply between retry attempts.</summary>
         private TimeSpan _delay = TimeSpan.FromSeconds(0.8);
 
         /// <summary>The maximum delay to allow between retry attempts.</summary>
@@ -36,6 +36,9 @@ namespace Azure.Messaging.ServiceBus
         ///   to have failed.
         /// </summary>
         ///
+        ///
+        /// <value>The default retry limit is 3.</value>
+        ///
         public int MaxRetries
         {
             get => _maxRetries;
@@ -52,6 +55,9 @@ namespace Azure.Messaging.ServiceBus
         ///   on which to base calculations for a backoff-based approach.
         /// </summary>
         ///
+        ///
+        /// <value>The default delay is 0.8 seconds.</value>
+        ///
         public TimeSpan Delay
         {
             get => _delay;
@@ -66,6 +72,9 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         ///   The maximum permissible delay between retry attempts.
         /// </summary>
+        ///
+        ///
+        /// <value>The default maximum delay is 60 seconds.</value>
         ///
         public TimeSpan MaxDelay
         {
@@ -82,6 +91,9 @@ namespace Azure.Messaging.ServiceBus
         ///   The maximum duration to wait for completion of a single attempt, whether the initial
         ///   attempt or a retry.
         /// </summary>
+        ///
+        ///
+        /// <value>The default timeout is 60 seconds.</value>
         ///
         public TimeSpan TryTimeout
         {

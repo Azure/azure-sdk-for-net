@@ -14,19 +14,15 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ExpressRouteCircuitRoutesTableSummary DeserializeExpressRouteCircuitRoutesTableSummary(JsonElement element)
         {
-            string neighbor = default;
-            int? v = default;
-            int? @as = default;
-            string upDown = default;
-            string statePfxRcd = default;
+            Optional<string> neighbor = default;
+            Optional<int> v = default;
+            Optional<int> @as = default;
+            Optional<string> upDown = default;
+            Optional<string> statePfxRcd = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("neighbor"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     neighbor = property.Value.GetString();
                     continue;
                 }
@@ -34,6 +30,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     v = property.Value.GetInt32();
@@ -43,6 +40,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     @as = property.Value.GetInt32();
@@ -50,24 +48,16 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("upDown"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     upDown = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("statePfxRcd"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     statePfxRcd = property.Value.GetString();
                     continue;
                 }
             }
-            return new ExpressRouteCircuitRoutesTableSummary(neighbor, v, @as, upDown, statePfxRcd);
+            return new ExpressRouteCircuitRoutesTableSummary(neighbor.Value, Optional.ToNullable(v), Optional.ToNullable(@as), upDown.Value, statePfxRcd.Value);
         }
     }
 }

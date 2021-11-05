@@ -1,6 +1,6 @@
 ﻿{
     "$metadata": {
-        "$model": "dtmi:samples:Room;1"
+        "$model": "dtmi:com:samples:Room;1"
     },
     "Temperature": 80,
     "Humidity": 25,

@@ -105,6 +105,10 @@ namespace Microsoft.Azure.Management.Network.Models
             {
                 Source.Validate();
             }
+            if (Destination != null)
+            {
+                Destination.Validate();
+            }
         }
     }
 }

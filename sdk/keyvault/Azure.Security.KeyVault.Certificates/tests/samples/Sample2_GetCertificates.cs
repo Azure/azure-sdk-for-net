@@ -6,7 +6,6 @@ using NUnit.Framework;
 using System;
 using System.Diagnostics;
 using System.Threading;
-using Azure.Security.KeyVault.Tests;
 
 namespace Azure.Security.KeyVault.Certificates.Samples
 {
@@ -24,7 +23,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             string keyVaultUrl = TestEnvironment.KeyVaultUrl;
 
             #region Snippet:CertificatesSample2CertificateClient
-            var client = new CertificateClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
+            CertificateClient client = new CertificateClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
             #endregion
 
             #region Snippet:CertificatesSample2CreateCertificate

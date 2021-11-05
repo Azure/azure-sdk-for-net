@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
 using System.Net;
 using System.Text;
 using Azure.Core;
@@ -29,10 +30,9 @@ namespace Azure.Storage.Blobs
         private Uri _uri;
 
         /// <summary>
-        /// Whether the Uri is an IP Uri as determined by
-        /// <see cref="UriExtensions.IsHostIPEndPointStyle"/>.
+        /// Whether the Uri is a path-style Uri (i.e. it is an IP Uri or the domain includes a port that is used by the local emulator).
         /// </summary>
-        private readonly bool _isIPStyleUri;
+        private readonly bool _isPathStyleUri;
 
         /// <summary>
         /// Gets or sets the scheme name of the URI.
@@ -189,7 +189,7 @@ namespace Azure.Storage.Blobs
 
                 if (uri.IsHostIPEndPointStyle())
                 {
-                    _isIPStyleUri = true;
+                    _isPathStyleUri = true;
                     var accountEndIndex = path.IndexOf("/", StringComparison.InvariantCulture);
 
                     // Slash not found; path has account name & no container name
@@ -297,16 +297,16 @@ namespace Azure.Storage.Blobs
             var path = new StringBuilder("");
             // only append the account name to the path for Ip style Uri.
             // regular style Uri will already have account name in domain
-            if (_isIPStyleUri && !string.IsNullOrWhiteSpace(AccountName))
+            if (_isPathStyleUri && !string.IsNullOrWhiteSpace(AccountName))
             {
-                path.Append("/").Append(AccountName);
+                path.Append('/').Append(AccountName);
             }
             if (!string.IsNullOrWhiteSpace(BlobContainerName))
             {
-                path.Append("/").Append(BlobContainerName);
+                path.Append('/').Append(BlobContainerName);
                 if (BlobName != null && BlobName.Length > 0)
                 {
-                    path.Append("/").Append(Uri.EscapeDataString(BlobName));
+                    path.Append('/').Append(BlobName.EscapePath());
                 }
             }
 
@@ -315,20 +315,20 @@ namespace Azure.Storage.Blobs
             if (!string.IsNullOrWhiteSpace(Snapshot))
             {
                 if (query.Length > 0)
-                { query.Append("&"); }
-                query.Append(Constants.SnapshotParameterName).Append("=").Append(Snapshot);
+                { query.Append('&'); }
+                query.Append(Constants.SnapshotParameterName).Append('=').Append(Snapshot);
             }
             if (!string.IsNullOrWhiteSpace(VersionId))
             {
                 if (query.Length > 0)
-                { query.Append("&"); }
-                query.Append(Constants.VersionIdParameterName).Append("=").Append(VersionId);
+                { query.Append('&'); }
+                query.Append(Constants.VersionIdParameterName).Append('=').Append(VersionId);
             }
             var sas = Sas?.ToString();
             if (!string.IsNullOrWhiteSpace(sas))
             {
                 if (query.Length > 0)
-                { query.Append("&"); }
+                { query.Append('&'); }
                 query.Append(sas);
             }
 

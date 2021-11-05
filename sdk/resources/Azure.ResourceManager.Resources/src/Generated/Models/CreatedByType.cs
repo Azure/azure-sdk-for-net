@@ -15,7 +15,8 @@ namespace Azure.ResourceManager.Resources.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="CreatedByType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreatedByType"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CreatedByType(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));

@@ -30,7 +30,7 @@ namespace Azure.Graph.Rbac
         /// <param name="tenantID"> The tenant ID. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantID"/> or <paramref name="apiVersion"/> is null. </exception>
         public GroupsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string tenantID, Uri endpoint = null, string apiVersion = "1.6")
         {
             if (tenantID == null)
@@ -62,6 +62,7 @@ namespace Azure.Graph.Rbac
             uri.AppendPath("/isMemberOf", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
@@ -72,6 +73,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Checks whether the specified user, group, contact, or service principal is a direct or transitive member of the specified group. </summary>
         /// <param name="parameters"> The check group membership parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public async Task<Response<CheckGroupMembershipResult>> IsMemberOfAsync(CheckGroupMembershipParameters parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
@@ -87,14 +89,7 @@ namespace Azure.Graph.Rbac
                     {
                         CheckGroupMembershipResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = CheckGroupMembershipResult.DeserializeCheckGroupMembershipResult(document.RootElement);
-                        }
+                        value = CheckGroupMembershipResult.DeserializeCheckGroupMembershipResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -105,6 +100,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Checks whether the specified user, group, contact, or service principal is a direct or transitive member of the specified group. </summary>
         /// <param name="parameters"> The check group membership parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public Response<CheckGroupMembershipResult> IsMemberOf(CheckGroupMembershipParameters parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
@@ -120,14 +116,7 @@ namespace Azure.Graph.Rbac
                     {
                         CheckGroupMembershipResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = CheckGroupMembershipResult.DeserializeCheckGroupMembershipResult(document.RootElement);
-                        }
+                        value = CheckGroupMembershipResult.DeserializeCheckGroupMembershipResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -150,6 +139,7 @@ namespace Azure.Graph.Rbac
             uri.AppendPath(memberObjectId, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             return message;
         }
 
@@ -157,6 +147,7 @@ namespace Azure.Graph.Rbac
         /// <param name="groupObjectId"> The object ID of the group from which to remove the member. </param>
         /// <param name="memberObjectId"> Member object id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupObjectId"/> or <paramref name="memberObjectId"/> is null. </exception>
         public async Task<Response> RemoveMemberAsync(string groupObjectId, string memberObjectId, CancellationToken cancellationToken = default)
         {
             if (groupObjectId == null)
@@ -183,6 +174,7 @@ namespace Azure.Graph.Rbac
         /// <param name="groupObjectId"> The object ID of the group from which to remove the member. </param>
         /// <param name="memberObjectId"> Member object id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupObjectId"/> or <paramref name="memberObjectId"/> is null. </exception>
         public Response RemoveMember(string groupObjectId, string memberObjectId, CancellationToken cancellationToken = default)
         {
             if (groupObjectId == null)
@@ -219,6 +211,7 @@ namespace Azure.Graph.Rbac
             uri.AppendPath("/$links/members", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
@@ -230,6 +223,7 @@ namespace Azure.Graph.Rbac
         /// <param name="groupObjectId"> The object ID of the group to which to add the member. </param>
         /// <param name="parameters"> The URL of the member object, such as https://graph.windows.net/0b1f9851-1bf0-433f-aec3-cb9272f093dc/directoryObjects/f260bbc4-c254-447b-94cf-293b5ec434dd. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupObjectId"/> or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> AddMemberAsync(string groupObjectId, GroupAddMemberParameters parameters, CancellationToken cancellationToken = default)
         {
             if (groupObjectId == null)
@@ -256,6 +250,7 @@ namespace Azure.Graph.Rbac
         /// <param name="groupObjectId"> The object ID of the group to which to add the member. </param>
         /// <param name="parameters"> The URL of the member object, such as https://graph.windows.net/0b1f9851-1bf0-433f-aec3-cb9272f093dc/directoryObjects/f260bbc4-c254-447b-94cf-293b5ec434dd. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupObjectId"/> or <paramref name="parameters"/> is null. </exception>
         public Response AddMember(string groupObjectId, GroupAddMemberParameters parameters, CancellationToken cancellationToken = default)
         {
             if (groupObjectId == null)
@@ -290,6 +285,7 @@ namespace Azure.Graph.Rbac
             uri.AppendPath("/groups", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
@@ -300,6 +296,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Create a group in the directory. </summary>
         /// <param name="parameters"> The parameters for the group to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public async Task<Response<ADGroup>> CreateAsync(GroupCreateParameters parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
@@ -315,14 +312,7 @@ namespace Azure.Graph.Rbac
                     {
                         ADGroup value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ADGroup.DeserializeADGroup(document.RootElement);
-                        }
+                        value = ADGroup.DeserializeADGroup(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -333,6 +323,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Create a group in the directory. </summary>
         /// <param name="parameters"> The parameters for the group to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public Response<ADGroup> Create(GroupCreateParameters parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
@@ -348,14 +339,7 @@ namespace Azure.Graph.Rbac
                     {
                         ADGroup value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ADGroup.DeserializeADGroup(document.RootElement);
-                        }
+                        value = ADGroup.DeserializeADGroup(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -379,6 +363,7 @@ namespace Azure.Graph.Rbac
             }
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             return message;
         }
 
@@ -395,14 +380,7 @@ namespace Azure.Graph.Rbac
                     {
                         GroupListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = GroupListResult.DeserializeGroupListResult(document.RootElement);
-                        }
+                        value = GroupListResult.DeserializeGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -423,14 +401,7 @@ namespace Azure.Graph.Rbac
                     {
                         GroupListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = GroupListResult.DeserializeGroupListResult(document.RootElement);
-                        }
+                        value = GroupListResult.DeserializeGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -452,12 +423,14 @@ namespace Azure.Graph.Rbac
             uri.AppendPath("/members", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             return message;
         }
 
         /// <summary> Gets the members of a group. </summary>
         /// <param name="objectId"> The object ID of the group whose members should be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> is null. </exception>
         public async Task<Response<DirectoryObjectListResult>> GetGroupMembersAsync(string objectId, CancellationToken cancellationToken = default)
         {
             if (objectId == null)
@@ -473,14 +446,7 @@ namespace Azure.Graph.Rbac
                     {
                         DirectoryObjectListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
-                        }
+                        value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -491,6 +457,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets the members of a group. </summary>
         /// <param name="objectId"> The object ID of the group whose members should be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> is null. </exception>
         public Response<DirectoryObjectListResult> GetGroupMembers(string objectId, CancellationToken cancellationToken = default)
         {
             if (objectId == null)
@@ -506,14 +473,7 @@ namespace Azure.Graph.Rbac
                     {
                         DirectoryObjectListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
-                        }
+                        value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -534,12 +494,14 @@ namespace Azure.Graph.Rbac
             uri.AppendPath(objectId, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             return message;
         }
 
         /// <summary> Gets group information from the directory. </summary>
         /// <param name="objectId"> The object ID of the user for which to get group information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> is null. </exception>
         public async Task<Response<ADGroup>> GetAsync(string objectId, CancellationToken cancellationToken = default)
         {
             if (objectId == null)
@@ -555,14 +517,7 @@ namespace Azure.Graph.Rbac
                     {
                         ADGroup value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ADGroup.DeserializeADGroup(document.RootElement);
-                        }
+                        value = ADGroup.DeserializeADGroup(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -573,6 +528,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets group information from the directory. </summary>
         /// <param name="objectId"> The object ID of the user for which to get group information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> is null. </exception>
         public Response<ADGroup> Get(string objectId, CancellationToken cancellationToken = default)
         {
             if (objectId == null)
@@ -588,14 +544,7 @@ namespace Azure.Graph.Rbac
                     {
                         ADGroup value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ADGroup.DeserializeADGroup(document.RootElement);
-                        }
+                        value = ADGroup.DeserializeADGroup(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -616,12 +565,14 @@ namespace Azure.Graph.Rbac
             uri.AppendPath(objectId, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             return message;
         }
 
         /// <summary> Delete a group from the directory. </summary>
         /// <param name="objectId"> The object ID of the group to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> is null. </exception>
         public async Task<Response> DeleteAsync(string objectId, CancellationToken cancellationToken = default)
         {
             if (objectId == null)
@@ -643,6 +594,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Delete a group from the directory. </summary>
         /// <param name="objectId"> The object ID of the group to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> is null. </exception>
         public Response Delete(string objectId, CancellationToken cancellationToken = default)
         {
             if (objectId == null)
@@ -675,6 +627,7 @@ namespace Azure.Graph.Rbac
             uri.AppendPath("/getMemberGroups", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
@@ -686,6 +639,7 @@ namespace Azure.Graph.Rbac
         /// <param name="objectId"> The object ID of the group for which to get group membership. </param>
         /// <param name="parameters"> Group filtering parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> or <paramref name="parameters"/> is null. </exception>
         public async Task<Response<GroupGetMemberGroupsResult>> GetMemberGroupsAsync(string objectId, GroupGetMemberGroupsParameters parameters, CancellationToken cancellationToken = default)
         {
             if (objectId == null)
@@ -705,14 +659,7 @@ namespace Azure.Graph.Rbac
                     {
                         GroupGetMemberGroupsResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = GroupGetMemberGroupsResult.DeserializeGroupGetMemberGroupsResult(document.RootElement);
-                        }
+                        value = GroupGetMemberGroupsResult.DeserializeGroupGetMemberGroupsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -724,6 +671,7 @@ namespace Azure.Graph.Rbac
         /// <param name="objectId"> The object ID of the group for which to get group membership. </param>
         /// <param name="parameters"> Group filtering parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> or <paramref name="parameters"/> is null. </exception>
         public Response<GroupGetMemberGroupsResult> GetMemberGroups(string objectId, GroupGetMemberGroupsParameters parameters, CancellationToken cancellationToken = default)
         {
             if (objectId == null)
@@ -743,14 +691,7 @@ namespace Azure.Graph.Rbac
                     {
                         GroupGetMemberGroupsResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = GroupGetMemberGroupsResult.DeserializeGroupGetMemberGroupsResult(document.RootElement);
-                        }
+                        value = GroupGetMemberGroupsResult.DeserializeGroupGetMemberGroupsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -772,12 +713,14 @@ namespace Azure.Graph.Rbac
             uri.AppendPath("/owners", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             return message;
         }
 
         /// <summary> The owners are a set of non-admin users who are allowed to modify this object. </summary>
         /// <param name="objectId"> The object ID of the group for which to get owners. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> is null. </exception>
         public async Task<Response<DirectoryObjectListResult>> ListOwnersAsync(string objectId, CancellationToken cancellationToken = default)
         {
             if (objectId == null)
@@ -793,14 +736,7 @@ namespace Azure.Graph.Rbac
                     {
                         DirectoryObjectListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
-                        }
+                        value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -811,6 +747,7 @@ namespace Azure.Graph.Rbac
         /// <summary> The owners are a set of non-admin users who are allowed to modify this object. </summary>
         /// <param name="objectId"> The object ID of the group for which to get owners. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> is null. </exception>
         public Response<DirectoryObjectListResult> ListOwners(string objectId, CancellationToken cancellationToken = default)
         {
             if (objectId == null)
@@ -826,14 +763,7 @@ namespace Azure.Graph.Rbac
                     {
                         DirectoryObjectListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
-                        }
+                        value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -855,6 +785,7 @@ namespace Azure.Graph.Rbac
             uri.AppendPath("/$links/owners", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
@@ -866,6 +797,7 @@ namespace Azure.Graph.Rbac
         /// <param name="objectId"> The object ID of the application to which to add the owner. </param>
         /// <param name="parameters"> The URL of the owner object, such as https://graph.windows.net/0b1f9851-1bf0-433f-aec3-cb9272f093dc/directoryObjects/f260bbc4-c254-447b-94cf-293b5ec434dd. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> AddOwnerAsync(string objectId, AddOwnerParameters parameters, CancellationToken cancellationToken = default)
         {
             if (objectId == null)
@@ -892,6 +824,7 @@ namespace Azure.Graph.Rbac
         /// <param name="objectId"> The object ID of the application to which to add the owner. </param>
         /// <param name="parameters"> The URL of the owner object, such as https://graph.windows.net/0b1f9851-1bf0-433f-aec3-cb9272f093dc/directoryObjects/f260bbc4-c254-447b-94cf-293b5ec434dd. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> or <paramref name="parameters"/> is null. </exception>
         public Response AddOwner(string objectId, AddOwnerParameters parameters, CancellationToken cancellationToken = default)
         {
             if (objectId == null)
@@ -929,6 +862,7 @@ namespace Azure.Graph.Rbac
             uri.AppendPath(ownerObjectId, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             return message;
         }
 
@@ -936,6 +870,7 @@ namespace Azure.Graph.Rbac
         /// <param name="objectId"> The object ID of the group from which to remove the owner. </param>
         /// <param name="ownerObjectId"> Owner object id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> or <paramref name="ownerObjectId"/> is null. </exception>
         public async Task<Response> RemoveOwnerAsync(string objectId, string ownerObjectId, CancellationToken cancellationToken = default)
         {
             if (objectId == null)
@@ -962,6 +897,7 @@ namespace Azure.Graph.Rbac
         /// <param name="objectId"> The object ID of the group from which to remove the owner. </param>
         /// <param name="ownerObjectId"> Owner object id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> or <paramref name="ownerObjectId"/> is null. </exception>
         public Response RemoveOwner(string objectId, string ownerObjectId, CancellationToken cancellationToken = default)
         {
             if (objectId == null)
@@ -994,15 +930,17 @@ namespace Azure.Graph.Rbac
             uri.AppendPath("/", false);
             uri.AppendPath(tenantID, true);
             uri.AppendPath("/", false);
-            uri.AppendRaw(nextLink, false);
+            uri.AppendRawNextLink(nextLink, false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             return message;
         }
 
         /// <summary> Gets a list of groups for the current tenant. </summary>
         /// <param name="nextLink"> Next link for the list operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<GroupListResult>> ListNextAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1018,14 +956,7 @@ namespace Azure.Graph.Rbac
                     {
                         GroupListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = GroupListResult.DeserializeGroupListResult(document.RootElement);
-                        }
+                        value = GroupListResult.DeserializeGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1036,6 +967,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets a list of groups for the current tenant. </summary>
         /// <param name="nextLink"> Next link for the list operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<GroupListResult> ListNext(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1051,14 +983,7 @@ namespace Azure.Graph.Rbac
                     {
                         GroupListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = GroupListResult.DeserializeGroupListResult(document.RootElement);
-                        }
+                        value = GroupListResult.DeserializeGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1076,15 +1001,17 @@ namespace Azure.Graph.Rbac
             uri.AppendPath("/", false);
             uri.AppendPath(tenantID, true);
             uri.AppendPath("/", false);
-            uri.AppendRaw(nextLink, false);
+            uri.AppendRawNextLink(nextLink, false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             return message;
         }
 
         /// <summary> Gets the members of a group. </summary>
         /// <param name="nextLink"> Next link for the list operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<DirectoryObjectListResult>> GetGroupMembersNextAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1100,14 +1027,7 @@ namespace Azure.Graph.Rbac
                     {
                         DirectoryObjectListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
-                        }
+                        value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1118,6 +1038,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets the members of a group. </summary>
         /// <param name="nextLink"> Next link for the list operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<DirectoryObjectListResult> GetGroupMembersNext(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1133,14 +1054,7 @@ namespace Azure.Graph.Rbac
                     {
                         DirectoryObjectListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
-                        }
+                        value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1157,6 +1071,7 @@ namespace Azure.Graph.Rbac
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             return message;
         }
 
@@ -1164,6 +1079,7 @@ namespace Azure.Graph.Rbac
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="objectId"> The object ID of the group for which to get owners. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="objectId"/> is null. </exception>
         public async Task<Response<DirectoryObjectListResult>> ListOwnersNextPageAsync(string nextLink, string objectId, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1183,14 +1099,7 @@ namespace Azure.Graph.Rbac
                     {
                         DirectoryObjectListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
-                        }
+                        value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1202,6 +1111,7 @@ namespace Azure.Graph.Rbac
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="objectId"> The object ID of the group for which to get owners. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="objectId"/> is null. </exception>
         public Response<DirectoryObjectListResult> ListOwnersNextPage(string nextLink, string objectId, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1221,14 +1131,7 @@ namespace Azure.Graph.Rbac
                     {
                         DirectoryObjectListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
-                        }
+                        value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1245,12 +1148,14 @@ namespace Azure.Graph.Rbac
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             return message;
         }
 
         /// <summary> Gets a list of groups for the current tenant. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<GroupListResult>> ListNextNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1266,14 +1171,7 @@ namespace Azure.Graph.Rbac
                     {
                         GroupListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = GroupListResult.DeserializeGroupListResult(document.RootElement);
-                        }
+                        value = GroupListResult.DeserializeGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1284,6 +1182,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets a list of groups for the current tenant. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<GroupListResult> ListNextNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1299,14 +1198,7 @@ namespace Azure.Graph.Rbac
                     {
                         GroupListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = GroupListResult.DeserializeGroupListResult(document.RootElement);
-                        }
+                        value = GroupListResult.DeserializeGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1323,12 +1215,14 @@ namespace Azure.Graph.Rbac
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             return message;
         }
 
         /// <summary> Gets the members of a group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<DirectoryObjectListResult>> GetGroupMembersNextNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1344,14 +1238,7 @@ namespace Azure.Graph.Rbac
                     {
                         DirectoryObjectListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
-                        }
+                        value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1362,6 +1249,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets the members of a group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<DirectoryObjectListResult> GetGroupMembersNextNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1377,14 +1265,7 @@ namespace Azure.Graph.Rbac
                     {
                         DirectoryObjectListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
-                        }
+                        value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

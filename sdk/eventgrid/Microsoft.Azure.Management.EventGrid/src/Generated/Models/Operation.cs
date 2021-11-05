@@ -32,12 +32,15 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// <param name="name">Name of the operation</param>
         /// <param name="display">Display name of the operation</param>
         /// <param name="origin">Origin of the operation</param>
+        /// <param name="isDataAction">This Boolean is used to determine if the
+        /// operation is a data plane action or not.</param>
         /// <param name="properties">Properties of the operation</param>
-        public Operation(string name = default(string), OperationInfo display = default(OperationInfo), string origin = default(string), object properties = default(object))
+        public Operation(string name = default(string), OperationInfo display = default(OperationInfo), string origin = default(string), bool? isDataAction = default(bool?), object properties = default(object))
         {
             Name = name;
             Display = display;
             Origin = origin;
+            IsDataAction = isDataAction;
             Properties = properties;
             CustomInit();
         }
@@ -64,6 +67,13 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// </summary>
         [JsonProperty(PropertyName = "origin")]
         public string Origin { get; set; }
+
+        /// <summary>
+        /// Gets or sets this Boolean is used to determine if the operation is
+        /// a data plane action or not.
+        /// </summary>
+        [JsonProperty(PropertyName = "isDataAction")]
+        public bool? IsDataAction { get; set; }
 
         /// <summary>
         /// Gets or sets properties of the operation

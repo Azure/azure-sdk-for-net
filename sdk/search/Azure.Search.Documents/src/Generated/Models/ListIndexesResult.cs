@@ -16,6 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Initializes a new instance of ListIndexesResult. </summary>
         /// <param name="indexes"> The indexes in the Search service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="indexes"/> is null. </exception>
         internal ListIndexesResult(IEnumerable<SearchIndex> indexes)
         {
             if (indexes == null)
@@ -23,14 +24,14 @@ namespace Azure.Search.Documents.Indexes.Models
                 throw new ArgumentNullException(nameof(indexes));
             }
 
-            Indexes = indexes.ToArray();
+            Indexes = indexes.ToList();
         }
 
         /// <summary> Initializes a new instance of ListIndexesResult. </summary>
         /// <param name="indexes"> The indexes in the Search service. </param>
         internal ListIndexesResult(IReadOnlyList<SearchIndex> indexes)
         {
-            Indexes = indexes ?? new List<SearchIndex>();
+            Indexes = indexes;
         }
 
         /// <summary> The indexes in the Search service. </summary>

@@ -11,11 +11,12 @@ using System.ComponentModel;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The AvroCompressionCodec. </summary>
-    public readonly partial struct AvroCompressionCodec : IEquatable<AvroCompressionCodec>
+    internal readonly partial struct AvroCompressionCodec : IEquatable<AvroCompressionCodec>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="AvroCompressionCodec"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvroCompressionCodec"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AvroCompressionCodec(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));

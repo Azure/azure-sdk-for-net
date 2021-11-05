@@ -10,60 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ApplicationArtifact : IUtf8JsonSerializable
+    public partial class ApplicationArtifact
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Name != null)
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
-            if (Uri != null)
-            {
-                writer.WritePropertyName("uri");
-                writer.WriteStringValue(Uri);
-            }
-            if (Type != null)
-            {
-                writer.WritePropertyName("type");
-                writer.WriteStringValue(Type.Value.ToSerialString());
-            }
-            writer.WriteEndObject();
-        }
-
         internal static ApplicationArtifact DeserializeApplicationArtifact(JsonElement element)
         {
-            string name = default;
+            ApplicationArtifactName name = default;
             string uri = default;
-            ApplicationArtifactType? type = default;
+            ApplicationArtifactType type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    name = property.Value.GetString();
+                    name = new ApplicationArtifactName(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("uri"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     uri = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString().ToApplicationArtifactType();
                     continue;
                 }

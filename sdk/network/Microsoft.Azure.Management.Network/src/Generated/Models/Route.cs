@@ -44,20 +44,25 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="provisioningState">The provisioning state of the route
         /// resource. Possible values include: 'Succeeded', 'Updating',
         /// 'Deleting', 'Failed'</param>
+        /// <param name="hasBgpOverride">A value indicating whether this route
+        /// overrides overlapping BGP routes regardless of LPM.</param>
         /// <param name="name">The name of the resource that is unique within a
         /// resource group. This name can be used to access the
         /// resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public Route(string nextHopType, string id = default(string), string addressPrefix = default(string), string nextHopIpAddress = default(string), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        /// <param name="type">The type of the resource.</param>
+        public Route(string nextHopType, string id = default(string), string addressPrefix = default(string), string nextHopIpAddress = default(string), string provisioningState = default(string), bool? hasBgpOverride = default(bool?), string name = default(string), string etag = default(string), string type = default(string))
             : base(id)
         {
             AddressPrefix = addressPrefix;
             NextHopType = nextHopType;
             NextHopIpAddress = nextHopIpAddress;
             ProvisioningState = provisioningState;
+            HasBgpOverride = hasBgpOverride;
             Name = name;
             Etag = etag;
+            Type = type;
             CustomInit();
         }
 
@@ -96,6 +101,13 @@ namespace Microsoft.Azure.Management.Network.Models
         public string ProvisioningState { get; private set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether this route overrides
+        /// overlapping BGP routes regardless of LPM.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.hasBgpOverride")]
+        public bool? HasBgpOverride { get; set; }
+
+        /// <summary>
         /// Gets or sets the name of the resource that is unique within a
         /// resource group. This name can be used to access the resource.
         /// </summary>
@@ -108,6 +120,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
         public string Etag { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the type of the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; set; }
 
         /// <summary>
         /// Validate the object.

@@ -22,6 +22,7 @@ namespace ComputerVisionSDK.Tests
                 {
                     DomainModelResults results = client.AnalyzeImageByDomainInStreamAsync("celebrities", stream).Result;
 
+                    Assert.Matches("^\\d{4}-\\d{2}-\\d{2}(-preview)?$", results.ModelVersion);
                     var jobject = results.Result as JObject;
                     Assert.NotNull(jobject);
 
@@ -31,7 +32,7 @@ namespace ComputerVisionSDK.Tests
 
                     var celebrity = celebrities.Celebrities[0];
                     Assert.Equal("Satya Nadella", celebrity.Name);
-                    Assert.True(celebrity.Confidence > 0.97);
+                    Assert.True(celebrity.Confidence > 0.96);
                     Assert.True(celebrity.FaceRectangle.Width > 0);
                     Assert.True(celebrity.FaceRectangle.Height > 0);
                 }
@@ -51,6 +52,7 @@ namespace ComputerVisionSDK.Tests
                 {
                     DomainModelResults results = client.AnalyzeImageByDomainAsync("celebrities", celebrityUrl).Result;
 
+                    Assert.Matches("^\\d{4}-\\d{2}-\\d{2}(-preview)?$", results.ModelVersion);
                     var jobject = results.Result as JObject;
                     Assert.NotNull(jobject);
 
@@ -60,7 +62,7 @@ namespace ComputerVisionSDK.Tests
 
                     var celebrity = celebrities.Celebrities[0];
                     Assert.Equal("Satya Nadella", celebrity.Name);
-                    Assert.True(celebrity.Confidence > 0.97);
+                    Assert.True(celebrity.Confidence > 0.96);
                     Assert.True(celebrity.FaceRectangle.Width > 0);
                     Assert.True(celebrity.FaceRectangle.Height > 0);
                 }
@@ -81,6 +83,7 @@ namespace ComputerVisionSDK.Tests
                 {
                     DomainModelResults results = client.AnalyzeImageByDomainAsync("landmarks", landmarksUrl, Portuguese).Result;
 
+                    Assert.Matches("^\\d{4}-\\d{2}-\\d{2}(-preview)?$", results.ModelVersion);
                     var jobject = results.Result as JObject;
                     Assert.NotNull(jobject);
 
@@ -91,6 +94,28 @@ namespace ComputerVisionSDK.Tests
                     var landmark = landmarks.Landmarks[0];
                     Assert.Equal("Obelisco Espacial", landmark.Name);
                     Assert.True(landmark.Confidence > 0.99);
+                }
+            }
+        }
+
+        [Fact]
+        public void AnalyzeImageByDomainModelVersionTest()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                HttpMockServer.Initialize(this.GetType(), "AnalyzeImageByDomainModelVersionTest");
+
+                using (IComputerVisionClient client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
+                using (FileStream stream = new FileStream(GetTestImagePath("satya.jpg"), FileMode.Open))
+                {
+                    const string targetModelVersion = "2021-04-01";
+
+                    DomainModelResults results = client.AnalyzeImageByDomainInStreamAsync(
+                        "celebrities",
+                        stream,
+                        modelVersion: targetModelVersion).Result;
+
+                    Assert.Equal(targetModelVersion, results.ModelVersion);
                 }
             }
         }

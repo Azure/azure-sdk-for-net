@@ -11,46 +11,36 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
-    public partial class ApiKeyListResult
+    internal partial class ApiKeyListResult
     {
         internal static ApiKeyListResult DeserializeApiKeyListResult(JsonElement element)
         {
-            IReadOnlyList<ApiKey> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<ApiKey>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ApiKey> array = new List<ApiKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ApiKey.DeserializeApiKey(item));
-                        }
+                        array.Add(ApiKey.DeserializeApiKey(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new ApiKeyListResult(value, nextLink);
+            return new ApiKeyListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

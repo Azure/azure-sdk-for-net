@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Storage.Models
     public partial class UpdateHistoryProperty
     {
         /// <summary> Initializes a new instance of UpdateHistoryProperty. </summary>
-        public UpdateHistoryProperty()
+        internal UpdateHistoryProperty()
         {
         }
 

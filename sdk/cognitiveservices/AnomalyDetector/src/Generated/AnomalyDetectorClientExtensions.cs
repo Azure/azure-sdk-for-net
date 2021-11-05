@@ -73,5 +73,29 @@ namespace Microsoft.Azure.CognitiveServices.AnomalyDetector
                 }
             }
 
+            /// <summary>
+            /// Detect change point for the entire series
+            /// </summary>
+            /// <remarks>
+            /// Evaluate change point score of every series point
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='body'>
+            /// Time series points and granularity is needed. Advanced model parameters can
+            /// also be set in the request if needed.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ChangePointDetectResponse> ChangePointDetectAsync(this IAnomalyDetectorClient operations, ChangePointDetectRequest body, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ChangePointDetectWithHttpMessagesAsync(body, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
     }
 }

@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="provisioningState">The provisioning state of the
         /// packet capture session. Possible values include: 'Succeeded',
         /// 'Updating', 'Deleting', 'Failed'</param>
-        public PacketCaptureResult(string target, PacketCaptureStorageLocation storageLocation, string name = default(string), string id = default(string), string etag = default(string), int? bytesToCapturePerPacket = default(int?), int? totalBytesPerSession = default(int?), int? timeLimitInSeconds = default(int?), IList<PacketCaptureFilter> filters = default(IList<PacketCaptureFilter>), string provisioningState = default(string))
+        public PacketCaptureResult(string target, PacketCaptureStorageLocation storageLocation, string name = default(string), string id = default(string), string etag = default(string), long? bytesToCapturePerPacket = default(long?), long? totalBytesPerSession = default(long?), int? timeLimitInSeconds = default(int?), IList<PacketCaptureFilter> filters = default(IList<PacketCaptureFilter>), string provisioningState = default(string))
         {
             Name = name;
             Id = id;
@@ -103,13 +103,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// bytes are truncated.
         /// </summary>
         [JsonProperty(PropertyName = "properties.bytesToCapturePerPacket")]
-        public int? BytesToCapturePerPacket { get; set; }
+        public long? BytesToCapturePerPacket { get; set; }
 
         /// <summary>
         /// Gets or sets maximum size of the capture output.
         /// </summary>
         [JsonProperty(PropertyName = "properties.totalBytesPerSession")]
-        public int? TotalBytesPerSession { get; set; }
+        public long? TotalBytesPerSession { get; set; }
 
         /// <summary>
         /// Gets or sets maximum duration of the capture session in seconds.
@@ -151,6 +151,30 @@ namespace Microsoft.Azure.Management.Network.Models
             if (StorageLocation == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "StorageLocation");
+            }
+            if (BytesToCapturePerPacket > 4294967295)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "BytesToCapturePerPacket", 4294967295);
+            }
+            if (BytesToCapturePerPacket < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "BytesToCapturePerPacket", 0);
+            }
+            if (TotalBytesPerSession > 4294967295)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "TotalBytesPerSession", 4294967295);
+            }
+            if (TotalBytesPerSession < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "TotalBytesPerSession", 0);
+            }
+            if (TimeLimitInSeconds > 18000)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "TimeLimitInSeconds", 18000);
+            }
+            if (TimeLimitInSeconds < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "TimeLimitInSeconds", 0);
             }
         }
     }

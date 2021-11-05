@@ -31,6 +31,20 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// <summary>
         /// Initializes a new instance of the ImagePerformance class.
         /// </summary>
+        /// <param name="id">Id of the image.</param>
+        /// <param name="created">Date the image was created.</param>
+        /// <param name="width">Width of the image.</param>
+        /// <param name="height">Height of the image.</param>
+        /// <param name="imageUri">The URI to the image used for training. If
+        /// VNET feature is enabled this will be a relative path to be used
+        /// with GetArtifact, otherwise this will be an absolute URI to the
+        /// resource.</param>
+        /// <param name="thumbnailUri">The URI to the thumbnail of the original
+        /// image. If VNET feature is enabled this will be a relative path to
+        /// be used with GetArtifact, otherwise this will be an absolute URI to
+        /// the resource.</param>
+        /// <param name="tags">Tags associated with this image.</param>
+        /// <param name="regions">Regions associated with this image.</param>
         public ImagePerformance(IList<Prediction> predictions = default(IList<Prediction>), System.Guid id = default(System.Guid), System.DateTime created = default(System.DateTime), int width = default(int), int height = default(int), string imageUri = default(string), string thumbnailUri = default(string), IList<ImageTag> tags = default(IList<ImageTag>), IList<ImageRegion> regions = default(IList<ImageRegion>))
         {
             Predictions = predictions;
@@ -56,41 +70,54 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         public IList<Prediction> Predictions { get; private set; }
 
         /// <summary>
+        /// Gets id of the image.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public System.Guid Id { get; private set; }
 
         /// <summary>
+        /// Gets date the image was created.
         /// </summary>
         [JsonProperty(PropertyName = "created")]
         public System.DateTime Created { get; private set; }
 
         /// <summary>
+        /// Gets width of the image.
         /// </summary>
         [JsonProperty(PropertyName = "width")]
         public int Width { get; private set; }
 
         /// <summary>
+        /// Gets height of the image.
         /// </summary>
         [JsonProperty(PropertyName = "height")]
         public int Height { get; private set; }
 
         /// <summary>
+        /// Gets the URI to the image used for training. If VNET feature is
+        /// enabled this will be a relative path to be used with GetArtifact,
+        /// otherwise this will be an absolute URI to the resource.
         /// </summary>
         [JsonProperty(PropertyName = "imageUri")]
         public string ImageUri { get; private set; }
 
         /// <summary>
+        /// Gets the URI to the thumbnail of the original image. If VNET
+        /// feature is enabled this will be a relative path to be used with
+        /// GetArtifact, otherwise this will be an absolute URI to the
+        /// resource.
         /// </summary>
         [JsonProperty(PropertyName = "thumbnailUri")]
         public string ThumbnailUri { get; private set; }
 
         /// <summary>
+        /// Gets tags associated with this image.
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IList<ImageTag> Tags { get; private set; }
 
         /// <summary>
+        /// Gets regions associated with this image.
         /// </summary>
         [JsonProperty(PropertyName = "regions")]
         public IList<ImageRegion> Regions { get; private set; }

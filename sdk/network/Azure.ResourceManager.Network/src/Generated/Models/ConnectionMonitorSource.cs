@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         /// <summary> Initializes a new instance of ConnectionMonitorSource. </summary>
         /// <param name="resourceId"> The ID of the resource used as the source by connection monitor. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         public ConnectionMonitorSource(string resourceId)
         {
             if (resourceId == null)

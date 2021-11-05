@@ -56,7 +56,18 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// resized.</param>
         /// <param name="lastRpoCalculatedTime">The last RPO calculated
         /// time.</param>
-        public InMageAzureV2ProtectedDiskDetails(string diskId = default(string), string diskName = default(string), string protectionStage = default(string), string healthErrorCode = default(string), long? rpoInSeconds = default(long?), string resyncRequired = default(string), int? resyncProgressPercentage = default(int?), long? resyncDurationInSeconds = default(long?), long? diskCapacityInBytes = default(long?), long? fileSystemCapacityInBytes = default(long?), double? sourceDataInMegaBytes = default(double?), double? psDataInMegaBytes = default(double?), double? targetDataInMegaBytes = default(double?), string diskResized = default(string), System.DateTime? lastRpoCalculatedTime = default(System.DateTime?))
+        /// <param name="resyncProcessedBytes">The resync processed
+        /// bytes.</param>
+        /// <param name="resyncTotalTransferredBytes">The resync total
+        /// transferred bytes.</param>
+        /// <param name="resyncLast15MinutesTransferredBytes">The resync last
+        /// 15 minutes transferred bytes.</param>
+        /// <param name="resyncLastDataTransferTimeUTC">The last data transfer
+        /// time in UTC.</param>
+        /// <param name="resyncStartTime">The resync start time.</param>
+        /// <param name="progressHealth">The Progress Health.</param>
+        /// <param name="progressStatus">The Progress Status.</param>
+        public InMageAzureV2ProtectedDiskDetails(string diskId = default(string), string diskName = default(string), string protectionStage = default(string), string healthErrorCode = default(string), long? rpoInSeconds = default(long?), string resyncRequired = default(string), int? resyncProgressPercentage = default(int?), long? resyncDurationInSeconds = default(long?), long? diskCapacityInBytes = default(long?), long? fileSystemCapacityInBytes = default(long?), double? sourceDataInMegaBytes = default(double?), double? psDataInMegaBytes = default(double?), double? targetDataInMegaBytes = default(double?), string diskResized = default(string), System.DateTime? lastRpoCalculatedTime = default(System.DateTime?), long? resyncProcessedBytes = default(long?), long? resyncTotalTransferredBytes = default(long?), long? resyncLast15MinutesTransferredBytes = default(long?), System.DateTime? resyncLastDataTransferTimeUTC = default(System.DateTime?), System.DateTime? resyncStartTime = default(System.DateTime?), string progressHealth = default(string), string progressStatus = default(string))
         {
             DiskId = diskId;
             DiskName = diskName;
@@ -73,6 +84,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             TargetDataInMegaBytes = targetDataInMegaBytes;
             DiskResized = diskResized;
             LastRpoCalculatedTime = lastRpoCalculatedTime;
+            ResyncProcessedBytes = resyncProcessedBytes;
+            ResyncTotalTransferredBytes = resyncTotalTransferredBytes;
+            ResyncLast15MinutesTransferredBytes = resyncLast15MinutesTransferredBytes;
+            ResyncLastDataTransferTimeUTC = resyncLastDataTransferTimeUTC;
+            ResyncStartTime = resyncStartTime;
+            ProgressHealth = progressHealth;
+            ProgressStatus = progressStatus;
             CustomInit();
         }
 
@@ -171,6 +189,48 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "lastRpoCalculatedTime")]
         public System.DateTime? LastRpoCalculatedTime { get; set; }
+
+        /// <summary>
+        /// Gets or sets the resync processed bytes.
+        /// </summary>
+        [JsonProperty(PropertyName = "resyncProcessedBytes")]
+        public long? ResyncProcessedBytes { get; set; }
+
+        /// <summary>
+        /// Gets or sets the resync total transferred bytes.
+        /// </summary>
+        [JsonProperty(PropertyName = "resyncTotalTransferredBytes")]
+        public long? ResyncTotalTransferredBytes { get; set; }
+
+        /// <summary>
+        /// Gets or sets the resync last 15 minutes transferred bytes.
+        /// </summary>
+        [JsonProperty(PropertyName = "resyncLast15MinutesTransferredBytes")]
+        public long? ResyncLast15MinutesTransferredBytes { get; set; }
+
+        /// <summary>
+        /// Gets or sets the last data transfer time in UTC.
+        /// </summary>
+        [JsonProperty(PropertyName = "resyncLastDataTransferTimeUTC")]
+        public System.DateTime? ResyncLastDataTransferTimeUTC { get; set; }
+
+        /// <summary>
+        /// Gets or sets the resync start time.
+        /// </summary>
+        [JsonProperty(PropertyName = "resyncStartTime")]
+        public System.DateTime? ResyncStartTime { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Progress Health.
+        /// </summary>
+        [JsonProperty(PropertyName = "progressHealth")]
+        public string ProgressHealth { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Progress Status.
+        /// </summary>
+        [JsonProperty(PropertyName = "progressStatus")]
+        public string ProgressStatus { get; set; }
 
     }
 }

@@ -7,23 +7,23 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Object model for the Azure CLI script. </summary>
-    public partial class AzureCliScript : DeploymentScript
+    public partial class AzureCliScript : DeploymentScriptData
     {
         /// <summary> Initializes a new instance of AzureCliScript. </summary>
-        /// <param name="identity"> Managed identity to be used for this deployment script. Currently, only user-assigned MSI is supported. </param>
         /// <param name="location"> The location of the ACI and the storage account for the deployment script. </param>
-        /// <param name="retentionInterval"> Interval for which the service retains the script resource after it reaches a terminal state. Resource will be deleted when this duration expires. Duration is based on ISO 8601 pattern (for example P7D means one week). </param>
+        /// <param name="retentionInterval"> Interval for which the service retains the script resource after it reaches a terminal state. Resource will be deleted when this duration expires. Duration is based on ISO 8601 pattern (for example P1D means one day). </param>
         /// <param name="azCliVersion"> Azure CLI module version to be used. </param>
-        public AzureCliScript(ManagedServiceIdentity identity, string location, TimeSpan retentionInterval, string azCliVersion) : base(identity, location)
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="azCliVersion"/> is null. </exception>
+        public AzureCliScript(string location, TimeSpan retentionInterval, string azCliVersion) : base(location)
         {
-            if (identity == null)
-            {
-                throw new ArgumentNullException(nameof(identity));
-            }
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
@@ -33,16 +33,19 @@ namespace Azure.ResourceManager.Resources.Models
                 throw new ArgumentNullException(nameof(azCliVersion));
             }
 
+            Outputs = new ChangeTrackingDictionary<string, object>();
+            SupportingScriptUris = new ChangeTrackingList<string>();
+            EnvironmentVariables = new ChangeTrackingList<EnvironmentVariable>();
             RetentionInterval = retentionInterval;
             AzCliVersion = azCliVersion;
             Kind = ScriptType.AzureCLI;
         }
 
         /// <summary> Initializes a new instance of AzureCliScript. </summary>
-        /// <param name="id"> String Id used to locate any resource on Azure. </param>
-        /// <param name="name"> Name of this resource. </param>
-        /// <param name="type"> Type of this resource. </param>
-        /// <param name="identity"> Managed identity to be used for this deployment script. Currently, only user-assigned MSI is supported. </param>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="type"> The type. </param>
+        /// <param name="identity"> Optional property. Managed identity to be used for this deployment script. Currently, only user-assigned MSI is supported. </param>
         /// <param name="location"> The location of the ACI and the storage account for the deployment script. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="kind"> Type of the script. </param>
@@ -59,10 +62,10 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="arguments"> Command line arguments to pass to the script. Arguments are separated by spaces. ex: -Name blue* -Location &apos;West US 2&apos;. </param>
         /// <param name="environmentVariables"> The environment variables to pass over to the script. </param>
         /// <param name="forceUpdateTag"> Gets or sets how the deployment script should be forced to execute even if the script resource has not changed. Can be current time stamp or a GUID. </param>
-        /// <param name="retentionInterval"> Interval for which the service retains the script resource after it reaches a terminal state. Resource will be deleted when this duration expires. Duration is based on ISO 8601 pattern (for example P7D means one week). </param>
-        /// <param name="timeout"> Maximum allowed script execution time specified in ISO 8601 format. Default value is PT1H. </param>
+        /// <param name="retentionInterval"> Interval for which the service retains the script resource after it reaches a terminal state. Resource will be deleted when this duration expires. Duration is based on ISO 8601 pattern (for example P1D means one day). </param>
+        /// <param name="timeout"> Maximum allowed script execution time specified in ISO 8601 format. Default value is P1D. </param>
         /// <param name="azCliVersion"> Azure CLI module version to be used. </param>
-        internal AzureCliScript(string id, string name, string type, ManagedServiceIdentity identity, string location, IDictionary<string, string> tags, ScriptType kind, SystemData systemData, ContainerConfiguration containerSettings, StorageAccountConfiguration storageAccountSettings, CleanupOptions? cleanupPreference, ScriptProvisioningState? provisioningState, ScriptStatus status, IDictionary<string, object> outputs, string primaryScriptUri, IList<string> supportingScriptUris, string scriptContent, string arguments, IList<EnvironmentVariable> environmentVariables, string forceUpdateTag, TimeSpan retentionInterval, TimeSpan? timeout, string azCliVersion) : base(id, name, type, identity, location, tags, kind, systemData)
+        internal AzureCliScript(ResourceIdentifier id, string name, ResourceType type, ManagedServiceIdentity identity, string location, IDictionary<string, string> tags, ScriptType kind, SystemData systemData, ContainerConfiguration containerSettings, StorageAccountConfiguration storageAccountSettings, CleanupOptions? cleanupPreference, ScriptProvisioningState? provisioningState, ScriptStatus status, IReadOnlyDictionary<string, object> outputs, string primaryScriptUri, IList<string> supportingScriptUris, string scriptContent, string arguments, IList<EnvironmentVariable> environmentVariables, string forceUpdateTag, TimeSpan retentionInterval, TimeSpan? timeout, string azCliVersion) : base(id, name, type, identity, location, tags, kind, systemData)
         {
             ContainerSettings = containerSettings;
             StorageAccountSettings = storageAccountSettings;
@@ -93,22 +96,22 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Contains the results of script execution. </summary>
         public ScriptStatus Status { get; }
         /// <summary> List of script outputs. </summary>
-        public IDictionary<string, object> Outputs { get; }
+        public IReadOnlyDictionary<string, object> Outputs { get; }
         /// <summary> Uri for the script. This is the entry point for the external script. </summary>
         public string PrimaryScriptUri { get; set; }
         /// <summary> Supporting files for the external script. </summary>
-        public IList<string> SupportingScriptUris { get; set; }
+        public IList<string> SupportingScriptUris { get; }
         /// <summary> Script body. </summary>
         public string ScriptContent { get; set; }
         /// <summary> Command line arguments to pass to the script. Arguments are separated by spaces. ex: -Name blue* -Location &apos;West US 2&apos;. </summary>
         public string Arguments { get; set; }
         /// <summary> The environment variables to pass over to the script. </summary>
-        public IList<EnvironmentVariable> EnvironmentVariables { get; set; }
+        public IList<EnvironmentVariable> EnvironmentVariables { get; }
         /// <summary> Gets or sets how the deployment script should be forced to execute even if the script resource has not changed. Can be current time stamp or a GUID. </summary>
         public string ForceUpdateTag { get; set; }
-        /// <summary> Interval for which the service retains the script resource after it reaches a terminal state. Resource will be deleted when this duration expires. Duration is based on ISO 8601 pattern (for example P7D means one week). </summary>
+        /// <summary> Interval for which the service retains the script resource after it reaches a terminal state. Resource will be deleted when this duration expires. Duration is based on ISO 8601 pattern (for example P1D means one day). </summary>
         public TimeSpan RetentionInterval { get; set; }
-        /// <summary> Maximum allowed script execution time specified in ISO 8601 format. Default value is PT1H. </summary>
+        /// <summary> Maximum allowed script execution time specified in ISO 8601 format. Default value is P1D. </summary>
         public TimeSpan? Timeout { get; set; }
         /// <summary> Azure CLI module version to be used. </summary>
         public string AzCliVersion { get; set; }

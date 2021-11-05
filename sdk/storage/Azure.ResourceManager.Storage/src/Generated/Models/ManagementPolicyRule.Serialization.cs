@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Enabled != null)
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled");
                 writer.WriteBooleanValue(Enabled.Value);
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type");
-            writer.WriteStringValue(Type);
+            writer.WriteStringValue(Type.ToString());
             writer.WritePropertyName("definition");
             writer.WriteObjectValue(Definition);
             writer.WriteEndObject();
@@ -31,9 +31,9 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static ManagementPolicyRule DeserializeManagementPolicyRule(JsonElement element)
         {
-            bool? enabled = default;
+            Optional<bool> enabled = default;
             string name = default;
-            string type = default;
+            RuleType type = default;
             ManagementPolicyDefinition definition = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -41,6 +41,7 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enabled = property.Value.GetBoolean();
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new RuleType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("definition"))
@@ -62,7 +63,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new ManagementPolicyRule(enabled, name, type, definition);
+            return new ManagementPolicyRule(Optional.ToNullable(enabled), name, type, definition);
         }
     }
 }

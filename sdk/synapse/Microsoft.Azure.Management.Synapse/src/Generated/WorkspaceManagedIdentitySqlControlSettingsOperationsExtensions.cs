@@ -107,5 +107,51 @@ namespace Microsoft.Azure.Management.Synapse
                 }
             }
 
+            /// <summary>
+            /// Create or update Managed Identity Sql Control Settings
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace
+            /// </param>
+            /// <param name='managedIdentitySqlControlSettings'>
+            /// Managed Identity Sql Control Settings
+            /// </param>
+            public static ManagedIdentitySqlControlSettingsModel BeginCreateOrUpdate(this IWorkspaceManagedIdentitySqlControlSettingsOperations operations, string resourceGroupName, string workspaceName, ManagedIdentitySqlControlSettingsModel managedIdentitySqlControlSettings)
+            {
+                return operations.BeginCreateOrUpdateAsync(resourceGroupName, workspaceName, managedIdentitySqlControlSettings).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Create or update Managed Identity Sql Control Settings
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace
+            /// </param>
+            /// <param name='managedIdentitySqlControlSettings'>
+            /// Managed Identity Sql Control Settings
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ManagedIdentitySqlControlSettingsModel> BeginCreateOrUpdateAsync(this IWorkspaceManagedIdentitySqlControlSettingsOperations operations, string resourceGroupName, string workspaceName, ManagedIdentitySqlControlSettingsModel managedIdentitySqlControlSettings, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, workspaceName, managedIdentitySqlControlSettings, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
     }
 }

@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class DeploymentWhatIf : IUtf8JsonSerializable
+    internal partial class DeploymentWhatIf : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Location != null)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location");
                 writer.WriteStringValue(Location);

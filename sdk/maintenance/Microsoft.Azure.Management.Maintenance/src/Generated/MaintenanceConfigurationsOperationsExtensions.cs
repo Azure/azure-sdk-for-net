@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Maintenance
             /// Resource Group Name
             /// </param>
             /// <param name='resourceName'>
-            /// Resource Identifier
+            /// Maintenance Configuration Name
             /// </param>
             public static MaintenanceConfiguration Get(this IMaintenanceConfigurationsOperations operations, string resourceGroupName, string resourceName)
             {
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Maintenance
             /// Resource Group Name
             /// </param>
             /// <param name='resourceName'>
-            /// Resource Identifier
+            /// Maintenance Configuration Name
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Management.Maintenance
             /// Resource Group Name
             /// </param>
             /// <param name='resourceName'>
-            /// Resource Identifier
+            /// Maintenance Configuration Name
             /// </param>
             /// <param name='configuration'>
             /// The configuration
@@ -93,7 +93,7 @@ namespace Microsoft.Azure.Management.Maintenance
             /// Resource Group Name
             /// </param>
             /// <param name='resourceName'>
-            /// Resource Identifier
+            /// Maintenance Configuration Name
             /// </param>
             /// <param name='configuration'>
             /// The configuration
@@ -119,7 +119,7 @@ namespace Microsoft.Azure.Management.Maintenance
             /// Resource Group Name
             /// </param>
             /// <param name='resourceName'>
-            /// Resource Identifier
+            /// Maintenance Configuration Name
             /// </param>
             public static MaintenanceConfiguration Delete(this IMaintenanceConfigurationsOperations operations, string resourceGroupName, string resourceName)
             {
@@ -136,7 +136,7 @@ namespace Microsoft.Azure.Management.Maintenance
             /// Resource Group Name
             /// </param>
             /// <param name='resourceName'>
-            /// Resource Identifier
+            /// Maintenance Configuration Name
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -159,7 +159,7 @@ namespace Microsoft.Azure.Management.Maintenance
             /// Resource Group Name
             /// </param>
             /// <param name='resourceName'>
-            /// Resource Identifier
+            /// Maintenance Configuration Name
             /// </param>
             /// <param name='configuration'>
             /// The configuration
@@ -179,7 +179,7 @@ namespace Microsoft.Azure.Management.Maintenance
             /// Resource Group Name
             /// </param>
             /// <param name='resourceName'>
-            /// Resource Identifier
+            /// Maintenance Configuration Name
             /// </param>
             /// <param name='configuration'>
             /// The configuration

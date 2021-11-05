@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.HDInsight.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -46,8 +48,12 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// encryption-in-transit properties.</param>
         /// <param name="minSupportedTlsVersion">The minimal supported tls
         /// version.</param>
-        /// <param name="networkSettings">The network settings.</param>
-        public ClusterCreateProperties(string clusterVersion = default(string), OSType? osType = default(OSType?), Tier? tier = default(Tier?), ClusterDefinition clusterDefinition = default(ClusterDefinition), KafkaRestProperties kafkaRestProperties = default(KafkaRestProperties), SecurityProfile securityProfile = default(SecurityProfile), ComputeProfile computeProfile = default(ComputeProfile), StorageProfile storageProfile = default(StorageProfile), DiskEncryptionProperties diskEncryptionProperties = default(DiskEncryptionProperties), EncryptionInTransitProperties encryptionInTransitProperties = default(EncryptionInTransitProperties), string minSupportedTlsVersion = default(string), NetworkSettings networkSettings = default(NetworkSettings))
+        /// <param name="networkProperties">The network properties.</param>
+        /// <param name="computeIsolationProperties">The compute isolation
+        /// properties.</param>
+        /// <param name="privateLinkConfigurations">The private link
+        /// configurations.</param>
+        public ClusterCreateProperties(string clusterVersion = default(string), string osType = default(string), string tier = default(string), ClusterDefinition clusterDefinition = default(ClusterDefinition), KafkaRestProperties kafkaRestProperties = default(KafkaRestProperties), SecurityProfile securityProfile = default(SecurityProfile), ComputeProfile computeProfile = default(ComputeProfile), StorageProfile storageProfile = default(StorageProfile), DiskEncryptionProperties diskEncryptionProperties = default(DiskEncryptionProperties), EncryptionInTransitProperties encryptionInTransitProperties = default(EncryptionInTransitProperties), string minSupportedTlsVersion = default(string), NetworkProperties networkProperties = default(NetworkProperties), ComputeIsolationProperties computeIsolationProperties = default(ComputeIsolationProperties), IList<PrivateLinkConfiguration> privateLinkConfigurations = default(IList<PrivateLinkConfiguration>))
         {
             ClusterVersion = clusterVersion;
             OsType = osType;
@@ -60,7 +66,9 @@ namespace Microsoft.Azure.Management.HDInsight.Models
             DiskEncryptionProperties = diskEncryptionProperties;
             EncryptionInTransitProperties = encryptionInTransitProperties;
             MinSupportedTlsVersion = minSupportedTlsVersion;
-            NetworkSettings = networkSettings;
+            NetworkProperties = networkProperties;
+            ComputeIsolationProperties = computeIsolationProperties;
+            PrivateLinkConfigurations = privateLinkConfigurations;
             CustomInit();
         }
 
@@ -80,14 +88,14 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// 'Windows', 'Linux'
         /// </summary>
         [JsonProperty(PropertyName = "osType")]
-        public OSType? OsType { get; set; }
+        public string OsType { get; set; }
 
         /// <summary>
         /// Gets or sets the cluster tier. Possible values include: 'Standard',
         /// 'Premium'
         /// </summary>
         [JsonProperty(PropertyName = "tier")]
-        public Tier? Tier { get; set; }
+        public string Tier { get; set; }
 
         /// <summary>
         /// Gets or sets the cluster definition.
@@ -138,10 +146,22 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         public string MinSupportedTlsVersion { get; set; }
 
         /// <summary>
-        /// Gets or sets the network settings.
+        /// Gets or sets the network properties.
         /// </summary>
-        [JsonProperty(PropertyName = "networkSettings")]
-        public NetworkSettings NetworkSettings { get; set; }
+        [JsonProperty(PropertyName = "networkProperties")]
+        public NetworkProperties NetworkProperties { get; set; }
+
+        /// <summary>
+        /// Gets or sets the compute isolation properties.
+        /// </summary>
+        [JsonProperty(PropertyName = "computeIsolationProperties")]
+        public ComputeIsolationProperties ComputeIsolationProperties { get; set; }
+
+        /// <summary>
+        /// Gets or sets the private link configurations.
+        /// </summary>
+        [JsonProperty(PropertyName = "privateLinkConfigurations")]
+        public IList<PrivateLinkConfiguration> PrivateLinkConfigurations { get; set; }
 
     }
 }

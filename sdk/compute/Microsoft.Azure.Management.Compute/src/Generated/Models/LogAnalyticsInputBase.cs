@@ -40,7 +40,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Name.</param>
         /// <param name="groupByResourceName">Group query result by Resource
         /// Name.</param>
-        public LogAnalyticsInputBase(string blobContainerSasUri, System.DateTime fromTime, System.DateTime toTime, bool? groupByThrottlePolicy = default(bool?), bool? groupByOperationName = default(bool?), bool? groupByResourceName = default(bool?))
+        /// <param name="groupByClientApplicationId">Group query result by
+        /// Client Application ID.</param>
+        /// <param name="groupByUserAgent">Group query result by User
+        /// Agent.</param>
+        public LogAnalyticsInputBase(string blobContainerSasUri, System.DateTime fromTime, System.DateTime toTime, bool? groupByThrottlePolicy = default(bool?), bool? groupByOperationName = default(bool?), bool? groupByResourceName = default(bool?), bool? groupByClientApplicationId = default(bool?), bool? groupByUserAgent = default(bool?))
         {
             BlobContainerSasUri = blobContainerSasUri;
             FromTime = fromTime;
@@ -48,6 +52,8 @@ namespace Microsoft.Azure.Management.Compute.Models
             GroupByThrottlePolicy = groupByThrottlePolicy;
             GroupByOperationName = groupByOperationName;
             GroupByResourceName = groupByResourceName;
+            GroupByClientApplicationId = groupByClientApplicationId;
+            GroupByUserAgent = groupByUserAgent;
             CustomInit();
         }
 
@@ -92,6 +98,18 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "groupByResourceName")]
         public bool? GroupByResourceName { get; set; }
+
+        /// <summary>
+        /// Gets or sets group query result by Client Application ID.
+        /// </summary>
+        [JsonProperty(PropertyName = "groupByClientApplicationId")]
+        public bool? GroupByClientApplicationId { get; set; }
+
+        /// <summary>
+        /// Gets or sets group query result by User Agent.
+        /// </summary>
+        [JsonProperty(PropertyName = "groupByUserAgent")]
+        public bool? GroupByUserAgent { get; set; }
 
         /// <summary>
         /// Validate the object.

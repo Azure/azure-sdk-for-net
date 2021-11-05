@@ -16,6 +16,7 @@ namespace Microsoft.Azure.Management.KeyVault.Models
     /// </summary>
     public static class KeyPermissions
     {
+        public const string All = "all";
         public const string Encrypt = "encrypt";
         public const string Decrypt = "decrypt";
         public const string WrapKey = "wrapKey";

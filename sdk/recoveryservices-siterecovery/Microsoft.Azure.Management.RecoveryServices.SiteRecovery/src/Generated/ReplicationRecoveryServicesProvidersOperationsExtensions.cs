@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// The operations group for this extension method.
             /// </param>
             /// <param name='fabricName'>
-            /// Fabric name
+            /// Fabric name.
             /// </param>
             public static IPage<RecoveryServicesProvider> ListByReplicationFabrics(this IReplicationRecoveryServicesProvidersOperations operations, string fabricName)
             {
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// The operations group for this extension method.
             /// </param>
             /// <param name='fabricName'>
-            /// Fabric name
+            /// Fabric name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// Fabric name.
             /// </param>
             /// <param name='providerName'>
-            /// Recovery services provider name
+            /// Recovery services provider name.
             /// </param>
             public static RecoveryServicesProvider Get(this IReplicationRecoveryServicesProvidersOperations operations, string fabricName, string providerName)
             {
@@ -94,7 +94,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// Fabric name.
             /// </param>
             /// <param name='providerName'>
-            /// Recovery services provider name
+            /// Recovery services provider name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -160,7 +160,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             }
 
             /// <summary>
-            /// Purges recovery service provider from fabric
+            /// Purges recovery service provider from fabric.
             /// </summary>
             /// <remarks>
             /// The operation to purge(force delete) a recovery services provider from the
@@ -181,7 +181,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             }
 
             /// <summary>
-            /// Purges recovery service provider from fabric
+            /// Purges recovery service provider from fabric.
             /// </summary>
             /// <remarks>
             /// The operation to purge(force delete) a recovery services provider from the
@@ -260,7 +260,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// </summary>
             /// <remarks>
             /// The operation to removes/delete(unregister) a recovery services provider
-            /// from the vault
+            /// from the vault.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -284,7 +284,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// </summary>
             /// <remarks>
             /// The operation to removes/delete(unregister) a recovery services provider
-            /// from the vault
+            /// from the vault.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -308,7 +308,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// is a view only api.
             /// </summary>
             /// <remarks>
-            /// Lists the registered recovery services providers in the vault
+            /// Lists the registered recovery services providers in the vault.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -323,7 +323,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// is a view only api.
             /// </summary>
             /// <remarks>
-            /// Lists the registered recovery services providers in the vault
+            /// Lists the registered recovery services providers in the vault.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -392,7 +392,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             }
 
             /// <summary>
-            /// Purges recovery service provider from fabric
+            /// Purges recovery service provider from fabric.
             /// </summary>
             /// <remarks>
             /// The operation to purge(force delete) a recovery services provider from the
@@ -413,7 +413,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             }
 
             /// <summary>
-            /// Purges recovery service provider from fabric
+            /// Purges recovery service provider from fabric.
             /// </summary>
             /// <remarks>
             /// The operation to purge(force delete) a recovery services provider from the
@@ -492,7 +492,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// </summary>
             /// <remarks>
             /// The operation to removes/delete(unregister) a recovery services provider
-            /// from the vault
+            /// from the vault.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -516,7 +516,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// </summary>
             /// <remarks>
             /// The operation to removes/delete(unregister) a recovery services provider
-            /// from the vault
+            /// from the vault.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -580,7 +580,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// is a view only api.
             /// </summary>
             /// <remarks>
-            /// Lists the registered recovery services providers in the vault
+            /// Lists the registered recovery services providers in the vault.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -598,7 +598,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// is a view only api.
             /// </summary>
             /// <remarks>
-            /// Lists the registered recovery services providers in the vault
+            /// Lists the registered recovery services providers in the vault.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.

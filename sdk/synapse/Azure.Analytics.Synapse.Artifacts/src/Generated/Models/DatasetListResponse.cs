@@ -12,10 +12,11 @@ using System.Linq;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> A list of dataset resources. </summary>
-    public partial class DatasetListResponse
+    internal partial class DatasetListResponse
     {
         /// <summary> Initializes a new instance of DatasetListResponse. </summary>
         /// <param name="value"> List of datasets. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DatasetListResponse(IEnumerable<DatasetResource> value)
         {
             if (value == null)

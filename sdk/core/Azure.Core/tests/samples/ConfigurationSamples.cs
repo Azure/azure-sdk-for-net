@@ -75,15 +75,14 @@ namespace Azure.Core.Samples
         {
             #region Snippet:HttpClientProxyConfiguration
 
-            using HttpClient client = new HttpClient(
-                new HttpClientHandler()
-                {
-                    Proxy = new WebProxy(new Uri("http://example.com"))
-                });
+            using HttpClientHandler handler = new HttpClientHandler()
+            {
+                Proxy = new WebProxy(new Uri("http://example.com"))
+            };
 
             SecretClientOptions options = new SecretClientOptions
             {
-                Transport = new HttpClientTransport(client)
+                Transport = new HttpClientTransport(handler)
             };
 
             #endregion

@@ -2,16 +2,18 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Text;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Amqp;
 using Microsoft.Azure.Amqp;
+using Microsoft.Azure.Amqp.Encoding;
 using Microsoft.Azure.Amqp.Framing;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Amqp
 {
-    public class AmqpConverterTests : ServiceBusTestBase
+    public class AmqpConverterTests
     {
         [Test]
         public void ConvertAmqpMessageToSBMessage()
@@ -34,7 +36,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             var messageId = Guid.NewGuid().ToString();
             var partitionKey = Guid.NewGuid().ToString();
             var viaPartitionKey = Guid.NewGuid().ToString();
-            var sessionId = Guid.NewGuid().ToString();
+            var sessionId = partitionKey;
             var correlationId = Guid.NewGuid().ToString();
             var label = Guid.NewGuid().ToString();
             var to = Guid.NewGuid().ToString();
@@ -47,29 +49,29 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             {
                 MessageId = messageId,
                 PartitionKey = partitionKey,
-                ViaPartitionKey = viaPartitionKey,
+                TransactionPartitionKey = viaPartitionKey,
                 SessionId = sessionId,
                 CorrelationId = correlationId,
-                Label = label,
+                Subject = label,
                 To = to,
                 ContentType = contentType,
                 ReplyTo = replyTo,
                 ReplyToSessionId = replyToSessionId,
                 TimeToLive = timeToLive,
             };
-            sbMessage.Properties.Add("UserProperty", "SomeUserProperty");
+            sbMessage.ApplicationProperties.Add("UserProperty", "SomeUserProperty");
 
             var amqpMessage = AmqpMessageConverter.SBMessageToAmqpMessage(sbMessage);
             var convertedSbMessage = AmqpMessageConverter.AmqpMessageToSBMessage(amqpMessage);
 
-            Assert.AreEqual("SomeUserProperty", convertedSbMessage.Properties["UserProperty"]);
-            Assert.AreEqual(messageBody, convertedSbMessage.Body.Bytes.ToArray());
+            Assert.AreEqual("SomeUserProperty", convertedSbMessage.ApplicationProperties["UserProperty"]);
+            Assert.AreEqual(messageBody, convertedSbMessage.Body.ToArray());
             Assert.AreEqual(messageId, convertedSbMessage.MessageId);
             Assert.AreEqual(partitionKey, convertedSbMessage.PartitionKey);
-            Assert.AreEqual(viaPartitionKey, convertedSbMessage.ViaPartitionKey);
+            Assert.AreEqual(viaPartitionKey, convertedSbMessage.TransactionPartitionKey);
             Assert.AreEqual(sessionId, convertedSbMessage.SessionId);
             Assert.AreEqual(correlationId, convertedSbMessage.CorrelationId);
-            Assert.AreEqual(label, convertedSbMessage.Label);
+            Assert.AreEqual(label, convertedSbMessage.Subject);
             Assert.AreEqual(to, convertedSbMessage.To);
             Assert.AreEqual(contentType, convertedSbMessage.ContentType);
             Assert.AreEqual(replyTo, convertedSbMessage.ReplyTo);
@@ -117,6 +119,34 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             sbMessage.SequenceNumber = 1L;
 
             Assert.AreEqual(3, sbMessage.DeliveryCount);
+        }
+
+        [Test]
+        public void CanParseDictionaryValueSection()
+        {
+            var amqpMessage = AmqpMessage.Create(new AmqpValue { Value = new Dictionary<string, string> { { "key", "value" } } });
+            var sbMessage = AmqpMessageConverter.AmqpMessageToSBMessage(amqpMessage);
+            var body = sbMessage.GetRawAmqpMessage().Body;
+            Assert.IsTrue(body.TryGetValue(out object val));
+            Assert.AreEqual("value", ((Dictionary<string, string>)val)["key"]);
+
+            amqpMessage = AmqpMessage.Create(new AmqpValue { Value = new AmqpMap { { new MapKey("key"), "value" } } });
+            sbMessage = AmqpMessageConverter.AmqpMessageToSBMessage(amqpMessage);
+            body = sbMessage.GetRawAmqpMessage().Body;
+            Assert.IsTrue(body.TryGetValue(out val));
+            Assert.AreEqual("value", ((Dictionary<string, object>)val)["key"]);
+        }
+
+        [Test]
+        public void CanParseMaxAbsoluteExpiryTime()
+        {
+            var data = new Data();
+            var amqpMessage = AmqpMessage.Create(data);
+            amqpMessage.Properties.AbsoluteExpiryTime = DateTime.MaxValue;
+
+            var convertedSbMessage = AmqpMessageConverter.AmqpMessageToSBMessage(amqpMessage);
+
+            Assert.AreEqual(DateTimeOffset.MaxValue, convertedSbMessage.ExpiresAt);
         }
     }
 }

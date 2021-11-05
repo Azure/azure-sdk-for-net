@@ -49,7 +49,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A tuple containing the batch sub-operation messages merged into a
         /// single multipart/mixed content stream and content type.
         /// </returns>
-        public static Task<(Stream, string)> CreateAsync(
+        public static Task<(Stream ContentStream, string ContentType)> CreateAsync(
             IEnumerable<HttpMessage> messages,
             string prefix,
 #pragma warning disable CA1801 // Remove unused parameter (leaving for future changes)
@@ -87,9 +87,9 @@ namespace Azure.Storage.Blobs.Specialized
                 // Write the request URI
                 content
                     .Append(message.Request.Method.Method)
-                    .Append(" ")
+                    .Append(' ')
                     .Append(message.Request.Uri.PathAndQuery)
-                    .Append(" ")
+                    .Append(' ')
                     .Append(BatchConstants.HttpVersion)
                     .Append(newline);
 

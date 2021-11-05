@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (PublicCertData != null)
+            if (Optional.IsDefined(PublicCertData))
             {
                 writer.WritePropertyName("publicCertData");
                 writer.WriteStringValue(PublicCertData);
@@ -30,30 +30,22 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static VpnServerConfigVpnClientRootCertificate DeserializeVpnServerConfigVpnClientRootCertificate(JsonElement element)
         {
-            string name = default;
-            string publicCertData = default;
+            Optional<string> name = default;
+            Optional<string> publicCertData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("publicCertData"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     publicCertData = property.Value.GetString();
                     continue;
                 }
             }
-            return new VpnServerConfigVpnClientRootCertificate(name, publicCertData);
+            return new VpnServerConfigVpnClientRootCertificate(name.Value, publicCertData.Value);
         }
     }
 }

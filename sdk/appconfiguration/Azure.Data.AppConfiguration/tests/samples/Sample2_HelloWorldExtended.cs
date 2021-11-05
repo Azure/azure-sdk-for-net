@@ -10,7 +10,6 @@ using NUnit.Framework.Constraints;
 
 namespace Azure.Data.AppConfiguration.Samples
 {
-    [LiveOnly]
     public partial class ConfigurationSamples
     {
         [Test]
@@ -44,7 +43,6 @@ namespace Azure.Data.AppConfiguration.Samples
             instancesToUpdate.Value = "5";
             await client.SetConfigurationSettingAsync(instancesToUpdate);
             #endregion
-
 
             #region Snippet:AzConfigSample2_GetConfigurationSettingsAsync
             var selector = new SettingSelector { LabelFilter = "production" };

@@ -27,16 +27,13 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         /// List all the available operations the KubernetesConfiguration
         /// resource provider supports.
         /// </summary>
-        /// <param name='apiVersion'>
-        /// The API version to be used with the HTTP request.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -45,7 +42,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<ResourceProviderOperation>>> ListWithHttpMessagesAsync(string apiVersion, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<ResourceProviderOperation>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List all the available operations the KubernetesConfiguration
         /// resource provider supports.
@@ -59,7 +56,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">

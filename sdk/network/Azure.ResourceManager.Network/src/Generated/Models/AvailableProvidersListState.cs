@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of AvailableProvidersListState. </summary>
         internal AvailableProvidersListState()
         {
+            Providers = new ChangeTrackingList<string>();
+            Cities = new ChangeTrackingList<AvailableProvidersListCity>();
         }
 
         /// <summary> Initializes a new instance of AvailableProvidersListState. </summary>

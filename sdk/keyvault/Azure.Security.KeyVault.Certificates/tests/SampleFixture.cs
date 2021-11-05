@@ -7,7 +7,6 @@ using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Certificates.Samples
 {
-    [LiveOnly]
     [NonParallelizable]
     public class SampleFixture: SamplesBase<KeyVaultTestEnvironment>
     {
@@ -23,6 +22,8 @@ namespace Azure.Security.KeyVault.Certificates.Samples
 #pragma warning disable SA1402 // File may only contain a single type
     public partial class HelloWorld : SampleFixture { }
     public partial class GetCertificates : SampleFixture { }
+    public partial class ImportCertificate : SampleFixture { }
+    public partial class DownloadCertificate : SampleFixture { }
     public partial class Snippets : SampleFixture { }
 #pragma warning restore SA1402 // File may only contain a single type
 }

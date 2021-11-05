@@ -19,9 +19,9 @@ namespace Azure.Data.AppConfiguration.Performance
         }
 
         [Benchmark]
-        public int ReadDynamicJson()
+        public int ReadJsonData()
         {
-            return (int)DynamicJson.Parse(_json)["a"]["b"];
+            return (int)JsonData.FromString(_json)["a"]["b"];
         }
     }
 }

@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             /// <param name='queryOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static PolicyStatesQueryResults ListQueryResultsForManagementGroup(this IPolicyStatesOperations operations, string policyStatesResource, string managementGroupName, QueryOptions queryOptions = default(QueryOptions))
+            public static IPage<PolicyState> ListQueryResultsForManagementGroup(this IPolicyStatesOperations operations, string policyStatesResource, string managementGroupName, QueryOptions queryOptions = default(QueryOptions))
             {
                 return operations.ListQueryResultsForManagementGroupAsync(policyStatesResource, managementGroupName, queryOptions).GetAwaiter().GetResult();
             }
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PolicyStatesQueryResults> ListQueryResultsForManagementGroupAsync(this IPolicyStatesOperations operations, string policyStatesResource, string managementGroupName, QueryOptions queryOptions = default(QueryOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<PolicyState>> ListQueryResultsForManagementGroupAsync(this IPolicyStatesOperations operations, string policyStatesResource, string managementGroupName, QueryOptions queryOptions = default(QueryOptions), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListQueryResultsForManagementGroupWithHttpMessagesAsync(policyStatesResource, managementGroupName, queryOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -131,7 +131,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             /// <param name='queryOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static PolicyStatesQueryResults ListQueryResultsForSubscription(this IPolicyStatesOperations operations, string policyStatesResource, string subscriptionId, QueryOptions queryOptions = default(QueryOptions))
+            public static IPage<PolicyState> ListQueryResultsForSubscription(this IPolicyStatesOperations operations, string policyStatesResource, string subscriptionId, QueryOptions queryOptions = default(QueryOptions))
             {
                 return operations.ListQueryResultsForSubscriptionAsync(policyStatesResource, subscriptionId, queryOptions).GetAwaiter().GetResult();
             }
@@ -157,7 +157,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PolicyStatesQueryResults> ListQueryResultsForSubscriptionAsync(this IPolicyStatesOperations operations, string policyStatesResource, string subscriptionId, QueryOptions queryOptions = default(QueryOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<PolicyState>> ListQueryResultsForSubscriptionAsync(this IPolicyStatesOperations operations, string policyStatesResource, string subscriptionId, QueryOptions queryOptions = default(QueryOptions), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListQueryResultsForSubscriptionWithHttpMessagesAsync(policyStatesResource, subscriptionId, queryOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -226,7 +226,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             /// <param name='queryOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static PolicyStatesQueryResults ListQueryResultsForResourceGroup(this IPolicyStatesOperations operations, string policyStatesResource, string subscriptionId, string resourceGroupName, QueryOptions queryOptions = default(QueryOptions))
+            public static IPage<PolicyState> ListQueryResultsForResourceGroup(this IPolicyStatesOperations operations, string policyStatesResource, string subscriptionId, string resourceGroupName, QueryOptions queryOptions = default(QueryOptions))
             {
                 return operations.ListQueryResultsForResourceGroupAsync(policyStatesResource, subscriptionId, resourceGroupName, queryOptions).GetAwaiter().GetResult();
             }
@@ -255,7 +255,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PolicyStatesQueryResults> ListQueryResultsForResourceGroupAsync(this IPolicyStatesOperations operations, string policyStatesResource, string subscriptionId, string resourceGroupName, QueryOptions queryOptions = default(QueryOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<PolicyState>> ListQueryResultsForResourceGroupAsync(this IPolicyStatesOperations operations, string policyStatesResource, string subscriptionId, string resourceGroupName, QueryOptions queryOptions = default(QueryOptions), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListQueryResultsForResourceGroupWithHttpMessagesAsync(policyStatesResource, subscriptionId, resourceGroupName, queryOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -327,7 +327,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             /// <param name='queryOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static PolicyStatesQueryResults ListQueryResultsForResource(this IPolicyStatesOperations operations, string policyStatesResource, string resourceId, QueryOptions queryOptions = default(QueryOptions))
+            public static IPage<PolicyState> ListQueryResultsForResource(this IPolicyStatesOperations operations, string policyStatesResource, string resourceId, QueryOptions queryOptions = default(QueryOptions))
             {
                 return operations.ListQueryResultsForResourceAsync(policyStatesResource, resourceId, queryOptions).GetAwaiter().GetResult();
             }
@@ -353,7 +353,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PolicyStatesQueryResults> ListQueryResultsForResourceAsync(this IPolicyStatesOperations operations, string policyStatesResource, string resourceId, QueryOptions queryOptions = default(QueryOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<PolicyState>> ListQueryResultsForResourceAsync(this IPolicyStatesOperations operations, string policyStatesResource, string resourceId, QueryOptions queryOptions = default(QueryOptions), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListQueryResultsForResourceWithHttpMessagesAsync(policyStatesResource, resourceId, queryOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -494,7 +494,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             /// <param name='queryOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static PolicyStatesQueryResults ListQueryResultsForPolicySetDefinition(this IPolicyStatesOperations operations, string policyStatesResource, string subscriptionId, string policySetDefinitionName, QueryOptions queryOptions = default(QueryOptions))
+            public static IPage<PolicyState> ListQueryResultsForPolicySetDefinition(this IPolicyStatesOperations operations, string policyStatesResource, string subscriptionId, string policySetDefinitionName, QueryOptions queryOptions = default(QueryOptions))
             {
                 return operations.ListQueryResultsForPolicySetDefinitionAsync(policyStatesResource, subscriptionId, policySetDefinitionName, queryOptions).GetAwaiter().GetResult();
             }
@@ -523,7 +523,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PolicyStatesQueryResults> ListQueryResultsForPolicySetDefinitionAsync(this IPolicyStatesOperations operations, string policyStatesResource, string subscriptionId, string policySetDefinitionName, QueryOptions queryOptions = default(QueryOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<PolicyState>> ListQueryResultsForPolicySetDefinitionAsync(this IPolicyStatesOperations operations, string policyStatesResource, string subscriptionId, string policySetDefinitionName, QueryOptions queryOptions = default(QueryOptions), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListQueryResultsForPolicySetDefinitionWithHttpMessagesAsync(policyStatesResource, subscriptionId, policySetDefinitionName, queryOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -598,7 +598,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             /// <param name='queryOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static PolicyStatesQueryResults ListQueryResultsForPolicyDefinition(this IPolicyStatesOperations operations, string policyStatesResource, string subscriptionId, string policyDefinitionName, QueryOptions queryOptions = default(QueryOptions))
+            public static IPage<PolicyState> ListQueryResultsForPolicyDefinition(this IPolicyStatesOperations operations, string policyStatesResource, string subscriptionId, string policyDefinitionName, QueryOptions queryOptions = default(QueryOptions))
             {
                 return operations.ListQueryResultsForPolicyDefinitionAsync(policyStatesResource, subscriptionId, policyDefinitionName, queryOptions).GetAwaiter().GetResult();
             }
@@ -627,7 +627,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PolicyStatesQueryResults> ListQueryResultsForPolicyDefinitionAsync(this IPolicyStatesOperations operations, string policyStatesResource, string subscriptionId, string policyDefinitionName, QueryOptions queryOptions = default(QueryOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<PolicyState>> ListQueryResultsForPolicyDefinitionAsync(this IPolicyStatesOperations operations, string policyStatesResource, string subscriptionId, string policyDefinitionName, QueryOptions queryOptions = default(QueryOptions), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListQueryResultsForPolicyDefinitionWithHttpMessagesAsync(policyStatesResource, subscriptionId, policyDefinitionName, queryOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -702,7 +702,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             /// <param name='queryOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static PolicyStatesQueryResults ListQueryResultsForSubscriptionLevelPolicyAssignment(this IPolicyStatesOperations operations, string policyStatesResource, string subscriptionId, string policyAssignmentName, QueryOptions queryOptions = default(QueryOptions))
+            public static IPage<PolicyState> ListQueryResultsForSubscriptionLevelPolicyAssignment(this IPolicyStatesOperations operations, string policyStatesResource, string subscriptionId, string policyAssignmentName, QueryOptions queryOptions = default(QueryOptions))
             {
                 return operations.ListQueryResultsForSubscriptionLevelPolicyAssignmentAsync(policyStatesResource, subscriptionId, policyAssignmentName, queryOptions).GetAwaiter().GetResult();
             }
@@ -731,7 +731,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PolicyStatesQueryResults> ListQueryResultsForSubscriptionLevelPolicyAssignmentAsync(this IPolicyStatesOperations operations, string policyStatesResource, string subscriptionId, string policyAssignmentName, QueryOptions queryOptions = default(QueryOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<PolicyState>> ListQueryResultsForSubscriptionLevelPolicyAssignmentAsync(this IPolicyStatesOperations operations, string policyStatesResource, string subscriptionId, string policyAssignmentName, QueryOptions queryOptions = default(QueryOptions), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListQueryResultsForSubscriptionLevelPolicyAssignmentWithHttpMessagesAsync(policyStatesResource, subscriptionId, policyAssignmentName, queryOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -809,7 +809,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             /// <param name='queryOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static PolicyStatesQueryResults ListQueryResultsForResourceGroupLevelPolicyAssignment(this IPolicyStatesOperations operations, string policyStatesResource, string subscriptionId, string resourceGroupName, string policyAssignmentName, QueryOptions queryOptions = default(QueryOptions))
+            public static IPage<PolicyState> ListQueryResultsForResourceGroupLevelPolicyAssignment(this IPolicyStatesOperations operations, string policyStatesResource, string subscriptionId, string resourceGroupName, string policyAssignmentName, QueryOptions queryOptions = default(QueryOptions))
             {
                 return operations.ListQueryResultsForResourceGroupLevelPolicyAssignmentAsync(policyStatesResource, subscriptionId, resourceGroupName, policyAssignmentName, queryOptions).GetAwaiter().GetResult();
             }
@@ -841,7 +841,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PolicyStatesQueryResults> ListQueryResultsForResourceGroupLevelPolicyAssignmentAsync(this IPolicyStatesOperations operations, string policyStatesResource, string subscriptionId, string resourceGroupName, string policyAssignmentName, QueryOptions queryOptions = default(QueryOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<PolicyState>> ListQueryResultsForResourceGroupLevelPolicyAssignmentAsync(this IPolicyStatesOperations operations, string policyStatesResource, string subscriptionId, string resourceGroupName, string policyAssignmentName, QueryOptions queryOptions = default(QueryOptions), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListQueryResultsForResourceGroupLevelPolicyAssignmentWithHttpMessagesAsync(policyStatesResource, subscriptionId, resourceGroupName, policyAssignmentName, queryOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -971,6 +971,278 @@ namespace Microsoft.Azure.Management.PolicyInsights
             public static async Task BeginTriggerResourceGroupEvaluationAsync(this IPolicyStatesOperations operations, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginTriggerResourceGroupEvaluationWithHttpMessagesAsync(subscriptionId, resourceGroupName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Queries policy states for the resources under the management group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<PolicyState> ListQueryResultsForManagementGroupNext(this IPolicyStatesOperations operations, string nextPageLink)
+            {
+                return operations.ListQueryResultsForManagementGroupNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Queries policy states for the resources under the management group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<PolicyState>> ListQueryResultsForManagementGroupNextAsync(this IPolicyStatesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListQueryResultsForManagementGroupNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Queries policy states for the resources under the subscription.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<PolicyState> ListQueryResultsForSubscriptionNext(this IPolicyStatesOperations operations, string nextPageLink)
+            {
+                return operations.ListQueryResultsForSubscriptionNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Queries policy states for the resources under the subscription.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<PolicyState>> ListQueryResultsForSubscriptionNextAsync(this IPolicyStatesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListQueryResultsForSubscriptionNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Queries policy states for the resources under the resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<PolicyState> ListQueryResultsForResourceGroupNext(this IPolicyStatesOperations operations, string nextPageLink)
+            {
+                return operations.ListQueryResultsForResourceGroupNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Queries policy states for the resources under the resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<PolicyState>> ListQueryResultsForResourceGroupNextAsync(this IPolicyStatesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListQueryResultsForResourceGroupNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Queries policy states for the resource.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<PolicyState> ListQueryResultsForResourceNext(this IPolicyStatesOperations operations, string nextPageLink)
+            {
+                return operations.ListQueryResultsForResourceNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Queries policy states for the resource.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<PolicyState>> ListQueryResultsForResourceNextAsync(this IPolicyStatesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListQueryResultsForResourceNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Queries policy states for the subscription level policy set definition.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<PolicyState> ListQueryResultsForPolicySetDefinitionNext(this IPolicyStatesOperations operations, string nextPageLink)
+            {
+                return operations.ListQueryResultsForPolicySetDefinitionNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Queries policy states for the subscription level policy set definition.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<PolicyState>> ListQueryResultsForPolicySetDefinitionNextAsync(this IPolicyStatesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListQueryResultsForPolicySetDefinitionNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Queries policy states for the subscription level policy definition.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<PolicyState> ListQueryResultsForPolicyDefinitionNext(this IPolicyStatesOperations operations, string nextPageLink)
+            {
+                return operations.ListQueryResultsForPolicyDefinitionNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Queries policy states for the subscription level policy definition.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<PolicyState>> ListQueryResultsForPolicyDefinitionNextAsync(this IPolicyStatesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListQueryResultsForPolicyDefinitionNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Queries policy states for the subscription level policy assignment.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<PolicyState> ListQueryResultsForSubscriptionLevelPolicyAssignmentNext(this IPolicyStatesOperations operations, string nextPageLink)
+            {
+                return operations.ListQueryResultsForSubscriptionLevelPolicyAssignmentNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Queries policy states for the subscription level policy assignment.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<PolicyState>> ListQueryResultsForSubscriptionLevelPolicyAssignmentNextAsync(this IPolicyStatesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListQueryResultsForSubscriptionLevelPolicyAssignmentNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Queries policy states for the resource group level policy assignment.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<PolicyState> ListQueryResultsForResourceGroupLevelPolicyAssignmentNext(this IPolicyStatesOperations operations, string nextPageLink)
+            {
+                return operations.ListQueryResultsForResourceGroupLevelPolicyAssignmentNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Queries policy states for the resource group level policy assignment.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<PolicyState>> ListQueryResultsForResourceGroupLevelPolicyAssignmentNextAsync(this IPolicyStatesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListQueryResultsForResourceGroupLevelPolicyAssignmentNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
     }

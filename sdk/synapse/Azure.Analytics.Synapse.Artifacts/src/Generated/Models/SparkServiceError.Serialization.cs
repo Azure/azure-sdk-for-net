@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(SparkServiceErrorConverter))]
     public partial class SparkServiceError
     {
         internal static SparkServiceError DeserializeSparkServiceError(JsonElement element)
@@ -31,11 +34,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("source"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     source = new SparkErrorSource(property.Value.GetString());
                     continue;
                 }
             }
             return new SparkServiceError(message.Value, errorCode.Value, Optional.ToNullable(source));
+        }
+
+        internal partial class SparkServiceErrorConverter : JsonConverter<SparkServiceError>
+        {
+            public override void Write(Utf8JsonWriter writer, SparkServiceError model, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
+            public override SparkServiceError Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeSparkServiceError(document.RootElement);
+            }
         }
     }
 }

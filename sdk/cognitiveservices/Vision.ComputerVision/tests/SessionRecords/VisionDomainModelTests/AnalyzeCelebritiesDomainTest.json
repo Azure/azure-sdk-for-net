@@ -1,30 +1,36 @@
 {
   "Entries": [
     {
-      "RequestUri": "/vision/v3.0/models/celebrities/analyze",
-      "EncodedRequestUri": "L3Zpc2lvbi92My4wL21vZGVscy9jZWxlYnJpdGllcy9hbmFseXpl",
+      "RequestUri": "/vision/v3.2/models/celebrities/analyze?model-version=latest",
+      "EncodedRequestUri": "L3Zpc2lvbi92My4yL21vZGVscy9jZWxlYnJpdGllcy9hbmFseXplP21vZGVsLXZlcnNpb249bGF0ZXN0",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/psSdkJson6/src/SDKs/CognitiveServices/dataPlane/Vision/ComputerVision/ComputerVision.Tests/TestImages/satya.jpg\"\r\n}",
+      "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/main/sdk/cognitiveservices/Vision.ComputerVision/tests/TestImages/satya.jpg\"\r\n}",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.8.3815.0",
+          "FxVersion/4.8.4300.0",
           "OSName/Windows",
-          "OSVersion/10.0.18362.0",
-          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/5.0.0.0"
+          "OSVersion/10.0.19042.0",
+          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/7.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "186"
+          "152"
         ]
       },
       "ResponseHeaders": {
+        "csp-billing-usage": [
+          "CognitiveServices.ComputerVision.Celebrities=1,CognitiveServices.ComputerVision.Transaction=1"
+        ],
+        "x-envoy-upstream-service-time": [
+          "348"
+        ],
         "apim-request-id": [
-          "43b03c93-b91e-48f7-9798-20d814298533"
+          "8cadd9aa-14e0-4799-b67f-22109bd09eba"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -33,16 +39,16 @@
           "nosniff"
         ],
         "Date": [
-          "Thu, 22 Aug 2019 04:06:38 GMT"
+          "Wed, 24 Mar 2021 06:44:21 GMT"
         ],
         "Content-Length": [
-          "252"
+          "279"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"result\": {\r\n    \"celebrities\": [\r\n      {\r\n        \"faceRectangle\": {\r\n          \"top\": 50,\r\n          \"left\": 211,\r\n          \"width\": 55,\r\n          \"height\": 55\r\n        },\r\n        \"name\": \"Satya Nadella\",\r\n        \"confidence\": 0.97567886114120483\r\n      }\r\n    ]\r\n  },\r\n  \"requestId\": \"43b03c93-b91e-48f7-9798-20d814298533\",\r\n  \"metadata\": {\r\n    \"width\": 512,\r\n    \"height\": 288,\r\n    \"format\": \"Jpeg\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"result\": {\r\n    \"celebrities\": [\r\n      {\r\n        \"name\": \"Satya Nadella\",\r\n        \"confidence\": 0.96440011262893677,\r\n        \"faceRectangle\": {\r\n          \"left\": 211,\r\n          \"top\": 50,\r\n          \"width\": 55,\r\n          \"height\": 55\r\n        }\r\n      }\r\n    ]\r\n  },\r\n  \"requestId\": \"8cadd9aa-14e0-4799-b67f-22109bd09eba\",\r\n  \"metadata\": {\r\n    \"height\": 288,\r\n    \"width\": 512,\r\n    \"format\": \"Jpeg\"\r\n  },\r\n  \"modelVersion\": \"2021-04-01\"\r\n}",
       "StatusCode": 200
     }
   ],

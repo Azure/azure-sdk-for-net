@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(DatasetLocationConverter))]
     public partial class DatasetLocation : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -38,11 +41,28 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static DatasetLocation DeserializeDatasetLocation(JsonElement element)
         {
+            if (element.TryGetProperty("type", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "AmazonS3Location": return AmazonS3Location.DeserializeAmazonS3Location(element);
+                    case "AzureBlobFSLocation": return AzureBlobFSLocation.DeserializeAzureBlobFSLocation(element);
+                    case "AzureBlobStorageLocation": return AzureBlobStorageLocation.DeserializeAzureBlobStorageLocation(element);
+                    case "AzureDataLakeStoreLocation": return AzureDataLakeStoreLocation.DeserializeAzureDataLakeStoreLocation(element);
+                    case "AzureFileStorageLocation": return AzureFileStorageLocation.DeserializeAzureFileStorageLocation(element);
+                    case "FileServerLocation": return FileServerLocation.DeserializeFileServerLocation(element);
+                    case "FtpServerLocation": return FtpServerLocation.DeserializeFtpServerLocation(element);
+                    case "GoogleCloudStorageLocation": return GoogleCloudStorageLocation.DeserializeGoogleCloudStorageLocation(element);
+                    case "HdfsLocation": return HdfsLocation.DeserializeHdfsLocation(element);
+                    case "HttpServerLocation": return HttpServerLocation.DeserializeHttpServerLocation(element);
+                    case "SftpLocation": return SftpLocation.DeserializeSftpLocation(element);
+                }
+            }
             string type = default;
             Optional<object> folderPath = default;
             Optional<object> fileName = default;
             IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -52,19 +72,41 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("folderPath"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     folderPath = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("fileName"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     fileName = property.Value.GetObject();
                     continue;
                 }
-                additionalPropertiesDictionary ??= new Dictionary<string, object>();
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
             return new DatasetLocation(type, folderPath.Value, fileName.Value, additionalProperties);
+        }
+
+        internal partial class DatasetLocationConverter : JsonConverter<DatasetLocation>
+        {
+            public override void Write(Utf8JsonWriter writer, DatasetLocation model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override DatasetLocation Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeDatasetLocation(document.RootElement);
+            }
         }
     }
 }

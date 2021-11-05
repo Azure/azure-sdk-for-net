@@ -8,7 +8,7 @@
 namespace Azure.Security.KeyVault.Administration.Models
 {
     /// <summary> The key vault server error. </summary>
-    public partial class KeyVaultServiceError
+    internal partial class KeyVaultServiceError
     {
         /// <summary> Initializes a new instance of KeyVaultServiceError. </summary>
         internal KeyVaultServiceError()

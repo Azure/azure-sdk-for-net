@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "0d039c23-9e66-486a-af13-1d46dbcfc1e9"
+          "70011fe5-32b8-4b48-b288-a277ea5ed4c7"
         ],
         "accept-language": [
           "en-US"
@@ -15,7 +15,7 @@
         "User-Agent": [
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
@@ -24,7 +24,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 07 Aug 2019 20:06:49 GMT"
+          "Thu, 30 Jul 2020 18:53:50 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -33,13 +33,13 @@
           "11999"
         ],
         "x-ms-request-id": [
-          "8c2cadba-c16c-4ed6-b753-a1c8bb451940"
+          "ca9583b1-9bd9-4617-a37b-04b1a7823456"
         ],
         "x-ms-correlation-request-id": [
-          "8c2cadba-c16c-4ed6-b753-a1c8bb451940"
+          "ca9583b1-9bd9-4617-a37b-04b1a7823456"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20190807T200650Z:8c2cadba-c16c-4ed6-b753-a1c8bb451940"
+          "WESTUS:20200730T185350Z:ca9583b1-9bd9-4617-a37b-04b1a7823456"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -48,7 +48,7 @@
           "nosniff"
         ],
         "Content-Length": [
-          "3593"
+          "6247"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -57,17 +57,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/alsantamclirg2017\",\r\n      \"name\": \"alsantamclirg2017\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"83ac5549-d0d1-4117-bee6-31d62d6869a0\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/alsantamclirg2017_2\",\r\n      \"name\": \"alsantamclirg2017_2\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"83ac5549-d0d1-4117-bee6-31d62d6869a0\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/cleanupservice\",\r\n      \"name\": \"cleanupservice\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"e5e0419c-80e1-4a25-96b4-00bc8b0565c3\",\r\n        \"What Is Cleanup Service\": \"https://aka.ms/WhatIsCleanupService\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/demo-1445121807082019-paasv2\",\r\n      \"name\": \"demo-1445121807082019-paasv2\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"83ac5549-d0d1-4117-bee6-31d62d6869a0\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/demo-4554231807082019-paasv2\",\r\n      \"name\": \"demo-4554231807082019-paasv2\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"83ac5549-d0d1-4117-bee6-31d62d6869a0\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/NetworkWatcherRG\",\r\n      \"name\": \"NetworkWatcherRG\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"83ac5549-d0d1-4117-bee6-31d62d6869a0\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/RG-Globalization-ARM-Keyvault\",\r\n      \"name\": \"RG-Globalization-ARM-Keyvault\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"83ac5549-d0d1-4117-bee6-31d62d6869a0\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/rmsfe2etest10807184455\",\r\n      \"name\": \"rmsfe2etest10807184455\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"83ac5549-d0d1-4117-bee6-31d62d6869a0\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/rmsfe2etest20805033343\",\r\n      \"name\": \"rmsfe2etest20805033343\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"83ac5549-d0d1-4117-bee6-31d62d6869a0\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/rmsfe2etest20807184458\",\r\n      \"name\": \"rmsfe2etest20807184458\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"83ac5549-d0d1-4117-bee6-31d62d6869a0\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/rmsfe2etest30807190223\",\r\n      \"name\": \"rmsfe2etest30807190223\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"83ac5549-d0d1-4117-bee6-31d62d6869a0\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/rmsfe2etest40807184459\",\r\n      \"name\": \"rmsfe2etest40807184459\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"83ac5549-d0d1-4117-bee6-31d62d6869a0\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Deleting\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/Имякомпьютера-0812351907082019-paasv2\",\r\n      \"name\": \"Имякомпьютера-0812351907082019-paasv2\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Deleting\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/cleanupservice\",\r\n      \"name\": \"cleanupservice\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"b11a877b-3b22-4278-a607-3009de341451\",\r\n        \"What Is Cleanup Service\": \"https://aka.ms/WhatIsCleanupService\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/sfrptest07260806314\",\r\n      \"name\": \"sfrptest07260806314\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"623b2bea-1044-41ca-a3a0-25499adb4695\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/RG-Globalization-ARM-Keyvault\",\r\n      \"name\": \"RG-Globalization-ARM-Keyvault\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"623b2bea-1044-41ca-a3a0-25499adb4695\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/SFC_cdac567d-b2aa-419e-9b81-13d83fb09383\",\r\n      \"name\": \"SFC_cdac567d-b2aa-419e-9b81-13d83fb09383\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"623b2bea-1044-41ca-a3a0-25499adb4695\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/الكتلةلكمبيوتر-1202350227072020-paasv2\",\r\n      \"name\": \"الكتلةلكمبيوتر-1202350227072020-paasv2\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"623b2bea-1044-41ca-a3a0-25499adb4695\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/TestSfmcRG2\",\r\n      \"name\": \"TestSfmcRG2\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"623b2bea-1044-41ca-a3a0-25499adb4695\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/SFC_400a28b0-c9d0-4dbd-9667-9e976e0bec1a\",\r\n      \"name\": \"SFC_400a28b0-c9d0-4dbd-9667-9e976e0bec1a\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/demo-7827432227072020-paasv2\",\r\n      \"name\": \"demo-7827432227072020-paasv2\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"623b2bea-1044-41ca-a3a0-25499adb4695\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/NetworkWatcherRG\",\r\n      \"name\": \"NetworkWatcherRG\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"623b2bea-1044-41ca-a3a0-25499adb4695\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/sfmc-dotnet-sdk-RG-7212\",\r\n      \"name\": \"sfmc-dotnet-sdk-RG-7212\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"623b2bea-1044-41ca-a3a0-25499adb4695\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/SFC_40ce6bff-c013-4ff6-94cc-32efd0fe5e29\",\r\n      \"name\": \"SFC_40ce6bff-c013-4ff6-94cc-32efd0fe5e29\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/kejoshtest7\",\r\n      \"name\": \"kejoshtest7\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"623b2bea-1044-41ca-a3a0-25499adb4695\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/sfmc-dotnet-sdk-RG-5079\",\r\n      \"name\": \"sfmc-dotnet-sdk-RG-5079\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"623b2bea-1044-41ca-a3a0-25499adb4695\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/sfmc-dotnet-sdk-RG-1638\",\r\n      \"name\": \"sfmc-dotnet-sdk-RG-1638\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"623b2bea-1044-41ca-a3a0-25499adb4695\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/SFC_b2967d7c-cb7e-4619-8aa8-093391eeda0e\",\r\n      \"name\": \"SFC_b2967d7c-cb7e-4619-8aa8-093391eeda0e\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/sfmc-dotnet-sdk-RG-8213\",\r\n      \"name\": \"sfmc-dotnet-sdk-RG-8213\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"623b2bea-1044-41ca-a3a0-25499adb4695\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/SFC_769088d1-0326-4fb8-9370-e29658472997\",\r\n      \"name\": \"SFC_769088d1-0326-4fb8-9370-e29658472997\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/sfmc-dotnet-sdk-RG-6257\",\r\n      \"name\": \"sfmc-dotnet-sdk-RG-6257\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"623b2bea-1044-41ca-a3a0-25499adb4695\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/SFC_d6d279ea-7f06-424d-a66e-32eaebf09e7c\",\r\n      \"name\": \"SFC_d6d279ea-7f06-424d-a66e-32eaebf09e7c\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/sfmc-dotnet-sdk-RG-2193\",\r\n      \"name\": \"sfmc-dotnet-sdk-RG-2193\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"623b2bea-1044-41ca-a3a0-25499adb4695\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/sfmc-dotnet-sdk-RG-6875\",\r\n      \"name\": \"sfmc-dotnet-sdk-RG-6875\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"623b2bea-1044-41ca-a3a0-25499adb4695\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/SFC_fbfa4623-8b9a-4d8b-9a9c-ac91d1d8dfa0\",\r\n      \"name\": \"SFC_fbfa4623-8b9a-4d8b-9a9c-ac91d1d8dfa0\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/demo-2225271830072020-paasv2\",\r\n      \"name\": \"demo-2225271830072020-paasv2\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"623b2bea-1044-41ca-a3a0-25499adb4695\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/alsantamclirg2017/resources?$filter=resourceType%20eq%20'Microsoft.ServiceFabric%2Fclusters'&api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Jlc291cmNlR3JvdXBzL2Fsc2FudGFtY2xpcmcyMDE3L3Jlc291cmNlcz8kZmlsdGVyPXJlc291cmNlVHlwZSUyMGVxJTIwJ01pY3Jvc29mdC5TZXJ2aWNlRmFicmljJTJGY2x1c3RlcnMnJmFwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
+      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/cleanupservice/resources?$filter=resourceType%20eq%20'Microsoft.ServiceFabric%2Fclusters'&api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Jlc291cmNlR3JvdXBzL2NsZWFudXBzZXJ2aWNlL3Jlc291cmNlcz8kZmlsdGVyPXJlc291cmNlVHlwZSUyMGVxJTIwJ01pY3Jvc29mdC5TZXJ2aWNlRmFicmljJTJGY2x1c3RlcnMnJmFwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "31d70a2c-e98b-4354-89a6-da8d9d18f118"
+          "f117e42e-b833-4151-9cba-5fc31bcb05b4"
         ],
         "accept-language": [
           "en-US"
@@ -75,7 +75,7 @@
         "User-Agent": [
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
@@ -84,7 +84,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 07 Aug 2019 20:06:50 GMT"
+          "Thu, 30 Jul 2020 18:53:50 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -93,13 +93,13 @@
           "11999"
         ],
         "x-ms-request-id": [
-          "427e8852-64f9-49d3-9f43-2601f63712e5"
+          "1d7e5b09-a722-4777-9d70-44c3ff7d317b"
         ],
         "x-ms-correlation-request-id": [
-          "427e8852-64f9-49d3-9f43-2601f63712e5"
+          "1d7e5b09-a722-4777-9d70-44c3ff7d317b"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20190807T200650Z:427e8852-64f9-49d3-9f43-2601f63712e5"
+          "WESTUS:20200730T185350Z:1d7e5b09-a722-4777-9d70-44c3ff7d317b"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -121,13 +121,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/alsantamclirg2017/providers/Microsoft.ServiceFabric/clusters/donotexisting?api-version=2019-03-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Jlc291cmNlR3JvdXBzL2Fsc2FudGFtY2xpcmcyMDE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUZhYnJpYy9jbHVzdGVycy9kb25vdGV4aXN0aW5nP2FwaS12ZXJzaW9uPTIwMTktMDMtMDE=",
+      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/cleanupservice/providers/Microsoft.ServiceFabric/clusters/donotexisting?api-version=2020-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Jlc291cmNlR3JvdXBzL2NsZWFudXBzZXJ2aWNlL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUZhYnJpYy9jbHVzdGVycy9kb25vdGV4aXN0aW5nP2FwaS12ZXJzaW9uPTIwMjAtMDMtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "a57dfa56-f0ca-49ca-b576-0782a6827c0f"
+          "47ae9f09-7219-4ca1-9316-43f44be29265"
         ],
         "accept-language": [
           "en-US"
@@ -135,8 +135,8 @@
         "User-Agent": [
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18362.",
-          "Microsoft.Azure.Management.ServiceFabric.ServiceFabricManagementClient/1.1.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.ServiceFabric.ServiceFabricManagementClient/1.3.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -144,7 +144,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 07 Aug 2019 20:06:50 GMT"
+          "Thu, 30 Jul 2020 18:53:50 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -153,13 +153,13 @@
           "gateway"
         ],
         "x-ms-request-id": [
-          "2e4d1fad-268d-40ba-8265-d4fcccfa8e29"
+          "b25b28f2-34d6-4dc6-b071-8d2c4a1a274e"
         ],
         "x-ms-correlation-request-id": [
-          "2e4d1fad-268d-40ba-8265-d4fcccfa8e29"
+          "b25b28f2-34d6-4dc6-b071-8d2c4a1a274e"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20190807T200651Z:2e4d1fad-268d-40ba-8265-d4fcccfa8e29"
+          "WESTUS:20200730T185351Z:b25b28f2-34d6-4dc6-b071-8d2c4a1a274e"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -168,7 +168,7 @@
           "nosniff"
         ],
         "Content-Length": [
-          "167"
+          "232"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -177,7 +177,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"message\": \"The Resource 'Microsoft.ServiceFabric/clusters/donotexisting' under resource group 'alsantamclirg2017' was not found.\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"message\": \"The Resource 'Microsoft.ServiceFabric/clusters/donotexisting' under resource group 'cleanupservice' was not found. For more details please go to https://aka.ms/ARMResourceNotFoundFix\"\r\n  }\r\n}",
       "StatusCode": 404
     }
   ],

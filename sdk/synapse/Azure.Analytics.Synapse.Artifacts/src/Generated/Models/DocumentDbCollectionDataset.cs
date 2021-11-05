@@ -16,6 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of DocumentDbCollectionDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="collectionName"> Document Database collection name. Type: string (or Expression with resultType string). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="collectionName"/> is null. </exception>
         public DocumentDbCollectionDataset(LinkedServiceReference linkedServiceName, object collectionName) : base(linkedServiceName)
         {
             if (linkedServiceName == null)
@@ -40,7 +41,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="collectionName"> Document Database collection name. Type: string (or Expression with resultType string). </param>
         internal DocumentDbCollectionDataset(string type, string description, object structure, object schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, DatasetFolder folder, IDictionary<string, object> additionalProperties, object collectionName) : base(type, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {

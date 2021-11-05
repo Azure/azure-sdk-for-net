@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(NotebookMetadataConverter))]
     public partial class NotebookMetadata : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -23,8 +26,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             if (Optional.IsDefined(LanguageInfo))
             {
-                writer.WritePropertyName("language_info");
-                writer.WriteObjectValue(LanguageInfo);
+                if (LanguageInfo != null)
+                {
+                    writer.WritePropertyName("language_info");
+                    writer.WriteObjectValue(LanguageInfo);
+                }
+                else
+                {
+                    writer.WriteNull("language_info");
+                }
             }
             foreach (var item in AdditionalProperties)
             {
@@ -39,24 +49,46 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<NotebookKernelSpec> kernelspec = default;
             Optional<NotebookLanguageInfo> languageInfo = default;
             IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kernelspec"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     kernelspec = NotebookKernelSpec.DeserializeNotebookKernelSpec(property.Value);
                     continue;
                 }
                 if (property.NameEquals("language_info"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        languageInfo = null;
+                        continue;
+                    }
                     languageInfo = NotebookLanguageInfo.DeserializeNotebookLanguageInfo(property.Value);
                     continue;
                 }
-                additionalPropertiesDictionary ??= new Dictionary<string, object>();
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
             return new NotebookMetadata(kernelspec.Value, languageInfo.Value, additionalProperties);
+        }
+
+        internal partial class NotebookMetadataConverter : JsonConverter<NotebookMetadata>
+        {
+            public override void Write(Utf8JsonWriter writer, NotebookMetadata model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override NotebookMetadata Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeNotebookMetadata(document.RootElement);
+            }
         }
     }
 }

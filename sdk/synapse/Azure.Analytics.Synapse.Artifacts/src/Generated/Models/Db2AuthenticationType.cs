@@ -10,12 +10,13 @@ using System.ComponentModel;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    /// <summary> AuthenticationType to be used for connection. </summary>
+    /// <summary> AuthenticationType to be used for connection. It is mutually exclusive with connectionString property. </summary>
     public readonly partial struct Db2AuthenticationType : IEquatable<Db2AuthenticationType>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="Db2AuthenticationType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="Db2AuthenticationType"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public Db2AuthenticationType(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));

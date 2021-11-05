@@ -11,46 +11,36 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    public partial class EventHubListResult
+    internal partial class EventHubListResult
     {
         internal static EventHubListResult DeserializeEventHubListResult(JsonElement element)
         {
-            IReadOnlyList<Eventhub> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<Eventhub>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<Eventhub> array = new List<Eventhub>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(Eventhub.DeserializeEventhub(item));
-                        }
+                        array.Add(Eventhub.DeserializeEventhub(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new EventHubListResult(value, nextLink);
+            return new EventHubListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

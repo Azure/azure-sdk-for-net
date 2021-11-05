@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -16,12 +17,12 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (HealthProbe != null)
+            if (Optional.IsDefined(HealthProbe))
             {
                 writer.WritePropertyName("healthProbe");
-                writer.WriteObjectValue(HealthProbe);
+                JsonSerializer.Serialize(writer, HealthProbe);
             }
-            if (NetworkInterfaceConfigurations != null)
+            if (Optional.IsCollectionDefined(NetworkInterfaceConfigurations))
             {
                 writer.WritePropertyName("networkInterfaceConfigurations");
                 writer.WriteStartArray();
@@ -31,47 +32,58 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(NetworkApiVersion))
+            {
+                writer.WritePropertyName("networkApiVersion");
+                writer.WriteStringValue(NetworkApiVersion.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
         internal static VirtualMachineScaleSetNetworkProfile DeserializeVirtualMachineScaleSetNetworkProfile(JsonElement element)
         {
-            ApiEntityReference healthProbe = default;
-            IList<VirtualMachineScaleSetNetworkConfiguration> networkInterfaceConfigurations = default;
+            Optional<WritableSubResource> healthProbe = default;
+            Optional<IList<VirtualMachineScaleSetNetworkConfiguration>> networkInterfaceConfigurations = default;
+            Optional<NetworkApiVersion> networkApiVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("healthProbe"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    healthProbe = ApiEntityReference.DeserializeApiEntityReference(property.Value);
+                    healthProbe = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("networkInterfaceConfigurations"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<VirtualMachineScaleSetNetworkConfiguration> array = new List<VirtualMachineScaleSetNetworkConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(VirtualMachineScaleSetNetworkConfiguration.DeserializeVirtualMachineScaleSetNetworkConfiguration(item));
-                        }
+                        array.Add(VirtualMachineScaleSetNetworkConfiguration.DeserializeVirtualMachineScaleSetNetworkConfiguration(item));
                     }
                     networkInterfaceConfigurations = array;
                     continue;
                 }
+                if (property.NameEquals("networkApiVersion"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    networkApiVersion = new NetworkApiVersion(property.Value.GetString());
+                    continue;
+                }
             }
-            return new VirtualMachineScaleSetNetworkProfile(healthProbe, networkInterfaceConfigurations);
+            return new VirtualMachineScaleSetNetworkProfile(healthProbe, Optional.ToList(networkInterfaceConfigurations), Optional.ToNullable(networkApiVersion));
         }
     }
 }

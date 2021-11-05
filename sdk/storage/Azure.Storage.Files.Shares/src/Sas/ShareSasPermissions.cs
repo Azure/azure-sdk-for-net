@@ -55,7 +55,6 @@ namespace Azure.Storage.Files.Shares
     /// </summary>
     internal static partial class ShareExtensions
     {
-
         /// <summary>
         /// Create a permissions string to provide
         /// <see cref="ShareSasBuilder.Permissions"/>.

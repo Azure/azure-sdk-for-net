@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
@@ -15,6 +16,8 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <summary> Initializes a new instance of PrivateLinkResource. </summary>
         internal PrivateLinkResource()
         {
+            RequiredMembers = new ChangeTrackingList<string>();
+            RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of PrivateLinkResource. </summary>

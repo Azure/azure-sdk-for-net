@@ -9,7 +9,6 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class WebApiSkill
     {
         /// <summary> The headers required to make the http request. </summary>
-        [CodeGenMember(EmptyAsUndefined = true,  Initialize = true)]
         public IDictionary<string, string> HttpHeaders { get; }
     }
 }

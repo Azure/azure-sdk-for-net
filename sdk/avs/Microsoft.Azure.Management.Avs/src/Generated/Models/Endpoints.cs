@@ -33,10 +33,13 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// manager</param>
         /// <param name="vcsa">Endpoint for Virtual Center Server
         /// Appliance</param>
-        public Endpoints(string nsxtManager = default(string), string vcsa = default(string))
+        /// <param name="hcxCloudManager">Endpoint for the HCX Cloud
+        /// Manager</param>
+        public Endpoints(string nsxtManager = default(string), string vcsa = default(string), string hcxCloudManager = default(string))
         {
             NsxtManager = nsxtManager;
             Vcsa = vcsa;
+            HcxCloudManager = hcxCloudManager;
             CustomInit();
         }
 
@@ -56,6 +59,12 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// </summary>
         [JsonProperty(PropertyName = "vcsa")]
         public string Vcsa { get; private set; }
+
+        /// <summary>
+        /// Gets endpoint for the HCX Cloud Manager
+        /// </summary>
+        [JsonProperty(PropertyName = "hcxCloudManager")]
+        public string HcxCloudManager { get; private set; }
 
     }
 }

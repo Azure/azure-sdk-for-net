@@ -1,236 +1,278 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
-// 
+
+using FluentAssertions;
+using IotHub.Tests.Helpers;
+using Microsoft.Azure.Management.EventHub;
+using Microsoft.Azure.Management.EventHub.Models;
+using Microsoft.Azure.Management.IotHub;
+using Microsoft.Azure.Management.IotHub.Models;
+using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.ResourceManager.Models;
+using Microsoft.Azure.Management.ServiceBus;
+using Microsoft.Azure.Management.ServiceBus.Models;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Threading.Tasks;
+using EHModel = Microsoft.Azure.Management.EventHub.Models;
+using SBModel = Microsoft.Azure.Management.ServiceBus.Models;
 
 namespace IotHub.Tests.ScenarioTests
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Net;
-    using IotHub.Tests.Helpers;
-    using Microsoft.Azure.Management.EventHub;
-    using Microsoft.Azure.Management.EventHub.Models;
-    using Microsoft.Azure.Management.IotHub;
-    using Microsoft.Azure.Management.IotHub.Models;
-    using Microsoft.Azure.Management.ResourceManager;
-    using Microsoft.Azure.Management.ResourceManager.Models;
-    using Microsoft.Azure.Management.ServiceBus;
-    using Microsoft.Azure.Management.ServiceBus.Models;
-    using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-    using Xunit;
-    using EHModel = Microsoft.Azure.Management.EventHub.Models;
-    using SBModel = Microsoft.Azure.Management.ServiceBus.Models;
-
     public class IotHubTestBase
     {
-        protected ResourceManagementClient resourcesClient;
-        protected IotHubClient iotHubClient;
-        protected EventHubManagementClient ehClient;
-        protected ServiceBusManagementClient sbClient;
+        protected ResourceManagementClient _resourcesClient;
+        protected IotHubClient _iotHubClient;
+        protected EventHubManagementClient _ehClient;
+        protected ServiceBusManagementClient _sbClient;
 
-        protected bool initialized = false;
-        protected object locker = new object();
-        protected string location;
-        protected TestEnvironment testEnv;
+        protected bool _isInitialized = false;
+        protected object _initializeLock = new object();
+        protected string _location;
+        protected TestEnvironment _testEnvironment;
 
         protected void Initialize(MockContext context)
         {
-            if (!initialized)
+            if (_isInitialized)
             {
-                lock (locker)
+                return;
+            }
+
+            lock (_initializeLock)
+            {
+                if (_isInitialized)
                 {
-                    if (!initialized)
-                    {
-                        testEnv = TestEnvironmentFactory.GetTestEnvironment();
-                        resourcesClient = IotHubTestUtilities.GetResourceManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
-                        iotHubClient = IotHubTestUtilities.GetIotHubClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
-                        ehClient = IotHubTestUtilities.GetEhClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
-                        sbClient = IotHubTestUtilities.GetSbClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
-
-                        if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION")))
-                        {
-                            location = IotHubTestUtilities.DefaultLocation;
-                        }
-                        else
-                        {
-                            location = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION").Replace(" ", "").ToLower();
-                        }
-
-                        this.initialized = true;
-                    }
+                    return;
                 }
+
+                _testEnvironment = TestEnvironmentFactory.GetTestEnvironment();
+                _resourcesClient = IotHubTestUtilities.GetResourceManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+                _iotHubClient = IotHubTestUtilities.GetIotHubClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+                _ehClient = IotHubTestUtilities.GetEhClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+                _sbClient = IotHubTestUtilities.GetSbClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+
+                _location = string.IsNullOrEmpty(Environment.GetEnvironmentVariable("AZURE_LOCATION"))
+                    ? IotHubTestUtilities.DefaultLocation
+                    : Environment.GetEnvironmentVariable("AZURE_LOCATION").Replace(" ", "").ToLower();
+
+                _isInitialized = true;
             }
         }
 
-        protected string CreateExternalEH(ResourceGroup resourceGroup, string location)
+        protected async Task<string> CreateExternalEhAsync(ResourceGroup resourceGroup, string location)
         {
-            var namespaceName = "iothubcsharpsdkehnamespacetest";
-            var ehName = "iothubcsharpsdkehtest";
-            var authRuleName = "iothubcsharpsdkehtestrule";
+            const string namespaceName = "iothubcsharpsdkehnamespacetest";
+            const string ehName = "iothubcsharpsdkehtest";
+            const string authRuleName = "iothubcsharpsdkehtestrule";
 
-            var namespaceResource = ehClient.Namespaces.CreateOrUpdate(resourceGroup.Name, namespaceName, new EHModel.NamespaceCreateOrUpdateParameters()
-            {
-                Location = location,
-                Sku = new EHModel.Sku()
-                {
-                    Name = "Standard",
-                    Tier = "Standard"
-                }
-            });
-
-            Assert.Equal("Succeeded", namespaceResource.ProvisioningState);
-
-            var ehResource = ehClient.EventHubs.CreateOrUpdate(resourceGroup.Name, namespaceName, ehName, new EventHubCreateOrUpdateParameters()
-            {
-                Location = location
-            });
-
-            ehClient.EventHubs.CreateOrUpdateAuthorizationRule(resourceGroup.Name,
-                namespaceName,
-                ehName,
-                authRuleName,
-                new EHModel.SharedAccessAuthorizationRuleCreateOrUpdateParameters()
-                {
-                    Location = location,
-                    Rights = new List<EHModel.AccessRights?>()
-                {
-                    EHModel.AccessRights.Send,
-                    EHModel.AccessRights.Listen
-                }
-                });
-
-            return ehClient.EventHubs.ListKeys(resourceGroup.Name, namespaceName, ehName, authRuleName).PrimaryConnectionString;
-        }
-
-        protected Tuple<string, string> CreateExternalQueueAndTopic(ResourceGroup resourceGroup, string location)
-        {
-            string sbNamespaceName = "iotHubCSharpSDKSBNamespaceTest";
-            var sbName = "iotHubCSharpSDKSBTest";
-            var topicName = "iotHubCSharpSDKTopicTest";
-            var authRuleName = "iotHubCSharpSDKSBTopicTestRule";
-
-            var namespaceResource = sbClient.Namespaces.CreateOrUpdate(
-                resourceGroup.Name,
-                sbNamespaceName,
-                new SBModel.NamespaceCreateOrUpdateParameters()
-                {
-                    Location = location,
-                    Sku = new SBModel.Sku()
+            EHModel.NamespaceResource namespaceResource = await _ehClient.Namespaces
+                .CreateOrUpdateAsync(
+                    resourceGroup.Name,
+                    namespaceName,
+                    new EHModel.NamespaceCreateOrUpdateParameters
                     {
-                        Name = "Standard",
-                        Tier = "Standard"
-                    }
-                });
+                        Location = location,
+                        Sku = new EHModel.Sku
+                        {
+                            Name = "Standard",
+                            Tier = "Standard",
+                        },
+                    })
+                .ConfigureAwait(false);
+            namespaceResource.ProvisioningState.Should().Be("Succeeded");
 
-            Assert.Equal("Succeeded", namespaceResource.ProvisioningState);
+            _ = await _ehClient.EventHubs
+                .CreateOrUpdateAsync(
+                    resourceGroup.Name,
+                    namespaceName,
+                    ehName,
+                    new EventHubCreateOrUpdateParameters
+                    {
+                        Location = location,
+                    })
+                .ConfigureAwait(false);
 
-            var sbResource = sbClient.Queues.CreateOrUpdate(resourceGroup.Name, sbNamespaceName, sbName, new QueueCreateOrUpdateParameters()
-            {
-                Location = location
-            });
-            var topicResource = sbClient.Topics.CreateOrUpdate(resourceGroup.Name, sbNamespaceName, topicName, new TopicCreateOrUpdateParameters()
-            {
-                Location = location
-            });
+            await _ehClient.EventHubs
+                .CreateOrUpdateAuthorizationRuleAsync(
+                    resourceGroup.Name,
+                    namespaceName,
+                    ehName,
+                    authRuleName,
+                    new EHModel.SharedAccessAuthorizationRuleCreateOrUpdateParameters
+                    {
+                        Location = location,
+                        Rights = new List<EHModel.AccessRights?>
+                        {
+                            EHModel.AccessRights.Send,
+                            EHModel.AccessRights.Listen,
+                        },
+                    })
+                .ConfigureAwait(false);
 
-            sbClient.Queues.CreateOrUpdateAuthorizationRule(resourceGroup.Name, sbNamespaceName, sbName, authRuleName, new SBModel.SharedAccessAuthorizationRuleCreateOrUpdateParameters()
-            {
-                Location = location,
-                Rights = new List<SBModel.AccessRights?>()
-                {
-                    SBModel.AccessRights.Send,
-                    SBModel.AccessRights.Listen
-                }
-            });
+            EHModel.ResourceListKeys listKeys = await _ehClient.EventHubs
+                .ListKeysAsync(resourceGroup.Name, namespaceName, ehName, authRuleName)
+                .ConfigureAwait(false);
 
-            sbClient.Topics.CreateOrUpdateAuthorizationRule(resourceGroup.Name, sbNamespaceName, topicName, authRuleName, new SBModel.SharedAccessAuthorizationRuleCreateOrUpdateParameters()
-            {
-                Location = location,
-                Rights = new List<SBModel.AccessRights?>()
-                {
-                    SBModel.AccessRights.Send,
-                    SBModel.AccessRights.Listen
-                }
-            });
-
-            var sbConnectionString = sbClient.Queues.ListKeys(resourceGroup.Name, sbNamespaceName, sbName, authRuleName).PrimaryConnectionString;
-            var topicConnectionString = sbClient.Queues.ListKeys(resourceGroup.Name, sbNamespaceName, topicName, authRuleName).PrimaryConnectionString;
-
-            return Tuple.Create(sbConnectionString, topicConnectionString);
+            return listKeys.PrimaryConnectionString;
         }
 
-        protected IotHubDescription CreateIotHub(ResourceGroup resourceGroup, string location, string iotHubName, IotHubProperties properties)
+        protected async Task<Tuple<string, string>> CreateExternalQueueAndTopicAsync(ResourceGroup resourceGroup, string location)
         {
-            var createIotHubDescription = new IotHubDescription()
+            const string sbNamespaceName = "iotHubCSharpSDKSBNamespaceTest";
+            const string sbName = "iotHubCSharpSDKSBTest";
+            const string topicName = "iotHubCSharpSDKTopicTest";
+            const string authRuleName = "iotHubCSharpSDKSBTopicTestRule";
+
+            SBModel.NamespaceResource namespaceResource = await _sbClient.Namespaces
+                .CreateOrUpdateAsync(
+                    resourceGroup.Name,
+                    sbNamespaceName,
+                    new SBModel.NamespaceCreateOrUpdateParameters
+                    {
+                        Location = location,
+                        Sku = new SBModel.Sku
+                        {
+                            Name = "Standard",
+                            Tier = "Standard",
+                        },
+                    })
+                .ConfigureAwait(false);
+
+            namespaceResource.ProvisioningState.Should().Be("Succeeded");
+            _ = await _sbClient.Queues
+                .CreateOrUpdateAsync(resourceGroup.Name, sbNamespaceName, sbName, new QueueCreateOrUpdateParameters { Location = location })
+                .ConfigureAwait(false);
+            _ = await _sbClient.Topics
+                .CreateOrUpdateAsync(resourceGroup.Name, sbNamespaceName, topicName, new TopicCreateOrUpdateParameters { Location = location })
+                .ConfigureAwait(false);
+
+            await _sbClient.Queues
+                .CreateOrUpdateAuthorizationRuleAsync(
+                    resourceGroup.Name,
+                    sbNamespaceName,
+                    sbName,
+                    authRuleName,
+                    new SBModel.SharedAccessAuthorizationRuleCreateOrUpdateParameters
+                    {
+                        Location = location,
+                        Rights = new List<SBModel.AccessRights?>
+                        {
+                            SBModel.AccessRights.Send,
+                            SBModel.AccessRights.Listen,
+                        }
+                    })
+                .ConfigureAwait(false);
+
+            await _sbClient.Topics
+                .CreateOrUpdateAuthorizationRuleAsync(
+                    resourceGroup.Name,
+                    sbNamespaceName,
+                    topicName,
+                    authRuleName,
+                    new SBModel.SharedAccessAuthorizationRuleCreateOrUpdateParameters
+                    {
+                        Location = location,
+                        Rights = new List<SBModel.AccessRights?>
+                        {
+                            SBModel.AccessRights.Send,
+                            SBModel.AccessRights.Listen,
+                        }
+                    })
+                .ConfigureAwait(false);
+
+            SBModel.ResourceListKeys sbKeys = await _sbClient.Queues
+                .ListKeysAsync(resourceGroup.Name, sbNamespaceName, sbName, authRuleName)
+                .ConfigureAwait(false);
+            SBModel.ResourceListKeys topicKeys = await _sbClient.Queues
+                .ListKeysAsync(resourceGroup.Name, sbNamespaceName, topicName, authRuleName)
+                .ConfigureAwait(false);
+
+            return Tuple.Create(sbKeys.PrimaryConnectionString, topicKeys.PrimaryConnectionString);
+        }
+
+        protected Task<IotHubDescription> CreateIotHubAsync(ResourceGroup resourceGroup, string location, string iotHubName, IotHubProperties properties)
+        {
+            var createIotHubDescription = new IotHubDescription
             {
                 Location = location,
-                Sku = new IotHubSkuInfo()
+                Sku = new IotHubSkuInfo
                 {
                     Name = "S1",
-                    Capacity = 1
+                    Capacity = 1,
                 },
-                Properties = properties
-
+                Properties = properties,
             };
 
-            return this.iotHubClient.IotHubResource.CreateOrUpdate(
+            return _iotHubClient.IotHubResource.CreateOrUpdateAsync(
                 resourceGroup.Name,
                 iotHubName,
                 createIotHubDescription);
         }
 
-        protected IotHubDescription UpdateIotHub(ResourceGroup resourceGroup, IotHubDescription iotHubDescription, string iotHubName)
+        protected Task<IotHubDescription> UpdateIotHubAsync(ResourceGroup resourceGroup, IotHubDescription iotHubDescription, string iotHubName)
         {
-            return this.iotHubClient.IotHubResource.CreateOrUpdate(
+            return _iotHubClient.IotHubResource.CreateOrUpdateAsync(
                 resourceGroup.Name,
                 iotHubName,
                 iotHubDescription);
         }
 
-        protected ResourceGroup CreateResourceGroup(string resourceGroupName)
+        protected Task<ResourceGroup> CreateResourceGroupAsync(string resourceGroupName)
         {
-            return this.resourcesClient.ResourceGroups.CreateOrUpdate(resourceGroupName,
+            return _resourcesClient.ResourceGroups.CreateOrUpdateAsync(
+                resourceGroupName,
                 new ResourceGroup
                 {
                     Location = IotHubTestUtilities.DefaultLocation
                 });
         }
 
-        protected void DeleteResourceGroup(string resourceGroupName)
+        protected Task DeleteResourceGroupAsync(string resourceGroupName)
         {
-            this.resourcesClient.ResourceGroups.Delete(resourceGroupName);
+            return _resourcesClient.ResourceGroups.DeleteAsync(resourceGroupName);
         }
 
-        protected CertificateDescription CreateCertificate(ResourceGroup resourceGroup, string iotHubName, string certificateName, string certificateBodyDescriptionContent)
+        protected Task<CertificateDescription> CreateCertificateAsync(
+            ResourceGroup resourceGroup,
+            string iotHubName,
+            string certificateName)
         {
-            var createCertificateBodyDescription = new CertificateBodyDescription(certificateBodyDescriptionContent);
-
-            return this.iotHubClient.Certificates.CreateOrUpdate(
+            return _iotHubClient.Certificates.CreateOrUpdateAsync(
                 resourceGroup.Name,
                 iotHubName,
                 certificateName,
-                createCertificateBodyDescription);
+                null,
+                new CertificateProperties(
+                    IotHubTestUtilities.DefaultIotHubCertificateSubject,
+                    null,
+                    IotHubTestUtilities.DefaultIotHubCertificateThumbprint,
+                    null,
+                    null,
+                    null,
+                    IotHubTestUtilities.DefaultIotHubCertificateContent));
         }
 
-        protected CertificateListDescription GetCertificates(ResourceGroup resourceGroup, string iotHubName)
+        protected Task<CertificateListDescription> GetCertificatesAsync(ResourceGroup resourceGroup, string iotHubName)
         {
-            return this.iotHubClient.Certificates.ListByIotHub(resourceGroup.Name, iotHubName);
+            return _iotHubClient.Certificates.ListByIotHubAsync(resourceGroup.Name, iotHubName);
         }
 
-        protected CertificateDescription GetCertificate(ResourceGroup resourceGroup, string iotHubName, string certificateName)
+        protected Task<CertificateDescription> GetCertificateAsync(ResourceGroup resourceGroup, string iotHubName, string certificateName)
         {
-            return this.iotHubClient.Certificates.Get(resourceGroup.Name, iotHubName, certificateName);
+            return _iotHubClient.Certificates.GetAsync(resourceGroup.Name, iotHubName, certificateName);
         }
 
-        protected CertificateWithNonceDescription GenerateVerificationCode(ResourceGroup resourceGroup, string iotHubName, string certificateName, string etag)
+        protected Task<CertificateWithNonceDescription> GenerateVerificationCodeAsync(ResourceGroup resourceGroup, string iotHubName, string certificateName, string etag)
         {
-            return this.iotHubClient.Certificates.GenerateVerificationCode(resourceGroup.Name, iotHubName, certificateName, etag);
+            return _iotHubClient.Certificates.GenerateVerificationCodeAsync(resourceGroup.Name, iotHubName, certificateName, etag);
         }
 
-        protected void DeleteCertificate(ResourceGroup resourceGroup, string iotHubName, string certificateName, string Etag)
+        protected Task DeleteCertificateAsync(ResourceGroup resourceGroup, string iotHubName, string certificateName, string Etag)
         {
-            this.iotHubClient.Certificates.Delete(resourceGroup.Name, iotHubName, certificateName, Etag);
+            return _iotHubClient.Certificates.DeleteAsync(resourceGroup.Name, iotHubName, certificateName, Etag);
         }
     }
 }

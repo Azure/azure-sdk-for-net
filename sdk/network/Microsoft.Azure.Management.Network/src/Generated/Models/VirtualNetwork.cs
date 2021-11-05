@@ -39,11 +39,15 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="type">Resource type.</param>
         /// <param name="location">Resource location.</param>
         /// <param name="tags">Resource tags.</param>
+        /// <param name="extendedLocation">The extended location of the virtual
+        /// network.</param>
         /// <param name="addressSpace">The AddressSpace that contains an array
         /// of IP address ranges that can be used by subnets.</param>
         /// <param name="dhcpOptions">The dhcpOptions that contains an array of
         /// DNS servers available to VMs deployed in the virtual
         /// network.</param>
+        /// <param name="flowTimeoutInMinutes">The FlowTimeout value (in
+        /// minutes) for the Virtual Network</param>
         /// <param name="subnets">A list of subnets in a Virtual
         /// Network.</param>
         /// <param name="virtualNetworkPeerings">A list of peerings in a
@@ -63,15 +67,20 @@ namespace Microsoft.Azure.Management.Network.Models
         /// associated with the virtual network.</param>
         /// <param name="bgpCommunities">Bgp Communities sent over ExpressRoute
         /// with each route corresponding to a prefix in this VNET.</param>
+        /// <param name="encryption">Indicates if encryption is enabled on
+        /// virtual network and if VM without encryption is allowed in
+        /// encrypted VNet.</param>
         /// <param name="ipAllocations">Array of IpAllocation which reference
         /// this VNET.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public VirtualNetwork(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), AddressSpace addressSpace = default(AddressSpace), DhcpOptions dhcpOptions = default(DhcpOptions), IList<Subnet> subnets = default(IList<Subnet>), IList<VirtualNetworkPeering> virtualNetworkPeerings = default(IList<VirtualNetworkPeering>), string resourceGuid = default(string), string provisioningState = default(string), bool? enableDdosProtection = default(bool?), bool? enableVmProtection = default(bool?), SubResource ddosProtectionPlan = default(SubResource), VirtualNetworkBgpCommunities bgpCommunities = default(VirtualNetworkBgpCommunities), IList<SubResource> ipAllocations = default(IList<SubResource>), string etag = default(string))
+        public VirtualNetwork(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ExtendedLocation extendedLocation = default(ExtendedLocation), AddressSpace addressSpace = default(AddressSpace), DhcpOptions dhcpOptions = default(DhcpOptions), int? flowTimeoutInMinutes = default(int?), IList<Subnet> subnets = default(IList<Subnet>), IList<VirtualNetworkPeering> virtualNetworkPeerings = default(IList<VirtualNetworkPeering>), string resourceGuid = default(string), string provisioningState = default(string), bool? enableDdosProtection = default(bool?), bool? enableVmProtection = default(bool?), SubResource ddosProtectionPlan = default(SubResource), VirtualNetworkBgpCommunities bgpCommunities = default(VirtualNetworkBgpCommunities), VirtualNetworkEncryption encryption = default(VirtualNetworkEncryption), IList<SubResource> ipAllocations = default(IList<SubResource>), string etag = default(string))
             : base(id, name, type, location, tags)
         {
+            ExtendedLocation = extendedLocation;
             AddressSpace = addressSpace;
             DhcpOptions = dhcpOptions;
+            FlowTimeoutInMinutes = flowTimeoutInMinutes;
             Subnets = subnets;
             VirtualNetworkPeerings = virtualNetworkPeerings;
             ResourceGuid = resourceGuid;
@@ -80,6 +89,7 @@ namespace Microsoft.Azure.Management.Network.Models
             EnableVmProtection = enableVmProtection;
             DdosProtectionPlan = ddosProtectionPlan;
             BgpCommunities = bgpCommunities;
+            Encryption = encryption;
             IpAllocations = ipAllocations;
             Etag = etag;
             CustomInit();
@@ -89,6 +99,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the extended location of the virtual network.
+        /// </summary>
+        [JsonProperty(PropertyName = "extendedLocation")]
+        public ExtendedLocation ExtendedLocation { get; set; }
 
         /// <summary>
         /// Gets or sets the AddressSpace that contains an array of IP address
@@ -103,6 +119,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.dhcpOptions")]
         public DhcpOptions DhcpOptions { get; set; }
+
+        /// <summary>
+        /// Gets or sets the FlowTimeout value (in minutes) for the Virtual
+        /// Network
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.flowTimeoutInMinutes")]
+        public int? FlowTimeoutInMinutes { get; set; }
 
         /// <summary>
         /// Gets or sets a list of subnets in a Virtual Network.
@@ -160,6 +183,13 @@ namespace Microsoft.Azure.Management.Network.Models
         public VirtualNetworkBgpCommunities BgpCommunities { get; set; }
 
         /// <summary>
+        /// Gets or sets indicates if encryption is enabled on virtual network
+        /// and if VM without encryption is allowed in encrypted VNet.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.encryption")]
+        public VirtualNetworkEncryption Encryption { get; set; }
+
+        /// <summary>
         /// Gets or sets array of IpAllocation which reference this VNET.
         /// </summary>
         [JsonProperty(PropertyName = "properties.ipAllocations")]
@@ -180,9 +210,23 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </exception>
         public virtual void Validate()
         {
+            if (VirtualNetworkPeerings != null)
+            {
+                foreach (var element in VirtualNetworkPeerings)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
             if (BgpCommunities != null)
             {
                 BgpCommunities.Validate();
+            }
+            if (Encryption != null)
+            {
+                Encryption.Validate();
             }
         }
     }

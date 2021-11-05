@@ -44,7 +44,28 @@ namespace Azure.Core.Pipeline
                 throw new ArgumentNullException(nameof(perRetryPolicies));
             }
 
-            var policies = new List<HttpPipelinePolicy>();
+            var policies = new List<HttpPipelinePolicy>(8 +
+                                                        (options.Policies?.Count ?? 0) +
+                                                        perCallPolicies.Length +
+                                                        perRetryPolicies.Length);
+
+            void AddCustomerPolicies(HttpPipelinePosition position)
+            {
+                if (options.Policies != null)
+                {
+                    foreach (var policy in options.Policies)
+                    {
+                        if (policy.Position == position)
+                        {
+                            policies.Add(policy.Policy);
+                        }
+                    }
+                }
+            }
+
+            DiagnosticsOptions diagnostics = options.Diagnostics;
+
+            var sanitizer = new HttpMessageSanitizer(diagnostics.LoggedHeaderNames.ToArray(), diagnostics.LoggedQueryParameters.ToArray());
 
             bool isDistributedTracingEnabled = options.Diagnostics.IsDistributedTracingEnabled;
 
@@ -52,11 +73,10 @@ namespace Azure.Core.Pipeline
 
             policies.AddRange(perCallPolicies);
 
-            policies.AddRange(options.PerCallPolicies);
+            AddCustomerPolicies(HttpPipelinePosition.PerCall);
 
             policies.Add(ClientRequestIdPolicy.Shared);
 
-            DiagnosticsOptions diagnostics = options.Diagnostics;
             if (diagnostics.IsTelemetryEnabled)
             {
                 policies.Add(CreateTelemetryPolicy(options));
@@ -65,23 +85,26 @@ namespace Azure.Core.Pipeline
             RetryOptions retryOptions = options.Retry;
             policies.Add(new RetryPolicy(retryOptions.Mode, retryOptions.Delay, retryOptions.MaxDelay, retryOptions.MaxRetries));
 
+            policies.Add(RedirectPolicy.Shared);
+
             policies.AddRange(perRetryPolicies);
 
-            policies.AddRange(options.PerRetryPolicies);
+            AddCustomerPolicies(HttpPipelinePosition.PerRetry);
 
             if (diagnostics.IsLoggingEnabled)
             {
-                string assemblyName = options.GetType().Assembly.GetName().Name;
+                string assemblyName = options.GetType().Assembly!.GetName().Name!;
 
-                policies.Add(new LoggingPolicy(diagnostics.IsLoggingContentEnabled, diagnostics.LoggedContentSizeLimit,
-                    diagnostics.LoggedHeaderNames.ToArray(), diagnostics.LoggedQueryParameters.ToArray(), assemblyName));
+                policies.Add(new LoggingPolicy(diagnostics.IsLoggingContentEnabled, diagnostics.LoggedContentSizeLimit, sanitizer, assemblyName));
             }
 
             policies.Add(new ResponseBodyPolicy(options.Retry.NetworkTimeout));
 
-            policies.Add(new RequestActivityPolicy(isDistributedTracingEnabled, ClientDiagnostics.GetResourceProviderNamespace(options.GetType().Assembly)));
+            policies.Add(new RequestActivityPolicy(isDistributedTracingEnabled, ClientDiagnostics.GetResourceProviderNamespace(options.GetType().Assembly), sanitizer));
 
-            policies.RemoveAll(policy => policy == null);
+            AddCustomerPolicies(HttpPipelinePosition.BeforeTransport);
+
+            policies.RemoveAll(static policy => policy == null);
 
             return new HttpPipeline(options.Transport,
                 policies.ToArray(),
@@ -93,9 +116,9 @@ namespace Azure.Core.Pipeline
         {
             const string PackagePrefix = "Azure.";
 
-            Assembly clientAssembly = options.GetType().Assembly;
+            Assembly clientAssembly = options.GetType().Assembly!;
 
-            AssemblyInformationalVersionAttribute versionAttribute = clientAssembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
+            AssemblyInformationalVersionAttribute? versionAttribute = clientAssembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
             if (versionAttribute == null)
             {
                 throw new InvalidOperationException($"{nameof(AssemblyInformationalVersionAttribute)} is required on client SDK assembly '{clientAssembly.FullName}' (inferred from the use of options type '{options.GetType().FullName}').");
@@ -103,13 +126,13 @@ namespace Azure.Core.Pipeline
 
             string version = versionAttribute.InformationalVersion;
 
-            string assemblyName = clientAssembly.GetName().Name;
+            string assemblyName = clientAssembly.GetName().Name!;
             if (assemblyName.StartsWith(PackagePrefix, StringComparison.Ordinal))
             {
                 assemblyName = assemblyName.Substring(PackagePrefix.Length);
             }
 
-            int hashSeparator = version.IndexOf('+');
+            int hashSeparator = version.IndexOfOrdinal('+');
             if (hashSeparator != -1)
             {
                 version = version.Substring(0, hashSeparator);

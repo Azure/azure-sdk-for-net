@@ -15,6 +15,7 @@ namespace Azure.Search.Documents.Models
         /// <summary> Initializes a new instance of AutocompleteItem. </summary>
         /// <param name="text"> The completed term. </param>
         /// <param name="queryPlusText"> The query along with the completed term. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="queryPlusText"/> is null. </exception>
         internal AutocompleteItem(string text, string queryPlusText)
         {
             if (text == null)

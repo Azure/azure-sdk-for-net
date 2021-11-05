@@ -36,14 +36,15 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// Initializes a new instance of the LinkedStorageAccountsResource
         /// class.
         /// </summary>
-        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource. Ex-
-        /// Microsoft.Compute/virtualMachines or
-        /// Microsoft.Storage/storageAccounts.</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="dataSourceType">Linked storage accounts type. Possible
-        /// values include: 'CustomLogs', 'AzureWatson'</param>
+        /// values include: 'CustomLogs', 'AzureWatson', 'Query',
+        /// 'Alerts'</param>
         /// <param name="storageAccountIds">Linked storage accounts resources
         /// ids.</param>
         public LinkedStorageAccountsResource(string id = default(string), string name = default(string), string type = default(string), DataSourceType? dataSourceType = default(DataSourceType?), IList<string> storageAccountIds = default(IList<string>))
@@ -61,7 +62,7 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
 
         /// <summary>
         /// Gets linked storage accounts type. Possible values include:
-        /// 'CustomLogs', 'AzureWatson'
+        /// 'CustomLogs', 'AzureWatson', 'Query', 'Alerts'
         /// </summary>
         [JsonProperty(PropertyName = "properties.dataSourceType")]
         public DataSourceType? DataSourceType { get; private set; }

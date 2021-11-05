@@ -8,45 +8,35 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class GalleryImageVersionList
+    internal partial class GalleryImageVersionList
     {
         internal static GalleryImageVersionList DeserializeGalleryImageVersionList(JsonElement element)
         {
-            IReadOnlyList<GalleryImageVersion> value = default;
-            string nextLink = default;
+            IReadOnlyList<GalleryImageVersionData> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<GalleryImageVersion> array = new List<GalleryImageVersion>();
+                    List<GalleryImageVersionData> array = new List<GalleryImageVersionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(GalleryImageVersion.DeserializeGalleryImageVersion(item));
-                        }
+                        array.Add(GalleryImageVersionData.DeserializeGalleryImageVersionData(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new GalleryImageVersionList(value, nextLink);
+            return new GalleryImageVersionList(value, nextLink.Value);
         }
     }
 }

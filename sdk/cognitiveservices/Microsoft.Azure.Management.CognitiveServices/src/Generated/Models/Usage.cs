@@ -68,34 +68,34 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         public string Unit { get; set; }
 
         /// <summary>
-        /// Gets the name information for the metric.
+        /// Gets or sets the name information for the metric.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
-        public MetricName Name { get; private set; }
+        public MetricName Name { get; set; }
 
         /// <summary>
-        /// Gets the quota period used to summarize the usage values.
+        /// Gets or sets the quota period used to summarize the usage values.
         /// </summary>
         [JsonProperty(PropertyName = "quotaPeriod")]
-        public string QuotaPeriod { get; private set; }
+        public string QuotaPeriod { get; set; }
 
         /// <summary>
-        /// Gets maximum value for this metric.
+        /// Gets or sets maximum value for this metric.
         /// </summary>
         [JsonProperty(PropertyName = "limit")]
-        public double? Limit { get; private set; }
+        public double? Limit { get; set; }
 
         /// <summary>
-        /// Gets current value for this metric.
+        /// Gets or sets current value for this metric.
         /// </summary>
         [JsonProperty(PropertyName = "currentValue")]
-        public double? CurrentValue { get; private set; }
+        public double? CurrentValue { get; set; }
 
         /// <summary>
-        /// Gets next reset time for current quota.
+        /// Gets or sets next reset time for current quota.
         /// </summary>
         [JsonProperty(PropertyName = "nextResetTime")]
-        public string NextResetTime { get; private set; }
+        public string NextResetTime { get; set; }
 
         /// <summary>
         /// Gets or sets cognitive Services account quota usage status.

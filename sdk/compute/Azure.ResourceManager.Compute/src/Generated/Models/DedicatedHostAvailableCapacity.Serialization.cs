@@ -11,52 +11,30 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class DedicatedHostAvailableCapacity : IUtf8JsonSerializable
+    public partial class DedicatedHostAvailableCapacity
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (AllocatableVMs != null)
-            {
-                writer.WritePropertyName("allocatableVMs");
-                writer.WriteStartArray();
-                foreach (var item in AllocatableVMs)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
-        }
-
         internal static DedicatedHostAvailableCapacity DeserializeDedicatedHostAvailableCapacity(JsonElement element)
         {
-            IList<DedicatedHostAllocatableVM> allocatableVMs = default;
+            Optional<IReadOnlyList<DedicatedHostAllocatableVM>> allocatableVMs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allocatableVMs"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DedicatedHostAllocatableVM> array = new List<DedicatedHostAllocatableVM>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(DedicatedHostAllocatableVM.DeserializeDedicatedHostAllocatableVM(item));
-                        }
+                        array.Add(DedicatedHostAllocatableVM.DeserializeDedicatedHostAllocatableVM(item));
                     }
                     allocatableVMs = array;
                     continue;
                 }
             }
-            return new DedicatedHostAvailableCapacity(allocatableVMs);
+            return new DedicatedHostAvailableCapacity(Optional.ToList(allocatableVMs));
         }
     }
 }

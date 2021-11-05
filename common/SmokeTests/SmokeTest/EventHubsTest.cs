@@ -36,12 +36,13 @@ namespace SmokeTest
             Console.WriteLine("1.- Send an Event batch");
             Console.WriteLine("2.- Receive those events\n");
 
-            var connectionString = Environment.GetEnvironmentVariable("EVENT_HUBS_CONNECTION_STRING");
+            var connectionString = Environment.GetEnvironmentVariable("EVENT_HUBS_NAMESPACE_CONNECTION_STRING");
+            var eventHubName = Environment.GetEnvironmentVariable("EVENT_HUBS_TESTHUB_NAME");
             var storageConnectionString = Environment.GetEnvironmentVariable("BLOB_CONNECTION_STRING");
 
             try
             {
-                CreateSenderAndReceiver(connectionString, storageConnectionString);
+                CreateSenderAndReceiver(connectionString, eventHubName, storageConnectionString);
                 await SendAndReceiveEvents();
             }
             finally
@@ -52,13 +53,13 @@ namespace SmokeTest
 
         public static Task Cleanup() => sender.CloseAsync();
 
-        private static void CreateSenderAndReceiver(string connectionString, string storageConnectionString)
+        private static void CreateSenderAndReceiver(string connectionString, string eventHubName, string storageConnectionString)
         {
             Console.Write("Creating the Sender and Receivers... ");
 
-            sender = new EventHubProducerClient(connectionString);
+            sender = new EventHubProducerClient(connectionString, eventHubName);
             storageClient = new BlobContainerClient(storageConnectionString, "mycontainer");
-            processor = new EventProcessorClient(storageClient, EventHubConsumerClient.DefaultConsumerGroupName, connectionString);
+            processor = new EventProcessorClient(storageClient, EventHubConsumerClient.DefaultConsumerGroupName, connectionString, eventHubName);
             Console.WriteLine("\tdone");
         }
 
@@ -97,7 +98,7 @@ namespace SmokeTest
                 {
                     var bodyReader = new StreamReader(eventArgs.Data.BodyAsStream);
                     var bodyContents = bodyReader.ReadToEnd();
-                    Console.WriteLine("Recieved Event: {0}", bodyContents);
+                    Console.WriteLine("Received Event: {0}", bodyContents);
                 }
 
                 return Task.CompletedTask;

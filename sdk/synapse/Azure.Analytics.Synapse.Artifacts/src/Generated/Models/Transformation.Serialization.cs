@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(TransformationConverter))]
     public partial class Transformation : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -43,6 +46,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new Transformation(name, description.Value);
+        }
+
+        internal partial class TransformationConverter : JsonConverter<Transformation>
+        {
+            public override void Write(Utf8JsonWriter writer, Transformation model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override Transformation Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeTransformation(document.RootElement);
+            }
         }
     }
 }

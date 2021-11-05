@@ -38,6 +38,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Job's Tasks.</param>
         /// <param name="displayName">The display name for the Job.</param>
         /// <param name="priority">The priority of the Job.</param>
+        /// <param name="maxParallelTasks">The maximum number of tasks that can
+        /// be executed in parallel for the job.</param>
         /// <param name="constraints">The execution constraints for the
         /// Job.</param>
         /// <param name="jobManagerTask">Details of a Job Manager Task to be
@@ -59,11 +61,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// define dependencies on each other. The default is false.</param>
         /// <param name="networkConfiguration">The network configuration for
         /// the Job.</param>
-        public JobAddParameter(string id, PoolInformation poolInfo, string displayName = default(string), int? priority = default(int?), JobConstraints constraints = default(JobConstraints), JobManagerTask jobManagerTask = default(JobManagerTask), JobPreparationTask jobPreparationTask = default(JobPreparationTask), JobReleaseTask jobReleaseTask = default(JobReleaseTask), IList<EnvironmentSetting> commonEnvironmentSettings = default(IList<EnvironmentSetting>), OnAllTasksComplete? onAllTasksComplete = default(OnAllTasksComplete?), OnTaskFailure? onTaskFailure = default(OnTaskFailure?), IList<MetadataItem> metadata = default(IList<MetadataItem>), bool? usesTaskDependencies = default(bool?), JobNetworkConfiguration networkConfiguration = default(JobNetworkConfiguration))
+        public JobAddParameter(string id, PoolInformation poolInfo, string displayName = default(string), int? priority = default(int?), int? maxParallelTasks = default(int?), JobConstraints constraints = default(JobConstraints), JobManagerTask jobManagerTask = default(JobManagerTask), JobPreparationTask jobPreparationTask = default(JobPreparationTask), JobReleaseTask jobReleaseTask = default(JobReleaseTask), IList<EnvironmentSetting> commonEnvironmentSettings = default(IList<EnvironmentSetting>), OnAllTasksComplete? onAllTasksComplete = default(OnAllTasksComplete?), OnTaskFailure? onTaskFailure = default(OnTaskFailure?), IList<MetadataItem> metadata = default(IList<MetadataItem>), bool? usesTaskDependencies = default(bool?), JobNetworkConfiguration networkConfiguration = default(JobNetworkConfiguration))
         {
             Id = id;
             DisplayName = displayName;
             Priority = priority;
+            MaxParallelTasks = maxParallelTasks;
             Constraints = constraints;
             JobManagerTask = jobManagerTask;
             JobPreparationTask = jobPreparationTask;
@@ -117,6 +120,20 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </remarks>
         [JsonProperty(PropertyName = "priority")]
         public int? Priority { get; set; }
+
+        /// <summary>
+        /// Gets or sets the maximum number of tasks that can be executed in
+        /// parallel for the job.
+        /// </summary>
+        /// <remarks>
+        /// The value of maxParallelTasks must be -1 or greater than 0 if
+        /// specified. If not specified, the default value is -1, which means
+        /// there's no limit to the number of tasks that can be run at once.
+        /// You can update a job's maxParallelTasks after it has been created
+        /// using the update job API.
+        /// </remarks>
+        [JsonProperty(PropertyName = "maxParallelTasks")]
+        public int? MaxParallelTasks { get; set; }
 
         /// <summary>
         /// Gets or sets the execution constraints for the Job.

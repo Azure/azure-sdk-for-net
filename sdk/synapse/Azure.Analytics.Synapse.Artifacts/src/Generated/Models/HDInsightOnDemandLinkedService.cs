@@ -22,6 +22,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="hostSubscriptionId"> The customer’s subscription to host the cluster. Type: string (or Expression with resultType string). </param>
         /// <param name="tenant"> The Tenant id/name to which the service principal belongs. Type: string (or Expression with resultType string). </param>
         /// <param name="clusterResourceGroup"> The resource group where the cluster belongs. Type: string (or Expression with resultType string). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterSize"/>, <paramref name="timeToLive"/>, <paramref name="version"/>, <paramref name="linkedServiceName"/>, <paramref name="hostSubscriptionId"/>, <paramref name="tenant"/>, or <paramref name="clusterResourceGroup"/> is null. </exception>
         public HDInsightOnDemandLinkedService(object clusterSize, object timeToLive, object version, LinkedServiceReference linkedServiceName, object hostSubscriptionId, object tenant, object clusterResourceGroup)
         {
             if (clusterSize == null)
@@ -71,7 +72,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="clusterSize"> Number of worker/data nodes in the cluster. Suggestion value: 4. Type: string (or Expression with resultType string). </param>
         /// <param name="timeToLive"> The allowed idle time for the on-demand HDInsight cluster. Specifies how long the on-demand HDInsight cluster stays alive after completion of an activity run if there are no other active jobs in the cluster. The minimum value is 5 mins. Type: string (or Expression with resultType string). </param>
         /// <param name="version"> Version of the HDInsight cluster.  Type: string (or Expression with resultType string). </param>

@@ -11,6 +11,8 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
 
     public class DataBatchTests : ClientTestBase
     {
+        private readonly Random random = new Random();
+    
         /// <summary>
         /// Utilizes EventDataBatch to send messages as the messages are batched up to max batch size.
         /// </summary>
@@ -79,9 +81,14 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 var ehClient = EventHubClient.CreateFromConnectionString(connectionString);
-                var partitionSender = ehClient.CreatePartitionSender("0");
+                var partitionSender = default(PartitionSender);
+
                 try
                 {
+                    var partitions = await GetPartitionsAsync(ehClient);
+                    var partitionId = partitions[this.random.Next(partitions.Length)];                    
+                    partitionSender = ehClient.CreatePartitionSender(partitionId);
+                    
                     var batchOptions = new BatchOptions()
                     {
                         PartitionKey = "this is the partition key"
@@ -216,7 +223,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
                     if (partitionKey != null)
                     {
                         // Partition key is set then we expect all messages from the same partition.
-                        Assert.True(pReceived.Count(p => p.Count > 0) == 1, "Received messsages from multiple partitions.");
+                        Assert.True(pReceived.Count(p => p.Count > 0) == 1, "Received messages from multiple partitions.");
 
                         // Find target partition.
                         var targetPartition = pReceived.Single(p => p.Count > 0);

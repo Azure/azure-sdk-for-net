@@ -36,16 +36,14 @@ namespace Azure.Batch.Unit.Tests
                 Authentication = { Schemes = AuthenticationSchemes.None },
                 UrlPrefixes = { url }
             };
-            using (WebListener listener = new WebListener(settings))
-            {
-                listener.Start();
-                Task listenTask = AcceptAndAssertAsync(httpMethod, listener, AssertRequestHasExpectedContentLength);
+            using WebListener listener = new WebListener(settings);
+            listener.Start();
+            Task listenTask = AcceptAndAssertAsync(httpMethod, listener, AssertRequestHasExpectedContentLength);
 
-                HttpClient client = new HttpClient();
-                await client.SendAsync(message);
+            HttpClient client = new HttpClient();
+            await client.SendAsync(message);
 
-                await listenTask;
-            }
+            await listenTask;
         }
 #endif
 
@@ -62,11 +60,9 @@ namespace Azure.Batch.Unit.Tests
 
         private static async Task AcceptAndAssertAsync(HttpMethod httpMethod, WebListener listener, Action<HttpMethod, RequestContext> assertLambda)
         {
-            using (RequestContext ctx = await listener.AcceptAsync())
-            {
-                assertLambda(httpMethod, ctx);
-                ctx.Response.StatusCode = 200;
-            }
+            using RequestContext ctx = await listener.AcceptAsync();
+            assertLambda(httpMethod, ctx);
+            ctx.Response.StatusCode = 200;
         }
 
         private static void AssertRequestHasExpectedContentLength(HttpMethod httpMethod, RequestContext ctx)

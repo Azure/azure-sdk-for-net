@@ -1,0 +1,70 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "//subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/providers/Microsoft.Security/iotSensors?api-version=2020-08-06-preview",
+      "EncodedRequestUri": "Ly9zdWJzY3JpcHRpb25zLzQ4N2JiNDg1LWI1YjAtNDcxZS05YzBkLTEwNzE3NjEyZjg2OS9wcm92aWRlcnMvTWljcm9zb2Z0LlNlY3VyaXR5L2lvdFNlbnNvcnM/YXBpLXZlcnNpb249MjAyMC0wOC0wNi1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "5320a1d3-d242-4243-a4d4-e2567cba7034"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Security.SecurityCenterClient/2.1.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-original-request-ids": [
+          "",
+          ""
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "749"
+        ],
+        "x-ms-request-id": [
+          "15bd57e5-32a8-454a-807a-32c6a815dac5"
+        ],
+        "x-ms-correlation-request-id": [
+          "15bd57e5-32a8-454a-807a-32c6a815dac5"
+        ],
+        "x-ms-routing-request-id": [
+          "UKSOUTH:20201111T100920Z:15bd57e5-32a8-454a-807a-32c6a815dac5"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 11 Nov 2020 10:09:20 GMT"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "284"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/resourcegroups/iot-resourcegroup-cus/providers/microsoft.devices/iothubs/sdk-iothub-cus/providers/Microsoft.Security/iotSensors/iotSensor\",\r\n      \"type\": \"Microsoft.Security/iotSensors\",\r\n      \"name\": \"iotSensor\",\r\n      \"properties\": {}\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}

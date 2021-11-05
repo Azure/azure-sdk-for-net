@@ -11,58 +11,23 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class UpdateHistoryProperty : IUtf8JsonSerializable
+    public partial class UpdateHistoryProperty
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Update != null)
-            {
-                writer.WritePropertyName("update");
-                writer.WriteStringValue(Update.Value.ToString());
-            }
-            if (ImmutabilityPeriodSinceCreationInDays != null)
-            {
-                writer.WritePropertyName("immutabilityPeriodSinceCreationInDays");
-                writer.WriteNumberValue(ImmutabilityPeriodSinceCreationInDays.Value);
-            }
-            if (Timestamp != null)
-            {
-                writer.WritePropertyName("timestamp");
-                writer.WriteStringValue(Timestamp.Value, "O");
-            }
-            if (ObjectIdentifier != null)
-            {
-                writer.WritePropertyName("objectIdentifier");
-                writer.WriteStringValue(ObjectIdentifier);
-            }
-            if (TenantId != null)
-            {
-                writer.WritePropertyName("tenantId");
-                writer.WriteStringValue(TenantId);
-            }
-            if (Upn != null)
-            {
-                writer.WritePropertyName("upn");
-                writer.WriteStringValue(Upn);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static UpdateHistoryProperty DeserializeUpdateHistoryProperty(JsonElement element)
         {
-            ImmutabilityPolicyUpdateType? update = default;
-            int? immutabilityPeriodSinceCreationInDays = default;
-            DateTimeOffset? timestamp = default;
-            string objectIdentifier = default;
-            string tenantId = default;
-            string upn = default;
+            Optional<ImmutabilityPolicyUpdateType> update = default;
+            Optional<int> immutabilityPeriodSinceCreationInDays = default;
+            Optional<DateTimeOffset> timestamp = default;
+            Optional<string> objectIdentifier = default;
+            Optional<string> tenantId = default;
+            Optional<string> upn = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("update"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     update = new ImmutabilityPolicyUpdateType(property.Value.GetString());
@@ -72,6 +37,7 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     immutabilityPeriodSinceCreationInDays = property.Value.GetInt32();
@@ -81,6 +47,7 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     timestamp = property.Value.GetDateTimeOffset("O");
@@ -88,33 +55,21 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (property.NameEquals("objectIdentifier"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     objectIdentifier = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("tenantId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     tenantId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("upn"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     upn = property.Value.GetString();
                     continue;
                 }
             }
-            return new UpdateHistoryProperty(update, immutabilityPeriodSinceCreationInDays, timestamp, objectIdentifier, tenantId, upn);
+            return new UpdateHistoryProperty(Optional.ToNullable(update), Optional.ToNullable(immutabilityPeriodSinceCreationInDays), Optional.ToNullable(timestamp), objectIdentifier.Value, tenantId.Value, upn.Value);
         }
     }
 }

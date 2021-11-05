@@ -1,7 +1,5 @@
 # Prerequisites
 
-## Install
-
 ### Install the latest Powershell 7
 
 - Make sure you run the script using the latest stable version of [powershell 7](https://github.com/PowerShell/PowerShell/releases)
@@ -11,15 +9,30 @@
 - If already installed, check latest version:
   - Run `az --version` to make sure `azure-cli` is at least **version 2.3.1**
   - If it isn't, update it
-- Use this link to install [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest])
+- Use this link to install [Azure CLI](https://docs.microsoft.com/cli/azure/install-azure-cli?view=azure-cli-latest])
 
-## Delete
+### Install Bicep
 
-To delete the digital twins instance, you need to first delete the endpoint added by the script (the service doesn't yet support cascading delete).
+- Install using the instructions in [bicep](https://github.com/Azure/bicep/blob/main/docs/installing.md)
+- Note that to deploy Bicep files, use Bicep CLI version 0.3.1 or later. To check your Bicep CLI version, run:
 
-1. To do this, run the command `az dt endpoint delete -n <dt name> -g <rg name> --en someEventHubEndpoint`.
-1. If you have other endpoints that have been added outside this script, you can discover them with the command `az dt endpoint list -n <dt name> -g <rg name>`.
-1. Then delete them with the same command in step 1.
+```bash
+bicep --version
+```
+
+### Run the setup script
+
+The script creates required resources in your azure subscription that allows you to run live tests against them. Run the following command:
+
+- `.\setup.ps1 -Region [YOUR REGION] -ResourceGroup [YOUR DESIRED RESOURCE GROUP NAME] -SubscriptionId [YOUR SUBSCRIPTION ID] -DigitalTwinName [YOUR DESIRED DIGITAL TWIN INSTANCE NAME] -AppRegistrationName [YOUR APP REGISTRATION] -Verbose`
+
+### Generate the ARM template
+
+The ARM template is generated from the [test-resources.bicep](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/digitaltwins/test-resources.bicep) file by running the following script
+
+- `.\generateArmTemplate.ps1`
+
+> **Note**: Do not update the ARM template (test-resources.json) manually. Any changes should be made only to the test-resources.bicep file and the ARM template (test-resources.json) should be generated using the above command.
 
 ## Maintenance
 

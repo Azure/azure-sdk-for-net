@@ -34,8 +34,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// </summary>
         /// <param name="faceId">FaceId of the query face. User needs to call
         /// Face - Detect first to get a valid faceId. Note that this faceId is
-        /// not persisted and will expire 24 hours after the detection
-        /// call</param>
+        /// not persisted and will expire at the time specified by
+        /// faceIdTimeToLive after the detection call</param>
         /// <param name="faceListId">An existing user-specified unique
         /// candidate face list, created in Face List - Create a Face List.
         /// Face list contains a set of persistedFaceIds which are persisted
@@ -47,10 +47,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// and will never expire. Parameter faceListId, largeFaceListId and
         /// faceIds should not be provided at the same time.</param>
         /// <param name="faceIds">An array of candidate faceIds. All of them
-        /// are created by Face - Detect and the faceIds will expire 24 hours
-        /// after the detection call. The number of faceIds is limited to 1000.
-        /// Parameter faceListId, largeFaceListId and faceIds should not be
-        /// provided at the same time.</param>
+        /// are created by Face - Detect and the faceIds will expire at the
+        /// time specified by faceIdTimeToLive after the detection call. The
+        /// number of faceIds is limited to 1000. Parameter faceListId,
+        /// largeFaceListId and faceIds should not be provided at the same
+        /// time.</param>
         /// <param name="maxNumOfCandidatesReturned">The number of top similar
         /// faces returned. The valid range is [1, 1000].</param>
         /// <param name="mode">Similar face searching mode. It can be
@@ -75,7 +76,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// <summary>
         /// Gets or sets faceId of the query face. User needs to call Face -
         /// Detect first to get a valid faceId. Note that this faceId is not
-        /// persisted and will expire 24 hours after the detection call
+        /// persisted and will expire at the time specified by faceIdTimeToLive
+        /// after the detection call
         /// </summary>
         [JsonProperty(PropertyName = "faceId")]
         public System.Guid FaceId { get; set; }
@@ -102,10 +104,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
 
         /// <summary>
         /// Gets or sets an array of candidate faceIds. All of them are created
-        /// by Face - Detect and the faceIds will expire 24 hours after the
-        /// detection call. The number of faceIds is limited to 1000. Parameter
-        /// faceListId, largeFaceListId and faceIds should not be provided at
-        /// the same time.
+        /// by Face - Detect and the faceIds will expire at the time specified
+        /// by faceIdTimeToLive after the detection call. The number of faceIds
+        /// is limited to 1000. Parameter faceListId, largeFaceListId and
+        /// faceIds should not be provided at the same time.
         /// </summary>
         [JsonProperty(PropertyName = "faceIds")]
         public IList<System.Guid?> FaceIds { get; set; }

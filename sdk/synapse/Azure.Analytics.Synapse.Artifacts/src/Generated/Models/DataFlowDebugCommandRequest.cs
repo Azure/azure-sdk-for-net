@@ -17,11 +17,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> The ID of data flow debug session. </summary>
         public string SessionId { get; set; }
-        /// <summary> The data flow which contains the debug session. </summary>
-        public string DataFlowName { get; set; }
-        /// <summary> The command name. </summary>
-        public string CommandName { get; set; }
+        /// <summary> The command type. </summary>
+        public DataFlowDebugCommandType? Command { get; set; }
         /// <summary> The command payload object. </summary>
-        public object CommandPayload { get; set; }
+        public DataFlowDebugCommandPayload CommandPayload { get; set; }
     }
 }

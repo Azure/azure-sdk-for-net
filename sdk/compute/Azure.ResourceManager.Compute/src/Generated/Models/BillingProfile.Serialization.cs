@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (MaxPrice != null)
+            if (Optional.IsDefined(MaxPrice))
             {
                 writer.WritePropertyName("maxPrice");
                 writer.WriteNumberValue(MaxPrice.Value);
@@ -25,20 +25,21 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static BillingProfile DeserializeBillingProfile(JsonElement element)
         {
-            double? maxPrice = default;
+            Optional<double> maxPrice = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxPrice"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxPrice = property.Value.GetDouble();
                     continue;
                 }
             }
-            return new BillingProfile(maxPrice);
+            return new BillingProfile(Optional.ToNullable(maxPrice));
         }
     }
 }

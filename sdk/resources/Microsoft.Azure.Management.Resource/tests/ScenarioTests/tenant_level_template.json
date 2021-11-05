@@ -4,11 +4,11 @@
   "parameters": {
     "managementGroupId": {
       "type": "string",
-      "defaultValue": "gopremra-testmg"
+      "defaultValue": "net-sdk-testmg"
     },
     "subscriptionId": {
       "type": "string",
-      "defaultValue": "a93e8c5c-63cb-4635-933f-6d166ac25187"
+      "defaultValue": "45076d1d-a3e0-418b-8187-e1422a8cf5f4"
     },
     "roleDefinitionId": {
       "type": "string",
@@ -25,7 +25,7 @@
       "name": "[parameters('roleDefinitionId')]",
       "apiVersion": "2018-07-01",
       "properties": {
-        "roleName": "test-app",
+        "roleName": "test-role",
         "description": "something",
         "type": "CustomRole",
         "permissions": [

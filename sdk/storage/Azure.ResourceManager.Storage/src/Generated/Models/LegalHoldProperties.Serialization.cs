@@ -11,39 +11,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class LegalHoldProperties : IUtf8JsonSerializable
+    public partial class LegalHoldProperties
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (HasLegalHold != null)
-            {
-                writer.WritePropertyName("hasLegalHold");
-                writer.WriteBooleanValue(HasLegalHold.Value);
-            }
-            if (Tags != null)
-            {
-                writer.WritePropertyName("tags");
-                writer.WriteStartArray();
-                foreach (var item in Tags)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
-        }
-
         internal static LegalHoldProperties DeserializeLegalHoldProperties(JsonElement element)
         {
-            bool? hasLegalHold = default;
-            IList<TagProperty> tags = default;
+            Optional<bool> hasLegalHold = default;
+            Optional<IReadOnlyList<TagProperty>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hasLegalHold"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     hasLegalHold = property.Value.GetBoolean();
@@ -53,25 +33,19 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<TagProperty> array = new List<TagProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(TagProperty.DeserializeTagProperty(item));
-                        }
+                        array.Add(TagProperty.DeserializeTagProperty(item));
                     }
                     tags = array;
                     continue;
                 }
             }
-            return new LegalHoldProperties(hasLegalHold, tags);
+            return new LegalHoldProperties(Optional.ToNullable(hasLegalHold), Optional.ToList(tags));
         }
     }
 }

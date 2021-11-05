@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (PrefixMatch != null)
+            if (Optional.IsCollectionDefined(PrefixMatch))
             {
                 writer.WritePropertyName("prefixMatch");
                 writer.WriteStartArray();
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (BlobIndexMatch != null)
+            if (Optional.IsCollectionDefined(BlobIndexMatch))
             {
                 writer.WritePropertyName("blobIndexMatch");
                 writer.WriteStartArray();
@@ -48,28 +48,22 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static ManagementPolicyFilter DeserializeManagementPolicyFilter(JsonElement element)
         {
-            IList<string> prefixMatch = default;
+            Optional<IList<string>> prefixMatch = default;
             IList<string> blobTypes = default;
-            IList<TagFilter> blobIndexMatch = default;
+            Optional<IList<TagFilter>> blobIndexMatch = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("prefixMatch"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     prefixMatch = array;
                     continue;
@@ -79,14 +73,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     blobTypes = array;
                     continue;
@@ -95,25 +82,19 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<TagFilter> array = new List<TagFilter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(TagFilter.DeserializeTagFilter(item));
-                        }
+                        array.Add(TagFilter.DeserializeTagFilter(item));
                     }
                     blobIndexMatch = array;
                     continue;
                 }
             }
-            return new ManagementPolicyFilter(prefixMatch, blobTypes, blobIndexMatch);
+            return new ManagementPolicyFilter(Optional.ToList(prefixMatch), blobTypes, Optional.ToList(blobIndexMatch));
         }
     }
 }

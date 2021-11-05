@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (VpnServerConfigurationResourceId != null)
+            if (Optional.IsDefined(VpnServerConfigurationResourceId))
             {
                 writer.WritePropertyName("vpnServerConfigurationResourceId");
                 writer.WriteStringValue(VpnServerConfigurationResourceId);
             }
-            if (AuthenticationMethod != null)
+            if (Optional.IsDefined(AuthenticationMethod))
             {
                 writer.WritePropertyName("authenticationMethod");
                 writer.WriteStringValue(AuthenticationMethod.Value.ToString());

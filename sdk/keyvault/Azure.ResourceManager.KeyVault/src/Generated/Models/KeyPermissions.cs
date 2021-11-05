@@ -15,7 +15,8 @@ namespace Azure.ResourceManager.KeyVault.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="KeyPermissions"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyPermissions"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public KeyPermissions(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
@@ -37,6 +38,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         private const string RestoreValue = "restore";
         private const string RecoverValue = "recover";
         private const string PurgeValue = "purge";
+        private const string ReleaseValue = "release";
 
         /// <summary> encrypt. </summary>
         public static KeyPermissions Encrypt { get; } = new KeyPermissions(EncryptValue);
@@ -70,6 +72,8 @@ namespace Azure.ResourceManager.KeyVault.Models
         public static KeyPermissions Recover { get; } = new KeyPermissions(RecoverValue);
         /// <summary> purge. </summary>
         public static KeyPermissions Purge { get; } = new KeyPermissions(PurgeValue);
+        /// <summary> release. </summary>
+        public static KeyPermissions Release { get; } = new KeyPermissions(ReleaseValue);
         /// <summary> Determines if two <see cref="KeyPermissions"/> values are the same. </summary>
         public static bool operator ==(KeyPermissions left, KeyPermissions right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KeyPermissions"/> values are not the same. </summary>

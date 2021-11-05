@@ -8,35 +8,37 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The List Galleries operation response. </summary>
-    public partial class GalleryList
+    internal partial class GalleryList
     {
         /// <summary> Initializes a new instance of GalleryList. </summary>
         /// <param name="value"> A list of galleries. </param>
-        internal GalleryList(IEnumerable<Gallery> value)
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal GalleryList(IEnumerable<GalleryData> value)
         {
             if (value == null)
             {
                 throw new ArgumentNullException(nameof(value));
             }
 
-            Value = value.ToArray();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of GalleryList. </summary>
         /// <param name="value"> A list of galleries. </param>
         /// <param name="nextLink"> The uri to fetch the next page of galleries. Call ListNext() with this to fetch the next page of galleries. </param>
-        internal GalleryList(IReadOnlyList<Gallery> value, string nextLink)
+        internal GalleryList(IReadOnlyList<GalleryData> value, string nextLink)
         {
-            Value = value ?? new List<Gallery>();
+            Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> A list of galleries. </summary>
-        public IReadOnlyList<Gallery> Value { get; }
+        public IReadOnlyList<GalleryData> Value { get; }
         /// <summary> The uri to fetch the next page of galleries. Call ListNext() with this to fetch the next page of galleries. </summary>
         public string NextLink { get; }
     }

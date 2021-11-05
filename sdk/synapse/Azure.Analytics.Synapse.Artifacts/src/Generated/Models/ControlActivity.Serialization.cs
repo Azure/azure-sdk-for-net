@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(ControlActivityConverter))]
     public partial class ControlActivity : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -55,13 +58,30 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static ControlActivity DeserializeControlActivity(JsonElement element)
         {
+            if (element.TryGetProperty("type", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "AppendVariable": return AppendVariableActivity.DeserializeAppendVariableActivity(element);
+                    case "ExecutePipeline": return ExecutePipelineActivity.DeserializeExecutePipelineActivity(element);
+                    case "Filter": return FilterActivity.DeserializeFilterActivity(element);
+                    case "ForEach": return ForEachActivity.DeserializeForEachActivity(element);
+                    case "IfCondition": return IfConditionActivity.DeserializeIfConditionActivity(element);
+                    case "SetVariable": return SetVariableActivity.DeserializeSetVariableActivity(element);
+                    case "Switch": return SwitchActivity.DeserializeSwitchActivity(element);
+                    case "Until": return UntilActivity.DeserializeUntilActivity(element);
+                    case "Validation": return ValidationActivity.DeserializeValidationActivity(element);
+                    case "Wait": return WaitActivity.DeserializeWaitActivity(element);
+                    case "WebHook": return WebHookActivity.DeserializeWebHookActivity(element);
+                }
+            }
             string name = default;
             string type = default;
             Optional<string> description = default;
             Optional<IList<ActivityDependency>> dependsOn = default;
             Optional<IList<UserProperty>> userProperties = default;
             IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -81,6 +101,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("dependsOn"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ActivityDependency> array = new List<ActivityDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -91,6 +116,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("userProperties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<UserProperty> array = new List<UserProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -99,11 +129,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     userProperties = array;
                     continue;
                 }
-                additionalPropertiesDictionary ??= new Dictionary<string, object>();
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
             return new ControlActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties);
+        }
+
+        internal partial class ControlActivityConverter : JsonConverter<ControlActivity>
+        {
+            public override void Write(Utf8JsonWriter writer, ControlActivity model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override ControlActivity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeControlActivity(document.RootElement);
+            }
         }
     }
 }

@@ -80,12 +80,16 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
         /// <param name="policyDefinitionReferenceId">Reference ID for the
         /// policy definition inside the policy set, if the policy assignment
         /// is for a policy set.</param>
+        /// <param name="complianceState">Compliance state of the
+        /// resource.</param>
         /// <param name="tenantId">Tenant ID for the policy event
         /// record.</param>
         /// <param name="principalOid">Principal object ID for the user who
         /// initiated the resource operation that triggered the policy
         /// event.</param>
-        public PolicyEvent(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string odataid = default(string), string odatacontext = default(string), System.DateTime? timestamp = default(System.DateTime?), string resourceId = default(string), string policyAssignmentId = default(string), string policyDefinitionId = default(string), string effectiveParameters = default(string), bool? isCompliant = default(bool?), string subscriptionId = default(string), string resourceType = default(string), string resourceLocation = default(string), string resourceGroup = default(string), string resourceTags = default(string), string policyAssignmentName = default(string), string policyAssignmentOwner = default(string), string policyAssignmentParameters = default(string), string policyAssignmentScope = default(string), string policyDefinitionName = default(string), string policyDefinitionAction = default(string), string policyDefinitionCategory = default(string), string policySetDefinitionId = default(string), string policySetDefinitionName = default(string), string policySetDefinitionOwner = default(string), string policySetDefinitionCategory = default(string), string policySetDefinitionParameters = default(string), string managementGroupIds = default(string), string policyDefinitionReferenceId = default(string), string tenantId = default(string), string principalOid = default(string))
+        /// <param name="components">Components events records populated only
+        /// when URL contains $expand=components clause.</param>
+        public PolicyEvent(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string odataid = default(string), string odatacontext = default(string), System.DateTime? timestamp = default(System.DateTime?), string resourceId = default(string), string policyAssignmentId = default(string), string policyDefinitionId = default(string), string effectiveParameters = default(string), bool? isCompliant = default(bool?), string subscriptionId = default(string), string resourceType = default(string), string resourceLocation = default(string), string resourceGroup = default(string), string resourceTags = default(string), string policyAssignmentName = default(string), string policyAssignmentOwner = default(string), string policyAssignmentParameters = default(string), string policyAssignmentScope = default(string), string policyDefinitionName = default(string), string policyDefinitionAction = default(string), string policyDefinitionCategory = default(string), string policySetDefinitionId = default(string), string policySetDefinitionName = default(string), string policySetDefinitionOwner = default(string), string policySetDefinitionCategory = default(string), string policySetDefinitionParameters = default(string), string managementGroupIds = default(string), string policyDefinitionReferenceId = default(string), string complianceState = default(string), string tenantId = default(string), string principalOid = default(string), IList<ComponentEventDetails> components = default(IList<ComponentEventDetails>))
         {
             AdditionalProperties = additionalProperties;
             Odataid = odataid;
@@ -115,8 +119,10 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
             PolicySetDefinitionParameters = policySetDefinitionParameters;
             ManagementGroupIds = managementGroupIds;
             PolicyDefinitionReferenceId = policyDefinitionReferenceId;
+            ComplianceState = complianceState;
             TenantId = tenantId;
             PrincipalOid = principalOid;
+            Components = components;
             CustomInit();
         }
 
@@ -306,6 +312,12 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
         public string PolicyDefinitionReferenceId { get; set; }
 
         /// <summary>
+        /// Gets or sets compliance state of the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "complianceState")]
+        public string ComplianceState { get; set; }
+
+        /// <summary>
         /// Gets or sets tenant ID for the policy event record.
         /// </summary>
         [JsonProperty(PropertyName = "tenantId")]
@@ -317,6 +329,13 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
         /// </summary>
         [JsonProperty(PropertyName = "principalOid")]
         public string PrincipalOid { get; set; }
+
+        /// <summary>
+        /// Gets or sets components events records populated only when URL
+        /// contains $expand=components clause.
+        /// </summary>
+        [JsonProperty(PropertyName = "components")]
+        public IList<ComponentEventDetails> Components { get; set; }
 
     }
 }

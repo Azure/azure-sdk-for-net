@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Address != null)
+            if (Optional.IsDefined(Address))
             {
                 writer.WritePropertyName("address");
                 writer.WriteStringValue(Address);
@@ -25,20 +25,16 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static AzureFirewallPublicIPAddress DeserializeAzureFirewallPublicIPAddress(JsonElement element)
         {
-            string address = default;
+            Optional<string> address = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("address"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     address = property.Value.GetString();
                     continue;
                 }
             }
-            return new AzureFirewallPublicIPAddress(address);
+            return new AzureFirewallPublicIPAddress(address.Value);
         }
     }
 }

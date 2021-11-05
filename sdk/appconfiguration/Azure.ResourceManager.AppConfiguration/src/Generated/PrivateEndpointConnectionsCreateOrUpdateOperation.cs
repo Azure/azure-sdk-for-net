@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.AppConfiguration
     public partial class PrivateEndpointConnectionsCreateOrUpdateOperation : Operation<PrivateEndpointConnection>, IOperationSource<PrivateEndpointConnection>
     {
         private readonly ArmOperationHelpers<PrivateEndpointConnection> _operation;
+
+        /// <summary> Initializes a new instance of PrivateEndpointConnectionsCreateOrUpdateOperation for mocking. </summary>
+        protected PrivateEndpointConnectionsCreateOrUpdateOperation()
+        {
+        }
+
         internal PrivateEndpointConnectionsCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<PrivateEndpointConnection>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "PrivateEndpointConnectionsCreateOrUpdateOperation");
@@ -54,27 +60,13 @@ namespace Azure.ResourceManager.AppConfiguration
         PrivateEndpointConnection IOperationSource<PrivateEndpointConnection>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return PrivateEndpointConnection.DeserializePrivateEndpointConnection(document.RootElement);
-            }
+            return PrivateEndpointConnection.DeserializePrivateEndpointConnection(document.RootElement);
         }
 
         async ValueTask<PrivateEndpointConnection> IOperationSource<PrivateEndpointConnection>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return PrivateEndpointConnection.DeserializePrivateEndpointConnection(document.RootElement);
-            }
+            return PrivateEndpointConnection.DeserializePrivateEndpointConnection(document.RootElement);
         }
     }
 }

@@ -35,12 +35,17 @@ namespace Azure.Core.TestFramework
             // verify their Progress handling) so we'll just copy it to a
             // MemoryStream
             if (message.Request.Content != null &&
-                message.Request.Content.TryComputeLength(out long length) &&
-                length > 0)
+                message.Request.Content.TryComputeLength(out long length))
             {
-                using (MemoryStream stream = new MemoryStream((int)length))
+                // Set a Content-Length header if TryComputeLength succeeds.
+                message.Request.Headers.SetValue("Content-Length", length.ToString());
+
+                if (length > 0)
                 {
-                    message.Request.Content.WriteTo(stream, message.CancellationToken);
+                    using (MemoryStream stream = new MemoryStream((int)length))
+                    {
+                        message.Request.Content.WriteTo(stream, message.CancellationToken);
+                    }
                 }
             }
 
@@ -63,12 +68,17 @@ namespace Azure.Core.TestFramework
             // verify their Progress handling) so we'll just copy it to a
             // MemoryStream asynchronously
             if (message.Request.Content != null &&
-                message.Request.Content.TryComputeLength(out long length) &&
-                length > 0)
+                message.Request.Content.TryComputeLength(out long length))
             {
-                using (MemoryStream stream = new MemoryStream((int)length))
+                // Set a Content-Length header if TryComputeLength succeeds.
+                message.Request.Headers.SetValue("Content-Length", length.ToString());
+
+                if (length > 0)
                 {
-                    await message.Request.Content.WriteToAsync(stream, message.CancellationToken).ConfigureAwait(false);
+                    using (MemoryStream stream = new MemoryStream((int)length))
+                    {
+                        await message.Request.Content.WriteToAsync(stream, message.CancellationToken).ConfigureAwait(false);
+                    }
                 }
             }
 
@@ -87,15 +97,13 @@ namespace Azure.Core.TestFramework
 
         public override Request CreateRequest()
         {
+            var request = base.CreateRequest();
             lock (_random)
             {
-                // Force a call to random.NewGuid so we keep the random seed
-                // unified between record/playback
-                _random.NewGuid();
-
-                // TODO: Pavel will think about ways to unify this
+                // Make sure ClientRequestId are the same across request and response
+                request.ClientRequestId = _random.NewGuid().ToString("N");
             }
-            return base.CreateRequest();
+            return request;
         }
 
         public Response GetResponse(RecordEntry recordEntry)

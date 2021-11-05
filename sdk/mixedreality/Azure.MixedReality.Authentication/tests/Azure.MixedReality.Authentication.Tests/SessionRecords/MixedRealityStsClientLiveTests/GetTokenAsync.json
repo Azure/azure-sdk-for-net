@@ -1,0 +1,39 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sts.mixedreality.azure.com/Accounts/68321d5a-7978-4ceb-b880-0f49751daae9/token?api-version=2019-02-28-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-MixedReality.Authentication/1.0.0-alpha.20201214.1",
+          "(.NET 5.0.1-servicing.20575.16; Microsoft Windows 10.0.19042)"
+        ],
+        "X-MRC-CV": "OcJb983\u002BiEWl6nTkbyJWLg",
+        "x-ms-client-request-id": "3184a806364aa4944ed0ae33e3b4ad9a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-store, no-cache",
+        "Content-Length": "1264",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 14 Dec 2020 20:29:07 GMT",
+        "MS-CV": "4a5GoRwvf02egrvXeENDyQ.0",
+        "Pragma": "no-cache",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "ResponseBody": {
+        "AccessToken": "eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJlbWFpbCI6IkJvYkBjb250b3NvLmNvbSIsImdpdmVuX25hbWUiOiJCb2IiLCJpc3MiOiJodHRwOi8vRGVmYXVsdC5Jc3N1ZXIuY29tIiwiYXVkIjoiaHR0cDovL0RlZmF1bHQuQXVkaWVuY2UuY29tIiwiaWF0IjoiMTYwNzk3ODY4MyIsIm5iZiI6IjE2MDc5Nzg2ODMiLCJleHAiOiIxNjA3OTc4OTgzIn0."
+      }
+    }
+  ],
+  "Variables": {
+    "ACCOUNT_DOMAIN": "mixedreality.azure.com",
+    "ACCOUNT_ID": "68321d5a-7978-4ceb-b880-0f49751daae9",
+    "ACCOUNT_KEY": "NjgzMjFkNWEtNzk3OC00Y2ViLWI4ODAtMGY0OTc1MWRhYWU5",
+    "RandomSeed": "1748369871"
+  }
+}

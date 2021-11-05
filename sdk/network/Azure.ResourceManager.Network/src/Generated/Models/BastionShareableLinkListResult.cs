@@ -6,24 +6,17 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for all the Bastion Shareable Link endpoints. </summary>
-    public partial class BastionShareableLinkListResult
+    internal partial class BastionShareableLinkListResult
     {
         /// <summary> Initializes a new instance of BastionShareableLinkListResult. </summary>
         internal BastionShareableLinkListResult()
         {
-        }
-
-        /// <summary> Initializes a new instance of BastionShareableLinkListResult. </summary>
-        /// <param name="value"> List of Bastion Shareable Links for the request. </param>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal BastionShareableLinkListResult(IReadOnlyList<BastionShareableLink> value, string nextLink)
-        {
-            Value = value;
-            NextLink = nextLink;
+            Value = new ChangeTrackingList<BastionShareableLink>();
         }
 
         /// <summary> List of Bastion Shareable Links for the request. </summary>

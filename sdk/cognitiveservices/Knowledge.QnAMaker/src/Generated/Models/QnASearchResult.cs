@@ -38,7 +38,9 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
         /// <param name="source">Source of QnA result.</param>
         /// <param name="metadata">List of metadata.</param>
         /// <param name="context">Context object of the QnA</param>
-        public QnASearchResult(IList<string> questions = default(IList<string>), string answer = default(string), double? score = default(double?), int? id = default(int?), string source = default(string), IList<MetadataDTO> metadata = default(IList<MetadataDTO>), QnASearchResultContext context = default(QnASearchResultContext))
+        /// <param name="answerSpan">Answer span object of QnA with respect to
+        /// user's question.</param>
+        public QnASearchResult(IList<string> questions = default(IList<string>), string answer = default(string), double? score = default(double?), int? id = default(int?), string source = default(string), IList<MetadataDTO> metadata = default(IList<MetadataDTO>), QnASearchResultContext context = default(QnASearchResultContext), QnASearchResultAnswerSpan answerSpan = default(QnASearchResultAnswerSpan))
         {
             Questions = questions;
             Answer = answer;
@@ -47,6 +49,7 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
             Source = source;
             Metadata = metadata;
             Context = context;
+            AnswerSpan = answerSpan;
             CustomInit();
         }
 
@@ -96,6 +99,13 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
         /// </summary>
         [JsonProperty(PropertyName = "context")]
         public QnASearchResultContext Context { get; set; }
+
+        /// <summary>
+        /// Gets or sets answer span object of QnA with respect to user's
+        /// question.
+        /// </summary>
+        [JsonProperty(PropertyName = "answerSpan")]
+        public QnASearchResultAnswerSpan AnswerSpan { get; set; }
 
     }
 }

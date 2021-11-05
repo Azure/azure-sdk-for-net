@@ -1,0 +1,280 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/dfb63c8c-7c89-4ef8-af13-75c1d873c895/resourceGroups/ereyTest/providers/Microsoft.ContainerRegistry/registries/azuresdkunittest?api-version=2017-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGZiNjNjOGMtN2M4OS00ZWY4LWFmMTMtNzVjMWQ4NzNjODk1L3Jlc291cmNlR3JvdXBzL2VyZXlUZXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29udGFpbmVyUmVnaXN0cnkvcmVnaXN0cmllcy9henVyZXNka3VuaXR0ZXN0P2FwaS12ZXJzaW9uPTIwMTctMTAtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "8e096094-522f-46d8-a128-8d0c11a318de"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.ContainerRegistry.ContainerRegistryManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11998"
+        ],
+        "x-ms-request-id": [
+          "58f818ef-74f4-4b0f-ac54-13cbcd145da8"
+        ],
+        "x-ms-correlation-request-id": [
+          "58f818ef-74f4-4b0f-ac54-13cbcd145da8"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHAFRICANORTH:20201207T102808Z:58f818ef-74f4-4b0f-ac54-13cbcd145da8"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 07 Dec 2020 10:28:07 GMT"
+        ],
+        "Content-Length": [
+          "459"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard\",\r\n    \"tier\": \"Standard\"\r\n  },\r\n  \"type\": \"Microsoft.ContainerRegistry/registries\",\r\n  \"id\": \"/subscriptions/dfb63c8c-7c89-4ef8-af13-75c1d873c895/resourceGroups/ereyTest/providers/Microsoft.ContainerRegistry/registries/azuresdkunittest\",\r\n  \"name\": \"azuresdkunittest\",\r\n  \"location\": \"westus\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"loginServer\": \"azuresdkunittest.azurecr.io\",\r\n    \"creationDate\": \"2019-08-01T22:42:31.7178676Z\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"adminUserEnabled\": true\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/dfb63c8c-7c89-4ef8-af13-75c1d873c895/resourceGroups/ereyTest/providers/Microsoft.ContainerRegistry/registries/azuresdkunittest/listCredentials?api-version=2017-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGZiNjNjOGMtN2M4OS00ZWY4LWFmMTMtNzVjMWQ4NzNjODk1L3Jlc291cmNlR3JvdXBzL2VyZXlUZXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29udGFpbmVyUmVnaXN0cnkvcmVnaXN0cmllcy9henVyZXNka3VuaXR0ZXN0L2xpc3RDcmVkZW50aWFscz9hcGktdmVyc2lvbj0yMDE3LTEwLTAx",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "23bf3c51-ea68-425b-9d54-01878c86c52b"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.ContainerRegistry.ContainerRegistryManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1198"
+        ],
+        "x-ms-request-id": [
+          "48beb30c-85d2-4483-8f4f-b9da95648a77"
+        ],
+        "x-ms-correlation-request-id": [
+          "48beb30c-85d2-4483-8f4f-b9da95648a77"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHAFRICANORTH:20201207T102809Z:48beb30c-85d2-4483-8f4f-b9da95648a77"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 07 Dec 2020 10:28:08 GMT"
+        ],
+        "Content-Length": [
+          "172"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"username\": \"azuresdkunittest\",\r\n  \"passwords\": [\r\n    {\r\n      \"name\": \"password\",\r\n      \"value\": \"ccswPG/Y0OTXd3m8ZhBsnuZojLVSlql+\"\r\n    },\r\n    {\r\n      \"name\": \"password2\",\r\n      \"value\": \"9i/WBxz4VBOkFBq=2P8sTqC+hUG+5Oz7\"\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/v2/multi-hello-world/manifests/oci-index-put",
+      "EncodedRequestUri": "L3YyL211bHRpLWhlbGxvLXdvcmxkL21hbmlmZXN0cy9vY2ktaW5kZXgtcHV0",
+      "RequestMethod": "PUT",
+      "RequestBody": "ew0KICAibWFuaWZlc3RzIjogWw0KICAgIHsNCiAgICAgICJtZWRpYVR5cGUiOiAiYXBwbGljYXRpb24vdm5kLmRvY2tlci5kaXN0cmlidXRpb24ubWFuaWZlc3QudjIranNvbiIsDQogICAgICAic2l6ZSI6IDUyOCwNCiAgICAgICJkaWdlc3QiOiAic2hhMjU2OjRiMzZiMDM0N2IyYzZiMDJhZGM1NGEzZDhlODE0MzI5OWU3YzczM2I0ZGNhZGI5NWMxZDRjOGI2ZGE3MjAxNzIiLA0KICAgICAgInBsYXRmb3JtIjogew0KICAgICAgICAiYXJjaGl0ZWN0dXJlIjogImFtZDY0IiwNCiAgICAgICAgIm9zIjogImxpbnV4Ig0KICAgICAgfQ0KICAgIH0sDQogICAgew0KICAgICAgIm1lZGlhVHlwZSI6ICJhcHBsaWNhdGlvbi92bmQuZG9ja2VyLmRpc3RyaWJ1dGlvbi5tYW5pZmVzdC52Mitqc29uIiwNCiAgICAgICJzaXplIjogODM4LA0KICAgICAgImRpZ2VzdCI6ICJzaGEyNTY6MjU0MmM3NmQ1YmE4N2Y5OTIzZWJjYzY3MTE2NzdhMjE2N2RlZGYzM2UzODJmNjFhOTc3NzJhZTM1MTA2Mjc0ZCIsDQogICAgICAicGxhdGZvcm0iOiB7DQogICAgICAgICJhcmNoaXRlY3R1cmUiOiAiYW1kNjQiLA0KICAgICAgICAib3MiOiAid2luZG93cyIsDQogICAgICAgICJvcy52ZXJzaW9uIjogIjEwLjAuMTgzNjIuMjk1Ig0KICAgICAgfQ0KICAgIH0NCiAgXSwNCiAgImFubm90YXRpb25zIjogew0KICAgICJjb20uZXhhbXBsZS5rZXkxIjogInZhbHVlMSIsDQogICAgImNvbS5leGFtcGxlLmtleTIiOiAidmFsdWUyIg0KICB9LA0KICAibWVkaWFUeXBlIjogImFwcGxpY2F0aW9uL3ZuZC5vY2kuaW1hZ2UuaW5kZXgudjEranNvbiIsDQogICJzY2hlbWFWZXJzaW9uIjogMg0KfQ==",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "54da0415-067e-4d1d-bcf1-334f92f38188"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.ContainerRegistry.AzureContainerRegistryClient/1.0.0.0"
+        ],
+        "Content-Type": [
+          "application/vnd.oci.image.index.v1+json"
+        ],
+        "Content-Length": [
+          "826"
+        ]
+      },
+      "ResponseHeaders": {
+        "Server": [
+          "openresty"
+        ],
+        "Date": [
+          "Mon, 07 Dec 2020 10:28:12 GMT"
+        ],
+        "Connection": [
+          "keep-alive"
+        ],
+        "Access-Control-Expose-Headers": [
+          "Docker-Content-Digest",
+          "WWW-Authenticate",
+          "Link",
+          "X-Ms-Correlation-Request-Id"
+        ],
+        "Docker-Content-Digest": [
+          "sha256:7995b7c61c453b2a2e5a8e64464fd2512befac28d700dc63106d3d8b918d2d1e"
+        ],
+        "Docker-Distribution-Api-Version": [
+          "registry/2.0"
+        ],
+        "Location": [
+          "/v2/multi-hello-world/manifests/sha256:7995b7c61c453b2a2e5a8e64464fd2512befac28d700dc63106d3d8b918d2d1e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains",
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Ms-Client-Request-Id": [
+          "54da0415-067e-4d1d-bcf1-334f92f38188"
+        ],
+        "X-Ms-Correlation-Request-Id": [
+          "a73904f6-222f-4c46-9171-5ad83484e200"
+        ],
+        "X-Ms-Request-Id": [
+          "05dde8e4-07ba-4ceb-9b4c-fc50993b94f3"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/v2/multi-hello-world/manifests/oci-index-put",
+      "EncodedRequestUri": "L3YyL211bHRpLWhlbGxvLXdvcmxkL21hbmlmZXN0cy9vY2ktaW5kZXgtcHV0",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "0e5658cf-be8c-4cc4-9752-92e617014444"
+        ],
+        "Accept": [
+          "application/vnd.oci.image.index.v1+json"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.ContainerRegistry.AzureContainerRegistryClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Server": [
+          "openresty"
+        ],
+        "Date": [
+          "Mon, 07 Dec 2020 10:28:13 GMT"
+        ],
+        "Connection": [
+          "keep-alive"
+        ],
+        "Access-Control-Expose-Headers": [
+          "Docker-Content-Digest",
+          "WWW-Authenticate",
+          "Link",
+          "X-Ms-Correlation-Request-Id"
+        ],
+        "Docker-Content-Digest": [
+          "sha256:7995b7c61c453b2a2e5a8e64464fd2512befac28d700dc63106d3d8b918d2d1e"
+        ],
+        "Docker-Distribution-Api-Version": [
+          "registry/2.0"
+        ],
+        "ETag": [
+          "\"sha256:7995b7c61c453b2a2e5a8e64464fd2512befac28d700dc63106d3d8b918d2d1e\""
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains",
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Ms-Client-Request-Id": [
+          "0e5658cf-be8c-4cc4-9752-92e617014444"
+        ],
+        "X-Ms-Correlation-Request-Id": [
+          "6e7a392a-1690-4ec7-85fb-0c9c5526ffc7"
+        ],
+        "X-Ms-Request-Id": [
+          "4e526788-a479-4051-b9ad-d1029f7a01aa"
+        ],
+        "Content-Type": [
+          "application/vnd.oci.image.index.v1+json"
+        ],
+        "Content-Length": [
+          "826"
+        ]
+      },
+      "ResponseBody": "ew0KICAibWFuaWZlc3RzIjogWw0KICAgIHsNCiAgICAgICJtZWRpYVR5cGUiOiAiYXBwbGljYXRpb24vdm5kLmRvY2tlci5kaXN0cmlidXRpb24ubWFuaWZlc3QudjIranNvbiIsDQogICAgICAic2l6ZSI6IDUyOCwNCiAgICAgICJkaWdlc3QiOiAic2hhMjU2OjRiMzZiMDM0N2IyYzZiMDJhZGM1NGEzZDhlODE0MzI5OWU3YzczM2I0ZGNhZGI5NWMxZDRjOGI2ZGE3MjAxNzIiLA0KICAgICAgInBsYXRmb3JtIjogew0KICAgICAgICAiYXJjaGl0ZWN0dXJlIjogImFtZDY0IiwNCiAgICAgICAgIm9zIjogImxpbnV4Ig0KICAgICAgfQ0KICAgIH0sDQogICAgew0KICAgICAgIm1lZGlhVHlwZSI6ICJhcHBsaWNhdGlvbi92bmQuZG9ja2VyLmRpc3RyaWJ1dGlvbi5tYW5pZmVzdC52Mitqc29uIiwNCiAgICAgICJzaXplIjogODM4LA0KICAgICAgImRpZ2VzdCI6ICJzaGEyNTY6MjU0MmM3NmQ1YmE4N2Y5OTIzZWJjYzY3MTE2NzdhMjE2N2RlZGYzM2UzODJmNjFhOTc3NzJhZTM1MTA2Mjc0ZCIsDQogICAgICAicGxhdGZvcm0iOiB7DQogICAgICAgICJhcmNoaXRlY3R1cmUiOiAiYW1kNjQiLA0KICAgICAgICAib3MiOiAid2luZG93cyIsDQogICAgICAgICJvcy52ZXJzaW9uIjogIjEwLjAuMTgzNjIuMjk1Ig0KICAgICAgfQ0KICAgIH0NCiAgXSwNCiAgImFubm90YXRpb25zIjogew0KICAgICJjb20uZXhhbXBsZS5rZXkxIjogInZhbHVlMSIsDQogICAgImNvbS5leGFtcGxlLmtleTIiOiAidmFsdWUyIg0KICB9LA0KICAibWVkaWFUeXBlIjogImFwcGxpY2F0aW9uL3ZuZC5vY2kuaW1hZ2UuaW5kZXgudjEranNvbiIsDQogICJzY2hlbWFWZXJzaW9uIjogMg0KfQ==",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "dfb63c8c-7c89-4ef8-af13-75c1d873c895"
+  }
+}

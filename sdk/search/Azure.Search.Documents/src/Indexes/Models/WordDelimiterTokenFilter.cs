@@ -9,7 +9,6 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class WordDelimiterTokenFilter
     {
         /// <summary> A list of tokens to protect from being delimited. </summary>
-        [CodeGenMember(EmptyAsUndefined = true,  Initialize = true)]
         public IList<string> ProtectedWords { get; }
     }
 }

@@ -52,24 +52,14 @@ namespace Azure.AI.FormRecognizer
         {
             string errorCode = default;
 
-            if (string.IsNullOrEmpty(errorMessage))
+            if (errors.Count > 0)
             {
-                if (errors.Count > 0)
-                {
-                    var firstError = errors[0];
-
-                    errorMessage = firstError.Message;
-                    errorCode = firstError.ErrorCode;
-                }
-                else
-                {
-                    errorMessage = "Operation failed.";
-                }
+                errorCode = errors[0].ErrorCode;
+                errorMessage ??= errors[0].Message;
             }
 
             var errorInfo = new Dictionary<string, string>();
             int index = 0;
-
             foreach (var error in errors)
             {
                 errorInfo.Add($"error-{index}", $"{error.ErrorCode}: {error.Message}");
@@ -79,6 +69,24 @@ namespace Azure.AI.FormRecognizer
             return async
                 ? await diagnostics.CreateRequestFailedExceptionAsync(response, errorMessage, errorCode, errorInfo).ConfigureAwait(false)
                 : diagnostics.CreateRequestFailedException(response, errorMessage, errorCode, errorInfo);
+        }
+
+        public static async ValueTask<RequestFailedException> CreateExceptionForFailedOperationAsync(bool async, ClientDiagnostics diagnostics, Response response,ResponseError error)
+        {
+            var additionalInfo = new Dictionary<string, string>(1) { { "AdditionInformation", error.ToString() } };
+            return async
+                ? await diagnostics.CreateRequestFailedExceptionAsync(response, error.Message, error.Code, additionalInfo).ConfigureAwait(false)
+                : diagnostics.CreateRequestFailedException(response, error.Message, error.Code, additionalInfo);
+        }
+
+        public static RecognizedFormCollection ConvertPrebuiltOutputToRecognizedForms(V2AnalyzeResult analyzeResult)
+        {
+            List<RecognizedForm> forms = new List<RecognizedForm>();
+            for (int i = 0; i < analyzeResult.DocumentResults.Count; i++)
+            {
+                forms.Add(new RecognizedForm(analyzeResult.DocumentResults[i], analyzeResult.PageResults, analyzeResult.ReadResults, default));
+            }
+            return new RecognizedFormCollection(forms);
         }
     }
 }

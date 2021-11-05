@@ -15,41 +15,41 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("lun");
             writer.WriteNumberValue(Lun);
-            if (Caching != null)
+            if (Optional.IsDefined(Caching))
             {
                 writer.WritePropertyName("caching");
                 writer.WriteStringValue(Caching.Value.ToSerialString());
             }
-            if (WriteAcceleratorEnabled != null)
+            if (Optional.IsDefined(WriteAcceleratorEnabled))
             {
                 writer.WritePropertyName("writeAcceleratorEnabled");
                 writer.WriteBooleanValue(WriteAcceleratorEnabled.Value);
             }
             writer.WritePropertyName("createOption");
             writer.WriteStringValue(CreateOption.ToString());
-            if (DiskSizeGB != null)
+            if (Optional.IsDefined(DiskSizeGB))
             {
                 writer.WritePropertyName("diskSizeGB");
                 writer.WriteNumberValue(DiskSizeGB.Value);
             }
-            if (ManagedDisk != null)
+            if (Optional.IsDefined(ManagedDisk))
             {
                 writer.WritePropertyName("managedDisk");
                 writer.WriteObjectValue(ManagedDisk);
             }
-            if (DiskIopsReadWrite != null)
+            if (Optional.IsDefined(DiskIopsReadWrite))
             {
                 writer.WritePropertyName("diskIOPSReadWrite");
                 writer.WriteNumberValue(DiskIopsReadWrite.Value);
             }
-            if (DiskMBpsReadWrite != null)
+            if (Optional.IsDefined(DiskMBpsReadWrite))
             {
                 writer.WritePropertyName("diskMBpsReadWrite");
                 writer.WriteNumberValue(DiskMBpsReadWrite.Value);
@@ -59,23 +59,19 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachineScaleSetDataDisk DeserializeVirtualMachineScaleSetDataDisk(JsonElement element)
         {
-            string name = default;
+            Optional<string> name = default;
             int lun = default;
-            CachingTypes? caching = default;
-            bool? writeAcceleratorEnabled = default;
+            Optional<CachingTypes> caching = default;
+            Optional<bool> writeAcceleratorEnabled = default;
             DiskCreateOptionTypes createOption = default;
-            int? diskSizeGB = default;
-            VirtualMachineScaleSetManagedDiskParameters managedDisk = default;
-            long? diskIOPSReadWrite = default;
-            long? diskMBpsReadWrite = default;
+            Optional<int> diskSizeGB = default;
+            Optional<VirtualMachineScaleSetManagedDiskParameters> managedDisk = default;
+            Optional<long> diskIOPSReadWrite = default;
+            Optional<long> diskMBpsReadWrite = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
@@ -88,6 +84,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     caching = property.Value.GetString().ToCachingTypes();
@@ -97,6 +94,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     writeAcceleratorEnabled = property.Value.GetBoolean();
@@ -111,6 +109,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     diskSizeGB = property.Value.GetInt32();
@@ -120,6 +119,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     managedDisk = VirtualMachineScaleSetManagedDiskParameters.DeserializeVirtualMachineScaleSetManagedDiskParameters(property.Value);
@@ -129,6 +129,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     diskIOPSReadWrite = property.Value.GetInt64();
@@ -138,13 +139,14 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     diskMBpsReadWrite = property.Value.GetInt64();
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetDataDisk(name, lun, caching, writeAcceleratorEnabled, createOption, diskSizeGB, managedDisk, diskIOPSReadWrite, diskMBpsReadWrite);
+            return new VirtualMachineScaleSetDataDisk(name.Value, lun, Optional.ToNullable(caching), Optional.ToNullable(writeAcceleratorEnabled), createOption, Optional.ToNullable(diskSizeGB), managedDisk.Value, Optional.ToNullable(diskIOPSReadWrite), Optional.ToNullable(diskMBpsReadWrite));
         }
     }
 }

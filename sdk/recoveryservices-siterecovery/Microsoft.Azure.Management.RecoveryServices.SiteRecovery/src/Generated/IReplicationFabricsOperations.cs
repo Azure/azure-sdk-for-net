@@ -12,6 +12,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
+    using Microsoft.Rest.Azure.OData;
     using Models;
     using System.Collections;
     using System.Collections.Generic;
@@ -24,7 +25,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
     public partial interface IReplicationFabricsOperations
     {
         /// <summary>
-        /// Gets the list of ASR fabrics
+        /// Gets the list of ASR fabrics.
         /// </summary>
         /// <remarks>
         /// Gets a list of the Azure Site Recovery fabrics in the vault.
@@ -54,6 +55,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// <param name='fabricName'>
         /// Fabric name.
         /// </param>
+        /// <param name='odataQuery'>
+        /// OData parameters to apply to the operation.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -69,13 +73,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Fabric>> GetWithHttpMessagesAsync(string fabricName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Fabric>> GetWithHttpMessagesAsync(string fabricName, ODataQuery<FabricQueryParameter> odataQuery = default(ODataQuery<FabricQueryParameter>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates an Azure Site Recovery fabric.
         /// </summary>
         /// <remarks>
         /// The operation to create an Azure Site Recovery fabric (for e.g.
-        /// Hyper-V site)
+        /// Hyper-V site).
         /// </remarks>
         /// <param name='fabricName'>
         /// Name of the ASR fabric.
@@ -204,7 +208,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// The operation to delete or remove an Azure Site Recovery fabric.
         /// </remarks>
         /// <param name='fabricName'>
-        /// ASR fabric to delete
+        /// ASR fabric to delete.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -252,7 +256,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// </summary>
         /// <remarks>
         /// The operation to create an Azure Site Recovery fabric (for e.g.
-        /// Hyper-V site)
+        /// Hyper-V site).
         /// </remarks>
         /// <param name='fabricName'>
         /// Name of the ASR fabric.
@@ -381,7 +385,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// The operation to delete or remove an Azure Site Recovery fabric.
         /// </remarks>
         /// <param name='fabricName'>
-        /// ASR fabric to delete
+        /// ASR fabric to delete.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -425,7 +429,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// </exception>
         Task<AzureOperationResponse<Fabric>> BeginRenewCertificateWithHttpMessagesAsync(string fabricName, RenewCertificateInput renewCertificate, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets the list of ASR fabrics
+        /// Gets the list of ASR fabrics.
         /// </summary>
         /// <remarks>
         /// Gets a list of the Azure Site Recovery fabrics in the vault.

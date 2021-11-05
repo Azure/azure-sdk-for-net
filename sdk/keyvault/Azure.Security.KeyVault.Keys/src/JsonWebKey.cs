@@ -4,9 +4,11 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Security.KeyVault.Keys
@@ -16,6 +18,7 @@ namespace Azure.Security.KeyVault.Keys
     /// structure that represents a cryptographic key.
     /// For more information, see <see href="http://tools.ietf.org/html/draft-ietf-jose-json-web-key-18">JSON Web Key (JWK)</see>.
     /// </summary>
+    [JsonConverter(typeof(JsonWebKeyConverter))]
     public class JsonWebKey : IJsonDeserializable, IJsonSerializable
     {
         private const string KeyIdPropertyName = "kid";
@@ -35,6 +38,7 @@ namespace Azure.Security.KeyVault.Keys
         private const string KPropertyName = "k";
         private const string TPropertyName = "key_hsm";
 
+        private static readonly JsonEncodedText s_keyIdPropertyNameBytes = JsonEncodedText.Encode(KeyIdPropertyName);
         private static readonly JsonEncodedText s_keyTypePropertyNameBytes = JsonEncodedText.Encode(KeyTypePropertyName);
         private static readonly JsonEncodedText s_keyOpsPropertyNameBytes = JsonEncodedText.Encode(KeyOpsPropertyName);
         private static readonly JsonEncodedText s_curveNamePropertyNameBytes = JsonEncodedText.Encode(CurveNamePropertyName);
@@ -78,7 +82,14 @@ namespace Azure.Security.KeyVault.Keys
         {
         }
 
-        internal JsonWebKey(IEnumerable<KeyOperation> keyOps)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="JsonWebKey"/> class with the given key operations.
+        /// </summary>
+        /// <param name="keyOps">
+        /// A list of supported <see cref="KeyOperation"/> values.
+        /// If null, no operations will be permitted and subsequent cryptography operations may fail.
+        /// </param>
+        public JsonWebKey(IEnumerable<KeyOperation> keyOps)
         {
             _keyOps = keyOps is null ? new List<KeyOperation>() : new List<KeyOperation>(keyOps);
             KeyOps = new ReadOnlyCollection<KeyOperation>(_keyOps);
@@ -238,7 +249,7 @@ namespace Azure.Security.KeyVault.Keys
         #endregion
 
         /// <summary>
-        /// Gets the HSM token used with "Bring Your Own Key".
+        /// Gets the protected key used with "Bring Your Own Key".
         /// </summary>
         public byte[] T { get; set; }
 
@@ -261,15 +272,15 @@ namespace Azure.Security.KeyVault.Keys
         }
 
         /// <summary>
-        /// Converts this <see cref="JsonWebKey"/> of type <see cref="KeyType.Oct"/> to an <see cref="Aes"/> object.
+        /// Converts this <see cref="JsonWebKey"/> of type <see cref="KeyType.Oct"/> or <see cref="KeyType.OctHsm"/> to an <see cref="Aes"/> object.
         /// </summary>
         /// <returns>An <see cref="Aes"/> object.</returns>
         /// <exception cref="InvalidOperationException">This key is not of type <see cref="KeyType.Oct"/> or <see cref="K"/> is null.</exception>
         public Aes ToAes()
         {
-            if (KeyType != KeyType.Oct)
+            if (KeyType != KeyType.Oct && KeyType != KeyType.OctHsm)
             {
-                throw new InvalidOperationException($"key is not an {nameof(KeyType.Oct)} key");
+                throw new InvalidOperationException($"key is not an {nameof(KeyType.Oct)} or {nameof(KeyType.OctHsm)} type");
             }
 
             if (K is null)
@@ -340,10 +351,7 @@ namespace Azure.Security.KeyVault.Keys
                 rsaParameters.InverseQ = ForceBufferLength(nameof(QI), QI, byteLength);
             }
 
-            RSA rsa = RSA.Create();
-            rsa.ImportParameters(rsaParameters);
-
-            return rsa;
+            return CreateRSAProvider(rsaParameters);
         }
 
         internal bool SupportsOperation(KeyOperation operation)
@@ -423,8 +431,12 @@ namespace Azure.Security.KeyVault.Keys
             }
         }
 
-        internal void WriteProperties(Utf8JsonWriter json)
+        internal void WriteProperties(Utf8JsonWriter json, bool withId = false)
         {
+            if (Id != null && withId)
+            {
+                json.WriteString(s_keyIdPropertyNameBytes, Id);
+            }
             if (KeyType != default)
             {
                 json.WriteString(s_keyTypePropertyNameBytes, KeyType.ToString());
@@ -495,6 +507,33 @@ namespace Azure.Security.KeyVault.Keys
         void IJsonDeserializable.ReadProperties(JsonElement json) => ReadProperties(json);
 
         void IJsonSerializable.WriteProperties(Utf8JsonWriter json) => WriteProperties(json);
+
+        private static Func<RSAParameters, RSA> s_rsaFactory;
+        private static RSA CreateRSAProvider(RSAParameters parameters)
+        {
+            if (s_rsaFactory is null)
+            {
+                // On Framework 4.7.2 and newer, to create the CNG implementation of RSA that supports RSA-OAEP-256, we need to create it with RSAParameters.
+                MethodInfo createMethod = typeof(RSA).GetMethod(nameof(RSA.Create), BindingFlags.Public | BindingFlags.Static, null, new[] { typeof(RSAParameters) }, null);
+                if (createMethod != null)
+                {
+                    s_rsaFactory = (Func<RSAParameters, RSA>)createMethod.CreateDelegate(typeof(Func<RSAParameters, RSA>));
+                }
+                else
+                {
+                    s_rsaFactory = p =>
+                    {
+                        // On Framework, this will not support RSA-OAEP-256 padding.
+                        RSA rsa = RSA.Create();
+                        rsa.ImportParameters(parameters);
+
+                        return rsa;
+                    };
+                }
+            }
+
+            return s_rsaFactory(parameters);
+        }
 
         private static byte[] ForceBufferLength(string name, byte[] value, int requiredLengthInBytes)
         {

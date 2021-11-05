@@ -44,7 +44,12 @@ namespace Azure.Core
                 return url;
             }
 
+#if NET5_0
+            int indexOfQuerySeparator = url.IndexOf('?', StringComparison.Ordinal);
+#else
             int indexOfQuerySeparator = url.IndexOf('?');
+#endif
+
             if (indexOfQuerySeparator == -1)
             {
                 return url;
@@ -115,17 +120,16 @@ namespace Azure.Core
                     else
                     {
                         stringBuilder.Append(query, queryIndex, nameLength);
-                        stringBuilder.Append("=");
+                        stringBuilder.Append('=');
                         stringBuilder.Append(_redactedPlaceholder);
                         if (query[endOfParameterValue - 1] == '&')
                         {
-                            stringBuilder.Append("&");
+                            stringBuilder.Append('&');
                         }
                     }
                 }
 
                 queryIndex += valueLength;
-
             } while (queryIndex < query.Length);
 
             return stringBuilder.ToString();

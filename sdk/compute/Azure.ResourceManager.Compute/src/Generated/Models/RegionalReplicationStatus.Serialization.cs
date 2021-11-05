@@ -10,48 +10,18 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class RegionalReplicationStatus : IUtf8JsonSerializable
+    public partial class RegionalReplicationStatus
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Region != null)
-            {
-                writer.WritePropertyName("region");
-                writer.WriteStringValue(Region);
-            }
-            if (State != null)
-            {
-                writer.WritePropertyName("state");
-                writer.WriteStringValue(State.Value.ToString());
-            }
-            if (Details != null)
-            {
-                writer.WritePropertyName("details");
-                writer.WriteStringValue(Details);
-            }
-            if (Progress != null)
-            {
-                writer.WritePropertyName("progress");
-                writer.WriteNumberValue(Progress.Value);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static RegionalReplicationStatus DeserializeRegionalReplicationStatus(JsonElement element)
         {
-            string region = default;
-            ReplicationState? state = default;
-            string details = default;
-            int? progress = default;
+            Optional<string> region = default;
+            Optional<ReplicationState> state = default;
+            Optional<string> details = default;
+            Optional<int> progress = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("region"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     region = property.Value.GetString();
                     continue;
                 }
@@ -59,6 +29,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     state = new ReplicationState(property.Value.GetString());
@@ -66,10 +37,6 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("details"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     details = property.Value.GetString();
                     continue;
                 }
@@ -77,13 +44,14 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     progress = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new RegionalReplicationStatus(region, state, details, progress);
+            return new RegionalReplicationStatus(region.Value, Optional.ToNullable(state), details.Value, Optional.ToNullable(progress));
         }
     }
 }

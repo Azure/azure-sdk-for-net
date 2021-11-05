@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,12 +17,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of SubnetAssociation. </summary>
         internal SubnetAssociation()
         {
+            SecurityRules = new ChangeTrackingList<SecurityRuleData>();
         }
 
         /// <summary> Initializes a new instance of SubnetAssociation. </summary>
         /// <param name="id"> Subnet ID. </param>
         /// <param name="securityRules"> Collection of custom security rules. </param>
-        internal SubnetAssociation(string id, IReadOnlyList<SecurityRule> securityRules)
+        internal SubnetAssociation(string id, IReadOnlyList<SecurityRuleData> securityRules)
         {
             Id = id;
             SecurityRules = securityRules;
@@ -29,6 +32,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Subnet ID. </summary>
         public string Id { get; }
         /// <summary> Collection of custom security rules. </summary>
-        public IReadOnlyList<SecurityRule> SecurityRules { get; }
+        public IReadOnlyList<SecurityRuleData> SecurityRules { get; }
     }
 }

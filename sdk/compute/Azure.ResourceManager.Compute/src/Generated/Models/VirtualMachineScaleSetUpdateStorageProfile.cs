@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -15,17 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of VirtualMachineScaleSetUpdateStorageProfile. </summary>
         public VirtualMachineScaleSetUpdateStorageProfile()
         {
-        }
-
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetUpdateStorageProfile. </summary>
-        /// <param name="imageReference"> The image reference. </param>
-        /// <param name="osDisk"> The OS disk. </param>
-        /// <param name="dataDisks"> The data disks. </param>
-        internal VirtualMachineScaleSetUpdateStorageProfile(ImageReference imageReference, VirtualMachineScaleSetUpdateOSDisk osDisk, IList<VirtualMachineScaleSetDataDisk> dataDisks)
-        {
-            ImageReference = imageReference;
-            OsDisk = osDisk;
-            DataDisks = dataDisks;
+            DataDisks = new ChangeTrackingList<VirtualMachineScaleSetDataDisk>();
         }
 
         /// <summary> The image reference. </summary>
@@ -33,6 +24,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The OS disk. </summary>
         public VirtualMachineScaleSetUpdateOSDisk OsDisk { get; set; }
         /// <summary> The data disks. </summary>
-        public IList<VirtualMachineScaleSetDataDisk> DataDisks { get; set; }
+        public IList<VirtualMachineScaleSetDataDisk> DataDisks { get; }
     }
 }

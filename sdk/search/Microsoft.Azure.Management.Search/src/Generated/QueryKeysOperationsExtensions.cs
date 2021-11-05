@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Search
     public static partial class QueryKeysOperationsExtensions
     {
             /// <summary>
-            /// Generates a new query key for the specified Search service. You can create
+            /// Generates a new query key for the specified search service. You can create
             /// up to 50 query keys per service.
             /// <see href="https://aka.ms/search-manage" />
             /// </summary>
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.Search
             }
 
             /// <summary>
-            /// Generates a new query key for the specified Search service. You can create
+            /// Generates a new query key for the specified search service. You can create
             /// up to 50 query keys per service.
             /// <see href="https://aka.ms/search-manage" />
             /// </summary>

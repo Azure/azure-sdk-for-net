@@ -39,6 +39,10 @@ namespace Microsoft.Azure.Management.Network
         /// Parameters that define the operation to create a connection
         /// monitor.
         /// </param>
+        /// <param name='migrate'>
+        /// Value indicating whether connection monitor V1 should be migrated
+        /// to V2 format.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -54,7 +58,7 @@ namespace Microsoft.Azure.Management.Network
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ConnectionMonitorResult>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string networkWatcherName, string connectionMonitorName, ConnectionMonitor parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ConnectionMonitorResult>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string networkWatcherName, string connectionMonitorName, ConnectionMonitor parameters, string migrate = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets a connection monitor by name.
         /// </summary>
@@ -258,6 +262,10 @@ namespace Microsoft.Azure.Management.Network
         /// Parameters that define the operation to create a connection
         /// monitor.
         /// </param>
+        /// <param name='migrate'>
+        /// Value indicating whether connection monitor V1 should be migrated
+        /// to V2 format.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -273,7 +281,7 @@ namespace Microsoft.Azure.Management.Network
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ConnectionMonitorResult>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string networkWatcherName, string connectionMonitorName, ConnectionMonitor parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ConnectionMonitorResult>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string networkWatcherName, string connectionMonitorName, ConnectionMonitor parameters, string migrate = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes the specified connection monitor.
         /// </summary>

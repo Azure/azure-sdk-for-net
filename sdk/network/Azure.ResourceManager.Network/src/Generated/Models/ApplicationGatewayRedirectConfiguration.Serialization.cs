@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -16,80 +17,70 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Etag != null)
-            {
-                writer.WritePropertyName("etag");
-                writer.WriteStringValue(Etag);
-            }
-            if (Type != null)
-            {
-                writer.WritePropertyName("type");
-                writer.WriteStringValue(Type);
-            }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (RedirectType != null)
+            if (Optional.IsDefined(RedirectType))
             {
                 writer.WritePropertyName("redirectType");
                 writer.WriteStringValue(RedirectType.Value.ToString());
             }
-            if (TargetListener != null)
+            if (Optional.IsDefined(TargetListener))
             {
                 writer.WritePropertyName("targetListener");
-                writer.WriteObjectValue(TargetListener);
+                JsonSerializer.Serialize(writer, TargetListener);
             }
-            if (TargetUrl != null)
+            if (Optional.IsDefined(TargetUrl))
             {
                 writer.WritePropertyName("targetUrl");
                 writer.WriteStringValue(TargetUrl);
             }
-            if (IncludePath != null)
+            if (Optional.IsDefined(IncludePath))
             {
                 writer.WritePropertyName("includePath");
                 writer.WriteBooleanValue(IncludePath.Value);
             }
-            if (IncludeQueryString != null)
+            if (Optional.IsDefined(IncludeQueryString))
             {
                 writer.WritePropertyName("includeQueryString");
                 writer.WriteBooleanValue(IncludeQueryString.Value);
             }
-            if (RequestRoutingRules != null)
+            if (Optional.IsCollectionDefined(RequestRoutingRules))
             {
                 writer.WritePropertyName("requestRoutingRules");
                 writer.WriteStartArray();
                 foreach (var item in RequestRoutingRules)
                 {
-                    writer.WriteObjectValue(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
-            if (UrlPathMaps != null)
+            if (Optional.IsCollectionDefined(UrlPathMaps))
             {
                 writer.WritePropertyName("urlPathMaps");
                 writer.WriteStartArray();
                 foreach (var item in UrlPathMaps)
                 {
-                    writer.WriteObjectValue(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
-            if (PathRules != null)
+            if (Optional.IsCollectionDefined(PathRules))
             {
                 writer.WritePropertyName("pathRules");
                 writer.WriteStartArray();
                 foreach (var item in PathRules)
                 {
-                    writer.WriteObjectValue(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
@@ -99,64 +90,54 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ApplicationGatewayRedirectConfiguration DeserializeApplicationGatewayRedirectConfiguration(JsonElement element)
         {
-            string name = default;
-            string etag = default;
-            string type = default;
-            string id = default;
-            ApplicationGatewayRedirectType? redirectType = default;
-            SubResource targetListener = default;
-            string targetUrl = default;
-            bool? includePath = default;
-            bool? includeQueryString = default;
-            IList<SubResource> requestRoutingRules = default;
-            IList<SubResource> urlPathMaps = default;
-            IList<SubResource> pathRules = default;
+            Optional<string> name = default;
+            Optional<string> etag = default;
+            Optional<string> type = default;
+            Optional<string> id = default;
+            Optional<ApplicationGatewayRedirectType> redirectType = default;
+            Optional<WritableSubResource> targetListener = default;
+            Optional<string> targetUrl = default;
+            Optional<bool> includePath = default;
+            Optional<bool> includeQueryString = default;
+            Optional<IList<WritableSubResource>> requestRoutingRules = default;
+            Optional<IList<WritableSubResource>> urlPathMaps = default;
+            Optional<IList<WritableSubResource>> pathRules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("redirectType"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             redirectType = new ApplicationGatewayRedirectType(property0.Value.GetString());
@@ -166,17 +147,14 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            targetListener = DeserializeSubResource(property0.Value);
+                            targetListener = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("targetUrl"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             targetUrl = property0.Value.GetString();
                             continue;
                         }
@@ -184,6 +162,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             includePath = property0.Value.GetBoolean();
@@ -193,6 +172,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             includeQueryString = property0.Value.GetBoolean();
@@ -202,19 +182,13 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<SubResource> array = new List<SubResource>();
+                            List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(DeserializeSubResource(item));
-                                }
+                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
                             }
                             requestRoutingRules = array;
                             continue;
@@ -223,19 +197,13 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<SubResource> array = new List<SubResource>();
+                            List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(DeserializeSubResource(item));
-                                }
+                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
                             }
                             urlPathMaps = array;
                             continue;
@@ -244,19 +212,13 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<SubResource> array = new List<SubResource>();
+                            List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(DeserializeSubResource(item));
-                                }
+                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
                             }
                             pathRules = array;
                             continue;
@@ -265,7 +227,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ApplicationGatewayRedirectConfiguration(id, name, etag, type, redirectType, targetListener, targetUrl, includePath, includeQueryString, requestRoutingRules, urlPathMaps, pathRules);
+            return new ApplicationGatewayRedirectConfiguration(id.Value, name.Value, etag.Value, type.Value, Optional.ToNullable(redirectType), targetListener, targetUrl.Value, Optional.ToNullable(includePath), Optional.ToNullable(includeQueryString), Optional.ToList(requestRoutingRules), Optional.ToList(urlPathMaps), Optional.ToList(pathRules));
         }
     }
 }

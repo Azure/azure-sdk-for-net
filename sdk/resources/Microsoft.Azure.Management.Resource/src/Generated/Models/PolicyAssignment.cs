@@ -51,16 +51,18 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <param name="enforcementMode">The policy assignment enforcement
         /// mode. Possible values are Default and DoNotEnforce. Possible values
         /// include: 'Default', 'DoNotEnforce'</param>
+        /// <param name="nonComplianceMessages">The messages that describe why
+        /// a resource is non-compliant with the policy.</param>
         /// <param name="id">The ID of the policy assignment.</param>
         /// <param name="type">The type of the policy assignment.</param>
         /// <param name="name">The name of the policy assignment.</param>
-        /// <param name="sku">The policy sku. This property is optional,
-        /// obsolete, and will be ignored.</param>
         /// <param name="location">The location of the policy assignment. Only
         /// required when utilizing managed identity.</param>
         /// <param name="identity">The managed identity associated with the
         /// policy assignment.</param>
-        public PolicyAssignment(string displayName = default(string), string policyDefinitionId = default(string), string scope = default(string), IList<string> notScopes = default(IList<string>), IDictionary<string, ParameterValuesValue> parameters = default(IDictionary<string, ParameterValuesValue>), string description = default(string), object metadata = default(object), string enforcementMode = default(string), string id = default(string), string type = default(string), string name = default(string), PolicySku sku = default(PolicySku), string location = default(string), Identity identity = default(Identity))
+        /// <param name="systemData">The system metadata relating to this
+        /// resource.</param>
+        public PolicyAssignment(string displayName = default(string), string policyDefinitionId = default(string), string scope = default(string), IList<string> notScopes = default(IList<string>), IDictionary<string, ParameterValuesValue> parameters = default(IDictionary<string, ParameterValuesValue>), string description = default(string), object metadata = default(object), string enforcementMode = default(string), IList<NonComplianceMessage> nonComplianceMessages = default(IList<NonComplianceMessage>), string id = default(string), string type = default(string), string name = default(string), string location = default(string), Identity identity = default(Identity), SystemData systemData = default(SystemData))
         {
             DisplayName = displayName;
             PolicyDefinitionId = policyDefinitionId;
@@ -70,12 +72,13 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
             Description = description;
             Metadata = metadata;
             EnforcementMode = enforcementMode;
+            NonComplianceMessages = nonComplianceMessages;
             Id = id;
             Type = type;
             Name = name;
-            Sku = sku;
             Location = location;
             Identity = identity;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -98,10 +101,10 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         public string PolicyDefinitionId { get; set; }
 
         /// <summary>
-        /// Gets or sets the scope for the policy assignment.
+        /// Gets the scope for the policy assignment.
         /// </summary>
         [JsonProperty(PropertyName = "properties.scope")]
-        public string Scope { get; set; }
+        public string Scope { get; private set; }
 
         /// <summary>
         /// Gets or sets the policy's excluded scopes.
@@ -139,6 +142,13 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         public string EnforcementMode { get; set; }
 
         /// <summary>
+        /// Gets or sets the messages that describe why a resource is
+        /// non-compliant with the policy.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.nonComplianceMessages")]
+        public IList<NonComplianceMessage> NonComplianceMessages { get; set; }
+
+        /// <summary>
         /// Gets the ID of the policy assignment.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
@@ -157,13 +167,6 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets or sets the policy sku. This property is optional, obsolete,
-        /// and will be ignored.
-        /// </summary>
-        [JsonProperty(PropertyName = "sku")]
-        public PolicySku Sku { get; set; }
-
-        /// <summary>
         /// Gets or sets the location of the policy assignment. Only required
         /// when utilizing managed identity.
         /// </summary>
@@ -178,17 +181,10 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         public Identity Identity { get; set; }
 
         /// <summary>
-        /// Validate the object.
+        /// Gets the system metadata relating to this resource.
         /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Sku != null)
-            {
-                Sku.Validate();
-            }
-        }
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
+
     }
 }

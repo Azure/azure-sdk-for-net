@@ -1,12 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core.Pipeline;
 using Azure.Identity;
 using NUnit.Framework;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Security.KeyVault.Tests;
+using System.Net.Http;
 
 namespace Azure.Security.KeyVault.Secrets.Samples
 {
@@ -23,12 +24,12 @@ namespace Azure.Security.KeyVault.Secrets.Samples
         public void CreateClient()
         {
             // Environment variable with the Key Vault endpoint.
-            string keyVaultUrl = TestEnvironment.KeyVaultUrl;
+            string vaultUrl = TestEnvironment.KeyVaultUrl;
 
             #region Snippet:CreateSecretClient
             // Create a new secret client using the default credential from Azure.Identity using environment variables previously set,
             // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
-            var client = new SecretClient(vaultUri: new Uri(keyVaultUrl), credential: new DefaultAzureCredential());
+            var client = new SecretClient(vaultUri: new Uri(vaultUrl), credential: new DefaultAzureCredential());
 
             // Create a new secret using the secret client.
             KeyVaultSecret secret = client.SetSecret("secret-name", "secret-value");
@@ -186,6 +187,87 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             DeletedSecret secret = operation.Value;
             client.PurgeDeletedSecret(secret.Name);
             #endregion
+        }
+
+        [Ignore("Used only for the migration guide")]
+        private async Task MigrationGuide()
+        {
+            #region Snippet:Azure_Security_KeyVault_Secrets_Snippets_MigrationGuide_Create
+            SecretClient client = new SecretClient(
+                new Uri("https://myvault.vault.azure.net"),
+                new DefaultAzureCredential());
+            #endregion Snippet:Azure_Security_KeyVault_Secrets_Snippets_MigrationGuide_Create
+
+            #region Snippet:Azure_Security_KeyVault_Secrets_Snippets_MigrationGuide_CreateWithOptions
+            using (HttpClient httpClient = new HttpClient())
+            {
+                SecretClientOptions options = new SecretClientOptions
+                {
+                    Transport = new HttpClientTransport(httpClient)
+                };
+
+#if SNIPPET
+                SecretClient client = new SecretClient(
+#else
+                SecretClient _ = new SecretClient(
+#endif
+                    new Uri("https://myvault.vault.azure.net"),
+                    new DefaultAzureCredential(),
+                    options);
+            }
+            #endregion Snippet:Azure_Security_KeyVault_Secrets_Snippets_MigrationGuide_CreateWithOptions
+
+            {
+                #region Snippet:Azure_Security_KeyVault_Secrets_Snippets_MigrationGuide_SetSecret
+                KeyVaultSecret secret = await client.SetSecretAsync("secret-name", "secret-value");
+                #endregion Snippet:Azure_Security_KeyVault_Secrets_Snippets_MigrationGuide_SetSecret
+            }
+
+            {
+                #region Snippet:Azure_Security_KeyVault_Secrets_Snippets_MigrationGuide_GetSecret
+                // Get the latest secret value.
+                KeyVaultSecret secret = await client.GetSecretAsync("secret-name");
+
+                // Get a specific secret value.
+                KeyVaultSecret secretVersion = await client.GetSecretAsync("secret-name", "e43af03a7cbc47d4a4e9f11540186048");
+                #endregion Snippet:Azure_Security_KeyVault_Secrets_Snippets_MigrationGuide_GetSecret
+            }
+
+            {
+                #region Snippet:Azure_Security_KeyVault_Secrets_Snippets_MigrationGuide_ListSecrets
+                // List all secrets asynchronously.
+                await foreach (SecretProperties item in client.GetPropertiesOfSecretsAsync())
+                {
+                    KeyVaultSecret secret = await client.GetSecretAsync(item.Name);
+                }
+
+                // List all secrets synchronously.
+                foreach (SecretProperties item in client.GetPropertiesOfSecrets())
+                {
+                    KeyVaultSecret secret = client.GetSecret(item.Name);
+                }
+                #endregion Snippet:Azure_Security_KeyVault_Secrets_Snippets_MigrationGuide_ListSecrets
+            }
+
+            {
+                #region Snippet:Azure_Security_KeyVault_Secrets_Snippets_MigrationGuide_DeleteSecret
+                // Delete the secret.
+                DeleteSecretOperation deleteOperation = await client.StartDeleteSecretAsync("secret-name");
+
+                // Purge or recover the deleted secret if soft delete is enabled.
+                if (deleteOperation.Value.RecoveryId != null)
+                {
+                    // Deleting a secret does not happen immediately. Wait for the secret to be deleted.
+                    DeletedSecret deletedSecret = await deleteOperation.WaitForCompletionAsync();
+
+                    // Purge the deleted secret.
+                    await client.PurgeDeletedSecretAsync(deletedSecret.Name);
+
+                    // You can also recover the deleted secret using StartRecoverDeletedSecretAsync,
+                    // which returns RecoverDeletedSecretOperation you can await like DeleteSecretOperation above.
+                }
+                #endregion Snippet:Azure_Security_KeyVault_Secrets_Snippets_MigrationGuide_DeleteSecret
+            }
         }
     }
 }

@@ -7,6 +7,7 @@ using Microsoft.Azure.Management.DataMigration.Models;
 using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using System;
 
 namespace DataMigration.Tests.ScenarioTests
 {
@@ -15,7 +16,6 @@ namespace DataMigration.Tests.ScenarioTests
         protected static string ResourceGroupName;
         protected static string DmsDeploymentName;
         protected static string DmsProjectName;
-        protected static string DmsTaskName;
         protected static string DmsFileName;
 
         public CRUDDMSTestsBase()
@@ -23,11 +23,10 @@ namespace DataMigration.Tests.ScenarioTests
             ResourceGroupName = "DmsSdkRg";
             DmsDeploymentName = "DmsSdkService";
             DmsProjectName = "DmsSdkProject";
-            DmsTaskName = "DmsSdkTask";
             DmsFileName = "DmsSdkFile";
         }
 
-        protected Project CreateDMSProject(MockContext context,
+        protected Project CreateDMSSqlProject(MockContext context,
             DataMigrationServiceClient client,
             ResourceGroup resourceGroup,
             string dmsInstanceName,
@@ -35,6 +34,32 @@ namespace DataMigration.Tests.ScenarioTests
         {
             return client.Projects.CreateOrUpdate(
                 new Project(TestConfiguration.Location, ProjectSourcePlatform.SQL, ProjectTargetPlatform.SQLDB),
+                resourceGroup.Name,
+                dmsInstanceName,
+                dmsProjectName);
+        }
+
+        protected Project CreateDMSPGProject(MockContext context,
+            DataMigrationServiceClient client,
+            ResourceGroup resourceGroup,
+            string dmsInstanceName,
+            string dmsProjectName)
+        {
+            return client.Projects.CreateOrUpdate(
+                new Project(TestConfiguration.Location, ProjectSourcePlatform.PostgreSql, ProjectTargetPlatform.AzureDbForPostgreSql),
+                resourceGroup.Name,
+                dmsInstanceName,
+                dmsProjectName);
+        }
+
+        protected Project CreateDMSMySqlProject(MockContext context,
+            DataMigrationServiceClient client,
+            ResourceGroup resourceGroup,
+            string dmsInstanceName,
+            string dmsProjectName)
+        {
+            return client.Projects.CreateOrUpdate(
+                new Project(TestConfiguration.Location, ProjectSourcePlatform.MySQL, ProjectTargetPlatform.AzureDbForMySql),
                 resourceGroup.Name,
                 dmsInstanceName,
                 dmsProjectName);
@@ -49,7 +74,7 @@ namespace DataMigration.Tests.ScenarioTests
                 type: "Microsoft.DataMigration/services",
                 location: resourceGroup.Location,
                 virtualSubnetId: TestConfiguration.VirtualSubnetId,
-                sku: new ServiceSku("BusinessCritical_4vCores", "Business Critical")),
+                sku: new ServiceSku("Premium_4vCores", "Premium")),
                     resourceGroup.Name,
                     dmsInstanceName);
         }

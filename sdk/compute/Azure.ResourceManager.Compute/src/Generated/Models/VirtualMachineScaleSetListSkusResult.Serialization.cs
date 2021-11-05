@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineScaleSetListSkusResult
+    internal partial class VirtualMachineScaleSetListSkusResult
     {
         internal static VirtualMachineScaleSetListSkusResult DeserializeVirtualMachineScaleSetListSkusResult(JsonElement element)
         {
             IReadOnlyList<VirtualMachineScaleSetSku> value = default;
-            string nextLink = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -24,29 +24,18 @@ namespace Azure.ResourceManager.Compute.Models
                     List<VirtualMachineScaleSetSku> array = new List<VirtualMachineScaleSetSku>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(VirtualMachineScaleSetSku.DeserializeVirtualMachineScaleSetSku(item));
-                        }
+                        array.Add(VirtualMachineScaleSetSku.DeserializeVirtualMachineScaleSetSku(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetListSkusResult(value, nextLink);
+            return new VirtualMachineScaleSetListSkusResult(value, nextLink.Value);
         }
     }
 }

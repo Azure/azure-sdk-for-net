@@ -11,46 +11,36 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class PeerExpressRouteCircuitConnectionListResult
+    internal partial class PeerExpressRouteCircuitConnectionListResult
     {
         internal static PeerExpressRouteCircuitConnectionListResult DeserializePeerExpressRouteCircuitConnectionListResult(JsonElement element)
         {
-            IReadOnlyList<PeerExpressRouteCircuitConnection> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<PeerExpressRouteCircuitConnection>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PeerExpressRouteCircuitConnection> array = new List<PeerExpressRouteCircuitConnection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(PeerExpressRouteCircuitConnection.DeserializePeerExpressRouteCircuitConnection(item));
-                        }
+                        array.Add(PeerExpressRouteCircuitConnection.DeserializePeerExpressRouteCircuitConnection(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new PeerExpressRouteCircuitConnectionListResult(value, nextLink);
+            return new PeerExpressRouteCircuitConnectionListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

@@ -1,21 +1,21 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/10438cf7-a794-4c7b-ad4c-5ddc1313ba7d/resourcegroups/MixedRealityNetSdkTests?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTA0MzhjZjctYTc5NC00YzdiLWFkNGMtNWRkYzEzMTNiYTdkL3Jlc291cmNlZ3JvdXBzL01peGVkUmVhbGl0eU5ldFNka1Rlc3RzP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
+      "RequestUri": "/subscriptions/eaa04920-46c9-488e-b765-1db1491c42fb/resourcegroups/MixedRealityNetSdkTests?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWFhMDQ5MjAtNDZjOS00ODhlLWI3NjUtMWRiMTQ5MWM0MmZiL3Jlc291cmNlZ3JvdXBzL01peGVkUmVhbGl0eU5ldFNka1Rlc3RzP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"name\": \"MixedRealityNetSdkTests\",\r\n  \"location\": \"EastUs2\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "243411b8-eaff-40e5-b719-3c6ed87f8029"
+          "bb6cabdf-b870-4329-bfab-9f79e6eb30d3"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.6.29719.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
         ],
         "Content-Type": [
@@ -29,29 +29,29 @@
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Tue, 19 May 2020 06:50:33 GMT"
-        ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
+          "1198"
         ],
         "x-ms-request-id": [
-          "c34d1d8f-5662-4789-8983-9ea1eb5e6b34"
+          "a1553096-eb4e-4c64-a4b4-1670ffbecf67"
         ],
         "x-ms-correlation-request-id": [
-          "c34d1d8f-5662-4789-8983-9ea1eb5e6b34"
+          "a1553096-eb4e-4c64-a4b4-1670ffbecf67"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200519T065034Z:c34d1d8f-5662-4789-8983-9ea1eb5e6b34"
+          "WESTUS2:20210222T223824Z:a1553096-eb4e-4c64-a4b4-1670ffbecf67"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": [
           "nosniff"
+        ],
+        "Date": [
+          "Mon, 22 Feb 2021 22:38:23 GMT"
         ],
         "Content-Length": [
           "200"
@@ -63,34 +63,31 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/10438cf7-a794-4c7b-ad4c-5ddc1313ba7d/resourceGroups/MixedRealityNetSdkTests\",\r\n  \"name\": \"MixedRealityNetSdkTests\",\r\n  \"location\": \"eastus2\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/eaa04920-46c9-488e-b765-1db1491c42fb/resourceGroups/MixedRealityNetSdkTests\",\r\n  \"name\": \"MixedRealityNetSdkTests\",\r\n  \"location\": \"eastus2\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/10438cf7-a794-4c7b-ad4c-5ddc1313ba7d/resourceGroups/MixedRealityNetSdkTests/providers/Microsoft.MixedReality/spatialAnchorsAccounts/NetSdkTests?api-version=2020-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTA0MzhjZjctYTc5NC00YzdiLWFkNGMtNWRkYzEzMTNiYTdkL3Jlc291cmNlR3JvdXBzL01peGVkUmVhbGl0eU5ldFNka1Rlc3RzL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWl4ZWRSZWFsaXR5L3NwYXRpYWxBbmNob3JzQWNjb3VudHMvTmV0U2RrVGVzdHM/YXBpLXZlcnNpb249MjAyMC0wNS0wMQ==",
+      "RequestUri": "/subscriptions/eaa04920-46c9-488e-b765-1db1491c42fb/resourceGroups/MixedRealityNetSdkTests/providers/Microsoft.MixedReality/spatialAnchorsAccounts/NetSdkTests?api-version=2021-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWFhMDQ5MjAtNDZjOS00ODhlLWI3NjUtMWRiMTQ5MWM0MmZiL3Jlc291cmNlR3JvdXBzL01peGVkUmVhbGl0eU5ldFNka1Rlc3RzL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWl4ZWRSZWFsaXR5L3NwYXRpYWxBbmNob3JzQWNjb3VudHMvTmV0U2RrVGVzdHM/YXBpLXZlcnNpb249MjAyMS0wMy0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "ee8f002c-de31-46a1-81e4-7d79a3f38cb5"
+          "0b7c586b-52b1-4127-a90c-31848a0e5e1c"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.6.29719.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.MixedReality.MixedRealityClient/0.9.0.preview.1"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.MixedReality.MixedRealityClient/1.0.0.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
-        ],
-        "Date": [
-          "Tue, 19 May 2020 06:50:34 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -99,13 +96,13 @@
           "gateway"
         ],
         "x-ms-request-id": [
-          "28324945-f4a2-4098-a05f-d37f477747ee"
+          "a01cdf9e-1dbb-4dc9-848f-b9d2e23be507"
         ],
         "x-ms-correlation-request-id": [
-          "28324945-f4a2-4098-a05f-d37f477747ee"
+          "a01cdf9e-1dbb-4dc9-848f-b9d2e23be507"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200519T065034Z:28324945-f4a2-4098-a05f-d37f477747ee"
+          "WESTUS2:20210222T223824Z:a01cdf9e-1dbb-4dc9-848f-b9d2e23be507"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -113,68 +110,71 @@
         "X-Content-Type-Options": [
           "nosniff"
         ],
-        "Content-Length": [
-          "184"
+        "Date": [
+          "Mon, 22 Feb 2021 22:38:24 GMT"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Expires": [
           "-1"
+        ],
+        "Content-Length": [
+          "252"
         ]
       },
-      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"message\": \"The Resource 'Microsoft.MixedReality/spatialAnchorsAccounts/NetSdkTests' under resource group 'MixedRealityNetSdkTests' was not found.\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"message\": \"The Resource 'Microsoft.MixedReality/spatialAnchorsAccounts/NetSdkTests' under resource group 'MixedRealityNetSdkTests' was not found. For more details please go to https://aka.ms/ARMResourceNotFoundFix\"\r\n  }\r\n}",
       "StatusCode": 404
     },
     {
-      "RequestUri": "/subscriptions/10438cf7-a794-4c7b-ad4c-5ddc1313ba7d/resourceGroups/MixedRealityNetSdkTests/providers/Microsoft.MixedReality/spatialAnchorsAccounts/NetSdkTests?api-version=2020-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTA0MzhjZjctYTc5NC00YzdiLWFkNGMtNWRkYzEzMTNiYTdkL3Jlc291cmNlR3JvdXBzL01peGVkUmVhbGl0eU5ldFNka1Rlc3RzL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWl4ZWRSZWFsaXR5L3NwYXRpYWxBbmNob3JzQWNjb3VudHMvTmV0U2RrVGVzdHM/YXBpLXZlcnNpb249MjAyMC0wNS0wMQ==",
+      "RequestUri": "/subscriptions/eaa04920-46c9-488e-b765-1db1491c42fb/resourceGroups/MixedRealityNetSdkTests/providers/Microsoft.MixedReality/spatialAnchorsAccounts/NetSdkTests?api-version=2021-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWFhMDQ5MjAtNDZjOS00ODhlLWI3NjUtMWRiMTQ5MWM0MmZiL3Jlc291cmNlR3JvdXBzL01peGVkUmVhbGl0eU5ldFNka1Rlc3RzL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWl4ZWRSZWFsaXR5L3NwYXRpYWxBbmNob3JzQWNjb3VudHMvTmV0U2RrVGVzdHM/YXBpLXZlcnNpb249MjAyMS0wMy0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "0983c29e-ace4-41ab-92a9-b8e6a6de96f7"
+          "26904cc4-42d0-4383-97cb-f53bc6e443a1"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.6.29719.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.MixedReality.MixedRealityClient/0.9.0.preview.1"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.MixedReality.MixedRealityClient/1.0.0.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Tue, 19 May 2020 06:50:38 GMT"
-        ],
         "Pragma": [
           "no-cache"
         ],
         "MS-CV": [
-          "+ENzJ1E+F0qvXaQ8rUjBgA.0"
+          "WzFpDu63MEm6IxgvdhdP9w.0"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11997"
+          "11998"
         ],
         "x-ms-request-id": [
-          "22524549-eb2b-451b-a255-57cbdf1b8fe8"
+          "89cf81bf-27c4-4f79-832a-5191a0646c07"
         ],
         "x-ms-correlation-request-id": [
-          "22524549-eb2b-451b-a255-57cbdf1b8fe8"
+          "89cf81bf-27c4-4f79-832a-5191a0646c07"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200519T065038Z:22524549-eb2b-451b-a255-57cbdf1b8fe8"
+          "WESTUS2:20210222T223828Z:89cf81bf-27c4-4f79-832a-5191a0646c07"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
+        ],
+        "Date": [
+          "Mon, 22 Feb 2021 22:38:28 GMT"
         ],
         "Content-Length": [
           "432"
@@ -186,34 +186,31 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/10438cf7-a794-4c7b-ad4c-5ddc1313ba7d/resourceGroups/MixedRealityNetSdkTests/providers/Microsoft.MixedReality/spatialAnchorsAccounts/NetSdkTests\",\r\n  \"name\": \"NetSdkTests\",\r\n  \"type\": \"Microsoft.MixedReality/spatialAnchorsAccounts\",\r\n  \"identity\": null,\r\n  \"location\": \"EastUs2\",\r\n  \"plan\": null,\r\n  \"sku\": null,\r\n  \"kind\": null,\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"accountDomain\": \"mixedreality.azure.com\",\r\n    \"accountId\": \"5be95d15-c08b-4a78-ac23-c75ef286c014\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/eaa04920-46c9-488e-b765-1db1491c42fb/resourceGroups/MixedRealityNetSdkTests/providers/Microsoft.MixedReality/spatialAnchorsAccounts/NetSdkTests\",\r\n  \"name\": \"NetSdkTests\",\r\n  \"type\": \"Microsoft.MixedReality/spatialAnchorsAccounts\",\r\n  \"identity\": null,\r\n  \"location\": \"EastUs2\",\r\n  \"plan\": null,\r\n  \"sku\": null,\r\n  \"kind\": null,\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"accountDomain\": \"mixedreality.azure.com\",\r\n    \"accountId\": \"451a6bfa-f8cb-42e2-a519-f6652565acb5\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/10438cf7-a794-4c7b-ad4c-5ddc1313ba7d/resourceGroups/MixedRealityNetSdkTests/providers/Microsoft.MixedReality/spatialAnchorsAccounts/NetSdkTests?api-version=2020-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTA0MzhjZjctYTc5NC00YzdiLWFkNGMtNWRkYzEzMTNiYTdkL3Jlc291cmNlR3JvdXBzL01peGVkUmVhbGl0eU5ldFNka1Rlc3RzL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWl4ZWRSZWFsaXR5L3NwYXRpYWxBbmNob3JzQWNjb3VudHMvTmV0U2RrVGVzdHM/YXBpLXZlcnNpb249MjAyMC0wNS0wMQ==",
+      "RequestUri": "/subscriptions/eaa04920-46c9-488e-b765-1db1491c42fb/resourceGroups/MixedRealityNetSdkTests/providers/Microsoft.MixedReality/spatialAnchorsAccounts/NetSdkTests?api-version=2021-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWFhMDQ5MjAtNDZjOS00ODhlLWI3NjUtMWRiMTQ5MWM0MmZiL3Jlc291cmNlR3JvdXBzL01peGVkUmVhbGl0eU5ldFNka1Rlc3RzL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWl4ZWRSZWFsaXR5L3NwYXRpYWxBbmNob3JzQWNjb3VudHMvTmV0U2RrVGVzdHM/YXBpLXZlcnNpb249MjAyMS0wMy0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "4f3c2523-11d9-4a11-92ef-cc772fac93b3"
+          "79cc2475-5db4-4444-b5f2-6b8237eec154"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.6.29719.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.MixedReality.MixedRealityClient/0.9.0.preview.1"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.MixedReality.MixedRealityClient/1.0.0.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
-        ],
-        "Date": [
-          "Tue, 19 May 2020 06:50:42 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -222,13 +219,13 @@
           "gateway"
         ],
         "x-ms-request-id": [
-          "d24f2507-699e-4b52-84c1-53d0fb52f235"
+          "d84aec55-6491-4a7f-a093-0de67531b69e"
         ],
         "x-ms-correlation-request-id": [
-          "d24f2507-699e-4b52-84c1-53d0fb52f235"
+          "d84aec55-6491-4a7f-a093-0de67531b69e"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200519T065042Z:d24f2507-699e-4b52-84c1-53d0fb52f235"
+          "WESTUS2:20210222T223830Z:d84aec55-6491-4a7f-a093-0de67531b69e"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -236,36 +233,39 @@
         "X-Content-Type-Options": [
           "nosniff"
         ],
-        "Content-Length": [
-          "184"
+        "Date": [
+          "Mon, 22 Feb 2021 22:38:30 GMT"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Expires": [
           "-1"
+        ],
+        "Content-Length": [
+          "252"
         ]
       },
-      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"message\": \"The Resource 'Microsoft.MixedReality/spatialAnchorsAccounts/NetSdkTests' under resource group 'MixedRealityNetSdkTests' was not found.\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"message\": \"The Resource 'Microsoft.MixedReality/spatialAnchorsAccounts/NetSdkTests' under resource group 'MixedRealityNetSdkTests' was not found. For more details please go to https://aka.ms/ARMResourceNotFoundFix\"\r\n  }\r\n}",
       "StatusCode": 404
     },
     {
-      "RequestUri": "/subscriptions/10438cf7-a794-4c7b-ad4c-5ddc1313ba7d/resourceGroups/MixedRealityNetSdkTests/providers/Microsoft.MixedReality/spatialAnchorsAccounts/NetSdkTests?api-version=2020-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTA0MzhjZjctYTc5NC00YzdiLWFkNGMtNWRkYzEzMTNiYTdkL3Jlc291cmNlR3JvdXBzL01peGVkUmVhbGl0eU5ldFNka1Rlc3RzL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWl4ZWRSZWFsaXR5L3NwYXRpYWxBbmNob3JzQWNjb3VudHMvTmV0U2RrVGVzdHM/YXBpLXZlcnNpb249MjAyMC0wNS0wMQ==",
+      "RequestUri": "/subscriptions/eaa04920-46c9-488e-b765-1db1491c42fb/resourceGroups/MixedRealityNetSdkTests/providers/Microsoft.MixedReality/spatialAnchorsAccounts/NetSdkTests?api-version=2021-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWFhMDQ5MjAtNDZjOS00ODhlLWI3NjUtMWRiMTQ5MWM0MmZiL3Jlc291cmNlR3JvdXBzL01peGVkUmVhbGl0eU5ldFNka1Rlc3RzL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWl4ZWRSZWFsaXR5L3NwYXRpYWxBbmNob3JzQWNjb3VudHMvTmV0U2RrVGVzdHM/YXBpLXZlcnNpb249MjAyMS0wMy0wMS1wcmV2aWV3",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"EastUs2\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "ce4df228-6f56-4d32-818f-8e6dffc2fb90"
+          "eea73b8c-2a18-4f42-9704-7e4487e584af"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.6.29719.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.MixedReality.MixedRealityClient/0.9.0.preview.1"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.MixedReality.MixedRealityClient/1.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -278,17 +278,14 @@
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Tue, 19 May 2020 06:50:37 GMT"
-        ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "subscriptions/10438cf7-a794-4c7b-ad4c-5ddc1313ba7d/resourceGroups/MixedRealityNetSdkTests/providers/Microsoft.MixedReality/spatialAnchorsAccounts/NetSdkTests"
+          "subscriptions/eaa04920-46c9-488e-b765-1db1491c42fb/resourceGroups/MixedRealityNetSdkTests/providers/Microsoft.MixedReality/spatialAnchorsAccounts/NetSdkTests"
         ],
         "MS-CV": [
-          "A3fs4XkaeEif7S87bmx9mQ.0"
+          "WzCTH5JkmUKGUHUPNsLPJg.0"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -297,16 +294,19 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "b36b627e-14a1-453b-97b4-053877bd79ab"
+          "3ff1c645-4b08-463f-8fc2-e3ac9e84bbe2"
         ],
         "x-ms-correlation-request-id": [
-          "b36b627e-14a1-453b-97b4-053877bd79ab"
+          "3ff1c645-4b08-463f-8fc2-e3ac9e84bbe2"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200519T065038Z:b36b627e-14a1-453b-97b4-053877bd79ab"
+          "WESTUS2:20210222T223828Z:3ff1c645-4b08-463f-8fc2-e3ac9e84bbe2"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
+        ],
+        "Date": [
+          "Mon, 22 Feb 2021 22:38:28 GMT"
         ],
         "Content-Length": [
           "432"
@@ -318,40 +318,37 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/10438cf7-a794-4c7b-ad4c-5ddc1313ba7d/resourceGroups/MixedRealityNetSdkTests/providers/Microsoft.MixedReality/spatialAnchorsAccounts/NetSdkTests\",\r\n  \"name\": \"NetSdkTests\",\r\n  \"type\": \"Microsoft.MixedReality/spatialAnchorsAccounts\",\r\n  \"identity\": null,\r\n  \"location\": \"EastUs2\",\r\n  \"plan\": null,\r\n  \"sku\": null,\r\n  \"kind\": null,\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"accountDomain\": \"mixedreality.azure.com\",\r\n    \"accountId\": \"5be95d15-c08b-4a78-ac23-c75ef286c014\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/eaa04920-46c9-488e-b765-1db1491c42fb/resourceGroups/MixedRealityNetSdkTests/providers/Microsoft.MixedReality/spatialAnchorsAccounts/NetSdkTests\",\r\n  \"name\": \"NetSdkTests\",\r\n  \"type\": \"Microsoft.MixedReality/spatialAnchorsAccounts\",\r\n  \"identity\": null,\r\n  \"location\": \"EastUs2\",\r\n  \"plan\": null,\r\n  \"sku\": null,\r\n  \"kind\": null,\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"accountDomain\": \"mixedreality.azure.com\",\r\n    \"accountId\": \"451a6bfa-f8cb-42e2-a519-f6652565acb5\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/10438cf7-a794-4c7b-ad4c-5ddc1313ba7d/resourceGroups/MixedRealityNetSdkTests/providers/Microsoft.MixedReality/spatialAnchorsAccounts/NetSdkTests/listKeys?api-version=2020-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTA0MzhjZjctYTc5NC00YzdiLWFkNGMtNWRkYzEzMTNiYTdkL3Jlc291cmNlR3JvdXBzL01peGVkUmVhbGl0eU5ldFNka1Rlc3RzL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWl4ZWRSZWFsaXR5L3NwYXRpYWxBbmNob3JzQWNjb3VudHMvTmV0U2RrVGVzdHMvbGlzdEtleXM/YXBpLXZlcnNpb249MjAyMC0wNS0wMQ==",
+      "RequestUri": "/subscriptions/eaa04920-46c9-488e-b765-1db1491c42fb/resourceGroups/MixedRealityNetSdkTests/providers/Microsoft.MixedReality/spatialAnchorsAccounts/NetSdkTests/listKeys?api-version=2021-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWFhMDQ5MjAtNDZjOS00ODhlLWI3NjUtMWRiMTQ5MWM0MmZiL3Jlc291cmNlR3JvdXBzL01peGVkUmVhbGl0eU5ldFNka1Rlc3RzL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWl4ZWRSZWFsaXR5L3NwYXRpYWxBbmNob3JzQWNjb3VudHMvTmV0U2RrVGVzdHMvbGlzdEtleXM/YXBpLXZlcnNpb249MjAyMS0wMy0wMS1wcmV2aWV3",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "f9a26d1c-3036-4f27-8800-0e5d2851dec3"
+          "d3414f21-fcff-4980-8891-3c2f6e842fec"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.6.29719.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.MixedReality.MixedRealityClient/0.9.0.preview.1"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.MixedReality.MixedRealityClient/1.0.0.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Tue, 19 May 2020 06:50:38 GMT"
-        ],
         "Pragma": [
           "no-cache"
         ],
         "MS-CV": [
-          "vFh2Mdjvk0WWBR1QtEhhLg.0"
+          "oaKXxRkIdUGTeBnOpmHZnQ.0"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -360,16 +357,19 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "b275f972-7a14-416a-a559-6c3f50510210"
+          "378ec3f4-5c6b-45d2-8561-93e651b13067"
         ],
         "x-ms-correlation-request-id": [
-          "b275f972-7a14-416a-a559-6c3f50510210"
+          "378ec3f4-5c6b-45d2-8561-93e651b13067"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200519T065039Z:b275f972-7a14-416a-a559-6c3f50510210"
+          "WESTUS2:20210222T223828Z:378ec3f4-5c6b-45d2-8561-93e651b13067"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
+        ],
+        "Date": [
+          "Mon, 22 Feb 2021 22:38:28 GMT"
         ],
         "Content-Length": [
           "123"
@@ -381,40 +381,37 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"primaryKey\": \"rCYr8JuyWVlKEiU77SyYT/5hbNh2brexsn/lvVumJOg=\",\r\n  \"secondaryKey\": \"/NKs5N0Rr8Lnm6JjSNbCVhzRObt4TCOAcAldAaVRGd4=\"\r\n}",
+      "ResponseBody": "{\r\n  \"primaryKey\": \"EIv2fnk8HtJYgV5mXw2de9eup9YvlUGGvrXcFGnyMKo=\",\r\n  \"secondaryKey\": \"q6nRI6yjP7YxrOyCaj8h6zk2og4KrCLJLi4OE7A2c1Q=\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/10438cf7-a794-4c7b-ad4c-5ddc1313ba7d/resourceGroups/MixedRealityNetSdkTests/providers/Microsoft.MixedReality/spatialAnchorsAccounts/NetSdkTests/listKeys?api-version=2020-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTA0MzhjZjctYTc5NC00YzdiLWFkNGMtNWRkYzEzMTNiYTdkL3Jlc291cmNlR3JvdXBzL01peGVkUmVhbGl0eU5ldFNka1Rlc3RzL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWl4ZWRSZWFsaXR5L3NwYXRpYWxBbmNob3JzQWNjb3VudHMvTmV0U2RrVGVzdHMvbGlzdEtleXM/YXBpLXZlcnNpb249MjAyMC0wNS0wMQ==",
+      "RequestUri": "/subscriptions/eaa04920-46c9-488e-b765-1db1491c42fb/resourceGroups/MixedRealityNetSdkTests/providers/Microsoft.MixedReality/spatialAnchorsAccounts/NetSdkTests/listKeys?api-version=2021-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWFhMDQ5MjAtNDZjOS00ODhlLWI3NjUtMWRiMTQ5MWM0MmZiL3Jlc291cmNlR3JvdXBzL01peGVkUmVhbGl0eU5ldFNka1Rlc3RzL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWl4ZWRSZWFsaXR5L3NwYXRpYWxBbmNob3JzQWNjb3VudHMvTmV0U2RrVGVzdHMvbGlzdEtleXM/YXBpLXZlcnNpb249MjAyMS0wMy0wMS1wcmV2aWV3",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "820e17f5-4708-4be4-a53d-2d4f70730a9f"
+          "ffa31f8e-51c4-4b0d-8371-1919b1fda5e3"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.6.29719.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.MixedReality.MixedRealityClient/0.9.0.preview.1"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.MixedReality.MixedRealityClient/1.0.0.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Tue, 19 May 2020 06:50:39 GMT"
-        ],
         "Pragma": [
           "no-cache"
         ],
         "MS-CV": [
-          "OGPIHuP8wUW7tRUu/MjFSg.0"
+          "Mm/3mweJu0uwQQDSz43Kdg.0"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -423,16 +420,19 @@
           "1197"
         ],
         "x-ms-request-id": [
-          "2dafb242-7049-4dfc-a1b3-343f3a36f1e3"
+          "bfc546f1-4716-4b31-bb7e-bbd07ac37db8"
         ],
         "x-ms-correlation-request-id": [
-          "2dafb242-7049-4dfc-a1b3-343f3a36f1e3"
+          "bfc546f1-4716-4b31-bb7e-bbd07ac37db8"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200519T065040Z:2dafb242-7049-4dfc-a1b3-343f3a36f1e3"
+          "WESTUS2:20210222T223829Z:bfc546f1-4716-4b31-bb7e-bbd07ac37db8"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
+        ],
+        "Date": [
+          "Mon, 22 Feb 2021 22:38:29 GMT"
         ],
         "Content-Length": [
           "123"
@@ -444,26 +444,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"primaryKey\": \"t8YQYCqdU+WkPUBwQavcISTenF8yCdVrpapHkHBf/3w=\",\r\n  \"secondaryKey\": \"/NKs5N0Rr8Lnm6JjSNbCVhzRObt4TCOAcAldAaVRGd4=\"\r\n}",
+      "ResponseBody": "{\r\n  \"primaryKey\": \"L4t09ODFTfbYhA5s6CENf8Ajqi0PB+TvfXnvZDmnCB8=\",\r\n  \"secondaryKey\": \"q6nRI6yjP7YxrOyCaj8h6zk2og4KrCLJLi4OE7A2c1Q=\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/10438cf7-a794-4c7b-ad4c-5ddc1313ba7d/resourceGroups/MixedRealityNetSdkTests/providers/Microsoft.MixedReality/spatialAnchorsAccounts/NetSdkTests/regenerateKeys?api-version=2020-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTA0MzhjZjctYTc5NC00YzdiLWFkNGMtNWRkYzEzMTNiYTdkL3Jlc291cmNlR3JvdXBzL01peGVkUmVhbGl0eU5ldFNka1Rlc3RzL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWl4ZWRSZWFsaXR5L3NwYXRpYWxBbmNob3JzQWNjb3VudHMvTmV0U2RrVGVzdHMvcmVnZW5lcmF0ZUtleXM/YXBpLXZlcnNpb249MjAyMC0wNS0wMQ==",
+      "RequestUri": "/subscriptions/eaa04920-46c9-488e-b765-1db1491c42fb/resourceGroups/MixedRealityNetSdkTests/providers/Microsoft.MixedReality/spatialAnchorsAccounts/NetSdkTests/regenerateKeys?api-version=2021-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWFhMDQ5MjAtNDZjOS00ODhlLWI3NjUtMWRiMTQ5MWM0MmZiL3Jlc291cmNlR3JvdXBzL01peGVkUmVhbGl0eU5ldFNka1Rlc3RzL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWl4ZWRSZWFsaXR5L3NwYXRpYWxBbmNob3JzQWNjb3VudHMvTmV0U2RrVGVzdHMvcmVnZW5lcmF0ZUtleXM/YXBpLXZlcnNpb249MjAyMS0wMy0wMS1wcmV2aWV3",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"serial\": 1\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e2d8af98-a6b6-4c15-91fe-f7e1584c9a90"
+          "b3c7d334-868f-46e7-9edb-7dbddffb3aa4"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.6.29719.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.MixedReality.MixedRealityClient/0.9.0.preview.1"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.MixedReality.MixedRealityClient/1.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -476,14 +476,11 @@
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Tue, 19 May 2020 06:50:39 GMT"
-        ],
         "Pragma": [
           "no-cache"
         ],
         "MS-CV": [
-          "esj7zLJOhEe0JEhwaXbG1Q.0"
+          "xtf/gIv3gUSkygPqBUManQ.0"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -492,16 +489,19 @@
           "1198"
         ],
         "x-ms-request-id": [
-          "faa0e252-6391-4e16-8722-ce22df7c2be7"
+          "74cc69d8-527f-4e08-8bff-2fcaf0d25e86"
         ],
         "x-ms-correlation-request-id": [
-          "faa0e252-6391-4e16-8722-ce22df7c2be7"
+          "74cc69d8-527f-4e08-8bff-2fcaf0d25e86"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200519T065039Z:faa0e252-6391-4e16-8722-ce22df7c2be7"
+          "WESTUS2:20210222T223829Z:74cc69d8-527f-4e08-8bff-2fcaf0d25e86"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
+        ],
+        "Date": [
+          "Mon, 22 Feb 2021 22:38:29 GMT"
         ],
         "Content-Length": [
           "123"
@@ -513,26 +513,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"primaryKey\": \"t8YQYCqdU+WkPUBwQavcISTenF8yCdVrpapHkHBf/3w=\",\r\n  \"secondaryKey\": \"/NKs5N0Rr8Lnm6JjSNbCVhzRObt4TCOAcAldAaVRGd4=\"\r\n}",
+      "ResponseBody": "{\r\n  \"primaryKey\": \"L4t09ODFTfbYhA5s6CENf8Ajqi0PB+TvfXnvZDmnCB8=\",\r\n  \"secondaryKey\": \"q6nRI6yjP7YxrOyCaj8h6zk2og4KrCLJLi4OE7A2c1Q=\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/10438cf7-a794-4c7b-ad4c-5ddc1313ba7d/resourceGroups/MixedRealityNetSdkTests/providers/Microsoft.MixedReality/spatialAnchorsAccounts/NetSdkTests/regenerateKeys?api-version=2020-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTA0MzhjZjctYTc5NC00YzdiLWFkNGMtNWRkYzEzMTNiYTdkL3Jlc291cmNlR3JvdXBzL01peGVkUmVhbGl0eU5ldFNka1Rlc3RzL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWl4ZWRSZWFsaXR5L3NwYXRpYWxBbmNob3JzQWNjb3VudHMvTmV0U2RrVGVzdHMvcmVnZW5lcmF0ZUtleXM/YXBpLXZlcnNpb249MjAyMC0wNS0wMQ==",
+      "RequestUri": "/subscriptions/eaa04920-46c9-488e-b765-1db1491c42fb/resourceGroups/MixedRealityNetSdkTests/providers/Microsoft.MixedReality/spatialAnchorsAccounts/NetSdkTests/regenerateKeys?api-version=2021-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWFhMDQ5MjAtNDZjOS00ODhlLWI3NjUtMWRiMTQ5MWM0MmZiL3Jlc291cmNlR3JvdXBzL01peGVkUmVhbGl0eU5ldFNka1Rlc3RzL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWl4ZWRSZWFsaXR5L3NwYXRpYWxBbmNob3JzQWNjb3VudHMvTmV0U2RrVGVzdHMvcmVnZW5lcmF0ZUtleXM/YXBpLXZlcnNpb249MjAyMS0wMy0wMS1wcmV2aWV3",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"serial\": 2\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "1425d048-eb36-4bf3-9101-fdb114732e79"
+          "67eb828d-343b-4c23-b405-cab78bdf40c6"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.6.29719.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.MixedReality.MixedRealityClient/0.9.0.preview.1"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.MixedReality.MixedRealityClient/1.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -545,14 +545,11 @@
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Tue, 19 May 2020 06:50:39 GMT"
-        ],
         "Pragma": [
           "no-cache"
         ],
         "MS-CV": [
-          "uJNluq9TqUaA2vpWtAYiIQ.0"
+          "2H/CDQLKOkW/PqO5nO8srQ.0"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -561,16 +558,19 @@
           "1196"
         ],
         "x-ms-request-id": [
-          "43dd9643-cd43-45bb-a103-4ec72f757e9c"
+          "63713ee2-5f77-4edd-b968-b35c21f42ce6"
         ],
         "x-ms-correlation-request-id": [
-          "43dd9643-cd43-45bb-a103-4ec72f757e9c"
+          "63713ee2-5f77-4edd-b968-b35c21f42ce6"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200519T065040Z:43dd9643-cd43-45bb-a103-4ec72f757e9c"
+          "WESTUS2:20210222T223829Z:63713ee2-5f77-4edd-b968-b35c21f42ce6"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
+        ],
+        "Date": [
+          "Mon, 22 Feb 2021 22:38:29 GMT"
         ],
         "Content-Length": [
           "123"
@@ -582,40 +582,37 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"primaryKey\": \"t8YQYCqdU+WkPUBwQavcISTenF8yCdVrpapHkHBf/3w=\",\r\n  \"secondaryKey\": \"k+igUWzUBN37ZABVkd/9v2AQPLXSPlnVH7rPHrcy+hY=\"\r\n}",
+      "ResponseBody": "{\r\n  \"primaryKey\": \"L4t09ODFTfbYhA5s6CENf8Ajqi0PB+TvfXnvZDmnCB8=\",\r\n  \"secondaryKey\": \"nbHQbFL4TbNnxWsfrzPND7LQTul2cWtTXnBlsnJq/uY=\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/10438cf7-a794-4c7b-ad4c-5ddc1313ba7d/resourceGroups/MixedRealityNetSdkTests/providers/Microsoft.MixedReality/spatialAnchorsAccounts/NetSdkTests?api-version=2020-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTA0MzhjZjctYTc5NC00YzdiLWFkNGMtNWRkYzEzMTNiYTdkL3Jlc291cmNlR3JvdXBzL01peGVkUmVhbGl0eU5ldFNka1Rlc3RzL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWl4ZWRSZWFsaXR5L3NwYXRpYWxBbmNob3JzQWNjb3VudHMvTmV0U2RrVGVzdHM/YXBpLXZlcnNpb249MjAyMC0wNS0wMQ==",
+      "RequestUri": "/subscriptions/eaa04920-46c9-488e-b765-1db1491c42fb/resourceGroups/MixedRealityNetSdkTests/providers/Microsoft.MixedReality/spatialAnchorsAccounts/NetSdkTests?api-version=2021-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWFhMDQ5MjAtNDZjOS00ODhlLWI3NjUtMWRiMTQ5MWM0MmZiL3Jlc291cmNlR3JvdXBzL01peGVkUmVhbGl0eU5ldFNka1Rlc3RzL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWl4ZWRSZWFsaXR5L3NwYXRpYWxBbmNob3JzQWNjb3VudHMvTmV0U2RrVGVzdHM/YXBpLXZlcnNpb249MjAyMS0wMy0wMS1wcmV2aWV3",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "16512d5d-4d95-474a-8f7a-118b534963a0"
+          "12d6e368-d3e9-4492-b134-ab808317970b"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.6.29719.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.MixedReality.MixedRealityClient/0.9.0.preview.1"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.MixedReality.MixedRealityClient/1.0.0.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Tue, 19 May 2020 06:50:41 GMT"
-        ],
         "Pragma": [
           "no-cache"
         ],
         "MS-CV": [
-          "bEnDoV35nkmPI7wzrL34ag.0"
+          "P7d+L3lTvUiCplwMvAMk2w.0"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -624,52 +621,52 @@
           "14999"
         ],
         "x-ms-request-id": [
-          "be464d50-6188-4d72-aaf1-8ef6d906f987"
+          "1f0f14f1-6bad-4fe6-b0c4-b416cb15917d"
         ],
         "x-ms-correlation-request-id": [
-          "be464d50-6188-4d72-aaf1-8ef6d906f987"
+          "1f0f14f1-6bad-4fe6-b0c4-b416cb15917d"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200519T065042Z:be464d50-6188-4d72-aaf1-8ef6d906f987"
+          "WESTUS2:20210222T223830Z:1f0f14f1-6bad-4fe6-b0c4-b416cb15917d"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
-        "Content-Length": [
-          "0"
+        "Date": [
+          "Mon, 22 Feb 2021 22:38:30 GMT"
         ],
         "Expires": [
           "-1"
+        ],
+        "Content-Length": [
+          "0"
         ]
       },
       "ResponseBody": "",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/10438cf7-a794-4c7b-ad4c-5ddc1313ba7d/resourceGroups/MixedRealityNetSdkTests/providers/Microsoft.MixedReality/spatialAnchorsAccounts/NetSdkTests?api-version=2020-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTA0MzhjZjctYTc5NC00YzdiLWFkNGMtNWRkYzEzMTNiYTdkL3Jlc291cmNlR3JvdXBzL01peGVkUmVhbGl0eU5ldFNka1Rlc3RzL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWl4ZWRSZWFsaXR5L3NwYXRpYWxBbmNob3JzQWNjb3VudHMvTmV0U2RrVGVzdHM/YXBpLXZlcnNpb249MjAyMC0wNS0wMQ==",
+      "RequestUri": "/subscriptions/eaa04920-46c9-488e-b765-1db1491c42fb/resourceGroups/MixedRealityNetSdkTests/providers/Microsoft.MixedReality/spatialAnchorsAccounts/NetSdkTests?api-version=2021-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWFhMDQ5MjAtNDZjOS00ODhlLWI3NjUtMWRiMTQ5MWM0MmZiL3Jlc291cmNlR3JvdXBzL01peGVkUmVhbGl0eU5ldFNka1Rlc3RzL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWl4ZWRSZWFsaXR5L3NwYXRpYWxBbmNob3JzQWNjb3VudHMvTmV0U2RrVGVzdHM/YXBpLXZlcnNpb249MjAyMS0wMy0wMS1wcmV2aWV3",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "1b7e7328-677a-43b8-b7c9-e8e1161cdcb6"
+          "732efe76-bb44-485c-ae8b-00e1b41ffee5"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.6.29719.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.MixedReality.MixedRealityClient/0.9.0.preview.1"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.MixedReality.MixedRealityClient/1.0.0.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
-        ],
-        "Date": [
-          "Tue, 19 May 2020 06:50:42 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -678,19 +675,22 @@
           "14998"
         ],
         "x-ms-request-id": [
-          "cf0bde69-f13f-49a2-9409-e101ef77b8a7"
+          "3d5172d5-3647-41a4-a507-f993a078c12b"
         ],
         "x-ms-correlation-request-id": [
-          "cf0bde69-f13f-49a2-9409-e101ef77b8a7"
+          "3d5172d5-3647-41a4-a507-f993a078c12b"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200519T065042Z:cf0bde69-f13f-49a2-9409-e101ef77b8a7"
+          "WESTUS2:20210222T223831Z:3d5172d5-3647-41a4-a507-f993a078c12b"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": [
           "nosniff"
+        ],
+        "Date": [
+          "Mon, 22 Feb 2021 22:38:30 GMT"
         ],
         "Expires": [
           "-1"
@@ -700,21 +700,21 @@
       "StatusCode": 204
     },
     {
-      "RequestUri": "/subscriptions/10438cf7-a794-4c7b-ad4c-5ddc1313ba7d/resourcegroups/MixedRealityNetSdkTests?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTA0MzhjZjctYTc5NC00YzdiLWFkNGMtNWRkYzEzMTNiYTdkL3Jlc291cmNlZ3JvdXBzL01peGVkUmVhbGl0eU5ldFNka1Rlc3RzP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
+      "RequestUri": "/subscriptions/eaa04920-46c9-488e-b765-1db1491c42fb/resourcegroups/MixedRealityNetSdkTests?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWFhMDQ5MjAtNDZjOS00ODhlLWI3NjUtMWRiMTQ5MWM0MmZiL3Jlc291cmNlZ3JvdXBzL01peGVkUmVhbGl0eU5ldFNka1Rlc3RzP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "a1ce7546-1743-47ec-86be-09d2a5baab09"
+          "9a5017a2-5ffe-4b4e-b4a9-0ee7282a907b"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.6.29719.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
@@ -722,29 +722,26 @@
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Tue, 19 May 2020 06:50:43 GMT"
-        ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/10438cf7-a794-4c7b-ad4c-5ddc1313ba7d/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1NSVhFRFJFQUxJVFlORVRTREtURVNUUy1FQVNUVVMyIiwiam9iTG9jYXRpb24iOiJlYXN0dXMyIn0?api-version=2015-11-01"
+          "https://management.azure.com/subscriptions/eaa04920-46c9-488e-b765-1db1491c42fb/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1NSVhFRFJFQUxJVFlORVRTREtURVNUUy1FQVNUVVMyIiwiam9iTG9jYXRpb24iOiJlYXN0dXMyIn0?api-version=2015-11-01"
         ],
         "Retry-After": [
           "15"
         ],
         "x-ms-ratelimit-remaining-subscription-deletes": [
-          "14999"
+          "14997"
         ],
         "x-ms-request-id": [
-          "42a0b823-a4e2-46de-8643-b6c3ad9fe0d3"
+          "448cebbf-273c-4b40-90db-2da88ef12453"
         ],
         "x-ms-correlation-request-id": [
-          "42a0b823-a4e2-46de-8643-b6c3ad9fe0d3"
+          "448cebbf-273c-4b40-90db-2da88ef12453"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200519T065044Z:42a0b823-a4e2-46de-8643-b6c3ad9fe0d3"
+          "WESTUS2:20210222T223832Z:448cebbf-273c-4b40-90db-2da88ef12453"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -752,56 +749,56 @@
         "X-Content-Type-Options": [
           "nosniff"
         ],
-        "Content-Length": [
-          "0"
+        "Date": [
+          "Mon, 22 Feb 2021 22:38:31 GMT"
         ],
         "Expires": [
           "-1"
+        ],
+        "Content-Length": [
+          "0"
         ]
       },
       "ResponseBody": "",
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/10438cf7-a794-4c7b-ad4c-5ddc1313ba7d/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1NSVhFRFJFQUxJVFlORVRTREtURVNUUy1FQVNUVVMyIiwiam9iTG9jYXRpb24iOiJlYXN0dXMyIn0?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTA0MzhjZjctYTc5NC00YzdiLWFkNGMtNWRkYzEzMTNiYTdkL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFOU1ZoRlJGSkZRVXhKVkZsT1JWUlRSRXRVUlZOVVV5MUZRVk5VVlZNeUlpd2lhbTlpVEc5allYUnBiMjRpT2lKbFlYTjBkWE15SW4wP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
+      "RequestUri": "/subscriptions/eaa04920-46c9-488e-b765-1db1491c42fb/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1NSVhFRFJFQUxJVFlORVRTREtURVNUUy1FQVNUVVMyIiwiam9iTG9jYXRpb24iOiJlYXN0dXMyIn0?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWFhMDQ5MjAtNDZjOS00ODhlLWI3NjUtMWRiMTQ5MWM0MmZiL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFOU1ZoRlJGSkZRVXhKVkZsT1JWUlRSRXRVUlZOVVV5MUZRVk5VVlZNeUlpd2lhbTlpVEc5allYUnBiMjRpT2lKbFlYTjBkWE15SW4wP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.6.29719.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
-        ],
-        "Date": [
-          "Tue, 19 May 2020 06:50:58 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/10438cf7-a794-4c7b-ad4c-5ddc1313ba7d/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1NSVhFRFJFQUxJVFlORVRTREtURVNUUy1FQVNUVVMyIiwiam9iTG9jYXRpb24iOiJlYXN0dXMyIn0?api-version=2015-11-01"
+          "https://management.azure.com/subscriptions/eaa04920-46c9-488e-b765-1db1491c42fb/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1NSVhFRFJFQUxJVFlORVRTREtURVNUUy1FQVNUVVMyIiwiam9iTG9jYXRpb24iOiJlYXN0dXMyIn0?api-version=2015-11-01"
         ],
         "Retry-After": [
           "15"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11999"
+          "11996"
         ],
         "x-ms-request-id": [
-          "1a6cba57-9d55-45e3-a2c9-9bb5231b89c7"
+          "55698289-8919-4d1e-aa76-01118b5d142a"
         ],
         "x-ms-correlation-request-id": [
-          "1a6cba57-9d55-45e3-a2c9-9bb5231b89c7"
+          "55698289-8919-4d1e-aa76-01118b5d142a"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200519T065059Z:1a6cba57-9d55-45e3-a2c9-9bb5231b89c7"
+          "WESTUS2:20210222T223847Z:55698289-8919-4d1e-aa76-01118b5d142a"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -809,56 +806,56 @@
         "X-Content-Type-Options": [
           "nosniff"
         ],
-        "Content-Length": [
-          "0"
+        "Date": [
+          "Mon, 22 Feb 2021 22:38:47 GMT"
         ],
         "Expires": [
           "-1"
+        ],
+        "Content-Length": [
+          "0"
         ]
       },
       "ResponseBody": "",
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/10438cf7-a794-4c7b-ad4c-5ddc1313ba7d/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1NSVhFRFJFQUxJVFlORVRTREtURVNUUy1FQVNUVVMyIiwiam9iTG9jYXRpb24iOiJlYXN0dXMyIn0?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTA0MzhjZjctYTc5NC00YzdiLWFkNGMtNWRkYzEzMTNiYTdkL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFOU1ZoRlJGSkZRVXhKVkZsT1JWUlRSRXRVUlZOVVV5MUZRVk5VVlZNeUlpd2lhbTlpVEc5allYUnBiMjRpT2lKbFlYTjBkWE15SW4wP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
+      "RequestUri": "/subscriptions/eaa04920-46c9-488e-b765-1db1491c42fb/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1NSVhFRFJFQUxJVFlORVRTREtURVNUUy1FQVNUVVMyIiwiam9iTG9jYXRpb24iOiJlYXN0dXMyIn0?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWFhMDQ5MjAtNDZjOS00ODhlLWI3NjUtMWRiMTQ5MWM0MmZiL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFOU1ZoRlJGSkZRVXhKVkZsT1JWUlRSRXRVUlZOVVV5MUZRVk5VVlZNeUlpd2lhbTlpVEc5allYUnBiMjRpT2lKbFlYTjBkWE15SW4wP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.6.29719.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
-        ],
-        "Date": [
-          "Tue, 19 May 2020 06:51:15 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/10438cf7-a794-4c7b-ad4c-5ddc1313ba7d/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1NSVhFRFJFQUxJVFlORVRTREtURVNUUy1FQVNUVVMyIiwiam9iTG9jYXRpb24iOiJlYXN0dXMyIn0?api-version=2015-11-01"
+          "https://management.azure.com/subscriptions/eaa04920-46c9-488e-b765-1db1491c42fb/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1NSVhFRFJFQUxJVFlORVRTREtURVNUUy1FQVNUVVMyIiwiam9iTG9jYXRpb24iOiJlYXN0dXMyIn0?api-version=2015-11-01"
         ],
         "Retry-After": [
           "15"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11998"
+          "11995"
         ],
         "x-ms-request-id": [
-          "230043aa-02de-48d3-a6de-d2df8126801c"
+          "6f8edf85-8da7-41d1-98bf-646b4e1399b9"
         ],
         "x-ms-correlation-request-id": [
-          "230043aa-02de-48d3-a6de-d2df8126801c"
+          "6f8edf85-8da7-41d1-98bf-646b4e1399b9"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200519T065115Z:230043aa-02de-48d3-a6de-d2df8126801c"
+          "WESTUS2:20210222T223902Z:6f8edf85-8da7-41d1-98bf-646b4e1399b9"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -866,26 +863,29 @@
         "X-Content-Type-Options": [
           "nosniff"
         ],
-        "Content-Length": [
-          "0"
+        "Date": [
+          "Mon, 22 Feb 2021 22:39:02 GMT"
         ],
         "Expires": [
           "-1"
+        ],
+        "Content-Length": [
+          "0"
         ]
       },
       "ResponseBody": "",
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/10438cf7-a794-4c7b-ad4c-5ddc1313ba7d/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1NSVhFRFJFQUxJVFlORVRTREtURVNUUy1FQVNUVVMyIiwiam9iTG9jYXRpb24iOiJlYXN0dXMyIn0?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTA0MzhjZjctYTc5NC00YzdiLWFkNGMtNWRkYzEzMTNiYTdkL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFOU1ZoRlJGSkZRVXhKVkZsT1JWUlRSRXRVUlZOVVV5MUZRVk5VVlZNeUlpd2lhbTlpVEc5allYUnBiMjRpT2lKbFlYTjBkWE15SW4wP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
+      "RequestUri": "/subscriptions/eaa04920-46c9-488e-b765-1db1491c42fb/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1NSVhFRFJFQUxJVFlORVRTREtURVNUUy1FQVNUVVMyIiwiam9iTG9jYXRpb24iOiJlYXN0dXMyIn0?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWFhMDQ5MjAtNDZjOS00ODhlLWI3NjUtMWRiMTQ5MWM0MmZiL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFOU1ZoRlJGSkZRVXhKVkZsT1JWUlRSRXRVUlZOVVV5MUZRVk5VVlZNeUlpd2lhbTlpVEc5allYUnBiMjRpT2lKbFlYTjBkWE15SW4wP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.6.29719.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
@@ -893,23 +893,20 @@
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Tue, 19 May 2020 06:51:30 GMT"
-        ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11997"
+          "11994"
         ],
         "x-ms-request-id": [
-          "060e204d-d7c2-482a-819b-7df3f349f8e2"
+          "c7b38977-9068-4fae-aa8b-574e7b5d5b72"
         ],
         "x-ms-correlation-request-id": [
-          "060e204d-d7c2-482a-819b-7df3f349f8e2"
+          "c7b38977-9068-4fae-aa8b-574e7b5d5b72"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200519T065130Z:060e204d-d7c2-482a-819b-7df3f349f8e2"
+          "WESTUS2:20210222T223917Z:c7b38977-9068-4fae-aa8b-574e7b5d5b72"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -917,26 +914,29 @@
         "X-Content-Type-Options": [
           "nosniff"
         ],
-        "Content-Length": [
-          "0"
+        "Date": [
+          "Mon, 22 Feb 2021 22:39:17 GMT"
         ],
         "Expires": [
           "-1"
+        ],
+        "Content-Length": [
+          "0"
         ]
       },
       "ResponseBody": "",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/10438cf7-a794-4c7b-ad4c-5ddc1313ba7d/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1NSVhFRFJFQUxJVFlORVRTREtURVNUUy1FQVNUVVMyIiwiam9iTG9jYXRpb24iOiJlYXN0dXMyIn0?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTA0MzhjZjctYTc5NC00YzdiLWFkNGMtNWRkYzEzMTNiYTdkL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFOU1ZoRlJGSkZRVXhKVkZsT1JWUlRSRXRVUlZOVVV5MUZRVk5VVlZNeUlpd2lhbTlpVEc5allYUnBiMjRpT2lKbFlYTjBkWE15SW4wP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
+      "RequestUri": "/subscriptions/eaa04920-46c9-488e-b765-1db1491c42fb/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1NSVhFRFJFQUxJVFlORVRTREtURVNUUy1FQVNUVVMyIiwiam9iTG9jYXRpb24iOiJlYXN0dXMyIn0?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWFhMDQ5MjAtNDZjOS00ODhlLWI3NjUtMWRiMTQ5MWM0MmZiL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFOU1ZoRlJGSkZRVXhKVkZsT1JWUlRSRXRVUlZOVVV5MUZRVk5VVlZNeUlpd2lhbTlpVEc5allYUnBiMjRpT2lKbFlYTjBkWE15SW4wP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.6.29719.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
@@ -944,23 +944,20 @@
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Tue, 19 May 2020 06:51:30 GMT"
-        ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11996"
+          "11993"
         ],
         "x-ms-request-id": [
-          "1caaded1-4607-4666-8f10-270456a3c78b"
+          "fb432b38-4e14-405c-ac0f-f3eb58fce260"
         ],
         "x-ms-correlation-request-id": [
-          "1caaded1-4607-4666-8f10-270456a3c78b"
+          "fb432b38-4e14-405c-ac0f-f3eb58fce260"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200519T065130Z:1caaded1-4607-4666-8f10-270456a3c78b"
+          "WESTUS2:20210222T223917Z:fb432b38-4e14-405c-ac0f-f3eb58fce260"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -968,11 +965,14 @@
         "X-Content-Type-Options": [
           "nosniff"
         ],
-        "Content-Length": [
-          "0"
+        "Date": [
+          "Mon, 22 Feb 2021 22:39:17 GMT"
         ],
         "Expires": [
           "-1"
+        ],
+        "Content-Length": [
+          "0"
         ]
       },
       "ResponseBody": "",
@@ -981,6 +981,6 @@
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "10438cf7-a794-4c7b-ad4c-5ddc1313ba7d"
+    "SubscriptionId": "eaa04920-46c9-488e-b765-1db1491c42fb"
   }
 }

@@ -19,11 +19,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         public const string Passed = "Passed";
         public const string ActionRequired = "ActionRequired";
         public const string ActionSuggested = "ActionSuggested";
-        public const string Healthy = "Healthy";
-        public const string TransientDegraded = "TransientDegraded";
-        public const string PersistentDegraded = "PersistentDegraded";
-        public const string TransientUnhealthy = "TransientUnhealthy";
-        public const string PersistentUnhealthy = "PersistentUnhealthy";
         public const string Invalid = "Invalid";
     }
 }

@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         /// <param name="mpnsCertificate">The MPNS certificate.</param>
         /// <param name="certificateKey">The certificate key for this
         /// credential.</param>
-        /// <param name="thumbprint">The Mpns certificate Thumbprint</param>
+        /// <param name="thumbprint">The MPNS certificate Thumbprint</param>
         public MpnsCredential(string mpnsCertificate = default(string), string certificateKey = default(string), string thumbprint = default(string))
         {
             MpnsCertificate = mpnsCertificate;
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         public string CertificateKey { get; set; }
 
         /// <summary>
-        /// Gets or sets the Mpns certificate Thumbprint
+        /// Gets or sets the MPNS certificate Thumbprint
         /// </summary>
         [JsonProperty(PropertyName = "properties.thumbprint")]
         public string Thumbprint { get; set; }

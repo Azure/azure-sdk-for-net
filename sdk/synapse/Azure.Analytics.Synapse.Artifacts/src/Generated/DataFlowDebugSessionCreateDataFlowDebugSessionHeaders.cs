@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts
 {
-    internal class DataFlowDebugSessionCreateDataFlowDebugSessionHeaders
+    internal partial class DataFlowDebugSessionCreateDataFlowDebugSessionHeaders
     {
         private readonly Response _response;
         public DataFlowDebugSessionCreateDataFlowDebugSessionHeaders(Response response)

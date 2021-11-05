@@ -6,12 +6,12 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.AppPlatform</PackageId>
     <Description>Provides developers with libraries for the Azure Spring Cloud under Azure Resource manager to deploy, start, stop and scale Spring Cloud applications.</Description>
-    <Version>0.1.0-preview</Version>
+    <Version>1.1.0-preview</Version>
     <AssemblyName>Microsoft.Azure.Management.AppPlatform</AssemblyName>
     <PackageTags>management;spring;spring cloud;</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        This is a public release of the Azure Spring Cloud SDK.
+        Preview release for Azure Spring Cloud SDK.
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>

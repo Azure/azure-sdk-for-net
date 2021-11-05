@@ -6,22 +6,21 @@ using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs;
-using Azure.Storage.Test;
 using NUnit.Framework;
 
 namespace Azure.Storage.Test
 {
     public class StorageSharedKeyCredentialsTests : CommonTestBase
     {
-        public StorageSharedKeyCredentialsTests(bool async)
-            : base(async, null /* RecordedTestMode.Record to re-record */)
+        public StorageSharedKeyCredentialsTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record to re-record */)
         {
         }
 
         /// <summary>
-        /// Ensure updating the account key is reflected in the client
+        /// Ensure updating the account key is reflected in the client.
         /// </summary>
-        [Test]
+        [RecordedTest]
         public async Task RollCredentials()
         {
             // Create a service client
@@ -52,7 +51,7 @@ namespace Azure.Storage.Test
         /// Ensure updating the account key is reflected in the client and any
         /// children it created.
         /// </summary>
-        [Test]
+        [RecordedTest]
         public async Task RollCredentialsToChildren()
         {
             // Create a service client
@@ -67,7 +66,8 @@ namespace Azure.Storage.Test
                         GetBlobOptions()));
 
             // Create a child container
-            BlobContainerClient container = await service.CreateBlobContainerAsync(GetNewContainerName());
+            BlobContainerClient container = service.GetBlobContainerClient(GetNewContainerName());
+            await container.CreateIfNotExistsAsync();
             try
             {
                 // Verify the credential works (i.e., doesn't throw)
@@ -89,7 +89,7 @@ namespace Azure.Storage.Test
             finally
             {
                 // Clean up the child container
-                await container.DeleteAsync();
+                await container.DeleteIfExistsAsync();
             }
         }
     }

@@ -13,7 +13,7 @@ using Azure.ResourceManager.AppConfiguration;
 namespace Azure.ResourceManager.AppConfiguration
 {
     /// <summary> AppConfiguration service management client. </summary>
-    public class AppConfigurationManagementClient
+    public partial class AppConfigurationManagementClient
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="tokenCredential"> The OAuth token for making client requests. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public AppConfigurationManagementClient(string subscriptionId, Uri endpoint, TokenCredential tokenCredential, AppConfigurationManagementClientOptions options = null)
         {
             if (subscriptionId == null)

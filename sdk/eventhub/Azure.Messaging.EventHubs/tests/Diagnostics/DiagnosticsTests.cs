@@ -59,7 +59,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var producer = new EventHubProducerClient(fakeConnection, transportMock.Object);
 
             var eventData = new EventData(ReadOnlyMemory<byte>.Empty);
-            await producer.SendAsync(eventData);
+            await producer.SendAsync(new[] { eventData });
 
             activity.Stop();
 
@@ -98,7 +98,6 @@ namespace Azure.Messaging.EventHubs.Tests
             var fakeConnection = new MockConnection(endpoint, eventHubName);
             var batchTransportMock = new Mock<TransportEventBatch>();
 
-
             batchTransportMock
                 .Setup(m => m.TryAdd(It.IsAny<EventData>()))
                 .Callback<EventData>(addedEvent => batchEvent = addedEvent)
@@ -107,6 +106,10 @@ namespace Azure.Messaging.EventHubs.Tests
                     eventCount++;
                     return eventCount <= 1;
                 });
+
+            batchTransportMock
+                .Setup(m => m.Count)
+                .Returns(1);
 
             var transportMock = new Mock<TransportProducer>();
 
@@ -122,7 +125,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var eventData = new EventData(ReadOnlyMemory<byte>.Empty);
             var batch = await producer.CreateBatchAsync();
-            Assert.True(batch.TryAdd(eventData));
+            Assert.That(batch.TryAdd(eventData), Is.True);
 
             await producer.SendAsync(batch);
             activity.Stop();
@@ -267,8 +270,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await producer.SendAsync(new[]
             {
-                new EventData(ReadOnlyMemory<byte>.Empty, new Dictionary<string, object> { { DiagnosticProperty.DiagnosticIdAttribute, "id" } }),
-                new EventData(ReadOnlyMemory<byte>.Empty, new Dictionary<string, object> { { DiagnosticProperty.DiagnosticIdAttribute, "id2" } })
+                new EventData(new BinaryData(ReadOnlyMemory<byte>.Empty), new Dictionary<string, object> { { DiagnosticProperty.DiagnosticIdAttribute, "id" } }),
+                new EventData(new BinaryData(ReadOnlyMemory<byte>.Empty), new Dictionary<string, object> { { DiagnosticProperty.DiagnosticIdAttribute, "id2" } })
             });
 
             ClientDiagnosticListener.ProducedDiagnosticScope sendScope = testListener.Scopes.Single(s => s.Name == DiagnosticProperty.ProducerActivityName);
@@ -307,15 +310,19 @@ namespace Azure.Messaging.EventHubs.Tests
                     return hasSpace;
                 });
 
+            batchTransportMock
+                .Setup(m => m.Count)
+                .Returns(2);
+
             transportMock
                 .Setup(m => m.CreateBatchAsync(It.IsAny<CreateBatchOptions>(), It.IsAny<CancellationToken>()))
                 .Returns(new ValueTask<TransportEventBatch>(Task.FromResult(batchTransportMock.Object)));
 
             var producer = new EventHubProducerClient(fakeConnection, transportMock.Object);
 
-            var eventData1 = new EventData(ReadOnlyMemory<byte>.Empty, new Dictionary<string, object> { { DiagnosticProperty.DiagnosticIdAttribute, "id" } });
-            var eventData2 = new EventData(ReadOnlyMemory<byte>.Empty, new Dictionary<string, object> { { DiagnosticProperty.DiagnosticIdAttribute, "id2" } });
-            var eventData3 = new EventData(ReadOnlyMemory<byte>.Empty, new Dictionary<string, object> { { DiagnosticProperty.DiagnosticIdAttribute, "id3" } });
+            var eventData1 = new EventData(new BinaryData(ReadOnlyMemory<byte>.Empty), new Dictionary<string, object> { { DiagnosticProperty.DiagnosticIdAttribute, "id" } });
+            var eventData2 = new EventData(new BinaryData(ReadOnlyMemory<byte>.Empty), new Dictionary<string, object> { { DiagnosticProperty.DiagnosticIdAttribute, "id2" } });
+            var eventData3 = new EventData(new BinaryData(ReadOnlyMemory<byte>.Empty), new Dictionary<string, object> { { DiagnosticProperty.DiagnosticIdAttribute, "id3" } });
 
             EventDataBatch batch = await producer.CreateBatchAsync();
 
@@ -356,8 +363,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var eventBatch = new List<EventData>
             {
-                new EventData(Array.Empty<byte>(), enqueuedTime: enqueuedTime),
-                new EventData(Array.Empty<byte>(), enqueuedTime: enqueuedTime)
+                new EventData(new BinaryData(Array.Empty<byte>()), enqueuedTime: enqueuedTime),
+                new EventData(new BinaryData(Array.Empty<byte>()), enqueuedTime: enqueuedTime)
             };
 
             eventBatch.ForEach(evt => evt.Properties.Add(DiagnosticProperty.DiagnosticIdAttribute, (++diagnosticId).ToString()));
@@ -406,7 +413,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var enqueuedTime = DateTimeOffset.UtcNow;
             var diagnosticId = "OMGHAI2U!";
-            var eventBatch = new List<EventData> { new EventData(Array.Empty<byte>(), enqueuedTime: enqueuedTime) };
+            var eventBatch = new List<EventData> { new EventData(new BinaryData(Array.Empty<byte>()), enqueuedTime: enqueuedTime) };
             var partition = new EventProcessorPartition { PartitionId = "123" };
             var fullyQualifiedNamespace = "namespace";
             var eventHubName = "eventHub";

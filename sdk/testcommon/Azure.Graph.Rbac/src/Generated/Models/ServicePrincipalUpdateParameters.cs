@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
-
 namespace Azure.Graph.Rbac.Models
 {
     /// <summary> Request parameters for update an existing service principal. </summary>
@@ -14,17 +12,6 @@ namespace Azure.Graph.Rbac.Models
     {
         /// <summary> Initializes a new instance of ServicePrincipalUpdateParameters. </summary>
         public ServicePrincipalUpdateParameters()
-        {
-        }
-
-        /// <summary> Initializes a new instance of ServicePrincipalUpdateParameters. </summary>
-        /// <param name="accountEnabled"> whether or not the service principal account is enabled. </param>
-        /// <param name="appRoleAssignmentRequired"> Specifies whether an AppRoleAssignment to a user or group is required before Azure AD will issue a user or access token to the application. </param>
-        /// <param name="keyCredentials"> The collection of key credentials associated with the service principal. </param>
-        /// <param name="passwordCredentials"> The collection of password credentials associated with the service principal. </param>
-        /// <param name="servicePrincipalType"> the type of the service principal. </param>
-        /// <param name="tags"> Optional list of tags that you can apply to your service principals. Not nullable. </param>
-        internal ServicePrincipalUpdateParameters(bool? accountEnabled, bool? appRoleAssignmentRequired, IList<KeyCredential> keyCredentials, IList<PasswordCredential> passwordCredentials, string servicePrincipalType, IList<string> tags) : base(accountEnabled, appRoleAssignmentRequired, keyCredentials, passwordCredentials, servicePrincipalType, tags)
         {
         }
     }

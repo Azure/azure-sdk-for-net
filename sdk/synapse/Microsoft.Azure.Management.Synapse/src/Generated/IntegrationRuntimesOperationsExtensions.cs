@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='integrationRuntimeName'>
             /// Integration runtime name
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='integrationRuntimeName'>
             /// Integration runtime name
@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='integrationRuntimeName'>
             /// Integration runtime name
@@ -120,7 +120,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='integrationRuntimeName'>
             /// Integration runtime name
@@ -154,7 +154,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='integrationRuntimeName'>
             /// Integration runtime name
@@ -185,7 +185,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='integrationRuntimeName'>
             /// Integration runtime name
@@ -222,7 +222,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='integrationRuntimeName'>
             /// Integration runtime name
@@ -245,7 +245,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='integrationRuntimeName'>
             /// Integration runtime name
@@ -271,7 +271,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='integrationRuntimeName'>
             /// Integration runtime name
@@ -294,7 +294,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='integrationRuntimeName'>
             /// Integration runtime name
@@ -320,7 +320,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             public static IPage<IntegrationRuntimeResource> ListByWorkspace(this IIntegrationRuntimesOperations operations, string resourceGroupName, string workspaceName)
             {
@@ -340,7 +340,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -366,7 +366,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='integrationRuntimeName'>
             /// Integration runtime name
@@ -389,7 +389,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='integrationRuntimeName'>
             /// Integration runtime name
@@ -418,7 +418,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='integrationRuntimeName'>
             /// Integration runtime name
@@ -441,7 +441,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='integrationRuntimeName'>
             /// Integration runtime name
@@ -452,6 +452,452 @@ namespace Microsoft.Azure.Management.Synapse
             public static async Task StopAsync(this IIntegrationRuntimesOperations operations, string resourceGroupName, string workspaceName, string integrationRuntimeName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.StopWithHttpMessagesAsync(resourceGroupName, workspaceName, integrationRuntimeName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Gets list of outbound network dependencies for a given Azure-SSIS
+            /// integration runtime.
+            /// </summary>
+            /// <remarks>
+            /// Gets the list of outbound network dependencies for a given Azure-SSIS
+            /// integration runtime.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            /// <param name='integrationRuntimeName'>
+            /// Integration runtime name
+            /// </param>
+            public static IntegrationRuntimeOutboundNetworkDependenciesEndpointsResponse ListOutboundNetworkDependenciesEndpoints(this IIntegrationRuntimesOperations operations, string resourceGroupName, string workspaceName, string integrationRuntimeName)
+            {
+                return operations.ListOutboundNetworkDependenciesEndpointsAsync(resourceGroupName, workspaceName, integrationRuntimeName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets list of outbound network dependencies for a given Azure-SSIS
+            /// integration runtime.
+            /// </summary>
+            /// <remarks>
+            /// Gets the list of outbound network dependencies for a given Azure-SSIS
+            /// integration runtime.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            /// <param name='integrationRuntimeName'>
+            /// Integration runtime name
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IntegrationRuntimeOutboundNetworkDependenciesEndpointsResponse> ListOutboundNetworkDependenciesEndpointsAsync(this IIntegrationRuntimesOperations operations, string resourceGroupName, string workspaceName, string integrationRuntimeName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListOutboundNetworkDependenciesEndpointsWithHttpMessagesAsync(resourceGroupName, workspaceName, integrationRuntimeName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Enable interactive query in integration runtime
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            /// <param name='integrationRuntimeName'>
+            /// Integration runtime name
+            /// </param>
+            public static void EnableInteractiveQuery(this IIntegrationRuntimesOperations operations, string resourceGroupName, string workspaceName, string integrationRuntimeName)
+            {
+                operations.EnableInteractiveQueryAsync(resourceGroupName, workspaceName, integrationRuntimeName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Enable interactive query in integration runtime
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            /// <param name='integrationRuntimeName'>
+            /// Integration runtime name
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task EnableInteractiveQueryAsync(this IIntegrationRuntimesOperations operations, string resourceGroupName, string workspaceName, string integrationRuntimeName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.EnableInteractiveQueryWithHttpMessagesAsync(resourceGroupName, workspaceName, integrationRuntimeName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Disable interactive query in integration runtime
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            /// <param name='integrationRuntimeName'>
+            /// Integration runtime name
+            /// </param>
+            public static void DisableInteractiveQuery(this IIntegrationRuntimesOperations operations, string resourceGroupName, string workspaceName, string integrationRuntimeName)
+            {
+                operations.DisableInteractiveQueryAsync(resourceGroupName, workspaceName, integrationRuntimeName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Disable interactive query in integration runtime
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            /// <param name='integrationRuntimeName'>
+            /// Integration runtime name
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DisableInteractiveQueryAsync(this IIntegrationRuntimesOperations operations, string resourceGroupName, string workspaceName, string integrationRuntimeName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.DisableInteractiveQueryWithHttpMessagesAsync(resourceGroupName, workspaceName, integrationRuntimeName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Create integration runtime
+            /// </summary>
+            /// <remarks>
+            /// Create an integration runtime
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            /// <param name='integrationRuntimeName'>
+            /// Integration runtime name
+            /// </param>
+            /// <param name='integrationRuntime'>
+            /// Integration runtime resource definition.
+            /// </param>
+            /// <param name='ifMatch'>
+            /// ETag of the integration runtime entity. Should only be specified for
+            /// update, for which it should match existing entity or can be * for
+            /// unconditional update.
+            /// </param>
+            public static IntegrationRuntimeResource BeginCreate(this IIntegrationRuntimesOperations operations, string resourceGroupName, string workspaceName, string integrationRuntimeName, IntegrationRuntimeResource integrationRuntime, string ifMatch = default(string))
+            {
+                return operations.BeginCreateAsync(resourceGroupName, workspaceName, integrationRuntimeName, integrationRuntime, ifMatch).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Create integration runtime
+            /// </summary>
+            /// <remarks>
+            /// Create an integration runtime
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            /// <param name='integrationRuntimeName'>
+            /// Integration runtime name
+            /// </param>
+            /// <param name='integrationRuntime'>
+            /// Integration runtime resource definition.
+            /// </param>
+            /// <param name='ifMatch'>
+            /// ETag of the integration runtime entity. Should only be specified for
+            /// update, for which it should match existing entity or can be * for
+            /// unconditional update.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IntegrationRuntimeResource> BeginCreateAsync(this IIntegrationRuntimesOperations operations, string resourceGroupName, string workspaceName, string integrationRuntimeName, IntegrationRuntimeResource integrationRuntime, string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginCreateWithHttpMessagesAsync(resourceGroupName, workspaceName, integrationRuntimeName, integrationRuntime, ifMatch, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Delete integration runtime
+            /// </summary>
+            /// <remarks>
+            /// Delete an integration runtime
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            /// <param name='integrationRuntimeName'>
+            /// Integration runtime name
+            /// </param>
+            public static void BeginDelete(this IIntegrationRuntimesOperations operations, string resourceGroupName, string workspaceName, string integrationRuntimeName)
+            {
+                operations.BeginDeleteAsync(resourceGroupName, workspaceName, integrationRuntimeName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Delete integration runtime
+            /// </summary>
+            /// <remarks>
+            /// Delete an integration runtime
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            /// <param name='integrationRuntimeName'>
+            /// Integration runtime name
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginDeleteAsync(this IIntegrationRuntimesOperations operations, string resourceGroupName, string workspaceName, string integrationRuntimeName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, workspaceName, integrationRuntimeName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Start integration runtime
+            /// </summary>
+            /// <remarks>
+            /// Start an integration runtime
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            /// <param name='integrationRuntimeName'>
+            /// Integration runtime name
+            /// </param>
+            public static IntegrationRuntimeStatusResponse BeginStart(this IIntegrationRuntimesOperations operations, string resourceGroupName, string workspaceName, string integrationRuntimeName)
+            {
+                return operations.BeginStartAsync(resourceGroupName, workspaceName, integrationRuntimeName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Start integration runtime
+            /// </summary>
+            /// <remarks>
+            /// Start an integration runtime
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            /// <param name='integrationRuntimeName'>
+            /// Integration runtime name
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IntegrationRuntimeStatusResponse> BeginStartAsync(this IIntegrationRuntimesOperations operations, string resourceGroupName, string workspaceName, string integrationRuntimeName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginStartWithHttpMessagesAsync(resourceGroupName, workspaceName, integrationRuntimeName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Stop integration runtime
+            /// </summary>
+            /// <remarks>
+            /// Stop an integration runtime
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            /// <param name='integrationRuntimeName'>
+            /// Integration runtime name
+            /// </param>
+            public static void BeginStop(this IIntegrationRuntimesOperations operations, string resourceGroupName, string workspaceName, string integrationRuntimeName)
+            {
+                operations.BeginStopAsync(resourceGroupName, workspaceName, integrationRuntimeName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Stop integration runtime
+            /// </summary>
+            /// <remarks>
+            /// Stop an integration runtime
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            /// <param name='integrationRuntimeName'>
+            /// Integration runtime name
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginStopAsync(this IIntegrationRuntimesOperations operations, string resourceGroupName, string workspaceName, string integrationRuntimeName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginStopWithHttpMessagesAsync(resourceGroupName, workspaceName, integrationRuntimeName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Enable interactive query in integration runtime
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            /// <param name='integrationRuntimeName'>
+            /// Integration runtime name
+            /// </param>
+            public static void BeginEnableInteractiveQuery(this IIntegrationRuntimesOperations operations, string resourceGroupName, string workspaceName, string integrationRuntimeName)
+            {
+                operations.BeginEnableInteractiveQueryAsync(resourceGroupName, workspaceName, integrationRuntimeName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Enable interactive query in integration runtime
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            /// <param name='integrationRuntimeName'>
+            /// Integration runtime name
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginEnableInteractiveQueryAsync(this IIntegrationRuntimesOperations operations, string resourceGroupName, string workspaceName, string integrationRuntimeName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginEnableInteractiveQueryWithHttpMessagesAsync(resourceGroupName, workspaceName, integrationRuntimeName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Disable interactive query in integration runtime
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            /// <param name='integrationRuntimeName'>
+            /// Integration runtime name
+            /// </param>
+            public static void BeginDisableInteractiveQuery(this IIntegrationRuntimesOperations operations, string resourceGroupName, string workspaceName, string integrationRuntimeName)
+            {
+                operations.BeginDisableInteractiveQueryAsync(resourceGroupName, workspaceName, integrationRuntimeName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Disable interactive query in integration runtime
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            /// <param name='integrationRuntimeName'>
+            /// Integration runtime name
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginDisableInteractiveQueryAsync(this IIntegrationRuntimesOperations operations, string resourceGroupName, string workspaceName, string integrationRuntimeName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginDisableInteractiveQueryWithHttpMessagesAsync(resourceGroupName, workspaceName, integrationRuntimeName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

@@ -9,6 +9,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.Graph.Rbac.Models
 {
@@ -17,6 +18,7 @@ namespace Azure.Graph.Rbac.Models
     {
         /// <summary> Initializes a new instance of RequiredResourceAccess. </summary>
         /// <param name="resourceAccess"> The list of OAuth2.0 permission scopes and app roles that the application requires from the specified resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceAccess"/> is null. </exception>
         public RequiredResourceAccess(IEnumerable<ResourceAccess> resourceAccess)
         {
             if (resourceAccess == null)
@@ -25,7 +27,7 @@ namespace Azure.Graph.Rbac.Models
             }
 
             ResourceAccess = resourceAccess.ToList();
-            AdditionalProperties = new Dictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of RequiredResourceAccess. </summary>
@@ -34,9 +36,9 @@ namespace Azure.Graph.Rbac.Models
         /// <param name="additionalProperties"> . </param>
         internal RequiredResourceAccess(IList<ResourceAccess> resourceAccess, string resourceAppId, IDictionary<string, object> additionalProperties)
         {
-            ResourceAccess = resourceAccess ?? new List<ResourceAccess>();
+            ResourceAccess = resourceAccess;
             ResourceAppId = resourceAppId;
-            AdditionalProperties = additionalProperties ?? new Dictionary<string, object>();
+            AdditionalProperties = additionalProperties;
         }
 
         /// <summary> The list of OAuth2.0 permission scopes and app roles that the application requires from the specified resource. </summary>
@@ -56,23 +58,23 @@ namespace Azure.Graph.Rbac.Models
         public ICollection<string> Keys => AdditionalProperties.Keys;
         /// <inheritdoc />
         public ICollection<object> Values => AdditionalProperties.Values;
-        /// <inheritdoc />
+        /// <inheritdoc cref="ICollection{T}.Count"/>
         int ICollection<KeyValuePair<string, object>>.Count => AdditionalProperties.Count;
         /// <inheritdoc />
         public void Add(string key, object value) => AdditionalProperties.Add(key, value);
         /// <inheritdoc />
         public bool Remove(string key) => AdditionalProperties.Remove(key);
-        /// <inheritdoc />
+        /// <inheritdoc cref="ICollection{T}.IsReadOnly"/>
         bool ICollection<KeyValuePair<string, object>>.IsReadOnly => AdditionalProperties.IsReadOnly;
-        /// <inheritdoc />
+        /// <inheritdoc cref="ICollection{T}.Add"/>
         void ICollection<KeyValuePair<string, object>>.Add(KeyValuePair<string, object> value) => AdditionalProperties.Add(value);
-        /// <inheritdoc />
+        /// <inheritdoc cref="ICollection{T}.Remove"/>
         bool ICollection<KeyValuePair<string, object>>.Remove(KeyValuePair<string, object> value) => AdditionalProperties.Remove(value);
-        /// <inheritdoc />
+        /// <inheritdoc cref="ICollection{T}.Contains"/>
         bool ICollection<KeyValuePair<string, object>>.Contains(KeyValuePair<string, object> value) => AdditionalProperties.Contains(value);
-        /// <inheritdoc />
+        /// <inheritdoc cref="ICollection{T}.CopyTo"/>
         void ICollection<KeyValuePair<string, object>>.CopyTo(KeyValuePair<string, object>[] destination, int offset) => AdditionalProperties.CopyTo(destination, offset);
-        /// <inheritdoc />
+        /// <inheritdoc cref="ICollection{T}.Clear"/>
         void ICollection<KeyValuePair<string, object>>.Clear() => AdditionalProperties.Clear();
         /// <inheritdoc />
         public object this[string key]

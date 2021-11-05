@@ -37,16 +37,19 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices.Models
         /// <param name="thumbprint">The certificate's thumbprint.</param>
         /// <param name="isVerified">Determines whether certificate has been
         /// verified.</param>
+        /// <param name="certificate">base-64 representation of X509
+        /// certificate .cer file or just .pem file content.</param>
         /// <param name="created">The certificate's creation date and
         /// time.</param>
         /// <param name="updated">The certificate's last update date and
         /// time.</param>
-        public CertificateProperties(string subject = default(string), System.DateTime? expiry = default(System.DateTime?), string thumbprint = default(string), bool? isVerified = default(bool?), System.DateTime? created = default(System.DateTime?), System.DateTime? updated = default(System.DateTime?))
+        public CertificateProperties(string subject = default(string), System.DateTime? expiry = default(System.DateTime?), string thumbprint = default(string), bool? isVerified = default(bool?), byte[] certificate = default(byte[]), System.DateTime? created = default(System.DateTime?), System.DateTime? updated = default(System.DateTime?))
         {
             Subject = subject;
             Expiry = expiry;
             Thumbprint = thumbprint;
             IsVerified = isVerified;
+            Certificate = certificate;
             Created = created;
             Updated = updated;
             CustomInit();
@@ -81,6 +84,13 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices.Models
         /// </summary>
         [JsonProperty(PropertyName = "isVerified")]
         public bool? IsVerified { get; private set; }
+
+        /// <summary>
+        /// Gets base-64 representation of X509 certificate .cer file or just
+        /// .pem file content.
+        /// </summary>
+        [JsonProperty(PropertyName = "certificate")]
+        public byte[] Certificate { get; private set; }
 
         /// <summary>
         /// Gets the certificate's creation date and time.

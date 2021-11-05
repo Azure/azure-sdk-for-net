@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
@@ -14,12 +13,13 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Notebook cell. </summary>
-    public partial class NotebookCell : IDictionary<string, object>
+    public partial class NotebookCell
     {
         /// <summary> Initializes a new instance of NotebookCell. </summary>
         /// <param name="cellType"> String identifying the type of cell. </param>
         /// <param name="metadata"> Cell-level metadata. </param>
         /// <param name="source"> Contents of the cell, represented as an array of lines. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="cellType"/>, <paramref name="metadata"/>, or <paramref name="source"/> is null. </exception>
         public NotebookCell(string cellType, object metadata, IEnumerable<string> source)
         {
             if (cellType == null)
@@ -48,7 +48,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="source"> Contents of the cell, represented as an array of lines. </param>
         /// <param name="attachments"> Attachments associated with the cell. </param>
         /// <param name="outputs"> Cell-level output items. </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         internal NotebookCell(string cellType, object metadata, IList<string> source, object attachments, IList<NotebookCellOutputItem> outputs, IDictionary<string, object> additionalProperties)
         {
             CellType = cellType;
@@ -69,42 +69,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object Attachments { get; set; }
         /// <summary> Cell-level output items. </summary>
         public IList<NotebookCellOutputItem> Outputs { get; }
-        internal IDictionary<string, object> AdditionalProperties { get; }
-        /// <inheritdoc />
-        public IEnumerator<KeyValuePair<string, object>> GetEnumerator() => AdditionalProperties.GetEnumerator();
-        /// <inheritdoc />
-        IEnumerator IEnumerable.GetEnumerator() => AdditionalProperties.GetEnumerator();
-        /// <inheritdoc />
-        public bool TryGetValue(string key, out object value) => AdditionalProperties.TryGetValue(key, out value);
-        /// <inheritdoc />
-        public bool ContainsKey(string key) => AdditionalProperties.ContainsKey(key);
-        /// <inheritdoc />
-        public ICollection<string> Keys => AdditionalProperties.Keys;
-        /// <inheritdoc />
-        public ICollection<object> Values => AdditionalProperties.Values;
-        /// <inheritdoc />
-        int ICollection<KeyValuePair<string, object>>.Count => AdditionalProperties.Count;
-        /// <inheritdoc />
-        public void Add(string key, object value) => AdditionalProperties.Add(key, value);
-        /// <inheritdoc />
-        public bool Remove(string key) => AdditionalProperties.Remove(key);
-        /// <inheritdoc />
-        bool ICollection<KeyValuePair<string, object>>.IsReadOnly => AdditionalProperties.IsReadOnly;
-        /// <inheritdoc />
-        void ICollection<KeyValuePair<string, object>>.Add(KeyValuePair<string, object> value) => AdditionalProperties.Add(value);
-        /// <inheritdoc />
-        bool ICollection<KeyValuePair<string, object>>.Remove(KeyValuePair<string, object> value) => AdditionalProperties.Remove(value);
-        /// <inheritdoc />
-        bool ICollection<KeyValuePair<string, object>>.Contains(KeyValuePair<string, object> value) => AdditionalProperties.Contains(value);
-        /// <inheritdoc />
-        void ICollection<KeyValuePair<string, object>>.CopyTo(KeyValuePair<string, object>[] destination, int offset) => AdditionalProperties.CopyTo(destination, offset);
-        /// <inheritdoc />
-        void ICollection<KeyValuePair<string, object>>.Clear() => AdditionalProperties.Clear();
-        /// <inheritdoc />
-        public object this[string key]
-        {
-            get => AdditionalProperties[key];
-            set => AdditionalProperties[key] = value;
-        }
+        /// <summary> Additional Properties. </summary>
+        public IDictionary<string, object> AdditionalProperties { get; }
     }
 }

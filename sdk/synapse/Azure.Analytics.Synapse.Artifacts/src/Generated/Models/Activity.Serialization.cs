@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(ActivityConverter))]
     public partial class Activity : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -88,8 +91,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "IfCondition": return IfConditionActivity.DeserializeIfConditionActivity(element);
                     case "Lookup": return LookupActivity.DeserializeLookupActivity(element);
                     case "SetVariable": return SetVariableActivity.DeserializeSetVariableActivity(element);
+                    case "SparkJob": return SynapseSparkJobDefinitionActivity.DeserializeSynapseSparkJobDefinitionActivity(element);
+                    case "SqlPoolStoredProcedure": return SqlPoolStoredProcedureActivity.DeserializeSqlPoolStoredProcedureActivity(element);
                     case "SqlServerStoredProcedure": return SqlServerStoredProcedureActivity.DeserializeSqlServerStoredProcedureActivity(element);
                     case "Switch": return SwitchActivity.DeserializeSwitchActivity(element);
+                    case "SynapseNotebook": return SynapseNotebookActivity.DeserializeSynapseNotebookActivity(element);
                     case "Until": return UntilActivity.DeserializeUntilActivity(element);
                     case "Validation": return ValidationActivity.DeserializeValidationActivity(element);
                     case "Wait": return WaitActivity.DeserializeWaitActivity(element);
@@ -103,7 +109,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<IList<ActivityDependency>> dependsOn = default;
             Optional<IList<UserProperty>> userProperties = default;
             IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -123,6 +129,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("dependsOn"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ActivityDependency> array = new List<ActivityDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -133,6 +144,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("userProperties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<UserProperty> array = new List<UserProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -141,11 +157,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     userProperties = array;
                     continue;
                 }
-                additionalPropertiesDictionary ??= new Dictionary<string, object>();
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
             return new Activity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties);
+        }
+
+        internal partial class ActivityConverter : JsonConverter<Activity>
+        {
+            public override void Write(Utf8JsonWriter writer, Activity model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override Activity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeActivity(document.RootElement);
+            }
         }
     }
 }

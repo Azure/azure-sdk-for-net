@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -15,28 +16,12 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of SnapshotUpdate. </summary>
         public SnapshotUpdate()
         {
-        }
-
-        /// <summary> Initializes a new instance of SnapshotUpdate. </summary>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="sku"> The snapshots sku name. Can be Standard_LRS, Premium_LRS, or Standard_ZRS. </param>
-        /// <param name="osType"> the Operating System type. </param>
-        /// <param name="diskSizeGB"> If creationData.createOption is Empty, this field is mandatory and it indicates the size of the disk to create. If this field is present for updates or creation with other options, it indicates a resize. Resizes are only allowed if the disk is not attached to a running VM, and can only increase the disk&apos;s size. </param>
-        /// <param name="encryptionSettingsCollection"> Encryption settings collection used be Azure Disk Encryption, can contain multiple encryption settings per disk or snapshot. </param>
-        /// <param name="encryption"> Encryption property can be used to encrypt data at rest with customer managed keys or platform managed keys. </param>
-        internal SnapshotUpdate(IDictionary<string, string> tags, SnapshotSku sku, OperatingSystemTypes? osType, int? diskSizeGB, EncryptionSettingsCollection encryptionSettingsCollection, Encryption encryption)
-        {
-            Tags = tags;
-            Sku = sku;
-            OsType = osType;
-            DiskSizeGB = diskSizeGB;
-            EncryptionSettingsCollection = encryptionSettingsCollection;
-            Encryption = encryption;
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; set; }
-        /// <summary> The snapshots sku name. Can be Standard_LRS, Premium_LRS, or Standard_ZRS. </summary>
+        public IDictionary<string, string> Tags { get; }
+        /// <summary> The snapshots sku name. Can be Standard_LRS, Premium_LRS, or Standard_ZRS. This is an optional parameter for incremental snapshot and the default behavior is the SKU will be set to the same sku as the previous snapshot. </summary>
         public SnapshotSku Sku { get; set; }
         /// <summary> the Operating System type. </summary>
         public OperatingSystemTypes? OsType { get; set; }
@@ -46,5 +31,11 @@ namespace Azure.ResourceManager.Compute.Models
         public EncryptionSettingsCollection EncryptionSettingsCollection { get; set; }
         /// <summary> Encryption property can be used to encrypt data at rest with customer managed keys or platform managed keys. </summary>
         public Encryption Encryption { get; set; }
+        /// <summary> Policy for accessing the disk via network. </summary>
+        public NetworkAccessPolicy? NetworkAccessPolicy { get; set; }
+        /// <summary> ARM id of the DiskAccess resource for using private endpoints on disks. </summary>
+        public string DiskAccessId { get; set; }
+        /// <summary> Indicates the OS on a snapshot supports hibernation. </summary>
+        public bool? SupportsHibernation { get; set; }
     }
 }

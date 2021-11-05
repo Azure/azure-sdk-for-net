@@ -131,7 +131,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationStatus> DeleteAsync(this IExamples operations, System.Guid appId, string versionId, int exampleId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationStatus> DeleteAsync(this IExamples operations, System.Guid appId, string versionId, long exampleId, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.DeleteWithHttpMessagesAsync(appId, versionId, exampleId, null, cancellationToken).ConfigureAwait(false))
                 {

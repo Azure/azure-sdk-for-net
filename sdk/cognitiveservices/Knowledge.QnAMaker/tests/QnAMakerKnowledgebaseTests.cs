@@ -12,7 +12,7 @@ namespace QnAMaker.Tests
 {
     public class QnAMakerKnowledgebaseTests: BaseTests
     {
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6210")]
+        [Fact]
         public void QnAMakerKnowledgebaseCrud()
         {
             using (MockContext context = MockContext.Start(this.GetType()))

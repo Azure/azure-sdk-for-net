@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,16 +16,12 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static NetworkInterfaceAssociation DeserializeNetworkInterfaceAssociation(JsonElement element)
         {
-            string id = default;
-            IReadOnlyList<SecurityRule> securityRules = default;
+            Optional<string> id = default;
+            Optional<IReadOnlyList<SecurityRuleData>> securityRules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
@@ -32,25 +29,19 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SecurityRule> array = new List<SecurityRule>();
+                    List<SecurityRuleData> array = new List<SecurityRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(SecurityRule.DeserializeSecurityRule(item));
-                        }
+                        array.Add(SecurityRuleData.DeserializeSecurityRuleData(item));
                     }
                     securityRules = array;
                     continue;
                 }
             }
-            return new NetworkInterfaceAssociation(id, securityRules);
+            return new NetworkInterfaceAssociation(id.Value, Optional.ToList(securityRules));
         }
     }
 }

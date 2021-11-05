@@ -87,5 +87,34 @@ namespace ClientRuntime.NetCore.Tests
             Assert.True(fakeHttpHandler.NumberOfTimesFailedSoFar > 1);
             Assert.Equal((HttpStatusCode)429, responseMessage.StatusCode);
         }
+
+        [Fact]
+        public void LimitsRetryCount()
+        {
+            // Setup to always return 429.
+            var fakeHttpHandler = new FakeHttpHandler
+            {
+                StatusCodeToReturn = (HttpStatusCode)429,
+                TweakResponse = (response) =>
+                {
+                    response.Headers.Add("Retry-After", "1");
+                }
+            };
+
+            var retryHandler = new RetryAfterDelegatingHandler(fakeHttpHandler)
+            {
+                MaxRetries = 3
+            };
+
+            var httpClient = new HttpClient(retryHandler, false);
+
+            // Make a request using the HttpClient.
+            var fakeClient = new FakeServiceClient(httpClient);
+            var responseMessage = fakeClient.DoStuffSync();
+
+            Assert.NotNull(responseMessage);
+            Assert.Equal(3, fakeHttpHandler.NumberOfTimesFailedSoFar);
+            Assert.Equal((HttpStatusCode)429, responseMessage.StatusCode);
+        }
     }
 }

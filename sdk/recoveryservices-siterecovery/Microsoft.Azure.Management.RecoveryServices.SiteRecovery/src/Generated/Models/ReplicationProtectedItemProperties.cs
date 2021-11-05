@@ -83,7 +83,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// custom settings.</param>
         /// <param name="recoveryContainerId">The recovery container
         /// Id.</param>
-        public ReplicationProtectedItemProperties(string friendlyName = default(string), string protectedItemType = default(string), string protectableItemId = default(string), string recoveryServicesProviderId = default(string), string primaryFabricFriendlyName = default(string), string primaryFabricProvider = default(string), string recoveryFabricFriendlyName = default(string), string recoveryFabricId = default(string), string primaryProtectionContainerFriendlyName = default(string), string recoveryProtectionContainerFriendlyName = default(string), string protectionState = default(string), string protectionStateDescription = default(string), string activeLocation = default(string), string testFailoverState = default(string), string testFailoverStateDescription = default(string), IList<string> allowedOperations = default(IList<string>), string replicationHealth = default(string), string failoverHealth = default(string), IList<HealthError> healthErrors = default(IList<HealthError>), string policyId = default(string), string policyFriendlyName = default(string), System.DateTime? lastSuccessfulFailoverTime = default(System.DateTime?), System.DateTime? lastSuccessfulTestFailoverTime = default(System.DateTime?), CurrentScenarioDetails currentScenario = default(CurrentScenarioDetails), string failoverRecoveryPointId = default(string), ReplicationProviderSpecificSettings providerSpecificDetails = default(ReplicationProviderSpecificSettings), string recoveryContainerId = default(string))
+        /// <param name="eventCorrelationId">The correlation Id for events
+        /// associated with this protected item.</param>
+        public ReplicationProtectedItemProperties(string friendlyName = default(string), string protectedItemType = default(string), string protectableItemId = default(string), string recoveryServicesProviderId = default(string), string primaryFabricFriendlyName = default(string), string primaryFabricProvider = default(string), string recoveryFabricFriendlyName = default(string), string recoveryFabricId = default(string), string primaryProtectionContainerFriendlyName = default(string), string recoveryProtectionContainerFriendlyName = default(string), string protectionState = default(string), string protectionStateDescription = default(string), string activeLocation = default(string), string testFailoverState = default(string), string testFailoverStateDescription = default(string), IList<string> allowedOperations = default(IList<string>), string replicationHealth = default(string), string failoverHealth = default(string), IList<HealthError> healthErrors = default(IList<HealthError>), string policyId = default(string), string policyFriendlyName = default(string), System.DateTime? lastSuccessfulFailoverTime = default(System.DateTime?), System.DateTime? lastSuccessfulTestFailoverTime = default(System.DateTime?), CurrentScenarioDetails currentScenario = default(CurrentScenarioDetails), string failoverRecoveryPointId = default(string), ReplicationProviderSpecificSettings providerSpecificDetails = default(ReplicationProviderSpecificSettings), string recoveryContainerId = default(string), string eventCorrelationId = default(string))
         {
             FriendlyName = friendlyName;
             ProtectedItemType = protectedItemType;
@@ -112,6 +114,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             FailoverRecoveryPointId = failoverRecoveryPointId;
             ProviderSpecificDetails = providerSpecificDetails;
             RecoveryContainerId = recoveryContainerId;
+            EventCorrelationId = eventCorrelationId;
             CustomInit();
         }
 
@@ -287,6 +290,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "recoveryContainerId")]
         public string RecoveryContainerId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the correlation Id for events associated with this
+        /// protected item.
+        /// </summary>
+        [JsonProperty(PropertyName = "eventCorrelationId")]
+        public string EventCorrelationId { get; set; }
 
     }
 }

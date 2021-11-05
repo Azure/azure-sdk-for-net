@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    internal static class ResourceSkuRestrictionsTypeExtensions
+    internal static partial class ResourceSkuRestrictionsTypeExtensions
     {
         public static string ToSerialString(this ResourceSkuRestrictionsType value) => value switch
         {

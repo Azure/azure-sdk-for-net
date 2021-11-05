@@ -14,30 +14,22 @@ namespace Azure.ResourceManager.AppConfiguration.Models
     {
         internal static Error DeserializeError(JsonElement element)
         {
-            string code = default;
-            string message = default;
+            Optional<string> code = default;
+            Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     code = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("message"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     message = property.Value.GetString();
                     continue;
                 }
             }
-            return new Error(code, message);
+            return new Error(code.Value, message.Value);
         }
     }
 }

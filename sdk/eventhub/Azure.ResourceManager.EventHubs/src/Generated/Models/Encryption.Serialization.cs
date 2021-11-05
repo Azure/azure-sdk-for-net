@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (KeyVaultProperties != null)
+            if (Optional.IsCollectionDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties");
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
                 writer.WriteEndArray();
             }
-            if (KeySource != null)
+            if (Optional.IsDefined(KeySource))
             {
                 writer.WritePropertyName("keySource");
                 writer.WriteStringValue(KeySource);
@@ -36,42 +36,32 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         internal static Encryption DeserializeEncryption(JsonElement element)
         {
-            IList<KeyVaultProperties> keyVaultProperties = default;
-            string keySource = default;
+            Optional<IList<KeyVaultProperties>> keyVaultProperties = default;
+            Optional<string> keySource = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyVaultProperties"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<KeyVaultProperties> array = new List<KeyVaultProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(Models.KeyVaultProperties.DeserializeKeyVaultProperties(item));
-                        }
+                        array.Add(Models.KeyVaultProperties.DeserializeKeyVaultProperties(item));
                     }
                     keyVaultProperties = array;
                     continue;
                 }
                 if (property.NameEquals("keySource"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     keySource = property.Value.GetString();
                     continue;
                 }
             }
-            return new Encryption(keyVaultProperties, keySource);
+            return new Encryption(Optional.ToList(keyVaultProperties), keySource.Value);
         }
     }
 }

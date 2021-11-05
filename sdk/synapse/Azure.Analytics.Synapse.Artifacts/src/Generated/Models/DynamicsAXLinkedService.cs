@@ -19,6 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="servicePrincipalKey"> Specify the application&apos;s key. Mark this field as a SecureString to store it securely in Data Factory, or reference a secret stored in Azure Key Vault. Type: string (or Expression with resultType string). </param>
         /// <param name="tenant"> Specify the tenant information (domain name or tenant ID) under which your application resides. Retrieve it by hovering the mouse in the top-right corner of the Azure portal. Type: string (or Expression with resultType string). </param>
         /// <param name="aadResourceId"> Specify the resource you are requesting authorization. Type: string (or Expression with resultType string). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="url"/>, <paramref name="servicePrincipalId"/>, <paramref name="servicePrincipalKey"/>, <paramref name="tenant"/>, or <paramref name="aadResourceId"/> is null. </exception>
         public DynamicsAXLinkedService(object url, object servicePrincipalId, SecretBase servicePrincipalKey, object tenant, object aadResourceId)
         {
             if (url == null)
@@ -56,7 +57,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="url"> The Dynamics AX (or Dynamics 365 Finance and Operations) instance OData endpoint. </param>
         /// <param name="servicePrincipalId"> Specify the application&apos;s client ID. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalKey"> Specify the application&apos;s key. Mark this field as a SecureString to store it securely in Data Factory, or reference a secret stored in Azure Key Vault. Type: string (or Expression with resultType string). </param>

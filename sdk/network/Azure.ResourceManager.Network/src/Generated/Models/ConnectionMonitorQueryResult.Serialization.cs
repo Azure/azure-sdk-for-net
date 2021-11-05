@@ -15,14 +15,15 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ConnectionMonitorQueryResult DeserializeConnectionMonitorQueryResult(JsonElement element)
         {
-            ConnectionMonitorSourceStatus? sourceStatus = default;
-            IReadOnlyList<ConnectionStateSnapshot> states = default;
+            Optional<ConnectionMonitorSourceStatus> sourceStatus = default;
+            Optional<IReadOnlyList<ConnectionStateSnapshot>> states = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceStatus"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sourceStatus = new ConnectionMonitorSourceStatus(property.Value.GetString());
@@ -32,25 +33,19 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ConnectionStateSnapshot> array = new List<ConnectionStateSnapshot>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ConnectionStateSnapshot.DeserializeConnectionStateSnapshot(item));
-                        }
+                        array.Add(ConnectionStateSnapshot.DeserializeConnectionStateSnapshot(item));
                     }
                     states = array;
                     continue;
                 }
             }
-            return new ConnectionMonitorQueryResult(sourceStatus, states);
+            return new ConnectionMonitorQueryResult(Optional.ToNullable(sourceStatus), Optional.ToList(states));
         }
     }
 }

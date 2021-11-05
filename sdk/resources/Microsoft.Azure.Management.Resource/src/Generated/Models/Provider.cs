@@ -40,13 +40,17 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// resource provider.</param>
         /// <param name="resourceTypes">The collection of provider resource
         /// types.</param>
-        public Provider(string id = default(string), string namespaceProperty = default(string), string registrationState = default(string), string registrationPolicy = default(string), IList<ProviderResourceType> resourceTypes = default(IList<ProviderResourceType>))
+        /// <param name="providerAuthorizationConsentState">The provider
+        /// authorization consent state. Possible values include:
+        /// 'NotSpecified', 'Required', 'NotRequired', 'Consented'</param>
+        public Provider(string id = default(string), string namespaceProperty = default(string), string registrationState = default(string), string registrationPolicy = default(string), IList<ProviderResourceType> resourceTypes = default(IList<ProviderResourceType>), string providerAuthorizationConsentState = default(string))
         {
             Id = id;
             NamespaceProperty = namespaceProperty;
             RegistrationState = registrationState;
             RegistrationPolicy = registrationPolicy;
             ResourceTypes = resourceTypes;
+            ProviderAuthorizationConsentState = providerAuthorizationConsentState;
             CustomInit();
         }
 
@@ -84,6 +88,14 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// </summary>
         [JsonProperty(PropertyName = "resourceTypes")]
         public IList<ProviderResourceType> ResourceTypes { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the provider authorization consent state. Possible
+        /// values include: 'NotSpecified', 'Required', 'NotRequired',
+        /// 'Consented'
+        /// </summary>
+        [JsonProperty(PropertyName = "providerAuthorizationConsentState")]
+        public string ProviderAuthorizationConsentState { get; set; }
 
     }
 }

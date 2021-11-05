@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         /// <summary> Initializes a new instance of GetVpnSitesConfigurationRequest. </summary>
         /// <param name="outputBlobSasUrl"> The sas-url to download the configurations for vpn-sites. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="outputBlobSasUrl"/> is null. </exception>
         public GetVpnSitesConfigurationRequest(string outputBlobSasUrl)
         {
             if (outputBlobSasUrl == null)
@@ -22,20 +24,12 @@ namespace Azure.ResourceManager.Network.Models
                 throw new ArgumentNullException(nameof(outputBlobSasUrl));
             }
 
-            OutputBlobSasUrl = outputBlobSasUrl;
-        }
-
-        /// <summary> Initializes a new instance of GetVpnSitesConfigurationRequest. </summary>
-        /// <param name="vpnSites"> List of resource-ids of the vpn-sites for which config is to be downloaded. </param>
-        /// <param name="outputBlobSasUrl"> The sas-url to download the configurations for vpn-sites. </param>
-        internal GetVpnSitesConfigurationRequest(IList<string> vpnSites, string outputBlobSasUrl)
-        {
-            VpnSites = vpnSites;
+            VpnSites = new ChangeTrackingList<string>();
             OutputBlobSasUrl = outputBlobSasUrl;
         }
 
         /// <summary> List of resource-ids of the vpn-sites for which config is to be downloaded. </summary>
-        public IList<string> VpnSites { get; set; }
+        public IList<string> VpnSites { get; }
         /// <summary> The sas-url to download the configurations for vpn-sites. </summary>
         public string OutputBlobSasUrl { get; }
     }

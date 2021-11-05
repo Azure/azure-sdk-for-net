@@ -94,5 +94,4 @@ namespace Azure.Security.KeyVault.Secrets
             // RecoveryLevel is read-only don't serialize
         }
     }
-
 }

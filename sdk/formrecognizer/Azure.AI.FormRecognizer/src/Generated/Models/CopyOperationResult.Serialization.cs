@@ -7,10 +7,9 @@
 
 using System;
 using System.Text.Json;
-using Azure.AI.FormRecognizer;
 using Azure.Core;
 
-namespace Azure.AI.FormRecognizer.Training
+namespace Azure.AI.FormRecognizer.Models
 {
     internal partial class CopyOperationResult
     {
@@ -39,6 +38,11 @@ namespace Azure.AI.FormRecognizer.Training
                 }
                 if (property.NameEquals("copyResult"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     copyResult = CopyResult.DeserializeCopyResult(property.Value);
                     continue;
                 }

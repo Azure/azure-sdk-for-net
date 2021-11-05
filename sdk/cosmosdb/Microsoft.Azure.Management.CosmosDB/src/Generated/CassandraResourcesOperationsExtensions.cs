@@ -311,6 +311,102 @@ namespace Microsoft.Azure.Management.CosmosDB
             }
 
             /// <summary>
+            /// Migrate an Azure Cosmos DB Cassandra Keyspace from manual throughput to
+            /// autoscale
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='keyspaceName'>
+            /// Cosmos DB keyspace name.
+            /// </param>
+            public static ThroughputSettingsGetResults MigrateCassandraKeyspaceToAutoscale(this ICassandraResourcesOperations operations, string resourceGroupName, string accountName, string keyspaceName)
+            {
+                return operations.MigrateCassandraKeyspaceToAutoscaleAsync(resourceGroupName, accountName, keyspaceName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Migrate an Azure Cosmos DB Cassandra Keyspace from manual throughput to
+            /// autoscale
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='keyspaceName'>
+            /// Cosmos DB keyspace name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ThroughputSettingsGetResults> MigrateCassandraKeyspaceToAutoscaleAsync(this ICassandraResourcesOperations operations, string resourceGroupName, string accountName, string keyspaceName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.MigrateCassandraKeyspaceToAutoscaleWithHttpMessagesAsync(resourceGroupName, accountName, keyspaceName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Migrate an Azure Cosmos DB Cassandra Keyspace from autoscale to manual
+            /// throughput
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='keyspaceName'>
+            /// Cosmos DB keyspace name.
+            /// </param>
+            public static ThroughputSettingsGetResults MigrateCassandraKeyspaceToManualThroughput(this ICassandraResourcesOperations operations, string resourceGroupName, string accountName, string keyspaceName)
+            {
+                return operations.MigrateCassandraKeyspaceToManualThroughputAsync(resourceGroupName, accountName, keyspaceName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Migrate an Azure Cosmos DB Cassandra Keyspace from autoscale to manual
+            /// throughput
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='keyspaceName'>
+            /// Cosmos DB keyspace name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ThroughputSettingsGetResults> MigrateCassandraKeyspaceToManualThroughputAsync(this ICassandraResourcesOperations operations, string resourceGroupName, string accountName, string keyspaceName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.MigrateCassandraKeyspaceToManualThroughputWithHttpMessagesAsync(resourceGroupName, accountName, keyspaceName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Lists the Cassandra table under an existing Azure Cosmos DB database
             /// account.
             /// </summary>
@@ -634,6 +730,114 @@ namespace Microsoft.Azure.Management.CosmosDB
             }
 
             /// <summary>
+            /// Migrate an Azure Cosmos DB Cassandra table from manual throughput to
+            /// autoscale
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='keyspaceName'>
+            /// Cosmos DB keyspace name.
+            /// </param>
+            /// <param name='tableName'>
+            /// Cosmos DB table name.
+            /// </param>
+            public static ThroughputSettingsGetResults MigrateCassandraTableToAutoscale(this ICassandraResourcesOperations operations, string resourceGroupName, string accountName, string keyspaceName, string tableName)
+            {
+                return operations.MigrateCassandraTableToAutoscaleAsync(resourceGroupName, accountName, keyspaceName, tableName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Migrate an Azure Cosmos DB Cassandra table from manual throughput to
+            /// autoscale
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='keyspaceName'>
+            /// Cosmos DB keyspace name.
+            /// </param>
+            /// <param name='tableName'>
+            /// Cosmos DB table name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ThroughputSettingsGetResults> MigrateCassandraTableToAutoscaleAsync(this ICassandraResourcesOperations operations, string resourceGroupName, string accountName, string keyspaceName, string tableName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.MigrateCassandraTableToAutoscaleWithHttpMessagesAsync(resourceGroupName, accountName, keyspaceName, tableName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Migrate an Azure Cosmos DB Cassandra table from autoscale to manual
+            /// throughput
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='keyspaceName'>
+            /// Cosmos DB keyspace name.
+            /// </param>
+            /// <param name='tableName'>
+            /// Cosmos DB table name.
+            /// </param>
+            public static ThroughputSettingsGetResults MigrateCassandraTableToManualThroughput(this ICassandraResourcesOperations operations, string resourceGroupName, string accountName, string keyspaceName, string tableName)
+            {
+                return operations.MigrateCassandraTableToManualThroughputAsync(resourceGroupName, accountName, keyspaceName, tableName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Migrate an Azure Cosmos DB Cassandra table from autoscale to manual
+            /// throughput
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='keyspaceName'>
+            /// Cosmos DB keyspace name.
+            /// </param>
+            /// <param name='tableName'>
+            /// Cosmos DB table name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ThroughputSettingsGetResults> MigrateCassandraTableToManualThroughputAsync(this ICassandraResourcesOperations operations, string resourceGroupName, string accountName, string keyspaceName, string tableName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.MigrateCassandraTableToManualThroughputWithHttpMessagesAsync(resourceGroupName, accountName, keyspaceName, tableName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Create or update an Azure Cosmos DB Cassandra keyspace
             /// </summary>
             /// <param name='operations'>
@@ -777,6 +981,102 @@ namespace Microsoft.Azure.Management.CosmosDB
             public static async Task<ThroughputSettingsGetResults> BeginUpdateCassandraKeyspaceThroughputAsync(this ICassandraResourcesOperations operations, string resourceGroupName, string accountName, string keyspaceName, ThroughputSettingsUpdateParameters updateThroughputParameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginUpdateCassandraKeyspaceThroughputWithHttpMessagesAsync(resourceGroupName, accountName, keyspaceName, updateThroughputParameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Migrate an Azure Cosmos DB Cassandra Keyspace from manual throughput to
+            /// autoscale
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='keyspaceName'>
+            /// Cosmos DB keyspace name.
+            /// </param>
+            public static ThroughputSettingsGetResults BeginMigrateCassandraKeyspaceToAutoscale(this ICassandraResourcesOperations operations, string resourceGroupName, string accountName, string keyspaceName)
+            {
+                return operations.BeginMigrateCassandraKeyspaceToAutoscaleAsync(resourceGroupName, accountName, keyspaceName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Migrate an Azure Cosmos DB Cassandra Keyspace from manual throughput to
+            /// autoscale
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='keyspaceName'>
+            /// Cosmos DB keyspace name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ThroughputSettingsGetResults> BeginMigrateCassandraKeyspaceToAutoscaleAsync(this ICassandraResourcesOperations operations, string resourceGroupName, string accountName, string keyspaceName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginMigrateCassandraKeyspaceToAutoscaleWithHttpMessagesAsync(resourceGroupName, accountName, keyspaceName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Migrate an Azure Cosmos DB Cassandra Keyspace from autoscale to manual
+            /// throughput
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='keyspaceName'>
+            /// Cosmos DB keyspace name.
+            /// </param>
+            public static ThroughputSettingsGetResults BeginMigrateCassandraKeyspaceToManualThroughput(this ICassandraResourcesOperations operations, string resourceGroupName, string accountName, string keyspaceName)
+            {
+                return operations.BeginMigrateCassandraKeyspaceToManualThroughputAsync(resourceGroupName, accountName, keyspaceName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Migrate an Azure Cosmos DB Cassandra Keyspace from autoscale to manual
+            /// throughput
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='keyspaceName'>
+            /// Cosmos DB keyspace name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ThroughputSettingsGetResults> BeginMigrateCassandraKeyspaceToManualThroughputAsync(this ICassandraResourcesOperations operations, string resourceGroupName, string accountName, string keyspaceName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginMigrateCassandraKeyspaceToManualThroughputWithHttpMessagesAsync(resourceGroupName, accountName, keyspaceName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -944,6 +1244,114 @@ namespace Microsoft.Azure.Management.CosmosDB
             public static async Task<ThroughputSettingsGetResults> BeginUpdateCassandraTableThroughputAsync(this ICassandraResourcesOperations operations, string resourceGroupName, string accountName, string keyspaceName, string tableName, ThroughputSettingsUpdateParameters updateThroughputParameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginUpdateCassandraTableThroughputWithHttpMessagesAsync(resourceGroupName, accountName, keyspaceName, tableName, updateThroughputParameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Migrate an Azure Cosmos DB Cassandra table from manual throughput to
+            /// autoscale
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='keyspaceName'>
+            /// Cosmos DB keyspace name.
+            /// </param>
+            /// <param name='tableName'>
+            /// Cosmos DB table name.
+            /// </param>
+            public static ThroughputSettingsGetResults BeginMigrateCassandraTableToAutoscale(this ICassandraResourcesOperations operations, string resourceGroupName, string accountName, string keyspaceName, string tableName)
+            {
+                return operations.BeginMigrateCassandraTableToAutoscaleAsync(resourceGroupName, accountName, keyspaceName, tableName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Migrate an Azure Cosmos DB Cassandra table from manual throughput to
+            /// autoscale
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='keyspaceName'>
+            /// Cosmos DB keyspace name.
+            /// </param>
+            /// <param name='tableName'>
+            /// Cosmos DB table name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ThroughputSettingsGetResults> BeginMigrateCassandraTableToAutoscaleAsync(this ICassandraResourcesOperations operations, string resourceGroupName, string accountName, string keyspaceName, string tableName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginMigrateCassandraTableToAutoscaleWithHttpMessagesAsync(resourceGroupName, accountName, keyspaceName, tableName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Migrate an Azure Cosmos DB Cassandra table from autoscale to manual
+            /// throughput
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='keyspaceName'>
+            /// Cosmos DB keyspace name.
+            /// </param>
+            /// <param name='tableName'>
+            /// Cosmos DB table name.
+            /// </param>
+            public static ThroughputSettingsGetResults BeginMigrateCassandraTableToManualThroughput(this ICassandraResourcesOperations operations, string resourceGroupName, string accountName, string keyspaceName, string tableName)
+            {
+                return operations.BeginMigrateCassandraTableToManualThroughputAsync(resourceGroupName, accountName, keyspaceName, tableName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Migrate an Azure Cosmos DB Cassandra table from autoscale to manual
+            /// throughput
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='keyspaceName'>
+            /// Cosmos DB keyspace name.
+            /// </param>
+            /// <param name='tableName'>
+            /// Cosmos DB table name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ThroughputSettingsGetResults> BeginMigrateCassandraTableToManualThroughputAsync(this ICassandraResourcesOperations operations, string resourceGroupName, string accountName, string keyspaceName, string tableName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginMigrateCassandraTableToManualThroughputWithHttpMessagesAsync(resourceGroupName, accountName, keyspaceName, tableName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

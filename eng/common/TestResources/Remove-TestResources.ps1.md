@@ -14,34 +14,37 @@ Deletes the resource group deployed for a service directory from Azure.
 
 ### Default (Default)
 ```
-Remove-TestResources.ps1 [-BaseName] <String> [-Environment <String>] [-Force] [-WhatIf] [-Confirm]
+Remove-TestResources.ps1 [-BaseName <String>] [-SubscriptionId <String>] [-ServiceDirectory] <String>
+ [-Environment <String>] [-Force] [-RemoveTestResourcesRemainingArguments <Object>] [-WhatIf] [-Confirm]
  [<CommonParameters>]
 ```
 
 ### Default+Provisioner
 ```
-Remove-TestResources.ps1 [-BaseName] <String> -TenantId <String> [-SubscriptionId <String>]
- -ProvisionerApplicationId <String> -ProvisionerApplicationSecret <String> [-Environment <String>] [-Force]
- [-WhatIf] [-Confirm] [<CommonParameters>]
+Remove-TestResources.ps1 -BaseName <String> -TenantId <String> [-SubscriptionId <String>]
+ -ProvisionerApplicationId <String> -ProvisionerApplicationSecret <String> [[-ServiceDirectory] <String>]
+ [-Environment <String>] [-Force] [-RemoveTestResourcesRemainingArguments <Object>] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
 ```
 
 ### ResourceGroup+Provisioner
 ```
 Remove-TestResources.ps1 -ResourceGroupName <String> -TenantId <String> [-SubscriptionId <String>]
- -ProvisionerApplicationId <String> -ProvisionerApplicationSecret <String> [-Environment <String>] [-Force]
- [-WhatIf] [-Confirm] [<CommonParameters>]
+ -ProvisionerApplicationId <String> -ProvisionerApplicationSecret <String> [[-ServiceDirectory] <String>]
+ [-Environment <String>] [-Force] [-RemoveTestResourcesRemainingArguments <Object>] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
 ```
 
 ### ResourceGroup
 ```
-Remove-TestResources.ps1 -ResourceGroupName <String> [-Environment <String>] [-Force] [-WhatIf] [-Confirm]
+Remove-TestResources.ps1 -ResourceGroupName <String> [-SubscriptionId <String>] [[-ServiceDirectory] <String>]
+ [-Environment <String>] [-Force] [-RemoveTestResourcesRemainingArguments <Object>] [-WhatIf] [-Confirm]
  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
 Removes a resource group and all its resources previously deployed using
 New-TestResources.ps1.
-
 If you are not currently logged into an account in the Az PowerShell module,
 you will be asked to log in with Connect-AzAccount.
 Alternatively, you (or a
@@ -53,11 +56,9 @@ create resources.
 
 ### EXAMPLE 1
 ```
-Remove-TestResources.ps1 -BaseName 'uuid123' -Force
+Remove-TestResources.ps1 keyvault -Force
+Use the currently logged-in account to delete the resources created for Key Vault testing.
 ```
-
-Use the currently logged-in account to delete the resource group by the name of
-'rg-uuid123'
 
 ### EXAMPLE 2
 ```
@@ -68,11 +69,10 @@ Remove-TestResources.ps1 `
     -ProvisionerApplicationSecret '$(AppSecret)' `
     -Force `
     -Verbose `
-```
-
 When run in the context of an Azure DevOps pipeline, this script removes the
 resource group whose name is stored in the environment variable
 AZURE_RESOURCEGROUP_NAME.
+```
 
 ## PARAMETERS
 
@@ -82,11 +82,23 @@ This will delete the resource group named 'rg-\<baseName\>'
 
 ```yaml
 Type: String
-Parameter Sets: Default, Default+Provisioner
+Parameter Sets: Default
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+```yaml
+Type: String
+Parameter Sets: Default+Provisioner
 Aliases:
 
 Required: True
-Position: 1
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -123,13 +135,19 @@ Accept wildcard characters: False
 ```
 
 ### -SubscriptionId
-Optional subscription ID to use for new resources when logging in as a
+Optional subscription ID to use when deleting resources when logging in as a
 provisioner.
 You can also use Set-AzContext if not provisioning.
 
+If you do not specify a SubscriptionId and are not logged in, one will be
+automatically selected for you by the Connect-AzAccount cmdlet.
+
+Once you are logged in (or were previously), the selected SubscriptionId
+will be used for subsequent operations that are specific to a subscription.
+
 ```yaml
 Type: String
-Parameter Sets: Default+Provisioner, ResourceGroup+Provisioner
+Parameter Sets: (All)
 Aliases:
 
 Required: False
@@ -171,15 +189,27 @@ Accept wildcard characters: False
 
 ### -ServiceDirectory
 A directory under 'sdk' in the repository root - optionally with subdirectories
-specified - specified - in which to discover pre removal script named 'remove-test-resources-pre.json'.
+specified - in which to discover pre removal script named 'remove-test-resources-pre.json'.
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: Default
+Aliases:
+
+Required: True
+Position: 1
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+```yaml
+Type: String
+Parameter Sets: Default+Provisioner, ResourceGroup+Provisioner, ResourceGroup
 Aliases:
 
 Required: False
-Position: Named
+Position: 1
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -217,6 +247,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -RemoveTestResourcesRemainingArguments
+Captures any arguments not declared here (no parameter errors)
+
+```yaml
+Type: Object
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -WhatIf
 Shows what would happen if the cmdlet runs.
 The cmdlet is not run.
@@ -249,7 +294,7 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](https://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -258,5 +303,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-
-[New-TestResources.ps1](./New-TestResources.ps1.md)

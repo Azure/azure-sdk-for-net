@@ -18,14 +18,13 @@ namespace Azure.Core
 
         internal DiagnosticsOptions()
         {
-            IsTelemetryEnabled = !EnvironmentVariableToBool(Environment.GetEnvironmentVariable("AZURE_TELEMETRY_DISABLED")) ?? true;
-            IsDistributedTracingEnabled = !EnvironmentVariableToBool(Environment.GetEnvironmentVariable("AZURE_TRACING_DISABLED")) ?? true;
-            ApplicationId = DefaultApplicationId;
             LoggedHeaderNames = new List<string>()
             {
+                "x-ms-request-id",
                 "x-ms-client-request-id",
                 "x-ms-return-client-request-id",
                 "traceparent",
+                "MS-CV",
 
                 "Accept",
                 "Cache-Control",
@@ -48,6 +47,18 @@ namespace Azure.Core
                 "User-Agent"
             };
             LoggedQueryParameters = new List<string>();
+        }
+
+        internal DiagnosticsOptions(DiagnosticsOptions diagnosticsOptions)
+        {
+            ApplicationId = diagnosticsOptions.ApplicationId;
+            IsLoggingEnabled = diagnosticsOptions.IsLoggingEnabled;
+            IsTelemetryEnabled = diagnosticsOptions.IsTelemetryEnabled;
+            LoggedHeaderNames = new List<string>(diagnosticsOptions.LoggedHeaderNames);
+            LoggedQueryParameters = new List<string>(diagnosticsOptions.LoggedQueryParameters);
+            LoggedContentSizeLimit = diagnosticsOptions.LoggedContentSizeLimit;
+            IsDistributedTracingEnabled = diagnosticsOptions.IsDistributedTracingEnabled;
+            IsLoggingContentEnabled = diagnosticsOptions.IsLoggingContentEnabled;
         }
 
         /// <summary>
@@ -80,12 +91,12 @@ namespace Azure.Core
         /// <summary>
         /// Gets a list of headers names that are not redacted during logging.
         /// </summary>
-        public IList<string> LoggedHeaderNames { get; }
+        public IList<string> LoggedHeaderNames { get; internal set; }
 
         /// <summary>
         /// Gets a list of query parameter names that are not redacted during logging.
         /// </summary>
-        public IList<string> LoggedQueryParameters { get; }
+        public IList<string> LoggedQueryParameters { get; internal set; }
 
         /// <summary>
         /// Gets or sets the value sent a the first part of "User-Agent" headers for all requests issues by this client. Defaults to <see cref="DefaultApplicationId"/>.
@@ -106,23 +117,10 @@ namespace Azure.Core
         /// <summary>
         /// Gets or sets the default application id. Default application id would be set on all instances.
         /// </summary>
-        public static string? DefaultApplicationId { get; set; }
-
-        private static bool? EnvironmentVariableToBool(string value)
+        public static string? DefaultApplicationId
         {
-            if (string.Equals("true", value, StringComparison.OrdinalIgnoreCase) ||
-                string.Equals("1", value, StringComparison.OrdinalIgnoreCase))
-            {
-                return true;
-            }
-
-            if (string.Equals("false", value, StringComparison.OrdinalIgnoreCase) ||
-                string.Equals("0", value, StringComparison.OrdinalIgnoreCase))
-            {
-                return false;
-            }
-
-            return null;
+            get => ClientOptions.Default.Diagnostics.ApplicationId;
+            set => ClientOptions.Default.Diagnostics.ApplicationId = value;
         }
     }
 }

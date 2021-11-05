@@ -11,7 +11,7 @@ using System.Threading;
 
 namespace Azure.Storage.Internal.Avro
 {
-    internal class AvroReader
+    internal class AvroReader : IDisposable
     {
         /// <summary>
         /// Stream containing the body of the Avro file.
@@ -61,13 +61,32 @@ namespace Azure.Storage.Internal.Avro
         private bool _initalized;
 
         /// <summary>
+        /// To detect redundant calls
+        /// </summary>
+        private bool _disposed;
+
+        /// <summary>
+        /// Remembers where we started if partial data stream was provided.
+        /// </summary>
+        private readonly long _initialBlockOffset;
+
+        /// <summary>
         /// Constructor for an AvroReader that will read from the
         /// beginning of an Avro file.
         /// </summary>
         public AvroReader(Stream dataStream)
         {
-            _dataStream = dataStream;
-            _headerStream = dataStream;
+            if (dataStream.CanSeek)
+            {
+                _dataStream = dataStream;
+                _headerStream = dataStream;
+            }
+            else
+            {
+                _dataStream = new StreamWithPosition(dataStream);
+                _headerStream = _dataStream;
+            }
+
             _metadata = new Dictionary<string, string>();
             _initalized = false;
         }
@@ -82,10 +101,27 @@ namespace Azure.Storage.Internal.Avro
             long currentBlockOffset,
             long indexWithinCurrentBlock)
         {
-            _dataStream = dataStream;
-            _headerStream = headerStream;
+            if (dataStream.CanSeek)
+            {
+                _dataStream = dataStream;
+            }
+            else
+            {
+                _dataStream = new StreamWithPosition(dataStream);
+            }
+
+            if (headerStream.CanSeek)
+            {
+                _headerStream = headerStream;
+            }
+            else
+            {
+                _headerStream = new StreamWithPosition(headerStream);
+            }
+
             _metadata = new Dictionary<string, string>();
             _initalized = false;
+            _initialBlockOffset = currentBlockOffset;
             BlockOffset = currentBlockOffset;
             ObjectIndex = indexWithinCurrentBlock;
             _initalized = false;
@@ -96,7 +132,7 @@ namespace Azure.Storage.Internal.Avro
         /// </summary>
         public AvroReader() { }
 
-        private async Task Initalize(bool async, CancellationToken cancellationToken = default)
+        public virtual async Task Initalize(bool async, CancellationToken cancellationToken = default)
         {
             // Four bytes, ASCII 'O', 'b', 'j', followed by 1.
             byte[] header = await AvroParser.ReadFixedBytesAsync(_headerStream, AvroConstants.InitBytes.Length, async, cancellationToken).ConfigureAwait(false);
@@ -125,7 +161,7 @@ namespace Azure.Storage.Internal.Avro
 
             if (BlockOffset == 0)
             {
-                BlockOffset = _dataStream.Position;
+                BlockOffset = _initialBlockOffset + _dataStream.Position;
             }
 
             // Populate _itemsRemainingInCurrentBlock
@@ -161,7 +197,6 @@ namespace Azure.Storage.Internal.Avro
                 throw new ArgumentException("There are no more items in the stream");
             }
 
-
             object result = await _itemType.ReadAsync(_dataStream, async, cancellationToken).ConfigureAwait(false);
 
             _itemsRemainingInBlock--;
@@ -171,7 +206,7 @@ namespace Azure.Storage.Internal.Avro
             {
                 byte[] marker = await AvroParser.ReadFixedBytesAsync(_dataStream, 16, async, cancellationToken).ConfigureAwait(false);
 
-                BlockOffset = _dataStream.Position;
+                BlockOffset = _initialBlockOffset + _dataStream.Position;
                 ObjectIndex = 0;
 
                 if (!_syncMarker.SequenceEqual(marker))
@@ -196,6 +231,24 @@ namespace Azure.Storage.Internal.Avro
             }
 
             return result;
+        }
+
+        public void Dispose() => Dispose(true);
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                _dataStream.Dispose();
+                _headerStream.Dispose();
+            }
+
+            _disposed = true;
         }
     }
 }

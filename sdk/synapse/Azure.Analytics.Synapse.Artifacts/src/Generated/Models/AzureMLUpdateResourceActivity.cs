@@ -18,6 +18,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="trainedModelName"> Name of the Trained Model module in the Web Service experiment to be updated. Type: string (or Expression with resultType string). </param>
         /// <param name="trainedModelLinkedServiceName"> Name of Azure Storage linked service holding the .ilearner file that will be uploaded by the update operation. </param>
         /// <param name="trainedModelFilePath"> The relative file path in trainedModelLinkedService to represent the .ilearner file that will be uploaded by the update operation.  Type: string (or Expression with resultType string). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="trainedModelName"/>, <paramref name="trainedModelLinkedServiceName"/>, or <paramref name="trainedModelFilePath"/> is null. </exception>
         public AzureMLUpdateResourceActivity(string name, object trainedModelName, LinkedServiceReference trainedModelLinkedServiceName, object trainedModelFilePath) : base(name)
         {
             if (name == null)
@@ -49,7 +50,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="description"> Activity description. </param>
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="policy"> Activity policy. </param>
         /// <param name="trainedModelName"> Name of the Trained Model module in the Web Service experiment to be updated. Type: string (or Expression with resultType string). </param>

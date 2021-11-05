@@ -14,20 +14,16 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         internal static SearchIndexerError DeserializeSearchIndexerError(JsonElement element)
         {
-            string key = default;
+            Optional<string> key = default;
             string errorMessage = default;
             int statusCode = default;
-            string name = default;
-            string details = default;
-            string documentationLink = default;
+            Optional<string> name = default;
+            Optional<string> details = default;
+            Optional<string> documentationLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("key"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     key = property.Value.GetString();
                     continue;
                 }
@@ -43,33 +39,21 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("details"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     details = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("documentationLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     documentationLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new SearchIndexerError(key, errorMessage, statusCode, name, details, documentationLink);
+            return new SearchIndexerError(key.Value, errorMessage, statusCode, name.Value, details.Value, documentationLink.Value);
         }
     }
 }

@@ -16,18 +16,20 @@ namespace Azure.Search.Documents.Models
     {
         internal static SearchDocumentsResult DeserializeSearchDocumentsResult(JsonElement element)
         {
-            long? odataCount = default;
-            double? searchCoverage = default;
-            IReadOnlyDictionary<string, IList<FacetResult>> searchFacets = default;
-            SearchOptions searchNextPageParameters = default;
+            Optional<long> odataCount = default;
+            Optional<double> searchCoverage = default;
+            Optional<IReadOnlyDictionary<string, IList<FacetResult>>> searchFacets = default;
+            Optional<IReadOnlyList<AnswerResult>> searchAnswers = default;
+            Optional<SearchOptions> searchNextPageParameters = default;
             IReadOnlyList<SearchResult> value = default;
-            string odataNextLink = default;
+            Optional<string> odataNextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@odata.count"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     odataCount = property.Value.GetInt64();
@@ -37,6 +39,7 @@ namespace Azure.Search.Documents.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     searchCoverage = property.Value.GetDouble();
@@ -46,39 +49,42 @@ namespace Azure.Search.Documents.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, IList<FacetResult>> dictionary = new Dictionary<string, IList<FacetResult>>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        List<FacetResult> array = new List<FacetResult>();
+                        foreach (var item in property0.Value.EnumerateArray())
                         {
-                            dictionary.Add(property0.Name, null);
+                            array.Add(FacetResult.DeserializeFacetResult(item));
                         }
-                        else
-                        {
-                            List<FacetResult> array = new List<FacetResult>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(FacetResult.DeserializeFacetResult(item));
-                                }
-                            }
-                            dictionary.Add(property0.Name, array);
-                        }
+                        dictionary.Add(property0.Name, array);
                     }
                     searchFacets = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("@search.answers"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        searchAnswers = null;
+                        continue;
+                    }
+                    List<AnswerResult> array = new List<AnswerResult>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(AnswerResult.DeserializeAnswerResult(item));
+                    }
+                    searchAnswers = array;
                     continue;
                 }
                 if (property.NameEquals("@search.nextPageParameters"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     searchNextPageParameters = SearchOptions.DeserializeSearchOptions(property.Value);
@@ -89,29 +95,18 @@ namespace Azure.Search.Documents.Models
                     List<SearchResult> array = new List<SearchResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(SearchResult.DeserializeSearchResult(item));
-                        }
+                        array.Add(SearchResult.DeserializeSearchResult(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("@odata.nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     odataNextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new SearchDocumentsResult(odataCount, searchCoverage, searchFacets, searchNextPageParameters, value, odataNextLink);
+            return new SearchDocumentsResult(Optional.ToNullable(odataCount), Optional.ToNullable(searchCoverage), Optional.ToDictionary(searchFacets), Optional.ToList(searchAnswers), searchNextPageParameters.Value, value, odataNextLink.Value);
         }
     }
 }

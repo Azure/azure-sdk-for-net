@@ -6,6 +6,8 @@ namespace Azure.Messaging.EventHubs
         public EventProcessorClient(Azure.Storage.Blobs.BlobContainerClient checkpointStore, string consumerGroup, string connectionString) { }
         public EventProcessorClient(Azure.Storage.Blobs.BlobContainerClient checkpointStore, string consumerGroup, string connectionString, Azure.Messaging.EventHubs.EventProcessorClientOptions clientOptions) { }
         public EventProcessorClient(Azure.Storage.Blobs.BlobContainerClient checkpointStore, string consumerGroup, string connectionString, string eventHubName) { }
+        public EventProcessorClient(Azure.Storage.Blobs.BlobContainerClient checkpointStore, string consumerGroup, string fullyQualifiedNamespace, string eventHubName, Azure.AzureNamedKeyCredential credential, Azure.Messaging.EventHubs.EventProcessorClientOptions clientOptions = null) { }
+        public EventProcessorClient(Azure.Storage.Blobs.BlobContainerClient checkpointStore, string consumerGroup, string fullyQualifiedNamespace, string eventHubName, Azure.AzureSasCredential credential, Azure.Messaging.EventHubs.EventProcessorClientOptions clientOptions = null) { }
         public EventProcessorClient(Azure.Storage.Blobs.BlobContainerClient checkpointStore, string consumerGroup, string fullyQualifiedNamespace, string eventHubName, Azure.Core.TokenCredential credential, Azure.Messaging.EventHubs.EventProcessorClientOptions clientOptions = null) { }
         public EventProcessorClient(Azure.Storage.Blobs.BlobContainerClient checkpointStore, string consumerGroup, string connectionString, string eventHubName, Azure.Messaging.EventHubs.EventProcessorClientOptions clientOptions) { }
         public new string ConsumerGroup { get { throw null; } }
@@ -21,6 +23,7 @@ namespace Azure.Messaging.EventHubs
         protected override Azure.Messaging.EventHubs.EventHubConnection CreateConnection() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        protected override System.Threading.Tasks.Task<Azure.Messaging.EventHubs.Primitives.EventProcessorCheckpoint> GetCheckpointAsync(string partitionId, System.Threading.CancellationToken cancellationToken) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         protected override System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Messaging.EventHubs.Primitives.EventProcessorCheckpoint>> ListCheckpointsAsync(System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -43,8 +46,11 @@ namespace Azure.Messaging.EventHubs
         public Azure.Messaging.EventHubs.EventHubConnectionOptions ConnectionOptions { get { throw null; } set { } }
         public string Identifier { get { throw null; } set { } }
         public Azure.Messaging.EventHubs.Processor.LoadBalancingStrategy LoadBalancingStrategy { get { throw null; } set { } }
+        public System.TimeSpan LoadBalancingUpdateInterval { get { throw null; } set { } }
         public System.TimeSpan? MaximumWaitTime { get { throw null; } set { } }
+        public System.TimeSpan PartitionOwnershipExpirationInterval { get { throw null; } set { } }
         public int PrefetchCount { get { throw null; } set { } }
+        public long? PrefetchSizeInBytes { get { throw null; } set { } }
         public Azure.Messaging.EventHubs.EventHubsRetryOptions RetryOptions { get { throw null; } set { } }
         public bool TrackLastEnqueuedEventProperties { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]

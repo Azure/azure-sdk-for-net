@@ -34,9 +34,12 @@ namespace Microsoft.Azure.Management.HealthcareApis.Models
         /// </summary>
         /// <param name="offerThroughput">The provisioned throughput for the
         /// backing database.</param>
-        public ServiceCosmosDbConfigurationInfo(int? offerThroughput = default(int?))
+        /// <param name="keyVaultKeyUri">The URI of the customer-managed key
+        /// for the backing database.</param>
+        public ServiceCosmosDbConfigurationInfo(int? offerThroughput = default(int?), string keyVaultKeyUri = default(string))
         {
             OfferThroughput = offerThroughput;
+            KeyVaultKeyUri = keyVaultKeyUri;
             CustomInit();
         }
 
@@ -50,6 +53,13 @@ namespace Microsoft.Azure.Management.HealthcareApis.Models
         /// </summary>
         [JsonProperty(PropertyName = "offerThroughput")]
         public int? OfferThroughput { get; set; }
+
+        /// <summary>
+        /// Gets or sets the URI of the customer-managed key for the backing
+        /// database.
+        /// </summary>
+        [JsonProperty(PropertyName = "keyVaultKeyUri")]
+        public string KeyVaultKeyUri { get; set; }
 
         /// <summary>
         /// Validate the object.

@@ -8,27 +8,27 @@ namespace Azure.DigitalTwins.Core.Samples
         /// <summary>
         /// Room model Id
         /// </summary>
-        public const string RoomModelId = "dtmi:samples:Room;1";
+        public const string RoomModelId = "dtmi:com:samples:Room;1";
 
         /// <summary>
         /// WiFi model Id
         /// </summary>
-        public const string WifiModelId = "dtmi:samples:Wifi;1";
+        public const string WifiModelId = "dtmi:com:samples:Wifi;1";
 
         /// <summary>
         /// Building model Id
         /// </summary>
-        public const string BuildingModelId = "dtmi:samples:Building;1";
+        public const string BuildingModelId = "dtmi:com:samples:Building;1";
 
         /// <summary>
         /// Floor model Id
         /// </summary>
-        public const string FloorModelId = "dtmi:samples:Floor;1";
+        public const string FloorModelId = "dtmi:com:samples:Floor;1";
 
         /// <summary>
         /// HVAC model Id
         /// </summary>
-        public const string HvacModelId = "dtmi:samples:HVAC;1";
+        public const string HvacModelId = "dtmi:com:samples:HVAC;1";
 
         /// <summary>
         /// Placeholder for model Id in the temporary payload.
@@ -43,12 +43,12 @@ namespace Azure.DigitalTwins.Core.Samples
         /// <summary>
         /// Temporary model Id prefix
         /// </summary>
-        public const string TemporaryModelPrefix = "dtmi:samples:TempModel;";
+        public const string TemporaryModelPrefix = "dtmi:com:samples:TempModel;";
 
         /// <summary>
         /// Temporary component model Id prefix
         /// </summary>
-        public const string TemporaryComponentModelPrefix = "dtmi:samples:ComponentModel;";
+        public const string TemporaryComponentModelPrefix = "dtmi:com:samples:ComponentModel;";
 
         /// <summary>
         /// Placeholder for model display name in the temporary payload.
@@ -94,9 +94,9 @@ namespace Azure.DigitalTwins.Core.Samples
             }";
 
         /// <summary>
-        /// Path for component.
+        /// Name for component.
         /// </summary>
-        public const string ComponentPath = "Component1";
+        public const string ComponentName = "Component1";
 
         /// <summary>
         /// The application/json description of a temporary component model

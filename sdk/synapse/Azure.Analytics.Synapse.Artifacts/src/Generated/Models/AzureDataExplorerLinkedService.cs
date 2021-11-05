@@ -15,38 +15,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         /// <summary> Initializes a new instance of AzureDataExplorerLinkedService. </summary>
         /// <param name="endpoint"> The endpoint of Azure Data Explorer (the engine&apos;s endpoint). URL will be in the format https://&lt;clusterName&gt;.&lt;regionName&gt;.kusto.windows.net. Type: string (or Expression with resultType string). </param>
-        /// <param name="servicePrincipalId"> The ID of the service principal used to authenticate against Azure Data Explorer. Type: string (or Expression with resultType string). </param>
-        /// <param name="servicePrincipalKey"> The key of the service principal used to authenticate against Kusto. </param>
         /// <param name="database"> Database name for connection. Type: string (or Expression with resultType string). </param>
-        /// <param name="tenant"> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </param>
-        public AzureDataExplorerLinkedService(object endpoint, object servicePrincipalId, SecretBase servicePrincipalKey, object database, object tenant)
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="database"/> is null. </exception>
+        public AzureDataExplorerLinkedService(object endpoint, object database)
         {
             if (endpoint == null)
             {
                 throw new ArgumentNullException(nameof(endpoint));
             }
-            if (servicePrincipalId == null)
-            {
-                throw new ArgumentNullException(nameof(servicePrincipalId));
-            }
-            if (servicePrincipalKey == null)
-            {
-                throw new ArgumentNullException(nameof(servicePrincipalKey));
-            }
             if (database == null)
             {
                 throw new ArgumentNullException(nameof(database));
             }
-            if (tenant == null)
-            {
-                throw new ArgumentNullException(nameof(tenant));
-            }
 
             Endpoint = endpoint;
-            ServicePrincipalId = servicePrincipalId;
-            ServicePrincipalKey = servicePrincipalKey;
             Database = database;
-            Tenant = tenant;
             Type = "AzureDataExplorer";
         }
 
@@ -56,7 +39,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="endpoint"> The endpoint of Azure Data Explorer (the engine&apos;s endpoint). URL will be in the format https://&lt;clusterName&gt;.&lt;regionName&gt;.kusto.windows.net. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalId"> The ID of the service principal used to authenticate against Azure Data Explorer. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalKey"> The key of the service principal used to authenticate against Kusto. </param>

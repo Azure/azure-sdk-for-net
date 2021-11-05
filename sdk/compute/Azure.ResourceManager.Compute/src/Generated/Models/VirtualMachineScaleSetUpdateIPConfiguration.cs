@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -15,6 +17,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of VirtualMachineScaleSetUpdateIPConfiguration. </summary>
         public VirtualMachineScaleSetUpdateIPConfiguration()
         {
+            ApplicationGatewayBackendAddressPools = new ChangeTrackingList<WritableSubResource>();
+            ApplicationSecurityGroups = new ChangeTrackingList<WritableSubResource>();
+            LoadBalancerBackendAddressPools = new ChangeTrackingList<WritableSubResource>();
+            LoadBalancerInboundNatPools = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetUpdateIPConfiguration. </summary>
@@ -28,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="applicationSecurityGroups"> Specifies an array of references to application security group. </param>
         /// <param name="loadBalancerBackendAddressPools"> The load balancer backend address pools. </param>
         /// <param name="loadBalancerInboundNatPools"> The load balancer inbound nat pools. </param>
-        internal VirtualMachineScaleSetUpdateIPConfiguration(string id, string name, ApiEntityReference subnet, bool? primary, VirtualMachineScaleSetUpdatePublicIPAddressConfiguration publicIPAddressConfiguration, IPVersion? privateIPAddressVersion, IList<SubResource> applicationGatewayBackendAddressPools, IList<SubResource> applicationSecurityGroups, IList<SubResource> loadBalancerBackendAddressPools, IList<SubResource> loadBalancerInboundNatPools) : base(id)
+        internal VirtualMachineScaleSetUpdateIPConfiguration(string id, string name, WritableSubResource subnet, bool? primary, VirtualMachineScaleSetUpdatePublicIPAddressConfiguration publicIPAddressConfiguration, IPVersion? privateIPAddressVersion, IList<WritableSubResource> applicationGatewayBackendAddressPools, IList<WritableSubResource> applicationSecurityGroups, IList<WritableSubResource> loadBalancerBackendAddressPools, IList<WritableSubResource> loadBalancerInboundNatPools) : base(id)
         {
             Name = name;
             Subnet = subnet;
@@ -44,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The IP configuration name. </summary>
         public string Name { get; set; }
         /// <summary> The subnet. </summary>
-        public ApiEntityReference Subnet { get; set; }
+        public WritableSubResource Subnet { get; set; }
         /// <summary> Specifies the primary IP Configuration in case the network interface has more than one IP Configuration. </summary>
         public bool? Primary { get; set; }
         /// <summary> The publicIPAddressConfiguration. </summary>
@@ -52,12 +58,12 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Available from Api-Version 2017-03-30 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4.  Possible values are: &apos;IPv4&apos; and &apos;IPv6&apos;. </summary>
         public IPVersion? PrivateIPAddressVersion { get; set; }
         /// <summary> The application gateway backend address pools. </summary>
-        public IList<SubResource> ApplicationGatewayBackendAddressPools { get; set; }
+        public IList<WritableSubResource> ApplicationGatewayBackendAddressPools { get; }
         /// <summary> Specifies an array of references to application security group. </summary>
-        public IList<SubResource> ApplicationSecurityGroups { get; set; }
+        public IList<WritableSubResource> ApplicationSecurityGroups { get; }
         /// <summary> The load balancer backend address pools. </summary>
-        public IList<SubResource> LoadBalancerBackendAddressPools { get; set; }
+        public IList<WritableSubResource> LoadBalancerBackendAddressPools { get; }
         /// <summary> The load balancer inbound nat pools. </summary>
-        public IList<SubResource> LoadBalancerInboundNatPools { get; set; }
+        public IList<WritableSubResource> LoadBalancerInboundNatPools { get; }
     }
 }

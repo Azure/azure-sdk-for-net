@@ -8,39 +8,34 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class PacketCaptureListResult
+    internal partial class PacketCaptureListResult
     {
         internal static PacketCaptureListResult DeserializePacketCaptureListResult(JsonElement element)
         {
-            IReadOnlyList<PacketCaptureResult> value = default;
+            Optional<IReadOnlyList<PacketCaptureData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<PacketCaptureResult> array = new List<PacketCaptureResult>();
+                    List<PacketCaptureData> array = new List<PacketCaptureData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(PacketCaptureResult.DeserializePacketCaptureResult(item));
-                        }
+                        array.Add(PacketCaptureData.DeserializePacketCaptureData(item));
                     }
                     value = array;
                     continue;
                 }
             }
-            return new PacketCaptureListResult(value);
+            return new PacketCaptureListResult(Optional.ToList(value));
         }
     }
 }

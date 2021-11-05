@@ -32,22 +32,25 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the DeploymentScript class.
         /// </summary>
-        /// <param name="identity">Managed identity to be used for this
-        /// deployment script. Currently, only user-assigned MSI is
-        /// supported.</param>
         /// <param name="location">The location of the ACI and the storage
         /// account for the deployment script.</param>
         /// <param name="id">String Id used to locate any resource on
         /// Azure.</param>
         /// <param name="name">Name of this resource.</param>
         /// <param name="type">Type of this resource.</param>
+        /// <param name="identity">Optional property. Managed identity to be
+        /// used for this deployment script. Currently, only user-assigned MSI
+        /// is supported.</param>
         /// <param name="tags">Resource tags.</param>
-        public DeploymentScript(ManagedServiceIdentity identity, string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        /// <param name="systemData">The system metadata related to this
+        /// resource.</param>
+        public DeploymentScript(string location, string id = default(string), string name = default(string), string type = default(string), ManagedServiceIdentity identity = default(ManagedServiceIdentity), IDictionary<string, string> tags = default(IDictionary<string, string>), SystemData systemData = default(SystemData))
             : base(id, name, type)
         {
             Identity = identity;
             Location = location;
             Tags = tags;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -57,8 +60,9 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets managed identity to be used for this deployment
-        /// script. Currently, only user-assigned MSI is supported.
+        /// Gets or sets optional property. Managed identity to be used for
+        /// this deployment script. Currently, only user-assigned MSI is
+        /// supported.
         /// </summary>
         [JsonProperty(PropertyName = "identity")]
         public ManagedServiceIdentity Identity { get; set; }
@@ -77,6 +81,12 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
+        /// Gets the system metadata related to this resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -84,10 +94,6 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Identity == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Identity");
-            }
             if (Location == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Location");

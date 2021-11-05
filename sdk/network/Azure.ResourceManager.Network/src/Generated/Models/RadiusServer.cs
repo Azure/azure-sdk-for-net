@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         /// <summary> Initializes a new instance of RadiusServer. </summary>
         /// <param name="radiusServerAddress"> The address of this radius server. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="radiusServerAddress"/> is null. </exception>
         public RadiusServer(string radiusServerAddress)
         {
             if (radiusServerAddress == null)

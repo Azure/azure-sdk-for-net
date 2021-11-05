@@ -30,11 +30,19 @@ namespace Microsoft.Azure.Management.Marketplace.Models
         /// <param name="planId">Text identifier for this plan</param>
         /// <param name="planDisplayName">Friendly name for the plan for
         /// display in the marketplace</param>
-        public Plan(string skuId = default(string), string planId = default(string), string planDisplayName = default(string))
+        /// <param name="accessibility">Plan accessibility. Possible values
+        /// include: 'Unknown', 'Public', 'PrivateTenantOnLevel',
+        /// 'PrivateSubscriptionOnLevel'</param>
+        /// <param name="altStackReference">Alternative stack type</param>
+        /// <param name="stackType">Stack type (classic or arm)</param>
+        public Plan(string skuId = default(string), string planId = default(string), string planDisplayName = default(string), string accessibility = default(string), string altStackReference = default(string), string stackType = default(string))
         {
             SkuId = skuId;
             PlanId = planId;
             PlanDisplayName = planDisplayName;
+            Accessibility = accessibility;
+            AltStackReference = altStackReference;
+            StackType = stackType;
             CustomInit();
         }
 
@@ -60,6 +68,26 @@ namespace Microsoft.Azure.Management.Marketplace.Models
         /// </summary>
         [JsonProperty(PropertyName = "planDisplayName")]
         public string PlanDisplayName { get; private set; }
+
+        /// <summary>
+        /// Gets or sets plan accessibility. Possible values include:
+        /// 'Unknown', 'Public', 'PrivateTenantOnLevel',
+        /// 'PrivateSubscriptionOnLevel'
+        /// </summary>
+        [JsonProperty(PropertyName = "accessibility")]
+        public string Accessibility { get; set; }
+
+        /// <summary>
+        /// Gets alternative stack type
+        /// </summary>
+        [JsonProperty(PropertyName = "altStackReference")]
+        public string AltStackReference { get; private set; }
+
+        /// <summary>
+        /// Gets stack type (classic or arm)
+        /// </summary>
+        [JsonProperty(PropertyName = "stackType")]
+        public string StackType { get; private set; }
 
     }
 }

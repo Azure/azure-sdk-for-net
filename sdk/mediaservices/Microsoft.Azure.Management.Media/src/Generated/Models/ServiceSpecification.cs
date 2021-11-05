@@ -31,10 +31,12 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <summary>
         /// Initializes a new instance of the ServiceSpecification class.
         /// </summary>
+        /// <param name="logSpecifications">List of log specifications.</param>
         /// <param name="metricSpecifications">List of metric
         /// specifications.</param>
-        public ServiceSpecification(IList<Metric> metricSpecifications = default(IList<Metric>))
+        public ServiceSpecification(IList<LogSpecification> logSpecifications = default(IList<LogSpecification>), IList<MetricSpecification> metricSpecifications = default(IList<MetricSpecification>))
         {
+            LogSpecifications = logSpecifications;
             MetricSpecifications = metricSpecifications;
             CustomInit();
         }
@@ -45,10 +47,16 @@ namespace Microsoft.Azure.Management.Media.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets list of log specifications.
+        /// </summary>
+        [JsonProperty(PropertyName = "logSpecifications")]
+        public IList<LogSpecification> LogSpecifications { get; private set; }
+
+        /// <summary>
         /// Gets list of metric specifications.
         /// </summary>
         [JsonProperty(PropertyName = "metricSpecifications")]
-        public IList<Metric> MetricSpecifications { get; private set; }
+        public IList<MetricSpecification> MetricSpecifications { get; private set; }
 
     }
 }

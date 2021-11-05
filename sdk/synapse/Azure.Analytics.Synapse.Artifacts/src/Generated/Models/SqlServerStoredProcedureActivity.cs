@@ -17,6 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of SqlServerStoredProcedureActivity. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="storedProcedureName"> Stored procedure name. Type: string (or Expression with resultType string). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="storedProcedureName"/> is null. </exception>
         public SqlServerStoredProcedureActivity(string name, object storedProcedureName) : base(name)
         {
             if (name == null)
@@ -39,7 +40,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="description"> Activity description. </param>
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="policy"> Activity policy. </param>
         /// <param name="storedProcedureName"> Stored procedure name. Type: string (or Expression with resultType string). </param>

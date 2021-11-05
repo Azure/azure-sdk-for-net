@@ -15,6 +15,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         /// <summary> Initializes a new instance of MagentoLinkedService. </summary>
         /// <param name="host"> The URL of the Magento instance. (i.e. 192.168.222.110/magento3). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="host"/> is null. </exception>
         public MagentoLinkedService(object host)
         {
             if (host == null)
@@ -32,7 +33,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="host"> The URL of the Magento instance. (i.e. 192.168.222.110/magento3). </param>
         /// <param name="accessToken"> The access token from Magento. </param>
         /// <param name="useEncryptedEndpoints"> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </param>

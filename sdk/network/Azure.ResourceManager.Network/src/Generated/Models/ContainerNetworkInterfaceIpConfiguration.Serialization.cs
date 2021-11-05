@@ -10,80 +10,45 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ContainerNetworkInterfaceIpConfiguration : IUtf8JsonSerializable
+    public partial class ContainerNetworkInterfaceIpConfiguration
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Name != null)
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
-            if (Type != null)
-            {
-                writer.WritePropertyName("type");
-                writer.WriteStringValue(Type);
-            }
-            if (Etag != null)
-            {
-                writer.WritePropertyName("etag");
-                writer.WriteStringValue(Etag);
-            }
-            writer.WritePropertyName("properties");
-            writer.WriteStartObject();
-            if (ProvisioningState != null)
-            {
-                writer.WritePropertyName("provisioningState");
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            writer.WriteEndObject();
-            writer.WriteEndObject();
-        }
-
         internal static ContainerNetworkInterfaceIpConfiguration DeserializeContainerNetworkInterfaceIpConfiguration(JsonElement element)
         {
-            string name = default;
-            string type = default;
-            string etag = default;
-            ProvisioningState? provisioningState = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
+            Optional<string> etag = default;
+            Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("provisioningState"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
@@ -93,7 +58,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ContainerNetworkInterfaceIpConfiguration(name, type, etag, provisioningState);
+            return new ContainerNetworkInterfaceIpConfiguration(name.Value, type.Value, etag.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

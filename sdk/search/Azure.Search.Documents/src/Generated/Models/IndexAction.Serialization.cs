@@ -15,7 +15,7 @@ namespace Azure.Search.Documents.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ActionType != null)
+            if (Optional.IsDefined(ActionType))
             {
                 writer.WritePropertyName("@search.action");
                 writer.WriteStringValue(ActionType.Value.ToSerialString());

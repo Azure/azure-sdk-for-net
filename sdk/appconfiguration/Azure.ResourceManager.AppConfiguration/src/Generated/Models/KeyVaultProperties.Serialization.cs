@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (KeyIdentifier != null)
+            if (Optional.IsDefined(KeyIdentifier))
             {
                 writer.WritePropertyName("keyIdentifier");
                 writer.WriteStringValue(KeyIdentifier);
             }
-            if (IdentityClientId != null)
+            if (Optional.IsDefined(IdentityClientId))
             {
                 writer.WritePropertyName("identityClientId");
                 writer.WriteStringValue(IdentityClientId);
@@ -30,30 +30,22 @@ namespace Azure.ResourceManager.AppConfiguration.Models
 
         internal static KeyVaultProperties DeserializeKeyVaultProperties(JsonElement element)
         {
-            string keyIdentifier = default;
-            string identityClientId = default;
+            Optional<string> keyIdentifier = default;
+            Optional<string> identityClientId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyIdentifier"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     keyIdentifier = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("identityClientId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     identityClientId = property.Value.GetString();
                     continue;
                 }
             }
-            return new KeyVaultProperties(keyIdentifier, identityClientId);
+            return new KeyVaultProperties(keyIdentifier.Value, identityClientId.Value);
         }
     }
 }

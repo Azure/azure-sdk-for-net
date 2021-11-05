@@ -53,7 +53,8 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// <remarks>
         /// The maximum number of inbound NAT pools per Batch pool is 5. If the
         /// maximum number of inbound NAT pools is exceeded the request fails
-        /// with HTTP status code 400.
+        /// with HTTP status code 400. This cannot be specified if the
+        /// IPAddressProvisioningType is NoPublicIPAddresses.
         /// </remarks>
         [JsonProperty(PropertyName = "inboundNatPools")]
         public IList<InboundNatPool> InboundNatPools { get; set; }

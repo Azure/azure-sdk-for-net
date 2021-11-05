@@ -15,7 +15,8 @@ namespace Azure.ResourceManager.Storage.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="ReasonCode"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReasonCode"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ReasonCode(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));

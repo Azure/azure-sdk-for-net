@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -16,64 +17,49 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Etag != null)
-            {
-                writer.WritePropertyName("etag");
-                writer.WriteStringValue(Etag);
-            }
-            if (Type != null)
-            {
-                writer.WritePropertyName("type");
-                writer.WriteStringValue(Type);
-            }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (AllocatedOutboundPorts != null)
+            if (Optional.IsDefined(AllocatedOutboundPorts))
             {
                 writer.WritePropertyName("allocatedOutboundPorts");
                 writer.WriteNumberValue(AllocatedOutboundPorts.Value);
             }
-            if (FrontendIPConfigurations != null)
+            if (Optional.IsCollectionDefined(FrontendIPConfigurations))
             {
                 writer.WritePropertyName("frontendIPConfigurations");
                 writer.WriteStartArray();
                 foreach (var item in FrontendIPConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
-            if (BackendAddressPool != null)
+            if (Optional.IsDefined(BackendAddressPool))
             {
                 writer.WritePropertyName("backendAddressPool");
-                writer.WriteObjectValue(BackendAddressPool);
+                JsonSerializer.Serialize(writer, BackendAddressPool);
             }
-            if (ProvisioningState != null)
-            {
-                writer.WritePropertyName("provisioningState");
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (Protocol != null)
+            if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol");
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (EnableTcpReset != null)
+            if (Optional.IsDefined(EnableTcpReset))
             {
                 writer.WritePropertyName("enableTcpReset");
                 writer.WriteBooleanValue(EnableTcpReset.Value);
             }
-            if (IdleTimeoutInMinutes != null)
+            if (Optional.IsDefined(IdleTimeoutInMinutes))
             {
                 writer.WritePropertyName("idleTimeoutInMinutes");
                 writer.WriteNumberValue(IdleTimeoutInMinutes.Value);
@@ -84,63 +70,53 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static OutboundRule DeserializeOutboundRule(JsonElement element)
         {
-            string name = default;
-            string etag = default;
-            string type = default;
-            string id = default;
-            int? allocatedOutboundPorts = default;
-            IList<SubResource> frontendIPConfigurations = default;
-            SubResource backendAddressPool = default;
-            ProvisioningState? provisioningState = default;
-            LoadBalancerOutboundRuleProtocol? protocol = default;
-            bool? enableTcpReset = default;
-            int? idleTimeoutInMinutes = default;
+            Optional<string> name = default;
+            Optional<string> etag = default;
+            Optional<string> type = default;
+            Optional<string> id = default;
+            Optional<int> allocatedOutboundPorts = default;
+            Optional<IList<WritableSubResource>> frontendIPConfigurations = default;
+            Optional<WritableSubResource> backendAddressPool = default;
+            Optional<ProvisioningState> provisioningState = default;
+            Optional<LoadBalancerOutboundRuleProtocol> protocol = default;
+            Optional<bool> enableTcpReset = default;
+            Optional<int> idleTimeoutInMinutes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("allocatedOutboundPorts"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             allocatedOutboundPorts = property0.Value.GetInt32();
@@ -150,19 +126,13 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<SubResource> array = new List<SubResource>();
+                            List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(DeserializeSubResource(item));
-                                }
+                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
                             }
                             frontendIPConfigurations = array;
                             continue;
@@ -171,15 +141,17 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            backendAddressPool = DeserializeSubResource(property0.Value);
+                            backendAddressPool = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
@@ -189,6 +161,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             protocol = new LoadBalancerOutboundRuleProtocol(property0.Value.GetString());
@@ -198,6 +171,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enableTcpReset = property0.Value.GetBoolean();
@@ -207,6 +181,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             idleTimeoutInMinutes = property0.Value.GetInt32();
@@ -216,7 +191,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new OutboundRule(id, name, etag, type, allocatedOutboundPorts, frontendIPConfigurations, backendAddressPool, provisioningState, protocol, enableTcpReset, idleTimeoutInMinutes);
+            return new OutboundRule(id.Value, name.Value, etag.Value, type.Value, Optional.ToNullable(allocatedOutboundPorts), Optional.ToList(frontendIPConfigurations), backendAddressPool, Optional.ToNullable(provisioningState), Optional.ToNullable(protocol), Optional.ToNullable(enableTcpReset), Optional.ToNullable(idleTimeoutInMinutes));
         }
     }
 }

@@ -16,6 +16,7 @@ namespace Azure.Graph.Rbac.Models
     {
         /// <summary> Initializes a new instance of KeyCredentialsUpdateParameters. </summary>
         /// <param name="value"> A collection of KeyCredentials. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public KeyCredentialsUpdateParameters(IEnumerable<KeyCredential> value)
         {
             if (value == null)
@@ -24,13 +25,6 @@ namespace Azure.Graph.Rbac.Models
             }
 
             Value = value.ToList();
-        }
-
-        /// <summary> Initializes a new instance of KeyCredentialsUpdateParameters. </summary>
-        /// <param name="value"> A collection of KeyCredentials. </param>
-        internal KeyCredentialsUpdateParameters(IList<KeyCredential> value)
-        {
-            Value = value ?? new List<KeyCredential>();
         }
 
         /// <summary> A collection of KeyCredentials. </summary>

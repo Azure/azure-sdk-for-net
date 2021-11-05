@@ -6,6 +6,9 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -15,19 +18,20 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of ListQueue. </summary>
         public ListQueue()
         {
+            Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of ListQueue. </summary>
-        /// <param name="id"> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="type"> The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts. </param>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="type"> The type. </param>
         /// <param name="metadata"> A name-value pair that represents queue metadata. </param>
-        internal ListQueue(string id, string name, string type, IDictionary<string, string> metadata) : base(id, name, type)
+        internal ListQueue(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> metadata) : base(id, name, type)
         {
             Metadata = metadata;
         }
 
         /// <summary> A name-value pair that represents queue metadata. </summary>
-        public IDictionary<string, string> Metadata { get; set; }
+        public IDictionary<string, string> Metadata { get; }
     }
 }

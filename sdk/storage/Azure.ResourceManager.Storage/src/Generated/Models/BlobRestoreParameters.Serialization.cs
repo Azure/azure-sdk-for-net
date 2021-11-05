@@ -45,14 +45,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<BlobRestoreRange> array = new List<BlobRestoreRange>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(BlobRestoreRange.DeserializeBlobRestoreRange(item));
-                        }
+                        array.Add(BlobRestoreRange.DeserializeBlobRestoreRange(item));
                     }
                     blobRanges = array;
                     continue;

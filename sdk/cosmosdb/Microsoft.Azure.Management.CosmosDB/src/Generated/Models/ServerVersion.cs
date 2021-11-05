@@ -18,5 +18,6 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
     {
         public const string ThreeFullStopTwo = "3.2";
         public const string ThreeFullStopSix = "3.6";
+        public const string FourFullStopZero = "4.0";
     }
 }

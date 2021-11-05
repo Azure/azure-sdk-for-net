@@ -6,15 +6,17 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for ApplicationGatewayAvailableSslOptions API service call. </summary>
-    public partial class ApplicationGatewayAvailableSslPredefinedPolicies
+    internal partial class ApplicationGatewayAvailableSslPredefinedPolicies
     {
         /// <summary> Initializes a new instance of ApplicationGatewayAvailableSslPredefinedPolicies. </summary>
         internal ApplicationGatewayAvailableSslPredefinedPolicies()
         {
+            Value = new ChangeTrackingList<ApplicationGatewaySslPredefinedPolicy>();
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayAvailableSslPredefinedPolicies. </summary>

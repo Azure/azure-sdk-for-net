@@ -129,7 +129,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             }
             catch (Exception exception)
             {
-                throw AmqpExceptionHelper.GetClientException(exception);
+                throw AmqpExceptionHelper.GetClientException(exception, true);
             }
         }
 
@@ -153,7 +153,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             }
             catch (Exception exception)
             {
-                throw AmqpExceptionHelper.GetClientException(exception);
+                throw AmqpExceptionHelper.GetClientException(exception, true);
             }
         }
 
@@ -194,7 +194,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             }
             catch (Exception exception)
             {
-                throw AmqpExceptionHelper.GetClientException(exception);
+                throw AmqpExceptionHelper.GetClientException(exception, true);
             }
         }
     }

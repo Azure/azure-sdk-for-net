@@ -6,15 +6,17 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> The result of the List EventHubs operation. </summary>
-    public partial class EventHubListResult
+    internal partial class EventHubListResult
     {
         /// <summary> Initializes a new instance of EventHubListResult. </summary>
         internal EventHubListResult()
         {
+            Value = new ChangeTrackingList<Eventhub>();
         }
 
         /// <summary> Initializes a new instance of EventHubListResult. </summary>

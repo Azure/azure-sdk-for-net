@@ -6,28 +6,31 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for ListNetworkSecurityGroups API service call. </summary>
-    public partial class NetworkSecurityGroupListResult
+    internal partial class NetworkSecurityGroupListResult
     {
         /// <summary> Initializes a new instance of NetworkSecurityGroupListResult. </summary>
         internal NetworkSecurityGroupListResult()
         {
+            Value = new ChangeTrackingList<NetworkSecurityGroupData>();
         }
 
         /// <summary> Initializes a new instance of NetworkSecurityGroupListResult. </summary>
         /// <param name="value"> A list of NetworkSecurityGroup resources. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal NetworkSecurityGroupListResult(IReadOnlyList<NetworkSecurityGroup> value, string nextLink)
+        internal NetworkSecurityGroupListResult(IReadOnlyList<NetworkSecurityGroupData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> A list of NetworkSecurityGroup resources. </summary>
-        public IReadOnlyList<NetworkSecurityGroup> Value { get; }
+        public IReadOnlyList<NetworkSecurityGroupData> Value { get; }
         /// <summary> The URL to get the next set of results. </summary>
         public string NextLink { get; }
     }

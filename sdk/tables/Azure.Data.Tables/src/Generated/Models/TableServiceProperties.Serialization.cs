@@ -43,13 +43,13 @@ namespace Azure.Data.Tables.Models
 
         internal static TableServiceProperties DeserializeTableServiceProperties(XElement element)
         {
-            LoggingSettings logging = default;
+            TableAnalyticsLoggingSettings logging = default;
             TableMetrics hourMetrics = default;
             TableMetrics minuteMetrics = default;
-            IList<CorsRule> cors = default;
+            IList<TableCorsRule> cors = default;
             if (element.Element("Logging") is XElement loggingElement)
             {
-                logging = LoggingSettings.DeserializeLoggingSettings(loggingElement);
+                logging = TableAnalyticsLoggingSettings.DeserializeTableAnalyticsLoggingSettings(loggingElement);
             }
             if (element.Element("HourMetrics") is XElement hourMetricsElement)
             {
@@ -61,10 +61,10 @@ namespace Azure.Data.Tables.Models
             }
             if (element.Element("Cors") is XElement corsElement)
             {
-                var array = new List<CorsRule>();
+                var array = new List<TableCorsRule>();
                 foreach (var e in corsElement.Elements("CorsRule"))
                 {
-                    array.Add(CorsRule.DeserializeCorsRule(e));
+                    array.Add(TableCorsRule.DeserializeTableCorsRule(e));
                 }
                 cors = array;
             }

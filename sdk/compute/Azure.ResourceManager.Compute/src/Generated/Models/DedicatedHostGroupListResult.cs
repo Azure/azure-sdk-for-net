@@ -8,35 +8,37 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The List Dedicated Host Group with resource group response. </summary>
-    public partial class DedicatedHostGroupListResult
+    internal partial class DedicatedHostGroupListResult
     {
         /// <summary> Initializes a new instance of DedicatedHostGroupListResult. </summary>
         /// <param name="value"> The list of dedicated host groups. </param>
-        internal DedicatedHostGroupListResult(IEnumerable<DedicatedHostGroup> value)
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal DedicatedHostGroupListResult(IEnumerable<DedicatedHostGroupData> value)
         {
             if (value == null)
             {
                 throw new ArgumentNullException(nameof(value));
             }
 
-            Value = value.ToArray();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of DedicatedHostGroupListResult. </summary>
         /// <param name="value"> The list of dedicated host groups. </param>
         /// <param name="nextLink"> The URI to fetch the next page of Dedicated Host Groups. Call ListNext() with this URI to fetch the next page of Dedicated Host Groups. </param>
-        internal DedicatedHostGroupListResult(IReadOnlyList<DedicatedHostGroup> value, string nextLink)
+        internal DedicatedHostGroupListResult(IReadOnlyList<DedicatedHostGroupData> value, string nextLink)
         {
-            Value = value ?? new List<DedicatedHostGroup>();
+            Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of dedicated host groups. </summary>
-        public IReadOnlyList<DedicatedHostGroup> Value { get; }
+        public IReadOnlyList<DedicatedHostGroupData> Value { get; }
         /// <summary> The URI to fetch the next page of Dedicated Host Groups. Call ListNext() with this URI to fetch the next page of Dedicated Host Groups. </summary>
         public string NextLink { get; }
     }

@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -15,29 +16,30 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (StorageAccountType != null)
+            if (Optional.IsDefined(StorageAccountType))
             {
                 writer.WritePropertyName("storageAccountType");
                 writer.WriteStringValue(StorageAccountType.Value.ToString());
             }
-            if (DiskEncryptionSet != null)
+            if (Optional.IsDefined(DiskEncryptionSet))
             {
                 writer.WritePropertyName("diskEncryptionSet");
-                writer.WriteObjectValue(DiskEncryptionSet);
+                JsonSerializer.Serialize(writer, DiskEncryptionSet);
             }
             writer.WriteEndObject();
         }
 
         internal static VirtualMachineScaleSetManagedDiskParameters DeserializeVirtualMachineScaleSetManagedDiskParameters(JsonElement element)
         {
-            StorageAccountTypes? storageAccountType = default;
-            SubResource diskEncryptionSet = default;
+            Optional<StorageAccountTypes> storageAccountType = default;
+            Optional<WritableSubResource> diskEncryptionSet = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageAccountType"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     storageAccountType = new StorageAccountTypes(property.Value.GetString());
@@ -47,13 +49,14 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    diskEncryptionSet = SubResource.DeserializeSubResource(property.Value);
+                    diskEncryptionSet = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetManagedDiskParameters(storageAccountType, diskEncryptionSet);
+            return new VirtualMachineScaleSetManagedDiskParameters(Optional.ToNullable(storageAccountType), diskEncryptionSet);
         }
     }
 }

@@ -1,55 +1,72 @@
-using System.Linq;
+using DeviceProvisioningServices.Tests.Helpers;
+using FluentAssertions;
 using Microsoft.Azure.Management.DeviceProvisioningServices;
 using Microsoft.Azure.Management.DeviceProvisioningServices.Models;
+using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using DeviceProvisioningServices.Tests.Helpers;
+using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace DeviceProvisioningServices.Tests.ScenarioTests
 {
     public class DeviceProvisioningClientCertificates : DeviceProvisioningTestBase
     {
-
         [Fact]
-        public void CreateAndDelete()
+        public async Task CreateAndDelete()
         {
-            using (var context = MockContext.Start(this.GetType()))
-            {
-                this.Initialize(context);
-                var testName = "unitTestingDPSCertificatesCreateAndDelete";
-                var resourceGroup = this.GetResourceGroup(testName);
-                var service = this.GetService(resourceGroup.Name, testName);
+            using MockContext context = MockContext.Start(GetType());
+            Initialize(context);
+            var testName = "unitTestingDPSCertificatesCreateAndDelete";
+            ResourceGroup rg = await GetResourceGroupAsync(testName).ConfigureAwait(false);
+            ProvisioningServiceDescription service = await GetServiceAsync(testName, rg.Name).ConfigureAwait(false);
 
-                //add a cert
-                this.provisioningClient.DpsCertificate.CreateOrUpdate(testName,
-                    testName, Constants.Certificate.Name,
-                    new CertificateBodyDescription(Constants.Certificate.Content));
+            //add a cert
+            await _provisioningClient.DpsCertificate
+                .CreateOrUpdateAsync(
+                    rg.Name,
+                    testName,
+                    Constants.Certificate.Name,
+                    null,
+                    Constants.Certificate.Content)
+                .ConfigureAwait(false);
 
-                var certificateList = this.provisioningClient.DpsCertificates.List(testName,
-                    testName);
+            CertificateListDescription certificateList = await _provisioningClient.DpsCertificate
+                .ListAsync(rg.Name, testName)
+                .ConfigureAwait(false);
 
-                Assert.Contains(certificateList.Value, x => x.Name == Constants.Certificate.Name);
+            certificateList.Value.Should().Contain(x => x.Name == Constants.Certificate.Name);
 
-                //verify certificate details
-                var certificateDetails =
-                    certificateList.Value.FirstOrDefault(x => x.Name == Constants.Certificate.Name);
-                Assert.NotNull(certificateDetails);
-                Assert.Equal(certificateDetails.Properties.Subject, Constants.Certificate.Subject);
-                Assert.Equal(certificateDetails.Properties.Thumbprint, Constants.Certificate.Thumbprint);
+            // verify certificate details
+            CertificateResponse certificateDetails = certificateList.Value.FirstOrDefault(x => x.Name == Constants.Certificate.Name);
+            certificateDetails.Should().NotBeNull();
+            certificateDetails.Properties.Subject.Should().Be(Constants.Certificate.Subject);
+            certificateDetails.Properties.Thumbprint.Should().Be(Constants.Certificate.Thumbprint);
 
-                //can get a verification code
-                var verificationCodeResponse =
-                    this.provisioningClient.DpsCertificate.GenerateVerificationCode(certificateDetails.Name,
-                        certificateDetails.Etag, resourceGroup.Name, service.Name);
-                Assert.NotNull(verificationCodeResponse.Properties);
-                Assert.False(string.IsNullOrEmpty(verificationCodeResponse.Properties.VerificationCode));
+            // can get a verification code
+            VerificationCodeResponse verificationCodeResponse = await _provisioningClient.DpsCertificate
+                .GenerateVerificationCodeAsync(
+                    certificateDetails.Name,
+                    certificateDetails.Etag,
+                    rg.Name,
+                    service.Name)
+                .ConfigureAwait(false);
+            verificationCodeResponse.Properties.Should().NotBeNull();
+            verificationCodeResponse.Properties.VerificationCode.Should().NotBeNullOrEmpty();
 
-                //delete certificate
-                this.provisioningClient.DpsCertificate.Delete(resourceGroup.Name, verificationCodeResponse.Etag, service.Name, Constants.Certificate.Name);
-                certificateList = this.provisioningClient.DpsCertificates.List(testName,
-                    testName);
-                Assert.DoesNotContain(certificateList.Value, x => x.Name == Constants.Certificate.Name);
-            }
+            // delete certificate
+            await _provisioningClient.DpsCertificate
+                .DeleteAsync(
+                    rg.Name,
+                    verificationCodeResponse.Etag,
+                    service.Name,
+                    Constants.Certificate.Name)
+                .ConfigureAwait(false);
+
+            certificateList = await _provisioningClient.DpsCertificate
+                .ListAsync(rg.Name, testName)
+                .ConfigureAwait(false);
+            certificateList.Value.Should().NotContain(x => x.Name == Constants.Certificate.Name);
         }
     }
 }

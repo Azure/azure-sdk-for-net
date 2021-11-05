@@ -15,30 +15,38 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (KeyVaultProperties != null)
+            if (Optional.IsDefined(KeyVaultProperties))
             {
-                writer.WritePropertyName("keyVaultProperties");
-                writer.WriteObjectValue(KeyVaultProperties);
+                if (KeyVaultProperties != null)
+                {
+                    writer.WritePropertyName("keyVaultProperties");
+                    writer.WriteObjectValue(KeyVaultProperties);
+                }
+                else
+                {
+                    writer.WriteNull("keyVaultProperties");
+                }
             }
             writer.WriteEndObject();
         }
 
         internal static EncryptionProperties DeserializeEncryptionProperties(JsonElement element)
         {
-            KeyVaultProperties keyVaultProperties = default;
+            Optional<KeyVaultProperties> keyVaultProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyVaultProperties"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        keyVaultProperties = null;
                         continue;
                     }
                     keyVaultProperties = KeyVaultProperties.DeserializeKeyVaultProperties(property.Value);
                     continue;
                 }
             }
-            return new EncryptionProperties(keyVaultProperties);
+            return new EncryptionProperties(keyVaultProperties.Value);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (NetworkInterfaceConfigurations != null)
+            if (Optional.IsCollectionDefined(NetworkInterfaceConfigurations))
             {
                 writer.WritePropertyName("networkInterfaceConfigurations");
                 writer.WriteStartArray();
@@ -31,32 +31,26 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachineScaleSetVMNetworkProfileConfiguration DeserializeVirtualMachineScaleSetVMNetworkProfileConfiguration(JsonElement element)
         {
-            IList<VirtualMachineScaleSetNetworkConfiguration> networkInterfaceConfigurations = default;
+            Optional<IList<VirtualMachineScaleSetNetworkConfiguration>> networkInterfaceConfigurations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("networkInterfaceConfigurations"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<VirtualMachineScaleSetNetworkConfiguration> array = new List<VirtualMachineScaleSetNetworkConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(VirtualMachineScaleSetNetworkConfiguration.DeserializeVirtualMachineScaleSetNetworkConfiguration(item));
-                        }
+                        array.Add(VirtualMachineScaleSetNetworkConfiguration.DeserializeVirtualMachineScaleSetNetworkConfiguration(item));
                     }
                     networkInterfaceConfigurations = array;
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetVMNetworkProfileConfiguration(networkInterfaceConfigurations);
+            return new VirtualMachineScaleSetVMNetworkProfileConfiguration(Optional.ToList(networkInterfaceConfigurations));
         }
     }
 }

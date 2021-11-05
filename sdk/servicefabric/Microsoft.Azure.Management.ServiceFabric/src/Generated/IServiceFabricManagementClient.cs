@@ -41,13 +41,6 @@ namespace Microsoft.Azure.Management.ServiceFabric
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// The version of the Service Fabric resource provider API. This is a
-        /// required parameter and it's value must be "2019-03-01" for this
-        /// specification.
-        /// </summary>
-        string ApiVersion { get; }
-
-        /// <summary>
         /// The customer subscription identifier.
         /// </summary>
         string SubscriptionId { get; set; }
@@ -105,6 +98,21 @@ namespace Microsoft.Azure.Management.ServiceFabric
         /// Gets the IServicesOperations.
         /// </summary>
         IServicesOperations Services { get; }
+
+        /// <summary>
+        /// Gets the IManagedClustersOperations.
+        /// </summary>
+        IManagedClustersOperations ManagedClusters { get; }
+
+        /// <summary>
+        /// Gets the IManagedClusterVersionsOperations.
+        /// </summary>
+        IManagedClusterVersionsOperations ManagedClusterVersions { get; }
+
+        /// <summary>
+        /// Gets the INodeTypesOperations.
+        /// </summary>
+        INodeTypesOperations NodeTypes { get; }
 
     }
 }

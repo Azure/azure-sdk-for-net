@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (OsDiskImage != null)
+            if (Optional.IsDefined(OsDiskImage))
             {
                 writer.WritePropertyName("osDiskImage");
                 writer.WriteObjectValue(OsDiskImage);
             }
-            if (DataDiskImages != null)
+            if (Optional.IsCollectionDefined(DataDiskImages))
             {
                 writer.WritePropertyName("dataDiskImages");
                 writer.WriteStartArray();
@@ -36,42 +36,37 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static EncryptionImages DeserializeEncryptionImages(JsonElement element)
         {
-            DiskImageEncryption osDiskImage = default;
-            IList<DataDiskImageEncryption> dataDiskImages = default;
+            Optional<OSDiskImageEncryption> osDiskImage = default;
+            Optional<IList<DataDiskImageEncryption>> dataDiskImages = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("osDiskImage"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    osDiskImage = DiskImageEncryption.DeserializeDiskImageEncryption(property.Value);
+                    osDiskImage = OSDiskImageEncryption.DeserializeOSDiskImageEncryption(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataDiskImages"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DataDiskImageEncryption> array = new List<DataDiskImageEncryption>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(DataDiskImageEncryption.DeserializeDataDiskImageEncryption(item));
-                        }
+                        array.Add(DataDiskImageEncryption.DeserializeDataDiskImageEncryption(item));
                     }
                     dataDiskImages = array;
                     continue;
                 }
             }
-            return new EncryptionImages(osDiskImage, dataDiskImages);
+            return new EncryptionImages(osDiskImage.Value, Optional.ToList(dataDiskImages));
         }
     }
 }

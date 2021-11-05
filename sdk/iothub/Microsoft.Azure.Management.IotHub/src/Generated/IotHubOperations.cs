@@ -51,19 +51,20 @@ namespace Microsoft.Azure.Management.IotHub
         public IotHubClient Client { get; private set; }
 
         /// <summary>
-        /// Manual Failover Fail over
+        /// Manually initiate a failover for the IoT Hub to its secondary region
         /// </summary>
         /// <remarks>
-        /// Perform manual fail over of given hub
+        /// Manually initiate a failover for the IoT Hub to its secondary region. To
+        /// learn more, see https://aka.ms/manualfailover
         /// </remarks>
         /// <param name='iotHubName'>
-        /// IotHub to fail over
-        /// </param>
-        /// <param name='failoverInput'>
-        /// Region to failover to. Must be a azure DR pair
+        /// Name of the IoT hub to failover
         /// </param>
         /// <param name='resourceGroupName'>
-        /// resource group which Iot Hub belongs to
+        /// Name of the resource group containing the IoT hub resource
+        /// </param>
+        /// <param name='failoverRegion'>
+        /// Region the hub will be failed over to
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -71,27 +72,28 @@ namespace Microsoft.Azure.Management.IotHub
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> ManualFailoverWithHttpMessagesAsync(string iotHubName, FailoverInput failoverInput, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> ManualFailoverWithHttpMessagesAsync(string iotHubName, string resourceGroupName, string failoverRegion, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse _response = await BeginManualFailoverWithHttpMessagesAsync(iotHubName, failoverInput, resourceGroupName, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse _response = await BeginManualFailoverWithHttpMessagesAsync(iotHubName, resourceGroupName, failoverRegion, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Manual Failover Fail over
+        /// Manually initiate a failover for the IoT Hub to its secondary region
         /// </summary>
         /// <remarks>
-        /// Perform manual fail over of given hub
+        /// Manually initiate a failover for the IoT Hub to its secondary region. To
+        /// learn more, see https://aka.ms/manualfailover
         /// </remarks>
         /// <param name='iotHubName'>
-        /// IotHub to fail over
-        /// </param>
-        /// <param name='failoverInput'>
-        /// Region to failover to. Must be a azure DR pair
+        /// Name of the IoT hub to failover
         /// </param>
         /// <param name='resourceGroupName'>
-        /// resource group which Iot Hub belongs to
+        /// Name of the resource group containing the IoT hub resource
+        /// </param>
+        /// <param name='failoverRegion'>
+        /// Region the hub will be failed over to
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -111,19 +113,11 @@ namespace Microsoft.Azure.Management.IotHub
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> BeginManualFailoverWithHttpMessagesAsync(string iotHubName, FailoverInput failoverInput, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> BeginManualFailoverWithHttpMessagesAsync(string iotHubName, string resourceGroupName, string failoverRegion, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (iotHubName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "iotHubName");
-            }
-            if (failoverInput == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "failoverInput");
-            }
-            if (failoverInput != null)
-            {
-                failoverInput.Validate();
             }
             if (Client.SubscriptionId == null)
             {
@@ -137,6 +131,15 @@ namespace Microsoft.Azure.Management.IotHub
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
+            if (failoverRegion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "failoverRegion");
+            }
+            FailoverInput failoverInput = new FailoverInput();
+            if (failoverRegion != null)
+            {
+                failoverInput.FailoverRegion = failoverRegion;
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -145,8 +148,8 @@ namespace Microsoft.Azure.Management.IotHub
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("iotHubName", iotHubName);
-                tracingParameters.Add("failoverInput", failoverInput);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("failoverInput", failoverInput);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginManualFailover", tracingParameters);
             }

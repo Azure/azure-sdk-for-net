@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Graph.Rbac.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.Graph.Rbac.Models
         /// <summary> Initializes a new instance of PreAuthorizedApplicationPermission. </summary>
         public PreAuthorizedApplicationPermission()
         {
+            AccessGrants = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of PreAuthorizedApplicationPermission. </summary>
@@ -29,6 +31,6 @@ namespace Azure.Graph.Rbac.Models
         /// <summary> Indicates whether the permission set is DirectAccess or impersonation. </summary>
         public bool? DirectAccessGrant { get; set; }
         /// <summary> The list of permissions. </summary>
-        public IList<string> AccessGrants { get; set; }
+        public IList<string> AccessGrants { get; }
     }
 }

@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    internal static class ResourceSkuCapacityScaleTypeExtensions
+    internal static partial class ResourceSkuCapacityScaleTypeExtensions
     {
         public static string ToSerialString(this ResourceSkuCapacityScaleType value) => value switch
         {

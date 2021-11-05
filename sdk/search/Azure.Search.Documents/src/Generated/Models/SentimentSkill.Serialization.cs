@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
@@ -17,66 +16,59 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (DefaultLanguageCode != null)
+            if (Optional.IsDefined(DefaultLanguageCode))
             {
-                writer.WritePropertyName("defaultLanguageCode");
-                writer.WriteStringValue(DefaultLanguageCode.Value.ToString());
+                if (DefaultLanguageCode != null)
+                {
+                    writer.WritePropertyName("defaultLanguageCode");
+                    writer.WriteStringValue(DefaultLanguageCode.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("defaultLanguageCode");
+                }
             }
             writer.WritePropertyName("@odata.type");
             writer.WriteStringValue(ODataType);
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
             }
-            if (Context != null)
+            if (Optional.IsDefined(Context))
             {
                 writer.WritePropertyName("context");
                 writer.WriteStringValue(Context);
             }
-            if (Inputs.Any())
+            writer.WritePropertyName("inputs");
+            writer.WriteStartArray();
+            foreach (var item in Inputs)
             {
-                writer.WritePropertyName("inputs");
-                writer.WriteStartArray();
-                foreach (var item in Inputs)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
+                writer.WriteObjectValue(item);
             }
-            else
+            writer.WriteEndArray();
+            writer.WritePropertyName("outputs");
+            writer.WriteStartArray();
+            foreach (var item in Outputs)
             {
-                writer.WriteNull("inputs");
+                writer.WriteObjectValue(item);
             }
-            if (Outputs.Any())
-            {
-                writer.WritePropertyName("outputs");
-                writer.WriteStartArray();
-                foreach (var item in Outputs)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            else
-            {
-                writer.WriteNull("outputs");
-            }
+            writer.WriteEndArray();
             writer.WriteEndObject();
         }
 
         internal static SentimentSkill DeserializeSentimentSkill(JsonElement element)
         {
-            SentimentSkillLanguage? defaultLanguageCode = default;
+            Optional<SentimentSkillLanguage?> defaultLanguageCode = default;
             string odataType = default;
-            string name = default;
-            string description = default;
-            string context = default;
+            Optional<string> name = default;
+            Optional<string> description = default;
+            Optional<string> context = default;
             IList<InputFieldMappingEntry> inputs = default;
             IList<OutputFieldMappingEntry> outputs = default;
             foreach (var property in element.EnumerateObject())
@@ -85,6 +77,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        defaultLanguageCode = null;
                         continue;
                     }
                     defaultLanguageCode = new SentimentSkillLanguage(property.Value.GetString());
@@ -97,28 +90,16 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("description"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     description = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("context"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     context = property.Value.GetString();
                     continue;
                 }
@@ -127,14 +108,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     List<InputFieldMappingEntry> array = new List<InputFieldMappingEntry>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(InputFieldMappingEntry.DeserializeInputFieldMappingEntry(item));
-                        }
+                        array.Add(InputFieldMappingEntry.DeserializeInputFieldMappingEntry(item));
                     }
                     inputs = array;
                     continue;
@@ -144,20 +118,13 @@ namespace Azure.Search.Documents.Indexes.Models
                     List<OutputFieldMappingEntry> array = new List<OutputFieldMappingEntry>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(OutputFieldMappingEntry.DeserializeOutputFieldMappingEntry(item));
-                        }
+                        array.Add(OutputFieldMappingEntry.DeserializeOutputFieldMappingEntry(item));
                     }
                     outputs = array;
                     continue;
                 }
             }
-            return new SentimentSkill(odataType, name, description, context, inputs, outputs, defaultLanguageCode);
+            return new SentimentSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, Optional.ToNullable(defaultLanguageCode));
         }
     }
 }

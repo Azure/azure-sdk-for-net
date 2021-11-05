@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(SsisExecutionParameterConverter))]
     public partial class SsisExecutionParameter : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -32,6 +35,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new SsisExecutionParameter(value);
+        }
+
+        internal partial class SsisExecutionParameterConverter : JsonConverter<SsisExecutionParameter>
+        {
+            public override void Write(Utf8JsonWriter writer, SsisExecutionParameter model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override SsisExecutionParameter Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeSsisExecutionParameter(document.RootElement);
+            }
         }
     }
 }

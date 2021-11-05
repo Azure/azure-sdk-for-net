@@ -53,7 +53,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// factory.</param>
         /// <param name="globalParameters">List of parameters for
         /// factory.</param>
-        public Factory(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string eTag = default(string), IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), FactoryIdentity identity = default(FactoryIdentity), string provisioningState = default(string), System.DateTime? createTime = default(System.DateTime?), string version = default(string), FactoryRepoConfiguration repoConfiguration = default(FactoryRepoConfiguration), IDictionary<string, GlobalParameterSpecification> globalParameters = default(IDictionary<string, GlobalParameterSpecification>))
+        /// <param name="encryption">Properties to enable Customer Managed Key
+        /// for the factory.</param>
+        /// <param name="publicNetworkAccess">Whether or not public network
+        /// access is allowed for the data factory. Possible values include:
+        /// 'Enabled', 'Disabled'</param>
+        public Factory(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string eTag = default(string), IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), FactoryIdentity identity = default(FactoryIdentity), string provisioningState = default(string), System.DateTime? createTime = default(System.DateTime?), string version = default(string), FactoryRepoConfiguration repoConfiguration = default(FactoryRepoConfiguration), IDictionary<string, GlobalParameterSpecification> globalParameters = default(IDictionary<string, GlobalParameterSpecification>), EncryptionConfiguration encryption = default(EncryptionConfiguration), string publicNetworkAccess = default(string))
             : base(id, name, type, location, tags, eTag)
         {
             AdditionalProperties = additionalProperties;
@@ -63,6 +68,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             Version = version;
             RepoConfiguration = repoConfiguration;
             GlobalParameters = globalParameters;
+            Encryption = encryption;
+            PublicNetworkAccess = publicNetworkAccess;
             CustomInit();
         }
 
@@ -115,6 +122,20 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public IDictionary<string, GlobalParameterSpecification> GlobalParameters { get; set; }
 
         /// <summary>
+        /// Gets or sets properties to enable Customer Managed Key for the
+        /// factory.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.encryption")]
+        public EncryptionConfiguration Encryption { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether or not public network access is allowed for
+        /// the data factory. Possible values include: 'Enabled', 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.publicNetworkAccess")]
+        public string PublicNetworkAccess { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -122,6 +143,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </exception>
         public virtual void Validate()
         {
+            if (Identity != null)
+            {
+                Identity.Validate();
+            }
             if (RepoConfiguration != null)
             {
                 RepoConfiguration.Validate();
@@ -135,6 +160,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
                         valueElement.Validate();
                     }
                 }
+            }
+            if (Encryption != null)
+            {
+                Encryption.Validate();
             }
         }
     }

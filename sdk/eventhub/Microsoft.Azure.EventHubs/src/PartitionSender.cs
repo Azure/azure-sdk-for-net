@@ -6,6 +6,7 @@ namespace Microsoft.Azure.EventHubs
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.Azure.EventHubs.Primitives;
 
@@ -125,32 +126,36 @@ namespace Microsoft.Azure.EventHubs
         public async Task SendAsync(IEnumerable<EventData> eventDatas)
         {
             Guard.ArgumentNotNull(nameof(eventDatas), eventDatas);
+            this.ThrowIfClosed();
 
             if (eventDatas is EventDataBatch && !string.IsNullOrEmpty(((EventDataBatch)eventDatas).PartitionKey))
             {
                 throw Fx.Exception.InvalidOperation(Resources.PartitionSenderInvalidWithPartitionKeyOnBatch);
             }
 
-            int count = EventDataSender.ValidateEvents(eventDatas);
+            // Convert enumerator to a rescannable collection to avoid skipping events if underlying enumerator is not re-scannabled.
+            var eventDataList = eventDatas?.ToList();
+
+            int count = EventDataSender.ValidateEvents(eventDataList);
             EventHubsEventSource.Log.EventSendStart(this.ClientId, count, null);
-            Activity activity = EventHubsDiagnosticSource.StartSendActivity(this.ClientId, this.EventHubClient.ConnectionStringBuilder, this.PartitionId, eventDatas, count);
+            Activity activity = EventHubsDiagnosticSource.StartSendActivity(this.ClientId, this.EventHubClient.ConnectionStringBuilder, this.PartitionId, eventDataList, count);
 
             Task sendTask = null;
             try
             {
-                sendTask = this.InnerSender.SendAsync(eventDatas, null);
+                sendTask = this.InnerSender.SendAsync(eventDataList, null);
                 await sendTask.ConfigureAwait(false);
             }
             catch (Exception exception)
             {
                 EventHubsEventSource.Log.EventSendException(this.ClientId, exception.ToString());
-                EventHubsDiagnosticSource.FailSendActivity(activity, this.EventHubClient.ConnectionStringBuilder, this.PartitionId, eventDatas, exception);
+                EventHubsDiagnosticSource.FailSendActivity(activity, this.EventHubClient.ConnectionStringBuilder, this.PartitionId, eventDataList, exception);
                 throw;
             }
             finally
             {
                 EventHubsEventSource.Log.EventSendStop(this.ClientId);
-                EventHubsDiagnosticSource.StopSendActivity(activity, this.EventHubClient.ConnectionStringBuilder, this.PartitionId, eventDatas, sendTask);
+                EventHubsDiagnosticSource.StopSendActivity(activity, this.EventHubClient.ConnectionStringBuilder, this.PartitionId, eventDataList, sendTask);
             }
         }
 

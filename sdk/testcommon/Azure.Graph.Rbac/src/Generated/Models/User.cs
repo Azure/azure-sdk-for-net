@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Graph.Rbac.Models
 {
@@ -16,6 +17,7 @@ namespace Azure.Graph.Rbac.Models
         /// <summary> Initializes a new instance of User. </summary>
         internal User()
         {
+            SignInNames = new ChangeTrackingList<SignInName>();
             ObjectType = "User";
         }
 

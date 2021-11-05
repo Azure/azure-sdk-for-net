@@ -13,7 +13,7 @@ using Azure.Graph.Rbac;
 namespace Azure.Graph.Rbac
 {
     /// <summary> Rbac service management client. </summary>
-    public class RbacManagementClient
+    public partial class RbacManagementClient
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
@@ -37,7 +37,7 @@ namespace Azure.Graph.Rbac
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="tokenCredential"> The OAuth token for making client requests. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantID"/> is null. </exception>
         public RbacManagementClient(string tenantID, Uri endpoint, TokenCredential tokenCredential, RbacManagementClientOptions options = null)
         {
             if (tenantID == null)

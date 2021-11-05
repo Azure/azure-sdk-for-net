@@ -53,7 +53,9 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// 'Deleting', 'Renaming', 'Unknown'</param>
         /// <param name="captureDescription">Properties of capture
         /// description</param>
-        public Eventhub(string id = default(string), string name = default(string), string type = default(string), IList<string> partitionIds = default(IList<string>), System.DateTime? createdAt = default(System.DateTime?), System.DateTime? updatedAt = default(System.DateTime?), long? messageRetentionInDays = default(long?), long? partitionCount = default(long?), EntityStatus? status = default(EntityStatus?), CaptureDescription captureDescription = default(CaptureDescription))
+        /// <param name="systemData">The system meta data relating to this
+        /// resource.</param>
+        public Eventhub(string id = default(string), string name = default(string), string type = default(string), IList<string> partitionIds = default(IList<string>), System.DateTime? createdAt = default(System.DateTime?), System.DateTime? updatedAt = default(System.DateTime?), long? messageRetentionInDays = default(long?), long? partitionCount = default(long?), EntityStatus? status = default(EntityStatus?), CaptureDescription captureDescription = default(CaptureDescription), SystemData systemData = default(SystemData))
             : base(id, name, type)
         {
             PartitionIds = partitionIds;
@@ -63,6 +65,7 @@ namespace Microsoft.Azure.Management.EventHub.Models
             PartitionCount = partitionCount;
             Status = status;
             CaptureDescription = captureDescription;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -119,6 +122,12 @@ namespace Microsoft.Azure.Management.EventHub.Models
         public CaptureDescription CaptureDescription { get; set; }
 
         /// <summary>
+        /// Gets the system meta data relating to this resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -133,10 +142,6 @@ namespace Microsoft.Azure.Management.EventHub.Models
             if (PartitionCount < 1)
             {
                 throw new ValidationException(ValidationRules.InclusiveMinimum, "PartitionCount", 1);
-            }
-            if (CaptureDescription != null)
-            {
-                CaptureDescription.Validate();
             }
         }
     }

@@ -30,9 +30,14 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// Initializes a new instance of the HostInfo class.
         /// </summary>
         /// <param name="name">The host name</param>
-        public HostInfo(string name = default(string))
+        /// <param name="fqdn">The Fully Qualified Domain Name of host</param>
+        /// <param name="effectiveDiskEncryptionKeyUrl">The effective disk
+        /// encryption key URL used by the host</param>
+        public HostInfo(string name = default(string), string fqdn = default(string), string effectiveDiskEncryptionKeyUrl = default(string))
         {
             Name = name;
+            Fqdn = fqdn;
+            EffectiveDiskEncryptionKeyUrl = effectiveDiskEncryptionKeyUrl;
             CustomInit();
         }
 
@@ -46,6 +51,18 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Fully Qualified Domain Name of host
+        /// </summary>
+        [JsonProperty(PropertyName = "fqdn")]
+        public string Fqdn { get; set; }
+
+        /// <summary>
+        /// Gets or sets the effective disk encryption key URL used by the host
+        /// </summary>
+        [JsonProperty(PropertyName = "effectiveDiskEncryptionKeyUrl")]
+        public string EffectiveDiskEncryptionKeyUrl { get; set; }
 
     }
 }

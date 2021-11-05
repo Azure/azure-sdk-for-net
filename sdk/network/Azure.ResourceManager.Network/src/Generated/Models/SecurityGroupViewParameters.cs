@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         /// <summary> Initializes a new instance of SecurityGroupViewParameters. </summary>
         /// <param name="targetResourceId"> ID of the target VM. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/> is null. </exception>
         public SecurityGroupViewParameters(string targetResourceId)
         {
             if (targetResourceId == null)

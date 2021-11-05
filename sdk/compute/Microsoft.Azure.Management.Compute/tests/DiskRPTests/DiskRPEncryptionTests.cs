@@ -31,15 +31,17 @@ namespace Compute.Tests.DiskRPTests
             {
                 EnsureClientsInitialized(context);
                 string testVaultId = @"/subscriptions/0296790d-427c-48ca-b204-8b729bbd8670/resourceGroups/longrunningrg-centraluseuap/providers/Microsoft.KeyVault/vaults/swaggerKeyVault5";
+
                 string encryptionKeyUri = @"https://swaggerkeyvault5.vault.azure.net/keys/swaggerKey/52317b056a2c49d0b8673a67d072655e";
                 string secretUri = @"https://swaggerkeyvault5.vault.azure.net/secrets/swaggerSecret/0e01a1ab339e40ff9f01ea98ae8ee6b5";
+
                 string encryptionSettingsVersion = "1.0";
 
                 var rgName = TestUtilities.GenerateName(TestPrefix);
                 var diskName = TestUtilities.GenerateName(DiskNamePrefix);
                 Disk disk = GenerateDefaultDisk(DiskCreateOption.Empty, rgName, 10);
                 disk.EncryptionSettingsCollection = GetDiskEncryptionSettings(testVaultId, encryptionKeyUri, secretUri, encryptionSettingsVersion: encryptionSettingsVersion);
-                disk.Location = DiskRPLocation;
+                disk.Location = "centraluseuap";
 
                 try
                 {

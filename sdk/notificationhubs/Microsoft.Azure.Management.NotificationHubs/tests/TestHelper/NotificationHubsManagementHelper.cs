@@ -29,7 +29,7 @@ namespace NotificationHubs.Tests.TestHelper
         public static NotificationHubsManagementClient GetNotificationHubsManagementClient(MockContext context, RecordedDelegatingHandler handler)
         {
             if (handler != null)
-            {
+            { 
                 handler.IsPassThrough = true;
                 NotificationHubsManagementClient nhManagementClient = context.GetServiceClient<NotificationHubsManagementClient>(handlers: handler);
                 return nhManagementClient;

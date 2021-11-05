@@ -32,12 +32,12 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <summary>
         /// Initializes a new instance of the EncryptionScope class.
         /// </summary>
-        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource. Ex-
-        /// Microsoft.Compute/virtualMachines or
-        /// Microsoft.Storage/storageAccounts.</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="source">The provider for the encryption scope.
         /// Possible values (case-insensitive):  Microsoft.Storage,
         /// Microsoft.KeyVault. Possible values include: 'Microsoft.Storage',
@@ -52,7 +52,10 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <param name="keyVaultProperties">The key vault properties for the
         /// encryption scope. This is a required field if encryption scope
         /// 'source' attribute is set to 'Microsoft.KeyVault'.</param>
-        public EncryptionScope(string id = default(string), string name = default(string), string type = default(string), string source = default(string), string state = default(string), System.DateTime? creationTime = default(System.DateTime?), System.DateTime? lastModifiedTime = default(System.DateTime?), EncryptionScopeKeyVaultProperties keyVaultProperties = default(EncryptionScopeKeyVaultProperties))
+        /// <param name="requireInfrastructureEncryption">A boolean indicating
+        /// whether or not the service applies a secondary layer of encryption
+        /// with platform managed keys for data at rest.</param>
+        public EncryptionScope(string id = default(string), string name = default(string), string type = default(string), string source = default(string), string state = default(string), System.DateTime? creationTime = default(System.DateTime?), System.DateTime? lastModifiedTime = default(System.DateTime?), EncryptionScopeKeyVaultProperties keyVaultProperties = default(EncryptionScopeKeyVaultProperties), bool? requireInfrastructureEncryption = default(bool?))
             : base(id, name, type)
         {
             Source = source;
@@ -60,6 +63,7 @@ namespace Microsoft.Azure.Management.Storage.Models
             CreationTime = creationTime;
             LastModifiedTime = lastModifiedTime;
             KeyVaultProperties = keyVaultProperties;
+            RequireInfrastructureEncryption = requireInfrastructureEncryption;
             CustomInit();
         }
 
@@ -104,6 +108,14 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.keyVaultProperties")]
         public EncryptionScopeKeyVaultProperties KeyVaultProperties { get; set; }
+
+        /// <summary>
+        /// Gets or sets a boolean indicating whether or not the service
+        /// applies a secondary layer of encryption with platform managed keys
+        /// for data at rest.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.requireInfrastructureEncryption")]
+        public bool? RequireInfrastructureEncryption { get; set; }
 
     }
 }

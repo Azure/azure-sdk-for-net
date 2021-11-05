@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Globalization;
 using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,19 +21,27 @@ namespace Azure.Messaging.EventHubs.Primitives
     /// </summary>
     ///
     /// <remarks>
-    ///   It is recommended that the <c>EventProcessorClient</c> or <see cref="EventHubConsumerClient" />
+    ///   <para>It is recommended that the <c>EventProcessorClient</c> or <see cref="EventHubConsumerClient" />
     ///   be used for reading and processing events for the majority of scenarios.  The partition receiver is
-    ///   intended to enable scenarios with special needs which require more direct control.
+    ///   intended to enable scenarios with special needs which require more direct control.</para>
+    ///
+    ///   <para>The <see cref="PartitionReceiver" /> is safe to cache and use for the lifetime of an application, and that is best practice when the application
+    ///   reads events regularly or semi-regularly.  The receiver holds responsibility for efficient resource management, working to keep resource usage low during
+    ///   periods of inactivity and manage health during periods of higher use.  Calling either the <see cref="CloseAsync" /> or <see cref="DisposeAsync" />
+    ///   method as the application is shutting down will ensure that network resources and other unmanaged objects are properly cleaned up.</para>
     /// </remarks>
     ///
-    /// <seealso href="https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor" />
+    /// <seealso href="https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor">Azure.Messaging.EventHubs.Processor (NuGet)</seealso>
     /// <seealso cref="EventHubConsumerClient.ReadEventsFromPartitionAsync(string, EventPosition, CancellationToken)"/>
     /// <seealso cref="EventHubConsumerClient.ReadEventsFromPartitionAsync(string, EventPosition, ReadEventOptions, CancellationToken)"/>
     ///
     public class PartitionReceiver : IAsyncDisposable
     {
+        /// <summary>Indicates whether or not the consumer should consider itself invalid when a partition is stolen by another consumer, as determined by the Event Hubs service.</summary>
+        private const bool InvalidateConsumerWhenPartitionIsStolen = false;
+
         /// <summary>Indicates whether or not this instance has been closed.</summary>
-        private volatile bool _closed = false;
+        private volatile bool _closed;
 
         /// <summary>
         ///   The fully qualified Event Hubs namespace that the client is associated with.  This is likely
@@ -63,6 +70,12 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// </summary>
         ///
         public string PartitionId { get; }
+
+        /// <summary>
+        ///   A unique name used to identify this receiver.
+        /// </summary>
+        ///
+        public string Identifier { get; }
 
         /// <summary>
         ///   The position within the partition where the client begins reading events.
@@ -142,7 +155,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   Event Hub will result in a connection string that contains the name.
         /// </remarks>
         ///
-        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string"/>
+        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
         ///
         public PartitionReceiver(string consumerGroup,
                                  string partitionId,
@@ -169,7 +182,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   passed only once, either as part of the connection string or separately.
         /// </remarks>
         ///
-        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string"/>
+        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
         ///
         public PartitionReceiver(string consumerGroup,
                                  string partitionId,
@@ -191,10 +204,65 @@ namespace Azure.Messaging.EventHubs.Primitives
             DefaultMaximumWaitTime = options.DefaultMaximumReceiveWaitTime;
             RetryPolicy = options.RetryOptions.ToRetryPolicy();
 
-#pragma warning disable CA2214 // Do not call overridable methods in constructors. This internal method is virtual for testing purposes.
-            InnerConsumer = CreateTransportConsumer(consumerGroup, partitionId, eventPosition, RetryPolicy, options);
-#pragma warning restore CA2214 // Do not call overridable methods in constructors.
+            Identifier = string.IsNullOrEmpty(options.Identifier)
+                ? Guid.NewGuid().ToString()
+                : options.Identifier;
 
+            InnerConsumer = Connection.CreateTransportConsumer(
+                consumerGroup,
+                partitionId,
+                Identifier,
+                eventPosition,
+                RetryPolicy,
+                options.TrackLastEnqueuedEventProperties,
+                InvalidateConsumerWhenPartitionIsStolen,
+                options.OwnerLevel,
+                (uint?)options.PrefetchCount,
+                options.PrefetchSizeInBytes);
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="PartitionReceiver"/> class.
+        /// </summary>
+        ///
+        /// <param name="consumerGroup">The name of the consumer group this client is associated with.  Events are read in the context of this group.</param>
+        /// <param name="partitionId">The identifier of the Event Hub partition from which events will be received.</param>
+        /// <param name="eventPosition">The position within the partition where the client should begin reading events.</param>
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub to associate the client with.</param>
+        /// <param name="credential">The shared key credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
+        /// <param name="options">A set of options to apply when configuring the client.</param>
+        ///
+        public PartitionReceiver(string consumerGroup,
+                                 string partitionId,
+                                 EventPosition eventPosition,
+                                 string fullyQualifiedNamespace,
+                                 string eventHubName,
+                                 AzureNamedKeyCredential credential,
+                                 PartitionReceiverOptions options = default) : this(consumerGroup, partitionId, eventPosition, fullyQualifiedNamespace, eventHubName, (object)credential, options)
+        {
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="PartitionReceiver"/> class.
+        /// </summary>
+        ///
+        /// <param name="consumerGroup">The name of the consumer group this client is associated with.  Events are read in the context of this group.</param>
+        /// <param name="partitionId">The identifier of the Event Hub partition from which events will be received.</param>
+        /// <param name="eventPosition">The position within the partition where the client should begin reading events.</param>
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub to associate the client with.</param>
+        /// <param name="credential">The shared signature credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
+        /// <param name="options">A set of options to apply when configuring the client.</param>
+        ///
+        public PartitionReceiver(string consumerGroup,
+                                 string partitionId,
+                                 EventPosition eventPosition,
+                                 string fullyQualifiedNamespace,
+                                 string eventHubName,
+                                 AzureSasCredential credential,
+                                 PartitionReceiverOptions options = default) : this(consumerGroup, partitionId, eventPosition, fullyQualifiedNamespace, eventHubName, (object)credential, options)
+        {
         }
 
         /// <summary>
@@ -215,26 +283,8 @@ namespace Azure.Messaging.EventHubs.Primitives
                                  string fullyQualifiedNamespace,
                                  string eventHubName,
                                  TokenCredential credential,
-                                 PartitionReceiverOptions options = default)
+                                 PartitionReceiverOptions options = default) : this(consumerGroup, partitionId, eventPosition, fullyQualifiedNamespace, eventHubName, (object)credential, options)
         {
-            Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
-            Argument.AssertNotNullOrEmpty(partitionId, nameof(partitionId));
-            Argument.AssertWellFormedEventHubsNamespace(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
-            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
-            Argument.AssertNotNull(credential, nameof(credential));
-
-            options = options?.Clone() ?? new PartitionReceiverOptions();
-
-            Connection = new EventHubConnection(fullyQualifiedNamespace, eventHubName, credential, options.ConnectionOptions);
-            ConsumerGroup = consumerGroup;
-            PartitionId = partitionId;
-            InitialPosition = eventPosition;
-            DefaultMaximumWaitTime = options.DefaultMaximumReceiveWaitTime;
-            RetryPolicy = options.RetryOptions.ToRetryPolicy();
-
-#pragma warning disable CA2214 // Do not call overridable methods in constructors. This internal method is virtual for testing purposes.
-            InnerConsumer = CreateTransportConsumer(consumerGroup, partitionId, eventPosition, RetryPolicy, options);
-#pragma warning restore CA2214 // Do not call overridable methods in constructors.
         }
 
         /// <summary>
@@ -267,9 +317,73 @@ namespace Azure.Messaging.EventHubs.Primitives
             DefaultMaximumWaitTime = options.DefaultMaximumReceiveWaitTime;
             RetryPolicy = options.RetryOptions.ToRetryPolicy();
 
-#pragma warning disable CA2214 // Do not call overridable methods in constructors. This internal method is virtual for testing purposes.
-            InnerConsumer = CreateTransportConsumer(consumerGroup, partitionId, eventPosition, RetryPolicy, options);
-#pragma warning restore CA2214 // Do not call overridable methods in constructors.
+            Identifier = string.IsNullOrEmpty(options.Identifier)
+                ? Guid.NewGuid().ToString()
+                : options.Identifier;
+
+            InnerConsumer = Connection.CreateTransportConsumer(
+                consumerGroup,
+                partitionId,
+                Identifier,
+                eventPosition,
+                RetryPolicy,
+                options.TrackLastEnqueuedEventProperties,
+                InvalidateConsumerWhenPartitionIsStolen,
+                options.OwnerLevel,
+                (uint?)options.PrefetchCount,
+                options.PrefetchSizeInBytes);
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="PartitionReceiver"/> class.
+        /// </summary>
+        ///
+        /// <param name="consumerGroup">The name of the consumer group this client is associated with.  Events are read in the context of this group.</param>
+        /// <param name="partitionId">The identifier of the Event Hub partition from which events will be received.</param>
+        /// <param name="eventPosition">The position within the partition where the client should begin reading events.</param>
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub to associate the client with.</param>
+        /// <param name="credential">The credential to use for authorization.  This may be of any type supported by the public constructors.</param>
+        /// <param name="options">A set of options to apply when configuring the client.</param>
+        ///
+        private PartitionReceiver(string consumerGroup,
+                                  string partitionId,
+                                  EventPosition eventPosition,
+                                  string fullyQualifiedNamespace,
+                                  string eventHubName,
+                                  object credential,
+                                  PartitionReceiverOptions options = default)
+        {
+            Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
+            Argument.AssertNotNullOrEmpty(partitionId, nameof(partitionId));
+            Argument.AssertWellFormedEventHubsNamespace(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
+            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
+            Argument.AssertNotNull(credential, nameof(credential));
+
+            options = options?.Clone() ?? new PartitionReceiverOptions();
+
+            Connection = EventHubConnection.CreateWithCredential(fullyQualifiedNamespace, eventHubName, credential, options.ConnectionOptions);
+            ConsumerGroup = consumerGroup;
+            PartitionId = partitionId;
+            InitialPosition = eventPosition;
+            DefaultMaximumWaitTime = options.DefaultMaximumReceiveWaitTime;
+            RetryPolicy = options.RetryOptions.ToRetryPolicy();
+
+            Identifier = string.IsNullOrEmpty(options.Identifier)
+                ? Guid.NewGuid().ToString()
+                : options.Identifier;
+
+            InnerConsumer = Connection.CreateTransportConsumer(
+                consumerGroup,
+                partitionId,
+                Identifier,
+                eventPosition,
+                RetryPolicy,
+                options.TrackLastEnqueuedEventProperties,
+                InvalidateConsumerWhenPartitionIsStolen,
+                options.OwnerLevel,
+                (uint?)options.PrefetchCount,
+                options.PrefetchSizeInBytes);
         }
 
         /// <summary>
@@ -330,6 +444,20 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///
         /// <returns>The batch of <see cref="EventData" /> from the Event Hub partition this client is associated with.  If no events are present, an empty enumerable is returned.</returns>
         ///
+        /// <remarks>
+        ///   When events are available in the prefetch queue, they will be used to form the batch as quickly as possible without waiting for additional events from the
+        ///   Event Hubs service to try and meet the requested <paramref name="maximumEventCount" />.  When no events are available in prefetch, the receiver will wait up
+        ///   to the duration specified by the <see cref="EventHubsRetryOptions.TryTimeout" /> in the active retry policy for events to be read from the service.  Once any
+        ///   events are available, they will be used to form the batch immediately.
+        /// </remarks>
+        ///
+        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested <paramref name="maximumEventCount" /> is less than 1.</exception>
+        ///
+        /// <exception cref="EventHubsException">
+        ///   Occurs when an <see cref="PartitionReceiver"/> is unable to read from the requested Event Hub partition due to another reader having
+        ///   asserted exclusive ownership.  In this case, the <see cref="EventHubsException.FailureReason"/> will be set to <see cref="EventHubsException.FailureReason.ConsumerDisconnected"/>.
+        /// </exception>
+        ///
         public virtual async Task<IEnumerable<EventData>> ReceiveBatchAsync(int maximumEventCount,
                                                                             CancellationToken cancellationToken = default) =>
             await ReceiveBatchInternalAsync(maximumEventCount, null, cancellationToken).ConfigureAwait(false);
@@ -339,10 +467,23 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// </summary>
         ///
         /// <param name="maximumEventCount">The maximum number of messages to receive in this batch.</param>
-        /// <param name="maximumWaitTime">The maximum amount of time to wait to build up the requested message count for the batch.</param>
+        /// <param name="maximumWaitTime">The maximum amount of time to wait for events to become available, if no events can be read from the prefetch queue.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>The batch of <see cref="EventData" /> from the Event Hub partition this client is associated with.  If no events are present, an empty enumerable is returned.</returns>
+        ///
+        /// <remarks>
+        ///   When events are available in the prefetch queue, they will be used to form the batch as quickly as possible without waiting for additional events from the
+        ///   Event Hubs service to try and meet the requested <paramref name="maximumEventCount" />.  When no events are available in prefetch, the receiver will wait up
+        ///   to the <paramref name="maximumWaitTime"/> for events to be read from the service.  Once any events are available, they will be used to form the batch immediately.
+        /// </remarks>
+        ///
+        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested <paramref name="maximumEventCount" /> is less than 1.</exception>
+        ///
+        /// <exception cref="EventHubsException">
+        ///   Occurs when an <see cref="PartitionReceiver"/> is unable to read from the requested Event Hub partition due to another reader having
+        ///   asserted exclusive ownership.  In this case, the <see cref="EventHubsException.FailureReason"/> will be set to <see cref="EventHubsException.FailureReason.ConsumerDisconnected"/>.
+        /// </exception>
         ///
         public virtual async Task<IEnumerable<EventData>> ReceiveBatchAsync(int maximumEventCount,
                                                                             TimeSpan maximumWaitTime,
@@ -365,9 +506,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             }
 
             IsClosed = true;
-
-            var clientHash = GetHashCode().ToString(CultureInfo.InvariantCulture);
-            Logger.ClientCloseStart(nameof(PartitionReceiver), EventHubName, clientHash);
+            Logger.ClientCloseStart(nameof(PartitionReceiver), EventHubName, Identifier);
 
             // Attempt to close the transport consumer.  In the event that an exception is encountered,
             // it should not impact the attempt to close the connection, assuming ownership.
@@ -380,7 +519,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             }
             catch (Exception ex)
             {
-                Logger.ClientCloseError(nameof(PartitionReceiver), EventHubName, clientHash, ex.Message);
+                Logger.ClientCloseError(nameof(PartitionReceiver), EventHubName, Identifier, ex.Message);
                 transportConsumerException = ex;
             }
 
@@ -391,17 +530,17 @@ namespace Azure.Messaging.EventHubs.Primitives
             {
                 if (OwnsConnection)
                 {
-                    await Connection.CloseAsync().ConfigureAwait(false);
+                    await Connection.CloseAsync(CancellationToken.None).ConfigureAwait(false);
                 }
             }
             catch (Exception ex)
             {
-                Logger.ClientCloseError(nameof(PartitionReceiver), EventHubName, clientHash, ex.Message);
+                Logger.ClientCloseError(nameof(PartitionReceiver), EventHubName, Identifier, ex.Message);
                 throw;
             }
             finally
             {
-                Logger.ClientCloseComplete(nameof(PartitionReceiver), EventHubName, clientHash);
+                Logger.ClientCloseComplete(nameof(PartitionReceiver), EventHubName, Identifier);
             }
 
             // If there was an active exception pending from closing the transport
@@ -418,7 +557,11 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   including ensuring that the client itself has been closed.
         /// </summary>
         ///
-        public virtual async ValueTask DisposeAsync() => await CloseAsync().ConfigureAwait(false);
+        public virtual async ValueTask DisposeAsync()
+        {
+            await CloseAsync().ConfigureAwait(false);
+            GC.SuppressFinalize(this);
+        }
 
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.
@@ -448,25 +591,6 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => base.ToString();
-
-        /// <summary>
-        ///   Creates an <see cref="TransportConsumer" /> to use for reading events.
-        /// </summary>
-        ///
-        /// <param name="consumerGroup">The name of the consumer group the consumer will be associated with.  Events will be read in the context of this group.</param>
-        /// <param name="partitionId">The identifier of the Event Hub partition from which events will be received.</param>
-        /// <param name="eventPosition">The position within the partition where the consumer should begin reading events.</param>
-        /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
-        /// <param name="options">A set of options to apply when configuring the consumer.</param>
-        ///
-        /// <returns>A <see cref="TransportConsumer" /> configured in the requested manner.</returns>
-        ///
-        internal virtual TransportConsumer CreateTransportConsumer(string consumerGroup,
-                                                                   string partitionId,
-                                                                   EventPosition eventPosition,
-                                                                   EventHubsRetryPolicy retryPolicy,
-                                                                   PartitionReceiverOptions options) =>
-            Connection.CreateTransportConsumer(consumerGroup, partitionId, eventPosition, retryPolicy, options.TrackLastEnqueuedEventProperties, options.OwnerLevel, (uint?)options.PrefetchCount);
 
         /// <summary>
         ///   Receives a batch of <see cref="EventData" /> from the Event Hub partition this client is associated with.

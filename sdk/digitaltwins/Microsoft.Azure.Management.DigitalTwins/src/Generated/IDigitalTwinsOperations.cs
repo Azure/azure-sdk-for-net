@@ -92,8 +92,8 @@ namespace Microsoft.Azure.Management.DigitalTwins
         /// <param name='resourceName'>
         /// The name of the DigitalTwinsInstance.
         /// </param>
-        /// <param name='tags'>
-        /// Instance tags
+        /// <param name='digitalTwinsPatchDescription'>
+        /// The DigitalTwinsInstance and security metadata.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -110,7 +110,7 @@ namespace Microsoft.Azure.Management.DigitalTwins
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<DigitalTwinsDescription>> UpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DigitalTwinsDescription>> UpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, DigitalTwinsPatchDescription digitalTwinsPatchDescription, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete a DigitalTwinsInstance.
         /// </summary>
@@ -247,8 +247,8 @@ namespace Microsoft.Azure.Management.DigitalTwins
         /// <param name='resourceName'>
         /// The name of the DigitalTwinsInstance.
         /// </param>
-        /// <param name='tags'>
-        /// Instance tags
+        /// <param name='digitalTwinsPatchDescription'>
+        /// The DigitalTwinsInstance and security metadata.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -265,7 +265,7 @@ namespace Microsoft.Azure.Management.DigitalTwins
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<DigitalTwinsDescription>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DigitalTwinsDescription>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, DigitalTwinsPatchDescription digitalTwinsPatchDescription, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete a DigitalTwinsInstance.
         /// </summary>

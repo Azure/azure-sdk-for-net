@@ -1,15 +1,18 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core.Pipeline;
 using Azure.Identity;
 using Azure.Security.KeyVault.Keys.Cryptography;
 using NUnit.Framework;
 using System;
+using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Security.KeyVault.Tests;
+using System.Security.Cryptography;
 
 namespace Azure.Security.KeyVault.Keys.Samples
 {
@@ -27,12 +30,12 @@ namespace Azure.Security.KeyVault.Keys.Samples
         public void CreateClient()
         {
             // Environment variable with the Key Vault endpoint.
-            string keyVaultUrl = TestEnvironment.KeyVaultUrl;
+            string vaultUrl = TestEnvironment.KeyVaultUrl;
 
             #region Snippet:CreateKeyClient
             // Create a new key client using the default credential from Azure.Identity using environment variables previously set,
             // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
-            var client = new KeyClient(vaultUri: new Uri(keyVaultUrl), credential: new DefaultAzureCredential());
+            var client = new KeyClient(vaultUri: new Uri(vaultUrl), credential: new DefaultAzureCredential());
 
             // Create a new key using the key client.
             KeyVaultKey key = client.CreateKey("key-name", KeyType.Rsa);
@@ -42,9 +45,9 @@ namespace Azure.Security.KeyVault.Keys.Samples
             #endregion
 
             #region Snippet:CreateCryptographyClient
-            // Create a new certificate client using the default credential from Azure.Identity using environment variables previously set,
-            // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
-            var cryptoClient = new CryptographyClient(keyId: key.Id, credential: new DefaultAzureCredential());
+            // Create a new cryptography client using the same Key Vault or Managed HSM endpoint, service version,
+            // and options as the KeyClient created earlier.
+            CryptographyClient cryptoClient = client.GetCryptographyClient(key.Name, key.Properties.Version);
             #endregion
 
             this.client = client;
@@ -114,7 +117,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
         public void RetrieveKey()
         {
             // Make sure a key exists.
-             client.CreateKey("key-name", KeyType.Rsa);
+            client.CreateKey("key-name", KeyType.Rsa);
 
             #region Snippet:RetrieveKey
             KeyVaultKey key = client.GetKey("key-name");
@@ -171,6 +174,12 @@ namespace Azure.Security.KeyVault.Keys.Samples
         public void EncryptDecrypt()
         {
             #region Snippet:EncryptDecrypt
+#if SNIPPET
+            // Create a new cryptography client using the same Key Vault or Managed HSM endpoint, service version,
+            // and options as the KeyClient created earlier.
+            var cryptoClient = client.GetCryptographyClient(key.Name, key.Properties.Version);
+#endif
+
             byte[] plaintext = Encoding.UTF8.GetBytes("A single block of plaintext");
 
             // encrypt the data using the algorithm RSAOAEP
@@ -221,8 +230,8 @@ namespace Azure.Security.KeyVault.Keys.Samples
             await client.PurgeDeletedKeyAsync(key.Name);
             #endregion
 
-            DeleteKeyOperation rsaKeyOperation =  client.StartDeleteKey("rsa-key-name");
-            DeleteKeyOperation ecKeyOperation =  client.StartDeleteKey("ec-key-name");
+            DeleteKeyOperation rsaKeyOperation = client.StartDeleteKey("rsa-key-name");
+            DeleteKeyOperation ecKeyOperation = client.StartDeleteKey("ec-key-name");
 
             try
             {
@@ -258,6 +267,139 @@ namespace Azure.Security.KeyVault.Keys.Samples
             DeletedKey key = operation.Value;
             client.PurgeDeletedKey(key.Name);
             #endregion
+        }
+
+        [Ignore("Used only for the migration guide")]
+        private async Task MigrationGuide()
+        {
+            #region Snippet:Azure_Security_KeyVault_Keys_Snippets_MigrationGuide_Create
+            KeyClient client = new KeyClient(
+                new Uri("https://myvault.vault.azure.net"),
+                new DefaultAzureCredential());
+
+            CryptographyClient cryptoClient = new CryptographyClient(
+                new Uri("https://myvault.vault.azure.net"),
+                new DefaultAzureCredential());
+            #endregion Snippet:Azure_Security_KeyVault_Keys_Snippets_MigrationGuide_Create
+
+            #region Snippet:Azure_Security_KeyVault_Keys_Snippets_MigrationGuide_CreateWithOptions
+            using (HttpClient httpClient = new HttpClient())
+            {
+                KeyClientOptions options = new KeyClientOptions
+                {
+                    Transport = new HttpClientTransport(httpClient)
+                };
+
+#if SNIPPET
+                KeyClient client = new KeyClient(
+#else
+                client = new KeyClient(
+#endif
+                    new Uri("https://myvault.vault.azure.net"),
+                    new DefaultAzureCredential(),
+                    options);
+
+                CryptographyClientOptions cryptoOptions = new CryptographyClientOptions
+                {
+                    Transport = new HttpClientTransport(httpClient)
+                };
+
+#if SNIPPET
+                CryptographyClient cryptoClient = new CryptographyClient(
+#else
+                cryptoClient = new CryptographyClient(
+#endif
+                    new Uri("https://myvault.vault.azure.net"),
+                    new DefaultAzureCredential(),
+                    cryptoOptions);
+            }
+            #endregion Snippet:Azure_Security_KeyVault_Keys_Snippets_MigrationGuide_CreateWithOptions
+
+            {
+                #region Snippet:Azure_Security_KeyVault_Keys_Snippets_MigrationGuide_CreateKeys
+                // Create RSA key.
+                CreateRsaKeyOptions createRsaOptions = new CreateRsaKeyOptions("rsa-key-name")
+                {
+                    KeySize = 4096
+                };
+
+                KeyVaultKey rsaKey = await client.CreateRsaKeyAsync(createRsaOptions);
+
+                // Create Elliptic-Curve key.
+                CreateEcKeyOptions createEcOptions = new CreateEcKeyOptions("ec-key-name")
+                {
+                    CurveName = KeyCurveName.P256
+                };
+
+                KeyVaultKey ecKey = await client.CreateEcKeyAsync(createEcOptions);
+                #endregion Snippet:Azure_Security_KeyVault_Keys_Snippets_MigrationGuide_CreateKeys
+            }
+
+            {
+                #region Snippet:Azure_Security_KeyVault_Keys_Snippets_MigrationGuide_ListKeys
+                // List all keys asynchronously.
+                await foreach (KeyProperties item in client.GetPropertiesOfKeysAsync())
+                {
+                    KeyVaultKey key = await client.GetKeyAsync(item.Name);
+                }
+
+                // List all keys synchronously.
+                foreach (KeyProperties item in client.GetPropertiesOfKeys())
+                {
+                    KeyVaultKey key = client.GetKey(item.Name);
+                }
+                #endregion Snippet:Azure_Security_KeyVault_Keys_Snippets_MigrationGuide_ListKeys
+            }
+
+            {
+                #region Snippet:Azure_Security_KeyVault_Keys_Snippets_MigrationGuide_DeleteKey
+                // Delete the key.
+                DeleteKeyOperation deleteOperation = await client.StartDeleteKeyAsync("key-name");
+
+                // Purge or recover the deleted key if soft delete is enabled.
+                if (deleteOperation.Value.RecoveryId != null)
+                {
+                    // Deleting a key does not happen immediately. Wait for the key to be deleted.
+                    DeletedKey deletedKey = await deleteOperation.WaitForCompletionAsync();
+
+                    // Purge the deleted key.
+                    await client.PurgeDeletedKeyAsync(deletedKey.Name);
+
+                    // You can also recover the deleted key using StartRecoverDeletedKeyAsync,
+                    // which returns RecoverDeletedKeyOperation you can await like DeleteKeyOperation above.
+                }
+                #endregion Snippet:Azure_Security_KeyVault_Keys_Snippets_MigrationGuide_DeleteKey
+            }
+
+            {
+                #region Snippet:Azure_Security_KeyVault_Keys_Snippets_MigrationGuide_Encrypt
+                // Encrypt a message. The plaintext must be small enough for the chosen algorithm.
+                byte[] plaintext = Encoding.UTF8.GetBytes("Small message to encrypt");
+                EncryptResult encrypted = await cryptoClient.EncryptAsync(EncryptionAlgorithm.RsaOaep256, plaintext);
+
+                // Decrypt the message.
+                DecryptResult decrypted = await cryptoClient.DecryptAsync(encrypted.Algorithm, encrypted.Ciphertext);
+                string message = Encoding.UTF8.GetString(decrypted.Plaintext);
+                #endregion Snippet:Azure_Security_KeyVault_Keys_Snippets_MigrationGuide_Encrypt
+            }
+
+            {
+                #region Snippet:Azure_Security_KeyVault_Keys_Snippets_MigrationGuide_Wrap
+                using (Aes aes = Aes.Create())
+                {
+                    // Use a symmetric key to encrypt large amounts of data, possibly streamed...
+
+                    // Now wrap the key and store the encrypted key and plaintext IV to later decrypt the key to decrypt the data.
+                    WrapResult wrapped = await cryptoClient.WrapKeyAsync(KeyWrapAlgorithm.RsaOaep256, aes.Key);
+
+                    // Read the IV and the encrypted key from the payload, then unwrap the key.
+                    UnwrapResult unwrapped = await cryptoClient.UnwrapKeyAsync(wrapped.Algorithm, wrapped.EncryptedKey);
+                    aes.Key = unwrapped.Key;
+
+                    // Decrypt the payload with the symmetric key.
+                }
+                #endregion Snippet:Azure_Security_KeyVault_Keys_Snippets_MigrationGuide_Wrap
+            }
         }
     }
 }

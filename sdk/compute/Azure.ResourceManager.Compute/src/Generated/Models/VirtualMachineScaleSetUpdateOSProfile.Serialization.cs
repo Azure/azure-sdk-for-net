@@ -15,22 +15,22 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (CustomData != null)
+            if (Optional.IsDefined(CustomData))
             {
                 writer.WritePropertyName("customData");
                 writer.WriteStringValue(CustomData);
             }
-            if (WindowsConfiguration != null)
+            if (Optional.IsDefined(WindowsConfiguration))
             {
                 writer.WritePropertyName("windowsConfiguration");
                 writer.WriteObjectValue(WindowsConfiguration);
             }
-            if (LinuxConfiguration != null)
+            if (Optional.IsDefined(LinuxConfiguration))
             {
                 writer.WritePropertyName("linuxConfiguration");
                 writer.WriteObjectValue(LinuxConfiguration);
             }
-            if (Secrets != null)
+            if (Optional.IsCollectionDefined(Secrets))
             {
                 writer.WritePropertyName("secrets");
                 writer.WriteStartArray();

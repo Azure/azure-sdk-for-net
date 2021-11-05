@@ -11,83 +11,30 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class RecordSet : IUtf8JsonSerializable
+    public partial class RecordSet
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (RecordType != null)
-            {
-                writer.WritePropertyName("recordType");
-                writer.WriteStringValue(RecordType);
-            }
-            if (RecordSetName != null)
-            {
-                writer.WritePropertyName("recordSetName");
-                writer.WriteStringValue(RecordSetName);
-            }
-            if (Fqdn != null)
-            {
-                writer.WritePropertyName("fqdn");
-                writer.WriteStringValue(Fqdn);
-            }
-            if (ProvisioningState != null)
-            {
-                writer.WritePropertyName("provisioningState");
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (Ttl != null)
-            {
-                writer.WritePropertyName("ttl");
-                writer.WriteNumberValue(Ttl.Value);
-            }
-            if (IpAddresses != null)
-            {
-                writer.WritePropertyName("ipAddresses");
-                writer.WriteStartArray();
-                foreach (var item in IpAddresses)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
-        }
-
         internal static RecordSet DeserializeRecordSet(JsonElement element)
         {
-            string recordType = default;
-            string recordSetName = default;
-            string fqdn = default;
-            ProvisioningState? provisioningState = default;
-            int? ttl = default;
-            IList<string> ipAddresses = default;
+            Optional<string> recordType = default;
+            Optional<string> recordSetName = default;
+            Optional<string> fqdn = default;
+            Optional<ProvisioningState> provisioningState = default;
+            Optional<int> ttl = default;
+            Optional<IReadOnlyList<string>> ipAddresses = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recordType"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     recordType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("recordSetName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     recordSetName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("fqdn"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     fqdn = property.Value.GetString();
                     continue;
                 }
@@ -95,6 +42,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new ProvisioningState(property.Value.GetString());
@@ -104,6 +52,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ttl = property.Value.GetInt32();
@@ -113,25 +62,19 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     ipAddresses = array;
                     continue;
                 }
             }
-            return new RecordSet(recordType, recordSetName, fqdn, provisioningState, ttl, ipAddresses);
+            return new RecordSet(recordType.Value, recordSetName.Value, fqdn.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(ttl), Optional.ToList(ipAddresses));
         }
     }
 }

@@ -5,7 +5,9 @@ using System;
 using System.Collections;
 using System.Diagnostics.Tracing;
 using System.Security.Cryptography;
+using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Identity;
@@ -71,7 +73,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             MockResponse response = new MockResponse(200);
             response.SetContent(@$"{{""kid"":""{KeyId}"",""value"":""test""}}");
 
-            MockTransport transport = new MockTransport(response);
+            MockTransport transport = new MockTransport(_ => response);
             CryptographyClient client = CreateClient(key, transport);
 
             object result = await thunk(client, "invalid");
@@ -99,7 +101,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             MockResponse response = new MockResponse(200);
             response.SetContent(@$"{{""kid"":""{KeyId}"",""value"":{value ?? @"""test"""}}}");
 
-            CryptographyClient client = CreateClient(key, new MockTransport(response));
+            CryptographyClient client = CreateClient(key, new MockTransport(_ => response));
 
             object result = await thunk(client, "invalid");
             Assert.IsNotNull(result);
@@ -126,7 +128,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             MockResponse response = new MockResponse(200);
             response.SetContent(@$"{{""kid"":""{KeyId}"",""value"":{value ?? @"""test"""}}}");
 
-            CryptographyClient client = CreateClient(key, new MockTransport(response));
+            CryptographyClient client = CreateClient(key, new MockTransport(_ => response));
 
             object result = await thunk(client, "invalid");
             Assert.IsNotNull(result);
@@ -149,10 +151,12 @@ namespace Azure.Security.KeyVault.Keys.Tests
             key.Deserialize(keyResponse.ContentStream);
             keyResponse.ContentStream.Position = 0;
 
-            MockResponse resultResponse = new MockResponse(200);
-            resultResponse.SetContent(@$"{{""kid"":""{KeyId}"",""value"":{value ?? @"""test"""}}}");
-
-            CryptographyClient client = CreateClient(key, new MockTransport(keyResponse, resultResponse));
+            CryptographyClient client = CreateClient(key, new MockTransport(_ =>
+            {
+                keyResponse.ContentStream.Position = 0;
+                return keyResponse;
+                }
+            ));
 
             object result = await thunk(client, "invalid");
             Assert.IsNotNull(result);
@@ -189,7 +193,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             MockResponse response = new MockResponse(200);
             response.SetContent(@$"{{""kid"":""{KeyId}"",""value"":{value ?? @"""test"""}}}");
 
-            CryptographyClient client = CreateClient(key, new MockTransport(response));
+            CryptographyClient client = CreateClient(key, new MockTransport(_ => response));
 
             object result = await thunk(client, "invalid");
             Assert.IsNotNull(result);
@@ -225,7 +229,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             MockResponse response = new MockResponse(200);
             response.SetContent(@$"{{""kid"":""{KeyId}"",""value"":{value ?? @"""test"""}}}");
 
-            CryptographyClient client = CreateClient(key, new MockTransport(response));
+            CryptographyClient client = CreateClient(key, new MockTransport(_ => response));
 
             object result = await thunk(client, "invalid");
             Assert.IsNotNull(result);
@@ -254,7 +258,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             MockResponse response = new MockResponse(200);
             response.SetContent(@$"{{""kid"":""{KeyId}"",""value"":{value ?? @"""test"""}}}");
 
-            CryptographyClient client = CreateClient(key, new MockTransport(response), new ThrowingCryptographyProvider());
+            CryptographyClient client = CreateClient(key, new MockTransport(_ => response), new ThrowingCryptographyProvider());
 
             object result = await thunk(client, null);
             Assert.IsNotNull(result);
@@ -273,7 +277,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 Transport = transport,
             };
 
-            return InstrumentClient(new CryptographyClient(key, new DefaultAzureCredential(), options, provider));
+            return InstrumentClient(new CryptographyClient(key, new MockCredential(), options, provider));
         }
 
         private static IEnumerable GetAesOperations()
@@ -312,6 +316,21 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 yield return new TestCaseData("VerifyData", "true", new Func<CryptographyClient, string, Task<object>>(async (client, algorithm) => await client.VerifyDataAsync(algorithm ?? SignatureAlgorithm.RS256, s_buffer, s_buffer)))
                     .ConditionalIgnore(ignoreHashingMethods, "Cannot hash locally with invalid algorithm");
                 yield return new TestCaseData("WrapKey", null, new Func<CryptographyClient, string, Task<object>>(async (client, algorithm) => await client.WrapKeyAsync(algorithm ?? KeyWrapAlgorithm.RsaOaep, s_buffer)));
+            }
+        }
+
+        public class MockCredential : TokenCredential
+        {
+            private AccessToken token = new AccessToken("mockToken", DateTimeOffset.UtcNow.AddHours(1));
+
+            public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
+            {
+                return token;
+            }
+
+            public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
+            {
+                return new ValueTask<AccessToken>(token);
             }
         }
     }

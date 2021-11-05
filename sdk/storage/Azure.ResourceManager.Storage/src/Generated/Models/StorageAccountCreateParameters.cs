@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -17,6 +18,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="sku"> Required. Gets or sets the SKU name. </param>
         /// <param name="kind"> Required. Indicates the type of storage account. </param>
         /// <param name="location"> Required. Gets or sets the location of the resource. This will be one of the supported and registered Azure Geo Regions (e.g. West US, East US, Southeast Asia, etc.). The geo region of a resource cannot be changed once it is created, but if an identical geo region is specified on update, the request will succeed. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sku"/> or <paramref name="location"/> is null. </exception>
         public StorageAccountCreateParameters(Sku sku, Kind kind, string location)
         {
             if (sku == null)
@@ -31,39 +33,7 @@ namespace Azure.ResourceManager.Storage.Models
             Sku = sku;
             Kind = kind;
             Location = location;
-        }
-
-        /// <summary> Initializes a new instance of StorageAccountCreateParameters. </summary>
-        /// <param name="sku"> Required. Gets or sets the SKU name. </param>
-        /// <param name="kind"> Required. Indicates the type of storage account. </param>
-        /// <param name="location"> Required. Gets or sets the location of the resource. This will be one of the supported and registered Azure Geo Regions (e.g. West US, East US, Southeast Asia, etc.). The geo region of a resource cannot be changed once it is created, but if an identical geo region is specified on update, the request will succeed. </param>
-        /// <param name="tags"> Gets or sets a list of key value pairs that describe the resource. These tags can be used for viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key with a length no greater than 128 characters and a value with a length no greater than 256 characters. </param>
-        /// <param name="identity"> The identity of the resource. </param>
-        /// <param name="customDomain"> User domain assigned to the storage account. Name is the CNAME source. Only one custom domain is supported per storage account at this time. To clear the existing custom domain, use an empty string for the custom domain name property. </param>
-        /// <param name="encryption"> Not applicable. Azure Storage encryption is enabled for all storage accounts and cannot be disabled. </param>
-        /// <param name="networkRuleSet"> Network rule set. </param>
-        /// <param name="accessTier"> Required for storage accounts where kind = BlobStorage. The access tier used for billing. </param>
-        /// <param name="azureFilesIdentityBasedAuthentication"> Provides the identity based authentication settings for Azure Files. </param>
-        /// <param name="enableHttpsTrafficOnly"> Allows https traffic only to storage service if sets to true. The default value is true since API version 2019-04-01. </param>
-        /// <param name="isHnsEnabled"> Account HierarchicalNamespace enabled if sets to true. </param>
-        /// <param name="largeFileSharesState"> Allow large file shares if sets to Enabled. It cannot be disabled once it is enabled. </param>
-        /// <param name="routingPreference"> Maintains information about the network routing choice opted by the user for data transfer. </param>
-        internal StorageAccountCreateParameters(Sku sku, Kind kind, string location, IDictionary<string, string> tags, Identity identity, CustomDomain customDomain, Encryption encryption, NetworkRuleSet networkRuleSet, AccessTier? accessTier, AzureFilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication, bool? enableHttpsTrafficOnly, bool? isHnsEnabled, LargeFileSharesState? largeFileSharesState, RoutingPreference routingPreference)
-        {
-            Sku = sku;
-            Kind = kind;
-            Location = location;
-            Tags = tags;
-            Identity = identity;
-            CustomDomain = customDomain;
-            Encryption = encryption;
-            NetworkRuleSet = networkRuleSet;
-            AccessTier = accessTier;
-            AzureFilesIdentityBasedAuthentication = azureFilesIdentityBasedAuthentication;
-            EnableHttpsTrafficOnly = enableHttpsTrafficOnly;
-            IsHnsEnabled = isHnsEnabled;
-            LargeFileSharesState = largeFileSharesState;
-            RoutingPreference = routingPreference;
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Required. Gets or sets the SKU name. </summary>
@@ -72,10 +42,16 @@ namespace Azure.ResourceManager.Storage.Models
         public Kind Kind { get; }
         /// <summary> Required. Gets or sets the location of the resource. This will be one of the supported and registered Azure Geo Regions (e.g. West US, East US, Southeast Asia, etc.). The geo region of a resource cannot be changed once it is created, but if an identical geo region is specified on update, the request will succeed. </summary>
         public string Location { get; }
+        /// <summary> Optional. Set the extended location of the resource. If not set, the storage account will be created in Azure main region. Otherwise it will be created in the specified extended location. </summary>
+        public ExtendedLocation ExtendedLocation { get; set; }
         /// <summary> Gets or sets a list of key value pairs that describe the resource. These tags can be used for viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key with a length no greater than 128 characters and a value with a length no greater than 256 characters. </summary>
-        public IDictionary<string, string> Tags { get; set; }
+        public IDictionary<string, string> Tags { get; }
         /// <summary> The identity of the resource. </summary>
         public Identity Identity { get; set; }
+        /// <summary> SasPolicy assigned to the storage account. </summary>
+        public SasPolicy SasPolicy { get; set; }
+        /// <summary> KeyPolicy assigned to the storage account. </summary>
+        public KeyPolicy KeyPolicy { get; set; }
         /// <summary> User domain assigned to the storage account. Name is the CNAME source. Only one custom domain is supported per storage account at this time. To clear the existing custom domain, use an empty string for the custom domain name property. </summary>
         public CustomDomain CustomDomain { get; set; }
         /// <summary> Not applicable. Azure Storage encryption is enabled for all storage accounts and cannot be disabled. </summary>
@@ -94,5 +70,15 @@ namespace Azure.ResourceManager.Storage.Models
         public LargeFileSharesState? LargeFileSharesState { get; set; }
         /// <summary> Maintains information about the network routing choice opted by the user for data transfer. </summary>
         public RoutingPreference RoutingPreference { get; set; }
+        /// <summary> Allow or disallow public access to all blobs or containers in the storage account. The default interpretation is true for this property. </summary>
+        public bool? AllowBlobPublicAccess { get; set; }
+        /// <summary> Set the minimum TLS version to be permitted on requests to storage. The default interpretation is TLS 1.0 for this property. </summary>
+        public MinimumTlsVersion? MinimumTlsVersion { get; set; }
+        /// <summary> Indicates whether the storage account permits requests to be authorized with the account access key via Shared Key. If false, then all requests, including shared access signatures, must be authorized with Azure Active Directory (Azure AD). The default value is null, which is equivalent to true. </summary>
+        public bool? AllowSharedKeyAccess { get; set; }
+        /// <summary> NFS 3.0 protocol support enabled if set to true. </summary>
+        public bool? EnableNfsV3 { get; set; }
+        /// <summary> Allow or disallow cross AAD tenant object replication. The default interpretation is true for this property. </summary>
+        public bool? AllowCrossTenantReplication { get; set; }
     }
 }

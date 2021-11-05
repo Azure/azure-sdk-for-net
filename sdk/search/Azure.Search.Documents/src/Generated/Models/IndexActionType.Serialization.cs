@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.Search.Documents.Models
 {
-    internal static class IndexActionTypeExtensions
+    internal static partial class IndexActionTypeExtensions
     {
         public static string ToSerialString(this IndexActionType value) => value switch
         {

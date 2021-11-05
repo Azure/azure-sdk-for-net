@@ -15,34 +15,19 @@ namespace Azure.ResourceManager.EventHubs.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Id != null)
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
-            if (Name != null)
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
-            if (Type != null)
-            {
-                writer.WritePropertyName("type");
-                writer.WriteStringValue(Type);
-            }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (IpMask != null)
+            if (Optional.IsDefined(IpMask))
             {
                 writer.WritePropertyName("ipMask");
                 writer.WriteStringValue(IpMask);
             }
-            if (Action != null)
+            if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action");
                 writer.WriteStringValue(Action.Value.ToString());
             }
-            if (FilterName != null)
+            if (Optional.IsDefined(FilterName))
             {
                 writer.WritePropertyName("filterName");
                 writer.WriteStringValue(FilterName);
@@ -53,51 +38,40 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         internal static IpFilterRule DeserializeIpFilterRule(JsonElement element)
         {
-            string id = default;
-            string name = default;
-            string type = default;
-            string ipMask = default;
-            IPAction? action = default;
-            string filterName = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
+            Optional<string> ipMask = default;
+            Optional<IPAction> action = default;
+            Optional<string> filterName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("ipMask"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             ipMask = property0.Value.GetString();
                             continue;
                         }
@@ -105,6 +79,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             action = new IPAction(property0.Value.GetString());
@@ -112,10 +87,6 @@ namespace Azure.ResourceManager.EventHubs.Models
                         }
                         if (property0.NameEquals("filterName"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             filterName = property0.Value.GetString();
                             continue;
                         }
@@ -123,7 +94,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     continue;
                 }
             }
-            return new IpFilterRule(id, name, type, ipMask, action, filterName);
+            return new IpFilterRule(id.Value, name.Value, type.Value, ipMask.Value, Optional.ToNullable(action), filterName.Value);
         }
     }
 }

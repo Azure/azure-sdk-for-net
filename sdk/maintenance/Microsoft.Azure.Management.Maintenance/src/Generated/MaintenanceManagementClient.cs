@@ -77,6 +77,11 @@ namespace Microsoft.Azure.Management.Maintenance
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
+        /// Gets the IPublicMaintenanceConfigurationsOperations.
+        /// </summary>
+        public virtual IPublicMaintenanceConfigurationsOperations PublicMaintenanceConfigurations { get; private set; }
+
+        /// <summary>
         /// Gets the IApplyUpdatesOperations.
         /// </summary>
         public virtual IApplyUpdatesOperations ApplyUpdates { get; private set; }
@@ -90,6 +95,21 @@ namespace Microsoft.Azure.Management.Maintenance
         /// Gets the IMaintenanceConfigurationsOperations.
         /// </summary>
         public virtual IMaintenanceConfigurationsOperations MaintenanceConfigurations { get; private set; }
+
+        /// <summary>
+        /// Gets the IMaintenanceConfigurationsForResourceGroupOperations.
+        /// </summary>
+        public virtual IMaintenanceConfigurationsForResourceGroupOperations MaintenanceConfigurationsForResourceGroup { get; private set; }
+
+        /// <summary>
+        /// Gets the IApplyUpdateForResourceGroupOperations.
+        /// </summary>
+        public virtual IApplyUpdateForResourceGroupOperations ApplyUpdateForResourceGroup { get; private set; }
+
+        /// <summary>
+        /// Gets the IConfigurationAssignmentsWithinSubscriptionOperations.
+        /// </summary>
+        public virtual IConfigurationAssignmentsWithinSubscriptionOperations ConfigurationAssignmentsWithinSubscription { get; private set; }
 
         /// <summary>
         /// Gets the IOperations.
@@ -342,13 +362,17 @@ namespace Microsoft.Azure.Management.Maintenance
         /// </summary>
         private void Initialize()
         {
+            PublicMaintenanceConfigurations = new PublicMaintenanceConfigurationsOperations(this);
             ApplyUpdates = new ApplyUpdatesOperations(this);
             ConfigurationAssignments = new ConfigurationAssignmentsOperations(this);
             MaintenanceConfigurations = new MaintenanceConfigurationsOperations(this);
+            MaintenanceConfigurationsForResourceGroup = new MaintenanceConfigurationsForResourceGroupOperations(this);
+            ApplyUpdateForResourceGroup = new ApplyUpdateForResourceGroupOperations(this);
+            ConfigurationAssignmentsWithinSubscription = new ConfigurationAssignmentsWithinSubscriptionOperations(this);
             Operations = new Operations(this);
             Updates = new UpdatesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2020-04-01";
+            ApiVersion = "2021-09-01-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

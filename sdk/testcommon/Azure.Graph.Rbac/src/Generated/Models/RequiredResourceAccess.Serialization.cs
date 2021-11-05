@@ -23,7 +23,7 @@ namespace Azure.Graph.Rbac.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (ResourceAppId != null)
+            if (Optional.IsDefined(ResourceAppId))
             {
                 writer.WritePropertyName("resourceAppId");
                 writer.WriteStringValue(ResourceAppId);
@@ -39,9 +39,9 @@ namespace Azure.Graph.Rbac.Models
         internal static RequiredResourceAccess DeserializeRequiredResourceAccess(JsonElement element)
         {
             IList<ResourceAccess> resourceAccess = default;
-            string resourceAppId = default;
+            Optional<string> resourceAppId = default;
             IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceAccess"))
@@ -49,39 +49,20 @@ namespace Azure.Graph.Rbac.Models
                     List<ResourceAccess> array = new List<ResourceAccess>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(Models.ResourceAccess.DeserializeResourceAccess(item));
-                        }
+                        array.Add(Models.ResourceAccess.DeserializeResourceAccess(item));
                     }
                     resourceAccess = array;
                     continue;
                 }
                 if (property.NameEquals("resourceAppId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     resourceAppId = property.Value.GetString();
                     continue;
                 }
-                additionalPropertiesDictionary ??= new Dictionary<string, object>();
-                if (property.Value.ValueKind == JsonValueKind.Null)
-                {
-                    additionalPropertiesDictionary.Add(property.Name, null);
-                }
-                else
-                {
-                    additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
-                }
+                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new RequiredResourceAccess(resourceAccess, resourceAppId, additionalProperties);
+            return new RequiredResourceAccess(resourceAccess, resourceAppId.Value, additionalProperties);
         }
     }
 }

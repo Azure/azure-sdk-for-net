@@ -37,11 +37,11 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// <param name="count">The number of partitions.</param>
         /// <param name="lowKey">String indicating the lower bound of the
         /// partition key range that
-        /// should be split between the partition ‘Count’
+        /// should be split between the partition ‘count’
         /// </param>
         /// <param name="highKey">String indicating the upper bound of the
         /// partition key range that
-        /// should be split between the partition ‘Count’
+        /// should be split between the partition ‘count’
         /// </param>
         public UniformInt64RangePartitionSchemeDescription(int count, string lowKey, string highKey)
         {
@@ -59,25 +59,25 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// <summary>
         /// Gets or sets the number of partitions.
         /// </summary>
-        [JsonProperty(PropertyName = "Count")]
+        [JsonProperty(PropertyName = "count")]
         public int Count { get; set; }
 
         /// <summary>
         /// Gets or sets string indicating the lower bound of the partition key
         /// range that
-        /// should be split between the partition ‘Count’
+        /// should be split between the partition ‘count’
         ///
         /// </summary>
-        [JsonProperty(PropertyName = "LowKey")]
+        [JsonProperty(PropertyName = "lowKey")]
         public string LowKey { get; set; }
 
         /// <summary>
         /// Gets or sets string indicating the upper bound of the partition key
         /// range that
-        /// should be split between the partition ‘Count’
+        /// should be split between the partition ‘count’
         ///
         /// </summary>
-        [JsonProperty(PropertyName = "HighKey")]
+        [JsonProperty(PropertyName = "highKey")]
         public string HighKey { get; set; }
 
         /// <summary>

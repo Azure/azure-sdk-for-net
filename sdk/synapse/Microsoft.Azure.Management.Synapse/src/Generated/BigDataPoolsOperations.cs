@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorContractException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -88,17 +88,6 @@ namespace Microsoft.Azure.Management.Synapse
         /// </return>
         public async Task<AzureOperationResponse<BigDataPoolResourceInfo>> GetWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string bigDataPoolName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (Client.ApiVersion != null)
-            {
-                if (Client.ApiVersion.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
-                }
-            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
@@ -124,10 +113,6 @@ namespace Microsoft.Azure.Management.Synapse
                 {
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
-                }
             }
             if (workspaceName == null)
             {
@@ -137,6 +122,7 @@ namespace Microsoft.Azure.Management.Synapse
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "bigDataPoolName");
             }
+            string apiVersion = "2021-06-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -144,6 +130,7 @@ namespace Microsoft.Azure.Management.Synapse
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("workspaceName", workspaceName);
                 tracingParameters.Add("bigDataPoolName", bigDataPoolName);
@@ -158,9 +145,9 @@ namespace Microsoft.Azure.Management.Synapse
             _url = _url.Replace("{workspaceName}", System.Uri.EscapeDataString(workspaceName));
             _url = _url.Replace("{bigDataPoolName}", System.Uri.EscapeDataString(bigDataPoolName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -222,11 +209,11 @@ namespace Microsoft.Azure.Management.Synapse
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new ErrorContractException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ErrorContract _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorContract>(_responseContent, Client.DeserializationSettings);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
@@ -306,7 +293,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorContractException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -323,17 +310,6 @@ namespace Microsoft.Azure.Management.Synapse
         /// </return>
         public async Task<AzureOperationResponse<BigDataPoolResourceInfo>> UpdateWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string bigDataPoolName, BigDataPoolPatchInfo bigDataPoolPatchInfo, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (Client.ApiVersion != null)
-            {
-                if (Client.ApiVersion.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
-                }
-            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
@@ -359,10 +335,6 @@ namespace Microsoft.Azure.Management.Synapse
                 {
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
-                }
             }
             if (workspaceName == null)
             {
@@ -376,6 +348,7 @@ namespace Microsoft.Azure.Management.Synapse
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "bigDataPoolPatchInfo");
             }
+            string apiVersion = "2021-06-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -383,6 +356,7 @@ namespace Microsoft.Azure.Management.Synapse
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("workspaceName", workspaceName);
                 tracingParameters.Add("bigDataPoolName", bigDataPoolName);
@@ -398,9 +372,9 @@ namespace Microsoft.Azure.Management.Synapse
             _url = _url.Replace("{workspaceName}", System.Uri.EscapeDataString(workspaceName));
             _url = _url.Replace("{bigDataPoolName}", System.Uri.EscapeDataString(bigDataPoolName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -468,11 +442,11 @@ namespace Microsoft.Azure.Management.Synapse
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new ErrorContractException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ErrorContract _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorContract>(_responseContent, Client.DeserializationSettings);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
@@ -608,7 +582,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="CloudException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -625,17 +599,6 @@ namespace Microsoft.Azure.Management.Synapse
         /// </return>
         public async Task<AzureOperationResponse<IPage<BigDataPoolResourceInfo>>> ListByWorkspaceWithHttpMessagesAsync(string resourceGroupName, string workspaceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (Client.ApiVersion != null)
-            {
-                if (Client.ApiVersion.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
-                }
-            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
@@ -661,15 +624,12 @@ namespace Microsoft.Azure.Management.Synapse
                 {
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
-                }
             }
             if (workspaceName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "workspaceName");
             }
+            string apiVersion = "2021-06-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -677,6 +637,7 @@ namespace Microsoft.Azure.Management.Synapse
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("workspaceName", workspaceName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -689,9 +650,9 @@ namespace Microsoft.Azure.Management.Synapse
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{workspaceName}", System.Uri.EscapeDataString(workspaceName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -753,14 +714,13 @@ namespace Microsoft.Azure.Management.Synapse
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
-                        ex = new CloudException(_errorBody.Message);
                         ex.Body = _errorBody;
                     }
                 }
@@ -770,10 +730,6 @@ namespace Microsoft.Azure.Management.Synapse
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
                 if (_shouldTrace)
                 {
                     ServiceClientTracing.Error(_invocationId, ex);
@@ -845,7 +801,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorContractException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -862,17 +818,6 @@ namespace Microsoft.Azure.Management.Synapse
         /// </return>
         public async Task<AzureOperationResponse<BigDataPoolResourceInfo>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string bigDataPoolName, BigDataPoolResourceInfo bigDataPoolInfo, bool? force = false, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (Client.ApiVersion != null)
-            {
-                if (Client.ApiVersion.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
-                }
-            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
@@ -898,10 +843,6 @@ namespace Microsoft.Azure.Management.Synapse
                 {
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
-                }
             }
             if (workspaceName == null)
             {
@@ -919,6 +860,7 @@ namespace Microsoft.Azure.Management.Synapse
             {
                 bigDataPoolInfo.Validate();
             }
+            string apiVersion = "2021-06-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -926,6 +868,7 @@ namespace Microsoft.Azure.Management.Synapse
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("workspaceName", workspaceName);
                 tracingParameters.Add("bigDataPoolName", bigDataPoolName);
@@ -942,9 +885,9 @@ namespace Microsoft.Azure.Management.Synapse
             _url = _url.Replace("{workspaceName}", System.Uri.EscapeDataString(workspaceName));
             _url = _url.Replace("{bigDataPoolName}", System.Uri.EscapeDataString(bigDataPoolName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (force != null)
             {
@@ -1016,11 +959,11 @@ namespace Microsoft.Azure.Management.Synapse
             string _responseContent = null;
             if ((int)_statusCode != 200 && (int)_statusCode != 202)
             {
-                var ex = new ErrorContractException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ErrorContract _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorContract>(_responseContent, Client.DeserializationSettings);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
@@ -1115,7 +1058,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorContractException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -1132,17 +1075,6 @@ namespace Microsoft.Azure.Management.Synapse
         /// </return>
         public async Task<AzureOperationResponse<object>> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string bigDataPoolName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (Client.ApiVersion != null)
-            {
-                if (Client.ApiVersion.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
-                }
-            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
@@ -1168,10 +1100,6 @@ namespace Microsoft.Azure.Management.Synapse
                 {
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
-                }
             }
             if (workspaceName == null)
             {
@@ -1181,6 +1109,7 @@ namespace Microsoft.Azure.Management.Synapse
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "bigDataPoolName");
             }
+            string apiVersion = "2021-06-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1188,6 +1117,7 @@ namespace Microsoft.Azure.Management.Synapse
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("workspaceName", workspaceName);
                 tracingParameters.Add("bigDataPoolName", bigDataPoolName);
@@ -1202,9 +1132,9 @@ namespace Microsoft.Azure.Management.Synapse
             _url = _url.Replace("{workspaceName}", System.Uri.EscapeDataString(workspaceName));
             _url = _url.Replace("{bigDataPoolName}", System.Uri.EscapeDataString(bigDataPoolName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1266,11 +1196,11 @@ namespace Microsoft.Azure.Management.Synapse
             string _responseContent = null;
             if ((int)_statusCode != 200 && (int)_statusCode != 202 && (int)_statusCode != 204)
             {
-                var ex = new ErrorContractException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ErrorContract _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorContract>(_responseContent, Client.DeserializationSettings);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
@@ -1359,7 +1289,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="CloudException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -1455,14 +1385,13 @@ namespace Microsoft.Azure.Management.Synapse
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
-                        ex = new CloudException(_errorBody.Message);
                         ex.Body = _errorBody;
                     }
                 }
@@ -1472,10 +1401,6 @@ namespace Microsoft.Azure.Management.Synapse
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
                 if (_shouldTrace)
                 {
                     ServiceClientTracing.Error(_invocationId, ex);

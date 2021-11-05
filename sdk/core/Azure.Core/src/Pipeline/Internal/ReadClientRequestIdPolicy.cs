@@ -2,13 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading;
 
 namespace Azure.Core.Pipeline
 {
     internal class ReadClientRequestIdPolicy : HttpPipelineSynchronousPolicy
     {
-        private static readonly AsyncLocal<ClientRequestIdScope?> CurrentRequestIdScope = new AsyncLocal<ClientRequestIdScope?>();
+        public const string MessagePropertyKey = "x-ms-client-request-id";
 
         protected ReadClientRequestIdPolicy()
         {
@@ -22,34 +21,16 @@ namespace Azure.Core.Pipeline
             {
                 message.Request.ClientRequestId = value;
             }
-            else if (CurrentRequestIdScope.Value?.ClientRequestId != null)
+            else if (message.TryGetProperty(MessagePropertyKey, out object? propertyValue))
             {
-                message.Request.ClientRequestId = CurrentRequestIdScope.Value.ClientRequestId;
-            }
-        }
-
-        internal static IDisposable StartScope(string? clientRequestId)
-        {
-            CurrentRequestIdScope.Value = new ClientRequestIdScope(clientRequestId, CurrentRequestIdScope.Value);
-
-            return CurrentRequestIdScope.Value;
-        }
-
-        private class ClientRequestIdScope: IDisposable
-        {
-            private readonly ClientRequestIdScope? _parent;
-
-            internal ClientRequestIdScope(string? clientRequestId, ClientRequestIdScope? parent)
-            {
-                ClientRequestId = clientRequestId;
-                _parent = parent;
-            }
-
-            public string? ClientRequestId { get; }
-
-            public void Dispose()
-            {
-                CurrentRequestIdScope.Value = _parent;
+                if (propertyValue is string stringValue)
+                {
+                    message.Request.ClientRequestId = stringValue;
+                }
+                else
+                {
+                    throw new ArgumentException($"{MessagePropertyKey} http message property must be a string but was {propertyValue?.GetType()}");
+                }
             }
         }
     }

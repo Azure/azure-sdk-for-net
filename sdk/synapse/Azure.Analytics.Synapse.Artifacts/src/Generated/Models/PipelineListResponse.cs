@@ -12,10 +12,11 @@ using System.Linq;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> A list of pipeline resources. </summary>
-    public partial class PipelineListResponse
+    internal partial class PipelineListResponse
     {
         /// <summary> Initializes a new instance of PipelineListResponse. </summary>
         /// <param name="value"> List of pipelines. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal PipelineListResponse(IEnumerable<PipelineResource> value)
         {
             if (value == null)

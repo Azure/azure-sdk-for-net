@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.DataBox.Models
         [EnumMember(Value = "PickedUp")]
         PickedUp,
         /// <summary>
-        /// Notification at device received at azure datacenter stage.
+        /// Notification at device received at Azure datacenter stage.
         /// </summary>
         [EnumMember(Value = "AtAzureDC")]
         AtAzureDC,

@@ -36,19 +36,22 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// </summary>
         /// <param name="location">The geo-location where the resource
         /// lives</param>
-        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource. Ex-
-        /// Microsoft.Compute/virtualMachines or
-        /// Microsoft.Storage/storageAccounts.</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="tags">Resource tags.</param>
-        /// <param name="provisioningState">PrivateLinkHub provisioning state.
-        /// Possible values include: 'Succeeded', 'Failed'</param>
-        public PrivateLinkHub(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string))
+        /// <param name="provisioningState">PrivateLinkHub provisioning
+        /// state</param>
+        /// <param name="privateEndpointConnections">List of private endpoint
+        /// connections</param>
+        public PrivateLinkHub(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), IList<PrivateEndpointConnectionForPrivateLinkHubBasic> privateEndpointConnections = default(IList<PrivateEndpointConnectionForPrivateLinkHubBasic>))
             : base(location, id, name, type, tags)
         {
             ProvisioningState = provisioningState;
+            PrivateEndpointConnections = privateEndpointConnections;
             CustomInit();
         }
 
@@ -58,11 +61,16 @@ namespace Microsoft.Azure.Management.Synapse.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets privateLinkHub provisioning state. Possible values include:
-        /// 'Succeeded', 'Failed'
+        /// Gets or sets privateLinkHub provisioning state
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; private set; }
+        public string ProvisioningState { get; set; }
+
+        /// <summary>
+        /// Gets list of private endpoint connections
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.privateEndpointConnections")]
+        public IList<PrivateEndpointConnectionForPrivateLinkHubBasic> PrivateEndpointConnections { get; private set; }
 
         /// <summary>
         /// Validate the object.

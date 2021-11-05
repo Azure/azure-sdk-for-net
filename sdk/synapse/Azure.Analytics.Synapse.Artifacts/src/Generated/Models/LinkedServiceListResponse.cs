@@ -12,10 +12,11 @@ using System.Linq;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> A list of linked service resources. </summary>
-    public partial class LinkedServiceListResponse
+    internal partial class LinkedServiceListResponse
     {
         /// <summary> Initializes a new instance of LinkedServiceListResponse. </summary>
         /// <param name="value"> List of linked services. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal LinkedServiceListResponse(IEnumerable<LinkedServiceResource> value)
         {
             if (value == null)

@@ -15,22 +15,22 @@ namespace Azure.ResourceManager.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Blob != null)
+            if (Optional.IsDefined(Blob))
             {
                 writer.WritePropertyName("blob");
                 writer.WriteObjectValue(Blob);
             }
-            if (File != null)
+            if (Optional.IsDefined(File))
             {
                 writer.WritePropertyName("file");
                 writer.WriteObjectValue(File);
             }
-            if (Table != null)
+            if (Optional.IsDefined(Table))
             {
                 writer.WritePropertyName("table");
                 writer.WriteObjectValue(Table);
             }
-            if (Queue != null)
+            if (Optional.IsDefined(Queue))
             {
                 writer.WritePropertyName("queue");
                 writer.WriteObjectValue(Queue);
@@ -40,16 +40,17 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static EncryptionServices DeserializeEncryptionServices(JsonElement element)
         {
-            EncryptionService blob = default;
-            EncryptionService file = default;
-            EncryptionService table = default;
-            EncryptionService queue = default;
+            Optional<EncryptionService> blob = default;
+            Optional<EncryptionService> file = default;
+            Optional<EncryptionService> table = default;
+            Optional<EncryptionService> queue = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("blob"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     blob = EncryptionService.DeserializeEncryptionService(property.Value);
@@ -59,6 +60,7 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     file = EncryptionService.DeserializeEncryptionService(property.Value);
@@ -68,6 +70,7 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     table = EncryptionService.DeserializeEncryptionService(property.Value);
@@ -77,13 +80,14 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     queue = EncryptionService.DeserializeEncryptionService(property.Value);
                     continue;
                 }
             }
-            return new EncryptionServices(blob, file, table, queue);
+            return new EncryptionServices(blob.Value, file.Value, table.Value, queue.Value);
         }
     }
 }

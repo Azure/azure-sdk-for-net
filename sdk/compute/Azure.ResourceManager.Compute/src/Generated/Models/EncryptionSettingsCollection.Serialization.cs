@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             writer.WritePropertyName("enabled");
             writer.WriteBooleanValue(Enabled);
-            if (EncryptionSettings != null)
+            if (Optional.IsCollectionDefined(EncryptionSettings))
             {
                 writer.WritePropertyName("encryptionSettings");
                 writer.WriteStartArray();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (EncryptionSettingsVersion != null)
+            if (Optional.IsDefined(EncryptionSettingsVersion))
             {
                 writer.WritePropertyName("encryptionSettingsVersion");
                 writer.WriteStringValue(EncryptionSettingsVersion);
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.Compute.Models
         internal static EncryptionSettingsCollection DeserializeEncryptionSettingsCollection(JsonElement element)
         {
             bool enabled = default;
-            IList<EncryptionSettingsElement> encryptionSettings = default;
-            string encryptionSettingsVersion = default;
+            Optional<IList<EncryptionSettingsElement>> encryptionSettings = default;
+            Optional<string> encryptionSettingsVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"))
@@ -52,34 +52,24 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<EncryptionSettingsElement> array = new List<EncryptionSettingsElement>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(EncryptionSettingsElement.DeserializeEncryptionSettingsElement(item));
-                        }
+                        array.Add(EncryptionSettingsElement.DeserializeEncryptionSettingsElement(item));
                     }
                     encryptionSettings = array;
                     continue;
                 }
                 if (property.NameEquals("encryptionSettingsVersion"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     encryptionSettingsVersion = property.Value.GetString();
                     continue;
                 }
             }
-            return new EncryptionSettingsCollection(enabled, encryptionSettings, encryptionSettingsVersion);
+            return new EncryptionSettingsCollection(enabled, Optional.ToList(encryptionSettings), encryptionSettingsVersion.Value);
         }
     }
 }

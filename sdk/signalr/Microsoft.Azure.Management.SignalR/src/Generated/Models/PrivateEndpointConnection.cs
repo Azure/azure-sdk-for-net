@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.SignalR.Models
     using System.Linq;
 
     /// <summary>
-    /// A private endpoint connection to SignalR resource
+    /// A private endpoint connection to an azure resource
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class PrivateEndpointConnection : ProxyResource
@@ -37,6 +37,8 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// <param name="name">The name of the resource.</param>
         /// <param name="type">The type of the resource - e.g.
         /// "Microsoft.SignalRService/SignalR"</param>
+        /// <param name="systemData">Metadata pertaining to creation and last
+        /// modification of the resource.</param>
         /// <param name="provisioningState">Provisioning state of the private
         /// endpoint connection. Possible values include: 'Unknown',
         /// 'Succeeded', 'Failed', 'Canceled', 'Running', 'Creating',
@@ -45,9 +47,10 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// private endpoint connection</param>
         /// <param name="privateLinkServiceConnectionState">Connection
         /// state</param>
-        public PrivateEndpointConnection(string id = default(string), string name = default(string), string type = default(string), string provisioningState = default(string), PrivateEndpoint privateEndpoint = default(PrivateEndpoint), PrivateLinkServiceConnectionState privateLinkServiceConnectionState = default(PrivateLinkServiceConnectionState))
+        public PrivateEndpointConnection(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string provisioningState = default(string), PrivateEndpoint privateEndpoint = default(PrivateEndpoint), PrivateLinkServiceConnectionState privateLinkServiceConnectionState = default(PrivateLinkServiceConnectionState))
             : base(id, name, type)
         {
+            SystemData = systemData;
             ProvisioningState = provisioningState;
             PrivateEndpoint = privateEndpoint;
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
@@ -58,6 +61,13 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets metadata pertaining to creation and last modification of the
+        /// resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
         /// <summary>
         /// Gets provisioning state of the private endpoint connection.

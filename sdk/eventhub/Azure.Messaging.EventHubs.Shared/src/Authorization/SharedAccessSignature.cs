@@ -88,7 +88,7 @@ namespace Azure.Messaging.EventHubs.Authorization
         public string Value { get; private set; }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="SharedAccessSignature"/> class.
+        ///   Initializes a new instance of the <see cref="SharedAccessSignature" /> class.
         /// </summary>
         ///
         /// <param name="eventHubResource">The Event Hubs resource to which the token is intended to serve as authorization.</param>
@@ -119,7 +119,7 @@ namespace Azure.Messaging.EventHubs.Authorization
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="SharedAccessSignature"/> class.
+        ///   Initializes a new instance of the <see cref="SharedAccessSignature" /> class.
         /// </summary>
         ///
         /// <param name="sharedAccessSignature">The shared access signature that will be parsed as the basis of this instance.</param>
@@ -138,7 +138,7 @@ namespace Azure.Messaging.EventHubs.Authorization
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="SharedAccessSignature"/> class.
+        ///   Initializes a new instance of the <see cref="SharedAccessSignature" /> class.
         /// </summary>
         ///
         /// <param name="sharedAccessSignature">The shared access signature that will be parsed as the basis of this instance.</param>

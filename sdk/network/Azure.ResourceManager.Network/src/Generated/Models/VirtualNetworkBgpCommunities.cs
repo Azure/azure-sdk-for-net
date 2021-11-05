@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         /// <summary> Initializes a new instance of VirtualNetworkBgpCommunities. </summary>
         /// <param name="virtualNetworkCommunity"> The BGP community associated with the virtual network. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkCommunity"/> is null. </exception>
         public VirtualNetworkBgpCommunities(string virtualNetworkCommunity)
         {
             if (virtualNetworkCommunity == null)

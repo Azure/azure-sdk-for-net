@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(NotebookCellOutputItemConverter))]
     public partial class NotebookCellOutputItem : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -62,6 +65,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("execution_count"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     executionCount = property.Value.GetInt32();
                     continue;
                 }
@@ -72,21 +80,49 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("text"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     text = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("data"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     data = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("metadata"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     metadata = property.Value.GetObject();
                     continue;
                 }
             }
             return new NotebookCellOutputItem(name.Value, Optional.ToNullable(executionCount), outputType, text.Value, data.Value, metadata.Value);
+        }
+
+        internal partial class NotebookCellOutputItemConverter : JsonConverter<NotebookCellOutputItem>
+        {
+            public override void Write(Utf8JsonWriter writer, NotebookCellOutputItem model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override NotebookCellOutputItem Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeNotebookCellOutputItem(document.RootElement);
+            }
         }
     }
 }

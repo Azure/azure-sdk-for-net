@@ -16,7 +16,6 @@ namespace Microsoft.Azure.Management.Monitor.Models
     /// <summary>
     /// The resource from which the rule collects its data.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("RuleDataSource")]
     public partial class RuleDataSource
     {
         /// <summary>
@@ -33,9 +32,18 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// <param name="resourceUri">the resource identifier of the resource
         /// the rule monitors. **NOTE**: this property cannot be updated for an
         /// existing rule.</param>
-        public RuleDataSource(string resourceUri = default(string))
+        /// <param name="legacyResourceId">the legacy resource identifier of
+        /// the resource the rule monitors. **NOTE**: this property cannot be
+        /// updated for an existing rule.</param>
+        /// <param name="resourceLocation">the location of the
+        /// resource.</param>
+        /// <param name="metricNamespace">the namespace of the metric.</param>
+        public RuleDataSource(string resourceUri = default(string), string legacyResourceId = default(string), string resourceLocation = default(string), string metricNamespace = default(string))
         {
             ResourceUri = resourceUri;
+            LegacyResourceId = legacyResourceId;
+            ResourceLocation = resourceLocation;
+            MetricNamespace = metricNamespace;
             CustomInit();
         }
 
@@ -51,6 +59,26 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// </summary>
         [JsonProperty(PropertyName = "resourceUri")]
         public string ResourceUri { get; set; }
+
+        /// <summary>
+        /// Gets or sets the legacy resource identifier of the resource the
+        /// rule monitors. **NOTE**: this property cannot be updated for an
+        /// existing rule.
+        /// </summary>
+        [JsonProperty(PropertyName = "legacyResourceId")]
+        public string LegacyResourceId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the location of the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "resourceLocation")]
+        public string ResourceLocation { get; set; }
+
+        /// <summary>
+        /// Gets or sets the namespace of the metric.
+        /// </summary>
+        [JsonProperty(PropertyName = "metricNamespace")]
+        public string MetricNamespace { get; set; }
 
     }
 }

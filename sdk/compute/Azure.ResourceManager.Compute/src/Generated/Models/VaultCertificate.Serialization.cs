@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (CertificateUrl != null)
+            if (Optional.IsDefined(CertificateUrl))
             {
                 writer.WritePropertyName("certificateUrl");
                 writer.WriteStringValue(CertificateUrl);
             }
-            if (CertificateStore != null)
+            if (Optional.IsDefined(CertificateStore))
             {
                 writer.WritePropertyName("certificateStore");
                 writer.WriteStringValue(CertificateStore);
@@ -30,30 +30,22 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VaultCertificate DeserializeVaultCertificate(JsonElement element)
         {
-            string certificateUrl = default;
-            string certificateStore = default;
+            Optional<string> certificateUrl = default;
+            Optional<string> certificateStore = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("certificateUrl"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     certificateUrl = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("certificateStore"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     certificateStore = property.Value.GetString();
                     continue;
                 }
             }
-            return new VaultCertificate(certificateUrl, certificateStore);
+            return new VaultCertificate(certificateUrl.Value, certificateStore.Value);
         }
     }
 }

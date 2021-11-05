@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,50 +15,34 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static AvailableServiceAlias DeserializeAvailableServiceAlias(JsonElement element)
         {
+            Optional<string> resourceName = default;
+            ResourceIdentifier id = default;
             string name = default;
-            string id = default;
-            string type = default;
-            string resourceName = default;
+            ResourceType type = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("resourceName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    name = property.Value.GetString();
+                    resourceName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("name"))
+                {
+                    name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceName"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    resourceName = property.Value.GetString();
-                    continue;
-                }
             }
-            return new AvailableServiceAlias(name, id, type, resourceName);
+            return new AvailableServiceAlias(id, name, type, resourceName.Value);
         }
     }
 }

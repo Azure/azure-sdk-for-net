@@ -43,11 +43,61 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// <param name="inboundIpRules">This can be used to restrict traffic
         /// from specific IPs instead of all IPs. Note: These are considered
         /// only if PublicNetworkAccess is enabled.</param>
-        public DomainUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), string publicNetworkAccess = default(string), IList<InboundIpRule> inboundIpRules = default(IList<InboundIpRule>))
+        /// <param name="disableLocalAuth">This boolean is used to enable or
+        /// disable local auth. Default value is false. When the property is
+        /// set to true, only AAD token will be used to authenticate if user is
+        /// allowed to publish to the domain.</param>
+        /// <param name="autoCreateTopicWithFirstSubscription">This Boolean is
+        /// used to specify the creation mechanism for 'all' the Event Grid
+        /// Domain Topics associated with this Event Grid Domain resource.
+        /// In this context, creation of domain topic can be auto-managed (when
+        /// true) or self-managed (when false). The default value for this
+        /// property is true.
+        /// When this property is null or set to true, Event Grid is
+        /// responsible of automatically creating the domain topic when the
+        /// first event subscription is
+        /// created at the scope of the domain topic. If this property is set
+        /// to false, then creating the first event subscription will require
+        /// creating a domain topic
+        /// by the user. The self-management mode can be used if the user wants
+        /// full control of when the domain topic is created, while
+        /// auto-managed mode provides the
+        /// flexibility to perform less operations and manage fewer resources
+        /// by the user. Also, note that in auto-managed creation mode, user is
+        /// allowed to create the
+        /// domain topic on demand if needed.</param>
+        /// <param name="autoDeleteTopicWithLastSubscription">This Boolean is
+        /// used to specify the deletion mechanism for 'all' the Event Grid
+        /// Domain Topics associated with this Event Grid Domain resource.
+        /// In this context, deletion of domain topic can be auto-managed (when
+        /// true) or self-managed (when false). The default value for this
+        /// property is true.
+        /// When this property is set to true, Event Grid is responsible of
+        /// automatically deleting the domain topic when the last event
+        /// subscription at the scope
+        /// of the domain topic is deleted. If this property is set to false,
+        /// then the user needs to manually delete the domain topic when it is
+        /// no longer needed
+        /// (e.g., when last event subscription is deleted and the resource
+        /// needs to be cleaned up). The self-management mode can be used if
+        /// the user wants full
+        /// control of when the domain topic needs to be deleted, while
+        /// auto-managed mode provides the flexibility to perform less
+        /// operations and manage fewer
+        /// resources by the user.</param>
+        /// <param name="identity">Identity information for the
+        /// resource.</param>
+        /// <param name="sku">The Sku pricing tier for the domain.</param>
+        public DomainUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), string publicNetworkAccess = default(string), IList<InboundIpRule> inboundIpRules = default(IList<InboundIpRule>), bool? disableLocalAuth = default(bool?), bool? autoCreateTopicWithFirstSubscription = default(bool?), bool? autoDeleteTopicWithLastSubscription = default(bool?), IdentityInfo identity = default(IdentityInfo), ResourceSku sku = default(ResourceSku))
         {
             Tags = tags;
             PublicNetworkAccess = publicNetworkAccess;
             InboundIpRules = inboundIpRules;
+            DisableLocalAuth = disableLocalAuth;
+            AutoCreateTopicWithFirstSubscription = autoCreateTopicWithFirstSubscription;
+            AutoDeleteTopicWithLastSubscription = autoDeleteTopicWithLastSubscription;
+            Identity = identity;
+            Sku = sku;
             CustomInit();
         }
 
@@ -80,6 +130,75 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.inboundIpRules")]
         public IList<InboundIpRule> InboundIpRules { get; set; }
+
+        /// <summary>
+        /// Gets or sets this boolean is used to enable or disable local auth.
+        /// Default value is false. When the property is set to true, only AAD
+        /// token will be used to authenticate if user is allowed to publish to
+        /// the domain.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.disableLocalAuth")]
+        public bool? DisableLocalAuth { get; set; }
+
+        /// <summary>
+        /// Gets or sets this Boolean is used to specify the creation mechanism
+        /// for 'all' the Event Grid Domain Topics associated with this Event
+        /// Grid Domain resource.
+        /// In this context, creation of domain topic can be auto-managed (when
+        /// true) or self-managed (when false). The default value for this
+        /// property is true.
+        /// When this property is null or set to true, Event Grid is
+        /// responsible of automatically creating the domain topic when the
+        /// first event subscription is
+        /// created at the scope of the domain topic. If this property is set
+        /// to false, then creating the first event subscription will require
+        /// creating a domain topic
+        /// by the user. The self-management mode can be used if the user wants
+        /// full control of when the domain topic is created, while
+        /// auto-managed mode provides the
+        /// flexibility to perform less operations and manage fewer resources
+        /// by the user. Also, note that in auto-managed creation mode, user is
+        /// allowed to create the
+        /// domain topic on demand if needed.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.autoCreateTopicWithFirstSubscription")]
+        public bool? AutoCreateTopicWithFirstSubscription { get; set; }
+
+        /// <summary>
+        /// Gets or sets this Boolean is used to specify the deletion mechanism
+        /// for 'all' the Event Grid Domain Topics associated with this Event
+        /// Grid Domain resource.
+        /// In this context, deletion of domain topic can be auto-managed (when
+        /// true) or self-managed (when false). The default value for this
+        /// property is true.
+        /// When this property is set to true, Event Grid is responsible of
+        /// automatically deleting the domain topic when the last event
+        /// subscription at the scope
+        /// of the domain topic is deleted. If this property is set to false,
+        /// then the user needs to manually delete the domain topic when it is
+        /// no longer needed
+        /// (e.g., when last event subscription is deleted and the resource
+        /// needs to be cleaned up). The self-management mode can be used if
+        /// the user wants full
+        /// control of when the domain topic needs to be deleted, while
+        /// auto-managed mode provides the flexibility to perform less
+        /// operations and manage fewer
+        /// resources by the user.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.autoDeleteTopicWithLastSubscription")]
+        public bool? AutoDeleteTopicWithLastSubscription { get; set; }
+
+        /// <summary>
+        /// Gets or sets identity information for the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public IdentityInfo Identity { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Sku pricing tier for the domain.
+        /// </summary>
+        [JsonProperty(PropertyName = "sku")]
+        public ResourceSku Sku { get; set; }
 
     }
 }

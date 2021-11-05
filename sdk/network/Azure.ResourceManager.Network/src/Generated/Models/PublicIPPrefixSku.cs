@@ -13,17 +13,20 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of PublicIPPrefixSku. </summary>
         public PublicIPPrefixSku()
         {
-            Name = "Standard";
         }
 
         /// <summary> Initializes a new instance of PublicIPPrefixSku. </summary>
         /// <param name="name"> Name of a public IP prefix SKU. </param>
-        internal PublicIPPrefixSku(string name)
+        /// <param name="tier"> Tier of a public IP prefix SKU. </param>
+        internal PublicIPPrefixSku(PublicIPPrefixSkuName? name, PublicIPPrefixSkuTier? tier)
         {
             Name = name;
+            Tier = tier;
         }
 
         /// <summary> Name of a public IP prefix SKU. </summary>
-        public string Name { get; set; }
+        public PublicIPPrefixSkuName? Name { get; set; }
+        /// <summary> Tier of a public IP prefix SKU. </summary>
+        public PublicIPPrefixSkuTier? Tier { get; set; }
     }
 }

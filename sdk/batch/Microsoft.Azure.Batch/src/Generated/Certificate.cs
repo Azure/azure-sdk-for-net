@@ -139,6 +139,14 @@ namespace Microsoft.Azure.Batch
             InheritUtil.InheritClientBehaviorsAndSetPublicProperty(this, baseBehaviors);
         }
 
+        /// <summary>
+        /// Default constructor to support mocking the <see cref="Certificate"/> class.
+        /// </summary>
+        protected Certificate()
+        {
+            this.propertyContainer = new PropertyContainer();
+        }
+
         internal Certificate(
             BatchClient parentBatchClient,
             Models.Certificate protocolObject,
@@ -206,8 +214,8 @@ namespace Microsoft.Azure.Batch
         /// </summary>
         /// <remarks>
         /// This property is set when creating a new <see cref="Certificate"/> from .pfx format data (see <see cref="CertificateOperations.CreateCertificateFromPfx(byte[], 
-        /// string)"/> and <see cref="CertificateOperations.CreateCertificateFromPfx(string, string)"/>). It is not defined for 
-        /// certificates retrieved from the Batch service.
+        /// string)"/> and <see cref="CertificateOperations.CreateCertificateFromPfx(string, string)"/>). It is not defined 
+        /// for certificates retrieved from the Batch service.
         /// </remarks>
         public string Password
         {

@@ -19,17 +19,17 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             writer.WritePropertyName("source");
             writer.WriteObjectValue(Source);
-            if (ContentType != null)
+            if (Optional.IsDefined(ManageActions))
             {
-                writer.WritePropertyName("contentType");
-                writer.WriteStringValue(ContentType);
+                writer.WritePropertyName("manageActions");
+                writer.WriteObjectValue(ManageActions);
             }
-            if (EnableHealthCheck != null)
+            if (Optional.IsDefined(EnableHealthCheck))
             {
                 writer.WritePropertyName("enableHealthCheck");
                 writer.WriteBooleanValue(EnableHealthCheck.Value);
             }
-            if (TargetRegions != null)
+            if (Optional.IsCollectionDefined(TargetRegions))
             {
                 writer.WritePropertyName("targetRegions");
                 writer.WriteStartArray();
@@ -39,27 +39,22 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ReplicaCount != null)
+            if (Optional.IsDefined(ReplicaCount))
             {
                 writer.WritePropertyName("replicaCount");
                 writer.WriteNumberValue(ReplicaCount.Value);
             }
-            if (ExcludeFromLatest != null)
+            if (Optional.IsDefined(ExcludeFromLatest))
             {
                 writer.WritePropertyName("excludeFromLatest");
                 writer.WriteBooleanValue(ExcludeFromLatest.Value);
             }
-            if (PublishedDate != null)
-            {
-                writer.WritePropertyName("publishedDate");
-                writer.WriteStringValue(PublishedDate.Value, "O");
-            }
-            if (EndOfLifeDate != null)
+            if (Optional.IsDefined(EndOfLifeDate))
             {
                 writer.WritePropertyName("endOfLifeDate");
                 writer.WriteStringValue(EndOfLifeDate.Value, "O");
             }
-            if (StorageAccountType != null)
+            if (Optional.IsDefined(StorageAccountType))
             {
                 writer.WritePropertyName("storageAccountType");
                 writer.WriteStringValue(StorageAccountType.Value.ToString());
@@ -70,14 +65,14 @@ namespace Azure.ResourceManager.Compute.Models
         internal static GalleryApplicationVersionPublishingProfile DeserializeGalleryApplicationVersionPublishingProfile(JsonElement element)
         {
             UserArtifactSource source = default;
-            string contentType = default;
-            bool? enableHealthCheck = default;
-            IList<TargetRegion> targetRegions = default;
-            int? replicaCount = default;
-            bool? excludeFromLatest = default;
-            DateTimeOffset? publishedDate = default;
-            DateTimeOffset? endOfLifeDate = default;
-            StorageAccountType? storageAccountType = default;
+            Optional<UserArtifactManage> manageActions = default;
+            Optional<bool> enableHealthCheck = default;
+            Optional<IList<TargetRegion>> targetRegions = default;
+            Optional<int> replicaCount = default;
+            Optional<bool> excludeFromLatest = default;
+            Optional<DateTimeOffset> publishedDate = default;
+            Optional<DateTimeOffset> endOfLifeDate = default;
+            Optional<StorageAccountType> storageAccountType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("source"))
@@ -85,19 +80,21 @@ namespace Azure.ResourceManager.Compute.Models
                     source = UserArtifactSource.DeserializeUserArtifactSource(property.Value);
                     continue;
                 }
-                if (property.NameEquals("contentType"))
+                if (property.NameEquals("manageActions"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    contentType = property.Value.GetString();
+                    manageActions = UserArtifactManage.DeserializeUserArtifactManage(property.Value);
                     continue;
                 }
                 if (property.NameEquals("enableHealthCheck"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enableHealthCheck = property.Value.GetBoolean();
@@ -107,19 +104,13 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<TargetRegion> array = new List<TargetRegion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(TargetRegion.DeserializeTargetRegion(item));
-                        }
+                        array.Add(TargetRegion.DeserializeTargetRegion(item));
                     }
                     targetRegions = array;
                     continue;
@@ -128,6 +119,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     replicaCount = property.Value.GetInt32();
@@ -137,6 +129,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     excludeFromLatest = property.Value.GetBoolean();
@@ -146,6 +139,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     publishedDate = property.Value.GetDateTimeOffset("O");
@@ -155,6 +149,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     endOfLifeDate = property.Value.GetDateTimeOffset("O");
@@ -164,13 +159,14 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     storageAccountType = new StorageAccountType(property.Value.GetString());
                     continue;
                 }
             }
-            return new GalleryApplicationVersionPublishingProfile(targetRegions, replicaCount, excludeFromLatest, publishedDate, endOfLifeDate, storageAccountType, source, contentType, enableHealthCheck);
+            return new GalleryApplicationVersionPublishingProfile(Optional.ToList(targetRegions), Optional.ToNullable(replicaCount), Optional.ToNullable(excludeFromLatest), Optional.ToNullable(publishedDate), Optional.ToNullable(endOfLifeDate), Optional.ToNullable(storageAccountType), source, manageActions.Value, Optional.ToNullable(enableHealthCheck));
         }
     }
 }

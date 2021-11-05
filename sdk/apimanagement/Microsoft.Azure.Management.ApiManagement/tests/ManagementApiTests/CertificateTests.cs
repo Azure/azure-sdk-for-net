@@ -10,13 +10,14 @@ using Xunit;
 using System.Threading.Tasks;
 using System;
 using System.Security.Cryptography.X509Certificates;
+using System.Linq;
 
 namespace ApiManagement.Tests.ManagementApiTests
 {
     public class CertificateTests : TestBase
     {
         [Fact]
-        [Trait("owner", "vifedo")]
+        [Trait("owner", "jikang")]
         public async Task CreateListUpdateDelete()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
@@ -67,6 +68,43 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.Equal(cert.Subject, getResponse.Body.Subject, StringComparer.OrdinalIgnoreCase);
                     Assert.Equal(cert.Thumbprint, getResponse.Body.Thumbprint, StringComparer.OrdinalIgnoreCase);
 
+                    //create key vault certificate
+                    string kvcertificateId = TestUtilities.GenerateName("kvcertificateId");
+                    var kvCreateParameters = new CertificateCreateOrUpdateParameters
+                    {
+                        KeyVault = new KeyVaultContractCreateProperties
+                        {
+                            SecretIdentifier = testBase.testKeyVaultSecretUrl
+                        },
+                    };
+
+                    var kvCertificateIdResponse = testBase.client.Certificate.CreateOrUpdate(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        kvcertificateId,
+                        kvCreateParameters,
+                        null);
+
+                    Assert.NotNull(createResponse);
+                    Assert.Equal(certificateId, createResponse.Name);
+
+                    // get the certificate to check is was created
+                    var getKVResponse = await testBase.client.Certificate.GetWithHttpMessagesAsync(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        kvcertificateId);
+
+                    Assert.NotNull(getKVResponse);
+                    Assert.Equal(kvcertificateId, getKVResponse.Body.Name);
+
+                    //refresh secret of key vault client
+                    var refreshKvCertificateResponse = testBase.client.Certificate.RefreshSecret(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        kvcertificateId);
+
+                    Assert.NotNull(refreshKvCertificateResponse);
+
                     // list certificates
                     listResponse = testBase.client.Certificate.ListByService(
                         testBase.rgName,
@@ -74,7 +112,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                         null);
 
                     Assert.NotNull(listResponse);
-                    Assert.Single(listResponse);
+                    Assert.Equal(2, listResponse.Count());
 
                     // remove the certificate
                     testBase.client.Certificate.Delete(
@@ -82,6 +120,12 @@ namespace ApiManagement.Tests.ManagementApiTests
                         testBase.serviceName,
                         certificateId,
                         getResponse.Headers.ETag);
+
+                    testBase.client.Certificate.Delete(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        kvcertificateId,
+                        "*");
 
                     // list again to see it was removed
                     listResponse = testBase.client.Certificate.ListByService(

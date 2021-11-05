@@ -6,15 +6,17 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
     /// <summary> The result of a request to list API keys. </summary>
-    public partial class ApiKeyListResult
+    internal partial class ApiKeyListResult
     {
         /// <summary> Initializes a new instance of ApiKeyListResult. </summary>
         internal ApiKeyListResult()
         {
+            Value = new ChangeTrackingList<ApiKey>();
         }
 
         /// <summary> Initializes a new instance of ApiKeyListResult. </summary>

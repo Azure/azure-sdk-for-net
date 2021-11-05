@@ -133,6 +133,16 @@ namespace Microsoft.Azure.ServiceBus
         public TimeSpan OperationTimeout { get; set; }
 
         /// <summary>
+        /// ConnectionIdleTimeout is applied when a connection recevies no traffic for a certain period of time.
+        /// In some situations, underlying transport layer takes really long time to detect a socket error and it may
+        /// cause some operations to time out after a long wait. This timeout helps to detect and close an idle connection
+        /// without waiting for the network layer to identify a socket error. But this setting may result in some increased
+        /// heartbeat traffic between the client and service.
+        /// </summary>
+        /// <remarks>Defaults to null</remarks>
+        public TimeSpan? ConnectionIdleTimeout { get; set; }
+
+        /// <summary>
         /// Retry policy for operations performed on the connection.
         /// </summary>
         /// <remarks>Defaults to <see cref="RetryPolicy.Default"/></remarks>
@@ -225,6 +235,7 @@ namespace Microsoft.Azure.ServiceBus
 
             this.OperationTimeout = builder.OperationTimeout;
             this.TransportType = builder.TransportType;
+            this.ConnectionIdleTimeout = builder.ConnectionIdleTimeout;
             this.ConnectionManager = new FaultTolerantAmqpObject<AmqpConnection>(this.CreateConnectionAsync, CloseConnection);
             this.TransactionController = new FaultTolerantAmqpObject<Controller>(this.CreateControllerAsync, CloseController);
         }
@@ -257,6 +268,12 @@ namespace Microsoft.Azure.ServiceBus
 
             var containerId = Guid.NewGuid().ToString();
             var amqpConnectionSettings = AmqpConnectionHelper.CreateAmqpConnectionSettings(AmqpConstants.DefaultMaxFrameSize, containerId, hostName);
+            if (this.ConnectionIdleTimeout.HasValue && this.ConnectionIdleTimeout.Value > TimeSpan.Zero)
+            {
+                uint timeOutInMillis = checked((uint)this.ConnectionIdleTimeout.Value.TotalMilliseconds);
+                amqpConnectionSettings.IdleTimeOut = timeOutInMillis;
+            }
+
             var connection = new AmqpConnection(transport, amqpSettings, amqpConnectionSettings);
             await connection.OpenAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false);
 

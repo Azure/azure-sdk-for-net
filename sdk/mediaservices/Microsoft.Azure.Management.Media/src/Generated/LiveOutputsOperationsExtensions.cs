@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.Media
             /// List Live Outputs
             /// </summary>
             /// <remarks>
-            /// Lists the Live Outputs in the Live Event.
+            /// Lists the live outputs of a live event.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Media
             /// The Media Services account name.
             /// </param>
             /// <param name='liveEventName'>
-            /// The name of the Live Event.
+            /// The name of the live event, maximum length is 32.
             /// </param>
             public static IPage<LiveOutput> List(this ILiveOutputsOperations operations, string resourceGroupName, string accountName, string liveEventName)
             {
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.Media
             /// List Live Outputs
             /// </summary>
             /// <remarks>
-            /// Lists the Live Outputs in the Live Event.
+            /// Lists the live outputs of a live event.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Media
             /// The Media Services account name.
             /// </param>
             /// <param name='liveEventName'>
-            /// The name of the Live Event.
+            /// The name of the live event, maximum length is 32.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Management.Media
             /// Get Live Output
             /// </summary>
             /// <remarks>
-            /// Gets a Live Output.
+            /// Gets a live output.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -89,10 +89,10 @@ namespace Microsoft.Azure.Management.Media
             /// The Media Services account name.
             /// </param>
             /// <param name='liveEventName'>
-            /// The name of the Live Event.
+            /// The name of the live event, maximum length is 32.
             /// </param>
             /// <param name='liveOutputName'>
-            /// The name of the Live Output.
+            /// The name of the live output.
             /// </param>
             public static LiveOutput Get(this ILiveOutputsOperations operations, string resourceGroupName, string accountName, string liveEventName, string liveOutputName)
             {
@@ -103,7 +103,7 @@ namespace Microsoft.Azure.Management.Media
             /// Get Live Output
             /// </summary>
             /// <remarks>
-            /// Gets a Live Output.
+            /// Gets a live output.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -115,10 +115,10 @@ namespace Microsoft.Azure.Management.Media
             /// The Media Services account name.
             /// </param>
             /// <param name='liveEventName'>
-            /// The name of the Live Event.
+            /// The name of the live event, maximum length is 32.
             /// </param>
             /// <param name='liveOutputName'>
-            /// The name of the Live Output.
+            /// The name of the live output.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -135,7 +135,7 @@ namespace Microsoft.Azure.Management.Media
             /// Create Live Output
             /// </summary>
             /// <remarks>
-            /// Creates a Live Output.
+            /// Creates a new live output.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -147,10 +147,10 @@ namespace Microsoft.Azure.Management.Media
             /// The Media Services account name.
             /// </param>
             /// <param name='liveEventName'>
-            /// The name of the Live Event.
+            /// The name of the live event, maximum length is 32.
             /// </param>
             /// <param name='liveOutputName'>
-            /// The name of the Live Output.
+            /// The name of the live output.
             /// </param>
             /// <param name='parameters'>
             /// Live Output properties needed for creation.
@@ -164,7 +164,7 @@ namespace Microsoft.Azure.Management.Media
             /// Create Live Output
             /// </summary>
             /// <remarks>
-            /// Creates a Live Output.
+            /// Creates a new live output.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -176,10 +176,10 @@ namespace Microsoft.Azure.Management.Media
             /// The Media Services account name.
             /// </param>
             /// <param name='liveEventName'>
-            /// The name of the Live Event.
+            /// The name of the live event, maximum length is 32.
             /// </param>
             /// <param name='liveOutputName'>
-            /// The name of the Live Output.
+            /// The name of the live output.
             /// </param>
             /// <param name='parameters'>
             /// Live Output properties needed for creation.
@@ -199,7 +199,8 @@ namespace Microsoft.Azure.Management.Media
             /// Delete Live Output
             /// </summary>
             /// <remarks>
-            /// Deletes a Live Output.
+            /// Deletes a live output. Deleting a live output does not delete the asset the
+            /// live output is writing to.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -211,10 +212,10 @@ namespace Microsoft.Azure.Management.Media
             /// The Media Services account name.
             /// </param>
             /// <param name='liveEventName'>
-            /// The name of the Live Event.
+            /// The name of the live event, maximum length is 32.
             /// </param>
             /// <param name='liveOutputName'>
-            /// The name of the Live Output.
+            /// The name of the live output.
             /// </param>
             public static void Delete(this ILiveOutputsOperations operations, string resourceGroupName, string accountName, string liveEventName, string liveOutputName)
             {
@@ -225,7 +226,8 @@ namespace Microsoft.Azure.Management.Media
             /// Delete Live Output
             /// </summary>
             /// <remarks>
-            /// Deletes a Live Output.
+            /// Deletes a live output. Deleting a live output does not delete the asset the
+            /// live output is writing to.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -237,10 +239,10 @@ namespace Microsoft.Azure.Management.Media
             /// The Media Services account name.
             /// </param>
             /// <param name='liveEventName'>
-            /// The name of the Live Event.
+            /// The name of the live event, maximum length is 32.
             /// </param>
             /// <param name='liveOutputName'>
-            /// The name of the Live Output.
+            /// The name of the live output.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -254,7 +256,7 @@ namespace Microsoft.Azure.Management.Media
             /// Create Live Output
             /// </summary>
             /// <remarks>
-            /// Creates a Live Output.
+            /// Creates a new live output.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -266,10 +268,10 @@ namespace Microsoft.Azure.Management.Media
             /// The Media Services account name.
             /// </param>
             /// <param name='liveEventName'>
-            /// The name of the Live Event.
+            /// The name of the live event, maximum length is 32.
             /// </param>
             /// <param name='liveOutputName'>
-            /// The name of the Live Output.
+            /// The name of the live output.
             /// </param>
             /// <param name='parameters'>
             /// Live Output properties needed for creation.
@@ -283,7 +285,7 @@ namespace Microsoft.Azure.Management.Media
             /// Create Live Output
             /// </summary>
             /// <remarks>
-            /// Creates a Live Output.
+            /// Creates a new live output.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -295,10 +297,10 @@ namespace Microsoft.Azure.Management.Media
             /// The Media Services account name.
             /// </param>
             /// <param name='liveEventName'>
-            /// The name of the Live Event.
+            /// The name of the live event, maximum length is 32.
             /// </param>
             /// <param name='liveOutputName'>
-            /// The name of the Live Output.
+            /// The name of the live output.
             /// </param>
             /// <param name='parameters'>
             /// Live Output properties needed for creation.
@@ -318,7 +320,8 @@ namespace Microsoft.Azure.Management.Media
             /// Delete Live Output
             /// </summary>
             /// <remarks>
-            /// Deletes a Live Output.
+            /// Deletes a live output. Deleting a live output does not delete the asset the
+            /// live output is writing to.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -330,10 +333,10 @@ namespace Microsoft.Azure.Management.Media
             /// The Media Services account name.
             /// </param>
             /// <param name='liveEventName'>
-            /// The name of the Live Event.
+            /// The name of the live event, maximum length is 32.
             /// </param>
             /// <param name='liveOutputName'>
-            /// The name of the Live Output.
+            /// The name of the live output.
             /// </param>
             public static void BeginDelete(this ILiveOutputsOperations operations, string resourceGroupName, string accountName, string liveEventName, string liveOutputName)
             {
@@ -344,7 +347,8 @@ namespace Microsoft.Azure.Management.Media
             /// Delete Live Output
             /// </summary>
             /// <remarks>
-            /// Deletes a Live Output.
+            /// Deletes a live output. Deleting a live output does not delete the asset the
+            /// live output is writing to.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -356,10 +360,10 @@ namespace Microsoft.Azure.Management.Media
             /// The Media Services account name.
             /// </param>
             /// <param name='liveEventName'>
-            /// The name of the Live Event.
+            /// The name of the live event, maximum length is 32.
             /// </param>
             /// <param name='liveOutputName'>
-            /// The name of the Live Output.
+            /// The name of the live output.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -373,7 +377,7 @@ namespace Microsoft.Azure.Management.Media
             /// List Live Outputs
             /// </summary>
             /// <remarks>
-            /// Lists the Live Outputs in the Live Event.
+            /// Lists the live outputs of a live event.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -390,7 +394,7 @@ namespace Microsoft.Azure.Management.Media
             /// List Live Outputs
             /// </summary>
             /// <remarks>
-            /// Lists the Live Outputs in the Live Event.
+            /// Lists the live outputs of a live event.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.

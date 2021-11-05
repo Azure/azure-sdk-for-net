@@ -6,15 +6,17 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> The result of the List Alias(Disaster Recovery configuration) operation. </summary>
-    public partial class ArmDisasterRecoveryListResult
+    internal partial class ArmDisasterRecoveryListResult
     {
         /// <summary> Initializes a new instance of ArmDisasterRecoveryListResult. </summary>
         internal ArmDisasterRecoveryListResult()
         {
+            Value = new ChangeTrackingList<ArmDisasterRecovery>();
         }
 
         /// <summary> Initializes a new instance of ArmDisasterRecoveryListResult. </summary>

@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.HealthcareApis.Models
     /// <summary>
     /// The description of the service.
     /// </summary>
-    public partial class ServicesDescription : Resource
+    public partial class ServicesDescription : ServicesResource
     {
         /// <summary>
         /// Initializes a new instance of the ServicesDescription class.
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.HealthcareApis.Models
         /// managed identity associated with it.</param>
         /// <param name="properties">The common properties of a
         /// service.</param>
-        public ServicesDescription(Kind kind, string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), ResourceIdentity identity = default(ResourceIdentity), ServicesProperties properties = default(ServicesProperties))
+        public ServicesDescription(Kind kind, string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), ServicesResourceIdentity identity = default(ServicesResourceIdentity), ServicesProperties properties = default(ServicesProperties))
             : base(kind, location, id, name, type, tags, etag, identity)
         {
             Properties = properties;

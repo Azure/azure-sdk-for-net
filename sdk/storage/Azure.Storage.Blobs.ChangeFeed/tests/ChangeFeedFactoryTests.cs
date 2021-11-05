@@ -1,11 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.TestFramework;
 using Azure.Storage.Blobs.Models;
 using Moq;
 using NUnit.Framework;
@@ -14,12 +13,12 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 {
     public class ChangeFeedFactoryTests : ChangeFeedTestBase
     {
-        public ChangeFeedFactoryTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public ChangeFeedFactoryTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetYearPathsTest()
         {
             // Arrange
@@ -54,7 +53,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 containerClient.Object, segmentFactory.Object);
 
             // Act
-            Queue<string> years = await changeFeedFactory.GetYearPaths(IsAsync).ConfigureAwait(false);
+            Queue<string> years = await changeFeedFactory.GetYearPathsInternal(
+                IsAsync,
+                default).ConfigureAwait(false);
 
             // Assert
             Queue<string> expectedYears = new Queue<string>();

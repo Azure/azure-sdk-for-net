@@ -1,11 +1,16 @@
 trigger: none
 
 extends:
-  template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
+  template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
     ServiceDirectory: digitaltwins
-    Location: westus2
-    SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview)
-    EnvVars:
-      # Runs live tests.
-      AZURE_IOT_TEST_MODE: Live
+    # Enable canary and public cloud testing in separate subscriptions, so that the tests-weekly builds
+    # don't exceed the 10 azure digital twin instance hard limit
+    CloudConfig:
+      Public:
+        SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+        Location: westus2
+      Canary:
+        SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview)
+        Location: eastus2euap
+    Clouds: Public,Canary

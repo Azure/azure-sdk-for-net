@@ -142,8 +142,8 @@ namespace Azure.Graph.Rbac
         public virtual Azure.AsyncPageable<Azure.Graph.Rbac.Models.DirectoryObject> ListOwnersAsync(string objectId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Graph.Rbac.Models.PasswordCredential> ListPasswordCredentials(string objectId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Graph.Rbac.Models.PasswordCredential> ListPasswordCredentialsAsync(string objectId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response Update(string objectId, Azure.Graph.Rbac.Models.ServicePrincipalBase parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> UpdateAsync(string objectId, Azure.Graph.Rbac.Models.ServicePrincipalBase parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response Update(string objectId, Azure.Graph.Rbac.Models.ServicePrincipalUpdateParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> UpdateAsync(string objectId, Azure.Graph.Rbac.Models.ServicePrincipalUpdateParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response UpdateKeyCredentials(string objectId, Azure.Graph.Rbac.Models.KeyCredentialsUpdateParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateKeyCredentialsAsync(string objectId, Azure.Graph.Rbac.Models.KeyCredentialsUpdateParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response UpdatePasswordCredentials(string objectId, Azure.Graph.Rbac.Models.PasswordCredentialsUpdateParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -252,29 +252,29 @@ namespace Azure.Graph.Rbac.Models
         public bool? AllowGuestsSignIn { get { throw null; } set { } }
         public bool? AllowPassthroughUsers { get { throw null; } set { } }
         public string AppLogoUrl { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> AppPermissions { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.Graph.Rbac.Models.AppRole> AppRoles { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> AppPermissions { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Graph.Rbac.Models.AppRole> AppRoles { get { throw null; } }
         public bool? AvailableToOtherTenants { get { throw null; } set { } }
         public string ErrorUrl { get { throw null; } set { } }
         public Azure.Graph.Rbac.Models.GroupMembershipClaimTypes? GroupMembershipClaims { get { throw null; } set { } }
         public string Homepage { get { throw null; } set { } }
         public Azure.Graph.Rbac.Models.InformationalUrl InformationalUrls { get { throw null; } set { } }
         public bool? IsDeviceOnlyAuthSupported { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.Graph.Rbac.Models.KeyCredential> KeyCredentials { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> KnownClientApplications { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Graph.Rbac.Models.KeyCredential> KeyCredentials { get { throw null; } }
+        public System.Collections.Generic.IList<string> KnownClientApplications { get { throw null; } }
         public string LogoutUrl { get { throw null; } set { } }
         public bool? Oauth2AllowImplicitFlow { get { throw null; } set { } }
         public bool? Oauth2AllowUrlPathMatching { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.Graph.Rbac.Models.OAuth2Permission> Oauth2Permissions { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Graph.Rbac.Models.OAuth2Permission> Oauth2Permissions { get { throw null; } }
         public bool? Oauth2RequirePostResponse { get { throw null; } set { } }
         public Azure.Graph.Rbac.Models.OptionalClaims OptionalClaims { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> OrgRestrictions { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.Graph.Rbac.Models.PasswordCredential> PasswordCredentials { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.Graph.Rbac.Models.PreAuthorizedApplication> PreAuthorizedApplications { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> OrgRestrictions { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Graph.Rbac.Models.PasswordCredential> PasswordCredentials { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Graph.Rbac.Models.PreAuthorizedApplication> PreAuthorizedApplications { get { throw null; } }
         public bool? PublicClient { get { throw null; } set { } }
         public string PublisherDomain { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> ReplyUrls { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.Graph.Rbac.Models.RequiredResourceAccess> RequiredResourceAccess { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> ReplyUrls { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Graph.Rbac.Models.RequiredResourceAccess> RequiredResourceAccess { get { throw null; } }
         public string SamlMetadataUrl { get { throw null; } set { } }
         public string SignInAudience { get { throw null; } set { } }
         public string WwwHomepage { get { throw null; } set { } }
@@ -283,24 +283,18 @@ namespace Azure.Graph.Rbac.Models
     {
         public ApplicationCreateParameters(string displayName) { }
         public string DisplayName { get { throw null; } }
-        public System.Collections.Generic.IList<string> IdentifierUris { get { throw null; } set { } }
-    }
-    public partial class ApplicationListResult
-    {
-        internal ApplicationListResult() { }
-        public string OdataNextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Graph.Rbac.Models.Application> Value { get { throw null; } }
+        public System.Collections.Generic.IList<string> IdentifierUris { get { throw null; } }
     }
     public partial class ApplicationUpdateParameters : Azure.Graph.Rbac.Models.ApplicationBase
     {
         public ApplicationUpdateParameters() { }
         public string DisplayName { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> IdentifierUris { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> IdentifierUris { get { throw null; } }
     }
     public partial class AppRole
     {
         public AppRole() { }
-        public System.Collections.Generic.IList<string> AllowedMemberTypes { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> AllowedMemberTypes { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public string Id { get { throw null; } set { } }
@@ -374,12 +368,6 @@ namespace Azure.Graph.Rbac.Models
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
         public bool TryGetValue(string key, out object value) { throw null; }
     }
-    public partial class DirectoryObjectListResult
-    {
-        internal DirectoryObjectListResult() { }
-        public string OdataNextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Graph.Rbac.Models.DirectoryObject> Value { get { throw null; } }
-    }
     public partial class Domain : System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.Generic.IReadOnlyCollection<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.Generic.IReadOnlyDictionary<string, object>, System.Collections.IEnumerable
     {
         internal Domain() { }
@@ -396,21 +384,16 @@ namespace Azure.Graph.Rbac.Models
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
         public bool TryGetValue(string key, out object value) { throw null; }
     }
-    public partial class DomainListResult
-    {
-        internal DomainListResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.Graph.Rbac.Models.Domain> Value { get { throw null; } }
-    }
     public partial class GetObjectsParameters : System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.Generic.IDictionary<string, object>, System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.IEnumerable
     {
         public GetObjectsParameters() { }
         public bool? IncludeDirectoryObjectReferences { get { throw null; } set { } }
         public object this[string key] { get { throw null; } set { } }
         public System.Collections.Generic.ICollection<string> Keys { get { throw null; } }
-        public System.Collections.Generic.IList<string> ObjectIds { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> ObjectIds { get { throw null; } }
         int System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.Count { get { throw null; } }
         bool System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.IsReadOnly { get { throw null; } }
-        public System.Collections.Generic.IList<string> Types { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Types { get { throw null; } }
         public System.Collections.Generic.ICollection<object> Values { get { throw null; } }
         public void Add(string key, object value) { }
         public bool ContainsKey(string key) { throw null; }
@@ -490,17 +473,6 @@ namespace Azure.Graph.Rbac.Models
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
         public bool TryGetValue(string key, out object value) { throw null; }
     }
-    public partial class GroupGetMemberGroupsResult
-    {
-        internal GroupGetMemberGroupsResult() { }
-        public System.Collections.Generic.IReadOnlyList<string> Value { get { throw null; } }
-    }
-    public partial class GroupListResult
-    {
-        internal GroupListResult() { }
-        public string OdataNextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Graph.Rbac.Models.ADGroup> Value { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct GroupMembershipClaimTypes : System.IEquatable<Azure.Graph.Rbac.Models.GroupMembershipClaimTypes>
     {
@@ -555,11 +527,6 @@ namespace Azure.Graph.Rbac.Models
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
         public bool TryGetValue(string key, out object value) { throw null; }
     }
-    public partial class KeyCredentialListResult
-    {
-        internal KeyCredentialListResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.Graph.Rbac.Models.KeyCredential> Value { get { throw null; } }
-    }
     public partial class KeyCredentialsUpdateParameters
     {
         public KeyCredentialsUpdateParameters(System.Collections.Generic.IEnumerable<Azure.Graph.Rbac.Models.KeyCredential> value) { }
@@ -590,12 +557,6 @@ namespace Azure.Graph.Rbac.Models
         public string Scope { get { throw null; } set { } }
         public string StartTime { get { throw null; } set { } }
     }
-    public partial class OAuth2PermissionGrantListResult
-    {
-        internal OAuth2PermissionGrantListResult() { }
-        public string OdataNextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Graph.Rbac.Models.OAuth2PermissionGrant> Value { get { throw null; } }
-    }
     public partial class OptionalClaim
     {
         public OptionalClaim() { }
@@ -607,9 +568,9 @@ namespace Azure.Graph.Rbac.Models
     public partial class OptionalClaims
     {
         public OptionalClaims() { }
-        public System.Collections.Generic.IList<Azure.Graph.Rbac.Models.OptionalClaim> AccessToken { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.Graph.Rbac.Models.OptionalClaim> IdToken { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.Graph.Rbac.Models.OptionalClaim> SamlToken { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Graph.Rbac.Models.OptionalClaim> AccessToken { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Graph.Rbac.Models.OptionalClaim> IdToken { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Graph.Rbac.Models.OptionalClaim> SamlToken { get { throw null; } }
     }
     public partial class PasswordCredential : System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.Generic.IDictionary<string, object>, System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.IEnumerable
     {
@@ -635,11 +596,6 @@ namespace Azure.Graph.Rbac.Models
         bool System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.Remove(System.Collections.Generic.KeyValuePair<string, object> value) { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
         public bool TryGetValue(string key, out object value) { throw null; }
-    }
-    public partial class PasswordCredentialListResult
-    {
-        internal PasswordCredentialListResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.Graph.Rbac.Models.PasswordCredential> Value { get { throw null; } }
     }
     public partial class PasswordCredentialsUpdateParameters
     {
@@ -672,18 +628,18 @@ namespace Azure.Graph.Rbac.Models
     {
         public PreAuthorizedApplication() { }
         public string AppId { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.Graph.Rbac.Models.PreAuthorizedApplicationExtension> Extensions { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.Graph.Rbac.Models.PreAuthorizedApplicationPermission> Permissions { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Graph.Rbac.Models.PreAuthorizedApplicationExtension> Extensions { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Graph.Rbac.Models.PreAuthorizedApplicationPermission> Permissions { get { throw null; } }
     }
     public partial class PreAuthorizedApplicationExtension
     {
         public PreAuthorizedApplicationExtension() { }
-        public System.Collections.Generic.IList<string> Conditions { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Conditions { get { throw null; } }
     }
     public partial class PreAuthorizedApplicationPermission
     {
         public PreAuthorizedApplicationPermission() { }
-        public System.Collections.Generic.IList<string> AccessGrants { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> AccessGrants { get { throw null; } }
         public bool? DirectAccessGrant { get { throw null; } set { } }
     }
     public partial class RequiredResourceAccess : System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.Generic.IDictionary<string, object>, System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.IEnumerable
@@ -760,21 +716,15 @@ namespace Azure.Graph.Rbac.Models
         public ServicePrincipalBase() { }
         public bool? AccountEnabled { get { throw null; } set { } }
         public bool? AppRoleAssignmentRequired { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.Graph.Rbac.Models.KeyCredential> KeyCredentials { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.Graph.Rbac.Models.PasswordCredential> PasswordCredentials { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Graph.Rbac.Models.KeyCredential> KeyCredentials { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Graph.Rbac.Models.PasswordCredential> PasswordCredentials { get { throw null; } }
         public string ServicePrincipalType { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> Tags { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Tags { get { throw null; } }
     }
     public partial class ServicePrincipalCreateParameters : Azure.Graph.Rbac.Models.ServicePrincipalBase
     {
         public ServicePrincipalCreateParameters(string appId) { }
         public string AppId { get { throw null; } }
-    }
-    public partial class ServicePrincipalListResult
-    {
-        internal ServicePrincipalListResult() { }
-        public string OdataNextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Graph.Rbac.Models.ServicePrincipal> Value { get { throw null; } }
     }
     public partial class ServicePrincipalObjectResult
     {
@@ -870,17 +820,6 @@ namespace Azure.Graph.Rbac.Models
         bool System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.Remove(System.Collections.Generic.KeyValuePair<string, object> value) { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
         public bool TryGetValue(string key, out object value) { throw null; }
-    }
-    public partial class UserGetMemberGroupsResult
-    {
-        internal UserGetMemberGroupsResult() { }
-        public System.Collections.Generic.IReadOnlyList<string> Value { get { throw null; } }
-    }
-    public partial class UserListResult
-    {
-        internal UserListResult() { }
-        public string OdataNextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Graph.Rbac.Models.User> Value { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct UserType : System.IEquatable<Azure.Graph.Rbac.Models.UserType>

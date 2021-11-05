@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (HealthProbe != null)
+            if (Optional.IsDefined(HealthProbe))
             {
                 writer.WritePropertyName("healthProbe");
-                writer.WriteObjectValue(HealthProbe);
+                JsonSerializer.Serialize(writer, HealthProbe);
             }
-            if (NetworkInterfaceConfigurations != null)
+            if (Optional.IsCollectionDefined(NetworkInterfaceConfigurations))
             {
                 writer.WritePropertyName("networkInterfaceConfigurations");
                 writer.WriteStartArray();
@@ -29,6 +29,11 @@ namespace Azure.ResourceManager.Compute.Models
                     writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(NetworkApiVersion))
+            {
+                writer.WritePropertyName("networkApiVersion");
+                writer.WriteStringValue(NetworkApiVersion.Value.ToString());
             }
             writer.WriteEndObject();
         }

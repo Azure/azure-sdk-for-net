@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Storage.Models
     public partial class BlobRestoreStatus
     {
         /// <summary> Initializes a new instance of BlobRestoreStatus. </summary>
-        public BlobRestoreStatus()
+        internal BlobRestoreStatus()
         {
         }
 

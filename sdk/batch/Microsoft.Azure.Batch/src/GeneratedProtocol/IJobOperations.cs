@@ -402,7 +402,9 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <remarks>
         /// Task counts provide a count of the Tasks by active, running or
         /// completed Task state, and a count of Tasks which succeeded or
-        /// failed. Tasks in the preparing state are counted as running.
+        /// failed. Tasks in the preparing state are counted as running. Note
+        /// that the numbers returned may not always be up to date. If you need
+        /// exact task counts, use a list query.
         /// </remarks>
         /// <param name='jobId'>
         /// The ID of the Job.
@@ -425,7 +427,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<TaskCounts,JobGetTaskCountsHeaders>> GetTaskCountsWithHttpMessagesAsync(string jobId, JobGetTaskCountsOptions jobGetTaskCountsOptions = default(JobGetTaskCountsOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<TaskCountsResult,JobGetTaskCountsHeaders>> GetTaskCountsWithHttpMessagesAsync(string jobId, JobGetTaskCountsOptions jobGetTaskCountsOptions = default(JobGetTaskCountsOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists all of the Jobs in the specified Account.
         /// </summary>

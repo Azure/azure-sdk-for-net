@@ -33,10 +33,16 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// </summary>
         /// <param name="accountUrl">Account URL</param>
         /// <param name="filesystem">Filesystem name</param>
-        public DataLakeStorageAccountDetails(string accountUrl = default(string), string filesystem = default(string))
+        /// <param name="resourceId">ARM resource Id of this storage
+        /// account</param>
+        /// <param name="createManagedPrivateEndpoint">Create managed private
+        /// endpoint to this storage account or not</param>
+        public DataLakeStorageAccountDetails(string accountUrl = default(string), string filesystem = default(string), string resourceId = default(string), bool? createManagedPrivateEndpoint = default(bool?))
         {
             AccountUrl = accountUrl;
             Filesystem = filesystem;
+            ResourceId = resourceId;
+            CreateManagedPrivateEndpoint = createManagedPrivateEndpoint;
             CustomInit();
         }
 
@@ -56,6 +62,19 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// </summary>
         [JsonProperty(PropertyName = "filesystem")]
         public string Filesystem { get; set; }
+
+        /// <summary>
+        /// Gets or sets ARM resource Id of this storage account
+        /// </summary>
+        [JsonProperty(PropertyName = "resourceId")]
+        public string ResourceId { get; set; }
+
+        /// <summary>
+        /// Gets or sets create managed private endpoint to this storage
+        /// account or not
+        /// </summary>
+        [JsonProperty(PropertyName = "createManagedPrivateEndpoint")]
+        public bool? CreateManagedPrivateEndpoint { get; set; }
 
     }
 }

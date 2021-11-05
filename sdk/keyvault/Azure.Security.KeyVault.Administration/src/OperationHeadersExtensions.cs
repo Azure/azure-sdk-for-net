@@ -8,28 +8,28 @@ namespace Azure.Security.KeyVault.Administration
     internal static class OperationHeadersExtensions
     {
         /// <summary>
-        /// Extracts the operation JobId from the <see cref="ServiceFullBackupHeaders" /> AzureAsyncOperation.
+        /// Extracts the operation JobId from the <see cref="AzureSecurityKeyVaultAdministrationFullBackupHeaders" /> AzureAsyncOperation.
         /// </summary>
         /// <returns>The operation JobId.</returns>
-        public static string JobId(this ServiceFullBackupHeaders header)
+        public static string JobId(this AzureSecurityKeyVaultAdministrationFullBackupHeaders header)
         {
             return GetJobIdFromAzureAsyncOperation(header.AzureAsyncOperation);
         }
 
         /// <summary>
-        /// Extracts the operation JobId from the <see cref="ServiceFullRestoreOperationHeaders" /> AzureAsyncOperation.
+        /// Extracts the operation JobId from the <see cref="AzureSecurityKeyVaultAdministrationFullRestoreOperationHeaders" /> AzureAsyncOperation.
         /// </summary>
         /// <returns>The operation JobId.</returns>
-        public static string JobId(this ServiceFullRestoreOperationHeaders header)
+        public static string JobId(this AzureSecurityKeyVaultAdministrationFullRestoreOperationHeaders header)
         {
             return GetJobIdFromAzureAsyncOperation(header.AzureAsyncOperation);
         }
 
         /// <summary>
-        /// Extracts the operation JobId from the <see cref="ServiceSelectiveKeyRestoreOperationHeaders" /> AzureAsyncOperation.
+        /// Extracts the operation JobId from the <see cref="AzureSecurityKeyVaultAdministrationSelectiveKeyRestoreOperationHeaders" /> AzureAsyncOperation.
         /// </summary>
         /// <returns>The operation JobId.</returns>
-        public static string JobId(this ServiceSelectiveKeyRestoreOperationHeaders header)
+        public static string JobId(this AzureSecurityKeyVaultAdministrationSelectiveKeyRestoreOperationHeaders header)
         {
             return GetJobIdFromAzureAsyncOperation(header.AzureAsyncOperation);
         }

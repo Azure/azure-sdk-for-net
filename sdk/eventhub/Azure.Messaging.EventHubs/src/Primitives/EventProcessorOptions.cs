@@ -29,6 +29,9 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <summary>The prefetch count to use for the event processor.</summary>
         private int _prefetchCount = 300;
 
+        /// <summary>The prefetch size limit to use for the partition receiver.</summary>
+        private long? _prefetchSizeInBytes;
+
         /// <summary>The desired amount of time to allow between load balancing verification attempts.</summary>
         private TimeSpan _loadBalancingUpdateInterval = TimeSpan.FromSeconds(10);
 
@@ -68,7 +71,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         }
 
         /// <summary>
-        ///   The maximum amount of time to wait for an event to become available for a given partition before emitting
+        ///   The maximum amount of time to wait for events to become available from a given partition before emitting
         ///   an empty batch of events.
         /// </summary>
         ///
@@ -77,6 +80,8 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   dispatch them to be processed while waiting; otherwise, a batch will always be emitted within this interval, whether or not
         ///   it is empty.
         /// </value>
+        ///
+        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested wait time is negative.</exception>
         ///
         public TimeSpan? MaximumWaitTime
         {
@@ -94,9 +99,9 @@ namespace Azure.Messaging.EventHubs.Primitives
         }
 
         /// <summary>
-        ///   The number of events that will be eagerly requested from the Event Hubs service and staged locally without regard to
-        ///   whether the processor is currently active, intended to help maximize throughput by buffering service operations rather than
-        ///   readers needing to wait for service operations to complete.
+        ///   The number of events that will be eagerly requested from the Event Hubs service and queued locally without regard to
+        ///   whether a read operation is currently active, intended to help maximize throughput by allowing events to be read from
+        ///   from a local cache rather than waiting on a service request.
         /// </summary>
         ///
         /// <value>
@@ -120,6 +125,8 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   times as large as the number of events in a batch to allow for efficient buffering of service operations.
         /// </remarks>
         ///
+        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested count is negative.</exception>
+        ///
         public int PrefetchCount
         {
             get => _prefetchCount;
@@ -132,14 +139,52 @@ namespace Azure.Messaging.EventHubs.Primitives
         }
 
         /// <summary>
+        ///   The desired number of bytes to attempt to eagerly request from the Event Hubs service and queued locally without regard to
+        ///   whether a read operation is currently active, intended to help maximize throughput by allowing events to be read from
+        ///   from a local cache rather than waiting on a service request.
+        /// </summary>
+        ///
+        /// <value>
+        ///   <para>When set to <c>null</c>, the option is considered disabled; otherwise, it will be considered enabled and take
+        ///   precedence over any value specified for the <see cref="PrefetchCount" />The <see cref="PrefetchSizeInBytes" /> is an
+        ///   advanced control that developers can use to help tune performance in some scenarios; it is recommended to prefer using
+        ///   the <see cref="PrefetchCount" /> over this option where possible for more accurate control and more predictable throughput.</para>
+        ///
+        ///   <para>This size should be considered a statement of intent rather than a guaranteed limit; the local cache may be larger or
+        ///   smaller than the number of bytes specified, and will always contain at least one event when the <see cref="PrefetchSizeInBytes" />
+        ///   is specified.  A heuristic is used to predict the average event size to use for size calculations, which should be expected to fluctuate
+        ///   as traffic passes through the system.  Consequently, the resulting resource use will fluctuate as well.</para>
+        /// </value>
+        ///
+        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested size is negative.</exception>
+        ///
+        public long? PrefetchSizeInBytes
+        {
+            get => _prefetchSizeInBytes;
+
+            set
+            {
+                if (value.HasValue)
+                {
+                    Argument.AssertAtLeast(value.Value, 0, nameof(PrefetchSizeInBytes));
+                }
+                _prefetchSizeInBytes = value;
+            }
+        }
+
+        /// <summary>
         ///   The desired amount of time to allow between load balancing verification attempts.
         /// </summary>
+        ///
+        /// <value>If not specified, a load balancing interval of 10 seconds will be assumed.</value>
         ///
         /// <remarks>
         ///   Because load balancing holds less priority than processing events, this interval
         ///   should be considered the minimum time that will elapse between verification attempts; operations
         ///   with higher priority may cause a minor delay longer than this interval for load balancing.
         /// </remarks>
+        ///
+        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested interval is negative.</exception>
         ///
         public TimeSpan LoadBalancingUpdateInterval
         {
@@ -154,9 +199,13 @@ namespace Azure.Messaging.EventHubs.Primitives
 
         /// <summary>
         ///   The desired amount of time to consider a partition owned by a specific event processor
-        ///   instance before the ownership is considered stale and the partition eligible to be requested
-        ///   by another event processor that wishes to assume responsibility for processing it.
+        ///   instance before the ownership is considered stale and the partition becomes eligible to be
+        ///   requested by another event processor that wishes to assume responsibility for processing it.
         /// </summary>
+        ///
+        /// <value>If not specified, an ownership interval of 30 seconds will be assumed.</value>
+        ///
+        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested interval is negative.</exception>
         ///
         public TimeSpan PartitionOwnershipExpirationInterval
         {
@@ -258,6 +307,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                 _connectionOptions = ConnectionOptions.Clone(),
                 _retryOptions = RetryOptions.Clone(),
                 _prefetchCount = PrefetchCount,
+                _prefetchSizeInBytes = PrefetchSizeInBytes,
                 _maximumWaitTime = MaximumWaitTime,
                 _loadBalancingUpdateInterval = LoadBalancingUpdateInterval,
                 _partitionOwnershipExpirationInterval = PartitionOwnershipExpirationInterval,

@@ -23,14 +23,7 @@ namespace Azure.Search.Documents.Models
                     List<IndexingResult> array = new List<IndexingResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(IndexingResult.DeserializeIndexingResult(item));
-                        }
+                        array.Add(IndexingResult.DeserializeIndexingResult(item));
                     }
                     value = array;
                     continue;

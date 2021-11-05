@@ -1,0 +1,129 @@
+{
+    "Entries": [
+        {
+            "RequestUri": "https://aiimdsuavault.vault.azure.net/secrets/identitytestsecret?api-version=7.0",
+            "RequestMethod": "PUT",
+            "RequestHeaders": {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+                "traceparent": "00-96305e2715e52f45b848cf7cca833f75-1bd8e21a673b404a-00",
+                "User-Agent": [
+                    "azsdk-net-Security.KeyVault.Secrets/4.0.2",
+                    "(.NET Core 3.1.10; Linux 4.15.0-1098-azure #109~16.04.1-Ubuntu SMP Wed Sep 30 18:53:14 UTC 2020)"
+                ],
+                "x-ms-client-request-id": "cb9e0e62fb060f87d017f4e968425ba0",
+                "x-ms-return-client-request-id": "true"
+            },
+            "RequestBody": null,
+            "StatusCode": 401,
+            "ResponseHeaders": {
+                "Cache-Control": "no-cache",
+                "Content-Length": "87",
+                "Content-Type": "application/json; charset=utf-8",
+                "Date": "Fri, 13 Nov 2020 02:05:37 GMT",
+                "Expires": "-1",
+                "Pragma": "no-cache",
+                "Strict-Transport-Security": "max-age=31536000;includeSubDomains",
+                "WWW-Authenticate": "Bearer authorization=\u0022https://login.windows.net/72f988bf-86f1-41af-91ab-2d7cd011db47\u0022, resource=\u0022https://vault.azure.net\u0022",
+                "X-Content-Type-Options": "nosniff",
+                "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=52.247.235.179;act_addr_fam=InterNetwork;",
+                "x-ms-keyvault-region": "westus",
+                "x-ms-keyvault-service-version": "1.2.58.0",
+                "x-ms-request-id": "d551fd8f-8baf-4876-a910-3846f6b3a122",
+                "X-Powered-By": "ASP.NET"
+            },
+            "ResponseBody": {
+                "error": {
+                    "code": "Unauthorized",
+                    "message": "Request is missing a Bearer or PoP token."
+                }
+            }
+        },
+        {
+            "RequestUri": "https://10.0.0.4:2377/metadata/identity/oauth2/token?api-version=2019-07-01-preview\u0026resource=https%3A%2F%2Fvault.azure.net\u0026client_id=3b8a7f55-566c-4de3-b5f4-d12ba3d03e76",
+            "RequestMethod": "GET",
+            "RequestHeaders": {
+                "secret": "1dce8ed0-c547-4f87-b200-e42000000000",
+                "traceparent": "00-96305e2715e52f45b848cf7cca833f75-853f74785ed15c4c-00",
+                "User-Agent": [
+                    "azsdk-net-Identity/1.3.0-alpha.20201112.1",
+                    "(.NET Core 3.1.10; Linux 4.15.0-1098-azure #109~16.04.1-Ubuntu SMP Wed Sep 30 18:53:14 UTC 2020)"
+                ],
+                "x-ms-client-request-id": "711de83d3f472eee474c06fd8ca8e3d1",
+                "x-ms-return-client-request-id": "true"
+            },
+            "RequestBody": "U2FuaXRpemVk",
+            "StatusCode": 200,
+            "ResponseHeaders": {
+                "Content-Type": "application/json; charset=utf-8",
+                "Date": "Fri, 13 Nov 2020 02:05:38 GMT",
+                "Server": "Kestrel",
+                "Transfer-Encoding": "chunked"
+            },
+            "ResponseBody": {
+                "token_type": "Bearer",
+                "access_token": "Sanitized",
+                "expires_on": 1605318553,
+                "resource": "https://vault.azure.net"
+            }
+        },
+        {
+            "RequestUri": "https://aiimdsuavault.vault.azure.net/secrets/identitytestsecret?api-version=7.0",
+            "RequestMethod": "PUT",
+            "RequestHeaders": {
+                "Accept": "application/json",
+                "Authorization": "Sanitized",
+                "Content-Length": "17",
+                "Content-Type": "application/json",
+                "traceparent": "00-96305e2715e52f45b848cf7cca833f75-1bd8e21a673b404a-00",
+                "User-Agent": [
+                    "azsdk-net-Security.KeyVault.Secrets/4.0.2",
+                    "(.NET Core 3.1.10; Linux 4.15.0-1098-azure #109~16.04.1-Ubuntu SMP Wed Sep 30 18:53:14 UTC 2020)"
+                ],
+                "x-ms-client-request-id": "cb9e0e62fb060f87d017f4e968425ba0",
+                "x-ms-return-client-request-id": "true"
+            },
+            "RequestBody": {
+                "value": "value"
+            },
+            "StatusCode": 200,
+            "ResponseHeaders": {
+                "Cache-Control": "no-cache",
+                "Content-Length": "222",
+                "Content-Type": "application/json; charset=utf-8",
+                "Date": "Fri, 13 Nov 2020 02:05:38 GMT",
+                "Expires": "-1",
+                "Pragma": "no-cache",
+                "Strict-Transport-Security": "max-age=31536000;includeSubDomains",
+                "X-Content-Type-Options": "nosniff",
+                "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=52.247.235.179;act_addr_fam=InterNetwork;",
+                "x-ms-keyvault-region": "westus",
+                "x-ms-keyvault-service-version": "1.2.58.0",
+                "x-ms-request-id": "0adde166-6c4b-4194-8fa2-f73e20316c9e",
+                "X-Powered-By": "ASP.NET"
+            },
+            "ResponseBody": {
+                "value": "value",
+                "id": "https://aiimdsuavault.vault.azure.net/secrets/identitytestsecret/6ec0aefacf3b47429925925006be271c",
+                "attributes": {
+                    "enabled": true,
+                    "created": 1605233138,
+                    "updated": 1605233138,
+                    "recoveryLevel": "Purgeable"
+                }
+            }
+        }
+    ],
+    "Variables": {
+        "IDENTITYTEST_IMDSTEST_CLIENTID": "3b8a7f55-566c-4de3-b5f4-d12ba3d03e76",
+        "IDENTITYTEST_IMDSTEST_USERASSIGNEDVAULT": "https://aiimdsuavault.vault.azure.net/",
+        "IDENTITYTEST_SFTEST_ENABLE": "true",
+        "IDENTITY_ENDPOINT": "https://10.0.0.4:2377/metadata/identity/oauth2/token",
+        "IDENTITY_HEADER": "1dce8ed0-c547-4f87-b200-e42000000000",
+        "IDENTITY_SERVER_THUMBPRINT": "f7e8b6fc0b674ad907333280a46ebc6d90ada5a4",
+        "IMDS_ENDPOINT": null,
+        "MSI_ENDPOINT": null,
+        "MSI_SECRET": null,
+        "RandomSeed": "483384775"
+    }
+}

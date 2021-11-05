@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Graph.Rbac.Models
 {
@@ -15,23 +16,9 @@ namespace Azure.Graph.Rbac.Models
         /// <summary> Initializes a new instance of ServicePrincipalBase. </summary>
         public ServicePrincipalBase()
         {
-        }
-
-        /// <summary> Initializes a new instance of ServicePrincipalBase. </summary>
-        /// <param name="accountEnabled"> whether or not the service principal account is enabled. </param>
-        /// <param name="appRoleAssignmentRequired"> Specifies whether an AppRoleAssignment to a user or group is required before Azure AD will issue a user or access token to the application. </param>
-        /// <param name="keyCredentials"> The collection of key credentials associated with the service principal. </param>
-        /// <param name="passwordCredentials"> The collection of password credentials associated with the service principal. </param>
-        /// <param name="servicePrincipalType"> the type of the service principal. </param>
-        /// <param name="tags"> Optional list of tags that you can apply to your service principals. Not nullable. </param>
-        internal ServicePrincipalBase(bool? accountEnabled, bool? appRoleAssignmentRequired, IList<KeyCredential> keyCredentials, IList<PasswordCredential> passwordCredentials, string servicePrincipalType, IList<string> tags)
-        {
-            AccountEnabled = accountEnabled;
-            AppRoleAssignmentRequired = appRoleAssignmentRequired;
-            KeyCredentials = keyCredentials;
-            PasswordCredentials = passwordCredentials;
-            ServicePrincipalType = servicePrincipalType;
-            Tags = tags;
+            KeyCredentials = new ChangeTrackingList<KeyCredential>();
+            PasswordCredentials = new ChangeTrackingList<PasswordCredential>();
+            Tags = new ChangeTrackingList<string>();
         }
 
         /// <summary> whether or not the service principal account is enabled. </summary>
@@ -39,12 +26,12 @@ namespace Azure.Graph.Rbac.Models
         /// <summary> Specifies whether an AppRoleAssignment to a user or group is required before Azure AD will issue a user or access token to the application. </summary>
         public bool? AppRoleAssignmentRequired { get; set; }
         /// <summary> The collection of key credentials associated with the service principal. </summary>
-        public IList<KeyCredential> KeyCredentials { get; set; }
+        public IList<KeyCredential> KeyCredentials { get; }
         /// <summary> The collection of password credentials associated with the service principal. </summary>
-        public IList<PasswordCredential> PasswordCredentials { get; set; }
+        public IList<PasswordCredential> PasswordCredentials { get; }
         /// <summary> the type of the service principal. </summary>
         public string ServicePrincipalType { get; set; }
         /// <summary> Optional list of tags that you can apply to your service principals. Not nullable. </summary>
-        public IList<string> Tags { get; set; }
+        public IList<string> Tags { get; }
     }
 }

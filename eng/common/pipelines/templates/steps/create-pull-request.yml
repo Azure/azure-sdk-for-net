@@ -7,48 +7,33 @@ parameters:
   PROwner: azure-sdk
   CommitMsg: not-specified
   RepoOwner: Azure
-  RepoName: not-specified
+  RepoName: $(Build.Repository.Name)
   PushArgs:
   WorkingDirectory: $(System.DefaultWorkingDirectory)
   PRTitle: not-specified
+  PRBody: ''
   ScriptDirectory: eng/common/scripts
-  GHReviewersVariable: '' 
+  GHReviewersVariable: ''
   GHTeamReviewersVariable: ''
+  GHAssignessVariable: ''
+  # Multiple labels seperated by comma, e.g. "bug, APIView"
+  PRLabels: ''
+  SkipCheckingForChanges: false
+  CloseAfterOpenForTesting: false
+  OpenAsDraft: false
 
 steps:
-
-- pwsh: |
-    echo "git add -A"
-    git add -A
-
-    echo "git diff --name-status --cached --exit-code"
-    git diff --name-status --cached --exit-code
-
-    if ($LastExitCode -ne 0) {
-      echo "##vso[task.setvariable variable=HasChanges]$true"
-      echo "Changes detected so setting HasChanges=true"
-    }
-    else {
-      echo "##vso[task.setvariable variable=HasChanges]$false"
-      echo "No changes so skipping code push"
-    }
-
-  displayName: Check for changes
-  workingDirectory: ${{ parameters.WorkingDirectory }}
-  ignoreLASTEXITCODE: true
-
-- task: PowerShell@2
-  displayName: Push changes
-  condition: and(succeeded(), eq(variables['HasChanges'], 'true'))
-  inputs:
-    pwsh: true
-    workingDirectory: ${{ parameters.WorkingDirectory }}
-    filePath: ${{ parameters.ScriptDirectory }}/git-branch-push.ps1
-    arguments: >
-      -PRBranchName "${{ parameters.PRBranchName }}"
-      -CommitMsg "${{ parameters.CommitMsg }}"
-      -GitUrl "https://$(azuresdk-github-pat)@github.com/${{ parameters.PROwner }}/${{ parameters.RepoName }}.git"
-      -PushArgs "${{ parameters.PushArgs }}"
+- template: /eng/common/pipelines/templates/steps/git-push-changes.yml
+  parameters:
+    BaseRepoBranch: ${{ parameters.PRBranchName }}
+    BaseRepoOwner: ${{ parameters.PROwner }}
+    CommitMsg: ${{ parameters.CommitMsg }}
+    TargetRepoOwner: ${{ parameters.RepoOwner }}
+    TargetRepoName: ${{ parameters.RepoName }}
+    PushArgs: ${{ parameters.PushArgs }}
+    WorkingDirectory: ${{ parameters.WorkingDirectory }}
+    ScriptDirectory: ${{ parameters.ScriptDirectory }}
+    SkipCheckingForChanges: ${{ parameters.SkipCheckingForChanges }}
 
 - task: PowerShell@2
   displayName: Create pull request
@@ -59,24 +44,16 @@ steps:
     filePath: ${{ parameters.ScriptDirectory }}/Submit-PullRequest.ps1
     arguments: >
       -RepoOwner "${{ parameters.RepoOwner }}"
-      -RepoName "${{ parameters.RepoName }}"
+      -RepoName "$(RepoNameWithoutOwner)"
       -BaseBranch "${{ parameters.BaseBranchName }}"
       -PROwner "${{ parameters.PROwner }}"
       -PRBranch "${{ parameters.PRBranchName }}"
       -AuthToken "$(azuresdk-github-pat)"
       -PRTitle "${{ parameters.PRTitle }}"
-
-- task: PowerShell@2
-  displayName: Tag a Reviewer on PR
-  condition: and(succeeded(), eq(variables['HasChanges'], 'true'))
-  inputs:
-    pwsh: true
-    workingDirectory: ${{ parameters.WorkingDirectory }}
-    filePath: ${{ parameters.ScriptDirectory }}/add-pullrequest-reviewers.ps1
-    arguments: >
-      -RepoOwner "${{ parameters.RepoOwner }}"
-      -RepoName "${{ parameters.RepoName }}"
-      -AuthToken "$(azuresdk-github-pat)"
-      -GitHubUsers "$(${{ parameters.GHReviewersVariable }})"
-      -GitHubTeams "$(${{ parameters.GHTeamReviewersVariable }})"
-      -PRNumber "$(Submitted.PullRequest.Number)"
+      -PRBody "${{ coalesce(parameters.PRBody, parameters.CommitMsg, parameters.PRTitle) }}"
+      -PRLabels "${{ parameters.PRLabels }}"
+      -UserReviewers "$(${{ parameters.GHReviewersVariable }})"
+      -TeamReviewers "$(${{ parameters.GHTeamReviewersVariable }})"
+      -Assignees "$(${{ parameters.GHAssignessVariable }})"
+      -CloseAfterOpenForTesting $${{ coalesce(parameters.CloseAfterOpenForTesting, 'false') }}
+      -OpenAsDraft $${{ parameters.OpenAsDraft }}

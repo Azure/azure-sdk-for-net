@@ -21,10 +21,12 @@ namespace Azure.ResourceManager.EventHubs
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         internal EventHubsRestOperations RestClient { get; }
+
         /// <summary> Initializes a new instance of EventHubsOperations for mocking. </summary>
         protected EventHubsOperations()
         {
         }
+
         /// <summary> Initializes a new instance of EventHubsOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
@@ -378,6 +380,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="eventHubName"> The Event Hub name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="eventHubName"/> is null. </exception>
         public virtual AsyncPageable<AuthorizationRule> ListAuthorizationRulesAsync(string resourceGroupName, string namespaceName, string eventHubName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -431,6 +434,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="eventHubName"> The Event Hub name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="eventHubName"/> is null. </exception>
         public virtual Pageable<AuthorizationRule> ListAuthorizationRules(string resourceGroupName, string namespaceName, string eventHubName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -485,6 +489,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="skip"> Skip is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skip parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is null. </exception>
         public virtual AsyncPageable<Eventhub> ListByNamespaceAsync(string resourceGroupName, string namespaceName, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -535,6 +540,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="skip"> Skip is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skip parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is null. </exception>
         public virtual Pageable<Eventhub> ListByNamespace(string resourceGroupName, string namespaceName, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)

@@ -1,28 +1,28 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/74f34d9c-50ed-4d7a-a1a8-88d2aed13ac3/resourceGroups/ApiM-SDK-EastUS/providers/Microsoft.ApiManagement/service/sdktestservicemapi?api-version=2019-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzRmMzRkOWMtNTBlZC00ZDdhLWExYTgtODhkMmFlZDEzYWMzL3Jlc291cmNlR3JvdXBzL0FwaU0tU0RLLUVhc3RVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZW1hcGk/YXBpLXZlcnNpb249MjAxOS0xMi0wMQ==",
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZT9hcGktdmVyc2lvbj0yMDIwLTEyLTAx",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"publisherEmail\": \"apim@autorestsdk.com\",\r\n    \"publisherName\": \"autorestsdk\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Developer\",\r\n    \"capacity\": 1\r\n  },\r\n  \"location\": \"eastus\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\",\r\n    \"tag3\": \"value3\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"publisherEmail\": \"apim@autorestsdk.com\",\r\n    \"publisherName\": \"autorestsdk\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Developer\",\r\n    \"capacity\": 1\r\n  },\r\n  \"location\": \"CentralUS\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\",\r\n    \"tag3\": \"value3\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "eecd5cbf-d8ce-4b48-bc8e-ae3e619d39cb"
+          "77f50b04-347e-44f6-9bf9-c5f79e12e01c"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27817.03",
+          "FxVersion/4.6.29812.02",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/5.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/7.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "286"
+          "289"
         ]
       },
       "ResponseHeaders": {
@@ -33,14 +33,14 @@
           "no-cache"
         ],
         "ETag": [
-          "\"AAAAAAAHRdg=\""
+          "\"AAAAAAAU2+c=\""
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "711ada30-9234-4906-b71e-05d3f27a52b0",
-          "1996a7e9-db5d-4a06-8698-18726f373027"
+          "4d871920-587c-489f-8374-85023646390a",
+          "0d57fe9c-7ae7-4a10-9179-700127875694"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -49,19 +49,19 @@
           "1199"
         ],
         "x-ms-correlation-request-id": [
-          "958f6502-c033-427d-aeec-8b46dcff711c"
+          "3a1e333b-563d-4692-a220-ae725e5c02fe"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20200325T190343Z:958f6502-c033-427d-aeec-8b46dcff711c"
+          "WESTCENTRALUS:20210408T231051Z:3a1e333b-563d-4692-a220-ae725e5c02fe"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 25 Mar 2020 19:03:42 GMT"
+          "Thu, 08 Apr 2021 23:10:50 GMT"
         ],
         "Content-Length": [
-          "2293"
+          "2221"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -70,26 +70,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/74f34d9c-50ed-4d7a-a1a8-88d2aed13ac3/resourceGroups/ApiM-SDK-EastUS/providers/Microsoft.ApiManagement/service/sdktestservicemapi\",\r\n  \"name\": \"sdktestservicemapi\",\r\n  \"type\": \"Microsoft.ApiManagement/service\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\",\r\n    \"tag3\": \"value3\"\r\n  },\r\n  \"location\": \"East US\",\r\n  \"etag\": \"AAAAAAAHRdg=\",\r\n  \"properties\": {\r\n    \"publisherEmail\": \"apim@autorestsdk.com\",\r\n    \"publisherName\": \"autorestsdk\",\r\n    \"notificationSenderEmail\": \"apimgmt-noreply@mail.windowsazure.com\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"targetProvisioningState\": \"\",\r\n    \"createdAtUtc\": \"2020-01-15T02:10:29.8101523Z\",\r\n    \"gatewayUrl\": \"https://sdktestservicemapi.preview.int-azure-api.net\",\r\n    \"gatewayRegionalUrl\": \"https://sdktestservicemapi-eastus-01.regional.preview.int-azure-api.net\",\r\n    \"portalUrl\": \"https://sdktestservicemapi.portal.preview.int-azure-api.net\",\r\n    \"developerPortalUrl\": \"https://sdktestservicemapi.developer.preview.int-azure-api.net\",\r\n    \"managementApiUrl\": \"https://sdktestservicemapi.management.preview.int-azure-api.net\",\r\n    \"scmUrl\": \"https://sdktestservicemapi.scm.preview.int-azure-api.net\",\r\n    \"hostnameConfigurations\": [\r\n      {\r\n        \"type\": \"Proxy\",\r\n        \"hostName\": \"sdktestservicemapi.preview.int-azure-api.net\",\r\n        \"encodedCertificate\": null,\r\n        \"keyVaultId\": null,\r\n        \"certificatePassword\": null,\r\n        \"negotiateClientCertificate\": false,\r\n        \"certificate\": null,\r\n        \"defaultSslBinding\": true\r\n      }\r\n    ],\r\n    \"publicIPAddresses\": [\r\n      \"52.170.235.245\"\r\n    ],\r\n    \"privateIPAddresses\": null,\r\n    \"additionalLocations\": null,\r\n    \"virtualNetworkConfiguration\": null,\r\n    \"customProperties\": {\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Ssl30\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TripleDes168\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls10\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls11\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Ssl30\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Protocols.Server.Http2\": \"False\"\r\n    },\r\n    \"virtualNetworkType\": \"None\",\r\n    \"certificates\": [],\r\n    \"disableGateway\": false,\r\n    \"apiVersionConstraint\": {\r\n      \"minApiVersion\": null\r\n    }\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Developer\",\r\n    \"capacity\": 1\r\n  },\r\n  \"identity\": null\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice\",\r\n  \"name\": \"sdktestservice\",\r\n  \"type\": \"Microsoft.ApiManagement/service\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\",\r\n    \"tag3\": \"value3\"\r\n  },\r\n  \"location\": \"Central US\",\r\n  \"etag\": \"AAAAAAAU2+c=\",\r\n  \"properties\": {\r\n    \"publisherEmail\": \"apim@autorestsdk.com\",\r\n    \"publisherName\": \"autorestsdk\",\r\n    \"notificationSenderEmail\": \"apimgmt-noreply@mail.windowsazure.com\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"targetProvisioningState\": \"\",\r\n    \"createdAtUtc\": \"2019-08-23T10:23:03.7042803Z\",\r\n    \"gatewayUrl\": \"https://sdktestservice.azure-api.net\",\r\n    \"gatewayRegionalUrl\": \"https://sdktestservice-centralus-01.regional.azure-api.net\",\r\n    \"portalUrl\": \"https://sdktestservice.portal.azure-api.net\",\r\n    \"developerPortalUrl\": \"https://sdktestservice.developer.azure-api.net\",\r\n    \"managementApiUrl\": \"https://sdktestservice.management.azure-api.net\",\r\n    \"scmUrl\": \"https://sdktestservice.scm.azure-api.net\",\r\n    \"hostnameConfigurations\": [\r\n      {\r\n        \"type\": \"Proxy\",\r\n        \"hostName\": \"sdktestservice.azure-api.net\",\r\n        \"encodedCertificate\": null,\r\n        \"keyVaultId\": null,\r\n        \"certificatePassword\": null,\r\n        \"negotiateClientCertificate\": false,\r\n        \"certificate\": null,\r\n        \"defaultSslBinding\": true,\r\n        \"identityClientId\": null\r\n      }\r\n    ],\r\n    \"publicIPAddresses\": [\r\n      \"104.43.169.82\"\r\n    ],\r\n    \"privateIPAddresses\": null,\r\n    \"additionalLocations\": null,\r\n    \"virtualNetworkConfiguration\": null,\r\n    \"customProperties\": {\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Ssl30\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TripleDes168\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls10\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls11\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Ssl30\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Protocols.Server.Http2\": \"False\"\r\n    },\r\n    \"virtualNetworkType\": \"None\",\r\n    \"certificates\": [],\r\n    \"disableGateway\": false,\r\n    \"apiVersionConstraint\": {\r\n      \"minApiVersion\": null\r\n    }\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Developer\",\r\n    \"capacity\": 1\r\n  },\r\n  \"identity\": null,\r\n  \"zones\": null\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/74f34d9c-50ed-4d7a-a1a8-88d2aed13ac3/resourceGroups/ApiM-SDK-EastUS/providers/Microsoft.ApiManagement/service/sdktestservicemapi?api-version=2019-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzRmMzRkOWMtNTBlZC00ZDdhLWExYTgtODhkMmFlZDEzYWMzL3Jlc291cmNlR3JvdXBzL0FwaU0tU0RLLUVhc3RVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZW1hcGk/YXBpLXZlcnNpb249MjAxOS0xMi0wMQ==",
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZT9hcGktdmVyc2lvbj0yMDIwLTEyLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "750ce00e-8100-43c7-84f7-9457894c894c"
+          "da52f4b4-c0b7-4fed-8153-ca8b1923b8a1"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27817.03",
+          "FxVersion/4.6.29812.02",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/5.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/7.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -100,34 +100,34 @@
           "no-cache"
         ],
         "ETag": [
-          "\"AAAAAAAHRdg=\""
+          "\"AAAAAAAU2+c=\""
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "a3469fb6-9114-47de-ba2f-ca1c5fb7c5d0"
+          "fea9ec29-079a-430e-9162-fd850d47f689"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14999"
+          "11999"
         ],
         "x-ms-correlation-request-id": [
-          "0719fa1c-ca17-448d-92e4-c126481e682c"
+          "6f996f49-a903-488b-b644-145d5ea85e88"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20200325T190343Z:0719fa1c-ca17-448d-92e4-c126481e682c"
+          "WESTCENTRALUS:20210408T231051Z:6f996f49-a903-488b-b644-145d5ea85e88"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 25 Mar 2020 19:03:43 GMT"
+          "Thu, 08 Apr 2021 23:10:50 GMT"
         ],
         "Content-Length": [
-          "2293"
+          "2221"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -136,26 +136,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/74f34d9c-50ed-4d7a-a1a8-88d2aed13ac3/resourceGroups/ApiM-SDK-EastUS/providers/Microsoft.ApiManagement/service/sdktestservicemapi\",\r\n  \"name\": \"sdktestservicemapi\",\r\n  \"type\": \"Microsoft.ApiManagement/service\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\",\r\n    \"tag3\": \"value3\"\r\n  },\r\n  \"location\": \"East US\",\r\n  \"etag\": \"AAAAAAAHRdg=\",\r\n  \"properties\": {\r\n    \"publisherEmail\": \"apim@autorestsdk.com\",\r\n    \"publisherName\": \"autorestsdk\",\r\n    \"notificationSenderEmail\": \"apimgmt-noreply@mail.windowsazure.com\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"targetProvisioningState\": \"\",\r\n    \"createdAtUtc\": \"2020-01-15T02:10:29.8101523Z\",\r\n    \"gatewayUrl\": \"https://sdktestservicemapi.preview.int-azure-api.net\",\r\n    \"gatewayRegionalUrl\": \"https://sdktestservicemapi-eastus-01.regional.preview.int-azure-api.net\",\r\n    \"portalUrl\": \"https://sdktestservicemapi.portal.preview.int-azure-api.net\",\r\n    \"developerPortalUrl\": \"https://sdktestservicemapi.developer.preview.int-azure-api.net\",\r\n    \"managementApiUrl\": \"https://sdktestservicemapi.management.preview.int-azure-api.net\",\r\n    \"scmUrl\": \"https://sdktestservicemapi.scm.preview.int-azure-api.net\",\r\n    \"hostnameConfigurations\": [\r\n      {\r\n        \"type\": \"Proxy\",\r\n        \"hostName\": \"sdktestservicemapi.preview.int-azure-api.net\",\r\n        \"encodedCertificate\": null,\r\n        \"keyVaultId\": null,\r\n        \"certificatePassword\": null,\r\n        \"negotiateClientCertificate\": false,\r\n        \"certificate\": null,\r\n        \"defaultSslBinding\": true\r\n      }\r\n    ],\r\n    \"publicIPAddresses\": [\r\n      \"52.170.235.245\"\r\n    ],\r\n    \"privateIPAddresses\": null,\r\n    \"additionalLocations\": null,\r\n    \"virtualNetworkConfiguration\": null,\r\n    \"customProperties\": {\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Ssl30\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TripleDes168\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls10\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls11\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Ssl30\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Protocols.Server.Http2\": \"False\"\r\n    },\r\n    \"virtualNetworkType\": \"None\",\r\n    \"certificates\": [],\r\n    \"disableGateway\": false,\r\n    \"apiVersionConstraint\": {\r\n      \"minApiVersion\": null\r\n    }\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Developer\",\r\n    \"capacity\": 1\r\n  },\r\n  \"identity\": null\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice\",\r\n  \"name\": \"sdktestservice\",\r\n  \"type\": \"Microsoft.ApiManagement/service\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\",\r\n    \"tag3\": \"value3\"\r\n  },\r\n  \"location\": \"Central US\",\r\n  \"etag\": \"AAAAAAAU2+c=\",\r\n  \"properties\": {\r\n    \"publisherEmail\": \"apim@autorestsdk.com\",\r\n    \"publisherName\": \"autorestsdk\",\r\n    \"notificationSenderEmail\": \"apimgmt-noreply@mail.windowsazure.com\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"targetProvisioningState\": \"\",\r\n    \"createdAtUtc\": \"2019-08-23T10:23:03.7042803Z\",\r\n    \"gatewayUrl\": \"https://sdktestservice.azure-api.net\",\r\n    \"gatewayRegionalUrl\": \"https://sdktestservice-centralus-01.regional.azure-api.net\",\r\n    \"portalUrl\": \"https://sdktestservice.portal.azure-api.net\",\r\n    \"developerPortalUrl\": \"https://sdktestservice.developer.azure-api.net\",\r\n    \"managementApiUrl\": \"https://sdktestservice.management.azure-api.net\",\r\n    \"scmUrl\": \"https://sdktestservice.scm.azure-api.net\",\r\n    \"hostnameConfigurations\": [\r\n      {\r\n        \"type\": \"Proxy\",\r\n        \"hostName\": \"sdktestservice.azure-api.net\",\r\n        \"encodedCertificate\": null,\r\n        \"keyVaultId\": null,\r\n        \"certificatePassword\": null,\r\n        \"negotiateClientCertificate\": false,\r\n        \"certificate\": null,\r\n        \"defaultSslBinding\": true,\r\n        \"identityClientId\": null\r\n      }\r\n    ],\r\n    \"publicIPAddresses\": [\r\n      \"104.43.169.82\"\r\n    ],\r\n    \"privateIPAddresses\": null,\r\n    \"additionalLocations\": null,\r\n    \"virtualNetworkConfiguration\": null,\r\n    \"customProperties\": {\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Ssl30\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TripleDes168\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls10\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls11\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Ssl30\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Protocols.Server.Http2\": \"False\"\r\n    },\r\n    \"virtualNetworkType\": \"None\",\r\n    \"certificates\": [],\r\n    \"disableGateway\": false,\r\n    \"apiVersionConstraint\": {\r\n      \"minApiVersion\": null\r\n    }\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Developer\",\r\n    \"capacity\": 1\r\n  },\r\n  \"identity\": null,\r\n  \"zones\": null\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/74f34d9c-50ed-4d7a-a1a8-88d2aed13ac3/resourceGroups/ApiM-SDK-EastUS/providers/Microsoft.ApiManagement/service/sdktestservicemapi/apis/aid6809?api-version=2019-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzRmMzRkOWMtNTBlZC00ZDdhLWExYTgtODhkMmFlZDEzYWMzL3Jlc291cmNlR3JvdXBzL0FwaU0tU0RLLUVhc3RVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZW1hcGkvYXBpcy9haWQ2ODA5P2FwaS12ZXJzaW9uPTIwMTktMTItMDE=",
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/aid2159?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2FpZDIxNTk/YXBpLXZlcnNpb249MjAyMC0xMi0wMQ==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"path\": \"weatherapi\",\r\n    \"value\": \"<?xml version=\\\"1.0\\\" encoding=\\\"utf-8\\\"?>\\r\\n<wsdl:definitions xmlns:s=\\\"http://www.w3.org/2001/XMLSchema\\\" xmlns:soap12=\\\"http://schemas.xmlsoap.org/wsdl/soap12/\\\" xmlns:mime=\\\"http://schemas.xmlsoap.org/wsdl/mime/\\\" xmlns:tns=\\\"http://ws.cdyne.com/WeatherWS/\\\" xmlns:soap=\\\"http://schemas.xmlsoap.org/wsdl/soap/\\\" xmlns:tm=\\\"http://microsoft.com/wsdl/mime/textMatching/\\\" xmlns:http=\\\"http://schemas.xmlsoap.org/wsdl/http/\\\" xmlns:soapenc=\\\"http://schemas.xmlsoap.org/soap/encoding/\\\" \\r\\n                  targetNamespace=\\\"http://ws.cdyne.com/WeatherWS/\\\" xmlns:wsdl=\\\"http://schemas.xmlsoap.org/wsdl/\\\">\\r\\n  <wsdl:types>\\r\\n    <s:schema elementFormDefault=\\\"qualified\\\" targetNamespace=\\\"http://ws.cdyne.com/WeatherWS/\\\">\\r\\n      <s:element name=\\\"GetWeatherInformation\\\">\\r\\n        <s:complexType />\\r\\n      </s:element>\\r\\n      <s:element name=\\\"GetWeatherInformationResponse\\\">\\r\\n        <s:complexType>\\r\\n          <s:sequence>\\r\\n            <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"GetWeatherInformationResult\\\" type=\\\"tns:ArrayOfWeatherDescription\\\" />\\r\\n          </s:sequence>\\r\\n        </s:complexType>\\r\\n      </s:element>\\r\\n      <s:complexType name=\\\"ArrayOfWeatherDescription\\\">\\r\\n        <s:sequence>\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"unbounded\\\" name=\\\"WeatherDescription\\\" type=\\\"tns:WeatherDescription\\\" />\\r\\n        </s:sequence>\\r\\n      </s:complexType>\\r\\n      <s:complexType name=\\\"WeatherDescription\\\">\\r\\n        <s:sequence>\\r\\n          <s:element minOccurs=\\\"1\\\" maxOccurs=\\\"1\\\" name=\\\"WeatherID\\\" type=\\\"s:short\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"Description\\\" type=\\\"s:string\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"PictureURL\\\" type=\\\"s:string\\\" />\\r\\n        </s:sequence>\\r\\n      </s:complexType>\\r\\n      <s:element name=\\\"GetCityForecastByZIP\\\">\\r\\n        <s:complexType>\\r\\n          <s:sequence>\\r\\n            <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"ZIP\\\" type=\\\"s:string\\\" />\\r\\n          </s:sequence>\\r\\n        </s:complexType>\\r\\n      </s:element>\\r\\n      <s:element name=\\\"GetCityForecastByZIPResponse\\\">\\r\\n        <s:complexType>\\r\\n          <s:sequence>\\r\\n            <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"GetCityForecastByZIPResult\\\" type=\\\"tns:ForecastReturn\\\" />\\r\\n          </s:sequence>\\r\\n        </s:complexType>\\r\\n      </s:element>\\r\\n      <s:complexType name=\\\"ForecastReturn\\\">\\r\\n        <s:sequence>\\r\\n          <s:element minOccurs=\\\"1\\\" maxOccurs=\\\"1\\\" name=\\\"Success\\\" type=\\\"s:boolean\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"ResponseText\\\" type=\\\"s:string\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"State\\\" type=\\\"s:string\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"City\\\" type=\\\"s:string\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"WeatherStationCity\\\" type=\\\"s:string\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"ForecastResult\\\" type=\\\"tns:ArrayOfForecast\\\" />\\r\\n        </s:sequence>\\r\\n      </s:complexType>\\r\\n      <s:complexType name=\\\"ArrayOfForecast\\\">\\r\\n        <s:sequence>\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"unbounded\\\" name=\\\"Forecast\\\" nillable=\\\"true\\\" type=\\\"tns:Forecast\\\" />\\r\\n        </s:sequence>\\r\\n      </s:complexType>\\r\\n      <s:complexType name=\\\"Forecast\\\">\\r\\n        <s:sequence>\\r\\n          <s:element minOccurs=\\\"1\\\" maxOccurs=\\\"1\\\" name=\\\"Date\\\" type=\\\"s:dateTime\\\" />\\r\\n          <s:element minOccurs=\\\"1\\\" maxOccurs=\\\"1\\\" name=\\\"WeatherID\\\" type=\\\"s:short\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"Desciption\\\" type=\\\"s:string\\\" />\\r\\n          <s:element minOccurs=\\\"1\\\" maxOccurs=\\\"1\\\" name=\\\"Temperatures\\\" type=\\\"tns:temp\\\" />\\r\\n          <s:element minOccurs=\\\"1\\\" maxOccurs=\\\"1\\\" name=\\\"ProbabilityOfPrecipiation\\\" type=\\\"tns:POP\\\" />\\r\\n        </s:sequence>\\r\\n      </s:complexType>\\r\\n      <s:complexType name=\\\"temp\\\">\\r\\n        <s:sequence>\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"MorningLow\\\" type=\\\"s:string\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"DaytimeHigh\\\" type=\\\"s:string\\\" />\\r\\n        </s:sequence>\\r\\n      </s:complexType>\\r\\n      <s:complexType name=\\\"POP\\\">\\r\\n        <s:sequence>\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"Nighttime\\\" type=\\\"s:string\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"Daytime\\\" type=\\\"s:string\\\" />\\r\\n        </s:sequence>\\r\\n      </s:complexType>\\r\\n      <s:element name=\\\"GetCityWeatherByZIP\\\">\\r\\n        <s:complexType>\\r\\n          <s:sequence>\\r\\n            <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"ZIP\\\" type=\\\"s:string\\\" />\\r\\n          </s:sequence>\\r\\n        </s:complexType>\\r\\n      </s:element>\\r\\n      <s:element name=\\\"GetCityWeatherByZIPResponse\\\">\\r\\n        <s:complexType>\\r\\n          <s:sequence>\\r\\n            <s:element minOccurs=\\\"1\\\" maxOccurs=\\\"1\\\" name=\\\"GetCityWeatherByZIPResult\\\" type=\\\"tns:WeatherReturn\\\" />\\r\\n          </s:sequence>\\r\\n        </s:complexType>\\r\\n      </s:element>\\r\\n      <s:complexType name=\\\"WeatherReturn\\\">\\r\\n        <s:sequence>\\r\\n          <s:element minOccurs=\\\"1\\\" maxOccurs=\\\"1\\\" name=\\\"Success\\\" type=\\\"s:boolean\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"ResponseText\\\" type=\\\"s:string\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"State\\\" type=\\\"s:string\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"City\\\" type=\\\"s:string\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"WeatherStationCity\\\" type=\\\"s:string\\\" />\\r\\n          <s:element minOccurs=\\\"1\\\" maxOccurs=\\\"1\\\" name=\\\"WeatherID\\\" type=\\\"s:short\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"Description\\\" type=\\\"s:string\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"Temperature\\\" type=\\\"s:string\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"RelativeHumidity\\\" type=\\\"s:string\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"Wind\\\" type=\\\"s:string\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"Pressure\\\" type=\\\"s:string\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"Visibility\\\" type=\\\"s:string\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"WindChill\\\" type=\\\"s:string\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"Remarks\\\" type=\\\"s:string\\\" />\\r\\n        </s:sequence>\\r\\n      </s:complexType>\\r\\n      <s:element name=\\\"ArrayOfWeatherDescription\\\" nillable=\\\"true\\\" type=\\\"tns:ArrayOfWeatherDescription\\\" />\\r\\n      <s:element name=\\\"ForecastReturn\\\" nillable=\\\"true\\\" type=\\\"tns:ForecastReturn\\\" />\\r\\n      <s:element name=\\\"WeatherReturn\\\" type=\\\"tns:WeatherReturn\\\" />\\r\\n    </s:schema>\\r\\n  </wsdl:types>\\r\\n  <wsdl:message name=\\\"GetWeatherInformationSoapIn\\\">\\r\\n    <wsdl:part name=\\\"parameters\\\" element=\\\"tns:GetWeatherInformation\\\" />\\r\\n  </wsdl:message>\\r\\n  <wsdl:message name=\\\"GetWeatherInformationSoapOut\\\">\\r\\n    <wsdl:part name=\\\"parameters\\\" element=\\\"tns:GetWeatherInformationResponse\\\" />\\r\\n  </wsdl:message>\\r\\n  <wsdl:message name=\\\"GetCityForecastByZIPSoapIn\\\">\\r\\n    <wsdl:part name=\\\"parameters\\\" element=\\\"tns:GetCityForecastByZIP\\\" />\\r\\n  </wsdl:message>\\r\\n  <wsdl:message name=\\\"GetCityForecastByZIPSoapOut\\\">\\r\\n    <wsdl:part name=\\\"parameters\\\" element=\\\"tns:GetCityForecastByZIPResponse\\\" />\\r\\n  </wsdl:message>\\r\\n  <wsdl:message name=\\\"GetCityWeatherByZIPSoapIn\\\">\\r\\n    <wsdl:part name=\\\"parameters\\\" element=\\\"tns:GetCityWeatherByZIP\\\" />\\r\\n  </wsdl:message>\\r\\n  <wsdl:message name=\\\"GetCityWeatherByZIPSoapOut\\\">\\r\\n    <wsdl:part name=\\\"parameters\\\" element=\\\"tns:GetCityWeatherByZIPResponse\\\" />\\r\\n  </wsdl:message>\\r\\n  <wsdl:message name=\\\"GetWeatherInformationHttpGetIn\\\" />\\r\\n  <wsdl:message name=\\\"GetWeatherInformationHttpGetOut\\\">\\r\\n    <wsdl:part name=\\\"Body\\\" element=\\\"tns:ArrayOfWeatherDescription\\\" />\\r\\n  </wsdl:message>\\r\\n  <wsdl:message name=\\\"GetCityForecastByZIPHttpGetIn\\\">\\r\\n    <wsdl:part name=\\\"ZIP\\\" type=\\\"s:string\\\" />\\r\\n  </wsdl:message>\\r\\n  <wsdl:message name=\\\"GetCityForecastByZIPHttpGetOut\\\">\\r\\n    <wsdl:part name=\\\"Body\\\" element=\\\"tns:ForecastReturn\\\" />\\r\\n  </wsdl:message>\\r\\n  <wsdl:message name=\\\"GetCityWeatherByZIPHttpGetIn\\\">\\r\\n    <wsdl:part name=\\\"ZIP\\\" type=\\\"s:string\\\" />\\r\\n  </wsdl:message>\\r\\n  <wsdl:message name=\\\"GetCityWeatherByZIPHttpGetOut\\\">\\r\\n    <wsdl:part name=\\\"Body\\\" element=\\\"tns:WeatherReturn\\\" />\\r\\n  </wsdl:message>\\r\\n  <wsdl:message name=\\\"GetWeatherInformationHttpPostIn\\\" />\\r\\n  <wsdl:message name=\\\"GetWeatherInformationHttpPostOut\\\">\\r\\n    <wsdl:part name=\\\"Body\\\" element=\\\"tns:ArrayOfWeatherDescription\\\" />\\r\\n  </wsdl:message>\\r\\n  <wsdl:message name=\\\"GetCityForecastByZIPHttpPostIn\\\">\\r\\n    <wsdl:part name=\\\"ZIP\\\" type=\\\"s:string\\\" />\\r\\n  </wsdl:message>\\r\\n  <wsdl:message name=\\\"GetCityForecastByZIPHttpPostOut\\\">\\r\\n    <wsdl:part name=\\\"Body\\\" element=\\\"tns:ForecastReturn\\\" />\\r\\n  </wsdl:message>\\r\\n  <wsdl:message name=\\\"GetCityWeatherByZIPHttpPostIn\\\">\\r\\n    <wsdl:part name=\\\"ZIP\\\" type=\\\"s:string\\\" />\\r\\n  </wsdl:message>\\r\\n  <wsdl:message name=\\\"GetCityWeatherByZIPHttpPostOut\\\">\\r\\n    <wsdl:part name=\\\"Body\\\" element=\\\"tns:WeatherReturn\\\" />\\r\\n  </wsdl:message>\\r\\n  <wsdl:portType name=\\\"WeatherSoap\\\">\\r\\n    <wsdl:operation name=\\\"GetWeatherInformation\\\">\\r\\n      <wsdl:documentation xmlns:wsdl=\\\"http://schemas.xmlsoap.org/wsdl/\\\">Gets Information for each WeatherID</wsdl:documentation>\\r\\n      <wsdl:input message=\\\"tns:GetWeatherInformationSoapIn\\\" />\\r\\n      <wsdl:output message=\\\"tns:GetWeatherInformationSoapOut\\\" />\\r\\n    </wsdl:operation>\\r\\n    <wsdl:operation name=\\\"GetCityForecastByZIP\\\">\\r\\n      <wsdl:documentation xmlns:wsdl=\\\"http://schemas.xmlsoap.org/wsdl/\\\">Allows you to get your City Forecast Over the Next 7 Days, which is updated hourly. U.S. Only</wsdl:documentation>\\r\\n      <wsdl:input message=\\\"tns:GetCityForecastByZIPSoapIn\\\" />\\r\\n      <wsdl:output message=\\\"tns:GetCityForecastByZIPSoapOut\\\" />\\r\\n    </wsdl:operation>\\r\\n    <wsdl:operation name=\\\"GetCityWeatherByZIP\\\">\\r\\n      <wsdl:documentation xmlns:wsdl=\\\"http://schemas.xmlsoap.org/wsdl/\\\">Allows you to get your City's Weather, which is updated hourly. U.S. Only</wsdl:documentation>\\r\\n      <wsdl:input message=\\\"tns:GetCityWeatherByZIPSoapIn\\\" />\\r\\n      <wsdl:output message=\\\"tns:GetCityWeatherByZIPSoapOut\\\" />\\r\\n    </wsdl:operation>\\r\\n  </wsdl:portType>\\r\\n  <wsdl:portType name=\\\"WeatherHttpGet\\\">\\r\\n    <wsdl:operation name=\\\"GetWeatherInformation\\\">\\r\\n      <wsdl:documentation xmlns:wsdl=\\\"http://schemas.xmlsoap.org/wsdl/\\\">Gets Information for each WeatherID</wsdl:documentation>\\r\\n      <wsdl:input message=\\\"tns:GetWeatherInformationHttpGetIn\\\" />\\r\\n      <wsdl:output message=\\\"tns:GetWeatherInformationHttpGetOut\\\" />\\r\\n    </wsdl:operation>\\r\\n    <wsdl:operation name=\\\"GetCityForecastByZIP\\\">\\r\\n      <wsdl:documentation xmlns:wsdl=\\\"http://schemas.xmlsoap.org/wsdl/\\\">Allows you to get your City Forecast Over the Next 7 Days, which is updated hourly. U.S. Only</wsdl:documentation>\\r\\n      <wsdl:input message=\\\"tns:GetCityForecastByZIPHttpGetIn\\\" />\\r\\n      <wsdl:output message=\\\"tns:GetCityForecastByZIPHttpGetOut\\\" />\\r\\n    </wsdl:operation>\\r\\n    <wsdl:operation name=\\\"GetCityWeatherByZIP\\\">\\r\\n      <wsdl:documentation xmlns:wsdl=\\\"http://schemas.xmlsoap.org/wsdl/\\\">Allows you to get your City's Weather, which is updated hourly. U.S. Only</wsdl:documentation>\\r\\n      <wsdl:input message=\\\"tns:GetCityWeatherByZIPHttpGetIn\\\" />\\r\\n      <wsdl:output message=\\\"tns:GetCityWeatherByZIPHttpGetOut\\\" />\\r\\n    </wsdl:operation>\\r\\n  </wsdl:portType>\\r\\n  <wsdl:portType name=\\\"WeatherHttpPost\\\">\\r\\n    <wsdl:operation name=\\\"GetWeatherInformation\\\">\\r\\n      <wsdl:documentation xmlns:wsdl=\\\"http://schemas.xmlsoap.org/wsdl/\\\">Gets Information for each WeatherID</wsdl:documentation>\\r\\n      <wsdl:input message=\\\"tns:GetWeatherInformationHttpPostIn\\\" />\\r\\n      <wsdl:output message=\\\"tns:GetWeatherInformationHttpPostOut\\\" />\\r\\n    </wsdl:operation>\\r\\n    <wsdl:operation name=\\\"GetCityForecastByZIP\\\">\\r\\n      <wsdl:documentation xmlns:wsdl=\\\"http://schemas.xmlsoap.org/wsdl/\\\">Allows you to get your City Forecast Over the Next 7 Days, which is updated hourly. U.S. Only</wsdl:documentation>\\r\\n      <wsdl:input message=\\\"tns:GetCityForecastByZIPHttpPostIn\\\" />\\r\\n      <wsdl:output message=\\\"tns:GetCityForecastByZIPHttpPostOut\\\" />\\r\\n    </wsdl:operation>\\r\\n    <wsdl:operation name=\\\"GetCityWeatherByZIP\\\">\\r\\n      <wsdl:documentation xmlns:wsdl=\\\"http://schemas.xmlsoap.org/wsdl/\\\">Allows you to get your City's Weather, which is updated hourly. U.S. Only</wsdl:documentation>\\r\\n      <wsdl:input message=\\\"tns:GetCityWeatherByZIPHttpPostIn\\\" />\\r\\n      <wsdl:output message=\\\"tns:GetCityWeatherByZIPHttpPostOut\\\" />\\r\\n    </wsdl:operation>\\r\\n  </wsdl:portType>\\r\\n  <wsdl:binding name=\\\"WeatherSoap\\\" type=\\\"tns:WeatherSoap\\\">\\r\\n    <soap:binding transport=\\\"http://schemas.xmlsoap.org/soap/http\\\" />\\r\\n    <wsdl:operation name=\\\"GetWeatherInformation\\\">\\r\\n      <soap:operation soapAction=\\\"http://ws.cdyne.com/WeatherWS/GetWeatherInformation\\\" style=\\\"document\\\" />\\r\\n      <wsdl:input>\\r\\n        <soap:body use=\\\"literal\\\" />\\r\\n      </wsdl:input>\\r\\n      <wsdl:output>\\r\\n        <soap:body use=\\\"literal\\\" />\\r\\n      </wsdl:output>\\r\\n    </wsdl:operation>\\r\\n    <wsdl:operation name=\\\"GetCityForecastByZIP\\\">\\r\\n      <soap:operation soapAction=\\\"http://ws.cdyne.com/WeatherWS/GetCityForecastByZIP\\\" style=\\\"document\\\" />\\r\\n      <wsdl:input>\\r\\n        <soap:body use=\\\"literal\\\" />\\r\\n      </wsdl:input>\\r\\n      <wsdl:output>\\r\\n        <soap:body use=\\\"literal\\\" />\\r\\n      </wsdl:output>\\r\\n    </wsdl:operation>\\r\\n    <wsdl:operation name=\\\"GetCityWeatherByZIP\\\">\\r\\n      <soap:operation soapAction=\\\"http://ws.cdyne.com/WeatherWS/GetCityWeatherByZIP\\\" style=\\\"document\\\" />\\r\\n      <wsdl:input>\\r\\n        <soap:body use=\\\"literal\\\" />\\r\\n      </wsdl:input>\\r\\n      <wsdl:output>\\r\\n        <soap:body use=\\\"literal\\\" />\\r\\n      </wsdl:output>\\r\\n    </wsdl:operation>\\r\\n  </wsdl:binding>\\r\\n  <wsdl:binding name=\\\"WeatherSoap12\\\" type=\\\"tns:WeatherSoap\\\">\\r\\n    <soap12:binding transport=\\\"http://schemas.xmlsoap.org/soap/http\\\" />\\r\\n    <wsdl:operation name=\\\"GetWeatherInformation\\\">\\r\\n      <soap12:operation soapAction=\\\"http://ws.cdyne.com/WeatherWS/GetWeatherInformation\\\" style=\\\"document\\\" />\\r\\n      <wsdl:input>\\r\\n        <soap12:body use=\\\"literal\\\" />\\r\\n      </wsdl:input>\\r\\n      <wsdl:output>\\r\\n        <soap12:body use=\\\"literal\\\" />\\r\\n      </wsdl:output>\\r\\n    </wsdl:operation>\\r\\n    <wsdl:operation name=\\\"GetCityForecastByZIP\\\">\\r\\n      <soap12:operation soapAction=\\\"http://ws.cdyne.com/WeatherWS/GetCityForecastByZIP\\\" style=\\\"document\\\" />\\r\\n      <wsdl:input>\\r\\n        <soap12:body use=\\\"literal\\\" />\\r\\n      </wsdl:input>\\r\\n      <wsdl:output>\\r\\n        <soap12:body use=\\\"literal\\\" />\\r\\n      </wsdl:output>\\r\\n    </wsdl:operation>\\r\\n    <wsdl:operation name=\\\"GetCityWeatherByZIP\\\">\\r\\n      <soap12:operation soapAction=\\\"http://ws.cdyne.com/WeatherWS/GetCityWeatherByZIP\\\" style=\\\"document\\\" />\\r\\n      <wsdl:input>\\r\\n        <soap12:body use=\\\"literal\\\" />\\r\\n      </wsdl:input>\\r\\n      <wsdl:output>\\r\\n        <soap12:body use=\\\"literal\\\" />\\r\\n      </wsdl:output>\\r\\n    </wsdl:operation>\\r\\n  </wsdl:binding>\\r\\n  <wsdl:binding name=\\\"WeatherHttpGet\\\" type=\\\"tns:WeatherHttpGet\\\">\\r\\n    <http:binding verb=\\\"GET\\\" />\\r\\n    <wsdl:operation name=\\\"GetWeatherInformation\\\">\\r\\n      <http:operation location=\\\"/GetWeatherInformation\\\" />\\r\\n      <wsdl:input>\\r\\n        <http:urlEncoded />\\r\\n      </wsdl:input>\\r\\n      <wsdl:output>\\r\\n        <mime:mimeXml part=\\\"Body\\\" />\\r\\n      </wsdl:output>\\r\\n    </wsdl:operation>\\r\\n    <wsdl:operation name=\\\"GetCityForecastByZIP\\\">\\r\\n      <http:operation location=\\\"/GetCityForecastByZIP\\\" />\\r\\n      <wsdl:input>\\r\\n        <http:urlEncoded />\\r\\n      </wsdl:input>\\r\\n      <wsdl:output>\\r\\n        <mime:mimeXml part=\\\"Body\\\" />\\r\\n      </wsdl:output>\\r\\n    </wsdl:operation>\\r\\n    <wsdl:operation name=\\\"GetCityWeatherByZIP\\\">\\r\\n      <http:operation location=\\\"/GetCityWeatherByZIP\\\" />\\r\\n      <wsdl:input>\\r\\n        <http:urlEncoded />\\r\\n      </wsdl:input>\\r\\n      <wsdl:output>\\r\\n        <mime:mimeXml part=\\\"Body\\\" />\\r\\n      </wsdl:output>\\r\\n    </wsdl:operation>\\r\\n  </wsdl:binding>\\r\\n  <wsdl:binding name=\\\"WeatherHttpPost\\\" type=\\\"tns:WeatherHttpPost\\\">\\r\\n    <http:binding verb=\\\"POST\\\" />\\r\\n    <wsdl:operation name=\\\"GetWeatherInformation\\\">\\r\\n      <http:operation location=\\\"/GetWeatherInformation\\\" />\\r\\n      <wsdl:input>\\r\\n        <mime:content type=\\\"application/x-www-form-urlencoded\\\" />\\r\\n      </wsdl:input>\\r\\n      <wsdl:output>\\r\\n        <mime:mimeXml part=\\\"Body\\\" />\\r\\n      </wsdl:output>\\r\\n    </wsdl:operation>\\r\\n    <wsdl:operation name=\\\"GetCityForecastByZIP\\\">\\r\\n      <http:operation location=\\\"/GetCityForecastByZIP\\\" />\\r\\n      <wsdl:input>\\r\\n        <mime:content type=\\\"application/x-www-form-urlencoded\\\" />\\r\\n      </wsdl:input>\\r\\n      <wsdl:output>\\r\\n        <mime:mimeXml part=\\\"Body\\\" />\\r\\n      </wsdl:output>\\r\\n    </wsdl:operation>\\r\\n    <wsdl:operation name=\\\"GetCityWeatherByZIP\\\">\\r\\n      <http:operation location=\\\"/GetCityWeatherByZIP\\\" />\\r\\n      <wsdl:input>\\r\\n        <mime:content type=\\\"application/x-www-form-urlencoded\\\" />\\r\\n      </wsdl:input>\\r\\n      <wsdl:output>\\r\\n        <mime:mimeXml part=\\\"Body\\\" />\\r\\n      </wsdl:output>\\r\\n    </wsdl:operation>\\r\\n  </wsdl:binding>\\r\\n  <wsdl:service name=\\\"Weather\\\">\\r\\n    <wsdl:port name=\\\"WeatherSoap\\\" binding=\\\"tns:WeatherSoap\\\">\\r\\n      <soap:address location=\\\"http://wsf.cdyne.com/WeatherWS/Weather.asmx\\\" />\\r\\n    </wsdl:port>\\r\\n    <wsdl:port name=\\\"WeatherSoap12\\\" binding=\\\"tns:WeatherSoap12\\\">\\r\\n      <soap12:address location=\\\"http://wsf.cdyne.com/WeatherWS/Weather.asmx\\\" />\\r\\n    </wsdl:port>\\r\\n    <wsdl:port name=\\\"WeatherHttpGet\\\" binding=\\\"tns:WeatherHttpGet\\\">\\r\\n      <http:address location=\\\"http://wsf.cdyne.com/WeatherWS/Weather.asmx\\\" />\\r\\n    </wsdl:port>\\r\\n    <wsdl:port name=\\\"WeatherHttpPost\\\" binding=\\\"tns:WeatherHttpPost\\\">\\r\\n      <http:address location=\\\"http://wsf.cdyne.com/WeatherWS/Weather.asmx\\\" />\\r\\n    </wsdl:port>\\r\\n  </wsdl:service>\\r\\n</wsdl:definitions>\",\r\n    \"format\": \"wsdl\",\r\n    \"wsdlSelector\": {\r\n      \"wsdlServiceName\": \"Weather\",\r\n      \"wsdlEndpointName\": \"WeatherSoap\"\r\n    },\r\n    \"apiType\": \"soap\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "ef625ad4-3183-4382-b2e6-fd0b049f8de4"
+          "d3f081cc-4b10-48f1-821d-2207b564397a"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27817.03",
+          "FxVersion/4.6.29812.02",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/5.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/7.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -172,13 +172,16 @@
           "no-cache"
         ],
         "Location": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/74f34d9c-50ed-4d7a-a1a8-88d2aed13ac3/resourceGroups/ApiM-SDK-EastUS/providers/Microsoft.ApiManagement/service/sdktestservicemapi/apis/aid6809?api-version=2019-12-01&asyncId=5e7bab0f07b43d0e387945de&asyncCode=201"
+          "https://management.azure.com/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/aid2159?api-version=2020-12-01&asyncId=606f8d7e0dcb2d0bc8115e95&asyncCode=201"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
         "x-ms-request-id": [
-          "2bbee3f3-f6af-48ba-a228-b53f155c660c"
+          "a60373b1-68c0-4eac-85d9-cf2c8e20532d"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -187,16 +190,13 @@
           "1198"
         ],
         "x-ms-correlation-request-id": [
-          "e8fbfbfa-7f23-4d24-b7d0-820d6e999bd9"
+          "08b2ffe0-29ef-42bf-b607-4f2941143dde"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20200325T190343Z:e8fbfbfa-7f23-4d24-b7d0-820d6e999bd9"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
+          "WESTCENTRALUS:20210408T231054Z:08b2ffe0-29ef-42bf-b607-4f2941143dde"
         ],
         "Date": [
-          "Wed, 25 Mar 2020 19:03:43 GMT"
+          "Thu, 08 Apr 2021 23:10:53 GMT"
         ],
         "Expires": [
           "-1"
@@ -209,16 +209,16 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/74f34d9c-50ed-4d7a-a1a8-88d2aed13ac3/resourceGroups/ApiM-SDK-EastUS/providers/Microsoft.ApiManagement/service/sdktestservicemapi/apis/aid6809?api-version=2019-12-01&asyncId=5e7bab0f07b43d0e387945de&asyncCode=201",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzRmMzRkOWMtNTBlZC00ZDdhLWExYTgtODhkMmFlZDEzYWMzL3Jlc291cmNlR3JvdXBzL0FwaU0tU0RLLUVhc3RVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZW1hcGkvYXBpcy9haWQ2ODA5P2FwaS12ZXJzaW9uPTIwMTktMTItMDEmYXN5bmNJZD01ZTdiYWIwZjA3YjQzZDBlMzg3OTQ1ZGUmYXN5bmNDb2RlPTIwMQ==",
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/aid2159?api-version=2020-12-01&asyncId=606f8d7e0dcb2d0bc8115e95&asyncCode=201",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2FpZDIxNTk/YXBpLXZlcnNpb249MjAyMC0xMi0wMSZhc3luY0lkPTYwNmY4ZDdlMGRjYjJkMGJjODExNWU5NSZhc3luY0NvZGU9MjAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.27817.03",
+          "FxVersion/4.6.29812.02",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/5.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/7.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -229,34 +229,34 @@
           "no-cache"
         ],
         "ETag": [
-          "\"AAAAAAAANB0=\""
+          "\"AAAAAAAAdb4=\""
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
         "x-ms-request-id": [
-          "79027f44-28fd-41ab-9b9e-c3d39afec412"
+          "a50ba54e-a928-4c22-80aa-f39ea1130fe2"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14998"
+          "11998"
         ],
         "x-ms-correlation-request-id": [
-          "5b1da155-6920-42ed-8386-971d69ee1687"
+          "cd6790f2-eca6-4b50-b6ec-9b9a36d5b949"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20200325T190414Z:5b1da155-6920-42ed-8386-971d69ee1687"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
+          "WESTCENTRALUS:20210408T231124Z:cd6790f2-eca6-4b50-b6ec-9b9a36d5b949"
         ],
         "Date": [
-          "Wed, 25 Mar 2020 19:04:13 GMT"
+          "Thu, 08 Apr 2021 23:11:24 GMT"
         ],
         "Content-Length": [
-          "782"
+          "784"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -265,26 +265,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/74f34d9c-50ed-4d7a-a1a8-88d2aed13ac3/resourceGroups/ApiM-SDK-EastUS/providers/Microsoft.ApiManagement/service/sdktestservicemapi/apis/aid6809\",\r\n  \"type\": \"Microsoft.ApiManagement/service/apis\",\r\n  \"name\": \"aid6809\",\r\n  \"properties\": {\r\n    \"displayName\": \"Weather\",\r\n    \"apiRevision\": \"1\",\r\n    \"description\": null,\r\n    \"subscriptionRequired\": true,\r\n    \"serviceUrl\": \"http://wsf.cdyne.com/WeatherWS/Weather.asmx\",\r\n    \"path\": \"weatherapi\",\r\n    \"protocols\": [\r\n      \"https\"\r\n    ],\r\n    \"authenticationSettings\": {\r\n      \"oAuth2\": null,\r\n      \"openid\": null\r\n    },\r\n    \"subscriptionKeyParameterNames\": {\r\n      \"header\": \"Ocp-Apim-Subscription-Key\",\r\n      \"query\": \"subscription-key\"\r\n    },\r\n    \"type\": \"soap\",\r\n    \"isCurrent\": true\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/aid2159\",\r\n  \"type\": \"Microsoft.ApiManagement/service/apis\",\r\n  \"name\": \"aid2159\",\r\n  \"properties\": {\r\n    \"displayName\": \"Weather\",\r\n    \"apiRevision\": \"1\",\r\n    \"description\": null,\r\n    \"subscriptionRequired\": true,\r\n    \"serviceUrl\": \"http://wsf.cdyne.com/WeatherWS/Weather.asmx\",\r\n    \"path\": \"weatherapi\",\r\n    \"protocols\": [\r\n      \"https\"\r\n    ],\r\n    \"authenticationSettings\": {\r\n      \"oAuth2\": null,\r\n      \"openid\": null\r\n    },\r\n    \"subscriptionKeyParameterNames\": {\r\n      \"header\": \"Ocp-Apim-Subscription-Key\",\r\n      \"query\": \"subscription-key\"\r\n    },\r\n    \"type\": \"soap\",\r\n    \"isCurrent\": true\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/74f34d9c-50ed-4d7a-a1a8-88d2aed13ac3/resourceGroups/ApiM-SDK-EastUS/providers/Microsoft.ApiManagement/service/sdktestservicemapi/apis/aid6809?api-version=2019-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzRmMzRkOWMtNTBlZC00ZDdhLWExYTgtODhkMmFlZDEzYWMzL3Jlc291cmNlR3JvdXBzL0FwaU0tU0RLLUVhc3RVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZW1hcGkvYXBpcy9haWQ2ODA5P2FwaS12ZXJzaW9uPTIwMTktMTItMDE=",
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/aid2159?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2FpZDIxNTk/YXBpLXZlcnNpb249MjAyMC0xMi0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "c33f52ab-b676-458b-8caa-dbd7b9a13843"
+          "0e6cff85-b22e-4b3d-aee9-87ffacb0042a"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27817.03",
+          "FxVersion/4.6.29812.02",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/5.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/7.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -295,34 +295,34 @@
           "no-cache"
         ],
         "ETag": [
-          "\"AAAAAAAANB0=\""
+          "\"AAAAAAAAdb4=\""
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
         "x-ms-request-id": [
-          "08af7224-0c3a-4fdd-951c-447212aeab91"
+          "fc99b2b4-8a3e-4dfd-bfcc-14f2177aa42a"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14997"
+          "11997"
         ],
         "x-ms-correlation-request-id": [
-          "07bf60c1-4f3f-4139-bbb7-4f9976a01acd"
+          "b572bb66-0b16-4ea7-8fc0-bd28dac5edf4"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20200325T190414Z:07bf60c1-4f3f-4139-bbb7-4f9976a01acd"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
+          "WESTCENTRALUS:20210408T231124Z:b572bb66-0b16-4ea7-8fc0-bd28dac5edf4"
         ],
         "Date": [
-          "Wed, 25 Mar 2020 19:04:14 GMT"
+          "Thu, 08 Apr 2021 23:11:24 GMT"
         ],
         "Content-Length": [
-          "782"
+          "784"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -331,17 +331,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/74f34d9c-50ed-4d7a-a1a8-88d2aed13ac3/resourceGroups/ApiM-SDK-EastUS/providers/Microsoft.ApiManagement/service/sdktestservicemapi/apis/aid6809\",\r\n  \"type\": \"Microsoft.ApiManagement/service/apis\",\r\n  \"name\": \"aid6809\",\r\n  \"properties\": {\r\n    \"displayName\": \"Weather\",\r\n    \"apiRevision\": \"1\",\r\n    \"description\": null,\r\n    \"subscriptionRequired\": true,\r\n    \"serviceUrl\": \"http://wsf.cdyne.com/WeatherWS/Weather.asmx\",\r\n    \"path\": \"weatherapi\",\r\n    \"protocols\": [\r\n      \"https\"\r\n    ],\r\n    \"authenticationSettings\": {\r\n      \"oAuth2\": null,\r\n      \"openid\": null\r\n    },\r\n    \"subscriptionKeyParameterNames\": {\r\n      \"header\": \"Ocp-Apim-Subscription-Key\",\r\n      \"query\": \"subscription-key\"\r\n    },\r\n    \"type\": \"soap\",\r\n    \"isCurrent\": true\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/aid2159\",\r\n  \"type\": \"Microsoft.ApiManagement/service/apis\",\r\n  \"name\": \"aid2159\",\r\n  \"properties\": {\r\n    \"displayName\": \"Weather\",\r\n    \"apiRevision\": \"1\",\r\n    \"description\": null,\r\n    \"subscriptionRequired\": true,\r\n    \"serviceUrl\": \"http://wsf.cdyne.com/WeatherWS/Weather.asmx\",\r\n    \"path\": \"weatherapi\",\r\n    \"protocols\": [\r\n      \"https\"\r\n    ],\r\n    \"authenticationSettings\": {\r\n      \"oAuth2\": null,\r\n      \"openid\": null\r\n    },\r\n    \"subscriptionKeyParameterNames\": {\r\n      \"header\": \"Ocp-Apim-Subscription-Key\",\r\n      \"query\": \"subscription-key\"\r\n    },\r\n    \"type\": \"soap\",\r\n    \"isCurrent\": true\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/74f34d9c-50ed-4d7a-a1a8-88d2aed13ac3/resourceGroups/ApiM-SDK-EastUS/providers/Microsoft.ApiManagement/service/sdktestservicemapi/apis/aid6809?api-version=2019-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzRmMzRkOWMtNTBlZC00ZDdhLWExYTgtODhkMmFlZDEzYWMzL3Jlc291cmNlR3JvdXBzL0FwaU0tU0RLLUVhc3RVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZW1hcGkvYXBpcy9haWQ2ODA5P2FwaS12ZXJzaW9uPTIwMTktMTItMDE=",
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/aid2159?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2FpZDIxNTk/YXBpLXZlcnNpb249MjAyMC0xMi0wMQ==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "775c5144-bce5-4f65-a406-f846d9085412"
+          "7207c904-01df-475a-974c-14919c6e1414"
         ],
         "If-Match": [
           "*"
@@ -350,10 +350,10 @@
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27817.03",
+          "FxVersion/4.6.29812.02",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/5.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/7.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -366,8 +366,11 @@
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
         "x-ms-request-id": [
-          "f97f784f-602d-4c23-849f-cfcd15479ece"
+          "6a9bb6d2-ea2a-4f71-9bdd-5ea673e1b14f"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -376,16 +379,13 @@
           "14999"
         ],
         "x-ms-correlation-request-id": [
-          "9da42fb7-ae3f-4d5e-b919-fd69e2b61e16"
+          "088ce28c-5823-4e7e-99fc-5e2ad66eca4e"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20200325T190415Z:9da42fb7-ae3f-4d5e-b919-fd69e2b61e16"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
+          "WESTCENTRALUS:20210408T231124Z:088ce28c-5823-4e7e-99fc-5e2ad66eca4e"
         ],
         "Date": [
-          "Wed, 25 Mar 2020 19:04:14 GMT"
+          "Thu, 08 Apr 2021 23:11:24 GMT"
         ],
         "Expires": [
           "-1"
@@ -400,16 +400,16 @@
   ],
   "Names": {
     "WsdlTest": [
-      "aid6809"
+      "aid2159"
     ]
   },
   "Variables": {
-    "SubscriptionId": "74f34d9c-50ed-4d7a-a1a8-88d2aed13ac3",
+    "SubscriptionId": "bab08e11-7b12-4354-9fd1-4b5d64d40b68",
     "TestCertificate": "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",
     "TestCertificatePassword": "Password",
-    "SubId": "74f34d9c-50ed-4d7a-a1a8-88d2aed13ac3",
-    "ServiceName": "sdktestservicemapi",
-    "Location": "eastus",
-    "ResourceGroup": "ApiM-SDK-EastUS"
+    "SubId": "bab08e11-7b12-4354-9fd1-4b5d64d40b68",
+    "ServiceName": "sdktestservice",
+    "Location": "CentralUS",
+    "ResourceGroup": "Api-Default-CentralUS"
   }
 }

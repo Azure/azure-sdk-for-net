@@ -39,11 +39,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// upload Batch Service log file(s).</param>
         /// <param name="endTime">The end of the time range from which to
         /// upload Batch Service log file(s).</param>
-        public UploadBatchServiceLogsConfiguration(string containerUrl, System.DateTime startTime, System.DateTime? endTime = default(System.DateTime?))
+        /// <param name="identityReference">The reference to the user assigned
+        /// identity to use to access Azure Blob Storage specified by
+        /// containerUrl.</param>
+        public UploadBatchServiceLogsConfiguration(string containerUrl, System.DateTime startTime, System.DateTime? endTime = default(System.DateTime?), ComputeNodeIdentityReference identityReference = default(ComputeNodeIdentityReference))
         {
             ContainerUrl = containerUrl;
             StartTime = startTime;
             EndTime = endTime;
+            IdentityReference = identityReference;
             CustomInit();
         }
 
@@ -57,10 +61,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// which to upload the Batch Service log file(s).
         /// </summary>
         /// <remarks>
-        /// The URL must include a Shared Access Signature (SAS) granting write
-        /// permissions to the container. The SAS duration must allow enough
-        /// time for the upload to finish. The start time for SAS is optional
-        /// and recommended to not be specified.
+        /// If a user assigned managed identity is not being used, the URL must
+        /// include a Shared Access Signature (SAS) granting write permissions
+        /// to the container. The SAS duration must allow enough time for the
+        /// upload to finish. The start time for SAS is optional and
+        /// recommended to not be specified.
         /// </remarks>
         [JsonProperty(PropertyName = "containerUrl")]
         public string ContainerUrl { get; set; }
@@ -93,6 +98,17 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </remarks>
         [JsonProperty(PropertyName = "endTime")]
         public System.DateTime? EndTime { get; set; }
+
+        /// <summary>
+        /// Gets or sets the reference to the user assigned identity to use to
+        /// access Azure Blob Storage specified by containerUrl.
+        /// </summary>
+        /// <remarks>
+        /// The identity must have write access to the Azure Blob Storage
+        /// container.
+        /// </remarks>
+        [JsonProperty(PropertyName = "identityReference")]
+        public ComputeNodeIdentityReference IdentityReference { get; set; }
 
     }
 }

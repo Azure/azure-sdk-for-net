@@ -15,17 +15,17 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ImageReference != null)
+            if (Optional.IsDefined(ImageReference))
             {
                 writer.WritePropertyName("imageReference");
                 writer.WriteObjectValue(ImageReference);
             }
-            if (OsDisk != null)
+            if (Optional.IsDefined(OsDisk))
             {
                 writer.WritePropertyName("osDisk");
                 writer.WriteObjectValue(OsDisk);
             }
-            if (DataDisks != null)
+            if (Optional.IsCollectionDefined(DataDisks))
             {
                 writer.WritePropertyName("dataDisks");
                 writer.WriteStartArray();

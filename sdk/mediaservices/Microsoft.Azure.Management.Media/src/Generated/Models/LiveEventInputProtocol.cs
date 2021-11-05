@@ -27,8 +27,16 @@ namespace Microsoft.Azure.Management.Media.Models
             UnderlyingValue=underlyingValue;
         }
 
+        /// <summary>
+        /// Smooth Streaming input will be sent by the contribution encoder to
+        /// the live event.
+        /// </summary>
         public static readonly LiveEventInputProtocol FragmentedMP4 = "FragmentedMP4";
 
+        /// <summary>
+        /// RTMP input will be sent by the contribution encoder to the live
+        /// event.
+        /// </summary>
         public static readonly LiveEventInputProtocol RTMP = "RTMP";
 
 

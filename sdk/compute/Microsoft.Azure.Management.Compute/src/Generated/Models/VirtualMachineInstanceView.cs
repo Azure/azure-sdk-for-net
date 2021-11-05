@@ -52,6 +52,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// status on the virtual machine.</param>
         /// <param name="disks">The virtual machine disk information.</param>
         /// <param name="extensions">The extensions information.</param>
+        /// <param name="vmHealth">The health status for the VM.</param>
         /// <param name="bootDiagnostics">Boot Diagnostics is a debugging
         /// feature which allows you to view Console Output and Screenshot to
         /// diagnose VM status. &lt;br&gt;&lt;br&gt; You can easily view the
@@ -63,7 +64,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// that has automatic placement enabled. &lt;br&gt;&lt;br&gt;Minimum
         /// api-version: 2020-06-01.</param>
         /// <param name="statuses">The resource status information.</param>
-        public VirtualMachineInstanceView(int? platformUpdateDomain = default(int?), int? platformFaultDomain = default(int?), string computerName = default(string), string osName = default(string), string osVersion = default(string), string hyperVGeneration = default(string), string rdpThumbPrint = default(string), VirtualMachineAgentInstanceView vmAgent = default(VirtualMachineAgentInstanceView), MaintenanceRedeployStatus maintenanceRedeployStatus = default(MaintenanceRedeployStatus), IList<DiskInstanceView> disks = default(IList<DiskInstanceView>), IList<VirtualMachineExtensionInstanceView> extensions = default(IList<VirtualMachineExtensionInstanceView>), BootDiagnosticsInstanceView bootDiagnostics = default(BootDiagnosticsInstanceView), string assignedHost = default(string), IList<InstanceViewStatus> statuses = default(IList<InstanceViewStatus>))
+        /// <param name="patchStatus">[Preview Feature] The status of virtual
+        /// machine patch operations.</param>
+        public VirtualMachineInstanceView(int? platformUpdateDomain = default(int?), int? platformFaultDomain = default(int?), string computerName = default(string), string osName = default(string), string osVersion = default(string), string hyperVGeneration = default(string), string rdpThumbPrint = default(string), VirtualMachineAgentInstanceView vmAgent = default(VirtualMachineAgentInstanceView), MaintenanceRedeployStatus maintenanceRedeployStatus = default(MaintenanceRedeployStatus), IList<DiskInstanceView> disks = default(IList<DiskInstanceView>), IList<VirtualMachineExtensionInstanceView> extensions = default(IList<VirtualMachineExtensionInstanceView>), VirtualMachineHealthStatus vmHealth = default(VirtualMachineHealthStatus), BootDiagnosticsInstanceView bootDiagnostics = default(BootDiagnosticsInstanceView), string assignedHost = default(string), IList<InstanceViewStatus> statuses = default(IList<InstanceViewStatus>), VirtualMachinePatchStatus patchStatus = default(VirtualMachinePatchStatus))
         {
             PlatformUpdateDomain = platformUpdateDomain;
             PlatformFaultDomain = platformFaultDomain;
@@ -76,9 +79,11 @@ namespace Microsoft.Azure.Management.Compute.Models
             MaintenanceRedeployStatus = maintenanceRedeployStatus;
             Disks = disks;
             Extensions = extensions;
+            VmHealth = vmHealth;
             BootDiagnostics = bootDiagnostics;
             AssignedHost = assignedHost;
             Statuses = statuses;
+            PatchStatus = patchStatus;
             CustomInit();
         }
 
@@ -157,6 +162,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         public IList<VirtualMachineExtensionInstanceView> Extensions { get; set; }
 
         /// <summary>
+        /// Gets the health status for the VM.
+        /// </summary>
+        [JsonProperty(PropertyName = "vmHealth")]
+        public VirtualMachineHealthStatus VmHealth { get; private set; }
+
+        /// <summary>
         /// Gets or sets boot Diagnostics is a debugging feature which allows
         /// you to view Console Output and Screenshot to diagnose VM status.
         /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; You can easily view the output
@@ -182,6 +193,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "statuses")]
         public IList<InstanceViewStatus> Statuses { get; set; }
+
+        /// <summary>
+        /// Gets or sets [Preview Feature] The status of virtual machine patch
+        /// operations.
+        /// </summary>
+        [JsonProperty(PropertyName = "patchStatus")]
+        public VirtualMachinePatchStatus PatchStatus { get; set; }
 
     }
 }

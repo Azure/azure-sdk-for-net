@@ -82,6 +82,11 @@ namespace Microsoft.Azure.Management.HybridCompute
         public virtual IMachinesOperations Machines { get; private set; }
 
         /// <summary>
+        /// Gets the IMachineExtensionsOperations.
+        /// </summary>
+        public virtual IMachineExtensionsOperations MachineExtensions { get; private set; }
+
+        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         public virtual IOperations Operations { get; private set; }
@@ -328,9 +333,10 @@ namespace Microsoft.Azure.Management.HybridCompute
         private void Initialize()
         {
             Machines = new MachinesOperations(this);
+            MachineExtensions = new MachineExtensionsOperations(this);
             Operations = new Operations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-08-02-preview";
+            ApiVersion = "2020-08-02";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

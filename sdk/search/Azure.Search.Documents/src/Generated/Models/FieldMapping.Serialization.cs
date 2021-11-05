@@ -17,15 +17,22 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             writer.WritePropertyName("sourceFieldName");
             writer.WriteStringValue(SourceFieldName);
-            if (TargetFieldName != null)
+            if (Optional.IsDefined(TargetFieldName))
             {
                 writer.WritePropertyName("targetFieldName");
                 writer.WriteStringValue(TargetFieldName);
             }
-            if (MappingFunction != null)
+            if (Optional.IsDefined(MappingFunction))
             {
-                writer.WritePropertyName("mappingFunction");
-                writer.WriteObjectValue(MappingFunction);
+                if (MappingFunction != null)
+                {
+                    writer.WritePropertyName("mappingFunction");
+                    writer.WriteObjectValue(MappingFunction);
+                }
+                else
+                {
+                    writer.WriteNull("mappingFunction");
+                }
             }
             writer.WriteEndObject();
         }
@@ -33,8 +40,8 @@ namespace Azure.Search.Documents.Indexes.Models
         internal static FieldMapping DeserializeFieldMapping(JsonElement element)
         {
             string sourceFieldName = default;
-            string targetFieldName = default;
-            FieldMappingFunction mappingFunction = default;
+            Optional<string> targetFieldName = default;
+            Optional<FieldMappingFunction> mappingFunction = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceFieldName"))
@@ -44,10 +51,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("targetFieldName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     targetFieldName = property.Value.GetString();
                     continue;
                 }
@@ -55,13 +58,14 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        mappingFunction = null;
                         continue;
                     }
                     mappingFunction = FieldMappingFunction.DeserializeFieldMappingFunction(property.Value);
                     continue;
                 }
             }
-            return new FieldMapping(sourceFieldName, targetFieldName, mappingFunction);
+            return new FieldMapping(sourceFieldName, targetFieldName.Value, mappingFunction.Value);
         }
     }
 }

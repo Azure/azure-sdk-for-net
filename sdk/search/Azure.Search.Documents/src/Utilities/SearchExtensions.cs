@@ -62,7 +62,7 @@ namespace Azure.Search.Documents
         /// <param name="items">The items to join.</param>
         /// <returns>The items joined together by commas.</returns>
         public static string CommaJoin(this IEnumerable<string> items) =>
-            items != null && items.Count() > 0 ? string.Join(",", items) : null;
+            items != null && items.Any() ? string.Join(",", items) : null;
 
         /// <summary>
         /// Split a collection of strings by commas.

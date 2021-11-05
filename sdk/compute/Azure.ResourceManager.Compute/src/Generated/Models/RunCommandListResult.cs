@@ -12,10 +12,11 @@ using System.Linq;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The List Virtual Machine operation response. </summary>
-    public partial class RunCommandListResult
+    internal partial class RunCommandListResult
     {
         /// <summary> Initializes a new instance of RunCommandListResult. </summary>
         /// <param name="value"> The list of virtual machine run commands. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal RunCommandListResult(IEnumerable<RunCommandDocumentBase> value)
         {
             if (value == null)
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.Compute.Models
                 throw new ArgumentNullException(nameof(value));
             }
 
-            Value = value.ToArray();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of RunCommandListResult. </summary>
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="nextLink"> The uri to fetch the next page of run commands. Call ListNext() with this to fetch the next page of run commands. </param>
         internal RunCommandListResult(IReadOnlyList<RunCommandDocumentBase> value, string nextLink)
         {
-            Value = value ?? new List<RunCommandDocumentBase>();
+            Value = value;
             NextLink = nextLink;
         }
 

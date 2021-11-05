@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -15,16 +17,17 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of ListTableServices. </summary>
         internal ListTableServices()
         {
+            Value = new ChangeTrackingList<TableServiceData>();
         }
 
         /// <summary> Initializes a new instance of ListTableServices. </summary>
         /// <param name="value"> List of table services returned. </param>
-        internal ListTableServices(IReadOnlyList<TableServiceProperties> value)
+        internal ListTableServices(IReadOnlyList<TableServiceData> value)
         {
             Value = value;
         }
 
         /// <summary> List of table services returned. </summary>
-        public IReadOnlyList<TableServiceProperties> Value { get; }
+        public IReadOnlyList<TableServiceData> Value { get; }
     }
 }

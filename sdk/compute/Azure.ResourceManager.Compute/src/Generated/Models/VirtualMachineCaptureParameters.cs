@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="vhdPrefix"> The captured virtual hard disk&apos;s name prefix. </param>
         /// <param name="destinationContainerName"> The destination container name. </param>
         /// <param name="overwriteVhds"> Specifies whether to overwrite the destination virtual hard disk, in case of conflict. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vhdPrefix"/> or <paramref name="destinationContainerName"/> is null. </exception>
         public VirtualMachineCaptureParameters(string vhdPrefix, string destinationContainerName, bool overwriteVhds)
         {
             if (vhdPrefix == null)

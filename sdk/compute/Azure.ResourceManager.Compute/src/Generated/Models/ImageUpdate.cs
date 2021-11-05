@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Collections.Generic;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -17,27 +17,13 @@ namespace Azure.ResourceManager.Compute.Models
         {
         }
 
-        /// <summary> Initializes a new instance of ImageUpdate. </summary>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="sourceVirtualMachine"> The source virtual machine from which Image is created. </param>
-        /// <param name="storageProfile"> Specifies the storage settings for the virtual machine disks. </param>
-        /// <param name="provisioningState"> The provisioning state. </param>
-        /// <param name="hyperVGeneration"> Gets the HyperVGenerationType of the VirtualMachine created from the image. </param>
-        internal ImageUpdate(IDictionary<string, string> tags, SubResource sourceVirtualMachine, ImageStorageProfile storageProfile, string provisioningState, HyperVGenerationTypes? hyperVGeneration) : base(tags)
-        {
-            SourceVirtualMachine = sourceVirtualMachine;
-            StorageProfile = storageProfile;
-            ProvisioningState = provisioningState;
-            HyperVGeneration = hyperVGeneration;
-        }
-
         /// <summary> The source virtual machine from which Image is created. </summary>
-        public SubResource SourceVirtualMachine { get; set; }
+        public WritableSubResource SourceVirtualMachine { get; set; }
         /// <summary> Specifies the storage settings for the virtual machine disks. </summary>
         public ImageStorageProfile StorageProfile { get; set; }
         /// <summary> The provisioning state. </summary>
         public string ProvisioningState { get; }
-        /// <summary> Gets the HyperVGenerationType of the VirtualMachine created from the image. </summary>
+        /// <summary> Specifies the HyperVGenerationType of the VirtualMachine created from the image. From API Version 2019-03-01 if the image source is a blob, then we need the user to specify the value, if the source is managed resource like disk or snapshot, we may require the user to specify the property if we cannot deduce it from the source managed resource. </summary>
         public HyperVGenerationTypes? HyperVGeneration { get; set; }
     }
 }

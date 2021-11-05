@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of PatchRouteFilterRule. </summary>
         public PatchRouteFilterRule()
         {
-            RouteFilterRuleType = "Community";
+            Communities = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of PatchRouteFilterRule. </summary>
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="routeFilterRuleType"> The rule type of the rule. </param>
         /// <param name="communities"> The collection for bgp community values to filter on. e.g. [&apos;12076:5010&apos;,&apos;12076:5020&apos;]. </param>
         /// <param name="provisioningState"> The provisioning state of the route filter rule resource. </param>
-        internal PatchRouteFilterRule(string id, string name, string etag, Access? access, string routeFilterRuleType, IList<string> communities, ProvisioningState? provisioningState) : base(id)
+        internal PatchRouteFilterRule(string id, string name, string etag, Access? access, RouteFilterRuleType? routeFilterRuleType, IList<string> communities, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -43,9 +44,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The access type of the rule. </summary>
         public Access? Access { get; set; }
         /// <summary> The rule type of the rule. </summary>
-        public string RouteFilterRuleType { get; set; }
+        public RouteFilterRuleType? RouteFilterRuleType { get; set; }
         /// <summary> The collection for bgp community values to filter on. e.g. [&apos;12076:5010&apos;,&apos;12076:5020&apos;]. </summary>
-        public IList<string> Communities { get; set; }
+        public IList<string> Communities { get; }
         /// <summary> The provisioning state of the route filter rule resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }

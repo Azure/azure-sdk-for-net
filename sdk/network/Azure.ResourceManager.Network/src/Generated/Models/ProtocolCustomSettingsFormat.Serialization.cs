@@ -15,22 +15,22 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Protocol != null)
+            if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol");
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (TriggerRateOverride != null)
+            if (Optional.IsDefined(TriggerRateOverride))
             {
                 writer.WritePropertyName("triggerRateOverride");
                 writer.WriteStringValue(TriggerRateOverride);
             }
-            if (SourceRateOverride != null)
+            if (Optional.IsDefined(SourceRateOverride))
             {
                 writer.WritePropertyName("sourceRateOverride");
                 writer.WriteStringValue(SourceRateOverride);
             }
-            if (TriggerSensitivityOverride != null)
+            if (Optional.IsDefined(TriggerSensitivityOverride))
             {
                 writer.WritePropertyName("triggerSensitivityOverride");
                 writer.WriteStringValue(TriggerSensitivityOverride.Value.ToString());
@@ -40,16 +40,17 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ProtocolCustomSettingsFormat DeserializeProtocolCustomSettingsFormat(JsonElement element)
         {
-            DdosCustomPolicyProtocol? protocol = default;
-            string triggerRateOverride = default;
-            string sourceRateOverride = default;
-            DdosCustomPolicyTriggerSensitivityOverride? triggerSensitivityOverride = default;
+            Optional<DdosCustomPolicyProtocol> protocol = default;
+            Optional<string> triggerRateOverride = default;
+            Optional<string> sourceRateOverride = default;
+            Optional<DdosCustomPolicyTriggerSensitivityOverride> triggerSensitivityOverride = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("protocol"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     protocol = new DdosCustomPolicyProtocol(property.Value.GetString());
@@ -57,19 +58,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("triggerRateOverride"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     triggerRateOverride = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("sourceRateOverride"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     sourceRateOverride = property.Value.GetString();
                     continue;
                 }
@@ -77,13 +70,14 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     triggerSensitivityOverride = new DdosCustomPolicyTriggerSensitivityOverride(property.Value.GetString());
                     continue;
                 }
             }
-            return new ProtocolCustomSettingsFormat(protocol, triggerRateOverride, sourceRateOverride, triggerSensitivityOverride);
+            return new ProtocolCustomSettingsFormat(Optional.ToNullable(protocol), triggerRateOverride.Value, sourceRateOverride.Value, Optional.ToNullable(triggerSensitivityOverride));
         }
     }
 }

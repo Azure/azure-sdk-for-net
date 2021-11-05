@@ -15,7 +15,8 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="OcrSkillLanguage"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="OcrSkillLanguage"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OcrSkillLanguage(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));

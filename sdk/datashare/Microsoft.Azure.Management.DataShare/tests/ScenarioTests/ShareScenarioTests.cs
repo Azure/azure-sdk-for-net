@@ -50,7 +50,7 @@ namespace DataShare.Tests.ScenarioTests
 
         internal static Share GetShare()
         {
-            return new Share();
+            return new Share( shareKind: "CopyBased");
         }
     }
 }

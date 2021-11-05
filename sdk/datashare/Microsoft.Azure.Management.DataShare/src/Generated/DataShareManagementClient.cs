@@ -95,6 +95,11 @@ namespace Microsoft.Azure.Management.DataShare
         public virtual IDataSetMappingsOperations DataSetMappings { get; private set; }
 
         /// <summary>
+        /// Gets the IEmailRegistrationsOperations.
+        /// </summary>
+        public virtual IEmailRegistrationsOperations EmailRegistrations { get; private set; }
+
+        /// <summary>
         /// Gets the IInvitationsOperations.
         /// </summary>
         public virtual IInvitationsOperations Invitations { get; private set; }
@@ -379,6 +384,7 @@ namespace Microsoft.Azure.Management.DataShare
             ConsumerInvitations = new ConsumerInvitationsOperations(this);
             DataSets = new DataSetsOperations(this);
             DataSetMappings = new DataSetMappingsOperations(this);
+            EmailRegistrations = new EmailRegistrationsOperations(this);
             Invitations = new InvitationsOperations(this);
             Operations = new Operations(this);
             Shares = new SharesOperations(this);
@@ -388,7 +394,7 @@ namespace Microsoft.Azure.Management.DataShare
             SynchronizationSettings = new SynchronizationSettingsOperations(this);
             Triggers = new TriggersOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-11-01";
+            ApiVersion = "2020-09-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

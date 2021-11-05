@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// will overwrite the existing list.</param>
         /// <param name="reliabilityLevel">The reliability level sets the
         /// replica set size of system services. Learn about
-        /// [ReliabilityLevel](https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-cluster-capacity).
+        /// [ReliabilityLevel](https://docs.microsoft.com/azure/service-fabric/service-fabric-cluster-capacity).
         ///
         /// - None - Run the System services with a target replica set count of
         /// 1. This should only be used for test clusters.
@@ -92,8 +92,10 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// setting the **clusterCodeVersion** property in the cluster
         /// resource.
         /// . Possible values include: 'Automatic', 'Manual'</param>
+        /// <param name="applicationTypeVersionsCleanupPolicy">The policy used
+        /// to clean up unused versions.</param>
         /// <param name="tags">Cluster update parameters</param>
-        public ClusterUpdateParameters(IList<string> addOnFeatures = default(IList<string>), CertificateDescription certificate = default(CertificateDescription), ServerCertificateCommonNames certificateCommonNames = default(ServerCertificateCommonNames), IList<ClientCertificateCommonName> clientCertificateCommonNames = default(IList<ClientCertificateCommonName>), IList<ClientCertificateThumbprint> clientCertificateThumbprints = default(IList<ClientCertificateThumbprint>), string clusterCodeVersion = default(string), bool? eventStoreServiceEnabled = default(bool?), IList<SettingsSectionDescription> fabricSettings = default(IList<SettingsSectionDescription>), IList<NodeTypeDescription> nodeTypes = default(IList<NodeTypeDescription>), string reliabilityLevel = default(string), CertificateDescription reverseProxyCertificate = default(CertificateDescription), ClusterUpgradePolicy upgradeDescription = default(ClusterUpgradePolicy), string upgradeMode = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public ClusterUpdateParameters(IList<string> addOnFeatures = default(IList<string>), CertificateDescription certificate = default(CertificateDescription), ServerCertificateCommonNames certificateCommonNames = default(ServerCertificateCommonNames), IList<ClientCertificateCommonName> clientCertificateCommonNames = default(IList<ClientCertificateCommonName>), IList<ClientCertificateThumbprint> clientCertificateThumbprints = default(IList<ClientCertificateThumbprint>), string clusterCodeVersion = default(string), bool? eventStoreServiceEnabled = default(bool?), IList<SettingsSectionDescription> fabricSettings = default(IList<SettingsSectionDescription>), IList<NodeTypeDescription> nodeTypes = default(IList<NodeTypeDescription>), string reliabilityLevel = default(string), CertificateDescription reverseProxyCertificate = default(CertificateDescription), ClusterUpgradePolicy upgradeDescription = default(ClusterUpgradePolicy), string upgradeMode = default(string), ApplicationTypeVersionsCleanupPolicy applicationTypeVersionsCleanupPolicy = default(ApplicationTypeVersionsCleanupPolicy), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             AddOnFeatures = addOnFeatures;
             Certificate = certificate;
@@ -108,6 +110,7 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
             ReverseProxyCertificate = reverseProxyCertificate;
             UpgradeDescription = upgradeDescription;
             UpgradeMode = upgradeMode;
+            ApplicationTypeVersionsCleanupPolicy = applicationTypeVersionsCleanupPolicy;
             Tags = tags;
             CustomInit();
         }
@@ -189,7 +192,7 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// <summary>
         /// Gets or sets the reliability level sets the replica set size of
         /// system services. Learn about
-        /// [ReliabilityLevel](https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-cluster-capacity).
+        /// [ReliabilityLevel](https://docs.microsoft.com/azure/service-fabric/service-fabric-cluster-capacity).
         ///
         /// - None - Run the System services with a target replica set count of
         /// 1. This should only be used for test clusters.
@@ -233,6 +236,12 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.upgradeMode")]
         public string UpgradeMode { get; set; }
+
+        /// <summary>
+        /// Gets or sets the policy used to clean up unused versions.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.applicationTypeVersionsCleanupPolicy")]
+        public ApplicationTypeVersionsCleanupPolicy ApplicationTypeVersionsCleanupPolicy { get; set; }
 
         /// <summary>
         /// Gets or sets cluster update parameters
@@ -299,6 +308,10 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
             if (UpgradeDescription != null)
             {
                 UpgradeDescription.Validate();
+            }
+            if (ApplicationTypeVersionsCleanupPolicy != null)
+            {
+                ApplicationTypeVersionsCleanupPolicy.Validate();
             }
         }
     }

@@ -18,6 +18,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="operand"> Parameter name to be used for filter. The allowed operands to query pipeline runs are PipelineName, RunStart, RunEnd and Status; to query activity runs are ActivityName, ActivityRunStart, ActivityRunEnd, ActivityType and Status, and to query trigger runs are TriggerName, TriggerRunTimestamp and Status. </param>
         /// <param name="operator"> Operator to be used for filter. </param>
         /// <param name="values"> List of filter values. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="values"/> is null. </exception>
         public RunQueryFilter(RunQueryFilterOperand operand, RunQueryFilterOperator @operator, IEnumerable<string> values)
         {
             if (values == null)

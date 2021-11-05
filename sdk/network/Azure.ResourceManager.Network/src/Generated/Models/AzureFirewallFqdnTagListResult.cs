@@ -6,15 +6,17 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for ListAzureFirewallFqdnTags API service call. </summary>
-    public partial class AzureFirewallFqdnTagListResult
+    internal partial class AzureFirewallFqdnTagListResult
     {
         /// <summary> Initializes a new instance of AzureFirewallFqdnTagListResult. </summary>
         internal AzureFirewallFqdnTagListResult()
         {
+            Value = new ChangeTrackingList<AzureFirewallFqdnTag>();
         }
 
         /// <summary> Initializes a new instance of AzureFirewallFqdnTagListResult. </summary>

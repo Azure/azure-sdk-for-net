@@ -310,7 +310,7 @@ namespace Media.Tests.ScenarioTests
                     { "key3","value3"},
                     { "key4","value4"}
                 };
-                mediaMgmtClient.Mediaservices.Update(rgname, accountName, new MediaService
+                mediaMgmtClient.Mediaservices.Update(rgname, accountName, new MediaServiceUpdate
                 {
                     Tags = tagsUpdated
                 });

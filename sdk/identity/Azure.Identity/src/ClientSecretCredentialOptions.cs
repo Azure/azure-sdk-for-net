@@ -8,15 +8,15 @@ namespace Azure.Identity
     /// </summary>
     public class ClientSecretCredentialOptions : TokenCredentialOptions, ITokenCacheOptions
     {
+        /// <summary>
+        /// Specifies the <see cref="TokenCachePersistenceOptions"/> to be used by the credential. If not options are specified, the token cache will not be persisted to disk.
+        /// </summary>
+        public TokenCachePersistenceOptions TokenCachePersistenceOptions { get; set; }
 
         /// <summary>
-        /// If set to true the credential will store tokens in a persistent cache shared by other credentials.
+        /// Specifies either the specific <see cref="RegionalAuthority"/> (preferred), or use <see cref="RegionalAuthority.AutoDiscoverRegion"/> to attempt to auto-detect the region.
+        /// If not specified or auto-detection fails the non-regional endpoint will be used.
         /// </summary>
-        public bool EnablePersistentCache { get; set; }
-
-        /// <summary>
-        /// If set to true the credential will fall back to storing tokens in an unencrypted file if no OS level user encryption is available.
-        /// </summary>
-        public bool AllowUnencryptedCache { get; set; }
+        internal RegionalAuthority? RegionalAuthority { get; set; } = Azure.Identity.RegionalAuthority.FromEnvironment();
     }
 }

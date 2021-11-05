@@ -78,7 +78,7 @@ namespace Azure.Storage.Queues.Samples
             foreach (QueueMessage message in (await queue.ReceiveMessagesAsync(maxMessages: 10)).Value)
             {
                 // "Process" the message
-                Console.WriteLine($"Message: {message.MessageText}");
+                Console.WriteLine($"Message: {message.Body}");
 
                 // Let the service know we're finished with the message and
                 // it can be safely deleted.
@@ -107,7 +107,7 @@ namespace Azure.Storage.Queues.Samples
             foreach (PeekedMessage message in (await queue.PeekMessagesAsync(maxMessages: 10)).Value)
             {
                 // Inspect the message
-                Console.WriteLine($"Message: {message.MessageText}");
+                Console.WriteLine($"Message: {message.Body}");
             }
         }
 
@@ -140,7 +140,7 @@ namespace Azure.Storage.Queues.Samples
                 UpdateReceipt receipt = await queue.UpdateMessageAsync(
                     message.MessageId,
                     message.PopReceipt,
-                    message.MessageText,
+                    message.Body,
                     TimeSpan.FromSeconds(5));
 
                 // Keep track of the updated messages
@@ -156,7 +156,7 @@ namespace Azure.Storage.Queues.Samples
             foreach (QueueMessage message in messages)
             {
                 // "Process" the message
-                Console.WriteLine($"Message: {message.MessageText}");
+                Console.WriteLine($"Message: {message.Body}");
 
                 // Tell the service we need a little more time to process the message
                 await queue.DeleteMessageAsync(message.MessageId, message.PopReceipt);
@@ -180,8 +180,8 @@ namespace Azure.Storage.Queues.Samples
         public static void IdentityAuth()
         {
             // Create a QueueClient that will authenticate through Active Directory
-            Uri accountUri = new Uri("https://MYSTORAGEACCOUNT.blob.core.windows.net/");
-            QueueClient queue = new QueueClient(accountUri, new DefaultAzureCredential());
+            Uri queueUri = new Uri("https://MYSTORAGEACCOUNT.blob.core.windows.net/QUEUENAME");
+            QueueClient queue = new QueueClient(queueUri, new DefaultAzureCredential());
         }
 
         /// <summary>

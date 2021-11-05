@@ -1,25 +1,32 @@
 # Release History
 
-## 1.0.0-preview.2 (Unreleased)
+## 1.0.0-beta.4 (Unreleased)
 
+### Features Added
 
-## 1.0.0-preview.1
+### Breaking Changes
 
-This package follows the [Azure SDK Design Guidelines for .NET](https://azure.github.io/azure-sdk/dotnet_introduction.html) which provide a number of core capabilities that are shared amongst all Azure SDKs, including the intuitive Azure Identity library, an HTTP Pipeline with custom policies, error-handling, distributed tracing, and much more.
+### Bugs Fixed
 
-This is a Public Preview version, so expect incompatible changes in subsequent releases as we improve the product. To provide feedback, please submit an issue in our [Azure SDK for .NET GitHub repo](https://github.com/Azure/azure-sdk-for-net/issues).
+### Other Changes
 
-### General New Features
+## 1.0.0-beta.3 (2021-10-28)
 
-    - Support MSAL.NET, Azure.Identity is out of box for supporting MSAL.NET
-    - Support [OpenTelemetry](https://opentelemetry.io/) for distributed tracing
-    - HTTP pipeline with custom policies
-    - Better error-handling
-    - Support uniform telemetry across all languages
+### Breaking Changes
 
-> NOTE: For more information about unified authentication, please refer to [Azure Identity documentation for .NET](https://docs.microsoft.com//dotnet/api/overview/azure/identity-readme?view=azure-dotnet)
+- Renamed [Resource]Container to [Resource]Collection and added the IEnumerable<T> and IAsyncEnumerable<T> interfaces to them making it easier to iterate over the list in the simple case.
 
-### Migration from Previous Version of Azure Management SDK
+## 1.0.0-beta.2 (2021-09-14)
+
+### Features Added
+
+- Added ArmClient extension methods to support [start from the middle scenario](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/resourcemanager/Azure.ResourceManager#managing-existing-resources-by-id).
+
+## 1.0.0-beta.1 (2021-08-31)
+
+### Breaking Changes
+
+Guidance to migrate from Previous Version of Azure Management SDK
 
 #### Package Name
 The package name has been changed from `Microsoft.Azure.Management.Compute` to `Azure.ResourceManager.Compute`
@@ -29,7 +36,7 @@ The package name has been changed from `Microsoft.Azure.Management.Compute` to `
 Example: Create a VM:
 
 Before upgrade:
-```csharp
+```C#
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -57,7 +64,7 @@ computeClient.SubscriptionId = subscriptionId;
 
 var location = "westus";
 // Create Resource Group
-await resourceClient.ResourceGroups.CreateOrUpdateAsync(resourceGroup, new ResourceGroup(location));
+await resourceClient.ResourceGroups.CreateOrUpdateAsync(resourceGroupName, new ResourceGroup(location));
 
 // Create Availability Set
 var availabilitySet = new AvailabilitySet(location)
@@ -68,7 +75,7 @@ var availabilitySet = new AvailabilitySet(location)
 };
 
 availabilitySet = await computeClient.AvailabilitySets
-    .CreateOrUpdateAsync(resourceGroup, vmName + "_aSet", availabilitySet);
+    .CreateOrUpdateAsync(resourceGroupName, vmName + "_aSet", availabilitySet);
 
 // Create IP Address
 var ipAddress = new PublicIPAddress()
@@ -79,7 +86,7 @@ var ipAddress = new PublicIPAddress()
 };
 
 ipAddress = await networkClient
-    .PublicIPAddresses.BeginCreateOrUpdateAsync(resourceGroup, vmName + "_ip", ipAddress);
+    .PublicIPAddresses.BeginCreateOrUpdateAsync(resourceGroupName, vmName + "_ip", ipAddress);
 
 // Create VNet
 var vnet = new VirtualNetwork()
@@ -97,7 +104,7 @@ var vnet = new VirtualNetwork()
 };
 
 vnet = await networkClient.VirtualNetworks
-    .BeginCreateOrUpdateAsync(resourceGroup, vmName + "_vent", vnet);
+    .BeginCreateOrUpdateAsync(resourceGroupName, vmName + "_vent", vnet);
 
 // Create Network interface
 var nic = new NetworkInterface()
@@ -117,7 +124,7 @@ var nic = new NetworkInterface()
 };
 
 nic = await networkClient.NetworkInterfaces
-    .BeginCreateOrUpdateAsync(resourceGroup, vmName + "_nic", nic);
+    .BeginCreateOrUpdateAsync(resourceGroupName, vmName + "_nic", nic);
 
 var vm = new VirtualMachine(location)
 {
@@ -144,83 +151,78 @@ var vm = new VirtualMachine(location)
     HardwareProfile = new HardwareProfile() { VmSize = VirtualMachineSizeTypes.StandardB1ms },
 };
 
-await computeClient.VirtualMachines.BeginCreateOrUpdateAsync(resourceGroup, vmName, vm);
+await computeClient.VirtualMachines.BeginCreateOrUpdateAsync(resourceGroupName, vmName, vm);
 
 ```
 
 After upgrade:
-```csharp
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
+```C# Snippet:Changelog_New
 using Azure.Identity;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
+using System.Linq;
 
+var armClient = new ArmClient(new DefaultAzureCredential());
 
-var computeClient = new ComputeManagementClient(subscriptionId, new DefaultAzureCredential());
-var networkClient = new NetworkManagementClient(subscriptionId, new DefaultAzureCredential());
+var location = Location.WestUS;
+// Create ResourceGroup
+Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
+ResourceGroupCreateOrUpdateOperation rgOperation = await subscription.GetResourceGroups().CreateOrUpdateAsync("myResourceGroup", new ResourceGroupData(location));
+ResourceGroup resourceGroup = rgOperation.Value;
 
-var availabilitySetsClient = computeClient.AvailabilitySets;
-var virtualNetworksClient = networkClient.VirtualNetworks;
-var networkInterfaceClient = networkClient.NetworkInterfaces;
-var virtualMachinesClient = computeClient.VirtualMachines;
-
-var location = "westus";
 // Create AvailabilitySet
-var availabilitySet = new AvailabilitySet(location)
+var availabilitySetData = new AvailabilitySetData(location)
 {
     PlatformUpdateDomainCount = 5,
     PlatformFaultDomainCount = 2,
-    Sku = new Sku() { Name = "Aligned" }  // TODO. Verify new codegen on AvailabilitySetSkuTypes.Aligned
+    Sku = new Compute.Models.Sku() { Name = "Aligned" }
 };
-
-availabilitySet = await availabilitySetsClient.CreateOrUpdateAsync(resourceGroup, vmName + "_aSet", availabilitySet);
+AvailabilitySetCreateOrUpdateOperation asetOperation = await resourceGroup.GetAvailabilitySets().CreateOrUpdateAsync("myAvailabilitySet", availabilitySetData);
+AvailabilitySet availabilitySet = asetOperation.Value;
 
 // Create VNet
-var vnet = new VirtualNetwork()
+var vnetData = new VirtualNetworkData()
 {
     Location = location,
-    AddressSpace = new AddressSpace() { AddressPrefixes = new List<string>() { "10.0.0.0/16" } },
-    Subnets = new List<Subnet>()
+    AddressSpace = new AddressSpace() { AddressPrefixes = { "10.0.0.0/16" } },
+    Subnets =
     {
-        new Subnet()
+        new SubnetData()
         {
             Name = "mySubnet",
             AddressPrefix = "10.0.0.0/24",
         }
     },
 };
-
-vnet = await virtualNetworksClient
-    .StartCreateOrUpdate(resourceGroup, vmName + "_vent", vnet)
-    .WaitForCompletionAsync();
+VirtualNetworkCreateOrUpdateOperation vnetOperation = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync("myVirtualNetwork", vnetData);
+VirtualNetwork vnet = vnetOperation.Value;
 
 // Create Network interface
-var nic = new NetworkInterface()
+var nicData = new NetworkInterfaceData()
 {
     Location = location,
-    IpConfigurations = new List<NetworkInterfaceIPConfiguration>()
+    IpConfigurations =
     {
         new NetworkInterfaceIPConfiguration()
         {
             Name = "Primary",
             Primary = true,
-            Subnet = new Subnet() { Id = vnet.Subnets.First().Id },
+            Subnet = new SubnetData() { Id = vnet.Data.Subnets.First().Id },
             PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
         }
     }
 };
+NetworkInterfaceCreateOrUpdateOperation nicOperation = await resourceGroup.GetNetworkInterfaces().CreateOrUpdateAsync("myNetworkInterface", nicData);
+NetworkInterface nic = nicOperation.Value;
 
-nic = await networkInterfaceClient
-    .StartCreateOrUpdate(resourceGroup, vmName + "_nic", nic)
-    .WaitForCompletionAsync();
-
-var vm = new VirtualMachine(location)
+var vmData = new VirtualMachineData(location)
 {
-    NetworkProfile = new Compute.Models.NetworkProfile { NetworkInterfaces = new[] { new NetworkInterfaceReference() { Id = nic.Id } } },
+    AvailabilitySet = new WritableSubResource() { Id = availabilitySet.Id },
+    NetworkProfile = new Compute.Models.NetworkProfile { NetworkInterfaces = { new NetworkInterfaceReference() { Id = nic.Id } } },
     OsProfile = new OSProfile
     {
         ComputerName = "testVM",
@@ -236,16 +238,12 @@ var vm = new VirtualMachine(location)
             Publisher = "Canonical",
             Sku = "18.04-LTS",
             Version = "latest"
-        },
-        DataDisks = new List<DataDisk>()
+        }
     },
     HardwareProfile = new HardwareProfile() { VmSize = VirtualMachineSizeTypes.StandardB1Ms },
 };
-vm.AvailabilitySet.Id = availabilitySet.Id;
-
-var operaiontion = await virtualMachinesClient.StartCreateOrUpdateAsync(resourceGroup, vmName, vm);
-await operaiontion.WaitForCompletionAsync();
-
+VirtualMachineCreateOrUpdateOperation vmOperation = await resourceGroup.GetVirtualMachines().CreateOrUpdateAsync("myVirtualMachine", vmData);
+VirtualMachine vm = vmOperation.Value;
 ```
 
 #### Object Model Changes
@@ -253,7 +251,7 @@ await operaiontion.WaitForCompletionAsync();
 Example: Create a Virtual Machine Extension
 
 Before upgrade:
-```csharp
+```C#
 var vmExtension = new VirtualMachineExtension
             {
                 Location = "westus",
@@ -271,15 +269,16 @@ var vmExtension = new VirtualMachineExtension
 ```
 
 After upgrade:
-```csharp
-var vmExtension = new VirtualMachineExtension(
-                null,
-                "vmext01",
-                "Microsoft.Compute/virtualMachines/extensions",
-                "westus",
-                new Dictionary<string, string>() { { "extensionTag1", "1" }, { "extensionTag2", "2" } },
-                "RerunExtension",
-                "Microsoft.Compute",
-                "VMAccessAgent", "2.0", true, "{}", "{}", null, null
-                );
+```C# Snippet:Changelog_CreateVMExtension
+var vmExtension = new VirtualMachineExtensionData(Location.WestUS)
+{
+    Tags = { { "extensionTag1", "1" }, { "extensionTag2", "2" } },
+    Publisher = "Microsoft.Compute",
+    TypePropertiesType = "VMAccessAgent",
+    TypeHandlerVersion = "2.0",
+    AutoUpgradeMinorVersion = true,
+    ForceUpdateTag = "RerunExtension",
+    Settings = "{}",
+    ProtectedSettings = "{}"
+};
 ```

@@ -7,7 +7,7 @@ namespace Azure.Storage.Files.DataLake.Models
 {
     /// <summary>
     /// Specifies options for listing file systems with the
-    /// <see cref="DataLakeServiceClient.GetFileSystemsAsync"/> operation.
+    /// <see cref="DataLakeServiceClient.GetFileSystems(FileSystemTraits, FileSystemStates, string, System.Threading.CancellationToken)"/> operation.
     /// </summary>
     [Flags]
     public enum FileSystemTraits

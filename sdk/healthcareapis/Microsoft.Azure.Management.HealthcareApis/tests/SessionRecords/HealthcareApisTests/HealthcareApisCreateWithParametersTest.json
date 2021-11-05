@@ -65,10 +65,10 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/cc148bf2-42fb-4913-a3fb-2f284a69eb89/resourceGroups/res7089/providers/Microsoft.HealthcareApis/services/hca1234?api-version=2019-09-16",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvY2MxNDhiZjItNDJmYi00OTEzLWEzZmItMmYyODRhNjllYjg5L3Jlc291cmNlR3JvdXBzL3JlczcwODkvcHJvdmlkZXJzL01pY3Jvc29mdC5IZWFsdGhjYXJlQXBpcy9zZXJ2aWNlcy9oY2ExMjM0P2FwaS12ZXJzaW9uPTIwMTktMDktMTY=",
+      "RequestUri": "/subscriptions/cc148bf2-42fb-4913-a3fb-2f284a69eb89/resourceGroups/res7089/providers/Microsoft.HealthcareApis/services/hca1234?api-version=2020-03-30",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvY2MxNDhiZjItNDJmYi00OTEzLWEzZmItMmYyODRhNjllYjg5L3Jlc291cmNlR3JvdXBzL3JlczcwODkvcHJvdmlkZXJzL01pY3Jvc29mdC5IZWFsdGhjYXJlQXBpcy9zZXJ2aWNlcy9oY2ExMjM0P2FwaS12ZXJzaW9uPTIwMjAtMDMtMzA=",
       "RequestMethod": "PUT",
-      "RequestBody": "{ \"name\": \"S1\" ,\"location\":\"westus\", \"properties\": { \"authenticationConfiguration\": { \"authority\": \"https://login.microsoftonline.com/common\",\"audience\": \"https://azurehealthcareapis.com\",\"smartProxyEnabled\": \"false\" },\"cosmosDbConfiguration\": {\"offerThroughput\": \"400\"},\"accessPolicies\": [ {\"objectId\": \"7df19f2f-6169-40f0-ac1e-9a9b4e65a898\"}]}}",
+      "RequestBody": "{ \"name\": \"S1\" ,\"location\":\"westus\", \"properties\": { \"authenticationConfiguration\": { \"authority\": \"https://login.microsoftonline.com/common\",\"audience\": \"https://azurehealthcareapis.com\",\"smartProxyEnabled\": \"false\" },\"cosmosDbConfiguration\": {\"offerThroughput\": \"400\",\"keyVaultKeyUri\": \"https://my-vault.vault.azure.net/keys/my-key\"},\"accessPolicies\": [ {\"objectId\": \"7df19f2f-6169-40f0-ac1e-9a9b4e65a898\"}]}}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -87,7 +87,7 @@
           "Microsoft.Azure.Management.HealthcareApis.HealthcareApisManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/cc148bf2-42fb-4913-a3fb-2f284a69eb89/resourceGroups/res7089/providers/Microsoft.HealthcareApis/accounts/hca1234\",\r\n  \"name\": \"hca1234\",\r\n  \"type\": \"Microsoft.HealthcareApis/accounts\",\r\n  \"etag\": \"\\\"0a002ee3-0000-0000-0000-5aa238d80000\\\"\",\r\n  \"location\": \"westus\",\r\n  \"name\": \"S1\"\r\n ,\r\n  \"kind\": \"fhir-R4\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n , \"authenticationConfiguration\": { \"authority\": \"https://login.microsoftonline.com/common\",\"audience\": \"https://azurehealthcareapis.com\",\"smartProxyEnabled\": \"false\" },\"cosmosDbConfiguration\": {\"offerThroughput\": \"400\"},\"accessPolicies\": [ {\"objectId\": \"7df19f2f-6169-40f0-ac1e-9a9b4e65a898\"}]}}\r\n",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/cc148bf2-42fb-4913-a3fb-2f284a69eb89/resourceGroups/res7089/providers/Microsoft.HealthcareApis/accounts/hca1234\",\r\n  \"name\": \"hca1234\",\r\n  \"type\": \"Microsoft.HealthcareApis/accounts\",\r\n  \"etag\": \"\\\"0a002ee3-0000-0000-0000-5aa238d80000\\\"\",\r\n  \"location\": \"westus\",\r\n  \"name\": \"S1\"\r\n ,\r\n  \"kind\": \"fhir-R4\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n , \"authenticationConfiguration\": { \"authority\": \"https://login.microsoftonline.com/common\",\"audience\": \"https://azurehealthcareapis.com\",\"smartProxyEnabled\": \"false\" },\"cosmosDbConfiguration\": {\"offerThroughput\": \"400\",\"keyVaultKeyUri\": \"https://my-vault.vault.azure.net/keys/my-key\"},\"accessPolicies\": [ {\"objectId\": \"7df19f2f-6169-40f0-ac1e-9a9b4e65a898\"}]}}\r\n",
       "ResponseHeaders": {
         "Content-Length": [
           "570"

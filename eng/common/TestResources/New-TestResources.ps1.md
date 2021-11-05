@@ -14,61 +14,132 @@ Deploys live test resources defined for a service directory to Azure.
 
 ### Default (Default)
 ```
-New-TestResources.ps1 [-BaseName] <String> -ServiceDirectory <String> -TestApplicationId <String>
- [-TestApplicationSecret <String>] [-TestApplicationOid <String>] [-DeleteAfterHours <Int32>]
- [-Location <String>] [-Environment <String>] [-AdditionalParameters <Hashtable>] [-CI] [-Force] [-WhatIf]
- [-Confirm] [<CommonParameters>]
+New-TestResources.ps1 [-BaseName <String>] [-ResourceGroupName <String>] [-ServiceDirectory] <String>
+ [-TestApplicationId <String>] [-TestApplicationSecret <String>] [-TestApplicationOid <String>]
+ [-SubscriptionId <String>] [-DeleteAfterHours <Int32>] [-Location <String>] [-Environment <String>]
+ [-ArmTemplateParameters <Hashtable>] [-AdditionalParameters <Hashtable>] [-EnvironmentVariables <Hashtable>]
+ [-CI] [-Force] [-OutFile] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### Provisioner
 ```
-New-TestResources.ps1 [-BaseName] <String> -ServiceDirectory <String> -TestApplicationId <String>
- [-TestApplicationSecret <String>] [-TestApplicationOid <String>] -TenantId <String> [-SubscriptionId <String>]
- -ProvisionerApplicationId <String> -ProvisionerApplicationSecret <String> [-DeleteAfterHours <Int32>]
- [-Location <String>] [-Environment <String>] [-AdditionalParameters <Hashtable>] [-CI] [-Force] [-WhatIf]
- [-Confirm] [<CommonParameters>]
+New-TestResources.ps1 [-BaseName <String>] [-ResourceGroupName <String>] [-ServiceDirectory] <String>
+ [-TestApplicationId <String>] [-TestApplicationSecret <String>] [-TestApplicationOid <String>]
+ -TenantId <String> [-SubscriptionId <String>] -ProvisionerApplicationId <String>
+ -ProvisionerApplicationSecret <String> [-DeleteAfterHours <Int32>] [-Location <String>]
+ [-Environment <String>] [-ArmTemplateParameters <Hashtable>] [-AdditionalParameters <Hashtable>]
+ [-EnvironmentVariables <Hashtable>] [-CI] [-Force] [-OutFile] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Deploys live test resouces specified in test-resources.json files to a resource
-group.
+Deploys live test resouces specified in test-resources.json or test-resources.bicep
+files to a new resource group.
 
 This script searches the directory specified in $ServiceDirectory recursively
-for files named test-resources.json.
-All found test-resources.json files will be
-deployed to the test resource group.
+for files named test-resources.json or test-resources.bicep.
+All found test-resources.json
+and test-resources.bicep files will be deployed to the test resource group.
 
-If no test-resources.json files are located the script exits without making
-changes to the Azure environment.
+If no test-resources.json or test-resources.bicep files are located the script
+exits without making changes to the Azure environment.
 
-A service principal must first be created before this script is run and passed
-to $TestApplicationId and $TestApplicationSecret.
-Test resources will grant this
-service principal access.
+A service principal may optionally be passed to $TestApplicationId and $TestApplicationSecret.
+Test resources will grant this service principal access to the created resources.
+If no service principal is specified, a new one will be created and assigned the
+'Owner' role for the resource group associated with the test resources.
 
-This script uses credentials already specified in Connect-AzAccount or those
-specified in $ProvisionerApplicationId and $ProvisionerApplicationSecret.
+This script runs in the context of credentials already specified in Connect-AzAccount
+or those specified in $ProvisionerApplicationId and $ProvisionerApplicationSecret.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-Connect-AzAccount -Subscription "REPLACE_WITH_SUBSCRIPTION_ID"
-$testAadApp = New-AzADServicePrincipal -Role Owner -DisplayName 'azure-sdk-live-test-app'
-New-TestResources.ps1 `
-    -BaseName 'uuid123' `
-    -ServiceDirectory 'keyvault' `
-    -TestApplicationId $testAadApp.ApplicationId.ToString() `
-    -TestApplicationSecret (ConvertFrom-SecureString $testAadApp.Secret -AsPlainText)
+Connect-AzAccount -Subscription 'REPLACE_WITH_SUBSCRIPTION_ID'
+New-TestResources.ps1 keyvault
 ```
 
-Run this in a desktop environment to create new AAD apps and Service Principals
-that can be used to provision resources and run live tests.
+Run this in a desktop environment to create a new AAD application and Service Principal
+for running live tests against the test resources created.
+The principal will have ownership
+rights to the resource group and the resources that it contains, but no other resources in
+the subscription.
 
 Requires PowerShell 7 to use ConvertFrom-SecureString -AsPlainText or convert
 the SecureString to plaintext by another means.
 
 ### EXAMPLE 2
+```
+Connect-AzAccount -Subscription 'REPLACE_WITH_SUBSCRIPTION_ID'
+New-TestResources.ps1 `
+    -BaseName 'azsdk' `
+    -ServiceDirectory 'keyvault' `
+    -SubscriptionId 'REPLACE_WITH_SUBSCRIPTION_ID' `
+    -ResourceGroupName 'REPLACE_WITH_NAME_FOR_RESOURCE_GROUP' `
+    -Location 'eastus'
+```
+
+Run this in a desktop environment to specify the name and location of the resource
+group that test resources are being deployed to.
+This will also create a new AAD
+application and Service Principal for running live tests against the rest resources
+created.
+The principal will have ownership rights to the resource group and the
+resources that it contains, but no other resources in the subscription.
+
+Requires PowerShell 7 to use ConvertFrom-SecureString -AsPlainText or convert
+the SecureString to plaintext by another means.
+
+### EXAMPLE 3
+```
+Connect-AzAccount -Subscription 'REPLACE_WITH_SUBSCRIPTION_ID'
+New-TestResources.ps1 `
+    -BaseName 'azsdk' `
+    -ServiceDirectory 'keyvault' `
+    -SubscriptionId 'REPLACE_WITH_SUBSCRIPTION_ID' `
+    -ResourceGroupName 'REPLACE_WITH_NAME_FOR_RESOURCE_GROUP' `
+    -Location 'eastus' `
+    -TestApplicationId 'REPLACE_WITH_TEST_APPLICATION_ID' `
+    -TestApplicationSecret 'REPLACE_WITH_TEST_APPLICATION_SECRET'
+```
+
+Run this in a desktop environment to specify the name and location of the resource
+group that test resources are being deployed to.
+This will grant ownership rights
+to the 'TestApplicationId' for the resource group and the resources that it contains,
+without altering its existing permissions.
+
+### EXAMPLE 4
+```
+New-TestResources.ps1 `
+    -BaseName 'azsdk' `
+    -ServiceDirectory 'keyvault' `
+    -SubscriptionId 'REPLACE_WITH_SUBSCRIPTION_ID' `
+    -ResourceGroupName 'REPLACE_WITH_NAME_FOR_RESOURCE_GROUP' `
+    -Location 'eastus' `
+    -ProvisionerApplicationId 'REPLACE_WITH_PROVISIONER_APPLICATION_ID' `
+    -ProvisionerApplicationSecret 'REPLACE_WITH_PROVISIONER_APPLICATION_ID' `
+    -TestApplicationId 'REPLACE_WITH_TEST_APPLICATION_ID' `
+    -TestApplicationOid 'REPLACE_WITH_TEST_APPLICATION_OBJECT_ID' `
+    -TestApplicationSecret 'REPLACE_WITH_TEST_APPLICATION_SECRET'
+```
+
+Run this in a desktop environment to specify the name and location of the resource
+group that test resources are being deployed to.
+The script will be executed in the
+context of the 'ProvisionerApplicationId' rather than the caller.
+
+Depending on the permissions of the Provisioner Application principal, the script may
+grant ownership rights 'TestApplicationId' for the resource group and the resources
+that it contains, or may emit a message indicating that it was unable to perform the grant.
+
+For the Provisioner Application principal to perform the grant, it will need the
+permission 'Application.ReadWrite.OwnedBy' for the Microsoft Graph API.
+
+Requires PowerShell 7 to use ConvertFrom-SecureString -AsPlainText or convert
+the SecureString to plaintext by another means.
+
+### EXAMPLE 5
 ```
 New-TestResources.ps1 `
     -BaseName 'Generated' `
@@ -105,8 +176,27 @@ Type: String
 Parameter Sets: (All)
 Aliases:
 
-Required: True
-Position: 1
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ResourceGroupName
+Set this value to deploy directly to a Resource Group that has already been
+created or to create a new resource group with this name.
+
+If not specified, the $BaseName will be used to generate name for the resource
+group that will be created.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -114,8 +204,10 @@ Accept wildcard characters: False
 
 ### -ServiceDirectory
 A directory under 'sdk' in the repository root - optionally with subdirectories
-specified - in which to discover ARM templates named 'test-resources.json'.
-This can also be an absolute path or specify parent directories.
+specified - in which to discover ARM templates named 'test-resources.json' and
+Bicep templates named 'test-resources.bicep'.
+This can also be an absolute path
+or specify parent directories.
 
 ```yaml
 Type: String
@@ -123,16 +215,25 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: Named
+Position: 1
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -TestApplicationId
-The AAD Application ID to authenticate the test runner against deployed
-resources.
+Optional Azure Active Directory Application ID to authenticate the test runner
+against deployed resources.
 Passed to the ARM template as 'testApplicationId'.
+
+If not specified, a new AAD Application will be created and assigned the 'Owner'
+role for the resource group associated with the test resources.
+No permissions
+will be granted to the subscription or other resources.
+
+For those specifying a Provisioner Application principal as 'ProvisionerApplicationId',
+it will need the permission 'Application.ReadWrite.OwnedBy' for the Microsoft Graph API
+in order to create the Test Application principal.
 
 This application is used by the test runner to execute tests against the
 live test resources.
@@ -142,7 +243,7 @@ Type: String
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -171,7 +272,7 @@ Accept wildcard characters: False
 ```
 
 ### -TestApplicationOid
-Service Principal Object ID of the AAD Test application.
+Service Principal Object ID of the AAD Test Application.
 This is used to assign
 permissions to the AAD application so it can access tested features on the live
 test resources (e.g.
@@ -179,8 +280,14 @@ Role Assignments on resources).
 It is passed as to the ARM
 template as 'testApplicationOid'
 
+If not specified, an attempt will be made to query it from the Azure Active Directory
+tenant.
+For those specifying a service principal as 'ProvisionerApplicationId',
+it will need the permission 'Application.Read.All' for the Microsoft Graph API
+in order to query AAD.
+
 For more information on the relationship between AAD Applications and Service
-Principals see: https://docs.microsoft.com/en-us/azure/active-directory/develop/app-objects-and-service-principals
+Principals see: https://docs.microsoft.com/azure/active-directory/develop/app-objects-and-service-principals
 
 ```yaml
 Type: String
@@ -198,8 +305,8 @@ Accept wildcard characters: False
 The tenant ID of a service principal when a provisioner is specified.
 The same
 Tenant ID is used for Test Application and Provisioner Application.
-This value
-is passed to the ARM template as 'tenantId'.
+
+This value is passed to the ARM template as 'tenantId'.
 
 ```yaml
 Type: String
@@ -218,9 +325,15 @@ Optional subscription ID to use for new resources when logging in as a
 provisioner.
 You can also use Set-AzContext if not provisioning.
 
+If you do not specify a SubscriptionId and are not logged in, one will be
+automatically selected for you by the Connect-AzAccount cmdlet.
+
+Once you are logged in (or were previously), the selected SubscriptionId
+will be used for subsequent operations that are specific to a subscription.
+
 ```yaml
 Type: String
-Parameter Sets: Provisioner
+Parameter Sets: (All)
 Aliases:
 
 Required: False
@@ -231,10 +344,23 @@ Accept wildcard characters: False
 ```
 
 ### -ProvisionerApplicationId
-The AAD Application ID used to provision test resources when a provisioner is
-specified.
+Optional Application ID of the Azure Active Directory service principal to use for
+provisioning the test resources.
+If not, specified New-TestResources.ps1 uses the
+context of the caller to provision.
 
-If none is specified New-TestResources.ps1 uses the TestApplicationId.
+If specified, the Provisioner Application principal would benefit from the following
+permissions to the Microsoft Graph API:
+
+  - 'Application.Read.All' in order to query AAD to obtain the 'TestApplicaitonOid'
+
+  - 'Application.ReadWrite.OwnedBy' in order to create the Test Application principal
+     or grant an existing principal ownership of the resource group associated with
+     the test resources.
+
+If the provisioner does not have these permissions, it can still be used with
+New-TestResources.ps1 by specifying an existing Test Application principal, including
+its Object ID, and managing permissions to the resource group manually.
 
 This value is not passed to the ARM template.
 
@@ -254,8 +380,6 @@ Accept wildcard characters: False
 A service principal secret (password) used to provision test resources when a
 provisioner is specified.
 
-If none is specified New-TestResources.ps1 uses the TestApplicationSecret.
-
 This value is not passed to the ARM template.
 
 ```yaml
@@ -271,19 +395,15 @@ Accept wildcard characters: False
 ```
 
 ### -DeleteAfterHours
-Optional.
 Positive integer number of hours from the current time to set the
 'DeleteAfter' tag on the created resource group.
 The computed value is a
 timestamp of the form "2020-03-04T09:07:04.3083910Z".
 
-If this value is not specified no 'DeleteAfter' tag will be assigned to the
-created resource group.
-
 An optional cleanup process can delete resource groups whose "DeleteAfter"
 timestamp is less than the current time.
 
-This isused for CI automation.
+This is used for CI automation.
 
 ```yaml
 Type: Int32
@@ -292,7 +412,7 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: 0
+Default value: 120
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -305,6 +425,7 @@ is based on the cloud to which the template is being deployed:
 * AzureCloud -\> 'westus2'
 * AzureUSGovernment -\> 'usgovvirginia'
 * AzureChinaCloud -\> 'chinaeast2'
+* Dogfood -\> 'westus'
 
 ```yaml
 Type: String
@@ -319,9 +440,9 @@ Accept wildcard characters: False
 ```
 
 ### -Environment
-Name of the cloud environment.
+Optional name of the cloud environment.
 The default is the Azure Public Cloud
-('PublicCloud')
+('AzureCloud')
 
 ```yaml
 Type: String
@@ -335,7 +456,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -AdditionalParameters
+### -ArmTemplateParameters
 Optional key-value pairs of parameters to pass to the ARM template(s).
 
 ```yaml
@@ -346,6 +467,36 @@ Aliases:
 Required: False
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -AdditionalParameters
+Optional key-value pairs of parameters to pass to the ARM template(s) and pre-post scripts.
+
+```yaml
+Type: Hashtable
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -EnvironmentVariables
+Optional key-value pairs of parameters to set as environment variables to the shell.
+
+```yaml
+Type: Hashtable
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: @{}
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -368,6 +519,31 @@ Accept wildcard characters: False
 
 ### -Force
 Force creation of resources instead of being prompted.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -OutFile
+Save test environment settings into a .env file next to test resources template.
+The contents of the file are protected via the .NET Data Protection API (DPAPI).
+This is supported only on Windows.
+The environment file is scoped to the current
+service directory.
+
+The environment file will be named for the test resources template that it was
+generated for.
+For ARM templates, it will be test-resources.json.env.
+For
+Bicep templates, test-resources.bicep.env.
 
 ```yaml
 Type: SwitchParameter
@@ -412,25 +588,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -OutFile
-save test environment settings into a test-resources.json.env file next to test-resources.json. 
-The file is protected via DPAPI. The environment file would be scoped to the current repository directory.
-Note: Supported only on Windows.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](https://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -439,5 +598,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-
-[Remove-TestResources.ps1](./Remove-TestResources.ps1.md)

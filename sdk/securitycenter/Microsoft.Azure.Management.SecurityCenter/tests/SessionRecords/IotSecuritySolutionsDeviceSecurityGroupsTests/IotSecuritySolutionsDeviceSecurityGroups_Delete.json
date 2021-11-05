@@ -1,48 +1,45 @@
 {
   "Entries": [
     {
-      "RequestUri": "/%2Fsubscriptions%2F075423e9-7d33-4166-8bdf-3920b04e3735%2FresourceGroups%2FResourceGroup-CUS%2Fproviders%2FMicrosoft.Devices%2FIotHubs%2FIotHub-CUS/providers/Microsoft.Security/deviceSecurityGroups/TestDeviceSecurityGroupName?api-version=2019-08-01",
-      "EncodedRequestUri": "LyUyRnN1YnNjcmlwdGlvbnMlMkYwNzU0MjNlOS03ZDMzLTQxNjYtOGJkZi0zOTIwYjA0ZTM3MzUlMkZyZXNvdXJjZUdyb3VwcyUyRlJlc291cmNlR3JvdXAtQ1VTJTJGcHJvdmlkZXJzJTJGTWljcm9zb2Z0LkRldmljZXMlMkZJb3RIdWJzJTJGSW90SHViLUNVUy9wcm92aWRlcnMvTWljcm9zb2Z0LlNlY3VyaXR5L2RldmljZVNlY3VyaXR5R3JvdXBzL1Rlc3REZXZpY2VTZWN1cml0eUdyb3VwTmFtZT9hcGktdmVyc2lvbj0yMDE5LTA4LTAx",
+      "RequestUri": "//subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/resourceGroups/IOT-ResourceGroup-CUS/providers/Microsoft.Devices/IotHubs/SDK-IotHub-CUS/providers/Microsoft.Security/deviceSecurityGroups/TestDeviceSecurityGroupName?api-version=2019-08-01",
+      "EncodedRequestUri": "Ly9zdWJzY3JpcHRpb25zLzQ4N2JiNDg1LWI1YjAtNDcxZS05YzBkLTEwNzE3NjEyZjg2OS9yZXNvdXJjZUdyb3Vwcy9JT1QtUmVzb3VyY2VHcm91cC1DVVMvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXZpY2VzL0lvdEh1YnMvU0RLLUlvdEh1Yi1DVVMvcHJvdmlkZXJzL01pY3Jvc29mdC5TZWN1cml0eS9kZXZpY2VTZWN1cml0eUdyb3Vwcy9UZXN0RGV2aWNlU2VjdXJpdHlHcm91cE5hbWU/YXBpLXZlcnNpb249MjAxOS0wOC0wMQ==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "a5dbb1f6-7967-4760-acd3-7ece4431d98e"
+          "4af2fcd8-ea8e-4b8e-83ee-a5c5157e69f6"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.6.29321.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Security.SecurityCenterClient/1.0.1.0"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Security.SecurityCenterClient/2.1.0.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Thu, 07 Nov 2019 14:21:22 GMT"
-        ],
         "Pragma": [
           "no-cache"
         ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
+        "Request-Context": [
+          "appId=cid-v1:fe5cd4dd-bd6b-4202-a1f7-a9d691c1bc09"
         ],
         "x-ms-ratelimit-remaining-subscription-deletes": [
           "14999"
         ],
         "x-ms-request-id": [
-          "c6b87cd1-e1ce-4d64-b928-704863100128"
+          "4b089baa-d37d-4b06-bb8a-4236f7b37c1b"
         ],
         "x-ms-correlation-request-id": [
-          "c6b87cd1-e1ce-4d64-b928-704863100128"
+          "4b089baa-d37d-4b06-bb8a-4236f7b37c1b"
         ],
         "x-ms-routing-request-id": [
-          "UKSOUTH2:20191107T142122Z:c6b87cd1-e1ce-4d64-b928-704863100128"
+          "UKSOUTH:20201104T164844Z:4b089baa-d37d-4b06-bb8a-4236f7b37c1b"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -50,11 +47,14 @@
         "X-Content-Type-Options": [
           "nosniff"
         ],
-        "Content-Length": [
-          "0"
+        "Date": [
+          "Wed, 04 Nov 2020 16:48:44 GMT"
         ],
         "Expires": [
           "-1"
+        ],
+        "Content-Length": [
+          "0"
         ]
       },
       "ResponseBody": "",
@@ -62,7 +62,5 @@
     }
   ],
   "Names": {},
-  "Variables": {
-    "SubscriptionId": "075423e9-7d33-4166-8bdf-3920b04e3735"
-  }
+  "Variables": {}
 }

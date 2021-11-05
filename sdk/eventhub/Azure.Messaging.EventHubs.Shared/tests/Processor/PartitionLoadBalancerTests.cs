@@ -26,7 +26,7 @@ namespace Azure.Messaging.EventHubs.Tests
         private const string ConsumerGroup = "consumerGroup";
 
         /// <summary>
-        ///   Verifies that partitions owned by a <see cref="PartitionLoadBalancer" /> are immediately available to be claimed by another loadbalancer
+        ///   Verifies that partitions owned by a <see cref="PartitionLoadBalancer" /> are immediately available to be claimed by another load balancer
         ///   after StopAsync is called.
         /// </summary>
         ///
@@ -36,10 +36,8 @@ namespace Azure.Messaging.EventHubs.Tests
             const int NumberOfPartitions = 3;
             var partitionIds = Enumerable.Range(1, NumberOfPartitions).Select(p => p.ToString()).ToArray();
             var storageManager = new InMemoryStorageManager((s) => Console.WriteLine(s));
-            var loadbalancer1 = new PartitionLoadBalancer(
-                storageManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1));
-            var loadbalancer2 = new PartitionLoadBalancer(
-                storageManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1));
+            var loadbalancer1 = new PartitionLoadBalancer(storageManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1), TimeSpan.FromSeconds(10));
+            var loadbalancer2 = new PartitionLoadBalancer(storageManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1), TimeSpan.FromSeconds(10));
 
             // Ownership should start empty.
 
@@ -94,8 +92,7 @@ namespace Azure.Messaging.EventHubs.Tests
             const int NumberOfPartitions = 3;
             var partitionIds = Enumerable.Range(1, NumberOfPartitions).Select(p => p.ToString()).ToArray();
             var storageManager = new InMemoryStorageManager((s) => Console.WriteLine(s));
-            var loadbalancer = new PartitionLoadBalancer(
-                storageManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1));
+            var loadbalancer = new PartitionLoadBalancer(storageManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1), TimeSpan.FromSeconds(10));
 
             // Ownership should start empty.
 
@@ -127,7 +124,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var partitionIds = Enumerable.Range(1, NumberOfPartitions).Select(p => p.ToString()).ToArray();
             var storageManager = new InMemoryStorageManager((s) => Console.WriteLine(s));
-            var loadBalancer = new PartitionLoadBalancer(storageManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1));
+            var loadBalancer = new PartitionLoadBalancer(storageManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1), TimeSpan.FromSeconds(10));
 
             // Ownership should start empty.
 
@@ -168,7 +165,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var partitionIds = Enumerable.Range(1, NumberOfPartitions).Select(p => p.ToString()).ToArray();
             var storageManager = new InMemoryStorageManager((s) => Console.WriteLine(s));
-            var loadBalancer = new PartitionLoadBalancer(storageManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1));
+            var loadBalancer = new PartitionLoadBalancer(storageManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1), TimeSpan.FromSeconds(10));
             var completeOwnership = Enumerable.Empty<EventProcessorPartitionOwnership>();
 
             // Create partitions owned by a different load balancer.
@@ -227,7 +224,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var partitionIds = Enumerable.Range(1, NumberOfPartitions).Select(p => p.ToString()).ToArray();
             var storageManager = new InMemoryStorageManager((s) => Console.WriteLine(s));
-            var loadBalancer = new PartitionLoadBalancer(storageManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1));
+            var loadBalancer = new PartitionLoadBalancer(storageManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1), TimeSpan.FromSeconds(10));
             var completeOwnership = Enumerable.Empty<EventProcessorPartitionOwnership>();
 
             // Create partitions owned by a different load balancer.
@@ -287,7 +284,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionIds = Enumerable.Range(1, NumberOfPartitions).Select(p => p.ToString()).ToArray();
             var storageManager = new InMemoryStorageManager((s) => Console.WriteLine(s));
             var loadbalancer = new PartitionLoadBalancer(
-                storageManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1));
+                storageManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1), TimeSpan.FromSeconds(10));
 
             // Create partitions owned by this load balancer.
 
@@ -352,7 +349,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionIds = Enumerable.Range(1, NumberOfPartitions).Select(p => p.ToString()).ToArray();
             var storageManager = new InMemoryStorageManager((s) => Console.WriteLine(s));
             var loadbalancer = new PartitionLoadBalancer(
-                storageManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1));
+                storageManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1), TimeSpan.FromSeconds(10));
 
             // Create partitions owned by this load balancer.
 
@@ -391,7 +388,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(ownedByloadbalancer3.Count(), Is.GreaterThan(MaximumpartitionCount));
 
-            // Start the load balancer to steal ownership from of a when ownedPartitionCount == MinimumOwnedPartitionsCount but a loadbalancer owns > MaximumPartitionCount.
+            // Start the load balancer to steal ownership from of a when ownedPartitionCount == MinimumOwnedPartitionsCount but a load balancer owns > MaximumPartitionCount.
 
             await loadbalancer.RunLoadBalancingAsync(partitionIds, CancellationToken.None);
 
@@ -424,7 +421,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionIds = Enumerable.Range(1, NumberOfPartitions).Select(p => p.ToString()).ToArray();
             var storageManager = new InMemoryStorageManager((s) => Console.WriteLine(s));
             var loadbalancer = new PartitionLoadBalancer(
-                storageManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1));
+                storageManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1), TimeSpan.FromSeconds(10));
 
             // Create more partitions owned by this load balancer.
 
@@ -483,6 +480,151 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies that partitions ownership load balancing not attempt to steal from itself.
+        /// </summary>
+        ///
+        [Test]
+        public async Task RunLoadBalancingAsyncDoesNotStealFromItself()
+        {
+            const int MinimumpartitionCount = 4;
+            const int NumberOfPartitions = 9;
+
+            var partitionIds = Enumerable.Range(1, NumberOfPartitions).Select(p => p.ToString()).ToArray();
+            var storageManager = new InMemoryStorageManager((s) => Console.WriteLine(s));
+            var loadbalancer = new PartitionLoadBalancer(storageManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1), TimeSpan.FromSeconds(10));
+
+            var mockLog = new Mock<PartitionLoadBalancerEventSource>();
+            loadbalancer.Logger = mockLog.Object;
+
+            // Create more partitions owned by this load balancer.
+
+            var loadbalancerPartitionIds = Enumerable.Range(1, MinimumpartitionCount);
+            var completeOwnership = CreatePartitionOwnership(loadbalancerPartitionIds.Select(i => i.ToString()), loadbalancer.OwnerIdentifier);
+
+            // Seed the storageManager with the owned partitions.
+
+            await storageManager.ClaimOwnershipAsync(completeOwnership);
+
+            // Get owned partitions.
+
+            var totalOwnedPartitions = await storageManager.ListOwnershipAsync(loadbalancer.FullyQualifiedNamespace, loadbalancer.EventHubName, loadbalancer.ConsumerGroup);
+            var ownedByloadbalancer = GetOwnedPartitionIds(totalOwnedPartitions, loadbalancer.OwnerIdentifier);
+
+            // Verify number of owned partitions match the number of total partitions.
+
+            Assert.That(totalOwnedPartitions.Count(), Is.EqualTo(MinimumpartitionCount), "The minimum number of partitions should be owned.");
+            Assert.That(ownedByloadbalancer, Is.EquivalentTo(loadbalancerPartitionIds), "The minimum number of partitions should be owned by the load balancer.");
+
+            // The load balancing state is not yet equally distributed.  Run several load balancing cycles; balance should be reached and
+            // then remain stable.
+
+            var balanceCycles = NumberOfPartitions - MinimumpartitionCount;
+
+            while (balanceCycles > 0)
+            {
+                await loadbalancer.RunLoadBalancingAsync(partitionIds, CancellationToken.None);
+                --balanceCycles;
+            }
+
+            await loadbalancer.RunLoadBalancingAsync(partitionIds, CancellationToken.None);
+            await loadbalancer.RunLoadBalancingAsync(partitionIds, CancellationToken.None);
+            await loadbalancer.RunLoadBalancingAsync(partitionIds, CancellationToken.None);
+
+            // Verify partition ownership has not changed.
+
+            totalOwnedPartitions = await storageManager.ListOwnershipAsync(loadbalancer.FullyQualifiedNamespace, loadbalancer.EventHubName, loadbalancer.ConsumerGroup);
+            ownedByloadbalancer = GetOwnedPartitionIds(totalOwnedPartitions, loadbalancer.OwnerIdentifier);
+
+            Assert.That(totalOwnedPartitions.Count(), Is.EqualTo(NumberOfPartitions), "All partitions should be owned.");
+            Assert.That(ownedByloadbalancer, Is.EquivalentTo(totalOwnedPartitions.Select(ownership => int.Parse(ownership.PartitionId))), "The load balancer should own all partitions.");
+
+            // Verify that no attempts to steal were logged.
+
+            mockLog.Verify(log => log.ShouldStealPartition(It.IsAny<string>()), Times.Never);
+        }
+
+        /// <summary>
+        ///   Verifies that partitions ownership load balancing will not attempt to steal when an uneven distribution
+        ///   is already balanced.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(new[] { 2, 2, 6 })]
+        [TestCase(new[] { 2, 3, 7 })]
+        [TestCase(new[] { 10, 11, 31 })]
+        public async Task RunLoadBalancingAsyncDoesNotStealWhenTheLoadIsBalanced(int[] args)
+        {
+            var minimumPartitionCount = args[0];
+            var maximumPartitionCount = args[1];
+            var numberOfPartitions = args[2];
+
+            var partitionIds = Enumerable.Range(1, numberOfPartitions).Select(p => p.ToString()).ToArray();
+            var storageManager = new InMemoryStorageManager((s) => Console.WriteLine(s));
+            var loadbalancer = new PartitionLoadBalancer(storageManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1), TimeSpan.FromSeconds(10));
+
+            var mockLog = new Mock<PartitionLoadBalancerEventSource>();
+            loadbalancer.Logger = mockLog.Object;
+
+            // Create more partitions owned by this load balancer.
+
+            var loadbalancer1PartitionIds = Enumerable.Range(1, minimumPartitionCount);
+            var completeOwnership = CreatePartitionOwnership(loadbalancer1PartitionIds.Select(i => i.ToString()), loadbalancer.OwnerIdentifier);
+
+            // Create more partitions owned by a different load balancer.
+
+            var loadbalancer2Id = Guid.NewGuid().ToString();
+            var loadbalancer2PartitionIds = Enumerable.Range(loadbalancer1PartitionIds.Max() + 1, minimumPartitionCount);
+
+            completeOwnership = completeOwnership.Concat(CreatePartitionOwnership(loadbalancer2PartitionIds.Select(i => i.ToString()), loadbalancer2Id));
+
+            // Create more partitions owned by a different load balancer above the MaximumPartitionCount.
+
+            var loadbalancer3Id = Guid.NewGuid().ToString();
+            var loadbalancer3PartitionIds = Enumerable.Range(loadbalancer2PartitionIds.Max() + 1, maximumPartitionCount);
+
+            completeOwnership = completeOwnership.Concat(CreatePartitionOwnership(loadbalancer3PartitionIds.Select(i => i.ToString()), loadbalancer3Id));
+
+            // Seed the storageManager with the owned partitions.
+
+            await storageManager.ClaimOwnershipAsync(completeOwnership);
+
+            // Get owned partitions.
+
+            var totalOwnedPartitions = await storageManager.ListOwnershipAsync(loadbalancer.FullyQualifiedNamespace, loadbalancer.EventHubName, loadbalancer.ConsumerGroup);
+            var ownedByloadbalancer1 = GetOwnedPartitionIds(totalOwnedPartitions, loadbalancer.OwnerIdentifier);
+            var ownedByloadbalancer2 = GetOwnedPartitionIds(totalOwnedPartitions, loadbalancer2Id);
+            var ownedByloadbalancer3 = GetOwnedPartitionIds(totalOwnedPartitions, loadbalancer3Id);
+
+            // Verify number of owned partitions match the number of total partitions.
+
+            Assert.That(totalOwnedPartitions.Count(), Is.EqualTo(numberOfPartitions), "All partitions should be owned.");
+            Assert.That(ownedByloadbalancer1, Is.EquivalentTo(loadbalancer1PartitionIds), "The correct set of partitions should be owned by the first load balancer.");
+            Assert.That(ownedByloadbalancer2, Is.EquivalentTo(loadbalancer2PartitionIds), "The correct set of partitions should be owned by the first load balancer.");
+            Assert.That(ownedByloadbalancer3, Is.EquivalentTo(loadbalancer3PartitionIds), "The correct set of partitions should be owned by the first load balancer.");
+
+            // The load balancing state is equally distributed.  Run several load balancing cycles; ownership should remain stable.
+
+            await loadbalancer.RunLoadBalancingAsync(partitionIds, CancellationToken.None);
+            await loadbalancer.RunLoadBalancingAsync(partitionIds, CancellationToken.None);
+            await loadbalancer.RunLoadBalancingAsync(partitionIds, CancellationToken.None);
+
+            // Verify partition ownership has not changed.
+
+            totalOwnedPartitions = await storageManager.ListOwnershipAsync(loadbalancer.FullyQualifiedNamespace, loadbalancer.EventHubName, loadbalancer.ConsumerGroup);
+            ownedByloadbalancer1 = GetOwnedPartitionIds(totalOwnedPartitions, loadbalancer.OwnerIdentifier);
+            ownedByloadbalancer2 = GetOwnedPartitionIds(totalOwnedPartitions, loadbalancer2Id);
+            ownedByloadbalancer3 = GetOwnedPartitionIds(totalOwnedPartitions, loadbalancer3Id);
+
+            Assert.That(ownedByloadbalancer1, Is.EquivalentTo(loadbalancer1PartitionIds), "The correct set of partitions should for the first load balancer should not have changed.");
+            Assert.That(ownedByloadbalancer2, Is.EquivalentTo(loadbalancer2PartitionIds), "The correct set of partitions should for the second load balancer should not have changed.");
+            Assert.That(ownedByloadbalancer3, Is.EquivalentTo(loadbalancer3PartitionIds), "The correct set of partitions should for the third load balancer should not have changed.");
+
+            // Verify that no attempts to steal were logged.
+
+            mockLog.Verify(log => log.ShouldStealPartition(It.IsAny<string>()), Times.Never);
+        }
+
+        /// <summary>
         ///   Verifies that claimable partitions are claimed by a <see cref="PartitionLoadBalancer" /> after RunAsync is called.
         /// </summary>
         ///
@@ -494,7 +636,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var partitionIds = Enumerable.Range(1, NumberOfPartitions).Select(p => p.ToString()).ToArray();
             var storageManager = new InMemoryStorageManager((s) => Console.WriteLine(s));
-            var loadBalancer = new PartitionLoadBalancer(storageManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1));
+            var loadBalancer = new PartitionLoadBalancer(storageManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1), TimeSpan.FromSeconds(10));
 
             // Ownership should start empty.
 
@@ -551,7 +693,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var partitionIds = Enumerable.Range(1, NumberOfPartitions).Select(p => p.ToString()).ToArray();
             var mockStorageManager = new Mock<InMemoryStorageManager>() { CallBase = true };
-            var loadBalancer = new PartitionLoadBalancer(mockStorageManager.Object, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1));
+            var loadBalancer = new PartitionLoadBalancer(mockStorageManager.Object, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1), TimeSpan.FromSeconds(10));
 
             // Ownership should start empty.
 
@@ -604,7 +746,6 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(loadBalancer.OwnedPartitionIds.Count(), Is.EqualTo(OrphanedPartitionCount), "The load balancer should have ownership of all orphaned partitions and none additional.");
         }
 
-
         /// <summary>
         ///   Verifies that claimable partitions are claimed by a <see cref="PartitionLoadBalancer" /> after RunAsync is called.
         /// </summary>
@@ -619,7 +760,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var otherLoadBalancerIdentifier = Guid.NewGuid().ToString();
             var partitionIds = Enumerable.Range(1, NumberOfPartitions).Select(p => p.ToString()).ToArray();
             var storageManager = new InMemoryStorageManager((s) => Console.WriteLine(s));
-            var loadBalancer = new PartitionLoadBalancer(storageManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1));
+            var loadBalancer = new PartitionLoadBalancer(storageManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1), TimeSpan.FromSeconds(10));
 
             // Ownership should start empty.
 
@@ -640,7 +781,7 @@ namespace Azure.Messaging.EventHubs.Tests
             //
             // Assign the processor ownership over half of the partitions in storage, but do not formally claim them.
 
-            await storageManager.ClaimOwnershipAsync(CreatePartitionOwnership( partitionIds.Skip(MinimumPartitionCount).Take(OrphanedPartitionCount), loadBalancer.OwnerIdentifier));
+            await storageManager.ClaimOwnershipAsync(CreatePartitionOwnership(partitionIds.Skip(MinimumPartitionCount).Take(OrphanedPartitionCount), loadBalancer.OwnerIdentifier));
             completeOwnership = await storageManager.ListOwnershipAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup);
 
             Assert.That(completeOwnership.Count(), Is.EqualTo(OrphanedPartitionCount + MinimumPartitionCount), "Storage should be tracking half the partitions as owned by another processor as well as some orphans.");
@@ -683,7 +824,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionIds = Enumerable.Range(1, NumberOfPartitions).Select(p => p.ToString()).ToArray();
             var storageManager = new InMemoryStorageManager((s) => Console.WriteLine(s));
             var loadbalancer = new PartitionLoadBalancer(
-                storageManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1));
+                storageManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1), TimeSpan.FromSeconds(10));
 
             // Create more partitions owned by a different load balancer.
 
@@ -715,6 +856,171 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies that ownership is renewed only for partitions past LoadBalancingInterval.
+        /// </summary>
+        ///
+        [Test]
+        public async Task RunLoadBalancingAsyncDoesNotRenewFreshPartitions()
+        {
+            const int NumberOfPartitions = 4;
+            var partitionIds = Enumerable.Range(1, NumberOfPartitions).Select(p => p.ToString()).ToArray();
+
+            var storageManager = new InMemoryStorageManager((s) => Console.WriteLine(s));
+            string[] CollectVersions() => storageManager.Ownership.OrderBy(pair => pair.Key.PartitionId).Select(pair => pair.Value.Version).ToArray();
+
+            var now = DateTimeOffset.UtcNow;
+
+            var loadbalancerId = Guid.NewGuid().ToString();
+            var loadbalancerMock = new Mock<PartitionLoadBalancer>(
+                storageManager, loadbalancerId, ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(3), TimeSpan.FromSeconds(60));
+            loadbalancerMock.CallBase = true;
+            loadbalancerMock.Setup(b => b.GetDateTimeOffsetNow()).Returns(() => now);
+            var loadbalancer = loadbalancerMock.Object;
+
+            storageManager.LastModifiedTime = now;
+
+            // This run would re-take ownership and update versions
+            for (int i = 0; i < NumberOfPartitions; i++)
+            {
+                await loadbalancer.RunLoadBalancingAsync(partitionIds, CancellationToken.None);
+            }
+
+            var claimedVersions = CollectVersions();
+
+            // This run would renew ownership
+            now = now.AddSeconds(65);
+            storageManager.LastModifiedTime = now;
+            for (int i = 0; i < NumberOfPartitions; i++)
+            {
+                await loadbalancer.RunLoadBalancingAsync(partitionIds, CancellationToken.None);
+            }
+
+            var renewedVersions = CollectVersions();
+
+            // This run would not review anything as everything is up-to-date
+            for (int i = 0; i < NumberOfPartitions; i++)
+            {
+                await loadbalancer.RunLoadBalancingAsync(partitionIds, CancellationToken.None);
+            }
+
+            var notRenewedVersions = CollectVersions();
+
+            for (int i = 0; i < NumberOfPartitions; i++)
+            {
+                Assert.That(claimedVersions[i], Is.Not.EqualTo(renewedVersions[i]), "Partitions should've been claimed");
+                Assert.That(renewedVersions[i], Is.EqualTo(notRenewedVersions[i]), "Partitions should've been skipped during renewal");
+            }
+
+            Assert.That(storageManager.TotalRenewals, Is.EqualTo(8), "There should be 4 initial claims and 4 renew claims");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="PartitionLoadBalancer" /> when a partition is
+        ///   reported stolen.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ReportPartitionStolenAbandonsOwnership()
+        {
+            const int NumberOfPartitions = 3;
+
+            var partitionIds = Enumerable.Range(1, NumberOfPartitions).Select(p => p.ToString()).ToArray();
+            var storageManager = new InMemoryStorageManager();
+            var loadBalancer = new PartitionLoadBalancer(storageManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1), TimeSpan.FromSeconds(10));
+
+            // Assume ownership of all partitions
+
+            await storageManager.ClaimOwnershipAsync(CreatePartitionOwnership(partitionIds, loadBalancer.OwnerIdentifier));
+            await loadBalancer.RunLoadBalancingAsync(partitionIds, CancellationToken.None);
+
+            Assert.That(loadBalancer.OwnedPartitionIds, Is.EquivalentTo(partitionIds), "The load balancer should own all partitions.");
+
+            // Report the first partition stolen and validate that it is immediately abandoned.
+
+            var firstPartition = partitionIds.First();
+            partitionIds = partitionIds.Skip(1).ToArray();
+            Assert.That(partitionIds, Does.Not.Contain(firstPartition), "The first partition should no longer exist in the set of ids.");
+
+            loadBalancer.ReportPartitionStolen(firstPartition);
+            Assert.That(loadBalancer.OwnedPartitionIds, Does.Not.Contain(firstPartition), "The load balancer should not own the first partition after it was stolen.");
+            Assert.That(loadBalancer.OwnedPartitionIds, Is.EquivalentTo(partitionIds), "The load balancer should own all but the first partition.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="PartitionLoadBalancer" /> when a partition is
+        ///   reported stolen.
+        /// </summary>
+        ///
+        [Test]
+        public async Task LoadBalancerDoesNotReclaimStolenPartitionIfStorageAgrees()
+        {
+            const int NumberOfPartitions = 3;
+
+            var partitionIds = Enumerable.Range(1, NumberOfPartitions).Select(p => p.ToString()).ToArray();
+            var storageManager = new InMemoryStorageManager();
+            var loadBalancer = new PartitionLoadBalancer(storageManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1), TimeSpan.FromSeconds(10));
+
+            // Assume ownership of all partitions
+
+            await storageManager.ClaimOwnershipAsync(CreatePartitionOwnership(partitionIds, loadBalancer.OwnerIdentifier));
+            await loadBalancer.RunLoadBalancingAsync(partitionIds, CancellationToken.None);
+
+            Assert.That(loadBalancer.OwnedPartitionIds, Is.EquivalentTo(partitionIds), "The load balancer should own all partitions.");
+
+            // Report the first partition stolen and validate that it is immediately abandoned.
+
+            var firstPartition = partitionIds.First();
+
+            loadBalancer.ReportPartitionStolen(firstPartition);
+            Assert.That(loadBalancer.OwnedPartitionIds, Does.Not.Contain(firstPartition), "The load balancer should not own the first partition after it was stolen.");
+
+            // Update storage to reflect that the first partition is not owned.
+
+            var ownership = (await storageManager.ListOwnershipAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup)).Single(item => item.PartitionId == firstPartition);
+            ownership.OwnerIdentifier = "another-processor";
+
+            await storageManager.ClaimOwnershipAsync(new[] { ownership });
+            await loadBalancer.RunLoadBalancingAsync(partitionIds, CancellationToken.None);
+
+            Assert.That(loadBalancer.OwnedPartitionIds, Does.Not.Contain(firstPartition), "The load balancer should not own the first partition after load balancing.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="PartitionLoadBalancer" /> when a partition is
+        ///   reported stolen.
+        /// </summary>
+        ///
+        [Test]
+        public async Task LoadBalancerReclaimsStolenPartitionIfStorageDisagrees()
+        {
+            const int NumberOfPartitions = 3;
+
+            var partitionIds = Enumerable.Range(1, NumberOfPartitions).Select(p => p.ToString()).ToArray();
+            var storageManager = new InMemoryStorageManager();
+            var loadBalancer = new PartitionLoadBalancer(storageManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1), TimeSpan.FromSeconds(10));
+
+            // Assume ownership of all partitions
+
+            await storageManager.ClaimOwnershipAsync(CreatePartitionOwnership(partitionIds, loadBalancer.OwnerIdentifier));
+            await loadBalancer.RunLoadBalancingAsync(partitionIds, CancellationToken.None);
+
+            Assert.That(loadBalancer.OwnedPartitionIds, Is.EquivalentTo(partitionIds), "The load balancer should own all partitions.");
+
+            // Report the first partition stolen and validate that it is immediately abandoned.
+
+            var firstPartition = partitionIds.First();
+
+            loadBalancer.ReportPartitionStolen(firstPartition);
+            Assert.That(loadBalancer.OwnedPartitionIds, Does.Not.Contain(firstPartition), "The load balancer should not own the first partition after it was stolen.");
+
+            // Storage still reflects ownership of the stolen partition; running load balancing should
+            // reclaim it.
+
+            await loadBalancer.RunLoadBalancingAsync(partitionIds, CancellationToken.None);
+            Assert.That(loadBalancer.OwnedPartitionIds, Is.EquivalentTo(partitionIds), "The load balancer should own all partitions after considering storage.");
+        }
+
+        /// <summary>
         ///   Creates a collection of <see cref="PartitionOwnership" /> based on the specified arguments.
         /// </summary>
         ///
@@ -738,6 +1044,21 @@ namespace Azure.Messaging.EventHubs.Tests
                         LastModifiedTime = DateTimeOffset.UtcNow,
                         Version = Guid.NewGuid().ToString()
                     }).ToList();
+        }
+        /// <summary>
+        ///   Retrieves the partition identifiers from a set of ownership records.
+        /// </summary>
+        ///
+        /// <param name="ownership">The set of ownership to query.</param>
+        ///
+        /// <returns>The set of partition identifies represented in the <paramref name="ownership" /> set.</returns>
+        ///
+        private IEnumerable<int> GetOwnedPartitionIds(IEnumerable<EventProcessorPartitionOwnership> ownership, string ownerIdentifier)
+        {
+            foreach (var item in ownership.Where(itm => itm.OwnerIdentifier == ownerIdentifier))
+            {
+                yield return int.Parse(item.PartitionId);
+            }
         }
     }
 }

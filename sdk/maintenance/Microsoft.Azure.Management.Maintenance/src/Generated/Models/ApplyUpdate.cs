@@ -35,13 +35,15 @@ namespace Microsoft.Azure.Management.Maintenance.Models
         /// <param name="id">Fully qualified identifier of the resource</param>
         /// <param name="name">Name of the resource</param>
         /// <param name="type">Type of the resource</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="status">The status. Possible values include:
         /// 'Pending', 'InProgress', 'Completed', 'RetryNow',
         /// 'RetryLater'</param>
         /// <param name="resourceId">The resourceId</param>
         /// <param name="lastUpdateTime">Last Update time</param>
-        public ApplyUpdate(string id = default(string), string name = default(string), string type = default(string), string status = default(string), string resourceId = default(string), System.DateTime? lastUpdateTime = default(System.DateTime?))
-            : base(id, name, type)
+        public ApplyUpdate(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string status = default(string), string resourceId = default(string), System.DateTime? lastUpdateTime = default(System.DateTime?))
+            : base(id, name, type, systemData)
         {
             Status = status;
             ResourceId = resourceId;

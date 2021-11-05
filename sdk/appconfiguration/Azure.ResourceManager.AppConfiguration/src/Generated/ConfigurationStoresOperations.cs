@@ -21,17 +21,19 @@ namespace Azure.ResourceManager.AppConfiguration
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         internal ConfigurationStoresRestOperations RestClient { get; }
+
         /// <summary> Initializes a new instance of ConfigurationStoresOperations for mocking. </summary>
         protected ConfigurationStoresOperations()
         {
         }
+
         /// <summary> Initializes a new instance of ConfigurationStoresOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        internal ConfigurationStoresOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null, string apiVersion = "2019-11-01-preview")
+        internal ConfigurationStoresOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null, string apiVersion = "2020-06-01")
         {
             RestClient = new ConfigurationStoresRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint, apiVersion);
             _clientDiagnostics = clientDiagnostics;
@@ -236,6 +238,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public virtual AsyncPageable<ConfigurationStore> ListByResourceGroupAsync(string resourceGroupName, string skipToken = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -280,6 +283,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public virtual Pageable<ConfigurationStore> ListByResourceGroup(string resourceGroupName, string skipToken = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -325,6 +329,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="configStoreName"/> is null. </exception>
         public virtual AsyncPageable<ApiKey> ListKeysAsync(string resourceGroupName, string configStoreName, string skipToken = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -374,6 +379,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="configStoreName"/> is null. </exception>
         public virtual Pageable<ApiKey> ListKeys(string resourceGroupName, string configStoreName, string skipToken = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -423,6 +429,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="configStoreCreationParameters"> The parameters for creating a configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/>, or <paramref name="configStoreCreationParameters"/> is null. </exception>
         public virtual async Task<ConfigurationStoresCreateOperation> StartCreateAsync(string resourceGroupName, string configStoreName, ConfigurationStore configStoreCreationParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -457,6 +464,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="configStoreCreationParameters"> The parameters for creating a configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/>, or <paramref name="configStoreCreationParameters"/> is null. </exception>
         public virtual ConfigurationStoresCreateOperation StartCreate(string resourceGroupName, string configStoreName, ConfigurationStore configStoreCreationParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -490,6 +498,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="configStoreName"/> is null. </exception>
         public virtual async Task<ConfigurationStoresDeleteOperation> StartDeleteAsync(string resourceGroupName, string configStoreName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -519,6 +528,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="configStoreName"/> is null. </exception>
         public virtual ConfigurationStoresDeleteOperation StartDelete(string resourceGroupName, string configStoreName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -549,6 +559,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="configStoreUpdateParameters"> The parameters for updating a configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/>, or <paramref name="configStoreUpdateParameters"/> is null. </exception>
         public virtual async Task<ConfigurationStoresUpdateOperation> StartUpdateAsync(string resourceGroupName, string configStoreName, ConfigurationStoreUpdateParameters configStoreUpdateParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -583,6 +594,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="configStoreUpdateParameters"> The parameters for updating a configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/>, or <paramref name="configStoreUpdateParameters"/> is null. </exception>
         public virtual ConfigurationStoresUpdateOperation StartUpdate(string resourceGroupName, string configStoreName, ConfigurationStoreUpdateParameters configStoreUpdateParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)

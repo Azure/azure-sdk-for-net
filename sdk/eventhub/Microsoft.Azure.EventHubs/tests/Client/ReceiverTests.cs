@@ -58,7 +58,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
 
                 try
                 {
-                    // Randomly pick one of the available partitons.
+                    // Randomly pick one of the available partitions.
                     var partitions = await this.GetPartitionsAsync(ehClient);
                     var partitionId = partitions[new Random().Next(partitions.Length)];
                     TestUtility.Log($"Randomly picked partition {partitionId}");
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
                     TestUtility.Log($"Creating a new receiver with offset EndOFStream");
                     receiver = ehClient.CreateReceiver(PartitionReceiver.DefaultConsumerGroupName, partitionId, EventPosition.FromEnd());
 
-                    // Attemp to receive the message. This should return only 1 message.
+                    // Attempt to receive the message. This should return only 1 message.
                     var receiveTask = receiver.ReceiveAsync(100);
 
                     // Send a new message which is expected to go to the end of stream.
@@ -328,7 +328,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
             }
         }
 
-        [Fact(Skip = "This test is intermittently failing.  Tracked by issue #9798")]
+        [Fact]
         [LiveTest]
         [DisplayTestMethodName]
         public async Task CreateReceiverWithInclusiveSequenceNumber()
@@ -359,14 +359,14 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
                     // Create a new receiver which will start reading from the last message on the stream.
                     TestUtility.Log($"Creating a new receiver with sequence number {pInfo.LastEnqueuedSequenceNumber}");
                     receiver = ehClient.CreateReceiver(PartitionReceiver.DefaultConsumerGroupName, partitionId, EventPosition.FromSequenceNumber(pInfo.LastEnqueuedSequenceNumber, true));
-                    var receivedMessages = await receiver.ReceiveAsync(100);
+                    var receivedMessages = await ReceiveAllMessagesAsync(receiver);
 
-                    // We should have received only 1 message from this call.
+                    // We should have received 2 messages from this call.
                     Assert.True(receivedMessages.Count() == 2, $"Didn't receive 2 messages. Received {receivedMessages.Count()} messages(s).");
 
                     // Next receive on this partition shouldn't return any more messages.
-                    receivedMessages = await receiver.ReceiveAsync(100, TimeSpan.FromSeconds(15));
-                    Assert.True(receivedMessages == null, $"Received messages at the end.");
+                    var nextMessages = await receiver.ReceiveAsync(100, TimeSpan.FromSeconds(15));
+                    Assert.True(nextMessages == null, $"Received messages at the end.");
                 }
                 finally
                 {
@@ -609,7 +609,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
                         ehClient.CloseAsync());
                 }
 
-                await Assert.ThrowsAsync<ObjectDisposedException>(async () =>
+                await Assert.ThrowsAsync<InvalidOperationException>(async () =>
                 {
                     TestUtility.Log("Receiving another event from partition 0 on the closed receiver, this should fail");
                     await pReceiver.ReceiveAsync(1);

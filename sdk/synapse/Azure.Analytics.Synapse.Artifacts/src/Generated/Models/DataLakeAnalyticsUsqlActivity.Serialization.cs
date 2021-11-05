@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(DataLakeAnalyticsUsqlActivityConverter))]
     public partial class DataLakeAnalyticsUsqlActivity : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -118,16 +121,26 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<object> runtimeVersion = default;
             Optional<object> compilationMode = default;
             IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedServiceName"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     linkedServiceName = LinkedServiceReference.DeserializeLinkedServiceReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("policy"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     policy = ActivityPolicy.DeserializeActivityPolicy(property.Value);
                     continue;
                 }
@@ -148,6 +161,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("dependsOn"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ActivityDependency> array = new List<ActivityDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -158,6 +176,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("userProperties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<UserProperty> array = new List<UserProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -168,6 +191,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("typeProperties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("scriptPath"))
@@ -182,16 +210,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         }
                         if (property0.NameEquals("degreeOfParallelism"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             degreeOfParallelism = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("priority"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             priority = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("parameters"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             Dictionary<string, object> dictionary = new Dictionary<string, object>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
@@ -202,22 +245,44 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         }
                         if (property0.NameEquals("runtimeVersion"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             runtimeVersion = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("compilationMode"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             compilationMode = property0.Value.GetObject();
                             continue;
                         }
                     }
                     continue;
                 }
-                additionalPropertiesDictionary ??= new Dictionary<string, object>();
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
             return new DataLakeAnalyticsUsqlActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, scriptPath, scriptLinkedService, degreeOfParallelism.Value, priority.Value, Optional.ToDictionary(parameters), runtimeVersion.Value, compilationMode.Value);
+        }
+
+        internal partial class DataLakeAnalyticsUsqlActivityConverter : JsonConverter<DataLakeAnalyticsUsqlActivity>
+        {
+            public override void Write(Utf8JsonWriter writer, DataLakeAnalyticsUsqlActivity model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override DataLakeAnalyticsUsqlActivity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeDataLakeAnalyticsUsqlActivity(document.RootElement);
+            }
         }
     }
 }

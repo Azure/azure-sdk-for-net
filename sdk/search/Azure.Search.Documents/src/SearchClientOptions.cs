@@ -5,6 +5,7 @@ using System;
 using System.Diagnostics;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Core.Serialization;
 
 #pragma warning disable SA1402 // File may only contain a single type
 
@@ -19,23 +20,28 @@ namespace Azure.Search.Documents
         /// <summary>
         /// The versions of Azure Cognitive Search supported by this client
         /// library.  For more, see
-        /// <see href="https://docs.microsoft.com/azure/search/search-api-versions" />.
+        /// <see href="https://docs.microsoft.com/azure/search/search-api-versions">
+        /// API versions in Azure Cognitive Search</see>.
         /// </summary>
         public enum ServiceVersion
         {
             #pragma warning disable CA1707 // Identifiers should not contain underscores
             /// <summary>
-            /// The 2020_06_30 version of the Azure Cognitive Search
-            /// service.
+            /// The 2020_06_30 version of the Azure Cognitive Search service.
             /// </summary>
-            V2020_06_30 = 1
+            V2020_06_30 = 1,
+
+            /// <summary>
+            /// The 2021_04_30_Preview version of the Azure Cognitive Search service.
+            /// </summary>
+            V2021_04_30_Preview = 2,
             #pragma warning restore CA1707
         }
 
         /// <summary>
         /// The Latest service version supported by this client library.
         /// </summary>
-        internal const ServiceVersion LatestVersion = ServiceVersion.V2020_06_30;
+        internal const ServiceVersion LatestVersion = ServiceVersion.V2021_04_30_Preview;
 
         /// <summary>
         /// The service version to use when creating continuation tokens that
@@ -47,11 +53,11 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Gets the <see cref="ServiceVersion"/> of the service API used when
         /// making requests.  For more, see
-        /// <see href="https://docs.microsoft.com/azure/search/search-api-versions" />.
+        /// <see href="https://docs.microsoft.com/azure/search/search-api-versions">
+        /// API versions in Azure Cognitive Search</see>.
         /// </summary>
         public ServiceVersion Version { get; }
 
-#if EXPERIMENTAL_SERIALIZER
         /// <summary>
         /// Gets or sets an <see cref="ObjectSerializer"/> that can be used to
         /// customize the serialization of strongly typed models.  The
@@ -59,7 +65,6 @@ namespace Azure.Search.Documents
         /// will be used if no value is provided.
         /// </summary>
         public ObjectSerializer Serializer { get; set; }
-#endif
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SearchClientOptions"/>
@@ -68,7 +73,8 @@ namespace Azure.Search.Documents
         /// <param name="version">
         /// An optional <see cref="ServiceVersion"/> to specify the version of
         /// the REST API to use.  For more, see
-        /// <see href="https://docs.microsoft.com/azure/search/search-api-versions" />.
+        /// <see href="https://docs.microsoft.com/azure/search/search-api-versions">
+        /// API versions in Azure Cognitive Search</see>.
         ///
         /// If not provided, the <paramref name="version"/> will default to the
         /// latest supported by this client library.  It is recommended that
@@ -100,6 +106,23 @@ namespace Azure.Search.Documents
             return HttpPipelineBuilder.Build(
                 options: this,
                 perCallPolicies: new[] { new AzureKeyCredentialPolicy(credential, Constants.ApiKeyHeaderName) },
+                perRetryPolicies: Array.Empty<HttpPipelinePolicy>(),
+                responseClassifier: null);
+        }
+
+        /// <summary>
+        /// Create an <see cref="HttpPipeline"/> to send requests to the Search service.
+        /// </summary>
+        /// <param name="credential">
+        /// The <see cref="TokenCredential"/> to authenticate requests.
+        /// </param>
+        /// <returns>An <see cref="HttpPipeline"/> to send requests.</returns>
+        internal HttpPipeline Build(TokenCredential credential)
+        {
+            Debug.Assert(credential != null);
+            return HttpPipelineBuilder.Build(
+                options: this,
+                perCallPolicies: new[] { new BearerTokenAuthenticationPolicy(credential, Constants.CredentialScopeName) },
                 perRetryPolicies: Array.Empty<HttpPipelinePolicy>(),
                 responseClassifier: null);
         }
@@ -139,7 +162,6 @@ namespace Azure.Search.Documents
         {
             Diagnostics.LoggedQueryParameters.Add("api-version");
             Diagnostics.LoggedQueryParameters.Add("allowIndexDowntime");
-            Diagnostics.LoggedQueryParameters.Add("$select");
         }
     }
 
@@ -165,11 +187,12 @@ namespace Azure.Search.Documents
             version switch
             {
                 SearchClientOptions.ServiceVersion.V2020_06_30 => version,
+                SearchClientOptions.ServiceVersion.V2021_04_30_Preview => version,
                 _ => throw CreateInvalidVersionException(version)
             };
 
         /// <summary>
-        /// Get a version string, like "2019-05-06", corresponding to a given
+        /// Get a version string, like "2020-06-30", corresponding to a given
         /// <see cref="SearchClientOptions.ServiceVersion"/> value.
         /// </summary>
         /// <param name="version">
@@ -187,6 +210,7 @@ namespace Azure.Search.Documents
             version switch
             {
                 SearchClientOptions.ServiceVersion.V2020_06_30 => "2020-06-30",
+                SearchClientOptions.ServiceVersion.V2021_04_30_Preview => "2021-04-30-Preview",
                 _ => throw CreateInvalidVersionException(version)
             };
 

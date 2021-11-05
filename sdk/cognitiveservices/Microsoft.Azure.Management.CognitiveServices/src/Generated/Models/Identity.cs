@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
     using System.Linq;
 
     /// <summary>
-    /// Managed service identity.
+    /// Identity for the resource.
     /// </summary>
     public partial class Identity
     {
@@ -31,16 +31,17 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// <summary>
         /// Initializes a new instance of the Identity class.
         /// </summary>
-        /// <param name="type">Type of managed service identity. Possible
-        /// values include: 'None', 'SystemAssigned', 'UserAssigned'</param>
-        /// <param name="tenantId">Tenant of managed service identity.</param>
-        /// <param name="principalId">Principal Id of managed service
+        /// <param name="type">The identity type. Possible values include:
+        /// 'None', 'SystemAssigned', 'UserAssigned', 'SystemAssigned,
+        /// UserAssigned'</param>
+        /// <param name="tenantId">The tenant ID of resource.</param>
+        /// <param name="principalId">The principal ID of resource
         /// identity.</param>
         /// <param name="userAssignedIdentities">The list of user assigned
         /// identities associated with the resource. The user identity
         /// dictionary key references will be ARM resource ids in the form:
         /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}</param>
-        public Identity(IdentityType? type = default(IdentityType?), string tenantId = default(string), string principalId = default(string), IDictionary<string, UserAssignedIdentity> userAssignedIdentities = default(IDictionary<string, UserAssignedIdentity>))
+        public Identity(ResourceIdentityType? type = default(ResourceIdentityType?), string tenantId = default(string), string principalId = default(string), IDictionary<string, UserAssignedIdentity> userAssignedIdentities = default(IDictionary<string, UserAssignedIdentity>))
         {
             Type = type;
             TenantId = tenantId;
@@ -55,20 +56,20 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets type of managed service identity. Possible values
-        /// include: 'None', 'SystemAssigned', 'UserAssigned'
+        /// Gets or sets the identity type. Possible values include: 'None',
+        /// 'SystemAssigned', 'UserAssigned', 'SystemAssigned, UserAssigned'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
-        public IdentityType? Type { get; set; }
+        public ResourceIdentityType? Type { get; set; }
 
         /// <summary>
-        /// Gets tenant of managed service identity.
+        /// Gets the tenant ID of resource.
         /// </summary>
         [JsonProperty(PropertyName = "tenantId")]
         public string TenantId { get; private set; }
 
         /// <summary>
-        /// Gets principal Id of managed service identity.
+        /// Gets the principal ID of resource identity.
         /// </summary>
         [JsonProperty(PropertyName = "principalId")]
         public string PrincipalId { get; private set; }

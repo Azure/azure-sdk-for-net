@@ -30,10 +30,10 @@ namespace Microsoft.Azure.Management.Search.Models
         /// <summary>
         /// Initializes a new instance of the AdminKeyResult class.
         /// </summary>
-        /// <param name="primaryKey">The primary admin API key of the Search
+        /// <param name="primaryKey">The primary admin API key of the search
         /// service.</param>
         /// <param name="secondaryKey">The secondary admin API key of the
-        /// Search service.</param>
+        /// search service.</param>
         public AdminKeyResult(string primaryKey = default(string), string secondaryKey = default(string))
         {
             PrimaryKey = primaryKey;
@@ -47,13 +47,13 @@ namespace Microsoft.Azure.Management.Search.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the primary admin API key of the Search service.
+        /// Gets the primary admin API key of the search service.
         /// </summary>
         [JsonProperty(PropertyName = "primaryKey")]
         public string PrimaryKey { get; private set; }
 
         /// <summary>
-        /// Gets the secondary admin API key of the Search service.
+        /// Gets the secondary admin API key of the search service.
         /// </summary>
         [JsonProperty(PropertyName = "secondaryKey")]
         public string SecondaryKey { get; private set; }

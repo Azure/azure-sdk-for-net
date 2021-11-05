@@ -34,10 +34,13 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// <param name="enabled">Whether the add-on is enabled or not.</param>
         /// <param name="config">Key-value pairs for configuring an
         /// add-on.</param>
-        public ManagedClusterAddonProfile(bool enabled, IDictionary<string, string> config = default(IDictionary<string, string>))
+        /// <param name="identity">Information of user assigned identity used
+        /// by this add-on.</param>
+        public ManagedClusterAddonProfile(bool enabled, IDictionary<string, string> config = default(IDictionary<string, string>), ManagedClusterAddonProfileIdentity identity = default(ManagedClusterAddonProfileIdentity))
         {
             Enabled = enabled;
             Config = config;
+            Identity = identity;
             CustomInit();
         }
 
@@ -57,6 +60,12 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// </summary>
         [JsonProperty(PropertyName = "config")]
         public IDictionary<string, string> Config { get; set; }
+
+        /// <summary>
+        /// Gets information of user assigned identity used by this add-on.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public ManagedClusterAddonProfileIdentity Identity { get; private set; }
 
         /// <summary>
         /// Validate the object.

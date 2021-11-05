@@ -47,11 +47,6 @@ namespace Microsoft.Azure.Management.OperationalInsights
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// The API version to use for this operation.
-        /// </summary>
-        public string ApiVersion { get; private set; }
-
-        /// <summary>
         /// The ID of the target subscription.
         /// </summary>
         public string SubscriptionId { get; set; }
@@ -105,11 +100,6 @@ namespace Microsoft.Azure.Management.OperationalInsights
         public virtual IManagementGroupsOperations ManagementGroups { get; private set; }
 
         /// <summary>
-        /// Gets the IOperations.
-        /// </summary>
-        public virtual IOperations Operations { get; private set; }
-
-        /// <summary>
         /// Gets the IOperationStatusesOperations.
         /// </summary>
         public virtual IOperationStatusesOperations OperationStatuses { get; private set; }
@@ -123,21 +113,6 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// Gets the IUsagesOperations.
         /// </summary>
         public virtual IUsagesOperations Usages { get; private set; }
-
-        /// <summary>
-        /// Gets the IWorkspacesOperations.
-        /// </summary>
-        public virtual IWorkspacesOperations Workspaces { get; private set; }
-
-        /// <summary>
-        /// Gets the IDeletedWorkspacesOperations.
-        /// </summary>
-        public virtual IDeletedWorkspacesOperations DeletedWorkspaces { get; private set; }
-
-        /// <summary>
-        /// Gets the IClustersOperations.
-        /// </summary>
-        public virtual IClustersOperations Clusters { get; private set; }
 
         /// <summary>
         /// Gets the IStorageInsightConfigsOperations.
@@ -168,6 +143,31 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// Gets the IWorkspacePurgeOperations.
         /// </summary>
         public virtual IWorkspacePurgeOperations WorkspacePurge { get; private set; }
+
+        /// <summary>
+        /// Gets the ITablesOperations.
+        /// </summary>
+        public virtual ITablesOperations Tables { get; private set; }
+
+        /// <summary>
+        /// Gets the IClustersOperations.
+        /// </summary>
+        public virtual IClustersOperations Clusters { get; private set; }
+
+        /// <summary>
+        /// Gets the IOperations.
+        /// </summary>
+        public virtual IOperations Operations { get; private set; }
+
+        /// <summary>
+        /// Gets the IWorkspacesOperations.
+        /// </summary>
+        public virtual IWorkspacesOperations Workspaces { get; private set; }
+
+        /// <summary>
+        /// Gets the IDeletedWorkspacesOperations.
+        /// </summary>
+        public virtual IDeletedWorkspacesOperations DeletedWorkspaces { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the OperationalInsightsManagementClient class.
@@ -416,21 +416,21 @@ namespace Microsoft.Azure.Management.OperationalInsights
             LinkedServices = new LinkedServicesOperations(this);
             LinkedStorageAccounts = new LinkedStorageAccountsOperations(this);
             ManagementGroups = new ManagementGroupsOperations(this);
-            Operations = new Operations(this);
             OperationStatuses = new OperationStatusesOperations(this);
             SharedKeys = new SharedKeysOperations(this);
             Usages = new UsagesOperations(this);
-            Workspaces = new WorkspacesOperations(this);
-            DeletedWorkspaces = new DeletedWorkspacesOperations(this);
-            Clusters = new ClustersOperations(this);
             StorageInsightConfigs = new StorageInsightConfigsOperations(this);
             SavedSearches = new SavedSearchesOperations(this);
             AvailableServiceTiers = new AvailableServiceTiersOperations(this);
             Gateways = new GatewaysOperations(this);
             Schema = new SchemaOperations(this);
             WorkspacePurge = new WorkspacePurgeOperations(this);
+            Tables = new TablesOperations(this);
+            Clusters = new ClustersOperations(this);
+            Operations = new Operations(this);
+            Workspaces = new WorkspacesOperations(this);
+            DeletedWorkspaces = new DeletedWorkspacesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2020-03-01-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

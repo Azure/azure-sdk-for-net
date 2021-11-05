@@ -31,7 +31,7 @@ To update public API documentation after making changes to the public API, execu
 
 We use [NUnit 3][nunit] as our testing framework.
 
-[Azure.Core's testing framework][core_tests] is copied into our projects' `/TestFramework` folders by the build _(Please be sure to run all of the unit tests in `../../core/Azure.Core/Azure.Core.All.sln` if you make any changes here)_.
+[Azure.Core.TestFramework's testing framework][core_tests] provides a set of reusable primitives that simplify writing tests for new Azure SDK libraries.
 
 ### Sync/Async testing
 
@@ -47,7 +47,7 @@ Properly supporting recorded tests does require a few extra considerations. All 
 
 The easiest way to run and debug the tests is via Visual Studio's unit test runner.
 
-You can also run tests via the command line using `dotnet test`, but that will run tests for all supported platforms simultaneously and intermingle their output. You can run the tests for just one platform with `dotnet test -f netcoreapp2.1` or `dotnet test -f net461`.
+You can also run tests via the command line using `dotnet test`, but that will run tests for all supported platforms simultaneously and intermingle their output. You can run the tests for just one platform with `dotnet test -f netcoreapp3.1` or `dotnet test -f net461`.
 
 The recorded tests are run automatically on every pull request. Live tests are run nightly. Contributors with write access can ask Azure DevOps to run the live tests against a pull request by commenting `/azp run net - keyvault - tests` in the PR.
 
@@ -57,12 +57,11 @@ Before running or recording live tests you need to create [live test resources][
 
 ```powershell
 eng\common\TestResources\New-TestResources.ps1 `
-  -BaseName 'myusername' `
   -ServiceDirectory 'keyvault' `
-  -TestApplicationId $sp.ApplicationId `
-  -TestApplicationSecret (ConvertFrom-SecureString $sp.Secret -AsPlainText) `
   -AdditionalParameters @{
-    enableSoftDelete = $false # Enable or disable soft delete. Default is $true (enabled).
+    # Enable Managed HSM provisioning and testing.
+    # Disabled by default due to limitations: https://github.com/Azure/azure-sdk-for-net/issues/16531
+    enableHsm = $true
   }
 ```
 
@@ -74,11 +73,11 @@ Our samples are structured as unit tests so we can easily verify they're up to d
 
 [code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
-[core_tests]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/tests/TestFramework
-[live_tests]: https://github.com/Azure/azure-sdk-for-net/blob/master/eng/common/TestResources/README.md
+[core_tests]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core.TestFramework
+[live_tests]: https://github.com/Azure/azure-sdk-for-net/blob/main/eng/common/TestResources/README.md
 [nunit]: https://github.com/nunit/docs/wiki
 [open_issues]: https://github.com/Azure/azure-sdk-for-net/issues?utf8=%E2%9C%93&q=is%3Aopen+is%3Aissue+label%3AClient+label%3AKeyVault
 [sdk_design_guidelines_dotnet]: https://azure.github.io/azure-sdk/dotnet_introduction.html
 [sdk_design_guidelines]: https://azure.github.io/azure-sdk/general_introduction.html
 [sdk_readme]: https://github.com/Azure/azure-sdk
-[sdk_dotnet_code_readme]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md
+[sdk_dotnet_code_readme]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md

@@ -1,30 +1,36 @@
 {
   "Entries": [
     {
-      "RequestUri": "/vision/v3.0/detect",
-      "EncodedRequestUri": "L3Zpc2lvbi92My4wL2RldGVjdA==",
+      "RequestUri": "/vision/v3.2/detect?model-version=latest",
+      "EncodedRequestUri": "L3Zpc2lvbi92My4yL2RldGVjdD9tb2RlbC12ZXJzaW9uPWxhdGVzdA==",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/psSdkJson6/src/SDKs/CognitiveServices/dataPlane/Vision/ComputerVision/ComputerVision.Tests/TestImages/satya.jpg\"\r\n}",
+      "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/main/sdk/cognitiveservices/Vision.ComputerVision/tests/TestImages/satya.jpg\"\r\n}",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.8.3815.0",
+          "FxVersion/4.8.4300.0",
           "OSName/Windows",
-          "OSVersion/10.0.18362.0",
-          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/5.0.0.0"
+          "OSVersion/10.0.19042.0",
+          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/7.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "186"
+          "152"
         ]
       },
       "ResponseHeaders": {
+        "csp-billing-usage": [
+          "CognitiveServices.ComputerVision.Objects=1,CognitiveServices.ComputerVision.Transaction=1"
+        ],
+        "x-envoy-upstream-service-time": [
+          "603"
+        ],
         "apim-request-id": [
-          "0ca5b483-9eb1-44a2-9774-b1a47c9aa50e"
+          "b4333548-c1aa-4ee7-9d54-16afe87adcaf"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -33,16 +39,16 @@
           "nosniff"
         ],
         "Date": [
-          "Thu, 22 Aug 2019 04:06:44 GMT"
+          "Wed, 24 Mar 2021 06:44:17 GMT"
         ],
         "Content-Length": [
-          "202"
+          "230"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"objects\": [\r\n    {\r\n      \"rectangle\": {\r\n        \"x\": 151,\r\n        \"y\": 24,\r\n        \"w\": 228,\r\n        \"h\": 260\r\n      },\r\n      \"object\": \"person\",\r\n      \"confidence\": 0.956\r\n    }\r\n  ],\r\n  \"requestId\": \"0ca5b483-9eb1-44a2-9774-b1a47c9aa50e\",\r\n  \"metadata\": {\r\n    \"width\": 512,\r\n    \"height\": 288,\r\n    \"format\": \"Jpeg\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"objects\": [\r\n    {\r\n      \"rectangle\": {\r\n        \"x\": 151,\r\n        \"y\": 24,\r\n        \"w\": 228,\r\n        \"h\": 260\r\n      },\r\n      \"object\": \"person\",\r\n      \"confidence\": 0.956\r\n    }\r\n  ],\r\n  \"requestId\": \"b4333548-c1aa-4ee7-9d54-16afe87adcaf\",\r\n  \"metadata\": {\r\n    \"height\": 288,\r\n    \"width\": 512,\r\n    \"format\": \"Jpeg\"\r\n  },\r\n  \"modelVersion\": \"2021-04-01\"\r\n}",
       "StatusCode": 200
     }
   ],

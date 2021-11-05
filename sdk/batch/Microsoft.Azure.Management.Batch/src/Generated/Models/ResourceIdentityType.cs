@@ -27,6 +27,11 @@ namespace Microsoft.Azure.Management.Batch.Models
         [EnumMember(Value = "SystemAssigned")]
         SystemAssigned,
         /// <summary>
+        /// Batch account has user assigned identities with it.
+        /// </summary>
+        [EnumMember(Value = "UserAssigned")]
+        UserAssigned,
+        /// <summary>
         /// Batch account has no identity associated with it. Setting `None` in
         /// update account will remove existing identities.
         /// </summary>
@@ -46,6 +51,8 @@ namespace Microsoft.Azure.Management.Batch.Models
             {
                 case ResourceIdentityType.SystemAssigned:
                     return "SystemAssigned";
+                case ResourceIdentityType.UserAssigned:
+                    return "UserAssigned";
                 case ResourceIdentityType.None:
                     return "None";
             }
@@ -58,6 +65,8 @@ namespace Microsoft.Azure.Management.Batch.Models
             {
                 case "SystemAssigned":
                     return ResourceIdentityType.SystemAssigned;
+                case "UserAssigned":
+                    return ResourceIdentityType.UserAssigned;
                 case "None":
                     return ResourceIdentityType.None;
             }

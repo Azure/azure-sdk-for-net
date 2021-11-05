@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,16 +18,23 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
-            if (Parameters != null && Parameters.Any())
+            if (Optional.IsCollectionDefined(Parameters))
             {
-                writer.WritePropertyName("parameters");
-                writer.WriteStartObject();
-                foreach (var item in Parameters)
+                if (Parameters != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WritePropertyName("parameters");
+                    writer.WriteStartObject();
+                    foreach (var item in Parameters)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteObjectValue(item.Value);
+                    }
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("parameters");
+                }
             }
             writer.WriteEndObject();
         }
@@ -36,7 +42,7 @@ namespace Azure.Search.Documents.Indexes.Models
         internal static FieldMappingFunction DeserializeFieldMappingFunction(JsonElement element)
         {
             string name = default;
-            IDictionary<string, object> parameters = default;
+            Optional<IDictionary<string, object>> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -48,25 +54,19 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        parameters = null;
                         continue;
                     }
                     Dictionary<string, object> dictionary = new Dictionary<string, object>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetObject());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetObject());
                     }
                     parameters = dictionary;
                     continue;
                 }
             }
-            return new FieldMappingFunction(name, parameters);
+            return new FieldMappingFunction(name, Optional.ToDictionary(parameters));
         }
     }
 }

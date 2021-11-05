@@ -15,42 +15,42 @@ namespace Azure.Graph.Rbac.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (AdminConsentDescription != null)
+            if (Optional.IsDefined(AdminConsentDescription))
             {
                 writer.WritePropertyName("adminConsentDescription");
                 writer.WriteStringValue(AdminConsentDescription);
             }
-            if (AdminConsentDisplayName != null)
+            if (Optional.IsDefined(AdminConsentDisplayName))
             {
                 writer.WritePropertyName("adminConsentDisplayName");
                 writer.WriteStringValue(AdminConsentDisplayName);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
-            if (IsEnabled != null)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("isEnabled");
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
                 writer.WriteStringValue(Type);
             }
-            if (UserConsentDescription != null)
+            if (Optional.IsDefined(UserConsentDescription))
             {
                 writer.WritePropertyName("userConsentDescription");
                 writer.WriteStringValue(UserConsentDescription);
             }
-            if (UserConsentDisplayName != null)
+            if (Optional.IsDefined(UserConsentDisplayName))
             {
                 writer.WritePropertyName("userConsentDisplayName");
                 writer.WriteStringValue(UserConsentDisplayName);
             }
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value");
                 writer.WriteStringValue(Value);
@@ -60,40 +60,28 @@ namespace Azure.Graph.Rbac.Models
 
         internal static OAuth2Permission DeserializeOAuth2Permission(JsonElement element)
         {
-            string adminConsentDescription = default;
-            string adminConsentDisplayName = default;
-            string id = default;
-            bool? isEnabled = default;
-            string type = default;
-            string userConsentDescription = default;
-            string userConsentDisplayName = default;
-            string value = default;
+            Optional<string> adminConsentDescription = default;
+            Optional<string> adminConsentDisplayName = default;
+            Optional<string> id = default;
+            Optional<bool> isEnabled = default;
+            Optional<string> type = default;
+            Optional<string> userConsentDescription = default;
+            Optional<string> userConsentDisplayName = default;
+            Optional<string> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("adminConsentDescription"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     adminConsentDescription = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("adminConsentDisplayName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     adminConsentDisplayName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
@@ -101,6 +89,7 @@ namespace Azure.Graph.Rbac.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isEnabled = property.Value.GetBoolean();
@@ -108,42 +97,26 @@ namespace Azure.Graph.Rbac.Models
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("userConsentDescription"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     userConsentDescription = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("userConsentDisplayName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     userConsentDisplayName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     value = property.Value.GetString();
                     continue;
                 }
             }
-            return new OAuth2Permission(adminConsentDescription, adminConsentDisplayName, id, isEnabled, type, userConsentDescription, userConsentDisplayName, value);
+            return new OAuth2Permission(adminConsentDescription.Value, adminConsentDisplayName.Value, id.Value, Optional.ToNullable(isEnabled), type.Value, userConsentDescription.Value, userConsentDisplayName.Value, value.Value);
         }
     }
 }

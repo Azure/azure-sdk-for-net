@@ -32,6 +32,7 @@ namespace Azure.Storage
             Stream contentStream,
             TServiceSpecificArgs args,
             IProgress<long> progressHandler,
+            UploadTransactionalHashingOptions hashingOptions,
             string operationName,
             bool async,
             CancellationToken cancellationToken);
@@ -39,6 +40,7 @@ namespace Azure.Storage
             long offset,
             TServiceSpecificArgs args,
             IProgress<long> progressHandler,
+            UploadTransactionalHashingOptions hashingOptions,
             bool async,
             CancellationToken cancellationToken);
         public delegate Task<Response<TCompleteUploadReturn>> CommitPartitionedUploadInternal(
@@ -88,6 +90,11 @@ namespace Azure.Storage
         private readonly long? _blockSize;
 
         /// <summary>
+        /// Hashing options to use for paritioned upload calls.
+        /// </summary>
+        private readonly UploadTransactionalHashingOptions _hashingOptions;
+
+        /// <summary>
         /// The name of the calling operaiton.
         /// </summary>
         private readonly string _operationName;
@@ -95,6 +102,7 @@ namespace Azure.Storage
         public PartitionedUploader(
             Behaviors behaviors,
             StorageTransferOptions transferOptions,
+            UploadTransactionalHashingOptions hashingOptions,
             ArrayPool<byte> arrayPool = null,
             string operationName = null)
         {
@@ -130,7 +138,7 @@ namespace Azure.Storage
             }
             else
             {
-                _singleUploadThreshold = Constants.Blob.Block.MaxUploadBytes;
+                _singleUploadThreshold = Constants.Blob.Block.Pre_2019_12_12_MaxUploadBytes;
             }
 
             // Set _blockSize
@@ -140,6 +148,13 @@ namespace Azure.Storage
                 _blockSize = Math.Min(
                     Constants.Blob.Block.MaxStageBytes,
                     transferOptions.MaximumTransferSize.Value);
+            }
+
+            _hashingOptions = hashingOptions;
+            // partitioned uploads don't support pre-calculated hashes
+            if (_hashingOptions?.PrecalculatedHash != default)
+            {
+                throw Errors.PrecalculatedHashNotSupportedOnSplit();
             }
 
             _operationName = operationName;
@@ -157,6 +172,13 @@ namespace Azure.Storage
                 throw Errors.ArgumentNull(nameof(content));
             }
 
+            Errors.VerifyStreamPosition(content, nameof(content));
+
+            if (content.CanSeek && content.Position > 0)
+            {
+                content = WindowStream.GetWindow(content, content.Length - content.Position, content.Position);
+            }
+
             await _initializeDestinationInternal(args, async, cancellationToken).ConfigureAwait(false);
 
             // some strategies are unavailable if we don't know the stream length, and some can still work
@@ -172,6 +194,7 @@ namespace Azure.Storage
                     content,
                     args,
                     progressHandler,
+                    _hashingOptions,
                     _operationName,
                     async,
                     cancellationToken)
@@ -250,9 +273,7 @@ namespace Azure.Storage
                 // The list tracking blocks IDs we're going to commit
                 List<(long Offset, long Size)> partitions = new List<(long, long)>();
 
-                /* Streamed partitions only work if we can seek the stream; we need retries on
-                 * individual uploads.
-                 */
+                // Streamed partitions only work if we can seek the stream; we need retries on individual uploads.
                 GetNextStreamPartition partitionGetter = content.CanSeek
                             ? (GetNextStreamPartition)GetStreamedPartitionInternal
                             : /*   redundant cast   */GetBufferedPartitionInternal;
@@ -358,6 +379,11 @@ namespace Azure.Storage
                     async: true,
                     cancellationToken).ConfigureAwait(false))
                 {
+                    /* We need to do this first! Length is calculated on the fly based on stream buffer
+                     * contents; We need to record the partition data first before consuming the stream
+                     * asynchronously. */
+                    partitions.Add((block.AbsolutePosition, block.Length));
+
                     // Start staging the next block (but don't await the Task!)
                     Task task = StagePartitionAndDisposeInternal(
                         block,
@@ -369,7 +395,6 @@ namespace Azure.Storage
 
                     // Add the block to our task and commit lists
                     runningTasks.Add(task);
-                    partitions.Add((block.AbsolutePosition, block.Length));
 
                     // If we run out of workers
                     if (runningTasks.Count >= _maxWorkerCount)
@@ -434,6 +459,7 @@ namespace Azure.Storage
                     offset,
                     args,
                     progressHandler,
+                    _hashingOptions,
                     async,
                     cancellationToken)
                     .ConfigureAwait(false);
@@ -456,7 +482,7 @@ namespace Azure.Storage
             {
                 if (content.CanSeek)
                 {
-                    return content.Length;
+                    return content.Length - content.Position;
                 }
             }
             catch (NotSupportedException)

@@ -39,11 +39,20 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="quoteAllText">Indicates whether string values should
         /// always be enclosed with quotes. Type: boolean (or Expression with
         /// resultType boolean).</param>
-        public DelimitedTextWriteSettings(object fileExtension, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object quoteAllText = default(object))
+        /// <param name="maxRowsPerFile">Limit the written file's row count to
+        /// be smaller than or equal to the specified count. Type: integer (or
+        /// Expression with resultType integer).</param>
+        /// <param name="fileNamePrefix">Specifies the file name pattern
+        /// &lt;fileNamePrefix&gt;_&lt;fileIndex&gt;.&lt;fileExtension&gt; when
+        /// copy from non-file based store without partitionOptions. Type:
+        /// string (or Expression with resultType string).</param>
+        public DelimitedTextWriteSettings(object fileExtension, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object quoteAllText = default(object), object maxRowsPerFile = default(object), object fileNamePrefix = default(object))
             : base(additionalProperties)
         {
             QuoteAllText = quoteAllText;
             FileExtension = fileExtension;
+            MaxRowsPerFile = maxRowsPerFile;
+            FileNamePrefix = fileNamePrefix;
             CustomInit();
         }
 
@@ -66,6 +75,23 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "fileExtension")]
         public object FileExtension { get; set; }
+
+        /// <summary>
+        /// Gets or sets limit the written file's row count to be smaller than
+        /// or equal to the specified count. Type: integer (or Expression with
+        /// resultType integer).
+        /// </summary>
+        [JsonProperty(PropertyName = "maxRowsPerFile")]
+        public object MaxRowsPerFile { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the file name pattern
+        /// &amp;lt;fileNamePrefix&amp;gt;_&amp;lt;fileIndex&amp;gt;.&amp;lt;fileExtension&amp;gt;
+        /// when copy from non-file based store without partitionOptions. Type:
+        /// string (or Expression with resultType string).
+        /// </summary>
+        [JsonProperty(PropertyName = "fileNamePrefix")]
+        public object FileNamePrefix { get; set; }
 
         /// <summary>
         /// Validate the object.

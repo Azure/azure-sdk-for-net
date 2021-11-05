@@ -2,9 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-using Azure.Core.TestFramework;
+using System.Text.Json;
 using NUnit.Framework;
 
 namespace Azure.Messaging.EventGrid.Tests
@@ -12,20 +10,59 @@ namespace Azure.Messaging.EventGrid.Tests
     public class EventGridClientTests
     {
         [Test]
-        public void BuildSharedAccessSignatureThrowsWhenCalledFromSasClient()
+        public void ConstructorValidatesUriNotNull()
         {
-            EventGridClient client = new EventGridClient(
-                new Uri("https://exampletopic.westus2-1.eventgrid.azure.net/api/events"),
-                new AzureKeyCredential("thisIsNotAFakeCredential"));
+            Assert.That(
+                () => new EventGridPublisherClient(null, new AzureKeyCredential("credential")),
+                Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(
+                () => new EventGridPublisherClient(null, new AzureSasCredential("credential")),
+                Throws.InstanceOf<ArgumentNullException>());
+        }
 
-            string sasToken = client.BuildSharedAccessSignature(DateTimeOffset.UtcNow.AddMinutes(60));
-            EventGridClient sasTokenClient = new EventGridClient(
-                new Uri("https://exampletopic.westus2-1.eventgrid.azure.net/api/events"),
-                new SharedAccessSignatureCredential("thisIsNotAFakeCredential"));
+        [Test]
+        public void ConstructorValidatesKeyNotNull()
+        {
+            Assert.That(
+                () => new EventGridPublisherClient(new Uri("http://localHost"), (AzureKeyCredential)null),
+                Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(
+                () => new EventGridPublisherClient(new Uri("http://localHost"), (AzureSasCredential)null),
+                Throws.InstanceOf<ArgumentNullException>());
+        }
 
-            Assert.That(() => sasTokenClient.BuildSharedAccessSignature(DateTimeOffset.UtcNow.AddMinutes(60)),
-                Throws.InstanceOf<NotSupportedException>(),
-                "Can only create a SAS token when using an EventGridClient created using AzureKeyCredential.");
+        [Test]
+        public void CannotPublishEventGridEventWithNonJsonData()
+        {
+            EventGridPublisherClient client =
+                new EventGridPublisherClient(
+                    new Uri("http://localHost"),
+                    new AzureKeyCredential("fakeKey"));
+
+            var egEvent = new EventGridEvent(
+                $"Subject",
+                "Microsoft.MockPublisher.TestEvent",
+                "1.0",
+                new BinaryData(new byte[] { 1, 2, 3, 4 }));
+
+            Assert.That(
+                async () => await client.SendEventAsync(egEvent),
+                Throws.InstanceOf<JsonException>());
+        }
+
+        [Test]
+        public void CannotPublishCustomEventWithNonJsonData()
+        {
+            EventGridPublisherClient client =
+                new EventGridPublisherClient(
+                    new Uri("http://localHost"),
+                    new AzureKeyCredential("fakeKey"));
+
+            var customEvent = new BinaryData(new byte[] { 1, 2, 3, 4 });
+
+            Assert.That(
+                async () => await client.SendEventAsync(customEvent),
+                Throws.InstanceOf<JsonException>());
         }
     }
 }

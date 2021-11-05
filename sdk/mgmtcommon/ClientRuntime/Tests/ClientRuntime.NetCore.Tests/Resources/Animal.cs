@@ -1,7 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
+
+using Microsoft.Rest.Serialization;
+
 using Newtonsoft.Json;
 
 namespace Microsoft.Rest.ClientRuntime.Tests.Resources
@@ -15,8 +19,20 @@ namespace Microsoft.Rest.ClientRuntime.Tests.Resources
         [JsonProperty("name")]
         public string Name { get; set; }
 
+        [JsonConverter(typeof(UnixTimeJsonConverter))]
+        [JsonProperty("birthday")]
+        public DateTime? Birthday { get; set; }
+
         [JsonExtensionData]
         public IDictionary<string, object> AdditionalProperties { get; set; }
+
+        [JsonProperty("needVaccine")]
+        public bool NeedVaccine { get; set; }
+
+        public bool ShouldSerializeNeedVaccine()
+        {
+            return false;
+        }
     }
 
     [JsonObject("dog")]

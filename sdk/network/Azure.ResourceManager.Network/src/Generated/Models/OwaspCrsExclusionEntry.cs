@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="matchVariable"> The variable to be excluded. </param>
         /// <param name="selectorMatchOperator"> When matchVariable is a collection, operate on the selector to specify which elements in the collection this exclusion applies to. </param>
         /// <param name="selector"> When matchVariable is a collection, operator used to specify which elements in the collection this exclusion applies to. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="selector"/> is null. </exception>
         public OwaspCrsExclusionEntry(OwaspCrsExclusionEntryMatchVariable matchVariable, OwaspCrsExclusionEntrySelectorMatchOperator selectorMatchOperator, string selector)
         {
             if (selector == null)

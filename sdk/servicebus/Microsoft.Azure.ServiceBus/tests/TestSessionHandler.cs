@@ -14,8 +14,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
     class TestSessionHandler
     {
-        const int NumberOfSessions = 5;
-        const int MessagesPerSession = 10;
+        public const int NumberOfSessions = 5;
+        public const int MessagesPerSession = 10;
 
         readonly SessionPumpHost sessionPumpHost;
         readonly ReceiveMode receiveMode;
@@ -23,6 +23,12 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         readonly SessionHandlerOptions sessionHandlerOptions;
         ConcurrentDictionary<string, int> sessionMessageMap;
         int totalMessageCount;
+        int receivedMessageCount;
+
+        public int ReceivedMessageCount
+        {
+            get => receivedMessageCount;
+        }
 
         public TestSessionHandler(
             ReceiveMode receiveMode,
@@ -35,11 +41,53 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             this.sender = sender;
             this.sessionPumpHost = sessionPumpHost;
             this.sessionMessageMap = new ConcurrentDictionary<string, int>();
+            this.receivedMessageCount = 0;
+        }
+
+        public void RegisterSessionHandler(Func<IMessageSession, Message, CancellationToken, Task> handler, SessionHandlerOptions handlerOptions)
+        {
+            this.sessionPumpHost.OnSessionHandler(handler, handlerOptions);
         }
 
         public void RegisterSessionHandler(SessionHandlerOptions handlerOptions)
         {
             this.sessionPumpHost.OnSessionHandler(this.OnSessionHandler, this.sessionHandlerOptions);
+        }
+
+        public async Task UnregisterSessionHandler(TimeSpan inflightSessionHandlerTasksWaitTimeout)
+        {
+            await this.sessionPumpHost.UnregisterSessionHandlerAsync(inflightSessionHandlerTasksWaitTimeout).ConfigureAwait(false);
+        }
+
+        public void RegisterSessionHandlerAndRecordReceivedMessageCount(bool isPeekLockMode, int awaitTimeInSecs)
+        {
+            this.RegisterSessionHandler(
+               async (session, message, token) =>
+               {
+                   await Task.Delay(TimeSpan.FromSeconds(awaitTimeInSecs));
+                   TestUtility.Log($"Received Session: {session.SessionId} message: SequenceNumber: {message.SystemProperties.SequenceNumber}");
+
+                   if (isPeekLockMode && !sessionHandlerOptions.AutoComplete)
+                   {
+                       await session.CompleteAsync(message.SystemProperties.LockToken);
+                   }
+                   Interlocked.Increment(ref this.receivedMessageCount);
+               },
+               sessionHandlerOptions);
+        }
+
+        public async Task WaitForAllMessagesReceived(int expectedCount)
+        {
+            var stopwatch = Stopwatch.StartNew();
+            while (stopwatch.Elapsed.TotalSeconds <= 60)
+            {
+                if (this.receivedMessageCount == expectedCount)
+                {
+                    TestUtility.Log($"All '{expectedCount}' messages Received.");
+                    break;
+                }
+                await Task.Delay(TimeSpan.FromSeconds(5));
+            }
         }
 
         public async Task SendSessionMessages()

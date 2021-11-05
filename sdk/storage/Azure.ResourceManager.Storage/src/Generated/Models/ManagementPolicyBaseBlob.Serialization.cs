@@ -15,35 +15,42 @@ namespace Azure.ResourceManager.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (TierToCool != null)
+            if (Optional.IsDefined(TierToCool))
             {
                 writer.WritePropertyName("tierToCool");
                 writer.WriteObjectValue(TierToCool);
             }
-            if (TierToArchive != null)
+            if (Optional.IsDefined(TierToArchive))
             {
                 writer.WritePropertyName("tierToArchive");
                 writer.WriteObjectValue(TierToArchive);
             }
-            if (Delete != null)
+            if (Optional.IsDefined(Delete))
             {
                 writer.WritePropertyName("delete");
                 writer.WriteObjectValue(Delete);
+            }
+            if (Optional.IsDefined(EnableAutoTierToHotFromCool))
+            {
+                writer.WritePropertyName("enableAutoTierToHotFromCool");
+                writer.WriteBooleanValue(EnableAutoTierToHotFromCool.Value);
             }
             writer.WriteEndObject();
         }
 
         internal static ManagementPolicyBaseBlob DeserializeManagementPolicyBaseBlob(JsonElement element)
         {
-            DateAfterModification tierToCool = default;
-            DateAfterModification tierToArchive = default;
-            DateAfterModification delete = default;
+            Optional<DateAfterModification> tierToCool = default;
+            Optional<DateAfterModification> tierToArchive = default;
+            Optional<DateAfterModification> delete = default;
+            Optional<bool> enableAutoTierToHotFromCool = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tierToCool"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tierToCool = DateAfterModification.DeserializeDateAfterModification(property.Value);
@@ -53,6 +60,7 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tierToArchive = DateAfterModification.DeserializeDateAfterModification(property.Value);
@@ -62,13 +70,24 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     delete = DateAfterModification.DeserializeDateAfterModification(property.Value);
                     continue;
                 }
+                if (property.NameEquals("enableAutoTierToHotFromCool"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    enableAutoTierToHotFromCool = property.Value.GetBoolean();
+                    continue;
+                }
             }
-            return new ManagementPolicyBaseBlob(tierToCool, tierToArchive, delete);
+            return new ManagementPolicyBaseBlob(tierToCool.Value, tierToArchive.Value, delete.Value, Optional.ToNullable(enableAutoTierToHotFromCool));
         }
     }
 }

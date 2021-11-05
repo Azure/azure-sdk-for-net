@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +17,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ContainerNetworkInterfaceConfiguration. </summary>
         public ContainerNetworkInterfaceConfiguration()
         {
+            IpConfigurations = new ChangeTrackingList<IPConfigurationProfile>();
+            ContainerNetworkInterfaces = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of ContainerNetworkInterfaceConfiguration. </summary>
@@ -25,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="ipConfigurations"> A list of ip configurations of the container network interface configuration. </param>
         /// <param name="containerNetworkInterfaces"> A list of container network interfaces created from this container network interface configuration. </param>
         /// <param name="provisioningState"> The provisioning state of the container network interface configuration resource. </param>
-        internal ContainerNetworkInterfaceConfiguration(string id, string name, string type, string etag, IList<IPConfigurationProfile> ipConfigurations, IList<SubResource> containerNetworkInterfaces, ProvisioningState? provisioningState) : base(id)
+        internal ContainerNetworkInterfaceConfiguration(string id, string name, string type, string etag, IList<IPConfigurationProfile> ipConfigurations, IList<WritableSubResource> containerNetworkInterfaces, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Type = type;
@@ -42,9 +46,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> A list of ip configurations of the container network interface configuration. </summary>
-        public IList<IPConfigurationProfile> IpConfigurations { get; set; }
+        public IList<IPConfigurationProfile> IpConfigurations { get; }
         /// <summary> A list of container network interfaces created from this container network interface configuration. </summary>
-        public IList<SubResource> ContainerNetworkInterfaces { get; set; }
+        public IList<WritableSubResource> ContainerNetworkInterfaces { get; }
         /// <summary> The provisioning state of the container network interface configuration resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }

@@ -209,7 +209,8 @@ namespace Microsoft.Azure.EventHubs.Amqp
             {
                 MaxFrameSize = maxFrameSize,
                 ContainerId = containerId,
-                HostName = hostName
+                HostName = hostName,
+                IdleTimeOut = (uint)AmqpClientConstants.ConnectionIdleTimeout.TotalMilliseconds
             };
 
             ClientInfo.Add(connectionSettings);

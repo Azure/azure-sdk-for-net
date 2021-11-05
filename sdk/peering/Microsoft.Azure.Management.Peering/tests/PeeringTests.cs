@@ -78,7 +78,7 @@ namespace Peering.Tests
         /// <summary>
         /// The api version latest.
         /// </summary>
-        public const string ApiVersionLatest = "2020-04-01";
+        public const string ApiVersionLatest = "2020-10-01";
 
         /// <summary>
         /// The peering operations test.
@@ -549,8 +549,7 @@ namespace Peering.Tests
                     catch (Exception ex)
                     {
                         Assert.Contains("NotFound", ex.Message);
-                    }
-
+                }
                     var rgName = this.GetResourceGroup(peering.Id);
                     var pName = this.GetPeeringName(peering.Id);
                     var registeredAsnName = $"{peering.Name}_{peerAsn.PeerAsnProperty}";
@@ -560,19 +559,25 @@ namespace Peering.Tests
                         registeredAsnName,
                         peerAsn.PeerAsnProperty);
                     Assert.NotNull(resource);
-                    resource = this.Client.RegisteredAsns.Get(rgName, pName, registeredAsnName);
-                    Assert.NotNull(resource);
-                    var list = this.Client.RegisteredAsns.ListByPeering(rgname, pName);
-                    Assert.NotNull(list);
-                    this.Client.RegisteredAsns.Delete(
-                        rgName,
-                        pName,
-                        registeredAsnName);
-                    resource = this.Client.RegisteredAsns.Get(
-                        rgName,
-                        pName,
-                        registeredAsnName);
-                    Assert.NotNull(resource);
+                    try
+                    {
+                        resource = this.Client.RegisteredAsns.Get(rgName, pName, registeredAsnName);
+                        Assert.NotNull(resource);
+                        var list = this.Client.RegisteredAsns.ListByPeering(rgname, pName);
+                        Assert.NotNull(list);
+                        this.Client.RegisteredAsns.Delete(
+                            rgName,
+                            pName,
+                            registeredAsnName);
+                        resource = this.Client.RegisteredAsns.Get(
+                            rgName,
+                            pName,
+                            registeredAsnName);
+                    }
+                    catch (Exception ex)
+                    {
+                        Assert.Contains("NotFound", ex.Message);
+                    }
                 }
                 finally
                 {

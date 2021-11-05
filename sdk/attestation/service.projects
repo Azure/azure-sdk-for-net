@@ -1,0 +1,6 @@
+<Project>
+  <ItemGroup>
+    <!-- Remove Release Preview from nightly live runs -->
+    <ProjectReference Remove="$(MSBuildThisFileDirectory)Microsoft.Azure.Attestation\tests\**\*.csproj" />
+  </ItemGroup>
+</Project>

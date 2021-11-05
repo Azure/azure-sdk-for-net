@@ -18,7 +18,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             writer.WritePropertyName("interval");
             writer.WriteStringValue(Interval, "P");
-            if (StartTime != null)
+            if (Optional.IsDefined(StartTime))
             {
                 writer.WritePropertyName("startTime");
                 writer.WriteStringValue(StartTime.Value, "O");
@@ -29,7 +29,7 @@ namespace Azure.Search.Documents.Indexes.Models
         internal static IndexingSchedule DeserializeIndexingSchedule(JsonElement element)
         {
             TimeSpan interval = default;
-            DateTimeOffset? startTime = default;
+            Optional<DateTimeOffset> startTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("interval"))
@@ -41,13 +41,14 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
             }
-            return new IndexingSchedule(interval, startTime);
+            return new IndexingSchedule(interval, Optional.ToNullable(startTime));
         }
     }
 }

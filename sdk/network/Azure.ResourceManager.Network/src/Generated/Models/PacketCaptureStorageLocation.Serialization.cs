@@ -15,17 +15,17 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (StorageId != null)
+            if (Optional.IsDefined(StorageId))
             {
                 writer.WritePropertyName("storageId");
                 writer.WriteStringValue(StorageId);
             }
-            if (StoragePath != null)
+            if (Optional.IsDefined(StoragePath))
             {
                 writer.WritePropertyName("storagePath");
                 writer.WriteStringValue(StoragePath);
             }
-            if (FilePath != null)
+            if (Optional.IsDefined(FilePath))
             {
                 writer.WritePropertyName("filePath");
                 writer.WriteStringValue(FilePath);
@@ -35,40 +35,28 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static PacketCaptureStorageLocation DeserializePacketCaptureStorageLocation(JsonElement element)
         {
-            string storageId = default;
-            string storagePath = default;
-            string filePath = default;
+            Optional<string> storageId = default;
+            Optional<string> storagePath = default;
+            Optional<string> filePath = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     storageId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("storagePath"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     storagePath = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("filePath"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     filePath = property.Value.GetString();
                     continue;
                 }
             }
-            return new PacketCaptureStorageLocation(storageId, storagePath, filePath);
+            return new PacketCaptureStorageLocation(storageId.Value, storagePath.Value, filePath.Value);
         }
     }
 }

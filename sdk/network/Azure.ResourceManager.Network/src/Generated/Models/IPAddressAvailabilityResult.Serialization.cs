@@ -15,14 +15,16 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static IPAddressAvailabilityResult DeserializeIPAddressAvailabilityResult(JsonElement element)
         {
-            bool? available = default;
-            IReadOnlyList<string> availableIPAddresses = default;
+            Optional<bool> available = default;
+            Optional<IReadOnlyList<string>> availableIPAddresses = default;
+            Optional<bool> isPlatformReserved = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("available"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     available = property.Value.GetBoolean();
@@ -32,25 +34,29 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     availableIPAddresses = array;
                     continue;
                 }
+                if (property.NameEquals("isPlatformReserved"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    isPlatformReserved = property.Value.GetBoolean();
+                    continue;
+                }
             }
-            return new IPAddressAvailabilityResult(available, availableIPAddresses);
+            return new IPAddressAvailabilityResult(Optional.ToNullable(available), Optional.ToList(availableIPAddresses), Optional.ToNullable(isPlatformReserved));
         }
     }
 }

@@ -15,17 +15,17 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Plan != null)
+            if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan");
                 writer.WriteObjectValue(Plan);
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity");
-                writer.WriteObjectValue(Identity);
+                JsonSerializer.Serialize(writer, Identity);
             }
-            if (Zones != null)
+            if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones");
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Tags != null)
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags");
                 writer.WriteStartObject();
@@ -48,90 +48,105 @@ namespace Azure.ResourceManager.Compute.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (HardwareProfile != null)
+            if (Optional.IsDefined(HardwareProfile))
             {
                 writer.WritePropertyName("hardwareProfile");
                 writer.WriteObjectValue(HardwareProfile);
             }
-            if (StorageProfile != null)
+            if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile");
                 writer.WriteObjectValue(StorageProfile);
             }
-            if (AdditionalCapabilities != null)
+            if (Optional.IsDefined(AdditionalCapabilities))
             {
                 writer.WritePropertyName("additionalCapabilities");
                 writer.WriteObjectValue(AdditionalCapabilities);
             }
-            if (OsProfile != null)
+            if (Optional.IsDefined(OsProfile))
             {
                 writer.WritePropertyName("osProfile");
                 writer.WriteObjectValue(OsProfile);
             }
-            if (NetworkProfile != null)
+            if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile");
                 writer.WriteObjectValue(NetworkProfile);
             }
-            if (DiagnosticsProfile != null)
+            if (Optional.IsDefined(SecurityProfile))
+            {
+                writer.WritePropertyName("securityProfile");
+                writer.WriteObjectValue(SecurityProfile);
+            }
+            if (Optional.IsDefined(DiagnosticsProfile))
             {
                 writer.WritePropertyName("diagnosticsProfile");
                 writer.WriteObjectValue(DiagnosticsProfile);
             }
-            if (AvailabilitySet != null)
+            if (Optional.IsDefined(AvailabilitySet))
             {
                 writer.WritePropertyName("availabilitySet");
-                writer.WriteObjectValue(AvailabilitySet);
+                JsonSerializer.Serialize(writer, AvailabilitySet);
             }
-            if (VirtualMachineScaleSet != null)
+            if (Optional.IsDefined(VirtualMachineScaleSet))
             {
                 writer.WritePropertyName("virtualMachineScaleSet");
-                writer.WriteObjectValue(VirtualMachineScaleSet);
+                JsonSerializer.Serialize(writer, VirtualMachineScaleSet);
             }
-            if (ProximityPlacementGroup != null)
+            if (Optional.IsDefined(ProximityPlacementGroup))
             {
                 writer.WritePropertyName("proximityPlacementGroup");
-                writer.WriteObjectValue(ProximityPlacementGroup);
+                JsonSerializer.Serialize(writer, ProximityPlacementGroup);
             }
-            if (Priority != null)
+            if (Optional.IsDefined(Priority))
             {
                 writer.WritePropertyName("priority");
                 writer.WriteStringValue(Priority.Value.ToString());
             }
-            if (EvictionPolicy != null)
+            if (Optional.IsDefined(EvictionPolicy))
             {
                 writer.WritePropertyName("evictionPolicy");
                 writer.WriteStringValue(EvictionPolicy.Value.ToString());
             }
-            if (BillingProfile != null)
+            if (Optional.IsDefined(BillingProfile))
             {
                 writer.WritePropertyName("billingProfile");
                 writer.WriteObjectValue(BillingProfile);
             }
-            if (Host != null)
+            if (Optional.IsDefined(Host))
             {
                 writer.WritePropertyName("host");
-                writer.WriteObjectValue(Host);
+                JsonSerializer.Serialize(writer, Host);
             }
-            if (ProvisioningState != null)
+            if (Optional.IsDefined(HostGroup))
             {
-                writer.WritePropertyName("provisioningState");
-                writer.WriteStringValue(ProvisioningState);
+                writer.WritePropertyName("hostGroup");
+                JsonSerializer.Serialize(writer, HostGroup);
             }
-            if (InstanceView != null)
-            {
-                writer.WritePropertyName("instanceView");
-                writer.WriteObjectValue(InstanceView);
-            }
-            if (LicenseType != null)
+            if (Optional.IsDefined(LicenseType))
             {
                 writer.WritePropertyName("licenseType");
                 writer.WriteStringValue(LicenseType);
             }
-            if (VmId != null)
+            if (Optional.IsDefined(ExtensionsTimeBudget))
             {
-                writer.WritePropertyName("vmId");
-                writer.WriteStringValue(VmId);
+                writer.WritePropertyName("extensionsTimeBudget");
+                writer.WriteStringValue(ExtensionsTimeBudget);
+            }
+            if (Optional.IsDefined(PlatformFaultDomain))
+            {
+                writer.WritePropertyName("platformFaultDomain");
+                writer.WriteNumberValue(PlatformFaultDomain.Value);
+            }
+            if (Optional.IsDefined(ScheduledEventsProfile))
+            {
+                writer.WritePropertyName("scheduledEventsProfile");
+                writer.WriteObjectValue(ScheduledEventsProfile);
+            }
+            if (Optional.IsDefined(UserData))
+            {
+                writer.WritePropertyName("userData");
+                writer.WriteStringValue(UserData);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,56 +16,22 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ServiceTagsListResult DeserializeServiceTagsListResult(JsonElement element)
         {
+            Optional<string> changeNumber = default;
+            Optional<string> cloud = default;
+            Optional<IReadOnlyList<ServiceTagInformation>> values = default;
+            Optional<string> nextLink = default;
+            ResourceIdentifier id = default;
             string name = default;
-            string id = default;
-            string type = default;
-            string changeNumber = default;
-            string cloud = default;
-            IReadOnlyList<ServiceTagInformation> values = default;
+            ResourceType type = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("id"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    id = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    type = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("changeNumber"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     changeNumber = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("cloud"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     cloud = property.Value.GetString();
                     continue;
                 }
@@ -72,25 +39,39 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ServiceTagInformation> array = new List<ServiceTagInformation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ServiceTagInformation.DeserializeServiceTagInformation(item));
-                        }
+                        array.Add(ServiceTagInformation.DeserializeServiceTagInformation(item));
                     }
                     values = array;
                     continue;
                 }
+                if (property.NameEquals("nextLink"))
+                {
+                    nextLink = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("name"))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"))
+                {
+                    type = property.Value.GetString();
+                    continue;
+                }
             }
-            return new ServiceTagsListResult(name, id, type, changeNumber, cloud, values);
+            return new ServiceTagsListResult(id, name, type, changeNumber.Value, cloud.Value, Optional.ToList(values), nextLink.Value);
         }
     }
 }

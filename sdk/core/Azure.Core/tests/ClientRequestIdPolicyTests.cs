@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
@@ -72,7 +73,6 @@ namespace Azure.Core.Tests
         {
             var transport = new MockTransport(r => new MockResponse(200));
 
-
             using (HttpPipeline.CreateClientRequestIdScope("custom-id"))
             using (HttpPipeline.CreateClientRequestIdScope("nested-custom-id"))
             {
@@ -94,6 +94,19 @@ namespace Azure.Core.Tests
             }
 
             Assert.IsNotEmpty(transport.SingleRequest.ClientRequestId);
+            Assert.AreNotEqual("custom-id", transport.SingleRequest.ClientRequestId);
+        }
+
+        [Test]
+        public void ThrowsIfRequestIdPropertyIsNotAString()
+        {
+            var transport = new MockTransport(r => new MockResponse(200));
+
+            using (HttpPipeline.CreateHttpMessagePropertiesScope(
+                new Dictionary<string, object> { { ReadClientRequestIdPolicy.MessagePropertyKey, new List<string>() } }))
+            {
+                Assert.ThrowsAsync<ArgumentException>(async () => await SendGetRequest(transport, ReadClientRequestIdPolicy.Shared));
+            }
         }
     }
 }

@@ -43,6 +43,31 @@ namespace Azure.Storage.Sas
         Delete = 16,
 
         /// <summary>
+        /// Indicates that List is permitted.
+        /// </summary>
+        List = 32,
+
+        /// <summary>
+        /// Indicates that Move is permitted.
+        /// </summary>
+        Move = 64,
+
+        /// <summary>
+        /// Indicates that Execute is permitted.
+        /// </summary>
+        Execute = 128,
+
+        /// <summary>
+        /// Indicates that Ownership is permitted.
+        /// </summary>
+        ManageOwnership = 256,
+
+        /// <summary>
+        /// Indicates that Permissions is permitted.
+        /// </summary>
+        ManageAccessControl = 512,
+
+        /// <summary>
         /// Indicates that all permissions are set.
         /// </summary>
         All = ~0
@@ -56,7 +81,6 @@ namespace Azure.Storage.Files.DataLake
     /// </summary>
     internal static partial class DataLakeExtensions
     {
-
         /// <summary>
         /// Create a permissions string to provide
         /// <see cref="DataLakeSasBuilder.Permissions"/>.
@@ -84,6 +108,26 @@ namespace Azure.Storage.Files.DataLake
             if ((permissions & DataLakeSasPermissions.Delete) == DataLakeSasPermissions.Delete)
             {
                 sb.Append(Constants.Sas.Permissions.Delete);
+            }
+            if ((permissions & DataLakeSasPermissions.List) == DataLakeSasPermissions.List)
+            {
+                sb.Append(Constants.Sas.Permissions.List);
+            }
+            if ((permissions & DataLakeSasPermissions.Move) == DataLakeSasPermissions.Move)
+            {
+                sb.Append(Constants.Sas.Permissions.Move);
+            }
+            if ((permissions & DataLakeSasPermissions.Execute) == DataLakeSasPermissions.Execute)
+            {
+                sb.Append(Constants.Sas.Permissions.Execute);
+            }
+            if ((permissions & DataLakeSasPermissions.ManageOwnership) == DataLakeSasPermissions.ManageOwnership)
+            {
+                sb.Append(Constants.Sas.Permissions.ManageOwnership);
+            }
+            if ((permissions & DataLakeSasPermissions.ManageAccessControl) == DataLakeSasPermissions.ManageAccessControl)
+            {
+                sb.Append(Constants.Sas.Permissions.ManageAccessControl);
             }
             return sb.ToString();
         }

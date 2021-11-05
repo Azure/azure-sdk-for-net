@@ -17,13 +17,13 @@ namespace Microsoft.Azure.Search.Tests
     {
         private const string FakeDescription = "Some data source";
 
-        [Fact]
+        [Fact(Skip = "Needs AzureSqlReadOnlyConnectionString to be set")]
         public void CreateDataSourceReturnsCorrectDefinition()
         {
             Run(() => TestAllDataSourceTypes(CreateAndValidateDataSource));
         }
 
-        [Fact]
+        [Fact(Skip = "Needs AzureSqlReadOnlyConnectionString to be set")]
         public void CreateDataSourceFailsWithUsefulMessageOnUserError()
         {
             Run(() =>
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
-        [Fact]
+        [Fact(Skip = "Needs AzureSqlReadOnlyConnectionString to be set")]
         public void GetDataSourceReturnsCorrectDefinition()
         {
             Run(() => TestAllDataSourceTypes(CreateAndGetDataSource));
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
-        [Fact]
+        [Fact(Skip = "Needs AzureSqlReadOnlyConnectionString to be set")]
         public void CanUpdateDataSource()
         {
             Run(() =>
@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
-        [Fact]
+        [Fact(Skip = "Needs AzureSqlReadOnlyConnectionString to be set")]
         public void CreateOrUpdateCreatesWhenDataSourceDoesNotExist()
         {
             Run(() =>
@@ -99,7 +99,7 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
-        [Fact]
+        [Fact(Skip = "Needs AzureSqlReadOnlyConnectionString to be set")]
         public void CreateOrUpdateDataSourceIfNotExistsFailsOnExistingResource()
         {
             Run(() =>
@@ -111,7 +111,7 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
-        [Fact]
+        [Fact(Skip = "Needs AzureSqlReadOnlyConnectionString to be set")]
         public void CreateOrUpdateDataSourceIfNotExistsSucceedsOnNoResource()
         {
             Run(() =>
@@ -122,7 +122,7 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
-        [Fact]
+        [Fact(Skip = "Needs AzureSqlReadOnlyConnectionString to be set")]
         public void UpdateDataSourceIfExistsSucceedsOnExistingResource()
         {
             Run(() =>
@@ -134,7 +134,7 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
-        [Fact]
+        [Fact(Skip = "Needs AzureSqlReadOnlyConnectionString to be set")]
         public void UpdateDataSourceIfExistsFailsOnNoResource()
         {
             Run(() =>
@@ -145,7 +145,7 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
-        [Fact]
+        [Fact(Skip = "Needs AzureSqlReadOnlyConnectionString to be set")]
         public void UpdateDataSourceIfNotChangedSucceedsWhenResourceUnchanged()
         {
             Run(() =>
@@ -157,7 +157,7 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
-        [Fact]
+        [Fact(Skip = "Needs AzureSqlReadOnlyConnectionString to be set")]
         public void UpdateDataSourceIfNotChangedFailsWhenResourceChanged()
         {
             Run(() =>
@@ -169,7 +169,7 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
-        [Fact]
+        [Fact(Skip = "Needs AzureSqlReadOnlyConnectionString to be set")]
         public void DeleteDataSourceIfNotChangedWorksOnlyOnCurrentResource()
         {
             Run(() =>
@@ -186,7 +186,7 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
-        [Fact]
+        [Fact(Skip = "Needs AzureSqlReadOnlyConnectionString to be set")]
         public void DeleteDataSourceIfExistsWorksOnlyWhenResourceExists()
         {
             Run(() =>
@@ -202,7 +202,7 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
-        [Fact]
+        [Fact(Skip = "Needs AzureSqlReadOnlyConnectionString to be set")]
         public void DeleteDataSourceIsIdempotent()
         {
             Run(() =>
@@ -227,7 +227,7 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
-        [Fact]
+        [Fact(Skip = "Needs AzureSqlReadOnlyConnectionString to be set")]
         public void CanCreateAndListDataSources()
         {
             Run(() =>
@@ -250,7 +250,7 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
-        [Fact]
+        [Fact(Skip = "Needs AzureSqlReadOnlyConnectionString to be set")]
         public void ExistsReturnsTrueForExistingDataSource()
         {
             Run(() =>

@@ -11,46 +11,36 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
-    public partial class ConfigurationStoreListResult
+    internal partial class ConfigurationStoreListResult
     {
         internal static ConfigurationStoreListResult DeserializeConfigurationStoreListResult(JsonElement element)
         {
-            IReadOnlyList<ConfigurationStore> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<ConfigurationStore>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ConfigurationStore> array = new List<ConfigurationStore>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ConfigurationStore.DeserializeConfigurationStore(item));
-                        }
+                        array.Add(ConfigurationStore.DeserializeConfigurationStore(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new ConfigurationStoreListResult(value, nextLink);
+            return new ConfigurationStoreListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

@@ -1,13 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/e78961ba-36fe-4739-9212-e3031b4c8db7/resourceGroups/sandipsh/providers/Microsoft.PolicyInsights/policyEvents/default/queryResults?api-version=2018-04-04&$top=10&$from=2020-03-04T00:00:00Z",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTc4OTYxYmEtMzZmZS00NzM5LTkyMTItZTMwMzFiNGM4ZGI3L3Jlc291cmNlR3JvdXBzL3NhbmRpcHNoL3Byb3ZpZGVycy9NaWNyb3NvZnQuUG9saWN5SW5zaWdodHMvcG9saWN5RXZlbnRzL2RlZmF1bHQvcXVlcnlSZXN1bHRzP2FwaS12ZXJzaW9uPTIwMTgtMDQtMDQmJHRvcD0xMCYkZnJvbT0yMDIwLTAzLTA0VDAwJTNBMDAlM0EwMFo=",
+      "RequestUri": "/subscriptions/e78961ba-36fe-4739-9212-e3031b4c8db7/resourceGroups/sandipsh/providers/Microsoft.PolicyInsights/policyEvents/default/queryResults?api-version=2019-10-01&$top=10&$from=2020-07-04T00:00:00Z",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTc4OTYxYmEtMzZmZS00NzM5LTkyMTItZTMwMzFiNGM4ZGI3L3Jlc291cmNlR3JvdXBzL3NhbmRpcHNoL3Byb3ZpZGVycy9NaWNyb3NvZnQuUG9saWN5SW5zaWdodHMvcG9saWN5RXZlbnRzL2RlZmF1bHQvcXVlcnlSZXN1bHRzP2FwaS12ZXJzaW9uPTIwMTktMTAtMDEmJHRvcD0xMCYkZnJvbT0yMDIwLTA3LTA0VDAwJTNBMDAlM0EwMFo=",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "74d16ecf-efb3-4423-a795-4eec1199ee10"
+          "b62be16b-0569-4e8a-b38c-7e1ea4dafb10"
         ],
         "accept-language": [
           "en-US"
@@ -15,7 +15,7 @@
         "User-Agent": [
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "OSVersion/Microsoft.Windows.10.0.19041.",
           "Microsoft.Azure.Management.PolicyInsights.PolicyInsightsClient/3.1.0.0"
         ]
       },
@@ -24,7 +24,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 19 Mar 2020 23:42:12 GMT"
+          "Thu, 24 Sep 2020 22:02:36 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -33,19 +33,19 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-policy-insights-requests": [
-          "598"
+          "597"
         ],
         "x-ms-request-id": [
-          ":0c747993-1bb9-4b45-a2d2-f09a1358ba06"
+          ":e562e32f-48c7-4d69-8548-4446175173e4"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11999"
         ],
         "x-ms-correlation-request-id": [
-          "a89c9ef4-9d03-4c63-bb58-54d42ab46d23"
+          "afa0586e-f477-464b-b5e6-b02556b95030"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200319T234213Z:a89c9ef4-9d03-4c63-bb58-54d42ab46d23"
+          "WESTUS:20200924T220237Z:afa0586e-f477-464b-b5e6-b02556b95030"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"

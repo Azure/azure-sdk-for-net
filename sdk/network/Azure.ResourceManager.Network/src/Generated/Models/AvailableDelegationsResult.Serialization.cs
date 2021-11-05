@@ -11,46 +11,36 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class AvailableDelegationsResult
+    internal partial class AvailableDelegationsResult
     {
         internal static AvailableDelegationsResult DeserializeAvailableDelegationsResult(JsonElement element)
         {
-            IReadOnlyList<AvailableDelegation> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<AvailableDelegation>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AvailableDelegation> array = new List<AvailableDelegation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(AvailableDelegation.DeserializeAvailableDelegation(item));
-                        }
+                        array.Add(AvailableDelegation.DeserializeAvailableDelegation(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new AvailableDelegationsResult(value, nextLink);
+            return new AvailableDelegationsResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

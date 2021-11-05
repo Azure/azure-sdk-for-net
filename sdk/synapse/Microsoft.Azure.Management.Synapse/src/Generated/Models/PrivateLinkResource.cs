@@ -29,12 +29,12 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// <summary>
         /// Initializes a new instance of the PrivateLinkResource class.
         /// </summary>
-        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource. Ex-
-        /// Microsoft.Compute/virtualMachines or
-        /// Microsoft.Storage/storageAccounts.</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="properties">The private link resource
         /// properties.</param>
         public PrivateLinkResource(string id = default(string), string name = default(string), string type = default(string), PrivateLinkResourceProperties properties = default(PrivateLinkResourceProperties))

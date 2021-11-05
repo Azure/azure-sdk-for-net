@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(ParameterSpecificationConverter))]
     public partial class ParameterSpecification : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -38,11 +41,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("defaultValue"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     defaultValue = property.Value.GetObject();
                     continue;
                 }
             }
             return new ParameterSpecification(type, defaultValue.Value);
+        }
+
+        internal partial class ParameterSpecificationConverter : JsonConverter<ParameterSpecification>
+        {
+            public override void Write(Utf8JsonWriter writer, ParameterSpecification model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override ParameterSpecification Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeParameterSpecification(document.RootElement);
+            }
         }
     }
 }

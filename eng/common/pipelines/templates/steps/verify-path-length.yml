@@ -17,10 +17,6 @@ steps:
         import sys
 
         source_directory = r'${{ parameters.SourceDirectory }}'
-        longest_file_path = ''
-        longest_file_path_length = 0
-        longest_dir_path = ''
-        longest_dir_path_length = 0
         break_switch = False
         long_file_paths = []
         long_dir_paths = []
@@ -32,17 +28,12 @@ steps:
         for root, dirs, files in os.walk('{0}'.format(source_directory)):
             for file in files:
                 file_path = os.path.relpath(os.path.join(root, file), source_directory)
-                if ((len(file_path) + ${{ parameters.BasePathLength }}) > longest_file_path_length):
-                    longest_file_path_length = len(file_path) + ${{ parameters.BasePathLength }}
-                    longest_file_path = file_path
-                    if (longest_file_path_length >= 260):
-                        long_file_paths.append(longest_file_path)
+                if ((len(file_path) + ${{ parameters.BasePathLength }}) > 260):
+                    long_file_paths.append(file_path)
+
                 dir_path = os.path.relpath(root, source_directory)
-                if ((len(dir_path) + ${{ parameters.BasePathLength }}) > longest_dir_path_length):
-                    longest_dir_path_length = len(dir_path) + ${{ parameters.BasePathLength }}
-                    longest_dir_path = dir_path
-                    if (longest_dir_path_length >= 248):
-                        long_dir_paths.append(longest_dir_path)
+                if ((len(dir_path) + ${{ parameters.BasePathLength }}) > 248):
+                    long_dir_paths.append(dir_path)
 
         if (len(long_file_paths) > 0):
             print('With a base path length of {0} the following file path{1} exceed the allow path length of 260 characters'.format(${{ parameters.BasePathLength }}, pluralize('', 's', len(long_file_paths))))

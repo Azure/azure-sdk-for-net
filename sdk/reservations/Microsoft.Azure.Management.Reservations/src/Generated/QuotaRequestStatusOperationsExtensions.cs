@@ -22,24 +22,25 @@ namespace Microsoft.Azure.Management.Reservations
     public static partial class QuotaRequestStatusOperationsExtensions
     {
             /// <summary>
-            /// Gets the QuotaRequest details and status by the quota request Id for the
-            /// resources for the resource provider at a specific location. The requestId
-            /// is returned as response to the Put requests for serviceLimits.
+            /// For the specified Azure region (location), get the details and status of
+            /// the quota request by the quota request ID for the resources of the resource
+            /// provider. The PUT request for the quota (service limit) returns a response
+            /// with the requestId parameter.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='subscriptionId'>
-            /// Azure subscription id.
+            /// Azure subscription ID.
             /// </param>
             /// <param name='providerId'>
-            /// Azure resource provider id.
+            /// Azure resource provider ID.
             /// </param>
             /// <param name='location'>
             /// Azure region.
             /// </param>
             /// <param name='id'>
-            /// Quota Request id.
+            /// Quota Request ID.
             /// </param>
             public static QuotaRequestDetails Get(this IQuotaRequestStatusOperations operations, string subscriptionId, string providerId, string location, string id)
             {
@@ -47,24 +48,25 @@ namespace Microsoft.Azure.Management.Reservations
             }
 
             /// <summary>
-            /// Gets the QuotaRequest details and status by the quota request Id for the
-            /// resources for the resource provider at a specific location. The requestId
-            /// is returned as response to the Put requests for serviceLimits.
+            /// For the specified Azure region (location), get the details and status of
+            /// the quota request by the quota request ID for the resources of the resource
+            /// provider. The PUT request for the quota (service limit) returns a response
+            /// with the requestId parameter.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='subscriptionId'>
-            /// Azure subscription id.
+            /// Azure subscription ID.
             /// </param>
             /// <param name='providerId'>
-            /// Azure resource provider id.
+            /// Azure resource provider ID.
             /// </param>
             /// <param name='location'>
             /// Azure region.
             /// </param>
             /// <param name='id'>
-            /// Quota Request id.
+            /// Quota Request ID.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -78,18 +80,18 @@ namespace Microsoft.Azure.Management.Reservations
             }
 
             /// <summary>
-            /// For the specified location and Resource provider gets the current quota
-            /// requests under the subscription over the time period of one year ago from
-            /// now to one year back. oData filter can be used to select quota requests.
+            /// For the specified Azure region (location), subscription, and resource
+            /// provider, get the history of the quota requests for the past year. To
+            /// select specific quota requests, use the oData filter.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='subscriptionId'>
-            /// Azure subscription id.
+            /// Azure subscription ID.
             /// </param>
             /// <param name='providerId'>
-            /// Azure resource provider id.
+            /// Azure resource provider ID.
             /// </param>
             /// <param name='location'>
             /// Azure region.
@@ -106,8 +108,8 @@ namespace Microsoft.Azure.Management.Reservations
             /// <param name='skiptoken'>
             /// Skiptoken is only used if a previous operation returned a partial result.
             /// If a previous response contains a nextLink element, the value of the
-            /// nextLink element will include a skiptoken parameter that specifies a
-            /// starting point to use for subsequent calls
+            /// nextLink element includes a skiptoken parameter that specifies a starting
+            /// point to use for subsequent calls.
             /// </param>
             public static IPage<QuotaRequestDetails> List(this IQuotaRequestStatusOperations operations, string subscriptionId, string providerId, string location, string filter = default(string), int? top = default(int?), string skiptoken = default(string))
             {
@@ -115,18 +117,18 @@ namespace Microsoft.Azure.Management.Reservations
             }
 
             /// <summary>
-            /// For the specified location and Resource provider gets the current quota
-            /// requests under the subscription over the time period of one year ago from
-            /// now to one year back. oData filter can be used to select quota requests.
+            /// For the specified Azure region (location), subscription, and resource
+            /// provider, get the history of the quota requests for the past year. To
+            /// select specific quota requests, use the oData filter.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='subscriptionId'>
-            /// Azure subscription id.
+            /// Azure subscription ID.
             /// </param>
             /// <param name='providerId'>
-            /// Azure resource provider id.
+            /// Azure resource provider ID.
             /// </param>
             /// <param name='location'>
             /// Azure region.
@@ -143,8 +145,8 @@ namespace Microsoft.Azure.Management.Reservations
             /// <param name='skiptoken'>
             /// Skiptoken is only used if a previous operation returned a partial result.
             /// If a previous response contains a nextLink element, the value of the
-            /// nextLink element will include a skiptoken parameter that specifies a
-            /// starting point to use for subsequent calls
+            /// nextLink element includes a skiptoken parameter that specifies a starting
+            /// point to use for subsequent calls.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -158,9 +160,9 @@ namespace Microsoft.Azure.Management.Reservations
             }
 
             /// <summary>
-            /// For the specified location and Resource provider gets the current quota
-            /// requests under the subscription over the time period of one year ago from
-            /// now to one year back. oData filter can be used to select quota requests.
+            /// For the specified Azure region (location), subscription, and resource
+            /// provider, get the history of the quota requests for the past year. To
+            /// select specific quota requests, use the oData filter.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -174,9 +176,9 @@ namespace Microsoft.Azure.Management.Reservations
             }
 
             /// <summary>
-            /// For the specified location and Resource provider gets the current quota
-            /// requests under the subscription over the time period of one year ago from
-            /// now to one year back. oData filter can be used to select quota requests.
+            /// For the specified Azure region (location), subscription, and resource
+            /// provider, get the history of the quota requests for the past year. To
+            /// select specific quota requests, use the oData filter.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

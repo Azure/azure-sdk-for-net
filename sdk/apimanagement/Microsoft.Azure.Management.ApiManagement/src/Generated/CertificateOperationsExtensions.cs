@@ -37,9 +37,13 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
-            public static IPage<CertificateContract> ListByService(this ICertificateOperations operations, string resourceGroupName, string serviceName, ODataQuery<CertificateContract> odataQuery = default(ODataQuery<CertificateContract>))
+            /// <param name='isKeyVaultRefreshFailed'>
+            /// When set to true, the response contains only certificates entities which
+            /// failed refresh.
+            /// </param>
+            public static IPage<CertificateContract> ListByService(this ICertificateOperations operations, string resourceGroupName, string serviceName, ODataQuery<CertificateContract> odataQuery = default(ODataQuery<CertificateContract>), bool? isKeyVaultRefreshFailed = default(bool?))
             {
-                return operations.ListByServiceAsync(resourceGroupName, serviceName, odataQuery).GetAwaiter().GetResult();
+                return operations.ListByServiceAsync(resourceGroupName, serviceName, odataQuery, isKeyVaultRefreshFailed).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -57,12 +61,16 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
+            /// <param name='isKeyVaultRefreshFailed'>
+            /// When set to true, the response contains only certificates entities which
+            /// failed refresh.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<CertificateContract>> ListByServiceAsync(this ICertificateOperations operations, string resourceGroupName, string serviceName, ODataQuery<CertificateContract> odataQuery = default(ODataQuery<CertificateContract>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<CertificateContract>> ListByServiceAsync(this ICertificateOperations operations, string resourceGroupName, string serviceName, ODataQuery<CertificateContract> odataQuery = default(ODataQuery<CertificateContract>), bool? isKeyVaultRefreshFailed = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByServiceWithHttpMessagesAsync(resourceGroupName, serviceName, odataQuery, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByServiceWithHttpMessagesAsync(resourceGroupName, serviceName, odataQuery, isKeyVaultRefreshFailed, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -285,6 +293,58 @@ namespace Microsoft.Azure.Management.ApiManagement
             public static async Task DeleteAsync(this ICertificateOperations operations, string resourceGroupName, string serviceName, string certificateId, string ifMatch, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, serviceName, certificateId, ifMatch, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// From KeyVault, Refresh the certificate being used for authentication with
+            /// the backend.
+            /// <see href="https://azure.microsoft.com/en-us/documentation/articles/api-management-howto-mutual-certificates/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='certificateId'>
+            /// Identifier of the certificate entity. Must be unique in the current API
+            /// Management service instance.
+            /// </param>
+            public static CertificateContract RefreshSecret(this ICertificateOperations operations, string resourceGroupName, string serviceName, string certificateId)
+            {
+                return operations.RefreshSecretAsync(resourceGroupName, serviceName, certificateId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// From KeyVault, Refresh the certificate being used for authentication with
+            /// the backend.
+            /// <see href="https://azure.microsoft.com/en-us/documentation/articles/api-management-howto-mutual-certificates/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='certificateId'>
+            /// Identifier of the certificate entity. Must be unique in the current API
+            /// Management service instance.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CertificateContract> RefreshSecretAsync(this ICertificateOperations operations, string resourceGroupName, string serviceName, string certificateId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.RefreshSecretWithHttpMessagesAsync(resourceGroupName, serviceName, certificateId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>

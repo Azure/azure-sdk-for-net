@@ -5,12 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-#if EXPERIMENTAL_SPATIAL
-using Azure.Core.Spatial;
-#else
+using Azure.Core.GeoJson;
 using Azure.Search.Documents.Models;
 using Microsoft.Spatial;
-#endif
 using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests
@@ -156,24 +153,52 @@ namespace Azure.Search.Documents.Tests
             string.Join(",", seq);
 
         /// <summary>
-        /// Create a Geometry Point.
+        /// Create a geography point.
         /// </summary>
         /// <param name="latitude">The latitude.</param>
         /// <param name="longitude">The longitude.</param>
         /// <returns></returns>
-#if EXPERIMENTAL_SPATIAL
-        public static PointGeometry CreatePoint(double longitude, double latitude) =>
-            new PointGeometry(new GeometryPosition(longitude, latitude));
+        public static GeoPoint CreateGeoPoint(double longitude, double latitude) =>
+            new GeoPoint(new GeoPosition(longitude, latitude));
 
-        public static PointGeometry CreateDynamicPoint(double longitude, double latitude) =>
-            CreatePoint(longitude, latitude);
-#else
+        public static GeoPoint CreateDynamicGeoPoint(double longitude, double latitude) =>
+            CreateGeoPoint(longitude, latitude);
+
         public static GeographyPoint CreatePoint(double longitude, double latitude) =>
-            // Note: GeographyPoint takes latitude first, unlike PointGeometry
+            // Note: GeographyPoint takes latitude first, unlike GeoPoint
             GeographyPoint.Create(latitude, longitude);
 
         public static SearchDocument CreateDynamicPoint(double longitude, double latitude) =>
-            GeographyPointConverter.AsDocument(CreatePoint(longitude, latitude));
-#endif
+            CreatePoint(longitude, latitude).AsDocument();
+
+        /// <summary>
+        /// Converts the <see cref="GeographyPoint"/> to a <see cref="SearchDocument"/>.
+        /// </summary>
+        /// <param name="value">The <see cref="GeographyPoint"/> to convert.</param>
+        /// <returns>A <see cref="SearchDocument"/> for the given <paramref name="value"/>.</returns>
+        public static SearchDocument AsDocument(this GeographyPoint value)
+        {
+            if (value == null)
+            {
+                return null;
+            }
+
+            List<double> coords = new List<double>
+            {
+                value.Longitude,
+                value.Latitude,
+            };
+
+            if (value.Z != null)
+            {
+                coords.Add(value.Z.Value);
+            }
+
+            return new SearchDocument()
+            {
+                ["type"] = "Point",
+                ["coordinates"] = coords.ToArray()
+            };
+        }
     }
 }

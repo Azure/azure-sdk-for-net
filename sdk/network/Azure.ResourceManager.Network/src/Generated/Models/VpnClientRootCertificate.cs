@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         /// <summary> Initializes a new instance of VpnClientRootCertificate. </summary>
         /// <param name="publicCertData"> The certificate public data. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="publicCertData"/> is null. </exception>
         public VpnClientRootCertificate(string publicCertData)
         {
             if (publicCertData == null)

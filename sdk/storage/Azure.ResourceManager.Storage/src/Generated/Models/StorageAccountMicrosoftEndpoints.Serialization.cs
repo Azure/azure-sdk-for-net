@@ -10,110 +10,50 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class StorageAccountMicrosoftEndpoints : IUtf8JsonSerializable
+    public partial class StorageAccountMicrosoftEndpoints
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Blob != null)
-            {
-                writer.WritePropertyName("blob");
-                writer.WriteStringValue(Blob);
-            }
-            if (Queue != null)
-            {
-                writer.WritePropertyName("queue");
-                writer.WriteStringValue(Queue);
-            }
-            if (Table != null)
-            {
-                writer.WritePropertyName("table");
-                writer.WriteStringValue(Table);
-            }
-            if (File != null)
-            {
-                writer.WritePropertyName("file");
-                writer.WriteStringValue(File);
-            }
-            if (Web != null)
-            {
-                writer.WritePropertyName("web");
-                writer.WriteStringValue(Web);
-            }
-            if (Dfs != null)
-            {
-                writer.WritePropertyName("dfs");
-                writer.WriteStringValue(Dfs);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static StorageAccountMicrosoftEndpoints DeserializeStorageAccountMicrosoftEndpoints(JsonElement element)
         {
-            string blob = default;
-            string queue = default;
-            string table = default;
-            string file = default;
-            string web = default;
-            string dfs = default;
+            Optional<string> blob = default;
+            Optional<string> queue = default;
+            Optional<string> table = default;
+            Optional<string> file = default;
+            Optional<string> web = default;
+            Optional<string> dfs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("blob"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     blob = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("queue"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     queue = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("table"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     table = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("file"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     file = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("web"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     web = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("dfs"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     dfs = property.Value.GetString();
                     continue;
                 }
             }
-            return new StorageAccountMicrosoftEndpoints(blob, queue, table, file, web, dfs);
+            return new StorageAccountMicrosoftEndpoints(blob.Value, queue.Value, table.Value, file.Value, web.Value, dfs.Value);
         }
     }
 }

@@ -25,32 +25,32 @@ namespace Azure.Graph.Rbac.Models
             writer.WriteStringValue(UserPrincipalName);
             writer.WritePropertyName("mailNickname");
             writer.WriteStringValue(MailNickname);
-            if (Mail != null)
+            if (Optional.IsDefined(Mail))
             {
                 writer.WritePropertyName("mail");
                 writer.WriteStringValue(Mail);
             }
-            if (ImmutableId != null)
+            if (Optional.IsDefined(ImmutableId))
             {
                 writer.WritePropertyName("immutableId");
                 writer.WriteStringValue(ImmutableId);
             }
-            if (UsageLocation != null)
+            if (Optional.IsDefined(UsageLocation))
             {
                 writer.WritePropertyName("usageLocation");
                 writer.WriteStringValue(UsageLocation);
             }
-            if (GivenName != null)
+            if (Optional.IsDefined(GivenName))
             {
                 writer.WritePropertyName("givenName");
                 writer.WriteStringValue(GivenName);
             }
-            if (Surname != null)
+            if (Optional.IsDefined(Surname))
             {
                 writer.WritePropertyName("surname");
                 writer.WriteStringValue(Surname);
             }
-            if (UserType != null)
+            if (Optional.IsDefined(UserType))
             {
                 writer.WritePropertyName("userType");
                 writer.WriteStringValue(UserType.Value.ToString());

@@ -344,14 +344,41 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// </summary>
             /// <remarks>
             /// This operation retrieves a list of all the policy definitions in a given
-            /// subscription.
+            /// subscription that match the optional given $filter. Valid values for
+            /// $filter are: 'atExactScope()', 'policyType -eq {value}' or 'category eq
+            /// '{value}''. If $filter is not provided, the unfiltered list includes all
+            /// policy definitions associated with the subscription, including those that
+            /// apply directly or from management groups that contain the given
+            /// subscription. If $filter=atExactScope() is provided, the returned list only
+            /// includes all policy definitions that at the given subscription. If
+            /// $filter='policyType -eq {value}' is provided, the returned list only
+            /// includes all policy definitions whose type match the {value}. Possible
+            /// policyType values are NotSpecified, BuiltIn, Custom, and Static. If
+            /// $filter='category -eq {value}' is provided, the returned list only includes
+            /// all policy definitions whose category match the {value}.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IPage<PolicyDefinition> List(this IPolicyDefinitionsOperations operations)
+            /// <param name='filter'>
+            /// The filter to apply on the operation. Valid values for $filter are:
+            /// 'atExactScope()', 'policyType -eq {value}' or 'category eq '{value}''. If
+            /// $filter is not provided, no filtering is performed. If
+            /// $filter=atExactScope() is provided, the returned list only includes all
+            /// policy definitions that at the given scope. If $filter='policyType -eq
+            /// {value}' is provided, the returned list only includes all policy
+            /// definitions whose type match the {value}. Possible policyType values are
+            /// NotSpecified, BuiltIn, Custom, and Static. If $filter='category -eq
+            /// {value}' is provided, the returned list only includes all policy
+            /// definitions whose category match the {value}.
+            /// </param>
+            /// <param name='top'>
+            /// Maximum number of records to return. When the $top filter is not provided,
+            /// it will return 500 records.
+            /// </param>
+            public static IPage<PolicyDefinition> List(this IPolicyDefinitionsOperations operations, string filter = default(string), int? top = default(int?))
             {
-                return operations.ListAsync().GetAwaiter().GetResult();
+                return operations.ListAsync(filter, top).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -359,17 +386,44 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// </summary>
             /// <remarks>
             /// This operation retrieves a list of all the policy definitions in a given
-            /// subscription.
+            /// subscription that match the optional given $filter. Valid values for
+            /// $filter are: 'atExactScope()', 'policyType -eq {value}' or 'category eq
+            /// '{value}''. If $filter is not provided, the unfiltered list includes all
+            /// policy definitions associated with the subscription, including those that
+            /// apply directly or from management groups that contain the given
+            /// subscription. If $filter=atExactScope() is provided, the returned list only
+            /// includes all policy definitions that at the given subscription. If
+            /// $filter='policyType -eq {value}' is provided, the returned list only
+            /// includes all policy definitions whose type match the {value}. Possible
+            /// policyType values are NotSpecified, BuiltIn, Custom, and Static. If
+            /// $filter='category -eq {value}' is provided, the returned list only includes
+            /// all policy definitions whose category match the {value}.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='filter'>
+            /// The filter to apply on the operation. Valid values for $filter are:
+            /// 'atExactScope()', 'policyType -eq {value}' or 'category eq '{value}''. If
+            /// $filter is not provided, no filtering is performed. If
+            /// $filter=atExactScope() is provided, the returned list only includes all
+            /// policy definitions that at the given scope. If $filter='policyType -eq
+            /// {value}' is provided, the returned list only includes all policy
+            /// definitions whose type match the {value}. Possible policyType values are
+            /// NotSpecified, BuiltIn, Custom, and Static. If $filter='category -eq
+            /// {value}' is provided, the returned list only includes all policy
+            /// definitions whose category match the {value}.
+            /// </param>
+            /// <param name='top'>
+            /// Maximum number of records to return. When the $top filter is not provided,
+            /// it will return 500 records.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<PolicyDefinition>> ListAsync(this IPolicyDefinitionsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<PolicyDefinition>> ListAsync(this IPolicyDefinitionsOperations operations, string filter = default(string), int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(filter, top, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -379,31 +433,75 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// Retrieve built-in policy definitions
             /// </summary>
             /// <remarks>
-            /// This operation retrieves a list of all the built-in policy definitions.
+            /// This operation retrieves a list of all the built-in policy definitions that
+            /// match the optional given $filter. If $filter='policyType -eq {value}' is
+            /// provided, the returned list only includes all built-in policy definitions
+            /// whose type match the {value}. Possible policyType values are NotSpecified,
+            /// BuiltIn, Custom, and Static. If $filter='category -eq {value}' is provided,
+            /// the returned list only includes all built-in policy definitions whose
+            /// category match the {value}.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IPage<PolicyDefinition> ListBuiltIn(this IPolicyDefinitionsOperations operations)
+            /// <param name='filter'>
+            /// The filter to apply on the operation. Valid values for $filter are:
+            /// 'atExactScope()', 'policyType -eq {value}' or 'category eq '{value}''. If
+            /// $filter is not provided, no filtering is performed. If
+            /// $filter=atExactScope() is provided, the returned list only includes all
+            /// policy definitions that at the given scope. If $filter='policyType -eq
+            /// {value}' is provided, the returned list only includes all policy
+            /// definitions whose type match the {value}. Possible policyType values are
+            /// NotSpecified, BuiltIn, Custom, and Static. If $filter='category -eq
+            /// {value}' is provided, the returned list only includes all policy
+            /// definitions whose category match the {value}.
+            /// </param>
+            /// <param name='top'>
+            /// Maximum number of records to return. When the $top filter is not provided,
+            /// it will return 500 records.
+            /// </param>
+            public static IPage<PolicyDefinition> ListBuiltIn(this IPolicyDefinitionsOperations operations, string filter = default(string), int? top = default(int?))
             {
-                return operations.ListBuiltInAsync().GetAwaiter().GetResult();
+                return operations.ListBuiltInAsync(filter, top).GetAwaiter().GetResult();
             }
 
             /// <summary>
             /// Retrieve built-in policy definitions
             /// </summary>
             /// <remarks>
-            /// This operation retrieves a list of all the built-in policy definitions.
+            /// This operation retrieves a list of all the built-in policy definitions that
+            /// match the optional given $filter. If $filter='policyType -eq {value}' is
+            /// provided, the returned list only includes all built-in policy definitions
+            /// whose type match the {value}. Possible policyType values are NotSpecified,
+            /// BuiltIn, Custom, and Static. If $filter='category -eq {value}' is provided,
+            /// the returned list only includes all built-in policy definitions whose
+            /// category match the {value}.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='filter'>
+            /// The filter to apply on the operation. Valid values for $filter are:
+            /// 'atExactScope()', 'policyType -eq {value}' or 'category eq '{value}''. If
+            /// $filter is not provided, no filtering is performed. If
+            /// $filter=atExactScope() is provided, the returned list only includes all
+            /// policy definitions that at the given scope. If $filter='policyType -eq
+            /// {value}' is provided, the returned list only includes all policy
+            /// definitions whose type match the {value}. Possible policyType values are
+            /// NotSpecified, BuiltIn, Custom, and Static. If $filter='category -eq
+            /// {value}' is provided, the returned list only includes all policy
+            /// definitions whose category match the {value}.
+            /// </param>
+            /// <param name='top'>
+            /// Maximum number of records to return. When the $top filter is not provided,
+            /// it will return 500 records.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<PolicyDefinition>> ListBuiltInAsync(this IPolicyDefinitionsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<PolicyDefinition>> ListBuiltInAsync(this IPolicyDefinitionsOperations operations, string filter = default(string), int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListBuiltInWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListBuiltInWithHttpMessagesAsync(filter, top, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -414,7 +512,18 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// </summary>
             /// <remarks>
             /// This operation retrieves a list of all the policy definitions in a given
-            /// management group.
+            /// management group that match the optional given $filter. Valid values for
+            /// $filter are: 'atExactScope()', 'policyType -eq {value}' or 'category eq
+            /// '{value}''. If $filter is not provided, the unfiltered list includes all
+            /// policy definitions associated with the management group, including those
+            /// that apply directly or from management groups that contain the given
+            /// management group. If $filter=atExactScope() is provided, the returned list
+            /// only includes all policy definitions that at the given management group. If
+            /// $filter='policyType -eq {value}' is provided, the returned list only
+            /// includes all policy definitions whose type match the {value}. Possible
+            /// policyType values are NotSpecified, BuiltIn, Custom, and Static. If
+            /// $filter='category -eq {value}' is provided, the returned list only includes
+            /// all policy definitions whose category match the {value}.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -422,9 +531,25 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='managementGroupId'>
             /// The ID of the management group.
             /// </param>
-            public static IPage<PolicyDefinition> ListByManagementGroup(this IPolicyDefinitionsOperations operations, string managementGroupId)
+            /// <param name='filter'>
+            /// The filter to apply on the operation. Valid values for $filter are:
+            /// 'atExactScope()', 'policyType -eq {value}' or 'category eq '{value}''. If
+            /// $filter is not provided, no filtering is performed. If
+            /// $filter=atExactScope() is provided, the returned list only includes all
+            /// policy definitions that at the given scope. If $filter='policyType -eq
+            /// {value}' is provided, the returned list only includes all policy
+            /// definitions whose type match the {value}. Possible policyType values are
+            /// NotSpecified, BuiltIn, Custom, and Static. If $filter='category -eq
+            /// {value}' is provided, the returned list only includes all policy
+            /// definitions whose category match the {value}.
+            /// </param>
+            /// <param name='top'>
+            /// Maximum number of records to return. When the $top filter is not provided,
+            /// it will return 500 records.
+            /// </param>
+            public static IPage<PolicyDefinition> ListByManagementGroup(this IPolicyDefinitionsOperations operations, string managementGroupId, string filter = default(string), int? top = default(int?))
             {
-                return operations.ListByManagementGroupAsync(managementGroupId).GetAwaiter().GetResult();
+                return operations.ListByManagementGroupAsync(managementGroupId, filter, top).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -432,7 +557,18 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// </summary>
             /// <remarks>
             /// This operation retrieves a list of all the policy definitions in a given
-            /// management group.
+            /// management group that match the optional given $filter. Valid values for
+            /// $filter are: 'atExactScope()', 'policyType -eq {value}' or 'category eq
+            /// '{value}''. If $filter is not provided, the unfiltered list includes all
+            /// policy definitions associated with the management group, including those
+            /// that apply directly or from management groups that contain the given
+            /// management group. If $filter=atExactScope() is provided, the returned list
+            /// only includes all policy definitions that at the given management group. If
+            /// $filter='policyType -eq {value}' is provided, the returned list only
+            /// includes all policy definitions whose type match the {value}. Possible
+            /// policyType values are NotSpecified, BuiltIn, Custom, and Static. If
+            /// $filter='category -eq {value}' is provided, the returned list only includes
+            /// all policy definitions whose category match the {value}.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -440,12 +576,28 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='managementGroupId'>
             /// The ID of the management group.
             /// </param>
+            /// <param name='filter'>
+            /// The filter to apply on the operation. Valid values for $filter are:
+            /// 'atExactScope()', 'policyType -eq {value}' or 'category eq '{value}''. If
+            /// $filter is not provided, no filtering is performed. If
+            /// $filter=atExactScope() is provided, the returned list only includes all
+            /// policy definitions that at the given scope. If $filter='policyType -eq
+            /// {value}' is provided, the returned list only includes all policy
+            /// definitions whose type match the {value}. Possible policyType values are
+            /// NotSpecified, BuiltIn, Custom, and Static. If $filter='category -eq
+            /// {value}' is provided, the returned list only includes all policy
+            /// definitions whose category match the {value}.
+            /// </param>
+            /// <param name='top'>
+            /// Maximum number of records to return. When the $top filter is not provided,
+            /// it will return 500 records.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<PolicyDefinition>> ListByManagementGroupAsync(this IPolicyDefinitionsOperations operations, string managementGroupId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<PolicyDefinition>> ListByManagementGroupAsync(this IPolicyDefinitionsOperations operations, string managementGroupId, string filter = default(string), int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByManagementGroupWithHttpMessagesAsync(managementGroupId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByManagementGroupWithHttpMessagesAsync(managementGroupId, filter, top, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -456,7 +608,18 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// </summary>
             /// <remarks>
             /// This operation retrieves a list of all the policy definitions in a given
-            /// subscription.
+            /// subscription that match the optional given $filter. Valid values for
+            /// $filter are: 'atExactScope()', 'policyType -eq {value}' or 'category eq
+            /// '{value}''. If $filter is not provided, the unfiltered list includes all
+            /// policy definitions associated with the subscription, including those that
+            /// apply directly or from management groups that contain the given
+            /// subscription. If $filter=atExactScope() is provided, the returned list only
+            /// includes all policy definitions that at the given subscription. If
+            /// $filter='policyType -eq {value}' is provided, the returned list only
+            /// includes all policy definitions whose type match the {value}. Possible
+            /// policyType values are NotSpecified, BuiltIn, Custom, and Static. If
+            /// $filter='category -eq {value}' is provided, the returned list only includes
+            /// all policy definitions whose category match the {value}.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -474,7 +637,18 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// </summary>
             /// <remarks>
             /// This operation retrieves a list of all the policy definitions in a given
-            /// subscription.
+            /// subscription that match the optional given $filter. Valid values for
+            /// $filter are: 'atExactScope()', 'policyType -eq {value}' or 'category eq
+            /// '{value}''. If $filter is not provided, the unfiltered list includes all
+            /// policy definitions associated with the subscription, including those that
+            /// apply directly or from management groups that contain the given
+            /// subscription. If $filter=atExactScope() is provided, the returned list only
+            /// includes all policy definitions that at the given subscription. If
+            /// $filter='policyType -eq {value}' is provided, the returned list only
+            /// includes all policy definitions whose type match the {value}. Possible
+            /// policyType values are NotSpecified, BuiltIn, Custom, and Static. If
+            /// $filter='category -eq {value}' is provided, the returned list only includes
+            /// all policy definitions whose category match the {value}.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -497,7 +671,13 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// Retrieve built-in policy definitions
             /// </summary>
             /// <remarks>
-            /// This operation retrieves a list of all the built-in policy definitions.
+            /// This operation retrieves a list of all the built-in policy definitions that
+            /// match the optional given $filter. If $filter='policyType -eq {value}' is
+            /// provided, the returned list only includes all built-in policy definitions
+            /// whose type match the {value}. Possible policyType values are NotSpecified,
+            /// BuiltIn, Custom, and Static. If $filter='category -eq {value}' is provided,
+            /// the returned list only includes all built-in policy definitions whose
+            /// category match the {value}.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -514,7 +694,13 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// Retrieve built-in policy definitions
             /// </summary>
             /// <remarks>
-            /// This operation retrieves a list of all the built-in policy definitions.
+            /// This operation retrieves a list of all the built-in policy definitions that
+            /// match the optional given $filter. If $filter='policyType -eq {value}' is
+            /// provided, the returned list only includes all built-in policy definitions
+            /// whose type match the {value}. Possible policyType values are NotSpecified,
+            /// BuiltIn, Custom, and Static. If $filter='category -eq {value}' is provided,
+            /// the returned list only includes all built-in policy definitions whose
+            /// category match the {value}.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -538,7 +724,18 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// </summary>
             /// <remarks>
             /// This operation retrieves a list of all the policy definitions in a given
-            /// management group.
+            /// management group that match the optional given $filter. Valid values for
+            /// $filter are: 'atExactScope()', 'policyType -eq {value}' or 'category eq
+            /// '{value}''. If $filter is not provided, the unfiltered list includes all
+            /// policy definitions associated with the management group, including those
+            /// that apply directly or from management groups that contain the given
+            /// management group. If $filter=atExactScope() is provided, the returned list
+            /// only includes all policy definitions that at the given management group. If
+            /// $filter='policyType -eq {value}' is provided, the returned list only
+            /// includes all policy definitions whose type match the {value}. Possible
+            /// policyType values are NotSpecified, BuiltIn, Custom, and Static. If
+            /// $filter='category -eq {value}' is provided, the returned list only includes
+            /// all policy definitions whose category match the {value}.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -556,7 +753,18 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// </summary>
             /// <remarks>
             /// This operation retrieves a list of all the policy definitions in a given
-            /// management group.
+            /// management group that match the optional given $filter. Valid values for
+            /// $filter are: 'atExactScope()', 'policyType -eq {value}' or 'category eq
+            /// '{value}''. If $filter is not provided, the unfiltered list includes all
+            /// policy definitions associated with the management group, including those
+            /// that apply directly or from management groups that contain the given
+            /// management group. If $filter=atExactScope() is provided, the returned list
+            /// only includes all policy definitions that at the given management group. If
+            /// $filter='policyType -eq {value}' is provided, the returned list only
+            /// includes all policy definitions whose type match the {value}. Possible
+            /// policyType values are NotSpecified, BuiltIn, Custom, and Static. If
+            /// $filter='category -eq {value}' is provided, the returned list only includes
+            /// all policy definitions whose category match the {value}.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.

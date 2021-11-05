@@ -24,8 +24,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
     public partial interface ISupportedOperatingSystemsOperations
     {
         /// <summary>
-        /// Gets the data of supported OSes by SRS.
+        /// Gets the data of supported operating systems by SRS.
         /// </summary>
+        /// <param name='instanceType'>
+        /// The instance type.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -41,6 +44,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<SupportedOperatingSystems>> GetWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<SupportedOperatingSystems>> GetWithHttpMessagesAsync(string instanceType = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

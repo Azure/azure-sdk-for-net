@@ -10,13 +10,16 @@
 
 namespace Microsoft.Azure.Management.WebSites.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Description of site key vault references.
     /// </summary>
-    public partial class ApiKVReference
+    [Rest.Serialization.JsonTransformation]
+    public partial class ApiKVReference : ProxyOnlyResource
     {
         /// <summary>
         /// Initializes a new instance of the ApiKVReference class.
@@ -29,17 +32,18 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the ApiKVReference class.
         /// </summary>
+        /// <param name="id">Resource Id.</param>
+        /// <param name="name">Resource Name.</param>
+        /// <param name="kind">Kind of resource.</param>
+        /// <param name="type">Resource type.</param>
         /// <param name="status">Possible values include: 'Initialized',
         /// 'Resolved', 'InvalidSyntax', 'MSINotEnabled', 'VaultNotFound',
         /// 'SecretNotFound', 'SecretVersionNotFound',
-        /// 'AccessToKeyVaultDenied', 'OtherReasons'</param>
-        /// <param name="identityType">Possible values include:
-        /// 'SystemAssigned', 'UserAssigned', 'SystemAssigned, UserAssigned',
-        /// 'None'</param>
+        /// 'AccessToKeyVaultDenied', 'OtherReasons', 'FetchTimedOut',
+        /// 'UnauthorizedClient'</param>
         /// <param name="source">Possible values include: 'KeyVault'</param>
-        /// <param name="location">Possible values include:
-        /// 'ApplicationSetting'</param>
-        public ApiKVReference(string reference = default(string), ResolveStatus? status = default(ResolveStatus?), string vaultName = default(string), string secretName = default(string), string secretVersion = default(string), ManagedServiceIdentityType? identityType = default(ManagedServiceIdentityType?), string details = default(string), ConfigReferenceSource? source = default(ConfigReferenceSource?), ConfigReferenceLocation? location = default(ConfigReferenceLocation?))
+        public ApiKVReference(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string reference = default(string), ResolveStatus? status = default(ResolveStatus?), string vaultName = default(string), string secretName = default(string), string secretVersion = default(string), ManagedServiceIdentity identityType = default(ManagedServiceIdentity), string details = default(string), ConfigReferenceSource? source = default(ConfigReferenceSource?), string activeVersion = default(string))
+            : base(id, name, kind, type)
         {
             Reference = reference;
             Status = status;
@@ -49,7 +53,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
             IdentityType = identityType;
             Details = details;
             Source = source;
-            Location = location;
+            ActiveVersion = activeVersion;
             CustomInit();
         }
 
@@ -60,56 +64,54 @@ namespace Microsoft.Azure.Management.WebSites.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "reference")]
+        [JsonProperty(PropertyName = "properties.reference")]
         public string Reference { get; set; }
 
         /// <summary>
         /// Gets or sets possible values include: 'Initialized', 'Resolved',
         /// 'InvalidSyntax', 'MSINotEnabled', 'VaultNotFound',
         /// 'SecretNotFound', 'SecretVersionNotFound',
-        /// 'AccessToKeyVaultDenied', 'OtherReasons'
+        /// 'AccessToKeyVaultDenied', 'OtherReasons', 'FetchTimedOut',
+        /// 'UnauthorizedClient'
         /// </summary>
-        [JsonProperty(PropertyName = "status")]
+        [JsonProperty(PropertyName = "properties.status")]
         public ResolveStatus? Status { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "vaultName")]
+        [JsonProperty(PropertyName = "properties.vaultName")]
         public string VaultName { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "secretName")]
+        [JsonProperty(PropertyName = "properties.secretName")]
         public string SecretName { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "secretVersion")]
+        [JsonProperty(PropertyName = "properties.secretVersion")]
         public string SecretVersion { get; set; }
 
         /// <summary>
-        /// Gets or sets possible values include: 'SystemAssigned',
-        /// 'UserAssigned', 'SystemAssigned, UserAssigned', 'None'
         /// </summary>
-        [JsonProperty(PropertyName = "identityType")]
-        public ManagedServiceIdentityType? IdentityType { get; set; }
+        [JsonProperty(PropertyName = "properties.identityType")]
+        public ManagedServiceIdentity IdentityType { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "details")]
+        [JsonProperty(PropertyName = "properties.details")]
         public string Details { get; set; }
 
         /// <summary>
         /// Gets or sets possible values include: 'KeyVault'
         /// </summary>
-        [JsonProperty(PropertyName = "source")]
+        [JsonProperty(PropertyName = "properties.source")]
         public ConfigReferenceSource? Source { get; set; }
 
         /// <summary>
-        /// Gets or sets possible values include: 'ApplicationSetting'
         /// </summary>
-        [JsonProperty(PropertyName = "location")]
-        public ConfigReferenceLocation? Location { get; set; }
+        [JsonProperty(PropertyName = "properties.activeVersion")]
+        public string ActiveVersion { get; set; }
 
     }
 }

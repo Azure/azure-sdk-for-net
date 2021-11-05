@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Asn != null)
+            if (Optional.IsDefined(Asn))
             {
                 writer.WritePropertyName("asn");
                 writer.WriteNumberValue(Asn.Value);
             }
-            if (BgpPeeringAddress != null)
+            if (Optional.IsDefined(BgpPeeringAddress))
             {
                 writer.WritePropertyName("bgpPeeringAddress");
                 writer.WriteStringValue(BgpPeeringAddress);
@@ -30,14 +30,15 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static VpnLinkBgpSettings DeserializeVpnLinkBgpSettings(JsonElement element)
         {
-            long? asn = default;
-            string bgpPeeringAddress = default;
+            Optional<long> asn = default;
+            Optional<string> bgpPeeringAddress = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("asn"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     asn = property.Value.GetInt64();
@@ -45,15 +46,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("bgpPeeringAddress"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     bgpPeeringAddress = property.Value.GetString();
                     continue;
                 }
             }
-            return new VpnLinkBgpSettings(asn, bgpPeeringAddress);
+            return new VpnLinkBgpSettings(Optional.ToNullable(asn), bgpPeeringAddress.Value);
         }
     }
 }

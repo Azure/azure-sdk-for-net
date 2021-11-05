@@ -12,11 +12,12 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Execute pipeline activity. </summary>
-    public partial class ExecutePipelineActivity : Activity
+    public partial class ExecutePipelineActivity : ControlActivity
     {
         /// <summary> Initializes a new instance of ExecutePipelineActivity. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="pipeline"> Pipeline reference. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="pipeline"/> is null. </exception>
         public ExecutePipelineActivity(string name, PipelineReference pipeline) : base(name)
         {
             if (name == null)
@@ -39,7 +40,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="description"> Activity description. </param>
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="pipeline"> Pipeline reference. </param>
         /// <param name="parameters"> Pipeline parameters. </param>
         /// <param name="waitOnCompletion"> Defines whether activity execution will wait for the dependent pipeline execution to finish. Default is false. </param>

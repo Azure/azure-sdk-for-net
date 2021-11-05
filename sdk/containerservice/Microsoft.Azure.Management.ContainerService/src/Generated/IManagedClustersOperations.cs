@@ -24,12 +24,33 @@ namespace Microsoft.Azure.Management.ContainerService
     public partial interface IManagedClustersOperations
     {
         /// <summary>
+        /// Gets supported OS options in the specified subscription.
+        /// </summary>
+        /// <param name='location'>
+        /// The name of a supported Azure region.
+        /// </param>
+        /// <param name='resourceType'>
+        /// The resource type for which the OS options needs to be returned
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<OSOptionProfile>> GetOSOptionsWithHttpMessagesAsync(string location, string resourceType = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Gets a list of managed clusters in the specified subscription.
         /// </summary>
-        /// <remarks>
-        /// Gets a list of managed clusters in the specified subscription. The
-        /// operation returns properties of each managed cluster.
-        /// </remarks>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -50,10 +71,6 @@ namespace Microsoft.Azure.Management.ContainerService
         /// Lists managed clusters in the specified subscription and resource
         /// group.
         /// </summary>
-        /// <remarks>
-        /// Lists managed clusters in the specified subscription and resource
-        /// group. The operation returns properties of each managed cluster.
-        /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
@@ -74,12 +91,8 @@ namespace Microsoft.Azure.Management.ContainerService
         /// </exception>
         Task<AzureOperationResponse<IPage<ManagedCluster>>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets upgrade profile for a managed cluster.
+        /// Gets the upgrade profile of a managed cluster.
         /// </summary>
-        /// <remarks>
-        /// Gets the details of the upgrade profile for a managed cluster with
-        /// a specified resource group and name.
-        /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
@@ -106,8 +119,11 @@ namespace Microsoft.Azure.Management.ContainerService
         /// Gets an access profile of a managed cluster.
         /// </summary>
         /// <remarks>
-        /// Gets the accessProfile for the specified role name of the managed
-        /// cluster with a specified resource group and name.
+        /// **WARNING**: This API will be deprecated. Instead use
+        /// [ListClusterUserCredentials](https://docs.microsoft.com/rest/api/aks/managedclusters/listclusterusercredentials)
+        /// or
+        /// [ListClusterAdminCredentials](https://docs.microsoft.com/rest/api/aks/managedclusters/listclusteradmincredentials)
+        /// .
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -124,28 +140,28 @@ namespace Microsoft.Azure.Management.ContainerService
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// <exception cref="SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
+        [System.Obsolete("This operation is deprecated. Please do not use it any longer.")]
         Task<AzureOperationResponse<ManagedClusterAccessProfile>> GetAccessProfileWithHttpMessagesAsync(string resourceGroupName, string resourceName, string roleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets cluster admin credential of a managed cluster.
+        /// Lists the admin credentials of a managed cluster.
         /// </summary>
-        /// <remarks>
-        /// Gets cluster admin credential of the managed cluster with a
-        /// specified resource group and name.
-        /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='resourceName'>
         /// The name of the managed cluster resource.
+        /// </param>
+        /// <param name='serverFqdn'>
+        /// server fqdn type for credentials to be returned
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -162,19 +178,18 @@ namespace Microsoft.Azure.Management.ContainerService
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<CredentialResults>> ListClusterAdminCredentialsWithHttpMessagesAsync(string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<CredentialResults>> ListClusterAdminCredentialsWithHttpMessagesAsync(string resourceGroupName, string resourceName, string serverFqdn = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets cluster user credential of a managed cluster.
+        /// Lists the user credentials of a managed cluster.
         /// </summary>
-        /// <remarks>
-        /// Gets cluster user credential of the managed cluster with a
-        /// specified resource group and name.
-        /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='resourceName'>
         /// The name of the managed cluster resource.
+        /// </param>
+        /// <param name='serverFqdn'>
+        /// server fqdn type for credentials to be returned
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -191,19 +206,18 @@ namespace Microsoft.Azure.Management.ContainerService
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<CredentialResults>> ListClusterUserCredentialsWithHttpMessagesAsync(string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<CredentialResults>> ListClusterUserCredentialsWithHttpMessagesAsync(string resourceGroupName, string resourceName, string serverFqdn = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets cluster monitoring user credential of a managed cluster.
+        /// Lists the cluster monitoring user credentials of a managed cluster.
         /// </summary>
-        /// <remarks>
-        /// Gets cluster monitoring user credential of the managed cluster with
-        /// a specified resource group and name.
-        /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='resourceName'>
         /// The name of the managed cluster resource.
+        /// </param>
+        /// <param name='serverFqdn'>
+        /// server fqdn type for credentials to be returned
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -220,14 +234,10 @@ namespace Microsoft.Azure.Management.ContainerService
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<CredentialResults>> ListClusterMonitoringUserCredentialsWithHttpMessagesAsync(string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<CredentialResults>> ListClusterMonitoringUserCredentialsWithHttpMessagesAsync(string resourceGroupName, string resourceName, string serverFqdn = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets a managed cluster.
         /// </summary>
-        /// <remarks>
-        /// Gets the details of the managed cluster with a specified resource
-        /// group and name.
-        /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
@@ -253,10 +263,6 @@ namespace Microsoft.Azure.Management.ContainerService
         /// <summary>
         /// Creates or updates a managed cluster.
         /// </summary>
-        /// <remarks>
-        /// Creates or updates a managed cluster with the specified
-        /// configuration for agents and Kubernetes version.
-        /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
@@ -264,8 +270,7 @@ namespace Microsoft.Azure.Management.ContainerService
         /// The name of the managed cluster resource.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create or Update a Managed Cluster
-        /// operation.
+        /// The managed cluster to create or update.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -286,9 +291,6 @@ namespace Microsoft.Azure.Management.ContainerService
         /// <summary>
         /// Updates tags on a managed cluster.
         /// </summary>
-        /// <remarks>
-        /// Updates a managed cluster with the specified tags.
-        /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
@@ -317,10 +319,6 @@ namespace Microsoft.Azure.Management.ContainerService
         /// <summary>
         /// Deletes a managed cluster.
         /// </summary>
-        /// <remarks>
-        /// Deletes the managed cluster with a specified resource group and
-        /// name.
-        /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
@@ -341,10 +339,11 @@ namespace Microsoft.Azure.Management.ContainerService
         /// </exception>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Reset Service Principal Profile of a managed cluster.
+        /// Reset the Service Principal Profile of a managed cluster.
         /// </summary>
         /// <remarks>
-        /// Update the service principal Profile for a managed cluster.
+        /// This action cannot be performed on a cluster that is not using a
+        /// service principal
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -353,8 +352,7 @@ namespace Microsoft.Azure.Management.ContainerService
         /// The name of the managed cluster resource.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Reset Service Principal Profile
-        /// operation for a Managed Cluster.
+        /// The service principal profile to set on the managed cluster.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -370,11 +368,8 @@ namespace Microsoft.Azure.Management.ContainerService
         /// </exception>
         Task<AzureOperationResponse> ResetServicePrincipalProfileWithHttpMessagesAsync(string resourceGroupName, string resourceName, ManagedClusterServicePrincipalProfile parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Reset AAD Profile of a managed cluster.
+        /// Reset the AAD Profile of a managed cluster.
         /// </summary>
-        /// <remarks>
-        /// Update the AAD Profile for a managed cluster.
-        /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
@@ -382,8 +377,7 @@ namespace Microsoft.Azure.Management.ContainerService
         /// The name of the managed cluster resource.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Reset AAD Profile operation for a
-        /// Managed Cluster.
+        /// The AAD profile to set on the Managed Cluster
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -399,10 +393,12 @@ namespace Microsoft.Azure.Management.ContainerService
         /// </exception>
         Task<AzureOperationResponse> ResetAADProfileWithHttpMessagesAsync(string resourceGroupName, string resourceName, ManagedClusterAADProfile parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Rotate certificates of a managed cluster.
+        /// Rotates the certificates of a managed cluster.
         /// </summary>
         /// <remarks>
-        /// Rotate certificates of a managed cluster.
+        /// See [Certificate
+        /// rotation](https://docs.microsoft.com/azure/aks/certificate-rotation)
+        /// for more details about rotating managed cluster certificates.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -424,11 +420,16 @@ namespace Microsoft.Azure.Management.ContainerService
         /// </exception>
         Task<AzureOperationResponse> RotateClusterCertificatesWithHttpMessagesAsync(string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates or updates a managed cluster.
+        /// Stops a Managed Cluster
         /// </summary>
         /// <remarks>
-        /// Creates or updates a managed cluster with the specified
-        /// configuration for agents and Kubernetes version.
+        /// This can only be performed on Azure Virtual Machine Scale set
+        /// backed clusters. Stopping a cluster stops the control plane and
+        /// agent nodes entirely, while maintaining all object and cluster
+        /// state. A cluster does not accrue charges while it is stopped. See
+        /// [stopping a
+        /// cluster](https://docs.microsoft.com/azure/aks/start-stop-cluster)
+        /// for more details about stopping a cluster.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -436,9 +437,150 @@ namespace Microsoft.Azure.Management.ContainerService
         /// <param name='resourceName'>
         /// The name of the managed cluster resource.
         /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> StopWithHttpMessagesAsync(string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Starts a previously stopped Managed Cluster
+        /// </summary>
+        /// <remarks>
+        /// See [starting a
+        /// cluster](https://docs.microsoft.com/azure/aks/start-stop-cluster)
+        /// for more details about starting a cluster.
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='resourceName'>
+        /// The name of the managed cluster resource.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> StartWithHttpMessagesAsync(string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Submits a command to run against the Managed Cluster.
+        /// </summary>
+        /// <remarks>
+        /// AKS will create a pod to run the command. This is primarily useful
+        /// for private clusters. For more information see [AKS Run
+        /// Command](https://docs.microsoft.com/azure/aks/private-clusters#aks-run-command-preview).
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='resourceName'>
+        /// The name of the managed cluster resource.
+        /// </param>
+        /// <param name='requestPayload'>
+        /// The run command request
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<RunCommandResult>> RunCommandWithHttpMessagesAsync(string resourceGroupName, string resourceName, RunCommandRequest requestPayload, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets the results of a command which has been run on the Managed
+        /// Cluster.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='resourceName'>
+        /// The name of the managed cluster resource.
+        /// </param>
+        /// <param name='commandId'>
+        /// Id of the command.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<RunCommandResult>> GetCommandResultWithHttpMessagesAsync(string resourceGroupName, string resourceName, string commandId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets a list of egress endpoints (network endpoints of all outbound
+        /// dependencies) in the specified managed cluster.
+        /// </summary>
+        /// <remarks>
+        /// Gets a list of egress endpoints (network endpoints of all outbound
+        /// dependencies) in the specified managed cluster. The operation
+        /// returns properties of each egress endpoint.
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='resourceName'>
+        /// The name of the managed cluster resource.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<OutboundEnvironmentEndpoint>>> ListOutboundNetworkDependenciesEndpointsWithHttpMessagesAsync(string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Creates or updates a managed cluster.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='resourceName'>
+        /// The name of the managed cluster resource.
+        /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create or Update a Managed Cluster
-        /// operation.
+        /// The managed cluster to create or update.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -459,9 +601,6 @@ namespace Microsoft.Azure.Management.ContainerService
         /// <summary>
         /// Updates tags on a managed cluster.
         /// </summary>
-        /// <remarks>
-        /// Updates a managed cluster with the specified tags.
-        /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
@@ -490,10 +629,6 @@ namespace Microsoft.Azure.Management.ContainerService
         /// <summary>
         /// Deletes a managed cluster.
         /// </summary>
-        /// <remarks>
-        /// Deletes the managed cluster with a specified resource group and
-        /// name.
-        /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
@@ -514,10 +649,11 @@ namespace Microsoft.Azure.Management.ContainerService
         /// </exception>
         Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Reset Service Principal Profile of a managed cluster.
+        /// Reset the Service Principal Profile of a managed cluster.
         /// </summary>
         /// <remarks>
-        /// Update the service principal Profile for a managed cluster.
+        /// This action cannot be performed on a cluster that is not using a
+        /// service principal
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -526,8 +662,7 @@ namespace Microsoft.Azure.Management.ContainerService
         /// The name of the managed cluster resource.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Reset Service Principal Profile
-        /// operation for a Managed Cluster.
+        /// The service principal profile to set on the managed cluster.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -543,11 +678,8 @@ namespace Microsoft.Azure.Management.ContainerService
         /// </exception>
         Task<AzureOperationResponse> BeginResetServicePrincipalProfileWithHttpMessagesAsync(string resourceGroupName, string resourceName, ManagedClusterServicePrincipalProfile parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Reset AAD Profile of a managed cluster.
+        /// Reset the AAD Profile of a managed cluster.
         /// </summary>
-        /// <remarks>
-        /// Update the AAD Profile for a managed cluster.
-        /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
@@ -555,8 +687,7 @@ namespace Microsoft.Azure.Management.ContainerService
         /// The name of the managed cluster resource.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Reset AAD Profile operation for a
-        /// Managed Cluster.
+        /// The AAD profile to set on the Managed Cluster
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -572,10 +703,12 @@ namespace Microsoft.Azure.Management.ContainerService
         /// </exception>
         Task<AzureOperationResponse> BeginResetAADProfileWithHttpMessagesAsync(string resourceGroupName, string resourceName, ManagedClusterAADProfile parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Rotate certificates of a managed cluster.
+        /// Rotates the certificates of a managed cluster.
         /// </summary>
         /// <remarks>
-        /// Rotate certificates of a managed cluster.
+        /// See [Certificate
+        /// rotation](https://docs.microsoft.com/azure/aks/certificate-rotation)
+        /// for more details about rotating managed cluster certificates.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -597,12 +730,99 @@ namespace Microsoft.Azure.Management.ContainerService
         /// </exception>
         Task<AzureOperationResponse> BeginRotateClusterCertificatesWithHttpMessagesAsync(string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets a list of managed clusters in the specified subscription.
+        /// Stops a Managed Cluster
         /// </summary>
         /// <remarks>
-        /// Gets a list of managed clusters in the specified subscription. The
-        /// operation returns properties of each managed cluster.
+        /// This can only be performed on Azure Virtual Machine Scale set
+        /// backed clusters. Stopping a cluster stops the control plane and
+        /// agent nodes entirely, while maintaining all object and cluster
+        /// state. A cluster does not accrue charges while it is stopped. See
+        /// [stopping a
+        /// cluster](https://docs.microsoft.com/azure/aks/start-stop-cluster)
+        /// for more details about stopping a cluster.
         /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='resourceName'>
+        /// The name of the managed cluster resource.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> BeginStopWithHttpMessagesAsync(string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Starts a previously stopped Managed Cluster
+        /// </summary>
+        /// <remarks>
+        /// See [starting a
+        /// cluster](https://docs.microsoft.com/azure/aks/start-stop-cluster)
+        /// for more details about starting a cluster.
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='resourceName'>
+        /// The name of the managed cluster resource.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> BeginStartWithHttpMessagesAsync(string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Submits a command to run against the Managed Cluster.
+        /// </summary>
+        /// <remarks>
+        /// AKS will create a pod to run the command. This is primarily useful
+        /// for private clusters. For more information see [AKS Run
+        /// Command](https://docs.microsoft.com/azure/aks/private-clusters#aks-run-command-preview).
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='resourceName'>
+        /// The name of the managed cluster resource.
+        /// </param>
+        /// <param name='requestPayload'>
+        /// The run command request
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<RunCommandResult>> BeginRunCommandWithHttpMessagesAsync(string resourceGroupName, string resourceName, RunCommandRequest requestPayload, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets a list of managed clusters in the specified subscription.
+        /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
         /// </param>
@@ -626,10 +846,6 @@ namespace Microsoft.Azure.Management.ContainerService
         /// Lists managed clusters in the specified subscription and resource
         /// group.
         /// </summary>
-        /// <remarks>
-        /// Lists managed clusters in the specified subscription and resource
-        /// group. The operation returns properties of each managed cluster.
-        /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
         /// </param>
@@ -649,5 +865,33 @@ namespace Microsoft.Azure.Management.ContainerService
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<IPage<ManagedCluster>>> ListByResourceGroupNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets a list of egress endpoints (network endpoints of all outbound
+        /// dependencies) in the specified managed cluster.
+        /// </summary>
+        /// <remarks>
+        /// Gets a list of egress endpoints (network endpoints of all outbound
+        /// dependencies) in the specified managed cluster. The operation
+        /// returns properties of each egress endpoint.
+        /// </remarks>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<OutboundEnvironmentEndpoint>>> ListOutboundNetworkDependenciesEndpointsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

@@ -1,22 +1,22 @@
 {
   "Entries": [
     {
-      "RequestUri": "/%2Fsubscriptions%2F7e5c35c3-c2d0-43c7-ab12-2528b6b8dada%2FresourceGroups%2FNetSdkTests%2Fproviders%2FMicrosoft.Storage%2FstorageAccounts%2Fnetsdkstorage/providers/Microsoft.Security/advancedThreatProtectionSettings/current?api-version=2019-01-01",
-      "EncodedRequestUri": "LyUyRnN1YnNjcmlwdGlvbnMlMkY3ZTVjMzVjMy1jMmQwLTQzYzctYWIxMi0yNTI4YjZiOGRhZGElMkZyZXNvdXJjZUdyb3VwcyUyRk5ldFNka1Rlc3RzJTJGcHJvdmlkZXJzJTJGTWljcm9zb2Z0LlN0b3JhZ2UlMkZzdG9yYWdlQWNjb3VudHMlMkZuZXRzZGtzdG9yYWdlL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VjdXJpdHkvYWR2YW5jZWRUaHJlYXRQcm90ZWN0aW9uU2V0dGluZ3MvY3VycmVudD9hcGktdmVyc2lvbj0yMDE5LTAxLTAx",
+      "RequestUri": "//subscriptions/7e5c35c3-c2d0-43c7-ab12-2528b6b8dada/resourceGroups/NetSdkTests/providers/Microsoft.Storage/storageAccounts/netsdkstorage/providers/Microsoft.Security/advancedThreatProtectionSettings/current?api-version=2019-01-01",
+      "EncodedRequestUri": "Ly9zdWJzY3JpcHRpb25zLzdlNWMzNWMzLWMyZDAtNDNjNy1hYjEyLTI1MjhiNmI4ZGFkYS9yZXNvdXJjZUdyb3Vwcy9OZXRTZGtUZXN0cy9wcm92aWRlcnMvTWljcm9zb2Z0LlN0b3JhZ2Uvc3RvcmFnZUFjY291bnRzL25ldHNka3N0b3JhZ2UvcHJvdmlkZXJzL01pY3Jvc29mdC5TZWN1cml0eS9hZHZhbmNlZFRocmVhdFByb3RlY3Rpb25TZXR0aW5ncy9jdXJyZW50P2FwaS12ZXJzaW9uPTIwMTktMDEtMDE=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"isEnabled\": true\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "1193ca19-38bd-4371-9cbf-56674b67411e"
+          "1f791bcd-877c-4c06-8d6d-bca5254d0f7a"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.6.29321.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Security.SecurityCenterClient/1.1.1.0"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Security.SecurityCenterClient/2.1.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -29,9 +29,6 @@
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Wed, 12 Feb 2020 06:48:44 GMT"
-        ],
         "Pragma": [
           "no-cache"
         ],
@@ -42,19 +39,22 @@
           "4999"
         ],
         "x-ms-request-id": [
-          "fb9249b1-0953-4dfe-9f7b-8d984be2d41e"
+          "e5956e96-d736-486b-857e-26b7336fc0be"
         ],
         "x-ms-correlation-request-id": [
-          "fb9249b1-0953-4dfe-9f7b-8d984be2d41e"
+          "e5956e96-d736-486b-857e-26b7336fc0be"
         ],
         "x-ms-routing-request-id": [
-          "UKSOUTH2:20200212T064844Z:fb9249b1-0953-4dfe-9f7b-8d984be2d41e"
+          "UKSOUTH:20201104T182206Z:e5956e96-d736-486b-857e-26b7336fc0be"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": [
           "nosniff"
+        ],
+        "Date": [
+          "Wed, 04 Nov 2020 18:22:06 GMT"
         ],
         "Content-Length": [
           "325"

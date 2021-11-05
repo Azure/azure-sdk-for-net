@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -15,6 +16,8 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <summary> Initializes a new instance of NetworkRuleSet. </summary>
         public NetworkRuleSet()
         {
+            VirtualNetworkRules = new ChangeTrackingList<NWRuleSetVirtualNetworkRules>();
+            IpRules = new ChangeTrackingList<NWRuleSetIpRules>();
         }
 
         /// <summary> Initializes a new instance of NetworkRuleSet. </summary>
@@ -34,8 +37,8 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <summary> Default Action for Network Rule Set. </summary>
         public DefaultAction? DefaultAction { get; set; }
         /// <summary> List VirtualNetwork Rules. </summary>
-        public IList<NWRuleSetVirtualNetworkRules> VirtualNetworkRules { get; set; }
+        public IList<NWRuleSetVirtualNetworkRules> VirtualNetworkRules { get; }
         /// <summary> List of IpRules. </summary>
-        public IList<NWRuleSetIpRules> IpRules { get; set; }
+        public IList<NWRuleSetIpRules> IpRules { get; }
     }
 }

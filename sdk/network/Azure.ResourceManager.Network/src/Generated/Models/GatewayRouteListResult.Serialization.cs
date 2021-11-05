@@ -15,32 +15,26 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static GatewayRouteListResult DeserializeGatewayRouteListResult(JsonElement element)
         {
-            IReadOnlyList<GatewayRoute> value = default;
+            Optional<IReadOnlyList<GatewayRoute>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<GatewayRoute> array = new List<GatewayRoute>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(GatewayRoute.DeserializeGatewayRoute(item));
-                        }
+                        array.Add(GatewayRoute.DeserializeGatewayRoute(item));
                     }
                     value = array;
                     continue;
                 }
             }
-            return new GatewayRouteListResult(value);
+            return new GatewayRouteListResult(Optional.ToList(value));
         }
     }
 }

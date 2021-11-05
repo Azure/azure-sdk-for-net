@@ -20,15 +20,15 @@ namespace Azure.Storage.Blobs.Test
         {
             TestHelper.AssertExpectedException(
                 () => BlobQuickQueryStream.ValidateReadParameters(buffer: null, offset: 0, count: 0),
-                new ArgumentException($"Parameter cannot be null.{Environment.NewLine}Parameter name: buffer"));
+                new ArgumentException($"Parameter cannot be null.", "buffer"));
 
             TestHelper.AssertExpectedException(
                 () => BlobQuickQueryStream.ValidateReadParameters(buffer: new byte[10], offset: -1, count: 0),
-                new ArgumentException($"Parameter cannot be negative.{Environment.NewLine}Parameter name: offset"));
+                new ArgumentException($"Parameter cannot be negative.", "offset"));
 
             TestHelper.AssertExpectedException(
                 () => BlobQuickQueryStream.ValidateReadParameters(buffer: new byte[10], offset: 0, count: -1),
-                new ArgumentException($"Parameter cannot be negative.{Environment.NewLine}Parameter name: count"));
+                new ArgumentException($"Parameter cannot be negative.", "count"));
 
             TestHelper.AssertExpectedException(
                 () => BlobQuickQueryStream.ValidateReadParameters(buffer: new byte[5], offset: 6, count: 6),

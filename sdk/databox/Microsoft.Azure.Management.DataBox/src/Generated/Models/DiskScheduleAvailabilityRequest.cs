@@ -32,14 +32,16 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// Initializes a new instance of the DiskScheduleAvailabilityRequest
         /// class.
         /// </summary>
-        /// <param name="storageLocation">Location for data transfer.
-        /// For locations check:
+        /// <param name="storageLocation">Location for data transfer. For
+        /// locations check:
         /// https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01</param>
         /// <param name="expectedDataSizeInTerabytes">The expected size of the
         /// data, which needs to be transferred in this job, in
         /// terabytes.</param>
-        public DiskScheduleAvailabilityRequest(string storageLocation, int expectedDataSizeInTerabytes)
-            : base(storageLocation)
+        /// <param name="country">Country in which storage location should be
+        /// supported.</param>
+        public DiskScheduleAvailabilityRequest(string storageLocation, int expectedDataSizeInTerabytes, string country = default(string))
+            : base(storageLocation, country)
         {
             ExpectedDataSizeInTerabytes = expectedDataSizeInTerabytes;
             CustomInit();

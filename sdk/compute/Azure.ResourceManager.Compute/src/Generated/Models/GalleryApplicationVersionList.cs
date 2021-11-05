@@ -8,35 +8,37 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The List Gallery Application version operation response. </summary>
-    public partial class GalleryApplicationVersionList
+    internal partial class GalleryApplicationVersionList
     {
         /// <summary> Initializes a new instance of GalleryApplicationVersionList. </summary>
         /// <param name="value"> A list of gallery Application Versions. </param>
-        internal GalleryApplicationVersionList(IEnumerable<GalleryApplicationVersion> value)
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal GalleryApplicationVersionList(IEnumerable<GalleryApplicationVersionData> value)
         {
             if (value == null)
             {
                 throw new ArgumentNullException(nameof(value));
             }
 
-            Value = value.ToArray();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of GalleryApplicationVersionList. </summary>
         /// <param name="value"> A list of gallery Application Versions. </param>
         /// <param name="nextLink"> The uri to fetch the next page of gallery Application Versions. Call ListNext() with this to fetch the next page of gallery Application Versions. </param>
-        internal GalleryApplicationVersionList(IReadOnlyList<GalleryApplicationVersion> value, string nextLink)
+        internal GalleryApplicationVersionList(IReadOnlyList<GalleryApplicationVersionData> value, string nextLink)
         {
-            Value = value ?? new List<GalleryApplicationVersion>();
+            Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> A list of gallery Application Versions. </summary>
-        public IReadOnlyList<GalleryApplicationVersion> Value { get; }
+        public IReadOnlyList<GalleryApplicationVersionData> Value { get; }
         /// <summary> The uri to fetch the next page of gallery Application Versions. Call ListNext() with this to fetch the next page of gallery Application Versions. </summary>
         public string NextLink { get; }
     }

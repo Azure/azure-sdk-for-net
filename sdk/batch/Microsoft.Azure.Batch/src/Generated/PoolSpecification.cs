@@ -33,7 +33,6 @@ namespace Microsoft.Azure.Batch
             public readonly PropertyAccessor<CloudServiceConfiguration> CloudServiceConfigurationProperty;
             public readonly PropertyAccessor<string> DisplayNameProperty;
             public readonly PropertyAccessor<bool?> InterComputeNodeCommunicationEnabledProperty;
-            public readonly PropertyAccessor<int?> MaxTasksPerComputeNodeProperty;
             public readonly PropertyAccessor<IList<MetadataItem>> MetadataProperty;
             public readonly PropertyAccessor<IList<MountConfiguration>> MountConfigurationProperty;
             public readonly PropertyAccessor<NetworkConfiguration> NetworkConfigurationProperty;
@@ -42,6 +41,7 @@ namespace Microsoft.Azure.Batch
             public readonly PropertyAccessor<int?> TargetDedicatedComputeNodesProperty;
             public readonly PropertyAccessor<int?> TargetLowPriorityComputeNodesProperty;
             public readonly PropertyAccessor<TaskSchedulingPolicy> TaskSchedulingPolicyProperty;
+            public readonly PropertyAccessor<int?> TaskSlotsPerNodeProperty;
             public readonly PropertyAccessor<IList<UserAccount>> UserAccountsProperty;
             public readonly PropertyAccessor<VirtualMachineConfiguration> VirtualMachineConfigurationProperty;
             public readonly PropertyAccessor<string> VirtualMachineSizeProperty;
@@ -57,7 +57,6 @@ namespace Microsoft.Azure.Batch
                 this.CloudServiceConfigurationProperty = this.CreatePropertyAccessor<CloudServiceConfiguration>(nameof(CloudServiceConfiguration), BindingAccess.Read | BindingAccess.Write);
                 this.DisplayNameProperty = this.CreatePropertyAccessor<string>(nameof(DisplayName), BindingAccess.Read | BindingAccess.Write);
                 this.InterComputeNodeCommunicationEnabledProperty = this.CreatePropertyAccessor<bool?>(nameof(InterComputeNodeCommunicationEnabled), BindingAccess.Read | BindingAccess.Write);
-                this.MaxTasksPerComputeNodeProperty = this.CreatePropertyAccessor<int?>(nameof(MaxTasksPerComputeNode), BindingAccess.Read | BindingAccess.Write);
                 this.MetadataProperty = this.CreatePropertyAccessor<IList<MetadataItem>>(nameof(Metadata), BindingAccess.Read | BindingAccess.Write);
                 this.MountConfigurationProperty = this.CreatePropertyAccessor<IList<MountConfiguration>>(nameof(MountConfiguration), BindingAccess.Read | BindingAccess.Write);
                 this.NetworkConfigurationProperty = this.CreatePropertyAccessor<NetworkConfiguration>(nameof(NetworkConfiguration), BindingAccess.Read | BindingAccess.Write);
@@ -66,6 +65,7 @@ namespace Microsoft.Azure.Batch
                 this.TargetDedicatedComputeNodesProperty = this.CreatePropertyAccessor<int?>(nameof(TargetDedicatedComputeNodes), BindingAccess.Read | BindingAccess.Write);
                 this.TargetLowPriorityComputeNodesProperty = this.CreatePropertyAccessor<int?>(nameof(TargetLowPriorityComputeNodes), BindingAccess.Read | BindingAccess.Write);
                 this.TaskSchedulingPolicyProperty = this.CreatePropertyAccessor<TaskSchedulingPolicy>(nameof(TaskSchedulingPolicy), BindingAccess.Read | BindingAccess.Write);
+                this.TaskSlotsPerNodeProperty = this.CreatePropertyAccessor<int?>(nameof(TaskSlotsPerNode), BindingAccess.Read | BindingAccess.Write);
                 this.UserAccountsProperty = this.CreatePropertyAccessor<IList<UserAccount>>(nameof(UserAccounts), BindingAccess.Read | BindingAccess.Write);
                 this.VirtualMachineConfigurationProperty = this.CreatePropertyAccessor<VirtualMachineConfiguration>(nameof(VirtualMachineConfiguration), BindingAccess.Read | BindingAccess.Write);
                 this.VirtualMachineSizeProperty = this.CreatePropertyAccessor<string>(nameof(VirtualMachineSize), BindingAccess.Read | BindingAccess.Write);
@@ -109,10 +109,6 @@ namespace Microsoft.Azure.Batch
                     protocolObject.EnableInterNodeCommunication,
                     nameof(InterComputeNodeCommunicationEnabled),
                     BindingAccess.Read);
-                this.MaxTasksPerComputeNodeProperty = this.CreatePropertyAccessor(
-                    protocolObject.MaxTasksPerNode,
-                    nameof(MaxTasksPerComputeNode),
-                    BindingAccess.Read | BindingAccess.Write);
                 this.MetadataProperty = this.CreatePropertyAccessor(
                     MetadataItem.ConvertFromProtocolCollection(protocolObject.Metadata),
                     nameof(Metadata),
@@ -144,6 +140,10 @@ namespace Microsoft.Azure.Batch
                 this.TaskSchedulingPolicyProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.TaskSchedulingPolicy, o => new TaskSchedulingPolicy(o)),
                     nameof(TaskSchedulingPolicy),
+                    BindingAccess.Read | BindingAccess.Write);
+                this.TaskSlotsPerNodeProperty = this.CreatePropertyAccessor(
+                    protocolObject.TaskSlotsPerNode,
+                    nameof(TaskSlotsPerNode),
                     BindingAccess.Read | BindingAccess.Write);
                 this.UserAccountsProperty = this.CreatePropertyAccessor(
                     UserAccount.ConvertFromProtocolCollection(protocolObject.UserAccounts),
@@ -297,19 +297,6 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets or sets the maximum number of tasks that can run concurrently on a single compute node in the pool.
-        /// </summary>
-        /// <remarks>
-        /// The default value is 1. The maximum value is the smaller of 4 times the number of cores of the <see cref="VirtualMachineSize"/> 
-        /// of the pool or 256.
-        /// </remarks>
-        public int? MaxTasksPerComputeNode
-        {
-            get { return this.propertyContainer.MaxTasksPerComputeNodeProperty.Value; }
-            set { this.propertyContainer.MaxTasksPerComputeNodeProperty.Value = value; }
-        }
-
-        /// <summary>
         /// Gets or sets a list of name-value pairs associated with the pool as metadata.
         /// </summary>
         public IList<MetadataItem> Metadata
@@ -406,6 +393,20 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
+        /// Gets or sets the number of task slots that can be used to run concurrent tasks on a single compute node in the 
+        /// pool.
+        /// </summary>
+        /// <remarks>
+        /// The default value is 1. The maximum value is the smaller of 4 times the number of cores of the <see cref="VirtualMachineSize"/> 
+        /// of the pool or 256.
+        /// </remarks>
+        public int? TaskSlotsPerNode
+        {
+            get { return this.propertyContainer.TaskSlotsPerNodeProperty.Value; }
+            set { this.propertyContainer.TaskSlotsPerNodeProperty.Value = value; }
+        }
+
+        /// <summary>
         /// Gets or sets the list of user accounts to be created on each node in the pool.
         /// </summary>
         public IList<UserAccount> UserAccounts
@@ -477,7 +478,6 @@ namespace Microsoft.Azure.Batch
                 CloudServiceConfiguration = UtilitiesInternal.CreateObjectWithNullCheck(this.CloudServiceConfiguration, (o) => o.GetTransportObject()),
                 DisplayName = this.DisplayName,
                 EnableInterNodeCommunication = this.InterComputeNodeCommunicationEnabled,
-                MaxTasksPerNode = this.MaxTasksPerComputeNode,
                 Metadata = UtilitiesInternal.ConvertToProtocolCollection(this.Metadata),
                 MountConfiguration = UtilitiesInternal.ConvertToProtocolCollection(this.MountConfiguration),
                 NetworkConfiguration = UtilitiesInternal.CreateObjectWithNullCheck(this.NetworkConfiguration, (o) => o.GetTransportObject()),
@@ -486,6 +486,7 @@ namespace Microsoft.Azure.Batch
                 TargetDedicatedNodes = this.TargetDedicatedComputeNodes,
                 TargetLowPriorityNodes = this.TargetLowPriorityComputeNodes,
                 TaskSchedulingPolicy = UtilitiesInternal.CreateObjectWithNullCheck(this.TaskSchedulingPolicy, (o) => o.GetTransportObject()),
+                TaskSlotsPerNode = this.TaskSlotsPerNode,
                 UserAccounts = UtilitiesInternal.ConvertToProtocolCollection(this.UserAccounts),
                 VirtualMachineConfiguration = UtilitiesInternal.CreateObjectWithNullCheck(this.VirtualMachineConfiguration, (o) => o.GetTransportObject()),
                 VmSize = this.VirtualMachineSize,

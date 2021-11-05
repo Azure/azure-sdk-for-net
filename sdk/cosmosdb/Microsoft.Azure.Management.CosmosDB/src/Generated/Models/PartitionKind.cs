@@ -18,5 +18,6 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
     {
         public const string Hash = "Hash";
         public const string Range = "Range";
+        public const string MultiHash = "MultiHash";
     }
 }

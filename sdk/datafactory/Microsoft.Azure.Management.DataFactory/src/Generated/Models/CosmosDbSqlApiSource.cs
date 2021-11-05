@@ -41,21 +41,28 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="maxConcurrentConnections">The maximum concurrent
         /// connection count for the source data store. Type: integer (or
         /// Expression with resultType integer).</param>
+        /// <param name="disableMetricsCollection">If true, disable data store
+        /// metrics collection. Default is false. Type: boolean (or Expression
+        /// with resultType boolean).</param>
         /// <param name="query">SQL API query. Type: string (or Expression with
         /// resultType string).</param>
         /// <param name="pageSize">Page size of the result. Type: integer (or
         /// Expression with resultType integer).</param>
         /// <param name="preferredRegions">Preferred regions. Type: array of
         /// strings (or Expression with resultType array of strings).</param>
+        /// <param name="detectDatetime">Whether detect primitive values as
+        /// datetime values. Type: boolean (or Expression with resultType
+        /// boolean).</param>
         /// <param name="additionalColumns">Specifies the additional columns to
-        /// be added to source data. Type: array of objects (or Expression with
-        /// resultType array of objects).</param>
-        public CosmosDbSqlApiSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object query = default(object), object pageSize = default(object), object preferredRegions = default(object), IList<AdditionalColumns> additionalColumns = default(IList<AdditionalColumns>))
-            : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections)
+        /// be added to source data. Type: array of objects(AdditionalColumns)
+        /// (or Expression with resultType array of objects).</param>
+        public CosmosDbSqlApiSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object disableMetricsCollection = default(object), object query = default(object), object pageSize = default(object), object preferredRegions = default(object), object detectDatetime = default(object), object additionalColumns = default(object))
+            : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection)
         {
             Query = query;
             PageSize = pageSize;
             PreferredRegions = preferredRegions;
+            DetectDatetime = detectDatetime;
             AdditionalColumns = additionalColumns;
             CustomInit();
         }
@@ -87,12 +94,19 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public object PreferredRegions { get; set; }
 
         /// <summary>
+        /// Gets or sets whether detect primitive values as datetime values.
+        /// Type: boolean (or Expression with resultType boolean).
+        /// </summary>
+        [JsonProperty(PropertyName = "detectDatetime")]
+        public object DetectDatetime { get; set; }
+
+        /// <summary>
         /// Gets or sets specifies the additional columns to be added to source
-        /// data. Type: array of objects (or Expression with resultType array
-        /// of objects).
+        /// data. Type: array of objects(AdditionalColumns) (or Expression with
+        /// resultType array of objects).
         /// </summary>
         [JsonProperty(PropertyName = "additionalColumns")]
-        public IList<AdditionalColumns> AdditionalColumns { get; set; }
+        public object AdditionalColumns { get; set; }
 
     }
 }

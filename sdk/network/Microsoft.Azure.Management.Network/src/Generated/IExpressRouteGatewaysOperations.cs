@@ -94,6 +94,35 @@ namespace Microsoft.Azure.Management.Network
         /// </exception>
         Task<AzureOperationResponse<ExpressRouteGateway>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string expressRouteGatewayName, ExpressRouteGateway putExpressRouteGatewayParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Updates express route gateway tags.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name of the ExpressRouteGateway.
+        /// </param>
+        /// <param name='expressRouteGatewayName'>
+        /// The name of the gateway.
+        /// </param>
+        /// <param name='expressRouteGatewayParameters'>
+        /// Parameters supplied to update a virtual wan express route gateway
+        /// tags.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<ExpressRouteGateway>> UpdateTagsWithHttpMessagesAsync(string resourceGroupName, string expressRouteGatewayName, TagsObject expressRouteGatewayParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Fetches the details of a ExpressRoute gateway in a resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -171,6 +200,35 @@ namespace Microsoft.Azure.Management.Network
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<ExpressRouteGateway>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string expressRouteGatewayName, ExpressRouteGateway putExpressRouteGatewayParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Updates express route gateway tags.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name of the ExpressRouteGateway.
+        /// </param>
+        /// <param name='expressRouteGatewayName'>
+        /// The name of the gateway.
+        /// </param>
+        /// <param name='expressRouteGatewayParameters'>
+        /// Parameters supplied to update a virtual wan express route gateway
+        /// tags.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<ExpressRouteGateway>> BeginUpdateTagsWithHttpMessagesAsync(string resourceGroupName, string expressRouteGatewayName, TagsObject expressRouteGatewayParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes the specified ExpressRoute gateway in a resource group. An
         /// ExpressRoute gateway resource can only be deleted when there are no

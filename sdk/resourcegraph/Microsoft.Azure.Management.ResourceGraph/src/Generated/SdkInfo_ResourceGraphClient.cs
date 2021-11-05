@@ -19,10 +19,21 @@ namespace Microsoft.Azure.Management.ResourceGraph
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("ResourceGraph", "Operations", "2019-04-01"),
-                new Tuple<string, string, string>("ResourceGraph", "Resources", "2019-04-01"),
+                new Tuple<string, string, string>("ResourceGraph", "Operations", "2021-03-01"),
+                new Tuple<string, string, string>("ResourceGraph", "Resources", "2021-03-01"),
               }.AsEnumerable();
           }
       }
+      // BEGIN: Code Generation Metadata Section
+      public static readonly String AutoRestVersion = "v2";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/resourcegraph/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=C:\\Graph\\azure-sdk-for-net\\sdk";
+      public static readonly String GithubForkName = "Azure";
+      public static readonly String GithubBranchName = "master";
+      public static readonly String GithubCommidId = "413612b5f24da120e83eac227264f2e0b262ed8a";
+      public static readonly String CodeGenerationErrors = "";
+      public static readonly String GithubRepoName = "azure-rest-api-specs";
+      // END: Code Generation Metadata Section
   }
 }
+

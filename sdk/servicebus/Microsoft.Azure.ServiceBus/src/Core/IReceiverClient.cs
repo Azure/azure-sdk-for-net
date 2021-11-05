@@ -64,6 +64,14 @@ namespace Microsoft.Azure.ServiceBus.Core
         void RegisterMessageHandler(Func<Message, CancellationToken, Task> handler, MessageHandlerOptions messageHandlerOptions);
 
         /// <summary>
+        /// Unregister message handler from the receiver if there is an active message handler registered. This operation waits for the completion
+        /// of inflight receive and message handling operations to finish and unregisters future receives on the message handler which previously 
+        /// registered. 
+        /// </summary>
+        /// <param name="inflightMessageHandlerTasksWaitTimeout"> is the maximum waitTimeout for inflight message handling tasks.</param>
+        Task UnregisterMessageHandlerAsync(TimeSpan inflightMessageHandlerTasksWaitTimeout);
+
+        /// <summary>
         /// Completes a <see cref="Message"/> using its lock token. This will delete the message from the queue.
         /// </summary>
         /// <param name="lockToken">The lock token of the corresponding message to complete.</param>

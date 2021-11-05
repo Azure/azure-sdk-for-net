@@ -36,63 +36,6 @@ namespace Azure.Core.Tests
             StringAssert.StartsWith("application-id ", userAgent);
         }
 
-        [NonParallelizable]
-        [Theory]
-        [TestCase("true")]
-        [TestCase("TRUE")]
-        [TestCase("1")]
-        public void CanDisableTelemetryWithEnvironmentVariable(string value)
-        {
-            try
-            {
-                Environment.SetEnvironmentVariable("AZURE_TELEMETRY_DISABLED", value);
-
-                var testOptions = new TestOptions();
-                Assert.False(testOptions.Diagnostics.IsTelemetryEnabled);
-            }
-            finally
-            {
-                Environment.SetEnvironmentVariable("AZURE_TELEMETRY_DISABLED", null);
-            }
-        }
-
-        [NonParallelizable]
-        [Theory]
-        [TestCase("true")]
-        [TestCase("TRUE")]
-        [TestCase("1")]
-        public void CanDisableDistributedTracingWithEnvironmentVariable(string value)
-        {
-            try
-            {
-                Environment.SetEnvironmentVariable("AZURE_TRACING_DISABLED", value);
-
-                var testOptions = new TestOptions();
-                Assert.False(testOptions.Diagnostics.IsDistributedTracingEnabled);
-            }
-            finally
-            {
-                Environment.SetEnvironmentVariable("AZURE_TRACING_DISABLED", null);
-            }
-        }
-
-        [NonParallelizable]
-        [Test]
-        public void UsesDefaultApplicationId()
-        {
-            try
-            {
-                DiagnosticsOptions.DefaultApplicationId = "Global-application-id";
-
-                var testOptions = new TestOptions();
-                Assert.AreEqual("Global-application-id", testOptions.Diagnostics.ApplicationId);
-            }
-            finally
-            {
-                DiagnosticsOptions.DefaultApplicationId = null;
-            }
-        }
-
         [Test]
         public void ApplicationIdLimitedTo24Chars()
         {

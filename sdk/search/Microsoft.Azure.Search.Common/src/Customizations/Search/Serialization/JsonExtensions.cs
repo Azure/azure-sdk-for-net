@@ -145,7 +145,7 @@ namespace Microsoft.Azure.Search.Serialization
         /// The names of all JSON properties that are expected to be present in the parsed object.
         /// </param>
         /// <param name="readProperty">
-        /// A callback that reads a property value with the given name from the given <c cref="JsonReader">JsonReader</c>. It must
+        /// A callback that reads a property value with the given name from the given <see cref="JsonReader" />. It must
         /// advance the reader to the name of the next property, or the end of the object if there are no more properties to read.
         /// </param>
         /// <remarks>
@@ -166,7 +166,7 @@ namespace Microsoft.Azure.Search.Serialization
         /// The names of all JSON properties that are expected to be present in the parsed object.
         /// </param>
         /// <param name="readProperty">
-        /// A callback that reads a property value with the given name from the given <c cref="JsonReader">JsonReader</c>. It must
+        /// A callback that reads a property value with the given name from the given <see cref="JsonReader" />. It must
         /// advance the reader to the name of the next property, or the end of the object if there are no more properties to read.
         /// </param>
         /// <remarks>
@@ -192,7 +192,7 @@ namespace Microsoft.Azure.Search.Serialization
         /// The names of JSON properties besides the required properties that may be present in the parsed object.
         /// </param>
         /// <param name="readProperty">
-        /// A callback that reads a property value with the given name from the given <c cref="JsonReader">JsonReader</c>. It must
+        /// A callback that reads a property value with the given name from the given <see cref="JsonReader" />. It must
         /// advance the reader to the name of the next property, or the end of the object if there are no more properties to read.
         /// </param>
         /// <remarks>
@@ -256,7 +256,7 @@ namespace Microsoft.Azure.Search.Serialization
         /// The names of all JSON properties that are expected to be present in the given object.
         /// </param>
         /// <param name="isPropertyValid">
-        /// A predicate that determines whether the name and value of given <c cref="JProperty">JProperty</c> are valid.
+        /// A predicate that determines whether the name and value of given <see cref="JProperty" /> are valid.
         /// </param>
         /// <returns>
         /// <c>true</c> if all properties of the given JSON object pass the given validation function and all required properties exist,

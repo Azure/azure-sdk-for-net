@@ -27,5 +27,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         public const string ErrorRegionLimitExceed = "ErrorRegionLimitExceed";
         public const string ErrorUnknown = "ErrorUnknown";
         public const string ErrorNegativeAndRegularTagOnSameImage = "ErrorNegativeAndRegularTagOnSameImage";
+        public const string ErrorImageDimensions = "ErrorImageDimensions";
+        public const string ErrorInvalidTag = "ErrorInvalidTag";
     }
 }

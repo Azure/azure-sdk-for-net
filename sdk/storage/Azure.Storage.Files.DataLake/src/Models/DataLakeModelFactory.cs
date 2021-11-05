@@ -99,8 +99,25 @@ namespace Azure.Storage.Files.DataLake.Models
 
         #region FileSystemItem
         /// <summary>
-        /// Creates a new <see cref="FileSystemItem"/> instance for mocking.
+        /// Creates a new FileSystemItem instance for mocking.
         /// </summary>
+        public static FileSystemItem FileSystemItem(
+            string name = default,
+            bool? isDeleted = default,
+            string versionId = default,
+            FileSystemProperties properties = default)
+            => new FileSystemItem()
+            {
+                Name = name,
+                IsDeleted = isDeleted,
+                VersionId = versionId,
+                Properties = properties
+            };
+
+        /// <summary>
+        /// Creates a new FileSystemItem" instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static FileSystemItem FileSystemItem(
             string name,
             FileSystemProperties properties)
@@ -113,8 +130,39 @@ namespace Azure.Storage.Files.DataLake.Models
 
         #region FileSystemProperties
         /// <summary>
-        /// Creates a new <see cref="FileSystemProperties"/> instance for mocking.
+        /// Creates a new FileSystemProperties instance for mocking.
         /// </summary>
+        public static FileSystemProperties FileSystemProperties(
+            DateTimeOffset lastModified = default,
+            DataLakeLeaseStatus? leaseStatus = default,
+            DataLakeLeaseState? leaseState = default,
+            DataLakeLeaseDuration? leaseDuration = default,
+            PublicAccessType? publicAccess = default,
+            bool? hasImmutabilityPolicy = default,
+            bool? hasLegalHold = default,
+            ETag eTag = default,
+            IDictionary<string, string> metadata = default,
+            DateTimeOffset? deletedOn = default,
+            int? remainingRetentionDays = default)
+            => new FileSystemProperties()
+            {
+                LastModified = lastModified,
+                LeaseStatus = leaseStatus,
+                LeaseState = leaseState,
+                LeaseDuration = leaseDuration,
+                PublicAccess = publicAccess,
+                HasImmutabilityPolicy = hasImmutabilityPolicy,
+                HasLegalHold = hasLegalHold,
+                ETag = eTag,
+                Metadata = metadata,
+                DeletedOn = deletedOn,
+                RemainingRetentionDays = remainingRetentionDays
+            };
+
+        /// <summary>
+        /// Creates a new FileSystemProperties instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static FileSystemProperties FileSystemProperties(
             DateTimeOffset lastModified,
             DataLakeLeaseStatus? leaseStatus,

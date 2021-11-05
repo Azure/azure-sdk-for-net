@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(WebActivityAuthenticationConverter))]
     public partial class WebActivityAuthentication : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -56,6 +59,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("pfx"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     pfx = SecretBase.DeserializeSecretBase(property.Value);
                     continue;
                 }
@@ -66,6 +74,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("password"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     password = SecretBase.DeserializeSecretBase(property.Value);
                     continue;
                 }
@@ -76,6 +89,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new WebActivityAuthentication(type, pfx.Value, username.Value, password.Value, resource.Value);
+        }
+
+        internal partial class WebActivityAuthenticationConverter : JsonConverter<WebActivityAuthentication>
+        {
+            public override void Write(Utf8JsonWriter writer, WebActivityAuthentication model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override WebActivityAuthentication Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeWebActivityAuthentication(document.RootElement);
+            }
         }
     }
 }

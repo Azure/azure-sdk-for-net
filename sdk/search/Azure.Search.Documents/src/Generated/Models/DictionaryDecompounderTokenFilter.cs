@@ -17,6 +17,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of DictionaryDecompounderTokenFilter. </summary>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <param name="wordList"> The list of words to match against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="wordList"/> is null. </exception>
         public DictionaryDecompounderTokenFilter(string name, IEnumerable<string> wordList) : base(name)
         {
             if (name == null)
@@ -42,7 +43,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="onlyLongestMatch"> A value indicating whether to add only the longest matching subword to the output. Default is false. </param>
         internal DictionaryDecompounderTokenFilter(string oDataType, string name, IList<string> wordList, int? minWordSize, int? minSubwordSize, int? maxSubwordSize, bool? onlyLongestMatch) : base(oDataType, name)
         {
-            WordList = wordList ?? new List<string>();
+            WordList = wordList;
             MinWordSize = minWordSize;
             MinSubwordSize = minSubwordSize;
             MaxSubwordSize = maxSubwordSize;

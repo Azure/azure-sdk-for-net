@@ -21,10 +21,12 @@ namespace Azure.Graph.Rbac
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         internal ApplicationsRestOperations RestClient { get; }
+
         /// <summary> Initializes a new instance of ApplicationsOperations for mocking. </summary>
         protected ApplicationsOperations()
         {
         }
+
         /// <summary> Initializes a new instance of ApplicationsOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
@@ -451,6 +453,7 @@ namespace Azure.Graph.Rbac
         /// <summary> The owners are a set of non-admin users who are allowed to modify this object. </summary>
         /// <param name="applicationObjectId"> The object ID of the application for which to get owners. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationObjectId"/> is null. </exception>
         public virtual AsyncPageable<DirectoryObject> ListOwnersAsync(string applicationObjectId, CancellationToken cancellationToken = default)
         {
             if (applicationObjectId == null)
@@ -494,6 +497,7 @@ namespace Azure.Graph.Rbac
         /// <summary> The owners are a set of non-admin users who are allowed to modify this object. </summary>
         /// <param name="applicationObjectId"> The object ID of the application for which to get owners. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationObjectId"/> is null. </exception>
         public virtual Pageable<DirectoryObject> ListOwners(string applicationObjectId, CancellationToken cancellationToken = default)
         {
             if (applicationObjectId == null)
@@ -537,6 +541,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Get the keyCredentials associated with an application. </summary>
         /// <param name="applicationObjectId"> Application object ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationObjectId"/> is null. </exception>
         public virtual AsyncPageable<KeyCredential> ListKeyCredentialsAsync(string applicationObjectId, CancellationToken cancellationToken = default)
         {
             if (applicationObjectId == null)
@@ -565,6 +570,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Get the keyCredentials associated with an application. </summary>
         /// <param name="applicationObjectId"> Application object ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationObjectId"/> is null. </exception>
         public virtual Pageable<KeyCredential> ListKeyCredentials(string applicationObjectId, CancellationToken cancellationToken = default)
         {
             if (applicationObjectId == null)
@@ -593,6 +599,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Get the passwordCredentials associated with an application. </summary>
         /// <param name="applicationObjectId"> Application object ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationObjectId"/> is null. </exception>
         public virtual AsyncPageable<PasswordCredential> ListPasswordCredentialsAsync(string applicationObjectId, CancellationToken cancellationToken = default)
         {
             if (applicationObjectId == null)
@@ -621,6 +628,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Get the passwordCredentials associated with an application. </summary>
         /// <param name="applicationObjectId"> Application object ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationObjectId"/> is null. </exception>
         public virtual Pageable<PasswordCredential> ListPasswordCredentials(string applicationObjectId, CancellationToken cancellationToken = default)
         {
             if (applicationObjectId == null)
@@ -649,6 +657,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets a list of applications from the current tenant. </summary>
         /// <param name="nextLink"> Next link for the list operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public virtual AsyncPageable<Application> ListNextAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -692,6 +701,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets a list of applications from the current tenant. </summary>
         /// <param name="nextLink"> Next link for the list operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public virtual Pageable<Application> ListNext(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

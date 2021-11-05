@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    internal static class ChangeTypeExtensions
+    internal static partial class ChangeTypeExtensions
     {
         public static string ToSerialString(this ChangeType value) => value switch
         {
@@ -19,6 +19,7 @@ namespace Azure.ResourceManager.Resources.Models
             ChangeType.Deploy => "Deploy",
             ChangeType.NoChange => "NoChange",
             ChangeType.Modify => "Modify",
+            ChangeType.Unsupported => "Unsupported",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ChangeType value.")
         };
 
@@ -30,6 +31,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (string.Equals(value, "Deploy", StringComparison.InvariantCultureIgnoreCase)) return ChangeType.Deploy;
             if (string.Equals(value, "NoChange", StringComparison.InvariantCultureIgnoreCase)) return ChangeType.NoChange;
             if (string.Equals(value, "Modify", StringComparison.InvariantCultureIgnoreCase)) return ChangeType.Modify;
+            if (string.Equals(value, "Unsupported", StringComparison.InvariantCultureIgnoreCase)) return ChangeType.Unsupported;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ChangeType value.");
         }
     }

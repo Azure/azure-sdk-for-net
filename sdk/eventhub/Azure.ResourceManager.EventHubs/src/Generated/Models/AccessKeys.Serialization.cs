@@ -14,80 +14,52 @@ namespace Azure.ResourceManager.EventHubs.Models
     {
         internal static AccessKeys DeserializeAccessKeys(JsonElement element)
         {
-            string primaryConnectionString = default;
-            string secondaryConnectionString = default;
-            string aliasPrimaryConnectionString = default;
-            string aliasSecondaryConnectionString = default;
-            string primaryKey = default;
-            string secondaryKey = default;
-            string keyName = default;
+            Optional<string> primaryConnectionString = default;
+            Optional<string> secondaryConnectionString = default;
+            Optional<string> aliasPrimaryConnectionString = default;
+            Optional<string> aliasSecondaryConnectionString = default;
+            Optional<string> primaryKey = default;
+            Optional<string> secondaryKey = default;
+            Optional<string> keyName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryConnectionString"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     primaryConnectionString = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("secondaryConnectionString"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     secondaryConnectionString = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("aliasPrimaryConnectionString"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     aliasPrimaryConnectionString = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("aliasSecondaryConnectionString"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     aliasSecondaryConnectionString = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("primaryKey"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     primaryKey = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("secondaryKey"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     secondaryKey = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("keyName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     keyName = property.Value.GetString();
                     continue;
                 }
             }
-            return new AccessKeys(primaryConnectionString, secondaryConnectionString, aliasPrimaryConnectionString, aliasSecondaryConnectionString, primaryKey, secondaryKey, keyName);
+            return new AccessKeys(primaryConnectionString.Value, secondaryConnectionString.Value, aliasPrimaryConnectionString.Value, aliasSecondaryConnectionString.Value, primaryKey.Value, secondaryKey.Value, keyName.Value);
         }
     }
 }

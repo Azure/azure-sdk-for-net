@@ -11,8 +11,6 @@
 namespace Microsoft.Azure.Management.Avs.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -33,18 +31,15 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// </summary>
         /// <param name="primarySubnet">CIDR of primary subnet</param>
         /// <param name="secondarySubnet">CIDR of secondary subnet</param>
-        /// <param name="expressRouteID">Identifier of the ExpressRoute
+        /// <param name="expressRouteID">Identifier of the ExpressRoute Circuit
         /// (Microsoft Colo only)</param>
-        /// <param name="authorizations">Authorizations for the ExpressRoute
-        /// (Microsoft Colo only)</param>
-        /// <param name="expressRoutePrivatePeeringID">ExpressRoute private
-        /// peering identifier</param>
-        public Circuit(string primarySubnet = default(string), string secondarySubnet = default(string), string expressRouteID = default(string), IList<ExpressRouteAuthorization> authorizations = default(IList<ExpressRouteAuthorization>), string expressRoutePrivatePeeringID = default(string))
+        /// <param name="expressRoutePrivatePeeringID">ExpressRoute Circuit
+        /// private peering identifier</param>
+        public Circuit(string primarySubnet = default(string), string secondarySubnet = default(string), string expressRouteID = default(string), string expressRoutePrivatePeeringID = default(string))
         {
             PrimarySubnet = primarySubnet;
             SecondarySubnet = secondarySubnet;
             ExpressRouteID = expressRouteID;
-            Authorizations = authorizations;
             ExpressRoutePrivatePeeringID = expressRoutePrivatePeeringID;
             CustomInit();
         }
@@ -67,20 +62,13 @@ namespace Microsoft.Azure.Management.Avs.Models
         public string SecondarySubnet { get; private set; }
 
         /// <summary>
-        /// Gets identifier of the ExpressRoute (Microsoft Colo only)
+        /// Gets identifier of the ExpressRoute Circuit (Microsoft Colo only)
         /// </summary>
         [JsonProperty(PropertyName = "expressRouteID")]
         public string ExpressRouteID { get; private set; }
 
         /// <summary>
-        /// Gets or sets authorizations for the ExpressRoute (Microsoft Colo
-        /// only)
-        /// </summary>
-        [JsonProperty(PropertyName = "authorizations")]
-        public IList<ExpressRouteAuthorization> Authorizations { get; set; }
-
-        /// <summary>
-        /// Gets expressRoute private peering identifier
+        /// Gets expressRoute Circuit private peering identifier
         /// </summary>
         [JsonProperty(PropertyName = "expressRoutePrivatePeeringID")]
         public string ExpressRoutePrivatePeeringID { get; private set; }

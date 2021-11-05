@@ -15,17 +15,17 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Mode != null)
+            if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode");
                 writer.WriteStringValue(Mode.Value.ToSerialString());
             }
-            if (RollingUpgradePolicy != null)
+            if (Optional.IsDefined(RollingUpgradePolicy))
             {
                 writer.WritePropertyName("rollingUpgradePolicy");
                 writer.WriteObjectValue(RollingUpgradePolicy);
             }
-            if (AutomaticOSUpgradePolicy != null)
+            if (Optional.IsDefined(AutomaticOSUpgradePolicy))
             {
                 writer.WritePropertyName("automaticOSUpgradePolicy");
                 writer.WriteObjectValue(AutomaticOSUpgradePolicy);
@@ -35,15 +35,16 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static UpgradePolicy DeserializeUpgradePolicy(JsonElement element)
         {
-            UpgradeMode? mode = default;
-            RollingUpgradePolicy rollingUpgradePolicy = default;
-            AutomaticOSUpgradePolicy automaticOSUpgradePolicy = default;
+            Optional<UpgradeMode> mode = default;
+            Optional<RollingUpgradePolicy> rollingUpgradePolicy = default;
+            Optional<AutomaticOSUpgradePolicy> automaticOSUpgradePolicy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mode"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     mode = property.Value.GetString().ToUpgradeMode();
@@ -53,6 +54,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     rollingUpgradePolicy = RollingUpgradePolicy.DeserializeRollingUpgradePolicy(property.Value);
@@ -62,13 +64,14 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     automaticOSUpgradePolicy = AutomaticOSUpgradePolicy.DeserializeAutomaticOSUpgradePolicy(property.Value);
                     continue;
                 }
             }
-            return new UpgradePolicy(mode, rollingUpgradePolicy, automaticOSUpgradePolicy);
+            return new UpgradePolicy(Optional.ToNullable(mode), rollingUpgradePolicy.Value, automaticOSUpgradePolicy.Value);
         }
     }
 }

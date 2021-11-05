@@ -1,16 +1,105 @@
-# Microsoft.Azure.Synapse
+# Microsoft.Azure.Synapse.Artifacts
 
-Run `dotnet msbuild /t:GenerateCode` to generate code.
+Run `dotnet build /t:GenerateCode` to generate code.
 
 ### AutoRest Configuration
 > see https://aka.ms/autorest
 
-```yaml
-repo: https://github.com/Azure/azure-rest-api-specs/blob/fdf4bbfd7a73b28960d3a62490440345d6f2e8e3
+``` yaml
+tag: package-artifacts-composite-v1
+require:
+    - https://github.com/Azure/azure-rest-api-specs/blob/bee724836ffdeb5458274037dc75f4d43576b5e3/specification/synapse/data-plane/readme.md
+namespace: Azure.Analytics.Synapse.Artifacts
+public-clients: true
+security: AADToken
+security-scopes: https://dev.azuresynapse.net/.default
+modelerfour:
+  lenient-model-deduplication: true
+  seal-single-value-enum-by-default: true
+```
+
+### Make Endpoint type as Uri
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.parameters.Endpoint
+  transform: $.format = "url"
+```
+
+### Add nullable annotations
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.Notebook
+  transform: >
+    $.properties.folder["x-nullable"] = true;
 ```
 
 ``` yaml
-public-clients: true
-input-file:
-    - $(repo)/specification/synapse/data-plane/Microsoft.Synapse/preview/2019-06-01-preview/artifacts.json
+directive:
+  from: swagger-document
+  where: $.definitions.SparkJobDefinition
+  transform: >
+    $.properties.folder["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.SqlScript
+  transform: >
+    $.properties.folder["x-nullable"] = true;
+```
+
+### Expose serialization and deserialization methods and internal models
+
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    for (var path in $)
+    {
+      if (path.endsWith("AvroFormat") ||
+          path.endsWith("CreateDataFlowDebugSessionRequest") ||
+          path.endsWith("CopyBehaviorType") ||
+          path.endsWith("CopyTranslator") ||
+          path.endsWith("DataFlowDebugPreviewDataRequest") ||
+          path.endsWith("DataFlowDebugQueryResponse") ||
+          path.endsWith("DataFlowDebugResultResponse") ||
+          path.endsWith("DataFlowDebugStatisticsRequest") ||
+          path.endsWith("DataFlowDebugPackage") ||
+          path.endsWith("DatasetDataElement") ||
+          path.endsWith("DatasetSchemaDataElement") ||
+          path.endsWith("DatasetStorageFormat") ||
+          path.endsWith("EvaluateDataFlowExpressionRequest") ||
+          path.endsWith("ExposureControlRequest") ||
+          path.endsWith("ExposureControlResponse") ||
+          path.endsWith("GetSsisObjectMetadataRequest") ||
+          path.endsWith("JsonFormat") ||
+          path.endsWith("JsonFormatFilePattern") ||
+          path.endsWith("OrcFormat") ||
+          path.endsWith("ParquetFormat") ||
+          path.endsWith("RerunTriggerListResponse") ||
+          path.endsWith("RerunTumblingWindowTriggerActionParameter") ||
+          path.endsWith("SsisObjectMetadataStatusResponse") ||
+          path.endsWith("StartDataFlowDebugSessionRequest") ||
+          path.endsWith("StartDataFlowDebugSessionResponse") ||
+          path.endsWith("TabularTranslator") ||
+          path.endsWith("TextFormat") ||
+          path.endsWith("TriggerDependencyProvisioningStatus") ||
+          path.endsWith("TypeConversionSettings") ||
+          path.endsWith("WorkspaceIdentity") ||
+          path.endsWith("WorkspaceUpdateParameters"))
+      {
+        $[path]["x-csharp-usage"] = "model,input,output,converter";
+        $[path]["x-csharp-formats"] = "json";
+      }
+      else
+      {
+        $[path]["x-csharp-usage"] = "converter";
+      }
+    }
 ```

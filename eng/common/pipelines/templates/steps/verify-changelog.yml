@@ -4,7 +4,10 @@ parameters:
   default: 'not-specified'
 - name: ServiceName
   type: string
-  default: 'not-specified'
+  default: ''
+- name: ServiceDirectory
+  type: string
+  default: ''
 - name: ForRelease
   type: boolean
   default: false
@@ -14,10 +17,8 @@ steps:
     inputs:
       filePath: $(Build.SourcesDirectory)/eng/common/scripts/Verify-ChangeLog.ps1
       arguments: >
-        -PackageName ${{ parameters.PackageName }}
-        -ServiceName ${{ parameters.ServiceName }}
-        -RepoRoot $(Build.SourcesDirectory)
-        -RepoName $(Build.Repository.Name)
+        -PackageName '${{ parameters.PackageName }}'
+        -ServiceDirectory '${{ coalesce(parameters.ServiceDirectory, parameters.ServiceName) }}'
         -ForRelease $${{ parameters.ForRelease }}
       pwsh: true
       workingDirectory: $(Pipeline.Workspace)

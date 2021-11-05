@@ -16,22 +16,22 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Asn != null)
+            if (Optional.IsDefined(Asn))
             {
                 writer.WritePropertyName("asn");
                 writer.WriteNumberValue(Asn.Value);
             }
-            if (BgpPeeringAddress != null)
+            if (Optional.IsDefined(BgpPeeringAddress))
             {
                 writer.WritePropertyName("bgpPeeringAddress");
                 writer.WriteStringValue(BgpPeeringAddress);
             }
-            if (PeerWeight != null)
+            if (Optional.IsDefined(PeerWeight))
             {
                 writer.WritePropertyName("peerWeight");
                 writer.WriteNumberValue(PeerWeight.Value);
             }
-            if (BgpPeeringAddresses != null)
+            if (Optional.IsCollectionDefined(BgpPeeringAddresses))
             {
                 writer.WritePropertyName("bgpPeeringAddresses");
                 writer.WriteStartArray();
@@ -46,16 +46,17 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static BgpSettings DeserializeBgpSettings(JsonElement element)
         {
-            long? asn = default;
-            string bgpPeeringAddress = default;
-            int? peerWeight = default;
-            IList<IPConfigurationBgpPeeringAddress> bgpPeeringAddresses = default;
+            Optional<long> asn = default;
+            Optional<string> bgpPeeringAddress = default;
+            Optional<int> peerWeight = default;
+            Optional<IList<IPConfigurationBgpPeeringAddress>> bgpPeeringAddresses = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("asn"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     asn = property.Value.GetInt64();
@@ -63,10 +64,6 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("bgpPeeringAddress"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     bgpPeeringAddress = property.Value.GetString();
                     continue;
                 }
@@ -74,6 +71,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     peerWeight = property.Value.GetInt32();
@@ -83,25 +81,19 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<IPConfigurationBgpPeeringAddress> array = new List<IPConfigurationBgpPeeringAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(IPConfigurationBgpPeeringAddress.DeserializeIPConfigurationBgpPeeringAddress(item));
-                        }
+                        array.Add(IPConfigurationBgpPeeringAddress.DeserializeIPConfigurationBgpPeeringAddress(item));
                     }
                     bgpPeeringAddresses = array;
                     continue;
                 }
             }
-            return new BgpSettings(asn, bgpPeeringAddress, peerWeight, bgpPeeringAddresses);
+            return new BgpSettings(Optional.ToNullable(asn), bgpPeeringAddress.Value, Optional.ToNullable(peerWeight), Optional.ToList(bgpPeeringAddresses));
         }
     }
 }

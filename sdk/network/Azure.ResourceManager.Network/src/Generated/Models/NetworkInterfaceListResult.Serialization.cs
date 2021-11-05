@@ -8,49 +8,40 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class NetworkInterfaceListResult
+    internal partial class NetworkInterfaceListResult
     {
         internal static NetworkInterfaceListResult DeserializeNetworkInterfaceListResult(JsonElement element)
         {
-            IReadOnlyList<NetworkInterface> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<NetworkInterfaceData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<NetworkInterface> array = new List<NetworkInterface>();
+                    List<NetworkInterfaceData> array = new List<NetworkInterfaceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(NetworkInterface.DeserializeNetworkInterface(item));
-                        }
+                        array.Add(NetworkInterfaceData.DeserializeNetworkInterfaceData(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new NetworkInterfaceListResult(value, nextLink);
+            return new NetworkInterfaceListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

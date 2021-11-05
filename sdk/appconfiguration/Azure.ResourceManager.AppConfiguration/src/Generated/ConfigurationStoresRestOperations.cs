@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
-        public ConfigurationStoresRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null, string apiVersion = "2019-11-01-preview")
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
+        public ConfigurationStoresRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null, string apiVersion = "2020-06-01")
         {
             if (subscriptionId == null)
             {
@@ -66,6 +66,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 uri.AppendQuery("$skipToken", skipToken, true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -82,14 +83,7 @@ namespace Azure.ResourceManager.AppConfiguration
                     {
                         ConfigurationStoreListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ConfigurationStoreListResult.DeserializeConfigurationStoreListResult(document.RootElement);
-                        }
+                        value = ConfigurationStoreListResult.DeserializeConfigurationStoreListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -110,14 +104,7 @@ namespace Azure.ResourceManager.AppConfiguration
                     {
                         ConfigurationStoreListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ConfigurationStoreListResult.DeserializeConfigurationStoreListResult(document.RootElement);
-                        }
+                        value = ConfigurationStoreListResult.DeserializeConfigurationStoreListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -143,6 +130,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 uri.AppendQuery("$skipToken", skipToken, true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -150,6 +138,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<ConfigurationStoreListResult>> ListByResourceGroupAsync(string resourceGroupName, string skipToken = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -165,14 +154,7 @@ namespace Azure.ResourceManager.AppConfiguration
                     {
                         ConfigurationStoreListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ConfigurationStoreListResult.DeserializeConfigurationStoreListResult(document.RootElement);
-                        }
+                        value = ConfigurationStoreListResult.DeserializeConfigurationStoreListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -184,6 +166,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public Response<ConfigurationStoreListResult> ListByResourceGroup(string resourceGroupName, string skipToken = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -199,14 +182,7 @@ namespace Azure.ResourceManager.AppConfiguration
                     {
                         ConfigurationStoreListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ConfigurationStoreListResult.DeserializeConfigurationStoreListResult(document.RootElement);
-                        }
+                        value = ConfigurationStoreListResult.DeserializeConfigurationStoreListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -229,6 +205,7 @@ namespace Azure.ResourceManager.AppConfiguration
             uri.AppendPath(configStoreName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -236,6 +213,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="configStoreName"/> is null. </exception>
         public async Task<Response<ConfigurationStore>> GetAsync(string resourceGroupName, string configStoreName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -255,14 +233,7 @@ namespace Azure.ResourceManager.AppConfiguration
                     {
                         ConfigurationStore value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ConfigurationStore.DeserializeConfigurationStore(document.RootElement);
-                        }
+                        value = ConfigurationStore.DeserializeConfigurationStore(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -274,6 +245,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="configStoreName"/> is null. </exception>
         public Response<ConfigurationStore> Get(string resourceGroupName, string configStoreName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -293,14 +265,7 @@ namespace Azure.ResourceManager.AppConfiguration
                     {
                         ConfigurationStore value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ConfigurationStore.DeserializeConfigurationStore(document.RootElement);
-                        }
+                        value = ConfigurationStore.DeserializeConfigurationStore(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -323,6 +288,7 @@ namespace Azure.ResourceManager.AppConfiguration
             uri.AppendPath(configStoreName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(configStoreCreationParameters);
@@ -335,6 +301,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="configStoreCreationParameters"> The parameters for creating a configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/>, or <paramref name="configStoreCreationParameters"/> is null. </exception>
         public async Task<Response> CreateAsync(string resourceGroupName, string configStoreName, ConfigurationStore configStoreCreationParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -367,6 +334,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="configStoreCreationParameters"> The parameters for creating a configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/>, or <paramref name="configStoreCreationParameters"/> is null. </exception>
         public Response Create(string resourceGroupName, string configStoreName, ConfigurationStore configStoreCreationParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -409,6 +377,7 @@ namespace Azure.ResourceManager.AppConfiguration
             uri.AppendPath(configStoreName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -416,6 +385,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="configStoreName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string resourceGroupName, string configStoreName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -444,6 +414,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="configStoreName"/> is null. </exception>
         public Response Delete(string resourceGroupName, string configStoreName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -483,6 +454,7 @@ namespace Azure.ResourceManager.AppConfiguration
             uri.AppendPath(configStoreName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(configStoreUpdateParameters);
@@ -495,6 +467,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="configStoreUpdateParameters"> The parameters for updating a configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/>, or <paramref name="configStoreUpdateParameters"/> is null. </exception>
         public async Task<Response> UpdateAsync(string resourceGroupName, string configStoreName, ConfigurationStoreUpdateParameters configStoreUpdateParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -527,6 +500,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="configStoreUpdateParameters"> The parameters for updating a configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/>, or <paramref name="configStoreUpdateParameters"/> is null. </exception>
         public Response Update(string resourceGroupName, string configStoreName, ConfigurationStoreUpdateParameters configStoreUpdateParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -574,6 +548,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 uri.AppendQuery("$skipToken", skipToken, true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -582,6 +557,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="configStoreName"/> is null. </exception>
         public async Task<Response<ApiKeyListResult>> ListKeysAsync(string resourceGroupName, string configStoreName, string skipToken = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -601,14 +577,7 @@ namespace Azure.ResourceManager.AppConfiguration
                     {
                         ApiKeyListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApiKeyListResult.DeserializeApiKeyListResult(document.RootElement);
-                        }
+                        value = ApiKeyListResult.DeserializeApiKeyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -621,6 +590,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="configStoreName"/> is null. </exception>
         public Response<ApiKeyListResult> ListKeys(string resourceGroupName, string configStoreName, string skipToken = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -640,14 +610,7 @@ namespace Azure.ResourceManager.AppConfiguration
                     {
                         ApiKeyListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApiKeyListResult.DeserializeApiKeyListResult(document.RootElement);
-                        }
+                        value = ApiKeyListResult.DeserializeApiKeyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -671,6 +634,7 @@ namespace Azure.ResourceManager.AppConfiguration
             uri.AppendPath("/RegenerateKey", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(regenerateKeyParameters);
@@ -683,6 +647,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="regenerateKeyParameters"> The parameters for regenerating an access key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/>, or <paramref name="regenerateKeyParameters"/> is null. </exception>
         public async Task<Response<ApiKey>> RegenerateKeyAsync(string resourceGroupName, string configStoreName, RegenerateKeyParameters regenerateKeyParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -706,14 +671,7 @@ namespace Azure.ResourceManager.AppConfiguration
                     {
                         ApiKey value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApiKey.DeserializeApiKey(document.RootElement);
-                        }
+                        value = ApiKey.DeserializeApiKey(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -726,6 +684,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="regenerateKeyParameters"> The parameters for regenerating an access key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/>, or <paramref name="regenerateKeyParameters"/> is null. </exception>
         public Response<ApiKey> RegenerateKey(string resourceGroupName, string configStoreName, RegenerateKeyParameters regenerateKeyParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -749,14 +708,7 @@ namespace Azure.ResourceManager.AppConfiguration
                     {
                         ApiKey value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApiKey.DeserializeApiKey(document.RootElement);
-                        }
+                        value = ApiKey.DeserializeApiKey(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -780,6 +732,7 @@ namespace Azure.ResourceManager.AppConfiguration
             uri.AppendPath("/listKeyValue", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(listKeyValueParameters);
@@ -792,6 +745,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="listKeyValueParameters"> The parameters for retrieving a key-value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/>, or <paramref name="listKeyValueParameters"/> is null. </exception>
         public async Task<Response<KeyValue>> ListKeyValueAsync(string resourceGroupName, string configStoreName, ListKeyValueParameters listKeyValueParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -815,14 +769,7 @@ namespace Azure.ResourceManager.AppConfiguration
                     {
                         KeyValue value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = KeyValue.DeserializeKeyValue(document.RootElement);
-                        }
+                        value = KeyValue.DeserializeKeyValue(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -835,6 +782,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="listKeyValueParameters"> The parameters for retrieving a key-value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/>, or <paramref name="listKeyValueParameters"/> is null. </exception>
         public Response<KeyValue> ListKeyValue(string resourceGroupName, string configStoreName, ListKeyValueParameters listKeyValueParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -858,14 +806,7 @@ namespace Azure.ResourceManager.AppConfiguration
                     {
                         KeyValue value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = KeyValue.DeserializeKeyValue(document.RootElement);
-                        }
+                        value = KeyValue.DeserializeKeyValue(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -882,6 +823,7 @@ namespace Azure.ResourceManager.AppConfiguration
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -889,6 +831,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<ConfigurationStoreListResult>> ListNextPageAsync(string nextLink, string skipToken = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -904,14 +847,7 @@ namespace Azure.ResourceManager.AppConfiguration
                     {
                         ConfigurationStoreListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ConfigurationStoreListResult.DeserializeConfigurationStoreListResult(document.RootElement);
-                        }
+                        value = ConfigurationStoreListResult.DeserializeConfigurationStoreListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -923,6 +859,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<ConfigurationStoreListResult> ListNextPage(string nextLink, string skipToken = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -938,14 +875,7 @@ namespace Azure.ResourceManager.AppConfiguration
                     {
                         ConfigurationStoreListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ConfigurationStoreListResult.DeserializeConfigurationStoreListResult(document.RootElement);
-                        }
+                        value = ConfigurationStoreListResult.DeserializeConfigurationStoreListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -962,6 +892,7 @@ namespace Azure.ResourceManager.AppConfiguration
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -970,6 +901,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<ConfigurationStoreListResult>> ListByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, string skipToken = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -989,14 +921,7 @@ namespace Azure.ResourceManager.AppConfiguration
                     {
                         ConfigurationStoreListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ConfigurationStoreListResult.DeserializeConfigurationStoreListResult(document.RootElement);
-                        }
+                        value = ConfigurationStoreListResult.DeserializeConfigurationStoreListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1009,6 +934,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public Response<ConfigurationStoreListResult> ListByResourceGroupNextPage(string nextLink, string resourceGroupName, string skipToken = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1028,14 +954,7 @@ namespace Azure.ResourceManager.AppConfiguration
                     {
                         ConfigurationStoreListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ConfigurationStoreListResult.DeserializeConfigurationStoreListResult(document.RootElement);
-                        }
+                        value = ConfigurationStoreListResult.DeserializeConfigurationStoreListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1052,6 +971,7 @@ namespace Azure.ResourceManager.AppConfiguration
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1061,6 +981,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="configStoreName"/> is null. </exception>
         public async Task<Response<ApiKeyListResult>> ListKeysNextPageAsync(string nextLink, string resourceGroupName, string configStoreName, string skipToken = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1084,14 +1005,7 @@ namespace Azure.ResourceManager.AppConfiguration
                     {
                         ApiKeyListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApiKeyListResult.DeserializeApiKeyListResult(document.RootElement);
-                        }
+                        value = ApiKeyListResult.DeserializeApiKeyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1105,6 +1019,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="configStoreName"/> is null. </exception>
         public Response<ApiKeyListResult> ListKeysNextPage(string nextLink, string resourceGroupName, string configStoreName, string skipToken = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1128,14 +1043,7 @@ namespace Azure.ResourceManager.AppConfiguration
                     {
                         ApiKeyListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApiKeyListResult.DeserializeApiKeyListResult(document.RootElement);
-                        }
+                        value = ApiKeyListResult.DeserializeApiKeyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

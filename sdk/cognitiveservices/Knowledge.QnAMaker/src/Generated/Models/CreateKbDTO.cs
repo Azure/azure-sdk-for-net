@@ -47,8 +47,15 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
         /// as the answer in any Q-A which has no extracted answer from the
         /// document but has a hierarchy. Required when
         /// EnableHierarchicalExtraction field is set to True.</param>
-        /// <param name="language">Language of the knowledgebase.</param>
-        public CreateKbDTO(string name, IList<QnADTO> qnaList = default(IList<QnADTO>), IList<string> urls = default(IList<string>), IList<FileDTO> files = default(IList<FileDTO>), bool? enableHierarchicalExtraction = default(bool?), string defaultAnswerUsedForExtraction = default(string), string language = default(string))
+        /// <param name="language">Language of the knowledgebase. Please find
+        /// the list of supported languages &lt;a
+        /// href="https://aka.ms/qnamaker-languages#languages-supported"
+        /// target="_blank"&gt;here&lt;/a&gt;.</param>
+        /// <param name="enableMultipleLanguages">Set to true to enable
+        /// creating KBs in different languages for the same resource.</param>
+        /// <param name="defaultAnswer">Default answer sent to user if no good
+        /// match is found in the KB.</param>
+        public CreateKbDTO(string name, IList<QnADTO> qnaList = default(IList<QnADTO>), IList<string> urls = default(IList<string>), IList<FileDTO> files = default(IList<FileDTO>), bool? enableHierarchicalExtraction = default(bool?), string defaultAnswerUsedForExtraction = default(string), string language = default(string), bool? enableMultipleLanguages = default(bool?), string defaultAnswer = default(string))
         {
             Name = name;
             QnaList = qnaList;
@@ -57,6 +64,8 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
             EnableHierarchicalExtraction = enableHierarchicalExtraction;
             DefaultAnswerUsedForExtraction = defaultAnswerUsedForExtraction;
             Language = language;
+            EnableMultipleLanguages = enableMultipleLanguages;
+            DefaultAnswer = defaultAnswer;
             CustomInit();
         }
 
@@ -106,10 +115,27 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
         public string DefaultAnswerUsedForExtraction { get; set; }
 
         /// <summary>
-        /// Gets or sets language of the knowledgebase.
+        /// Gets or sets language of the knowledgebase. Please find the list of
+        /// supported languages &amp;lt;a
+        /// href="https://aka.ms/qnamaker-languages#languages-supported"
+        /// target="_blank"&amp;gt;here&amp;lt;/a&amp;gt;.
         /// </summary>
         [JsonProperty(PropertyName = "language")]
         public string Language { get; set; }
+
+        /// <summary>
+        /// Gets or sets set to true to enable creating KBs in different
+        /// languages for the same resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "enableMultipleLanguages")]
+        public bool? EnableMultipleLanguages { get; set; }
+
+        /// <summary>
+        /// Gets or sets default answer sent to user if no good match is found
+        /// in the KB.
+        /// </summary>
+        [JsonProperty(PropertyName = "defaultAnswer")]
+        public string DefaultAnswer { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -174,6 +200,17 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
                 if (Language.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "Language", 1);
+                }
+            }
+            if (DefaultAnswer != null)
+            {
+                if (DefaultAnswer.Length > 300)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "DefaultAnswer", 300);
+                }
+                if (DefaultAnswer.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "DefaultAnswer", 1);
                 }
             }
         }

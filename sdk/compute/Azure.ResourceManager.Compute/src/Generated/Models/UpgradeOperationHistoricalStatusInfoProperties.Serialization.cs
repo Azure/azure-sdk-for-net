@@ -14,18 +14,19 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static UpgradeOperationHistoricalStatusInfoProperties DeserializeUpgradeOperationHistoricalStatusInfoProperties(JsonElement element)
         {
-            UpgradeOperationHistoryStatus runningStatus = default;
-            RollingUpgradeProgressInfo progress = default;
-            ApiError error = default;
-            UpgradeOperationInvoker? startedBy = default;
-            ImageReference targetImageReference = default;
-            RollbackStatusInfo rollbackInfo = default;
+            Optional<UpgradeOperationHistoryStatus> runningStatus = default;
+            Optional<RollingUpgradeProgressInfo> progress = default;
+            Optional<ApiError> error = default;
+            Optional<UpgradeOperationInvoker> startedBy = default;
+            Optional<ImageReference> targetImageReference = default;
+            Optional<RollbackStatusInfo> rollbackInfo = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("runningStatus"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     runningStatus = UpgradeOperationHistoryStatus.DeserializeUpgradeOperationHistoryStatus(property.Value);
@@ -35,6 +36,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     progress = RollingUpgradeProgressInfo.DeserializeRollingUpgradeProgressInfo(property.Value);
@@ -44,6 +46,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     error = ApiError.DeserializeApiError(property.Value);
@@ -53,6 +56,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     startedBy = property.Value.GetString().ToUpgradeOperationInvoker();
@@ -62,6 +66,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     targetImageReference = ImageReference.DeserializeImageReference(property.Value);
@@ -71,13 +76,14 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     rollbackInfo = RollbackStatusInfo.DeserializeRollbackStatusInfo(property.Value);
                     continue;
                 }
             }
-            return new UpgradeOperationHistoricalStatusInfoProperties(runningStatus, progress, error, startedBy, targetImageReference, rollbackInfo);
+            return new UpgradeOperationHistoricalStatusInfoProperties(runningStatus.Value, progress.Value, error.Value, Optional.ToNullable(startedBy), targetImageReference.Value, rollbackInfo.Value);
         }
     }
 }

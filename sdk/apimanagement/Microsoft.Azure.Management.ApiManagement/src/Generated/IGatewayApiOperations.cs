@@ -12,6 +12,7 @@ namespace Microsoft.Azure.Management.ApiManagement
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
+    using Microsoft.Rest.Azure.OData;
     using Models;
     using System.Collections;
     using System.Collections.Generic;
@@ -36,11 +37,8 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Gateway entity identifier. Must be unique in the current API
         /// Management service instance. Must not have value 'managed'
         /// </param>
-        /// <param name='top'>
-        /// Number of records to return.
-        /// </param>
-        /// <param name='skip'>
-        /// Number of records to skip.
+        /// <param name='odataQuery'>
+        /// OData parameters to apply to the operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -57,7 +55,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<ApiContract>>> ListByServiceWithHttpMessagesAsync(string resourceGroupName, string serviceName, string gatewayId, int? top = default(int?), int? skip = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<ApiContract>>> ListByServiceWithHttpMessagesAsync(string resourceGroupName, string serviceName, string gatewayId, ODataQuery<ApiContract> odataQuery = default(ODataQuery<ApiContract>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Checks that API entity specified by identifier is associated with
         /// the Gateway entity.

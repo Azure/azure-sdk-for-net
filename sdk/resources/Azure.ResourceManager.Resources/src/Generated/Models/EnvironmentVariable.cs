@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.Resources.Models
     {
         /// <summary> Initializes a new instance of EnvironmentVariable. </summary>
         /// <param name="name"> The name of the environment variable. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public EnvironmentVariable(string name)
         {
             if (name == null)

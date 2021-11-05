@@ -33,76 +33,74 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.LongLongDuration)]
         public async Task TestCertificateVerbs()
         {
-            Func<Task> test = async () =>
+            async Task test()
             {
-                using (BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment()))
+                using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
+                //Generate the certificates
+                const string certificatePrefix = "testcertificatecrud";
+
+                string cerFilePath = IntegrationTestCommon.GetTemporaryCertificateFilePath(string.Format("{0}.cer", certificatePrefix));
+                string pfxFilePath = IntegrationTestCommon.GetTemporaryCertificateFilePath(string.Format("{0}.pfx", certificatePrefix));
+
+                IEnumerable<Certificate> certificates = GenerateCertificates(batchCli, cerFilePath, pfxFilePath);
+
+                try
                 {
-                    //Generate the certificates
-                    const string certificatePrefix = "testcertificatecrud";
-
-                    string cerFilePath = IntegrationTestCommon.GetTemporaryCertificateFilePath(string.Format("{0}.cer", certificatePrefix));
-                    string pfxFilePath = IntegrationTestCommon.GetTemporaryCertificateFilePath(string.Format("{0}.pfx", certificatePrefix));
-
-                    IEnumerable<Certificate> certificates = GenerateCertificates(batchCli, cerFilePath, pfxFilePath);
-
-                    try
+                    foreach (Certificate certificate in certificates)
                     {
-                        foreach (Certificate certificate in certificates)
-                        {
-                            this.testOutputHelper.WriteLine("Adding certificate with thumbprint: {0}", certificate.Thumbprint);
-                            await certificate.CommitAsync().ConfigureAwait(false);
+                        testOutputHelper.WriteLine("Adding certificate with thumbprint: {0}", certificate.Thumbprint);
+                        await certificate.CommitAsync().ConfigureAwait(false);
 
-                            Certificate boundCert = await batchCli.CertificateOperations.GetCertificateAsync(
-                                certificate.ThumbprintAlgorithm,
-                                certificate.Thumbprint).ConfigureAwait(false);
+                        Certificate boundCert = await batchCli.CertificateOperations.GetCertificateAsync(
+                            certificate.ThumbprintAlgorithm,
+                            certificate.Thumbprint).ConfigureAwait(false);
 
-                            Assert.Equal(certificate.Thumbprint, boundCert.Thumbprint);
-                            Assert.Equal(certificate.ThumbprintAlgorithm, boundCert.ThumbprintAlgorithm);
-                            Assert.NotNull(boundCert.Url);
+                        Assert.Equal(certificate.Thumbprint, boundCert.Thumbprint);
+                        Assert.Equal(certificate.ThumbprintAlgorithm, boundCert.ThumbprintAlgorithm);
+                        Assert.NotNull(boundCert.Url);
 
-                            Certificate certLowerDetail = await batchCli.CertificateOperations.GetCertificateAsync(
-                                certificate.ThumbprintAlgorithm,
-                                certificate.Thumbprint,
-                                new ODATADetailLevel() { SelectClause = "thumbprint, thumbprintAlgorithm" }).ConfigureAwait(false);
+                        Certificate certLowerDetail = await batchCli.CertificateOperations.GetCertificateAsync(
+                            certificate.ThumbprintAlgorithm,
+                            certificate.Thumbprint,
+                            new ODATADetailLevel() { SelectClause = "thumbprint, thumbprintAlgorithm" }).ConfigureAwait(false);
 
-                            // confirm lower detail level
-                            Assert.Null(certLowerDetail.Url);
-                            //test refresh to higher detail level
-                            await certLowerDetail.RefreshAsync();
-                            // confirm higher detail level
-                            Assert.NotNull(certLowerDetail.Url);
-                            // test refresh can lower detail level
-                            await certLowerDetail.RefreshAsync(new ODATADetailLevel() { SelectClause = "thumbprint, thumbprintAlgorithm" });
-                            // confirm lower detail level via refresh
-                            Assert.Null(certLowerDetail.Url);
-                        }
-
-                        List<CertificateReference> certificateReferences = certificates.Select(cer => new CertificateReference(cer)
-                            {
-                                StoreLocation = CertStoreLocation.LocalMachine,
-                                StoreName = "My",
-                                Visibility = CertificateVisibility.RemoteUser
-                            }).ToList();
-
-                        await TestCancelDeleteCertificateAsync(batchCli, certificateReferences, certificates.First()).ConfigureAwait(false);
+                        // confirm lower detail level
+                        Assert.Null(certLowerDetail.Url);
+                        //test refresh to higher detail level
+                        await certLowerDetail.RefreshAsync();
+                        // confirm higher detail level
+                        Assert.NotNull(certLowerDetail.Url);
+                        // test refresh can lower detail level
+                        await certLowerDetail.RefreshAsync(new ODATADetailLevel() { SelectClause = "thumbprint, thumbprintAlgorithm" });
+                        // confirm lower detail level via refresh
+                        Assert.Null(certLowerDetail.Url);
                     }
-                    finally
+
+                    List<CertificateReference> certificateReferences = certificates.Select(cer => new CertificateReference(cer)
                     {
-                        File.Delete(pfxFilePath);
-                        File.Delete(cerFilePath);
+                        StoreLocation = CertStoreLocation.LocalMachine,
+                        StoreName = "My",
+                        Visibility = CertificateVisibility.RemoteUser
+                    }).ToList();
 
-                        foreach (Certificate certificate in certificates)
-                        {
-                            TestUtilities.DeleteCertificateIfExistsAsync(batchCli, certificate.ThumbprintAlgorithm, certificate.Thumbprint).Wait();
-                        }
+                    await TestCancelDeleteCertificateAsync(batchCli, certificateReferences, certificates.First()).ConfigureAwait(false);
+                }
+                finally
+                {
+                    File.Delete(pfxFilePath);
+                    File.Delete(cerFilePath);
 
-                        foreach (Certificate certificate in certificates)
-                        {
-                            TestUtilities.DeleteCertMonitor(batchCli.CertificateOperations, this.testOutputHelper, certificate.ThumbprintAlgorithm, certificate.Thumbprint);
-                        }
+                    foreach (Certificate certificate in certificates)
+                    {
+                        TestUtilities.DeleteCertificateIfExistsAsync(batchCli, certificate.ThumbprintAlgorithm, certificate.Thumbprint).Wait();
+                    }
+
+                    foreach (Certificate certificate in certificates)
+                    {
+                        TestUtilities.DeleteCertMonitor(batchCli.CertificateOperations, testOutputHelper, certificate.ThumbprintAlgorithm, certificate.Thumbprint);
                     }
                 }
-            };
+            }
 
             await SynchronizationContextHelper.RunTestAsync(test, TestTimeout);
         }
@@ -112,53 +110,51 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.LongDuration)]
         public async Task TestPoolCertificateReferencesWithUpdate()
         {
-            Func<Task> test = async () =>
+            async Task test()
             {
-                using (BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment()))
+                using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
+                //Generate the certificates
+                const string certificatePrefix = "poolwithcertificatereferences";
+
+                string cerFilePath = IntegrationTestCommon.GetTemporaryCertificateFilePath(string.Format("{0}.cer", certificatePrefix));
+                string pfxFilePath = IntegrationTestCommon.GetTemporaryCertificateFilePath(string.Format("{0}.pfx", certificatePrefix));
+
+                IEnumerable<Certificate> certificates = GenerateCertificates(batchCli, cerFilePath, pfxFilePath);
+
+                try
                 {
-                    //Generate the certificates
-                    const string certificatePrefix = "poolwithcertificatereferences";
-
-                    string cerFilePath = IntegrationTestCommon.GetTemporaryCertificateFilePath(string.Format("{0}.cer", certificatePrefix));
-                    string pfxFilePath = IntegrationTestCommon.GetTemporaryCertificateFilePath(string.Format("{0}.pfx", certificatePrefix));
-
-                    IEnumerable<Certificate> certificates = GenerateCertificates(batchCli, cerFilePath, pfxFilePath);
-
-                    try
+                    foreach (Certificate certificate in certificates)
                     {
-                        foreach (Certificate certificate in certificates)
-                        {
-                            this.testOutputHelper.WriteLine("Adding certificate with thumbprint: {0}", certificate.Thumbprint);
-                            await certificate.CommitAsync().ConfigureAwait(false);
-                        }
-
-                        List<CertificateReference> certificateReferences = certificates.Select(cer => new CertificateReference(cer)
-                            {
-                                StoreLocation = CertStoreLocation.LocalMachine,
-                                StoreName = "My",
-                                Visibility = CertificateVisibility.RemoteUser
-                            }).ToList();
-
-                        await TestPoolCreateAndUpdateWithCertificateReferencesAsync(batchCli, certificateReferences).ConfigureAwait(false);
-                        await TestAutoPoolCreateAndUpdateWithCertificateReferencesAsync(batchCli, certificateReferences).ConfigureAwait(false);
+                        testOutputHelper.WriteLine("Adding certificate with thumbprint: {0}", certificate.Thumbprint);
+                        await certificate.CommitAsync().ConfigureAwait(false);
                     }
-                    finally
+
+                    List<CertificateReference> certificateReferences = certificates.Select(cer => new CertificateReference(cer)
                     {
-                        File.Delete(pfxFilePath);
-                        File.Delete(cerFilePath);
+                        StoreLocation = CertStoreLocation.LocalMachine,
+                        StoreName = "My",
+                        Visibility = CertificateVisibility.RemoteUser
+                    }).ToList();
 
-                        foreach (Certificate certificate in certificates)
-                        {
-                            TestUtilities.DeleteCertificateIfExistsAsync(batchCli, certificate.ThumbprintAlgorithm, certificate.Thumbprint).Wait();
-                        }
+                    await TestPoolCreateAndUpdateWithCertificateReferencesAsync(batchCli, certificateReferences).ConfigureAwait(false);
+                    await TestAutoPoolCreateAndUpdateWithCertificateReferencesAsync(batchCli, certificateReferences).ConfigureAwait(false);
+                }
+                finally
+                {
+                    File.Delete(pfxFilePath);
+                    File.Delete(cerFilePath);
 
-                        foreach (Certificate certificate in certificates)
-                        {
-                            TestUtilities.DeleteCertMonitor(batchCli.CertificateOperations, this.testOutputHelper, certificate.ThumbprintAlgorithm, certificate.Thumbprint);
-                        }
+                    foreach (Certificate certificate in certificates)
+                    {
+                        TestUtilities.DeleteCertificateIfExistsAsync(batchCli, certificate.ThumbprintAlgorithm, certificate.Thumbprint).Wait();
+                    }
+
+                    foreach (Certificate certificate in certificates)
+                    {
+                        TestUtilities.DeleteCertMonitor(batchCli.CertificateOperations, testOutputHelper, certificate.ThumbprintAlgorithm, certificate.Thumbprint);
                     }
                 }
-            };
+            }
 
             await SynchronizationContextHelper.RunTestAsync(test, TestTimeout);
         }
@@ -257,10 +253,11 @@
 
                 // mutate the cert refs: assign only one
                 {
-                    List<CertificateReference> listOfOne = new List<CertificateReference>();
-
-                    // just pick one cert
-                    listOfOne.Add(certificateReferences.ToArray()[1]);
+                    List<CertificateReference> listOfOne = new List<CertificateReference>
+                    {
+                        // just pick one cert
+                        certificateReferences.ToArray()[1]
+                    };
 
                     boundPool.CertificateReferences = listOfOne;
 
@@ -283,7 +280,6 @@
             }
             finally
             {
-                // cleanup
                 TestUtilities.DeletePoolIfExistsAsync(batchCli, poolId).Wait();
             }
         }

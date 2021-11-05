@@ -46,7 +46,10 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// available.</param>
         /// <param name="frameworks">List of frameworks associated with
         /// application stack.</param>
-        public ApplicationStackResource(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string applicationStackResourceName = default(string), string display = default(string), string dependency = default(string), IList<StackMajorVersion> majorVersions = default(IList<StackMajorVersion>), IList<ApplicationStack> frameworks = default(IList<ApplicationStack>))
+        /// <param name="isDeprecated">&lt;code&gt;true&lt;/code&gt; if this is
+        /// the stack is deprecated; otherwise,
+        /// &lt;code&gt;false&lt;/code&gt;.</param>
+        public ApplicationStackResource(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string applicationStackResourceName = default(string), string display = default(string), string dependency = default(string), IList<StackMajorVersion> majorVersions = default(IList<StackMajorVersion>), IList<ApplicationStack> frameworks = default(IList<ApplicationStack>), IList<ApplicationStack> isDeprecated = default(IList<ApplicationStack>))
             : base(id, name, kind, type)
         {
             ApplicationStackResourceName = applicationStackResourceName;
@@ -54,6 +57,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
             Dependency = dependency;
             MajorVersions = majorVersions;
             Frameworks = frameworks;
+            IsDeprecated = isDeprecated;
             CustomInit();
         }
 
@@ -91,6 +95,14 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.frameworks")]
         public IList<ApplicationStack> Frameworks { get; set; }
+
+        /// <summary>
+        /// Gets or sets &amp;lt;code&amp;gt;true&amp;lt;/code&amp;gt; if this
+        /// is the stack is deprecated; otherwise,
+        /// &amp;lt;code&amp;gt;false&amp;lt;/code&amp;gt;.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.isDeprecated")]
+        public IList<ApplicationStack> IsDeprecated { get; set; }
 
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -15,7 +16,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of KeyVaultSecretReference. </summary>
         /// <param name="secretUrl"> The URL referencing a secret in a Key Vault. </param>
         /// <param name="sourceVault"> The relative URL of the Key Vault containing the secret. </param>
-        public KeyVaultSecretReference(string secretUrl, SubResource sourceVault)
+        /// <exception cref="ArgumentNullException"> <paramref name="secretUrl"/> or <paramref name="sourceVault"/> is null. </exception>
+        public KeyVaultSecretReference(string secretUrl, WritableSubResource sourceVault)
         {
             if (secretUrl == null)
             {
@@ -33,6 +35,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The URL referencing a secret in a Key Vault. </summary>
         public string SecretUrl { get; set; }
         /// <summary> The relative URL of the Key Vault containing the secret. </summary>
-        public SubResource SourceVault { get; set; }
+        public WritableSubResource SourceVault { get; set; }
     }
 }

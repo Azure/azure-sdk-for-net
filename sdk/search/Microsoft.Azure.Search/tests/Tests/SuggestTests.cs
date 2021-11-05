@@ -12,6 +12,7 @@ namespace Microsoft.Azure.Search.Tests
     using Microsoft.Azure.Search.Models;
     using Microsoft.Azure.Search.Tests.Utilities;
     using Xunit;
+    using Index = Microsoft.Azure.Search.Models.Index;
 
     // MAINTENANCE NOTE: Test methods (those marked with [Fact]) need to be in the derived classes in order for
     // the mock recording/playback to work properly.
@@ -30,7 +31,7 @@ namespace Microsoft.Azure.Search.Tests
 
             IEnumerable<Hotel> expectedDocs =
                 Data.TestDocuments.Where(h => h.HotelId == "8" || h.HotelId == "10").OrderBy(h => h.HotelId);
-                
+
             Assert.Equal(expectedDocs, response.Results.Select(r => r.Document));
             Assert.Equal(expectedDocs.Select(h => h.Description), response.Results.Select(r => r.Text));
         }
@@ -146,8 +147,8 @@ namespace Microsoft.Azure.Search.Tests
             var suggestParameters =
                 new SuggestParameters()
                 {
-                    OrderBy = new string[] 
-                    { 
+                    OrderBy = new string[]
+                    {
                         "rating desc",
                         "lastRenovationDate asc",
                         "geo.distance(location, geography'POINT(-122.0 49.0)')"

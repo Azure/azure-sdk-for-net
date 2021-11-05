@@ -29,7 +29,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         /// </value>
         ///
         /// <remarks>
-        ///   Ownership of this data, including the memory that holds its <see cref="EventData.Body" />,
+        ///   Ownership of this data, including the memory that holds its <see cref="EventData.EventBody" />,
         ///   is assumed to transfer to consumers of the <see cref="PartitionEvent" />.  It may be considered
         ///   immutable and is safe to access so long as the reference is held.
         /// </remarks>

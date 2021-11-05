@@ -17,7 +17,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             writer.WritePropertyName("applicationId");
             writer.WriteStringValue(ApplicationId);
-            if (ApplicationSecret != null)
+            if (Optional.IsDefined(ApplicationSecret))
             {
                 writer.WritePropertyName("applicationSecret");
                 writer.WriteStringValue(ApplicationSecret);
@@ -28,7 +28,7 @@ namespace Azure.Search.Documents.Indexes.Models
         internal static AzureActiveDirectoryApplicationCredentials DeserializeAzureActiveDirectoryApplicationCredentials(JsonElement element)
         {
             string applicationId = default;
-            string applicationSecret = default;
+            Optional<string> applicationSecret = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("applicationId"))
@@ -38,15 +38,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("applicationSecret"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     applicationSecret = property.Value.GetString();
                     continue;
                 }
             }
-            return new AzureActiveDirectoryApplicationCredentials(applicationId, applicationSecret);
+            return new AzureActiveDirectoryApplicationCredentials(applicationId, applicationSecret.Value);
         }
     }
 }

@@ -9,7 +9,6 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class CorsOptions
     {
         /// <summary> The list of origins from which JavaScript code will be granted access to your index. Can contain a list of hosts of the form {protocol}://{fully-qualified-domain-name}[:{port#}], or a single &apos;*&apos; to allow all origins (not recommended). </summary>
-        [CodeGenMember(EmptyAsUndefined = true, Initialize = true)]
         public IList<string> AllowedOrigins { get; }
     }
 }

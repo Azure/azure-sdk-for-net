@@ -1,22 +1,22 @@
 {
   "Entries": [
     {
-      "RequestUri": "/qnamaker/knowledgebases/8758c6af-fa29-4e03-a517-9c36927f558f/generateAnswer",
-      "EncodedRequestUri": "L3FuYW1ha2VyL2tub3dsZWRnZWJhc2VzLzg3NThjNmFmLWZhMjktNGUwMy1hNTE3LTljMzY5MjdmNTU4Zi9nZW5lcmF0ZUFuc3dlcg==",
+      "RequestUri": "/qnamaker/knowledgebases/43de8400-ed9b-44ff-829d-e1dd3c5c7cb0/generateAnswer",
+      "EncodedRequestUri": "L3FuYW1ha2VyL2tub3dsZWRnZWJhc2VzLzQzZGU4NDAwLWVkOWItNDRmZi04MjlkLWUxZGQzYzVjN2NiMC9nZW5lcmF0ZUFuc3dlcg==",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"question\": \"good afternoon\"\r\n}",
+      "RequestBody": "{\r\n  \"question\": \"hello\",\r\n  \"isTest\": true\r\n}",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.27617.04",
+          "FxVersion/4.6.29220.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18362.",
-          "Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.QnAMakerRuntimeClient/1.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.QnAMakerClient/2.1.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "36"
+          "46"
         ]
       },
       "ResponseHeaders": {
@@ -26,14 +26,11 @@
         "Pragma": [
           "no-cache"
         ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
         "Server": [
           "Kestrel"
         ],
         "Request-Context": [
-          "appId=cid-v1:57fe7dc2-cca1-4cfc-98d1-5f1f2f34f969"
+          "appId=cid-v1:b1a17ffe-70ae-45b9-ace2-463467459d35"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -48,10 +45,14 @@
           "max-age=31536000"
         ],
         "Set-Cookie": [
-          "ARRAffinity=7adbf14d8e75f98367e830cf2e4b1f04857993258b74780366c7f67db243f6f5;Path=/;HttpOnly;Domain=paidtestbot.azurewebsites.net"
+          "ARRAffinity=643da09f0404d87e0f12cd06d58428e9c5c4dc563c548b31276fa1f2a7ae5535;Path=/;HttpOnly;Secure;Domain=sk4cs.azurewebsites.net",
+          "ARRAffinitySameSite=643da09f0404d87e0f12cd06d58428e9c5c4dc563c548b31276fa1f2a7ae5535;Path=/;HttpOnly;SameSite=None;Secure;Domain=sk4cs.azurewebsites.net"
         ],
         "Date": [
-          "Mon, 08 Jul 2019 11:40:27 GMT"
+          "Mon, 19 Oct 2020 17:43:07 GMT"
+        ],
+        "Content-Length": [
+          "475"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -60,7 +61,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"answers\": [\r\n    {\r\n      \"questions\": [\r\n        \"Good Afternoon !\"\r\n      ],\r\n      \"answer\": \"Good Afternoon! I hope you are doing well\",\r\n      \"score\": 100.0,\r\n      \"id\": 191,\r\n      \"source\": \"out.txt\",\r\n      \"metadata\": [],\r\n      \"context\": {\r\n        \"isContextOnly\": false,\r\n        \"prompts\": []\r\n      }\r\n    }\r\n  ],\r\n  \"debugInfo\": null\r\n}",
+      "ResponseBody": "{\r\n  \"answers\": [\r\n    {\r\n      \"questions\": [\r\n        \"hello\",\r\n        \"hi\",\r\n        \"start\"\r\n      ],\r\n      \"answer\": \"Hello, please select from the list of questions or enter a new question to continue.\",\r\n      \"score\": 100.0,\r\n      \"id\": 31,\r\n      \"source\": \"Editorial\",\r\n      \"metadata\": [\r\n        {\r\n          \"name\": \"category\",\r\n          \"value\": \"chitchat\"\r\n        },\r\n        {\r\n          \"name\": \"chitchat\",\r\n          \"value\": \"begin\"\r\n        }\r\n      ],\r\n      \"context\": {\r\n        \"isContextOnly\": false,\r\n        \"prompts\": [\r\n          {\r\n            \"displayOrder\": 1,\r\n            \"qnaId\": 1,\r\n            \"displayText\": \"Use REST\"\r\n          },\r\n          {\r\n            \"displayOrder\": 2,\r\n            \"qnaId\": 2,\r\n            \"displayText\": \"Use .NET NuGet package\"\r\n          }\r\n        ]\r\n      }\r\n    }\r\n  ],\r\n  \"activeLearningEnabled\": false\r\n}",
       "StatusCode": 200
     }
   ],

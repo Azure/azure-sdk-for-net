@@ -8,35 +8,37 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The List Proximity Placement Group operation response. </summary>
-    public partial class ProximityPlacementGroupListResult
+    internal partial class ProximityPlacementGroupListResult
     {
         /// <summary> Initializes a new instance of ProximityPlacementGroupListResult. </summary>
         /// <param name="value"> The list of proximity placement groups. </param>
-        internal ProximityPlacementGroupListResult(IEnumerable<ProximityPlacementGroup> value)
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal ProximityPlacementGroupListResult(IEnumerable<ProximityPlacementGroupData> value)
         {
             if (value == null)
             {
                 throw new ArgumentNullException(nameof(value));
             }
 
-            Value = value.ToArray();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of ProximityPlacementGroupListResult. </summary>
         /// <param name="value"> The list of proximity placement groups. </param>
         /// <param name="nextLink"> The URI to fetch the next page of proximity placement groups. </param>
-        internal ProximityPlacementGroupListResult(IReadOnlyList<ProximityPlacementGroup> value, string nextLink)
+        internal ProximityPlacementGroupListResult(IReadOnlyList<ProximityPlacementGroupData> value, string nextLink)
         {
-            Value = value ?? new List<ProximityPlacementGroup>();
+            Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of proximity placement groups. </summary>
-        public IReadOnlyList<ProximityPlacementGroup> Value { get; }
+        public IReadOnlyList<ProximityPlacementGroupData> Value { get; }
         /// <summary> The URI to fetch the next page of proximity placement groups. </summary>
         public string NextLink { get; }
     }

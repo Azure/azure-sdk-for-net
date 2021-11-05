@@ -11,46 +11,36 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class VirtualNetworkGatewayListConnectionsResult
+    internal partial class VirtualNetworkGatewayListConnectionsResult
     {
         internal static VirtualNetworkGatewayListConnectionsResult DeserializeVirtualNetworkGatewayListConnectionsResult(JsonElement element)
         {
-            IReadOnlyList<VirtualNetworkGatewayConnectionListEntity> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<VirtualNetworkGatewayConnectionListEntity>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<VirtualNetworkGatewayConnectionListEntity> array = new List<VirtualNetworkGatewayConnectionListEntity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(VirtualNetworkGatewayConnectionListEntity.DeserializeVirtualNetworkGatewayConnectionListEntity(item));
-                        }
+                        array.Add(VirtualNetworkGatewayConnectionListEntity.DeserializeVirtualNetworkGatewayConnectionListEntity(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new VirtualNetworkGatewayListConnectionsResult(value, nextLink);
+            return new VirtualNetworkGatewayListConnectionsResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

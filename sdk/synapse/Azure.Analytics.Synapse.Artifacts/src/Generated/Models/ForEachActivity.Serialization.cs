@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(ForEachActivityConverter))]
     public partial class ForEachActivity : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -87,7 +90,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Expression items = default;
             IList<Activity> activities = default;
             IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -107,6 +110,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("dependsOn"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ActivityDependency> array = new List<ActivityDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -117,6 +125,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("userProperties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<UserProperty> array = new List<UserProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -127,15 +140,30 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("typeProperties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("isSequential"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             isSequential = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("batchCount"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             batchCount = property0.Value.GetInt32();
                             continue;
                         }
@@ -157,11 +185,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     }
                     continue;
                 }
-                additionalPropertiesDictionary ??= new Dictionary<string, object>();
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
             return new ForEachActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, Optional.ToNullable(isSequential), Optional.ToNullable(batchCount), items, activities);
+        }
+
+        internal partial class ForEachActivityConverter : JsonConverter<ForEachActivity>
+        {
+            public override void Write(Utf8JsonWriter writer, ForEachActivity model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override ForEachActivity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeForEachActivity(document.RootElement);
+            }
         }
     }
 }

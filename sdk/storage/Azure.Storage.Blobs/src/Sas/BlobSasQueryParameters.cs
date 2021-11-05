@@ -86,7 +86,11 @@ namespace Azure.Storage.Sas
             string contentDisposition = default,
             string contentEncoding = default,
             string contentLanguage = default,
-            string contentType = default)
+            string contentType = default,
+            string authorizedAadObjectId = default,
+            string unauthorizedAadObjectId = default,
+            string correlationId = default,
+            string encryptionScope = default)
             : base(
                 version,
                 services,
@@ -103,7 +107,12 @@ namespace Azure.Storage.Sas
                 contentDisposition,
                 contentEncoding,
                 contentLanguage,
-                contentType)
+                contentType,
+                authorizedAadObjectId,
+                unauthorizedAadObjectId,
+                correlationId,
+                directoryDepth: null,
+                encryptionScope)
         {
             KeyProperties = new UserDelegationKeyProperties
             {
@@ -140,7 +149,7 @@ namespace Azure.Storage.Sas
         {
             StringBuilder sb = new StringBuilder();
             KeyProperties.AppendProperties(sb);
-            this.AppendProperties(sb);
+            AppendProperties(sb);
             return sb.ToString();
         }
     }

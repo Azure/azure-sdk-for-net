@@ -15,17 +15,17 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Vendor != null)
+            if (Optional.IsDefined(Vendor))
             {
                 writer.WritePropertyName("vendor");
                 writer.WriteStringValue(Vendor);
             }
-            if (DeviceFamily != null)
+            if (Optional.IsDefined(DeviceFamily))
             {
                 writer.WritePropertyName("deviceFamily");
                 writer.WriteStringValue(DeviceFamily);
             }
-            if (FirmwareVersion != null)
+            if (Optional.IsDefined(FirmwareVersion))
             {
                 writer.WritePropertyName("firmwareVersion");
                 writer.WriteStringValue(FirmwareVersion);

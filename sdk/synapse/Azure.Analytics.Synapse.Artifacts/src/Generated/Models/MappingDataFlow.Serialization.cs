@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(MappingDataFlowConverter))]
     public partial class MappingDataFlow : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -103,6 +106,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("annotations"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<object> array = new List<object>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -113,15 +121,30 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("folder"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     folder = DataFlowFolder.DeserializeDataFlowFolder(property.Value);
                     continue;
                 }
                 if (property.NameEquals("typeProperties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("sources"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<DataFlowSource> array = new List<DataFlowSource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -132,6 +155,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         }
                         if (property0.NameEquals("sinks"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<DataFlowSink> array = new List<DataFlowSink>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -142,6 +170,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         }
                         if (property0.NameEquals("transformations"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<Transformation> array = new List<Transformation>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -160,6 +193,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new MappingDataFlow(type, description.Value, Optional.ToList(annotations), folder.Value, Optional.ToList(sources), Optional.ToList(sinks), Optional.ToList(transformations), script.Value);
+        }
+
+        internal partial class MappingDataFlowConverter : JsonConverter<MappingDataFlow>
+        {
+            public override void Write(Utf8JsonWriter writer, MappingDataFlow model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override MappingDataFlow Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeMappingDataFlow(document.RootElement);
+            }
         }
     }
 }

@@ -10,52 +10,13 @@
 
 namespace Microsoft.Azure.Management.Marketplace.Models
 {
-    using Newtonsoft.Json;
-    using System.Linq;
 
     /// <summary>
-    /// Microsoft.Marketplace REST API operation
+    /// Defines values for Operation.
     /// </summary>
-    public partial class Operation
+    public static class Operation
     {
-        /// <summary>
-        /// Initializes a new instance of the Operation class.
-        /// </summary>
-        public Operation()
-        {
-            CustomInit();
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the Operation class.
-        /// </summary>
-        /// <param name="name">Operation name:
-        /// {provider}/{resource}/{operation}</param>
-        /// <param name="display">The object that represents the
-        /// operation.</param>
-        public Operation(string name = default(string), OperationDisplay display = default(OperationDisplay))
-        {
-            Name = name;
-            Display = display;
-            CustomInit();
-        }
-
-        /// <summary>
-        /// An initialization method that performs custom operations like setting defaults
-        /// </summary>
-        partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets operation name: {provider}/{resource}/{operation}
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Gets or sets the object that represents the operation.
-        /// </summary>
-        [JsonProperty(PropertyName = "display")]
-        public OperationDisplay Display { get; set; }
-
+        public const string DeletePrivateStoreOffer = "DeletePrivateStoreOffer";
+        public const string Ping = "Ping";
     }
 }

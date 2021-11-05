@@ -4,7 +4,6 @@
 using Microsoft.Identity.Client;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Azure.Identity
 {
@@ -14,14 +13,19 @@ namespace Azure.Identity
     public struct DeviceCodeInfo
     {
         internal DeviceCodeInfo(DeviceCodeResult deviceCode)
+            : this(deviceCode.UserCode, deviceCode.DeviceCode, new Uri(deviceCode.VerificationUrl), deviceCode.ExpiresOn, deviceCode.Message, deviceCode.ClientId, deviceCode.Scopes)
         {
-            UserCode = deviceCode.UserCode;
-            DeviceCode = deviceCode.DeviceCode;
-            VerificationUri = new Uri(deviceCode.VerificationUrl);
-            ExpiresOn = deviceCode.ExpiresOn;
-            Message = deviceCode.Message;
-            ClientId = deviceCode.ClientId;
-            Scopes = deviceCode.Scopes;
+        }
+
+        internal DeviceCodeInfo(string userCode, string deviceCode, Uri verificationUri, DateTimeOffset expiresOn, string message, string clientId, IReadOnlyCollection<string> scopes)
+        {
+            UserCode = userCode;
+            DeviceCode = deviceCode;
+            VerificationUri = verificationUri;
+            ExpiresOn = expiresOn;
+            Message = message;
+            ClientId = clientId;
+            Scopes = scopes;
         }
 
         /// <summary>

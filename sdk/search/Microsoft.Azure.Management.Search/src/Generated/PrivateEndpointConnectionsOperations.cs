@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Search
         public SearchManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Updates a Private Endpoint connection to the Search service in the given
+        /// Updates a Private Endpoint connection to the search service in the given
         /// resource group.
         /// <see href="https://aka.ms/search-manage" />
         /// </summary>
@@ -292,7 +292,7 @@ namespace Microsoft.Azure.Management.Search
         }
 
         /// <summary>
-        /// Gets the details of the private endpoint connection to the Search service
+        /// Gets the details of the private endpoint connection to the search service
         /// in the given resource group.
         /// <see href="https://aka.ms/search-manage" />
         /// </summary>
@@ -519,7 +519,7 @@ namespace Microsoft.Azure.Management.Search
         }
 
         /// <summary>
-        /// Disconnects the private endpoint connection and deletes it from the Search
+        /// Disconnects the private endpoint connection and deletes it from the search
         /// service.
         /// <see href="https://aka.ms/search-manage" />
         /// </summary>

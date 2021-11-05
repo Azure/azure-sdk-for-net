@@ -7,8 +7,8 @@ using System.Resources;
 [assembly: AssemblyTitle("Microsoft Azure Stream Analytics Management Library")]
 [assembly: AssemblyDescription("Provides Microsoft Azure Stream Analytics management operations.")]
 
-[assembly: AssemblyVersion("2.0.0.0")]
-[assembly: AssemblyFileVersion("2.1.0.0")]
+[assembly: AssemblyVersion("3.0.0.0")]
+[assembly: AssemblyFileVersion("3.0.0.0")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
 [assembly: AssemblyProduct("Azure .NET SDK")]

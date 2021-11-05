@@ -15,6 +15,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         /// <summary> Initializes a new instance of AzureBlobFSLinkedService. </summary>
         /// <param name="url"> Endpoint for the Azure Data Lake Storage Gen2 service. Type: string (or Expression with resultType string). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
         public AzureBlobFSLinkedService(object url)
         {
             if (url == null)
@@ -32,20 +33,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="url"> Endpoint for the Azure Data Lake Storage Gen2 service. Type: string (or Expression with resultType string). </param>
         /// <param name="accountKey"> Account key for the Azure Data Lake Storage Gen2 service. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalId"> The ID of the application used to authenticate against the Azure Data Lake Storage Gen2 account. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalKey"> The Key of the application used to authenticate against the Azure Data Lake Storage Gen2 account. </param>
         /// <param name="tenant"> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </param>
+        /// <param name="azureCloudType"> Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal AzureBlobFSLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object url, object accountKey, object servicePrincipalId, SecretBase servicePrincipalKey, object tenant, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        internal AzureBlobFSLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object url, object accountKey, object servicePrincipalId, SecretBase servicePrincipalKey, object tenant, object azureCloudType, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
             Url = url;
             AccountKey = accountKey;
             ServicePrincipalId = servicePrincipalId;
             ServicePrincipalKey = servicePrincipalKey;
             Tenant = tenant;
+            AzureCloudType = azureCloudType;
             EncryptedCredential = encryptedCredential;
             Type = type ?? "AzureBlobFS";
         }
@@ -60,6 +63,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public SecretBase ServicePrincipalKey { get; set; }
         /// <summary> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </summary>
         public object Tenant { get; set; }
+        /// <summary> Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string). </summary>
+        public object AzureCloudType { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
         public object EncryptedCredential { get; set; }
     }

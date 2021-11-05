@@ -15,15 +15,16 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         internal static SearchIndexerLimits DeserializeSearchIndexerLimits(JsonElement element)
         {
-            TimeSpan? maxRunTime = default;
-            long? maxDocumentExtractionSize = default;
-            long? maxDocumentContentCharactersToExtract = default;
+            Optional<TimeSpan> maxRunTime = default;
+            Optional<long> maxDocumentExtractionSize = default;
+            Optional<long> maxDocumentContentCharactersToExtract = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxRunTime"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxRunTime = property.Value.GetTimeSpan("P");
@@ -33,6 +34,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxDocumentExtractionSize = property.Value.GetInt64();
@@ -42,13 +44,14 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxDocumentContentCharactersToExtract = property.Value.GetInt64();
                     continue;
                 }
             }
-            return new SearchIndexerLimits(maxRunTime, maxDocumentExtractionSize, maxDocumentContentCharactersToExtract);
+            return new SearchIndexerLimits(Optional.ToNullable(maxRunTime), Optional.ToNullable(maxDocumentExtractionSize), Optional.ToNullable(maxDocumentContentCharactersToExtract));
         }
     }
 }

@@ -50,7 +50,13 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// for the pool.</param>
         /// <param name="diskEncryptionConfiguration">The disk encryption
         /// configuration for the pool.</param>
-        public VirtualMachineConfiguration(ImageReference imageReference, string nodeAgentSkuId, WindowsConfiguration windowsConfiguration = default(WindowsConfiguration), IList<DataDisk> dataDisks = default(IList<DataDisk>), string licenseType = default(string), ContainerConfiguration containerConfiguration = default(ContainerConfiguration), DiskEncryptionConfiguration diskEncryptionConfiguration = default(DiskEncryptionConfiguration))
+        /// <param name="nodePlacementConfiguration">The node placement
+        /// configuration for the pool.</param>
+        /// <param name="extensions">The virtual machine extension for the
+        /// pool.</param>
+        /// <param name="osDisk">Settings for the operating system disk of the
+        /// Virtual Machine.</param>
+        public VirtualMachineConfiguration(ImageReference imageReference, string nodeAgentSkuId, WindowsConfiguration windowsConfiguration = default(WindowsConfiguration), IList<DataDisk> dataDisks = default(IList<DataDisk>), string licenseType = default(string), ContainerConfiguration containerConfiguration = default(ContainerConfiguration), DiskEncryptionConfiguration diskEncryptionConfiguration = default(DiskEncryptionConfiguration), NodePlacementConfiguration nodePlacementConfiguration = default(NodePlacementConfiguration), IList<VMExtension> extensions = default(IList<VMExtension>), OSDisk osDisk = default(OSDisk))
         {
             ImageReference = imageReference;
             NodeAgentSkuId = nodeAgentSkuId;
@@ -59,6 +65,9 @@ namespace Microsoft.Azure.Management.Batch.Models
             LicenseType = licenseType;
             ContainerConfiguration = containerConfiguration;
             DiskEncryptionConfiguration = diskEncryptionConfiguration;
+            NodePlacementConfiguration = nodePlacementConfiguration;
+            Extensions = extensions;
+            OsDisk = osDisk;
             CustomInit();
         }
 
@@ -153,6 +162,36 @@ namespace Microsoft.Azure.Management.Batch.Models
         public DiskEncryptionConfiguration DiskEncryptionConfiguration { get; set; }
 
         /// <summary>
+        /// Gets or sets the node placement configuration for the pool.
+        /// </summary>
+        /// <remarks>
+        /// This configuration will specify rules on how nodes in the pool will
+        /// be physically allocated.
+        /// </remarks>
+        [JsonProperty(PropertyName = "nodePlacementConfiguration")]
+        public NodePlacementConfiguration NodePlacementConfiguration { get; set; }
+
+        /// <summary>
+        /// Gets or sets the virtual machine extension for the pool.
+        /// </summary>
+        /// <remarks>
+        /// If specified, the extensions mentioned in this configuration will
+        /// be installed on each node.
+        /// </remarks>
+        [JsonProperty(PropertyName = "extensions")]
+        public IList<VMExtension> Extensions { get; set; }
+
+        /// <summary>
+        /// Gets or sets settings for the operating system disk of the Virtual
+        /// Machine.
+        /// </summary>
+        /// <remarks>
+        /// Contains configuration for ephemeral OSDisk settings.
+        /// </remarks>
+        [JsonProperty(PropertyName = "osDisk")]
+        public OSDisk OsDisk { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -175,6 +214,16 @@ namespace Microsoft.Azure.Management.Batch.Models
                     if (element != null)
                     {
                         element.Validate();
+                    }
+                }
+            }
+            if (Extensions != null)
+            {
+                foreach (var element1 in Extensions)
+                {
+                    if (element1 != null)
+                    {
+                        element1.Validate();
                     }
                 }
             }

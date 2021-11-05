@@ -16,22 +16,22 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ProvisionVMAgent != null)
+            if (Optional.IsDefined(ProvisionVMAgent))
             {
                 writer.WritePropertyName("provisionVMAgent");
                 writer.WriteBooleanValue(ProvisionVMAgent.Value);
             }
-            if (EnableAutomaticUpdates != null)
+            if (Optional.IsDefined(EnableAutomaticUpdates))
             {
                 writer.WritePropertyName("enableAutomaticUpdates");
                 writer.WriteBooleanValue(EnableAutomaticUpdates.Value);
             }
-            if (TimeZone != null)
+            if (Optional.IsDefined(TimeZone))
             {
                 writer.WritePropertyName("timeZone");
                 writer.WriteStringValue(TimeZone);
             }
-            if (AdditionalUnattendContent != null)
+            if (Optional.IsCollectionDefined(AdditionalUnattendContent))
             {
                 writer.WritePropertyName("additionalUnattendContent");
                 writer.WriteStartArray();
@@ -41,7 +41,12 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (WinRM != null)
+            if (Optional.IsDefined(PatchSettings))
+            {
+                writer.WritePropertyName("patchSettings");
+                writer.WriteObjectValue(PatchSettings);
+            }
+            if (Optional.IsDefined(WinRM))
             {
                 writer.WritePropertyName("winRM");
                 writer.WriteObjectValue(WinRM);
@@ -51,17 +56,19 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static WindowsConfiguration DeserializeWindowsConfiguration(JsonElement element)
         {
-            bool? provisionVMAgent = default;
-            bool? enableAutomaticUpdates = default;
-            string timeZone = default;
-            IList<AdditionalUnattendContent> additionalUnattendContent = default;
-            WinRMConfiguration winRM = default;
+            Optional<bool> provisionVMAgent = default;
+            Optional<bool> enableAutomaticUpdates = default;
+            Optional<string> timeZone = default;
+            Optional<IList<AdditionalUnattendContent>> additionalUnattendContent = default;
+            Optional<PatchSettings> patchSettings = default;
+            Optional<WinRMConfiguration> winRM = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisionVMAgent"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisionVMAgent = property.Value.GetBoolean();
@@ -71,6 +78,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enableAutomaticUpdates = property.Value.GetBoolean();
@@ -78,10 +86,6 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("timeZone"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     timeZone = property.Value.GetString();
                     continue;
                 }
@@ -89,34 +93,39 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AdditionalUnattendContent> array = new List<AdditionalUnattendContent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(Models.AdditionalUnattendContent.DeserializeAdditionalUnattendContent(item));
-                        }
+                        array.Add(Models.AdditionalUnattendContent.DeserializeAdditionalUnattendContent(item));
                     }
                     additionalUnattendContent = array;
+                    continue;
+                }
+                if (property.NameEquals("patchSettings"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    patchSettings = PatchSettings.DeserializePatchSettings(property.Value);
                     continue;
                 }
                 if (property.NameEquals("winRM"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     winRM = WinRMConfiguration.DeserializeWinRMConfiguration(property.Value);
                     continue;
                 }
             }
-            return new WindowsConfiguration(provisionVMAgent, enableAutomaticUpdates, timeZone, additionalUnattendContent, winRM);
+            return new WindowsConfiguration(Optional.ToNullable(provisionVMAgent), Optional.ToNullable(enableAutomaticUpdates), timeZone.Value, Optional.ToList(additionalUnattendContent), patchSettings.Value, winRM.Value);
         }
     }
 }

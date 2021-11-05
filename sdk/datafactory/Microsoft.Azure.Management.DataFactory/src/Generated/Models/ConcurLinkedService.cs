@@ -46,6 +46,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="parameters">Parameters for linked service.</param>
         /// <param name="annotations">List of tags that can be used for
         /// describing the linked service.</param>
+        /// <param name="connectionProperties">Properties used to connect to
+        /// Concur. It is mutually exclusive with any other properties in the
+        /// linked service. Type: object.</param>
         /// <param name="password">The password corresponding to the user name
         /// that you provided in the username field.</param>
         /// <param name="useEncryptedEndpoints">Specifies whether the data
@@ -61,9 +64,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public ConcurLinkedService(object clientId, object username, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), SecretBase password = default(SecretBase), object useEncryptedEndpoints = default(object), object useHostVerification = default(object), object usePeerVerification = default(object), object encryptedCredential = default(object))
+        public ConcurLinkedService(object clientId, object username, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object connectionProperties = default(object), SecretBase password = default(SecretBase), object useEncryptedEndpoints = default(object), object useHostVerification = default(object), object usePeerVerification = default(object), object encryptedCredential = default(object))
             : base(additionalProperties, connectVia, description, parameters, annotations)
         {
+            ConnectionProperties = connectionProperties;
             ClientId = clientId;
             Username = username;
             Password = password;
@@ -78,6 +82,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets properties used to connect to Concur. It is mutually
+        /// exclusive with any other properties in the linked service. Type:
+        /// object.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.connectionProperties")]
+        public object ConnectionProperties { get; set; }
 
         /// <summary>
         /// Gets or sets application client_id supplied by Concur App

@@ -15,13 +15,6 @@ namespace Azure.ResourceManager.Resources.Models
         {
         }
 
-        /// <summary> Initializes a new instance of DeploymentExtendedFilter. </summary>
-        /// <param name="provisioningState"> The provisioning state. </param>
-        internal DeploymentExtendedFilter(string provisioningState)
-        {
-            ProvisioningState = provisioningState;
-        }
-
         /// <summary> The provisioning state. </summary>
         public string ProvisioningState { get; }
     }

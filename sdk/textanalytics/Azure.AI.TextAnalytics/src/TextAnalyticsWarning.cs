@@ -1,17 +1,19 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.AI.TextAnalytics.Models;
+
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// Text Analytics Warning.
     /// </summary>
-    public struct TextAnalyticsWarning
+    public readonly struct TextAnalyticsWarning
     {
-        internal TextAnalyticsWarning(string code, string message)
+        internal TextAnalyticsWarning(TextAnalyticsWarningInternal warning)
         {
-            WarningCode = code;
-            Message = message;
+            WarningCode = warning.Code;
+            Message = warning.Message;
         }
 
         /// <summary>

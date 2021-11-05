@@ -87,7 +87,7 @@ namespace Microsoft.Azure.Management.Security
                     throw new ValidationException(ValidationRules.Pattern, "Client.SubscriptionId", "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$");
                 }
             }
-            string apiVersion = "2019-01-01";
+            string apiVersion = "2021-07-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -237,7 +237,8 @@ namespace Microsoft.Azure.Management.Security
         /// Settings of different configurations in security center
         /// </summary>
         /// <param name='settingName'>
-        /// Name of setting: (MCAS/WDATP). Possible values include: 'MCAS', 'WDATP'
+        /// The name of the setting. Possible values include: 'MCAS', 'WDATP',
+        /// 'WDATP_EXCLUDE_LINUX_PUBLIC_PREVIEW', 'Sentinel'
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -277,7 +278,7 @@ namespace Microsoft.Azure.Management.Security
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "settingName");
             }
-            string apiVersion = "2019-01-01";
+            string apiVersion = "2021-07-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -429,7 +430,8 @@ namespace Microsoft.Azure.Management.Security
         /// updating settings about different configurations in security center
         /// </summary>
         /// <param name='settingName'>
-        /// Name of setting: (MCAS/WDATP). Possible values include: 'MCAS', 'WDATP'
+        /// The name of the setting. Possible values include: 'MCAS', 'WDATP',
+        /// 'WDATP_EXCLUDE_LINUX_PUBLIC_PREVIEW', 'Sentinel'
         /// </param>
         /// <param name='setting'>
         /// Setting object
@@ -476,7 +478,7 @@ namespace Microsoft.Azure.Management.Security
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "setting");
             }
-            string apiVersion = "2019-01-01";
+            string apiVersion = "2021-07-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

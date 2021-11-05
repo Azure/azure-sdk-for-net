@@ -2,17 +2,15 @@
   <PropertyGroup>
     <AssemblyTitle>Microsoft Cognitive Services CustomVision Training SDK</AssemblyTitle>
     <Description>This client library provides access to the Microsoft Cognitive Services CustomVision Training APIs.</Description>
-    <Version>2.0.0</Version>
+    <Version>2.1.0-preview</Version>
     <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;REST HTTP client;Custom Vision;Custom Vision Training API;Custom Vision Training SDK;Vision;netcore451511</PackageTags>
     <PackageReleaseNotes>
     <![CDATA[
     This is a public release of the Cognitive Services Custom Vision Training SDK.
 
     Changes in this release:
-    1) Added support to import and export projects.
-    2) Added support to train on a subset of training tags.
-    3) Updated CustomVisionTrainingClient to take in a credentials class for use with different types of authentication credentials. Client now use an ApiKeyServiceClientCredentials instead of passing in an ApiKey.
-
+      1) Added support to train a new iteration using another iteration as the starting point.
+      2) Added more information about exportable models.
     ]]>
     </PackageReleaseNotes>
   </PropertyGroup>

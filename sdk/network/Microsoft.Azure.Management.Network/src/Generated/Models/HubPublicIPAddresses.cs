@@ -31,10 +31,10 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the HubPublicIPAddresses class.
         /// </summary>
-        /// <param name="addresses">The number of Public IP addresses
-        /// associated with azure firewall.</param>
-        /// <param name="count">Private IP Address associated with azure
-        /// firewall.</param>
+        /// <param name="addresses">The list of Public IP addresses associated
+        /// with azure firewall or IP addresses to be retained.</param>
+        /// <param name="count">The number of Public IP addresses associated
+        /// with azure firewall.</param>
         public HubPublicIPAddresses(IList<AzureFirewallPublicIPAddress> addresses = default(IList<AzureFirewallPublicIPAddress>), int? count = default(int?))
         {
             Addresses = addresses;
@@ -48,14 +48,15 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the number of Public IP addresses associated with
-        /// azure firewall.
+        /// Gets or sets the list of Public IP addresses associated with azure
+        /// firewall or IP addresses to be retained.
         /// </summary>
         [JsonProperty(PropertyName = "addresses")]
         public IList<AzureFirewallPublicIPAddress> Addresses { get; set; }
 
         /// <summary>
-        /// Gets or sets private IP Address associated with azure firewall.
+        /// Gets or sets the number of Public IP addresses associated with
+        /// azure firewall.
         /// </summary>
         [JsonProperty(PropertyName = "count")]
         public int? Count { get; set; }

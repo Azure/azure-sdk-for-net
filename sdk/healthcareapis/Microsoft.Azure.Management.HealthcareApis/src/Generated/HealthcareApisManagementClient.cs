@@ -90,6 +90,16 @@ namespace Microsoft.Azure.Management.HealthcareApis
         public virtual IOperationResultsOperations OperationResults { get; private set; }
 
         /// <summary>
+        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// </summary>
+        public virtual IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; private set; }
+
+        /// <summary>
+        /// Gets the IPrivateLinkResourcesOperations.
+        /// </summary>
+        public virtual IPrivateLinkResourcesOperations PrivateLinkResources { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the HealthcareApisManagementClient class.
         /// </summary>
         /// <param name='httpClient'>
@@ -333,8 +343,10 @@ namespace Microsoft.Azure.Management.HealthcareApis
             Services = new ServicesOperations(this);
             Operations = new Operations(this);
             OperationResults = new OperationResultsOperations(this);
+            PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
+            PrivateLinkResources = new PrivateLinkResourcesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-09-16";
+            ApiVersion = "2020-03-30";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -351,6 +363,7 @@ namespace Microsoft.Azure.Management.HealthcareApis
                         new Iso8601TimeSpanConverter()
                     }
             };
+            SerializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings = new JsonSerializerSettings
             {
                 DateFormatHandling = Newtonsoft.Json.DateFormatHandling.IsoDateFormat,
@@ -364,6 +377,7 @@ namespace Microsoft.Azure.Management.HealthcareApis
                     }
             };
             CustomInitialize();
+            DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());
         }
     }

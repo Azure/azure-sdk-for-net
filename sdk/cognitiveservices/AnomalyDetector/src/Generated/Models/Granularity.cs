@@ -32,7 +32,9 @@ namespace Microsoft.Azure.CognitiveServices.AnomalyDetector.Models
         [EnumMember(Value = "hourly")]
         Hourly,
         [EnumMember(Value = "minutely")]
-        Minutely
+        Minutely,
+        [EnumMember(Value = "secondly")]
+        Secondly
     }
     internal static class GranularityEnumExtension
     {
@@ -57,6 +59,8 @@ namespace Microsoft.Azure.CognitiveServices.AnomalyDetector.Models
                     return "hourly";
                 case Granularity.Minutely:
                     return "minutely";
+                case Granularity.Secondly:
+                    return "secondly";
             }
             return null;
         }
@@ -77,6 +81,8 @@ namespace Microsoft.Azure.CognitiveServices.AnomalyDetector.Models
                     return Granularity.Hourly;
                 case "minutely":
                     return Granularity.Minutely;
+                case "secondly":
+                    return Granularity.Secondly;
             }
             return null;
         }

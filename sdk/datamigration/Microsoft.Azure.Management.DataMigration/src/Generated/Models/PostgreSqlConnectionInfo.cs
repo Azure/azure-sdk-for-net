@@ -35,12 +35,18 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// <param name="userName">User name</param>
         /// <param name="password">Password credential.</param>
         /// <param name="databaseName">Name of the database</param>
-        public PostgreSqlConnectionInfo(string serverName, int port, string userName = default(string), string password = default(string), string databaseName = default(string))
+        /// <param name="encryptConnection">Whether to encrypt the
+        /// connection</param>
+        /// <param name="trustServerCertificate">Whether to trust the server
+        /// certificate</param>
+        public PostgreSqlConnectionInfo(string serverName, int port, string userName = default(string), string password = default(string), string databaseName = default(string), bool? encryptConnection = default(bool?), bool? trustServerCertificate = default(bool?))
             : base(userName, password)
         {
             ServerName = serverName;
             DatabaseName = databaseName;
             Port = port;
+            EncryptConnection = encryptConnection;
+            TrustServerCertificate = trustServerCertificate;
             CustomInit();
         }
 
@@ -66,6 +72,18 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// </summary>
         [JsonProperty(PropertyName = "port")]
         public int Port { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether to encrypt the connection
+        /// </summary>
+        [JsonProperty(PropertyName = "encryptConnection")]
+        public bool? EncryptConnection { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether to trust the server certificate
+        /// </summary>
+        [JsonProperty(PropertyName = "trustServerCertificate")]
+        public bool? TrustServerCertificate { get; set; }
 
         /// <summary>
         /// Validate the object.

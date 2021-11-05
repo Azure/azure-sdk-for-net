@@ -35,19 +35,47 @@ namespace Azure.Data.Tables.Sas
         /// <param name="expiresOn">The time at which the shared access signature becomes invalid.</param>
         public TableAccountSasBuilder(string rawPermissions, TableAccountSasResourceTypes resourceTypes, DateTimeOffset expiresOn)
         {
+            Argument.AssertNotNullOrEmpty(rawPermissions, nameof(rawPermissions));
+
             ExpiresOn = expiresOn;
             Permissions = rawPermissions;
             ResourceTypes = resourceTypes;
         }
 
         /// <summary>
+        /// Initializes a new instance of <see cref="TableAccountSasBuilder"/> based on an existing Uri containing a shared acccess signature.
+        /// </summary>
+        /// <param name="sasUri">The Uri containing a SAS token to parse.</param>
+        /// <returns></returns>
+        public TableAccountSasBuilder(Uri sasUri)
+        {
+            Argument.AssertNotNull(sasUri, nameof(sasUri));
+
+            var uriBuilder = new TableUriBuilder(sasUri);
+
+            if (!uriBuilder.Sas.ResourceTypes.HasValue)
+            {
+                throw new ArgumentException("Uri must contain a ResourceType value", nameof(sasUri));
+            }
+
+            ExpiresOn = uriBuilder.Sas.ExpiresOn;
+            Identifier = uriBuilder.Sas.Identifier;
+            IPRange = uriBuilder.Sas.IPRange;
+            Protocol = uriBuilder.Sas.Protocol;
+            StartsOn = uriBuilder.Sas.StartsOn;
+            Version = uriBuilder.Sas.Version;
+            ResourceTypes = uriBuilder.Sas.ResourceTypes.Value;
+            SetPermissions(uriBuilder.Sas.Permissions);
+        }
+
+        /// <summary>
         /// The optional signed protocol field specifies the protocol
         /// permitted for a request made with the SAS.  Possible values are
-        /// <see cref="SasProtocol.HttpsAndHttp"/>,
-        /// <see cref="SasProtocol.Https"/>, and
-        /// <see cref="SasProtocol.None"/>.
+        /// <see cref="TableSasProtocol.HttpsAndHttp"/>,
+        /// <see cref="TableSasProtocol.Https"/>, and
+        /// <see cref="TableSasProtocol.None"/>.
         /// </summary>
-        public SasProtocol Protocol { get; set; }
+        public TableSasProtocol Protocol { get; set; }
 
         /// <summary>
         /// Optionally specify the time at which the shared access signature
@@ -81,7 +109,7 @@ namespace Azure.Data.Tables.Sas
         /// When specifying a range of IP addresses, note that the range is
         /// inclusive.
         /// </summary>
-        public SasIPRange IPRange { get; set; }
+        public TableSasIPRange IPRange { get; set; }
 
         /// <summary>
         /// An optional unique value up to 64 characters in length that
@@ -139,8 +167,8 @@ namespace Azure.Data.Tables.Sas
 
             EnsureState();
 
-            var startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
-            var expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
+            var startTime = TableSasExtensions.FormatTimesForSasSigning(StartsOn);
+            var expiryTime = TableSasExtensions.FormatTimesForSasSigning(ExpiresOn);
 
             // String to sign: https://docs.microsoft.com/en-us/rest/api/storageservices/create-account-sas#constructing-the-signature-string
             var stringToSign = string.Join("\n",

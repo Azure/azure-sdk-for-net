@@ -8,39 +8,34 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class ObjectReplicationPolicies
+    internal partial class ObjectReplicationPolicies
     {
         internal static ObjectReplicationPolicies DeserializeObjectReplicationPolicies(JsonElement element)
         {
-            IReadOnlyList<ObjectReplicationPolicy> value = default;
+            Optional<IReadOnlyList<ObjectReplicationPolicyData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ObjectReplicationPolicy> array = new List<ObjectReplicationPolicy>();
+                    List<ObjectReplicationPolicyData> array = new List<ObjectReplicationPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ObjectReplicationPolicy.DeserializeObjectReplicationPolicy(item));
-                        }
+                        array.Add(ObjectReplicationPolicyData.DeserializeObjectReplicationPolicyData(item));
                     }
                     value = array;
                     continue;
                 }
             }
-            return new ObjectReplicationPolicies(value);
+            return new ObjectReplicationPolicies(Optional.ToList(value));
         }
     }
 }

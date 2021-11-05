@@ -5,13 +5,16 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    public partial class TriggerListResponse
+    [JsonConverter(typeof(TriggerListResponseConverter))]
+    internal partial class TriggerListResponse
     {
         internal static TriggerListResponse DeserializeTriggerListResponse(JsonElement element)
         {
@@ -36,6 +39,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new TriggerListResponse(value, nextLink.Value);
+        }
+
+        internal partial class TriggerListResponseConverter : JsonConverter<TriggerListResponse>
+        {
+            public override void Write(Utf8JsonWriter writer, TriggerListResponse model, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
+            public override TriggerListResponse Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeTriggerListResponse(document.RootElement);
+            }
         }
     }
 }

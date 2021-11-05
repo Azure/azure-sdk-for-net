@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
-
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> IP addresses associated with azure firewall. </summary>
@@ -18,16 +16,16 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of HubIPAddresses. </summary>
-        /// <param name="publicIPAddresses"> List of Public IP addresses associated with azure firewall. </param>
+        /// <param name="publicIPs"> Public IP addresses associated with azure firewall. </param>
         /// <param name="privateIPAddress"> Private IP Address associated with azure firewall. </param>
-        internal HubIPAddresses(IList<AzureFirewallPublicIPAddress> publicIPAddresses, string privateIPAddress)
+        internal HubIPAddresses(HubPublicIPAddresses publicIPs, string privateIPAddress)
         {
-            PublicIPAddresses = publicIPAddresses;
+            PublicIPs = publicIPs;
             PrivateIPAddress = privateIPAddress;
         }
 
-        /// <summary> List of Public IP addresses associated with azure firewall. </summary>
-        public IList<AzureFirewallPublicIPAddress> PublicIPAddresses { get; set; }
+        /// <summary> Public IP addresses associated with azure firewall. </summary>
+        public HubPublicIPAddresses PublicIPs { get; set; }
         /// <summary> Private IP Address associated with azure firewall. </summary>
         public string PrivateIPAddress { get; set; }
     }

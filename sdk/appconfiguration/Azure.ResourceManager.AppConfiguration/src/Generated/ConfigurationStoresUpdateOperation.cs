@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.AppConfiguration
     public partial class ConfigurationStoresUpdateOperation : Operation<ConfigurationStore>, IOperationSource<ConfigurationStore>
     {
         private readonly ArmOperationHelpers<ConfigurationStore> _operation;
+
+        /// <summary> Initializes a new instance of ConfigurationStoresUpdateOperation for mocking. </summary>
+        protected ConfigurationStoresUpdateOperation()
+        {
+        }
+
         internal ConfigurationStoresUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<ConfigurationStore>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ConfigurationStoresUpdateOperation");
@@ -54,27 +60,13 @@ namespace Azure.ResourceManager.AppConfiguration
         ConfigurationStore IOperationSource<ConfigurationStore>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return ConfigurationStore.DeserializeConfigurationStore(document.RootElement);
-            }
+            return ConfigurationStore.DeserializeConfigurationStore(document.RootElement);
         }
 
         async ValueTask<ConfigurationStore> IOperationSource<ConfigurationStore>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return ConfigurationStore.DeserializeConfigurationStore(document.RootElement);
-            }
+            return ConfigurationStore.DeserializeConfigurationStore(document.RootElement);
         }
     }
 }

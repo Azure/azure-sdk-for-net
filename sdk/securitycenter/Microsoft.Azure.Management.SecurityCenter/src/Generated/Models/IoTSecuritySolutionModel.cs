@@ -34,7 +34,6 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <summary>
         /// Initializes a new instance of the IoTSecuritySolutionModel class.
         /// </summary>
-        /// <param name="workspace">Workspace resource ID</param>
         /// <param name="displayName">Resource display name.</param>
         /// <param name="iotHubs">IoT Hub resource IDs</param>
         /// <param name="id">Resource Id</param>
@@ -42,6 +41,7 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
         /// <param name="location">The resource location.</param>
+        /// <param name="workspace">Workspace resource ID</param>
         /// <param name="status">Status of the IoT Security solution. Possible
         /// values include: 'Enabled', 'Disabled'</param>
         /// <param name="export">List of additional options for exporting to
@@ -53,7 +53,11 @@ namespace Microsoft.Azure.Management.Security.Models
         /// solution.</param>
         /// <param name="unmaskedIpLoggingStatus">Unmasked IP address logging
         /// status. Possible values include: 'Disabled', 'Enabled'</param>
-        public IoTSecuritySolutionModel(string workspace, string displayName, IList<string> iotHubs, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), string status = default(string), IList<string> export = default(IList<string>), IList<string> disabledDataSources = default(IList<string>), UserDefinedResourcesProperties userDefinedResources = default(UserDefinedResourcesProperties), IList<string> autoDiscoveredResources = default(IList<string>), IList<RecommendationConfigurationProperties> recommendationsConfiguration = default(IList<RecommendationConfigurationProperties>), string unmaskedIpLoggingStatus = default(string))
+        /// <param name="additionalWorkspaces">List of additional
+        /// workspaces</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
+        public IoTSecuritySolutionModel(string displayName, IList<string> iotHubs, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), string workspace = default(string), string status = default(string), IList<string> export = default(IList<string>), IList<string> disabledDataSources = default(IList<string>), UserDefinedResourcesProperties userDefinedResources = default(UserDefinedResourcesProperties), IList<string> autoDiscoveredResources = default(IList<string>), IList<RecommendationConfigurationProperties> recommendationsConfiguration = default(IList<RecommendationConfigurationProperties>), string unmaskedIpLoggingStatus = default(string), IList<AdditionalWorkspacesProperties> additionalWorkspaces = default(IList<AdditionalWorkspacesProperties>), SystemData systemData = default(SystemData))
         {
             Id = id;
             Name = name;
@@ -70,6 +74,8 @@ namespace Microsoft.Azure.Management.Security.Models
             AutoDiscoveredResources = autoDiscoveredResources;
             RecommendationsConfiguration = recommendationsConfiguration;
             UnmaskedIpLoggingStatus = unmaskedIpLoggingStatus;
+            AdditionalWorkspaces = additionalWorkspaces;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -172,6 +178,19 @@ namespace Microsoft.Azure.Management.Security.Models
         public string UnmaskedIpLoggingStatus { get; set; }
 
         /// <summary>
+        /// Gets or sets list of additional workspaces
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.additionalWorkspaces")]
+        public IList<AdditionalWorkspacesProperties> AdditionalWorkspaces { get; set; }
+
+        /// <summary>
+        /// Gets azure Resource Manager metadata containing createdBy and
+        /// modifiedBy information.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -179,10 +198,6 @@ namespace Microsoft.Azure.Management.Security.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Workspace == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Workspace");
-            }
             if (DisplayName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "DisplayName");

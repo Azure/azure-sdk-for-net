@@ -19,7 +19,6 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
     /// <summary>
     /// The parameters for a quick task run request.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("EncodedTaskRunRequest")]
     public partial class EncodedTaskRunRequest : RunRequest
     {
         /// <summary>

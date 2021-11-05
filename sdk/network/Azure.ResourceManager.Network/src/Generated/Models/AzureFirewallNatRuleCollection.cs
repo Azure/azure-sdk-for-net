@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of AzureFirewallNatRuleCollection. </summary>
         public AzureFirewallNatRuleCollection()
         {
+            Rules = new ChangeTrackingList<AzureFirewallNatRule>();
         }
 
         /// <summary> Initializes a new instance of AzureFirewallNatRuleCollection. </summary>
@@ -44,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The action type of a NAT rule collection. </summary>
         public AzureFirewallNatRCAction Action { get; set; }
         /// <summary> Collection of rules used by a NAT rule collection. </summary>
-        public IList<AzureFirewallNatRule> Rules { get; set; }
+        public IList<AzureFirewallNatRule> Rules { get; }
         /// <summary> The provisioning state of the NAT rule collection resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteStartObject();
             writer.WritePropertyName("uri");
             writer.WriteStringValue(Uri);
-            if (ContentVersion != null)
+            if (Optional.IsDefined(ContentVersion))
             {
                 writer.WritePropertyName("contentVersion");
                 writer.WriteStringValue(ContentVersion);
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Resources.Models
         internal static ParametersLink DeserializeParametersLink(JsonElement element)
         {
             string uri = default;
-            string contentVersion = default;
+            Optional<string> contentVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("uri"))
@@ -38,15 +38,11 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("contentVersion"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     contentVersion = property.Value.GetString();
                     continue;
                 }
             }
-            return new ParametersLink(uri, contentVersion);
+            return new ParametersLink(uri, contentVersion.Value);
         }
     }
 }

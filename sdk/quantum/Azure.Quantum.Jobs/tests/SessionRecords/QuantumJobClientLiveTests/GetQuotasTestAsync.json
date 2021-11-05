@@ -1,0 +1,95 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://westus.quantum.azure.com/v1.0/subscriptions/677fc922-91d0-4bf6-9b06-4274d319a0fa/resourceGroups/sdk-review-rg/providers/Microsoft.Quantum/workspaces/workspace-ms/quotas",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-Quantum.Jobs/1.0.0-alpha.20210326.1",
+          "(.NET Core 4.6.29812.02; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "0163258f5b3a437e9d966a360c4f6d3c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "911",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 26 Mar 2021 07:22:38 GMT",
+        "Request-Context": "appId=cid-v1:4d6ac272-7369-45c6-9036-63d733c8519f",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=2592000",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "dimension": "combined_job_hours",
+            "scope": "Workspace",
+            "providerId": "Microsoft",
+            "utilization": -0.017852042555555551,
+            "holds": 0.0,
+            "limit": 10000.0,
+            "period": "Monthly"
+          },
+          {
+            "dimension": "combined_job_hours",
+            "scope": "Subscription",
+            "providerId": "Microsoft",
+            "utilization": 11.766338933944448,
+            "holds": 0.0,
+            "limit": 10000.0,
+            "period": "Monthly"
+          },
+          {
+            "dimension": "concurrent_cpu_jobs",
+            "scope": "Workspace",
+            "providerId": "Microsoft",
+            "utilization": 0.0,
+            "holds": 0.0,
+            "limit": 5.0,
+            "period": "None"
+          },
+          {
+            "dimension": "fpga_job_hours",
+            "scope": "Workspace",
+            "providerId": "Microsoft",
+            "utilization": 0.0,
+            "holds": 0.0,
+            "limit": 20.0,
+            "period": "Monthly"
+          },
+          {
+            "dimension": "fpga_job_hours",
+            "scope": "Subscription",
+            "providerId": "Microsoft",
+            "utilization": 0.0,
+            "holds": 0.0,
+            "limit": 40.0,
+            "period": "Monthly"
+          },
+          {
+            "dimension": "concurrent_fpga_jobs",
+            "scope": "Workspace",
+            "providerId": "Microsoft",
+            "utilization": 0.0,
+            "holds": 0.0,
+            "limit": 5.0,
+            "period": "None"
+          }
+        ],
+        "nextLink": null
+      }
+    }
+  ],
+  "Variables": {
+    "LOCATION": "westus",
+    "RandomSeed": "1047542448",
+    "RESOURCE_GROUP": "sdk-review-rg",
+    "SUBSCRIPTION_ID": "677fc922-91d0-4bf6-9b06-4274d319a0fa",
+    "WORKSPACE_NAME": "workspace-ms"
+  }
+}

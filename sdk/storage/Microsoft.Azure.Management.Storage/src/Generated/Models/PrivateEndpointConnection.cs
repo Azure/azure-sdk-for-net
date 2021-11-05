@@ -35,12 +35,12 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <param name="privateLinkServiceConnectionState">A collection of
         /// information about the state of the connection between service
         /// consumer and provider.</param>
-        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource. Ex-
-        /// Microsoft.Compute/virtualMachines or
-        /// Microsoft.Storage/storageAccounts.</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="privateEndpoint">The resource of private end
         /// point.</param>
         /// <param name="provisioningState">The provisioning state of the

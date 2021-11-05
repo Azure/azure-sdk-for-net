@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
@@ -134,52 +135,8 @@ namespace Azure.Core.Samples
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        public async Task AsyncPageableAsPages()
-        {
-            // create a client
-            var client = new SecretClient(new Uri("http://example.com"), new DefaultAzureCredential());
-
-            #region Snippet:AsyncPageableAsPages
-            // call a service method, which returns AsyncPageable<T>
-            AsyncPageable<SecretProperties> allSecretProperties = client.GetPropertiesOfSecretsAsync();
-
-            await foreach (Page<SecretProperties> page in allSecretProperties.AsPages())
-            {
-                // enumerate through page items
-                foreach (SecretProperties secretProperties in page.Values)
-                {
-                    Console.WriteLine(secretProperties.Name);
-                }
-
-                // get continuation token that can be used in AsPages call to resume enumeration
-                Console.WriteLine(page.ContinuationToken);
-            }
-            #endregion
-        }
-
-        [Test]
-        [Ignore("Only verifying that the sample builds")]
-        public void Pageable()
-        {
-            // create a client
-            var client = new SecretClient(new Uri("http://example.com"), new DefaultAzureCredential());
-
-            #region Snippet:Pageable
-            // call a service method, which returns Pageable<T>
-            Pageable<SecretProperties> allSecretProperties = client.GetPropertiesOfSecrets();
-
-            foreach (SecretProperties secretProperties in allSecretProperties)
-            {
-                Console.WriteLine(secretProperties.Name);
-            }
-            #endregion
-        }
-
-        [Test]
-        [Ignore("Only verifying that the sample builds")]
         public void RequestFailedException()
         {
-
             // create a client
             var client = new SecretClient(new Uri("http://example.com"), new DefaultAzureCredential());
 

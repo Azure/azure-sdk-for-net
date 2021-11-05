@@ -44,5 +44,16 @@ namespace Azure.Storage.Shared
 
             return string.Join("/", split);
         }
+
+        public static string GenerateBlockId(long offset)
+        {
+            // TODO #8162 - Add in a random GUID so multiple simultaneous
+            // uploads won't stomp on each other and the first to commit wins.
+            // This will require some changes to our test framework's
+            // RecordedClientRequestIdPolicy.
+            byte[] id = new byte[48]; // 48 raw bytes => 64 byte string once Base64 encoded
+            BitConverter.GetBytes(offset).CopyTo(id, 0);
+            return Convert.ToBase64String(id);
+        }
     }
 }

@@ -11,46 +11,36 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class NetworkInterfaceIPConfigurationListResult
+    internal partial class NetworkInterfaceIPConfigurationListResult
     {
         internal static NetworkInterfaceIPConfigurationListResult DeserializeNetworkInterfaceIPConfigurationListResult(JsonElement element)
         {
-            IReadOnlyList<NetworkInterfaceIPConfiguration> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<NetworkInterfaceIPConfiguration>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<NetworkInterfaceIPConfiguration> array = new List<NetworkInterfaceIPConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(NetworkInterfaceIPConfiguration.DeserializeNetworkInterfaceIPConfiguration(item));
-                        }
+                        array.Add(NetworkInterfaceIPConfiguration.DeserializeNetworkInterfaceIPConfiguration(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new NetworkInterfaceIPConfigurationListResult(value, nextLink);
+            return new NetworkInterfaceIPConfigurationListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

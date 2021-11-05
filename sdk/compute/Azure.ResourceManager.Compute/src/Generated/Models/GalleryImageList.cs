@@ -8,36 +8,38 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The List Gallery Images operation response. </summary>
-    public partial class GalleryImageList
+    internal partial class GalleryImageList
     {
         /// <summary> Initializes a new instance of GalleryImageList. </summary>
         /// <param name="value"> A list of Shared Image Gallery images. </param>
-        internal GalleryImageList(IEnumerable<GalleryImage> value)
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal GalleryImageList(IEnumerable<GalleryImageData> value)
         {
             if (value == null)
             {
                 throw new ArgumentNullException(nameof(value));
             }
 
-            Value = value.ToArray();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of GalleryImageList. </summary>
         /// <param name="value"> A list of Shared Image Gallery images. </param>
-        /// <param name="nextLink"> The uri to fetch the next page of Image Definitions in the Shared Image Gallery. Call ListNext() with this to fetch the next page of gallery Image Definitions. </param>
-        internal GalleryImageList(IReadOnlyList<GalleryImage> value, string nextLink)
+        /// <param name="nextLink"> The uri to fetch the next page of Image Definitions in the Shared Image Gallery. Call ListNext() with this to fetch the next page of gallery image definitions. </param>
+        internal GalleryImageList(IReadOnlyList<GalleryImageData> value, string nextLink)
         {
-            Value = value ?? new List<GalleryImage>();
+            Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> A list of Shared Image Gallery images. </summary>
-        public IReadOnlyList<GalleryImage> Value { get; }
-        /// <summary> The uri to fetch the next page of Image Definitions in the Shared Image Gallery. Call ListNext() with this to fetch the next page of gallery Image Definitions. </summary>
+        public IReadOnlyList<GalleryImageData> Value { get; }
+        /// <summary> The uri to fetch the next page of Image Definitions in the Shared Image Gallery. Call ListNext() with this to fetch the next page of gallery image definitions. </summary>
         public string NextLink { get; }
     }
 }

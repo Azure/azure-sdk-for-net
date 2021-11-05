@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    internal static class ProvisioningStateExtensions
+    internal static partial class ProvisioningStateExtensions
     {
         public static string ToSerialString(this ProvisioningState value) => value switch
         {

@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(SparkBatchJobConverter))]
     public partial class SparkBatchJob
     {
         internal static SparkBatchJob DeserializeSparkBatchJob(JsonElement element)
@@ -31,12 +34,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             int id = default;
             Optional<string> appId = default;
             Optional<IReadOnlyDictionary<string, string>> appInfo = default;
-            Optional<string> state = default;
+            Optional<LivyStates> state = default;
             Optional<IReadOnlyList<string>> log = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("livyInfo"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     livyInfo = SparkBatchJobState.DeserializeSparkBatchJobState(property.Value);
                     continue;
                 }
@@ -72,26 +80,51 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("jobType"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     jobType = new SparkJobType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("result"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     result = new SparkBatchJobResultType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("schedulerInfo"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     schedulerInfo = SparkScheduler.DeserializeSparkScheduler(property.Value);
                     continue;
                 }
                 if (property.NameEquals("pluginInfo"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     pluginInfo = SparkServicePlugin.DeserializeSparkServicePlugin(property.Value);
                     continue;
                 }
                 if (property.NameEquals("errorInfo"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<SparkServiceError> array = new List<SparkServiceError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -102,6 +135,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("tags"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -117,11 +155,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("appId"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        appId = null;
+                        continue;
+                    }
                     appId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("appInfo"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        appInfo = null;
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -132,11 +180,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("state"))
                 {
-                    state = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    state = new LivyStates(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("log"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        log = null;
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -146,7 +204,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new SparkBatchJob(livyInfo.Value, name.Value, workspaceName.Value, sparkPoolName.Value, submitterName.Value, submitterId.Value, artifactId.Value, Optional.ToNullable(jobType), Optional.ToNullable(result), schedulerInfo.Value, pluginInfo.Value, Optional.ToList(errorInfo), Optional.ToDictionary(tags), id, appId.Value, Optional.ToDictionary(appInfo), state.Value, Optional.ToList(log));
+            return new SparkBatchJob(livyInfo.Value, name.Value, workspaceName.Value, sparkPoolName.Value, submitterName.Value, submitterId.Value, artifactId.Value, Optional.ToNullable(jobType), Optional.ToNullable(result), schedulerInfo.Value, pluginInfo.Value, Optional.ToList(errorInfo), Optional.ToDictionary(tags), id, appId.Value, Optional.ToDictionary(appInfo), Optional.ToNullable(state), Optional.ToList(log));
+        }
+
+        internal partial class SparkBatchJobConverter : JsonConverter<SparkBatchJob>
+        {
+            public override void Write(Utf8JsonWriter writer, SparkBatchJob model, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
+            public override SparkBatchJob Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeSparkBatchJob(document.RootElement);
+            }
         }
     }
 }

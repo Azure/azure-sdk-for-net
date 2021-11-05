@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ApplicationGatewayPathRule. </summary>
         public ApplicationGatewayPathRule()
         {
+            Paths = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayPathRule. </summary>
@@ -29,7 +32,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="rewriteRuleSet"> Rewrite rule set resource of URL path map path rule. </param>
         /// <param name="provisioningState"> The provisioning state of the path rule resource. </param>
         /// <param name="firewallPolicy"> Reference to the FirewallPolicy resource. </param>
-        internal ApplicationGatewayPathRule(string id, string name, string etag, string type, IList<string> paths, SubResource backendAddressPool, SubResource backendHttpSettings, SubResource redirectConfiguration, SubResource rewriteRuleSet, ProvisioningState? provisioningState, SubResource firewallPolicy) : base(id)
+        internal ApplicationGatewayPathRule(string id, string name, string etag, string type, IList<string> paths, WritableSubResource backendAddressPool, WritableSubResource backendHttpSettings, WritableSubResource redirectConfiguration, WritableSubResource rewriteRuleSet, ProvisioningState? provisioningState, WritableSubResource firewallPolicy) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -50,18 +53,18 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Type of the resource. </summary>
         public string Type { get; }
         /// <summary> Path rules of URL path map. </summary>
-        public IList<string> Paths { get; set; }
+        public IList<string> Paths { get; }
         /// <summary> Backend address pool resource of URL path map path rule. </summary>
-        public SubResource BackendAddressPool { get; set; }
+        public WritableSubResource BackendAddressPool { get; set; }
         /// <summary> Backend http settings resource of URL path map path rule. </summary>
-        public SubResource BackendHttpSettings { get; set; }
+        public WritableSubResource BackendHttpSettings { get; set; }
         /// <summary> Redirect configuration resource of URL path map path rule. </summary>
-        public SubResource RedirectConfiguration { get; set; }
+        public WritableSubResource RedirectConfiguration { get; set; }
         /// <summary> Rewrite rule set resource of URL path map path rule. </summary>
-        public SubResource RewriteRuleSet { get; set; }
+        public WritableSubResource RewriteRuleSet { get; set; }
         /// <summary> The provisioning state of the path rule resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> Reference to the FirewallPolicy resource. </summary>
-        public SubResource FirewallPolicy { get; set; }
+        public WritableSubResource FirewallPolicy { get; set; }
     }
 }

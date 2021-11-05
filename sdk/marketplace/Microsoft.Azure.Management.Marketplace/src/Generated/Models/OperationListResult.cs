@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Marketplace.Models
         /// supported by the Microsoft.Marketplace resource provider.</param>
         /// <param name="nextLink">URL to get the next set of operation list
         /// results if there are any.</param>
-        public OperationListResult(IList<Operation> value = default(IList<Operation>), string nextLink = default(string))
+        public OperationListResult(IList<Operation1> value = default(IList<Operation1>), string nextLink = default(string))
         {
             Value = value;
             NextLink = nextLink;
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.Marketplace.Models
         /// the Microsoft.Marketplace resource provider.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
-        public IList<Operation> Value { get; set; }
+        public IList<Operation1> Value { get; set; }
 
         /// <summary>
         /// Gets URL to get the next set of operation list results if there are

@@ -39,7 +39,7 @@ namespace Azure.Security.KeyVault.Certificates
         public Uri KeyId
         {
             get => new Uri(_keyId);
-            internal set => _keyId = value?.ToString();
+            internal set => _keyId = value?.AbsoluteUri;
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace Azure.Security.KeyVault.Certificates
         public Uri SecretId
         {
             get => new Uri(_secretId);
-            internal set => _secretId = value?.ToString();
+            internal set => _secretId = value?.AbsoluteUri;
         }
 
         /// <summary>
@@ -59,6 +59,11 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// Gets the CER formatted public X509 certificate.
         /// </summary>
+        /// <remarks>
+        /// This property contains only the public key.
+        /// If you must retrieve the key pair including the private key instead of performing cryptographic operations in Azure Key Vault, see the sample:
+        /// <see href="https://docs.microsoft.com/samples/azure/azure-sdk-for-net/get-certificate-private-key"/>
+        /// </remarks>
         public byte[] Cer { get; internal set; }
 
         internal virtual void ReadProperty(JsonProperty prop)

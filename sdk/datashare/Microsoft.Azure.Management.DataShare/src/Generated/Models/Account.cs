@@ -36,10 +36,11 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// </summary>
         /// <param name="identity">Identity Info on the Account</param>
         /// <param name="id">The resource id of the azure resource</param>
-        /// <param name="location">Location of the azure resource.</param>
         /// <param name="name">Name of the azure resource</param>
-        /// <param name="tags">Tags on the azure resource.</param>
+        /// <param name="systemData">System Data of the Azure resource.</param>
         /// <param name="type">Type of the azure resource</param>
+        /// <param name="location">Location of the azure resource.</param>
+        /// <param name="tags">Tags on the azure resource.</param>
         /// <param name="createdAt">Time at which the account was
         /// created.</param>
         /// <param name="provisioningState">Provisioning state of the Account.
@@ -49,8 +50,8 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// resource</param>
         /// <param name="userName">Name of the user who created the
         /// resource</param>
-        public Account(Identity identity, string id = default(string), string location = default(string), string name = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string type = default(string), System.DateTime? createdAt = default(System.DateTime?), string provisioningState = default(string), string userEmail = default(string), string userName = default(string))
-            : base(id, location, name, tags, type)
+        public Account(Identity identity, string id = default(string), string name = default(string), SystemData systemData = default(SystemData), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), System.DateTime? createdAt = default(System.DateTime?), string provisioningState = default(string), string userEmail = default(string), string userName = default(string))
+            : base(id, name, systemData, type, location, tags)
         {
             Identity = identity;
             CreatedAt = createdAt;

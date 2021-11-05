@@ -1,134 +1,141 @@
 {
-    "$schema": "http://schema.management.azure.com/schemas/2014-04-01-preview/deploymentTemplate.json#",
-    "contentVersion": "1.0.0.0",
-    "parameters": {
-        "namespaceName": {
-            "type": "string",
-            "metadata": {
-                "description": "Name of the Event Hubs namespace"
-            }
-        },
-        "eventHubName": {
-            "type": "string",
-            "metadata": {
-                "description": "Name of the Event Hub"
-            }
-        },
-        "storageAccountName": {
-            "type": "string"
-        },
-        "blobContainerName" : {
-            "type": "string"
-        }
+  "$schema": "http://schema.management.azure.com/schemas/2014-04-01-preview/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "namespaceName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of the Event Hubs namespace"
+      }
     },
-    "variables": {
-        "location": "[resourceGroup().location]",
-        "defaultSASKeyName": "RootManageSharedAccessKey",
-        "eventHubsAuthRuleResourceId": "[resourceId('Microsoft.EventHub/namespaces/authorizationRules', parameters('namespaceName'), variables('defaultSASKeyName'))]"
+    "eventHubName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of the Event Hub"
+      }
     },
-    "resources": [
-        {
-            "apiVersion": "2015-08-01",
-            "name": "[parameters('namespaceName')]",
-            "type": "Microsoft.EventHub/Namespaces",
-            "location": "[variables('location')]",
-            "sku": {
-                "name": "Standard",
-                "tier": "Standard"
-            },
-            "resources": [
-                {
-                    "apiVersion": "2015-08-01",
-                    "name": "[parameters('eventHubName')]",
-                    "type": "EventHubs",
-                    "dependsOn": [
-                        "[concat('Microsoft.EventHub/namespaces/', parameters('namespaceName'))]"
-                    ],
-                    "properties": {
-                        "path": "[parameters('eventHubName')]"
-                    },
-                    "resources": [
-                    ]
-                }
-            ]
-        },
-        {
-            "type": "Microsoft.Storage/storageAccounts",
-            "apiVersion": "2019-04-01",
-            "name": "[parameters('storageAccountName')]",
-            "location": "[variables('location')]",
-            "sku": {
-                "name": "Standard_LRS",
-                "tier": "Standard"
-            },
-            "kind": "BlobStorage",
-            "properties": {
-                "networkAcls": {
-                    "bypass": "AzureServices",
-                    "virtualNetworkRules": [],
-                    "ipRules": [],
-                    "defaultAction": "Allow"
-                },
-                "supportsHttpsTrafficOnly": true,
-                "encryption": {
-                    "services": {
-                        "file": {
-                            "enabled": true
-                        },
-                        "blob": {
-                            "enabled": true
-                        }
-                    },
-                    "keySource": "Microsoft.Storage"
-                },
-                "accessTier": "Hot"
-            }
-        },
-        {
-            "type": "Microsoft.Storage/storageAccounts/blobServices",
-            "apiVersion": "2019-04-01",
-            "name": "[concat(parameters('storageAccountName'), '/default')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]"
-            ],
-            "properties": {
-                "cors": {
-                    "corsRules": []
-                },
-                "deleteRetentionPolicy": {
-                    "enabled": false
-                }
-            }
-        },
-        {
-            "type": "Microsoft.Storage/storageAccounts/blobServices/containers",
-            "apiVersion": "2019-04-01",
-            "name": "[concat(parameters('storageAccountName'), '/default/', parameters('blobContainerName'))]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Storage/storageAccounts/blobServices', parameters('storageAccountName'), 'default')]",
-                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]"
-            ],
-            "properties": {
-                "publicAccess": "None"
-            }
-        }
-    ],
-    "outputs": {
-        "NamespaceConnectionString": {
-            "type": "string",
-            "value": "[listkeys(variables('eventHubsAuthRuleResourceId'),  '2015-08-01').primaryConnectionString]"
-        },
-        "EventHubName": {
-            "type": "string",
-            "value": "[parameters('namespaceName')]"
-        },
-        "StorageConnectionString": {
-            "type": "string",
-            "value": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName')), providers('Microsoft.Storage', 'storageAccounts').apiVersions[0]).keys[0].value]"
-        },
-        "BlobContainerName": {
-            "type": "string",
-            "value": "[parameters('blobContainerName')]"
-        }
+    "storageAccountName": {
+      "type": "string"
+    },
+    "blobContainerName": {
+      "type": "string"
+    },
+    "storageEndpointSuffix": {
+      "type": "string",
+      "defaultValue": "core.windows.net",
+      "metadata": {
+        "description": "The url suffix to use when creating storage connection strings."
+      }
     }
+  },
+  "variables": {
+    "location": "[resourceGroup().location]",
+    "defaultSASKeyName": "RootManageSharedAccessKey",
+    "eventHubsAuthRuleResourceId": "[resourceId('Microsoft.EventHub/namespaces/authorizationRules', parameters('namespaceName'), variables('defaultSASKeyName'))]",
+    "storageAccountId": "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]"
+  },
+  "resources": [
+    {
+      "apiVersion": "2015-08-01",
+      "name": "[parameters('namespaceName')]",
+      "type": "Microsoft.EventHub/Namespaces",
+      "location": "[variables('location')]",
+      "sku": {
+        "name": "Standard",
+        "tier": "Standard"
+      },
+      "resources": [
+        {
+          "apiVersion": "2015-08-01",
+          "name": "[parameters('eventHubName')]",
+          "type": "EventHubs",
+          "dependsOn": [
+            "[concat('Microsoft.EventHub/namespaces/', parameters('namespaceName'))]"
+          ],
+          "properties": {
+            "path": "[parameters('eventHubName')]"
+          },
+          "resources": []
+        }
+      ]
+    },
+    {
+      "type": "Microsoft.Storage/storageAccounts",
+      "apiVersion": "2019-04-01",
+      "name": "[parameters('storageAccountName')]",
+      "location": "[variables('location')]",
+      "sku": {
+        "name": "Standard_LRS",
+        "tier": "Standard"
+      },
+      "kind": "BlobStorage",
+      "properties": {
+        "networkAcls": {
+          "bypass": "AzureServices",
+          "virtualNetworkRules": [],
+          "ipRules": [],
+          "defaultAction": "Allow"
+        },
+        "supportsHttpsTrafficOnly": true,
+        "encryption": {
+          "services": {
+            "file": {
+              "enabled": true
+            },
+            "blob": {
+              "enabled": true
+            }
+          },
+          "keySource": "Microsoft.Storage"
+        },
+        "accessTier": "Hot"
+      }
+    },
+    {
+      "type": "Microsoft.Storage/storageAccounts/blobServices",
+      "apiVersion": "2019-04-01",
+      "name": "[concat(parameters('storageAccountName'), '/default')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]"
+      ],
+      "properties": {
+        "cors": {
+          "corsRules": []
+        },
+        "deleteRetentionPolicy": {
+          "enabled": false
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Storage/storageAccounts/blobServices/containers",
+      "apiVersion": "2019-04-01",
+      "name": "[concat(parameters('storageAccountName'), '/default/', parameters('blobContainerName'))]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts/blobServices', parameters('storageAccountName'), 'default')]",
+        "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]"
+      ],
+      "properties": {
+        "publicAccess": "None"
+      }
+    }
+  ],
+  "outputs": {
+    "NamespaceConnectionString": {
+      "type": "string",
+      "value": "[listkeys(variables('eventHubsAuthRuleResourceId'), '2015-08-01').primaryConnectionString]"
+    },
+    "EventHubName": {
+      "type": "string",
+      "value": "[parameters('namespaceName')]"
+    },
+    "StorageConnectionString": {
+      "type": "string",
+      "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', parameters('storageAccountName'), ';AccountKey=', listKeys(variables('storageAccountId'), providers('Microsoft.Storage', 'storageAccounts').apiVersions[0]).keys[0].value, ';EndpointSuffix=', parameters('storageEndpointSuffix'))]"
+    },
+    "BlobContainerName": {
+      "type": "string",
+      "value": "[parameters('blobContainerName')]"
+    }
+  }
 }

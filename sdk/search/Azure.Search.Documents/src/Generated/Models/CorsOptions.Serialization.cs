@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
@@ -17,24 +16,24 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (AllowedOrigins.Any())
+            writer.WritePropertyName("allowedOrigins");
+            writer.WriteStartArray();
+            foreach (var item in AllowedOrigins)
             {
-                writer.WritePropertyName("allowedOrigins");
-                writer.WriteStartArray();
-                foreach (var item in AllowedOrigins)
+                writer.WriteStringValue(item);
+            }
+            writer.WriteEndArray();
+            if (Optional.IsDefined(MaxAgeInSeconds))
+            {
+                if (MaxAgeInSeconds != null)
                 {
-                    writer.WriteStringValue(item);
+                    writer.WritePropertyName("maxAgeInSeconds");
+                    writer.WriteNumberValue(MaxAgeInSeconds.Value);
                 }
-                writer.WriteEndArray();
-            }
-            else
-            {
-                writer.WriteNull("allowedOrigins");
-            }
-            if (MaxAgeInSeconds != null)
-            {
-                writer.WritePropertyName("maxAgeInSeconds");
-                writer.WriteNumberValue(MaxAgeInSeconds.Value);
+                else
+                {
+                    writer.WriteNull("maxAgeInSeconds");
+                }
             }
             writer.WriteEndObject();
         }
@@ -42,7 +41,7 @@ namespace Azure.Search.Documents.Indexes.Models
         internal static CorsOptions DeserializeCorsOptions(JsonElement element)
         {
             IList<string> allowedOrigins = default;
-            long? maxAgeInSeconds = default;
+            Optional<long?> maxAgeInSeconds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allowedOrigins"))
@@ -50,14 +49,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     allowedOrigins = array;
                     continue;
@@ -66,13 +58,14 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        maxAgeInSeconds = null;
                         continue;
                     }
                     maxAgeInSeconds = property.Value.GetInt64();
                     continue;
                 }
             }
-            return new CorsOptions(allowedOrigins, maxAgeInSeconds);
+            return new CorsOptions(allowedOrigins, Optional.ToNullable(maxAgeInSeconds));
         }
     }
 }

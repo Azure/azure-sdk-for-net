@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
 
             var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => Task.Run(() => azureCliAccessTokenProvider.GetAuthResultAsync(Constants.KeyVaultResourceId, Constants.TenantId)));
 
-            Assert.Contains(Constants.FailedToGetTokenError, exception.Message);
+            Assert.Contains(AzureServiceTokenProviderException.GenericErrorMessage, exception.Message);
             Assert.Contains(Constants.DeveloperToolError, exception.Message);
         }
 

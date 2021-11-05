@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Request body structure for starting data flow debug session. </summary>
-    internal partial class StartDataFlowDebugSessionRequest
+    public partial class StartDataFlowDebugSessionRequest
     {
         /// <summary> Initializes a new instance of StartDataFlowDebugSessionRequest. </summary>
-        internal StartDataFlowDebugSessionRequest()
+        public StartDataFlowDebugSessionRequest()
         {
             Datasets = new ChangeTrackingList<DatasetResource>();
             LinkedServices = new ChangeTrackingList<LinkedServiceResource>();
@@ -28,7 +28,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="staging"> Staging info for debug session. </param>
         /// <param name="debugSettings"> Data flow debug settings. </param>
         /// <param name="incrementalDebug"> The type of new Databricks cluster. </param>
-        internal StartDataFlowDebugSessionRequest(string sessionId, DataFlowResource dataFlow, IReadOnlyList<DatasetResource> datasets, IReadOnlyList<LinkedServiceResource> linkedServices, object staging, object debugSettings, bool? incrementalDebug)
+        internal StartDataFlowDebugSessionRequest(string sessionId, DataFlowResource dataFlow, IList<DatasetResource> datasets, IList<LinkedServiceResource> linkedServices, object staging, object debugSettings, bool? incrementalDebug)
         {
             SessionId = sessionId;
             DataFlow = dataFlow;
@@ -40,18 +40,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> The ID of data flow debug session. </summary>
-        public string SessionId { get; }
+        public string SessionId { get; set; }
         /// <summary> Data flow instance. </summary>
-        public DataFlowResource DataFlow { get; }
+        public DataFlowResource DataFlow { get; set; }
         /// <summary> List of datasets. </summary>
-        public IReadOnlyList<DatasetResource> Datasets { get; }
+        public IList<DatasetResource> Datasets { get; }
         /// <summary> List of linked services. </summary>
-        public IReadOnlyList<LinkedServiceResource> LinkedServices { get; }
+        public IList<LinkedServiceResource> LinkedServices { get; }
         /// <summary> Staging info for debug session. </summary>
-        public object Staging { get; }
+        public object Staging { get; set; }
         /// <summary> Data flow debug settings. </summary>
-        public object DebugSettings { get; }
+        public object DebugSettings { get; set; }
         /// <summary> The type of new Databricks cluster. </summary>
-        public bool? IncrementalDebug { get; }
+        public bool? IncrementalDebug { get; set; }
     }
 }

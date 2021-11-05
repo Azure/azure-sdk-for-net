@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Training;
@@ -21,7 +22,8 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Initializes a new instance of the <see cref="FormTrainingClientTests"/> class.
         /// </summary>
         /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
-        public FormTrainingClientTests(bool isAsync) : base(isAsync)
+        public FormTrainingClientTests(bool isAsync)
+            : base(isAsync)
         {
         }
 
@@ -30,13 +32,15 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Test Framework functionalities.
         /// </summary>
         /// <returns>The instrumented <see cref="FormTrainingClient" />.</returns>
-        private FormTrainingClient CreateInstrumentedClient()
+        private FormTrainingClient CreateClient(FormRecognizerClientOptions options = default)
         {
             var fakeEndpoint = new Uri("http://notreal.azure.com/");
             var fakeCredential = new AzureKeyCredential("fakeKey");
-            var client = new FormTrainingClient(fakeEndpoint, fakeCredential);
 
-            return InstrumentClient(client);
+            options ??= new FormRecognizerClientOptions();
+            var client = new FormTrainingClient(fakeEndpoint, fakeCredential, options);
+
+            return client;
         }
 
         /// <summary>
@@ -95,7 +99,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         public async Task FormTrainingClientThrowsWithNonExistingResourceEndpoint()
         {
-            var client = CreateInstrumentedClient();
+            var client = CreateClient();
 
             try
             {
@@ -111,16 +115,37 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         public void StartTrainingArgumentValidation()
         {
-            FormTrainingClient client = CreateInstrumentedClient();
+            // V2.0
+            var clientV2 = CreateClient(new FormRecognizerClientOptions(FormRecognizerClientOptions.ServiceVersion.V2_0));
 
-            Assert.ThrowsAsync<UriFormatException>(() => client.StartTrainingAsync(new Uri(string.Empty), useTrainingLabels: false));
-            Assert.ThrowsAsync<ArgumentNullException>(() => client.StartTrainingAsync((Uri)null, useTrainingLabels: false));
+            Assert.ThrowsAsync<UriFormatException>(() => clientV2.StartTrainingAsync(new Uri(string.Empty), useTrainingLabels: false));
+            Assert.ThrowsAsync<ArgumentNullException>(() => clientV2.StartTrainingAsync((Uri)null, useTrainingLabels: false));
+            Assert.Throws<UriFormatException>(() => clientV2.StartTraining(new Uri(string.Empty), useTrainingLabels: false));
+            Assert.Throws<ArgumentNullException>(() => clientV2.StartTraining((Uri)null, useTrainingLabels: false));
+
+            // V2.1
+            var clientV21 = CreateClient(new FormRecognizerClientOptions(FormRecognizerClientOptions.ServiceVersion.V2_1));
+
+            Assert.ThrowsAsync<UriFormatException>(() => clientV21.StartTrainingAsync(new Uri(string.Empty), useTrainingLabels: false, new TrainingOptions()));
+            Assert.ThrowsAsync<ArgumentNullException>(() => clientV21.StartTrainingAsync((Uri)null, useTrainingLabels: false, new TrainingOptions()));
+            Assert.Throws<UriFormatException>(() => clientV21.StartTraining(new Uri(string.Empty), useTrainingLabels: false, new TrainingOptions()));
+            Assert.Throws<ArgumentNullException>(() => clientV21.StartTraining((Uri)null, useTrainingLabels: false, new TrainingOptions()));
+        }
+
+        [Test]
+        public void StartCreateComposedModelArgumentValidation()
+        {
+            FormTrainingClient client = CreateClient();
+
+            Assert.ThrowsAsync<ArgumentNullException>(() => client.StartCreateComposedModelAsync(null));
+            Assert.ThrowsAsync<ArgumentException>(() => client.StartCreateComposedModelAsync(new List<string>() { string.Empty }));
+            Assert.ThrowsAsync<ArgumentException>(() => client.StartCreateComposedModelAsync(new List<string>() { "1975-04-04" }));
         }
 
         [Test]
         public void GetCustomModelArgumentValidation()
         {
-            FormTrainingClient client = CreateInstrumentedClient();
+            FormTrainingClient client = CreateClient();
 
             Assert.ThrowsAsync<ArgumentNullException>(() => client.GetCustomModelAsync(null));
             Assert.ThrowsAsync<ArgumentException>(() => client.GetCustomModelAsync(string.Empty));
@@ -130,7 +155,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         public void DeleteModelArgumentValidation()
         {
-            FormTrainingClient client = CreateInstrumentedClient();
+            FormTrainingClient client = CreateClient();
 
             Assert.ThrowsAsync<ArgumentNullException>(() => client.DeleteModelAsync(null));
             Assert.ThrowsAsync<ArgumentException>(() => client.DeleteModelAsync(string.Empty));
@@ -151,7 +176,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         public void StartCopyModelArgumentValidation()
         {
-            FormTrainingClient client = CreateInstrumentedClient();
+            FormTrainingClient client = CreateClient();
             var copyAuth = new CopyAuthorization("<modelId>", "<accesstoken>", default, "<resourceId>", "<region>");
 
             Assert.ThrowsAsync<ArgumentNullException>(() => client.StartCopyModelAsync(null, copyAuth));
@@ -163,7 +188,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         public void GetCopyAuthorizationArgumentValidation()
         {
-            FormTrainingClient client = CreateInstrumentedClient();
+            FormTrainingClient client = CreateClient();
             var text = "text";
 
             Assert.ThrowsAsync<ArgumentNullException>(() => client.GetCopyAuthorizationAsync(null, text));

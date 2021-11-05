@@ -5,8 +5,6 @@ using Microsoft.Azure.Management.ContainerRegistry;
 using Microsoft.Azure.Management.ContainerRegistry.Models;
 using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Management.ResourceManager.Models;
-using Microsoft.Azure.Management.Storage;
-using Microsoft.Azure.Management.Storage.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using System.Collections.Generic;
@@ -15,6 +13,7 @@ using Xunit;
 using Resource = Microsoft.Azure.Management.ContainerRegistry.Models.Resource;
 using Sku = Microsoft.Azure.Management.ContainerRegistry.Models.Sku;
 using SkuName = Microsoft.Azure.Management.ContainerRegistry.Models.SkuName;
+
 
 namespace ContainerRegistry.Tests
 {
@@ -61,13 +60,6 @@ namespace ContainerRegistry.Tests
             return client;
         }
 
-        public static StorageManagementClient GetStorageManagementClient(MockContext context, RecordedDelegatingHandler handler)
-        {
-            handler.IsPassThrough = true;
-            StorageManagementClient client = context.GetServiceClient<StorageManagementClient>(handlers: handler);
-            return client;
-        }
-
         public static ContainerRegistryManagementClient GetContainerRegistryManagementClient(MockContext context, RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
@@ -82,42 +74,6 @@ namespace ContainerRegistry.Tests
                 new ResourceGroup
                 {
                     Location = GetDefaultRegistryLocation(client)
-                });
-        }
-
-        public static StorageAccount CreateStorageAccount(StorageManagementClient client, ResourceGroup resourceGroup)
-        {
-            return client.StorageAccounts.Create(
-                resourceGroup.Name,
-                TestUtilities.GenerateName("acrstorage"),
-                new StorageAccountCreateParameters
-                {
-                    Location = resourceGroup.Location,
-                    Sku = new Microsoft.Azure.Management.Storage.Models.Sku
-                    {
-                        Name = Microsoft.Azure.Management.Storage.Models.SkuName.StandardLRS
-                    },
-                    Kind = Kind.Storage
-                });
-        }
-
-        public static Registry CreateClassicContainerRegistry(ContainerRegistryManagementClient client, ResourceGroup resourceGroup, StorageAccount storageAccount)
-        {
-            return client.Registries.Create(
-                resourceGroup.Name,
-                TestUtilities.GenerateName("acrregistry"),
-                new Registry
-                {
-                    Location = resourceGroup.Location,
-                    Sku = new Sku
-                    {
-                        Name = SkuName.Classic
-                    },
-                    StorageAccount = new StorageAccountProperties
-                    {
-                        Id = storageAccount.Id
-                    },
-                    Tags = DefaultTags
                 });
         }
 
@@ -158,8 +114,11 @@ namespace ContainerRegistry.Tests
                 resourceGroupName,
                 registryName,
                 NormalizeLocation(location),
-                location,
-                DefaultTags);
+                new Replication
+                {
+                    Location = location,
+                    Tags = DefaultTags
+                });
         }
 
         public static void ValidateResourceDefaultTags(Resource resource)

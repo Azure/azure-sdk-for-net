@@ -72,7 +72,7 @@ namespace Azure.Storage.Blobs.Samples
                 // Create a blob that can be accessed publicly
                 await container.CreateAsync(PublicAccessType.Blob);
                 BlobClient blob = container.GetBlobClient(Randomize("sample-blob"));
-                await blob.UploadAsync(new MemoryStream(Encoding.UTF8.GetBytes("Blob Content")));
+                await blob.UploadAsync(BinaryData.FromString("Blob Content"));
 
                 // Anonymously access a blob given its URI
                 Uri endpoint = blob.Uri;
@@ -122,7 +122,7 @@ namespace Azure.Storage.Blobs.Samples
         }
 
         /// <summary>
-        /// Use a shared access signature to acces a Storage Account.
+        /// Use a shared access signature to access a Storage Account.
         ///
         /// A shared access signature (SAS) is a URI that grants restricted
         /// access rights to Azure Storage resources. You can provide a shared

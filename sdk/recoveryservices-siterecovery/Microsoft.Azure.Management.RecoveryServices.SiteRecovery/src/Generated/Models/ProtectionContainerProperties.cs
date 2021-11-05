@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="fabricFriendlyName">Fabric friendly name.</param>
         /// <param name="friendlyName">The name.</param>
         /// <param name="fabricType">The fabric type.</param>
-        /// <param name="protectedItemCount">Number of protected PEs</param>
+        /// <param name="protectedItemCount">Number of protected PEs.</param>
         /// <param name="pairingStatus">The pairing status of this
         /// cloud.</param>
         /// <param name="role">The role of this cloud.</param>
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string FabricType { get; set; }
 
         /// <summary>
-        /// Gets or sets number of protected PEs
+        /// Gets or sets number of protected PEs.
         /// </summary>
         [JsonProperty(PropertyName = "protectedItemCount")]
         public int? ProtectedItemCount { get; set; }

@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.ApiManagement.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -119,5 +120,48 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         [JsonProperty(PropertyName = "protocols")]
         public IList<Protocol?> Protocols { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public override void Validate()
+        {
+            base.Validate();
+            if (Name != null)
+            {
+                if (Name.Length > 300)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "Name", 300);
+                }
+                if (Name.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Name", 1);
+                }
+            }
+            if (ServiceUrl != null)
+            {
+                if (ServiceUrl.Length > 2000)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "ServiceUrl", 2000);
+                }
+                if (ServiceUrl.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "ServiceUrl", 1);
+                }
+            }
+            if (Path != null)
+            {
+                if (Path.Length > 400)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "Path", 400);
+                }
+                if (Path.Length < 0)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Path", 0);
+                }
+            }
+        }
     }
 }

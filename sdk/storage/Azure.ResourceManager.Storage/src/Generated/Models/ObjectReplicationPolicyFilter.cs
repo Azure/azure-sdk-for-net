@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of ObjectReplicationPolicyFilter. </summary>
         public ObjectReplicationPolicyFilter()
         {
+            PrefixMatch = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ObjectReplicationPolicyFilter. </summary>
@@ -27,7 +29,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Optional. Filters the results to replicate only blobs whose names begin with the specified prefix. </summary>
-        public IList<string> PrefixMatch { get; set; }
+        public IList<string> PrefixMatch { get; }
         /// <summary> Blobs created after the time will be replicated to the destination. It must be in datetime format &apos;yyyy-MM-ddTHH:mm:ssZ&apos;. Example: 2020-02-19T16:05:00Z. </summary>
         public string MinCreationTime { get; set; }
     }

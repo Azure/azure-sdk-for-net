@@ -11,46 +11,36 @@ using Azure.Core;
 
 namespace Azure.Graph.Rbac.Models
 {
-    public partial class OAuth2PermissionGrantListResult
+    internal partial class OAuth2PermissionGrantListResult
     {
         internal static OAuth2PermissionGrantListResult DeserializeOAuth2PermissionGrantListResult(JsonElement element)
         {
-            IReadOnlyList<OAuth2PermissionGrant> value = default;
-            string odataNextLink = default;
+            Optional<IReadOnlyList<OAuth2PermissionGrant>> value = default;
+            Optional<string> odataNextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<OAuth2PermissionGrant> array = new List<OAuth2PermissionGrant>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(OAuth2PermissionGrant.DeserializeOAuth2PermissionGrant(item));
-                        }
+                        array.Add(OAuth2PermissionGrant.DeserializeOAuth2PermissionGrant(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("odata.nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     odataNextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new OAuth2PermissionGrantListResult(value, odataNextLink);
+            return new OAuth2PermissionGrantListResult(Optional.ToList(value), odataNextLink.Value);
         }
     }
 }

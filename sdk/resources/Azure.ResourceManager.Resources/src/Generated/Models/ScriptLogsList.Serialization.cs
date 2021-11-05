@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -15,32 +16,26 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static ScriptLogsList DeserializeScriptLogsList(JsonElement element)
         {
-            IReadOnlyList<ScriptLog> value = default;
+            Optional<IReadOnlyList<ScriptLogData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ScriptLog> array = new List<ScriptLog>();
+                    List<ScriptLogData> array = new List<ScriptLogData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ScriptLog.DeserializeScriptLog(item));
-                        }
+                        array.Add(ScriptLogData.DeserializeScriptLogData(item));
                     }
                     value = array;
                     continue;
                 }
             }
-            return new ScriptLogsList(value);
+            return new ScriptLogsList(Optional.ToList(value));
         }
     }
 }

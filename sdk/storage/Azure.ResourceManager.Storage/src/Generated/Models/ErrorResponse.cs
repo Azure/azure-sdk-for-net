@@ -16,17 +16,13 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Initializes a new instance of ErrorResponse. </summary>
-        /// <param name="code"> An identifier for the error. Codes are invariant and are intended to be consumed programmatically. </param>
-        /// <param name="message"> A message describing the error, intended to be suitable for display in a user interface. </param>
-        internal ErrorResponse(string code, string message)
+        /// <param name="error"> Azure Storage Resource Provider error response body. </param>
+        internal ErrorResponse(ErrorResponseBody error)
         {
-            Code = code;
-            Message = message;
+            Error = error;
         }
 
-        /// <summary> An identifier for the error. Codes are invariant and are intended to be consumed programmatically. </summary>
-        public string Code { get; }
-        /// <summary> A message describing the error, intended to be suitable for display in a user interface. </summary>
-        public string Message { get; }
+        /// <summary> Azure Storage Resource Provider error response body. </summary>
+        public ErrorResponseBody Error { get; }
     }
 }

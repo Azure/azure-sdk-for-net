@@ -11,46 +11,36 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class BgpServiceCommunityListResult
+    internal partial class BgpServiceCommunityListResult
     {
         internal static BgpServiceCommunityListResult DeserializeBgpServiceCommunityListResult(JsonElement element)
         {
-            IReadOnlyList<BgpServiceCommunity> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<BgpServiceCommunity>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<BgpServiceCommunity> array = new List<BgpServiceCommunity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(BgpServiceCommunity.DeserializeBgpServiceCommunity(item));
-                        }
+                        array.Add(BgpServiceCommunity.DeserializeBgpServiceCommunity(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new BgpServiceCommunityListResult(value, nextLink);
+            return new BgpServiceCommunityListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

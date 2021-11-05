@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             Optional<DateTimeOffset> deletionDate = default;
             Optional<DateTimeOffset> scheduledPurgeDate = default;
             Optional<IReadOnlyDictionary<string, string>> tags = default;
+            Optional<bool> purgeProtectionEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vaultId"))
@@ -35,16 +36,31 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 if (property.NameEquals("deletionDate"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     deletionDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("scheduledPurgeDate"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     scheduledPurgeDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("tags"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -53,8 +69,18 @@ namespace Azure.ResourceManager.KeyVault.Models
                     tags = dictionary;
                     continue;
                 }
+                if (property.NameEquals("purgeProtectionEnabled"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    purgeProtectionEnabled = property.Value.GetBoolean();
+                    continue;
+                }
             }
-            return new DeletedVaultProperties(vaultId.Value, location.Value, Optional.ToNullable(deletionDate), Optional.ToNullable(scheduledPurgeDate), Optional.ToDictionary(tags));
+            return new DeletedVaultProperties(vaultId.Value, location.Value, Optional.ToNullable(deletionDate), Optional.ToNullable(scheduledPurgeDate), Optional.ToDictionary(tags), Optional.ToNullable(purgeProtectionEnabled));
         }
     }
 }

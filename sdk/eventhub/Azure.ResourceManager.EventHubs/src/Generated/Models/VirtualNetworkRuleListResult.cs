@@ -6,15 +6,17 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> The response from the List namespace operation. </summary>
-    public partial class VirtualNetworkRuleListResult
+    internal partial class VirtualNetworkRuleListResult
     {
         /// <summary> Initializes a new instance of VirtualNetworkRuleListResult. </summary>
         internal VirtualNetworkRuleListResult()
         {
+            Value = new ChangeTrackingList<VirtualNetworkRule>();
         }
 
         /// <summary> Initializes a new instance of VirtualNetworkRuleListResult. </summary>

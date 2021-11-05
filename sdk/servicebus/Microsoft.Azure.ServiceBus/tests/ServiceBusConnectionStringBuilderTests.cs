@@ -83,6 +83,9 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
             csBuilder.OperationTimeout = TimeSpan.FromSeconds(42);
             Assert.Equal("Endpoint=amqps://contoso.servicebus.windows.net;TransportType=AmqpWebSockets;OperationTimeout=00:00:42", csBuilder.ToString());
+
+            csBuilder.ConnectionIdleTimeout = TimeSpan.FromSeconds(42);
+            Assert.Equal("Endpoint=amqps://contoso.servicebus.windows.net;TransportType=AmqpWebSockets;OperationTimeout=00:00:42;ConnectionIdleTimeout=00:00:42", csBuilder.ToString());
         }
 
         [Fact]
@@ -146,6 +149,20 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         {
             var csBuilder = new ServiceBusConnectionStringBuilder("Endpoint=sb://contoso.servicebus.windows.net;SharedAccessKeyName=keyname;SharedAccessKey=key;OperationTimeout=00:12:34");
             Assert.Equal(TimeSpan.FromMinutes(12).Add(TimeSpan.FromSeconds(34)), csBuilder.OperationTimeout);
+        }
+
+        [Fact]
+        public void ConnectionStringBuilderShouldParseConnectionIdleTimeoutAsInteger()
+        {
+            var csBuilder = new ServiceBusConnectionStringBuilder("Endpoint=sb://contoso.servicebus.windows.net;SharedAccessKeyName=keyname;SharedAccessKey=key;ConnectionIdleTimeout=30");
+            Assert.Equal(TimeSpan.FromSeconds(30), csBuilder.ConnectionIdleTimeout.Value);
+        }
+
+        [Fact]
+        public void ConnectionStringBuilderShouldParseConnectionIdleTimeoutAsTimeSpan()
+        {
+            var csBuilder = new ServiceBusConnectionStringBuilder("Endpoint=sb://contoso.servicebus.windows.net;SharedAccessKeyName=keyname;SharedAccessKey=key;ConnectionIdleTimeout=00:12:34");
+            Assert.Equal(TimeSpan.FromMinutes(12).Add(TimeSpan.FromSeconds(34)), csBuilder.ConnectionIdleTimeout.Value);
         }
 
         [Fact]

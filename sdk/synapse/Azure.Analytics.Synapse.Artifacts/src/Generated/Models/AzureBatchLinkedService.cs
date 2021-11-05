@@ -18,6 +18,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="batchUri"> The Azure Batch URI. Type: string (or Expression with resultType string). </param>
         /// <param name="poolName"> The Azure Batch pool name. Type: string (or Expression with resultType string). </param>
         /// <param name="linkedServiceName"> The Azure Storage linked service reference. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/>, <paramref name="batchUri"/>, <paramref name="poolName"/>, or <paramref name="linkedServiceName"/> is null. </exception>
         public AzureBatchLinkedService(object accountName, object batchUri, object poolName, LinkedServiceReference linkedServiceName)
         {
             if (accountName == null)
@@ -50,7 +51,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="accountName"> The Azure Batch account name. Type: string (or Expression with resultType string). </param>
         /// <param name="accessKey"> The Azure Batch account access key. </param>
         /// <param name="batchUri"> The Azure Batch URI. Type: string (or Expression with resultType string). </param>

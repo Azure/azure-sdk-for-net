@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (AuthenticationMethod != null)
+            if (Optional.IsDefined(AuthenticationMethod))
             {
                 writer.WritePropertyName("authenticationMethod");
                 writer.WriteStringValue(AuthenticationMethod.Value.ToString());

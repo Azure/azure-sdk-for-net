@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Linq;
 
     /// <summary>
-    /// Specifies information about the gallery Image Version that you want to
+    /// Specifies information about the gallery image version that you want to
     /// update.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
         /// <param name="provisioningState">The current state of the gallery
-        /// Image Version.</param>
+        /// image version.</param>
         public GalleryImageVersionUpdate(GalleryImageVersionStorageProfile storageProfile, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), GalleryImageVersionPublishingProfile publishingProfile = default(GalleryImageVersionPublishingProfile), string provisioningState = default(string), ReplicationStatus replicationStatus = default(ReplicationStatus))
             : base(id, name, type, tags)
         {
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         public GalleryImageVersionPublishingProfile PublishingProfile { get; set; }
 
         /// <summary>
-        /// Gets the current state of the gallery Image Version.
+        /// Gets the current state of the gallery image version.
         /// </summary>
         /// <remarks>
         /// The provisioning state, which only appears in the response.

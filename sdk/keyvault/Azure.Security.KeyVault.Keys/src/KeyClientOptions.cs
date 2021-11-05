@@ -16,7 +16,7 @@ namespace Azure.Security.KeyVault.Keys
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/keyvault/key-vault-versions">Key Vault versions</see>.
         /// </summary>
-        internal const ServiceVersion LatestVersion = ServiceVersion.V7_1_Preview;
+        internal const ServiceVersion LatestVersion = ServiceVersion.V7_3_Preview;
 
         /// <summary>
         /// The versions of Azure Key Vault supported by this client
@@ -31,9 +31,19 @@ namespace Azure.Security.KeyVault.Keys
             V7_0 = 0,
 
             /// <summary>
-            /// The Key Vault API version 7.1-preview.
+            /// The Key Vault API version 7.1.
             /// </summary>
-            V7_1_Preview = 1,
+            V7_1 = 1,
+
+            /// <summary>
+            /// The Key Vault API version 7.2.
+            /// </summary>
+            V7_2 = 2,
+
+            /// <summary>
+            /// The Key Vault API version 7.3-preview.
+            /// </summary>
+            V7_3_Preview = 3,
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -52,9 +62,7 @@ namespace Azure.Security.KeyVault.Keys
         /// The <see cref="ServiceVersion"/> of the service API used when
         /// making requests.
         /// </param>
-#pragma warning disable AZC0010 // ClientOptions constructors should default ServiceVersion to latest supported service version
         public KeyClientOptions(ServiceVersion version = LatestVersion)
-#pragma warning restore AZC0010 // ClientOptions constructors should default ServiceVersion to latest supported service version
         {
             Version = version;
 
@@ -66,8 +74,9 @@ namespace Azure.Security.KeyVault.Keys
             return Version switch
             {
                 ServiceVersion.V7_0 => "7.0",
-                ServiceVersion.V7_1_Preview => "7.1-preview",
-
+                ServiceVersion.V7_1 => "7.1",
+                ServiceVersion.V7_2 => "7.2",
+                ServiceVersion.V7_3_Preview => "7.3-preview",
                 _ => throw new ArgumentException(Version.ToString()),
             };
         }

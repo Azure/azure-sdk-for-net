@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Messaging.EventGrid;
 using Azure.Messaging.EventGrid.Models;
-using Microsoft.Azure.Management.EventGrid.Models;
 using NUnit.Framework;
 
 namespace Azure.Messaging.EventGrid.Tests

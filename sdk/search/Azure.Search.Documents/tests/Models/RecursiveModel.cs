@@ -5,11 +5,13 @@
 #pragma warning disable SA1649 // File name should match first type name
 
 // TODO: Remove when https://github.com/Azure/azure-sdk-for-net/issues/11166 is completed.
-namespace Azure.Search.Documents.Samples.Tests
+using Azure.Search.Documents.Indexes;
+
+namespace Azure.Search.Documents.Tests
 {
     public class RecursiveModel
     {
-        [IsFilterable]
+        [SimpleField(IsFilterable = true)]
         public int Data { get; set; }
 
         // This is to test that FieldBuilder gracefully fails on recursive models.
@@ -18,7 +20,7 @@ namespace Azure.Search.Documents.Samples.Tests
 
     public class OtherRecursiveModel
     {
-        [IsFilterable, IsFacetable]
+        [SimpleField(IsFilterable = true, IsFacetable = true)]
         public double Data { get; set; }
 
         public RecursiveModel RecursiveReference { get; set; }

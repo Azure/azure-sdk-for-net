@@ -12,11 +12,12 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> This activity evaluates a boolean expression and executes either the activities under the ifTrueActivities property or the ifFalseActivities property depending on the result of the expression. </summary>
-    public partial class IfConditionActivity : Activity
+    public partial class IfConditionActivity : ControlActivity
     {
         /// <summary> Initializes a new instance of IfConditionActivity. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="expression"> An expression that would evaluate to Boolean. This is used to determine the block of activities (ifTrueActivities or ifFalseActivities) that will be executed. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="expression"/> is null. </exception>
         public IfConditionActivity(string name, Expression expression) : base(name)
         {
             if (name == null)
@@ -40,7 +41,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="description"> Activity description. </param>
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="expression"> An expression that would evaluate to Boolean. This is used to determine the block of activities (ifTrueActivities or ifFalseActivities) that will be executed. </param>
         /// <param name="ifTrueActivities"> List of activities to execute if expression is evaluated to true. This is an optional property and if not provided, the activity will exit without any action. </param>
         /// <param name="ifFalseActivities"> List of activities to execute if expression is evaluated to false. This is an optional property and if not provided, the activity will exit without any action. </param>

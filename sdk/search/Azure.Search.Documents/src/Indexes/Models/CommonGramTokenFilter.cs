@@ -9,7 +9,6 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class CommonGramTokenFilter
     {
         /// <summary> The set of common words. </summary>
-        [CodeGenMember(EmptyAsUndefined = true, Initialize = true)]
         public IList<string> CommonWords { get; }
     }
 }

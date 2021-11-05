@@ -15,7 +15,8 @@ namespace Azure.ResourceManager.Compute.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="DiskCreateOption"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskCreateOption"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DiskCreateOption(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));

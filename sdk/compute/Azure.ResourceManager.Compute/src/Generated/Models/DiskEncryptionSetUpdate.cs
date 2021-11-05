@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -15,20 +16,18 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of DiskEncryptionSetUpdate. </summary>
         public DiskEncryptionSetUpdate()
         {
-        }
-
-        /// <summary> Initializes a new instance of DiskEncryptionSetUpdate. </summary>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="activeKey"> Key Vault Key Url and vault id of KeK, KeK is optional and when provided is used to unwrap the encryptionKey. </param>
-        internal DiskEncryptionSetUpdate(IDictionary<string, string> tags, KeyVaultAndKeyReference activeKey)
-        {
-            Tags = tags;
-            ActiveKey = activeKey;
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; set; }
-        /// <summary> Key Vault Key Url and vault id of KeK, KeK is optional and when provided is used to unwrap the encryptionKey. </summary>
-        public KeyVaultAndKeyReference ActiveKey { get; set; }
+        public IDictionary<string, string> Tags { get; }
+        /// <summary> The managed identity for the disk encryption set. It should be given permission on the key vault before it can be used to encrypt disks. </summary>
+        public EncryptionSetIdentity Identity { get; set; }
+        /// <summary> The type of key used to encrypt the data of the disk. </summary>
+        public DiskEncryptionSetType? EncryptionType { get; set; }
+        /// <summary> Key Vault Key Url to be used for server side encryption of Managed Disks and Snapshots. </summary>
+        public KeyForDiskEncryptionSet ActiveKey { get; set; }
+        /// <summary> Set this flag to true to enable auto-updating of this disk encryption set to the latest key version. </summary>
+        public bool? RotationToLatestKeyVersionEnabled { get; set; }
     }
 }

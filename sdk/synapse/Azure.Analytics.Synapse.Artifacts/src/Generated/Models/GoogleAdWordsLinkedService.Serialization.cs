@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(GoogleAdWordsLinkedServiceConverter))]
     public partial class GoogleAdWordsLinkedService : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -125,7 +128,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<object> useSystemTrustStore = default;
             Optional<object> encryptedCredential = default;
             IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -135,6 +138,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("connectVia"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property.Value);
                     continue;
                 }
@@ -145,6 +153,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("parameters"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, ParameterSpecification> dictionary = new Dictionary<string, ParameterSpecification>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -155,6 +168,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("annotations"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<object> array = new List<object>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -165,6 +183,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("typeProperties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("clientCustomerID"))
@@ -184,52 +207,104 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         }
                         if (property0.NameEquals("refreshToken"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             refreshToken = SecretBase.DeserializeSecretBase(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("clientId"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             clientId = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("clientSecret"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             clientSecret = SecretBase.DeserializeSecretBase(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("email"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             email = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("keyFilePath"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             keyFilePath = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("trustedCertPath"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             trustedCertPath = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("useSystemTrustStore"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             useSystemTrustStore = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             encryptedCredential = property0.Value.GetObject();
                             continue;
                         }
                     }
                     continue;
                 }
-                additionalPropertiesDictionary ??= new Dictionary<string, object>();
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
             return new GoogleAdWordsLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, clientCustomerID, developerToken, authenticationType, refreshToken.Value, clientId.Value, clientSecret.Value, email.Value, keyFilePath.Value, trustedCertPath.Value, useSystemTrustStore.Value, encryptedCredential.Value);
+        }
+
+        internal partial class GoogleAdWordsLinkedServiceConverter : JsonConverter<GoogleAdWordsLinkedService>
+        {
+            public override void Write(Utf8JsonWriter writer, GoogleAdWordsLinkedService model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override GoogleAdWordsLinkedService Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeGoogleAdWordsLinkedService(document.RootElement);
+            }
         }
     }
 }

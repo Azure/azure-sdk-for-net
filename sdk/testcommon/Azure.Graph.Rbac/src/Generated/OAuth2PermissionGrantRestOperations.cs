@@ -30,7 +30,7 @@ namespace Azure.Graph.Rbac
         /// <param name="tenantID"> The tenant ID. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantID"/> or <paramref name="apiVersion"/> is null. </exception>
         public OAuth2PermissionGrantRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string tenantID, Uri endpoint = null, string apiVersion = "1.6")
         {
             if (tenantID == null)
@@ -66,6 +66,7 @@ namespace Azure.Graph.Rbac
             }
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -82,14 +83,7 @@ namespace Azure.Graph.Rbac
                     {
                         OAuth2PermissionGrantListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = OAuth2PermissionGrantListResult.DeserializeOAuth2PermissionGrantListResult(document.RootElement);
-                        }
+                        value = OAuth2PermissionGrantListResult.DeserializeOAuth2PermissionGrantListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -110,14 +104,7 @@ namespace Azure.Graph.Rbac
                     {
                         OAuth2PermissionGrantListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = OAuth2PermissionGrantListResult.DeserializeOAuth2PermissionGrantListResult(document.RootElement);
-                        }
+                        value = OAuth2PermissionGrantListResult.DeserializeOAuth2PermissionGrantListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -137,9 +124,10 @@ namespace Azure.Graph.Rbac
             uri.AppendPath("/oauth2PermissionGrants", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             if (body != null)
             {
+                request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
                 content.JsonWriter.WriteObjectValue(body);
                 request.Content = content;
@@ -160,14 +148,7 @@ namespace Azure.Graph.Rbac
                     {
                         OAuth2PermissionGrant value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = OAuth2PermissionGrant.DeserializeOAuth2PermissionGrant(document.RootElement);
-                        }
+                        value = OAuth2PermissionGrant.DeserializeOAuth2PermissionGrant(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -188,14 +169,7 @@ namespace Azure.Graph.Rbac
                     {
                         OAuth2PermissionGrant value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = OAuth2PermissionGrant.DeserializeOAuth2PermissionGrant(document.RootElement);
-                        }
+                        value = OAuth2PermissionGrant.DeserializeOAuth2PermissionGrant(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -216,12 +190,14 @@ namespace Azure.Graph.Rbac
             uri.AppendPath(objectId, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             return message;
         }
 
         /// <summary> Delete a OAuth2 permission grant for the relevant resource Ids of an app. </summary>
         /// <param name="objectId"> The object ID of a permission grant. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> is null. </exception>
         public async Task<Response> DeleteAsync(string objectId, CancellationToken cancellationToken = default)
         {
             if (objectId == null)
@@ -243,6 +219,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Delete a OAuth2 permission grant for the relevant resource Ids of an app. </summary>
         /// <param name="objectId"> The object ID of a permission grant. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> is null. </exception>
         public Response Delete(string objectId, CancellationToken cancellationToken = default)
         {
             if (objectId == null)
@@ -271,15 +248,17 @@ namespace Azure.Graph.Rbac
             uri.AppendPath("/", false);
             uri.AppendPath(tenantID, true);
             uri.AppendPath("/", false);
-            uri.AppendRaw(nextLink, false);
+            uri.AppendRawNextLink(nextLink, false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             return message;
         }
 
         /// <summary> Gets the next page of OAuth2 permission grants. </summary>
         /// <param name="nextLink"> Next link for the list operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<OAuth2PermissionGrantListResult>> ListNextAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -295,14 +274,7 @@ namespace Azure.Graph.Rbac
                     {
                         OAuth2PermissionGrantListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = OAuth2PermissionGrantListResult.DeserializeOAuth2PermissionGrantListResult(document.RootElement);
-                        }
+                        value = OAuth2PermissionGrantListResult.DeserializeOAuth2PermissionGrantListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -313,6 +285,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets the next page of OAuth2 permission grants. </summary>
         /// <param name="nextLink"> Next link for the list operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<OAuth2PermissionGrantListResult> ListNext(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -328,14 +301,7 @@ namespace Azure.Graph.Rbac
                     {
                         OAuth2PermissionGrantListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = OAuth2PermissionGrantListResult.DeserializeOAuth2PermissionGrantListResult(document.RootElement);
-                        }
+                        value = OAuth2PermissionGrantListResult.DeserializeOAuth2PermissionGrantListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -352,12 +318,14 @@ namespace Azure.Graph.Rbac
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             return message;
         }
 
         /// <summary> Gets the next page of OAuth2 permission grants. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<OAuth2PermissionGrantListResult>> ListNextNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -373,14 +341,7 @@ namespace Azure.Graph.Rbac
                     {
                         OAuth2PermissionGrantListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = OAuth2PermissionGrantListResult.DeserializeOAuth2PermissionGrantListResult(document.RootElement);
-                        }
+                        value = OAuth2PermissionGrantListResult.DeserializeOAuth2PermissionGrantListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -391,6 +352,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets the next page of OAuth2 permission grants. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<OAuth2PermissionGrantListResult> ListNextNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -406,14 +368,7 @@ namespace Azure.Graph.Rbac
                     {
                         OAuth2PermissionGrantListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = OAuth2PermissionGrantListResult.DeserializeOAuth2PermissionGrantListResult(document.RootElement);
-                        }
+                        value = OAuth2PermissionGrantListResult.DeserializeOAuth2PermissionGrantListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

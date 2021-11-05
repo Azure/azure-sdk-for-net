@@ -8,49 +8,40 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class InboundNatRuleListResult
+    internal partial class InboundNatRuleListResult
     {
         internal static InboundNatRuleListResult DeserializeInboundNatRuleListResult(JsonElement element)
         {
-            IReadOnlyList<InboundNatRule> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<InboundNatRuleData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<InboundNatRule> array = new List<InboundNatRule>();
+                    List<InboundNatRuleData> array = new List<InboundNatRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(InboundNatRule.DeserializeInboundNatRule(item));
-                        }
+                        array.Add(InboundNatRuleData.DeserializeInboundNatRuleData(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new InboundNatRuleListResult(value, nextLink);
+            return new InboundNatRuleListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

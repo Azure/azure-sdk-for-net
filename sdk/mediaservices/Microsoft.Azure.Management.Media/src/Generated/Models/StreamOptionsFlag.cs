@@ -27,8 +27,16 @@ namespace Microsoft.Azure.Management.Media.Models
             UnderlyingValue=underlyingValue;
         }
 
+        /// <summary>
+        /// Live streaming with no special latency optimizations.
+        /// </summary>
         public static readonly StreamOptionsFlag Default = "Default";
 
+        /// <summary>
+        /// The live event provides lower end to end latency by reducing its
+        /// internal buffers. This could result in more client buffering during
+        /// playback if network bandwidth is low.
+        /// </summary>
         public static readonly StreamOptionsFlag LowLatency = "LowLatency";
 
 

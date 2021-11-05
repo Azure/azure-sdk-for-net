@@ -21,10 +21,8 @@ namespace Azure.DigitalTwins.Core.Tests
         public void CommonConfig_SetTo_PlaybackMode()
         {
             // arrange
-            string codeBase = Assembly.GetExecutingAssembly().CodeBase;
-            var uri = new UriBuilder(codeBase);
-            string path = Uri.UnescapeDataString(uri.Path);
-            string workingDirectory = Path.GetDirectoryName(path);
+            string codeBase = Assembly.GetExecutingAssembly().Location;
+            string workingDirectory = Path.GetDirectoryName(codeBase);
             string testSettingsCommonPath = Path.Combine(
                 workingDirectory,
                 "config",

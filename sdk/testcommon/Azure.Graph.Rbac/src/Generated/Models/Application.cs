@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Graph.Rbac.Models
 {
@@ -16,6 +17,17 @@ namespace Azure.Graph.Rbac.Models
         /// <summary> Initializes a new instance of Application. </summary>
         internal Application()
         {
+            AppRoles = new ChangeTrackingList<AppRole>();
+            AppPermissions = new ChangeTrackingList<string>();
+            IdentifierUris = new ChangeTrackingList<string>();
+            KeyCredentials = new ChangeTrackingList<KeyCredential>();
+            KnownClientApplications = new ChangeTrackingList<string>();
+            Oauth2Permissions = new ChangeTrackingList<OAuth2Permission>();
+            OrgRestrictions = new ChangeTrackingList<string>();
+            PasswordCredentials = new ChangeTrackingList<PasswordCredential>();
+            PreAuthorizedApplications = new ChangeTrackingList<PreAuthorizedApplication>();
+            ReplyUrls = new ChangeTrackingList<string>();
+            RequiredResourceAccess = new ChangeTrackingList<RequiredResourceAccess>();
             ObjectType = "Application";
         }
 

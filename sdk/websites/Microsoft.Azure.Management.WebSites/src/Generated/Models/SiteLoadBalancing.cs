@@ -30,7 +30,9 @@ namespace Microsoft.Azure.Management.WebSites.Models
         [EnumMember(Value = "WeightedTotalTraffic")]
         WeightedTotalTraffic,
         [EnumMember(Value = "RequestHash")]
-        RequestHash
+        RequestHash,
+        [EnumMember(Value = "PerSiteRoundRobin")]
+        PerSiteRoundRobin
     }
     internal static class SiteLoadBalancingEnumExtension
     {
@@ -53,6 +55,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
                     return "WeightedTotalTraffic";
                 case SiteLoadBalancing.RequestHash:
                     return "RequestHash";
+                case SiteLoadBalancing.PerSiteRoundRobin:
+                    return "PerSiteRoundRobin";
             }
             return null;
         }
@@ -71,6 +75,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
                     return SiteLoadBalancing.WeightedTotalTraffic;
                 case "RequestHash":
                     return SiteLoadBalancing.RequestHash;
+                case "PerSiteRoundRobin":
+                    return SiteLoadBalancing.PerSiteRoundRobin;
             }
             return null;
         }

@@ -51,16 +51,16 @@ namespace StreamAnalytics.Tests
                         {
                             DataType = @"nvarchar(max)"
                         },
-                        Binding = new AzureMachineLearningWebServiceFunctionBinding()
+                        Binding = new AzureMachineLearningStudioFunctionBinding()
                         {
                             Endpoint = TestHelper.ExecuteEndpoint,
                             ApiKey = null,
-                            Inputs = new AzureMachineLearningWebServiceInputs()
+                            Inputs = new AzureMachineLearningStudioInputs()
                             {
                                 Name = "input1",
-                                ColumnNames = new AzureMachineLearningWebServiceInputColumn[]
+                                ColumnNames = new AzureMachineLearningStudioInputColumn[]
                                 {
-                                    new AzureMachineLearningWebServiceInputColumn()
+                                    new AzureMachineLearningStudioInputColumn()
                                     {
                                         Name = "tweet",
                                         DataType = "string",
@@ -68,9 +68,9 @@ namespace StreamAnalytics.Tests
                                     }
                                 }
                             },
-                            Outputs = new List<AzureMachineLearningWebServiceOutputColumn>()
+                            Outputs = new List<AzureMachineLearningStudioOutputColumn>()
                             {
-                                new AzureMachineLearningWebServiceOutputColumn()
+                                new AzureMachineLearningStudioOutputColumn()
                                 {
                                     Name = "Sentiment",
                                     DataType = "string"
@@ -85,7 +85,7 @@ namespace StreamAnalytics.Tests
                 streamAnalyticsManagementClient.StreamingJobs.CreateOrReplace(TestHelper.GetDefaultStreamingJob(), resourceGroupName, jobName);
 
                 // Retrieve default definition
-                AzureMachineLearningWebServiceFunctionRetrieveDefaultDefinitionParameters retrieveDefaultDefinitionParameters = new AzureMachineLearningWebServiceFunctionRetrieveDefaultDefinitionParameters()
+                AzureMachineLearningStudioFunctionRetrieveDefaultDefinitionParameters retrieveDefaultDefinitionParameters = new AzureMachineLearningStudioFunctionRetrieveDefaultDefinitionParameters()
                 {
                     UdfType = UdfType.Scalar,
                     ExecuteEndpoint = TestHelper.ExecuteEndpoint
@@ -98,9 +98,9 @@ namespace StreamAnalytics.Tests
                 ValidationHelper.ValidateFunctionProperties(expectedFunction.Properties, function.Properties, false);
 
                 // PUT function
-                ((AzureMachineLearningWebServiceFunctionBinding)((ScalarFunctionProperties)function.Properties).Binding).ApiKey = TestHelper.ApiKey;
+                ((AzureMachineLearningStudioFunctionBinding)((ScalarFunctionProperties)function.Properties).Binding).ApiKey = TestHelper.ApiKey;
                 var putResponse = await streamAnalyticsManagementClient.Functions.CreateOrReplaceWithHttpMessagesAsync(function, resourceGroupName, jobName, functionName);
-                ((AzureMachineLearningWebServiceFunctionBinding)((ScalarFunctionProperties)function.Properties).Binding).ApiKey = null; // Null out because secrets are not returned in responses
+                ((AzureMachineLearningStudioFunctionBinding)((ScalarFunctionProperties)function.Properties).Binding).ApiKey = null; // Null out because secrets are not returned in responses
                 ValidationHelper.ValidateFunction(function, putResponse.Body, false);
                 Assert.Equal(expectedFunctionResourceId, putResponse.Body.Id);
                 Assert.Equal(functionName, putResponse.Body.Name);
@@ -122,13 +122,13 @@ namespace StreamAnalytics.Tests
                 {
                     Properties = new ScalarFunctionProperties()
                     {
-                        Binding = new AzureMachineLearningWebServiceFunctionBinding()
+                        Binding = new AzureMachineLearningStudioFunctionBinding()
                         {
                             BatchSize = 5000
                         }
                     }
                 };
-                ((AzureMachineLearningWebServiceFunctionBinding)((ScalarFunctionProperties)putResponse.Body.Properties).Binding).BatchSize = ((AzureMachineLearningWebServiceFunctionBinding)((ScalarFunctionProperties)functionPatch.Properties).Binding).BatchSize;
+                ((AzureMachineLearningStudioFunctionBinding)((ScalarFunctionProperties)putResponse.Body.Properties).Binding).BatchSize = ((AzureMachineLearningStudioFunctionBinding)((ScalarFunctionProperties)functionPatch.Properties).Binding).BatchSize;
                 var patchResponse = await streamAnalyticsManagementClient.Functions.UpdateWithHttpMessagesAsync(functionPatch, resourceGroupName, jobName, functionName);
                 ValidationHelper.ValidateFunction(putResponse.Body, patchResponse.Body, true);
                 // ETag should be different after a PATCH operation

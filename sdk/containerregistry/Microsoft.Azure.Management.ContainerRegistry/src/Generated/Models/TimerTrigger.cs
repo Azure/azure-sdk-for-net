@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// schedule</param>
         /// <param name="name">The name of the trigger.</param>
         /// <param name="status">The current status of trigger. Possible values
-        /// include: 'Disabled', 'Enabled'</param>
+        /// include: 'Enabled', 'Disabled'</param>
         public TimerTrigger(string schedule, string name, string status = default(string))
         {
             Schedule = schedule;
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
 
         /// <summary>
         /// Gets or sets the current status of trigger. Possible values
-        /// include: 'Disabled', 'Enabled'
+        /// include: 'Enabled', 'Disabled'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
         public string Status { get; set; }

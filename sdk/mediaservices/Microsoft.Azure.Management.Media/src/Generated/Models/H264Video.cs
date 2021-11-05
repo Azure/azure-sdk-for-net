@@ -34,14 +34,18 @@ namespace Microsoft.Azure.Management.Media.Models
         /// </summary>
         /// <param name="label">An optional label for the codec. The label can
         /// be used to control muxing behavior.</param>
-        /// <param name="keyFrameInterval">The distance between two key frames,
-        /// thereby defining a group of pictures (GOP). The value should be a
-        /// non-zero integer in the range [1, 30] seconds, specified in ISO
-        /// 8601 format. The default is 2 seconds (PT2S).</param>
+        /// <param name="keyFrameInterval">The distance between two key frames.
+        /// The value should be non-zero in the range [0.5, 20] seconds,
+        /// specified in ISO 8601 format. The default is 2 seconds(PT2S). Note
+        /// that this setting is ignored if VideoSyncMode.Passthrough is set,
+        /// where the KeyFrameInterval value will follow the input source
+        /// setting.</param>
         /// <param name="stretchMode">The resizing mode - how the input video
         /// will be resized to fit the desired output resolution(s). Default is
         /// AutoSize. Possible values include: 'None', 'AutoSize',
         /// 'AutoFit'</param>
+        /// <param name="syncMode">The Video Sync Mode. Possible values
+        /// include: 'Auto', 'Passthrough', 'Cfr', 'Vfr'</param>
         /// <param name="sceneChangeDetection">Whether or not the encoder
         /// should insert key frames at scene changes. If not specified, the
         /// default is false. This flag should be set to true only when the
@@ -52,8 +56,8 @@ namespace Microsoft.Azure.Management.Media.Models
         /// include: 'Speed', 'Balanced', 'Quality'</param>
         /// <param name="layers">The collection of output H.264 layers to be
         /// produced by the encoder.</param>
-        public H264Video(string label = default(string), System.TimeSpan? keyFrameInterval = default(System.TimeSpan?), StretchMode? stretchMode = default(StretchMode?), bool? sceneChangeDetection = default(bool?), H264Complexity? complexity = default(H264Complexity?), IList<H264Layer> layers = default(IList<H264Layer>))
-            : base(label, keyFrameInterval, stretchMode)
+        public H264Video(string label = default(string), System.TimeSpan? keyFrameInterval = default(System.TimeSpan?), StretchMode? stretchMode = default(StretchMode?), VideoSyncMode? syncMode = default(VideoSyncMode?), bool? sceneChangeDetection = default(bool?), H264Complexity? complexity = default(H264Complexity?), IList<H264Layer> layers = default(IList<H264Layer>))
+            : base(label, keyFrameInterval, stretchMode, syncMode)
         {
             SceneChangeDetection = sceneChangeDetection;
             Complexity = complexity;

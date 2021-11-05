@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (NotBeforeTimeout != null)
+            if (Optional.IsDefined(NotBeforeTimeout))
             {
                 writer.WritePropertyName("notBeforeTimeout");
                 writer.WriteStringValue(NotBeforeTimeout);
             }
-            if (Enable != null)
+            if (Optional.IsDefined(Enable))
             {
                 writer.WritePropertyName("enable");
                 writer.WriteBooleanValue(Enable.Value);
@@ -30,16 +30,12 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static TerminateNotificationProfile DeserializeTerminateNotificationProfile(JsonElement element)
         {
-            string notBeforeTimeout = default;
-            bool? enable = default;
+            Optional<string> notBeforeTimeout = default;
+            Optional<bool> enable = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("notBeforeTimeout"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     notBeforeTimeout = property.Value.GetString();
                     continue;
                 }
@@ -47,13 +43,14 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enable = property.Value.GetBoolean();
                     continue;
                 }
             }
-            return new TerminateNotificationProfile(notBeforeTimeout, enable);
+            return new TerminateNotificationProfile(notBeforeTimeout.Value, Optional.ToNullable(enable));
         }
     }
 }

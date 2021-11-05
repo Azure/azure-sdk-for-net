@@ -92,5 +92,21 @@ namespace Azure.Storage.Files.DataLake.Tests
             public string NoneMatch { get; set; }
             public string LeaseId { get; set; }
         }
+
+        public class InMemoryAccessControlRecursiveChangeProgress : IProgress<Response<AccessControlChanges>>
+        {
+            public List<AccessControlChangeFailure> Failures { get; } = new List<AccessControlChangeFailure>();
+            public List< AccessControlChangeFailure[] > BatchFailures { get; } = new List< AccessControlChangeFailure[] >();
+            public List<AccessControlChangeCounters> BatchCounters { get; } = new List<AccessControlChangeCounters>();
+            public List<AccessControlChangeCounters> CummulativeCounters { get; } = new List<AccessControlChangeCounters>();
+
+            public void Report(Response<AccessControlChanges> response)
+            {
+                Failures.AddRange(response.Value.BatchFailures);
+                if (response.Value.BatchFailures.Length > 0) BatchFailures.Add(response.Value.BatchFailures);
+                BatchCounters.Add(response.Value.BatchCounters);
+                CummulativeCounters.Add(response.Value.AggregateCounters);
+            }
+        }
     }
 }

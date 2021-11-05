@@ -18,5 +18,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
     {
         public const string SystemAssigned = "SystemAssigned";
         public const string None = "None";
+        public const string UserAssigned = "UserAssigned";
+        public const string SystemAssignedUserAssigned = "SystemAssigned, UserAssigned";
     }
 }

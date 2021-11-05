@@ -245,7 +245,7 @@ namespace Management.HDInsight.Tests
         }
 
         /// <summary>
-        /// Get resouce id of the specific storage account
+        /// Get resource id of the specific storage account
         /// </summary>
         /// <param name="resourceGroupName"></param>
         /// <param name="storageAccountName"></param>
@@ -345,7 +345,7 @@ namespace Management.HDInsight.Tests
         }
 
         /// <summary>
-        /// Set vault permissions to some resouce by its object id.
+        /// Set vault permissions to some resource by its object id.
         /// </summary>
         /// <param name="vault"></param>
         /// <param name="resourceGroupName"></param>
@@ -430,7 +430,7 @@ namespace Management.HDInsight.Tests
             authorizationManagementClient.RoleAssignments.Create(scope, assignmentName, newRoleAssignment);
         }
 
-        public VirtualNetwork CreateVirtualNetworkWithSubnet(string resourceGroupName, string location, string virtualNetworkName, string subnetName, bool subnetPrivateEndpointNetworkPoliciesFlag =true, bool subnetPrivateLinkServiceNetworkPoliciesFlag = true)
+        public VirtualNetwork CreateVirtualNetworkWithSubnet(string resourceGroupName, string location, string virtualNetworkName, string subnetName, NetworkSecurityGroup networkSecurityGroup=null, bool subnetPrivateEndpointNetworkPoliciesFlag =true, bool subnetPrivateLinkServiceNetworkPoliciesFlag = true)
         {
             VirtualNetwork vnet = new VirtualNetwork()
             {
@@ -448,6 +448,7 @@ namespace Management.HDInsight.Tests
                     {
                         Name = subnetName,
                         AddressPrefix = "10.0.0.0/24",
+                        NetworkSecurityGroup=networkSecurityGroup,
                         PrivateEndpointNetworkPolicies = subnetPrivateEndpointNetworkPoliciesFlag ? "Enabled" : "Disabled",
                         PrivateLinkServiceNetworkPolicies =subnetPrivateLinkServiceNetworkPoliciesFlag ? "Enabled" : "Disabled"
                     }
@@ -456,8 +457,18 @@ namespace Management.HDInsight.Tests
             return networkManagementClient.VirtualNetworks.CreateOrUpdate(resourceGroupName, virtualNetworkName, vnet);
         }
 
+        public NetworkSecurityGroup CreateNetworkSecurityGroup(string resourceGroupName, string networkSecurityGroupName, NetworkSecurityGroup networkSecurityGroupParameter)
+        {
+            return networkManagementClient.NetworkSecurityGroups.CreateOrUpdate(resourceGroupName, networkSecurityGroupName, networkSecurityGroupParameter);
+        }
+
+        public PrivateEndpoint CreatePrivateEndpoint(string resourceGroupName, string privateEndpointName, PrivateEndpoint privateEndpointParameter)
+        {
+            return networkManagementClient.PrivateEndpoints.CreateOrUpdate(resourceGroupName, privateEndpointName, privateEndpointParameter);
+        }
+
         /// <summary>
-        /// Throw expception if the given condition is satisfied
+        /// Throw exception if the given condition is satisfied
         /// </summary>
         /// <param name="condition"></param>
         /// <param name="message"></param>

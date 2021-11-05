@@ -22,6 +22,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="input"> Input blob path. Type: string (or Expression with resultType string). </param>
         /// <param name="output"> Output blob path. Type: string (or Expression with resultType string). </param>
         /// <param name="filePaths"> Paths to streaming job files. Can be directories. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="mapper"/>, <paramref name="reducer"/>, <paramref name="input"/>, <paramref name="output"/>, or <paramref name="filePaths"/> is null. </exception>
         public HDInsightStreamingActivity(string name, object mapper, object reducer, object input, object output, IEnumerable<object> filePaths) : base(name)
         {
             if (name == null)
@@ -67,7 +68,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="description"> Activity description. </param>
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="policy"> Activity policy. </param>
         /// <param name="storageLinkedServices"> Storage linked service references. </param>

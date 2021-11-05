@@ -44,13 +44,15 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// migration behavior</param>
         /// <param name="targetSetting">Target settings to tune target endpoint
         /// migration behavior</param>
-        public MigratePostgreSqlAzureDbForPostgreSqlSyncDatabaseInput(string name = default(string), string targetDatabaseName = default(string), IDictionary<string, string> migrationSetting = default(IDictionary<string, string>), IDictionary<string, string> sourceSetting = default(IDictionary<string, string>), IDictionary<string, string> targetSetting = default(IDictionary<string, string>))
+        /// <param name="selectedTables">Tables selected for migration</param>
+        public MigratePostgreSqlAzureDbForPostgreSqlSyncDatabaseInput(string name = default(string), string targetDatabaseName = default(string), IDictionary<string, string> migrationSetting = default(IDictionary<string, string>), IDictionary<string, string> sourceSetting = default(IDictionary<string, string>), IDictionary<string, string> targetSetting = default(IDictionary<string, string>), IList<MigratePostgreSqlAzureDbForPostgreSqlSyncDatabaseTableInput> selectedTables = default(IList<MigratePostgreSqlAzureDbForPostgreSqlSyncDatabaseTableInput>))
         {
             Name = name;
             TargetDatabaseName = targetDatabaseName;
             MigrationSetting = migrationSetting;
             SourceSetting = sourceSetting;
             TargetSetting = targetSetting;
+            SelectedTables = selectedTables;
             CustomInit();
         }
 
@@ -91,6 +93,12 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// </summary>
         [JsonProperty(PropertyName = "targetSetting")]
         public IDictionary<string, string> TargetSetting { get; set; }
+
+        /// <summary>
+        /// Gets or sets tables selected for migration
+        /// </summary>
+        [JsonProperty(PropertyName = "selectedTables")]
+        public IList<MigratePostgreSqlAzureDbForPostgreSqlSyncDatabaseTableInput> SelectedTables { get; set; }
 
     }
 }

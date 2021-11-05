@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>Azure.IoT.Hub.Service.Samples</RootNamespace>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <!-- NU5104: Using a project reference to the client causes build warning/errors on build agents. -->
+  <PropertyGroup>  
+    <NoWarn>$(NoWarn);NU5104</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommandLineParser" Version="2.8.0" />
+    <PackageReference Include="Microsoft.Azure.Storage.Blob" Version="11.2.2" />
+    <PackageReference Include="Microsoft.Azure.Storage.Common" Version="11.2.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Azure.IoT.Hub.Service.csproj" />
+  </ItemGroup>
+</Project>

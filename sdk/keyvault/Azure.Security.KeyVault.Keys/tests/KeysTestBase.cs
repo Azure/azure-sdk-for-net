@@ -6,7 +6,6 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 using Azure.Security.KeyVault.Tests;
 using Castle.DynamicProxy;
 using NUnit.Framework;
@@ -15,17 +14,19 @@ namespace Azure.Security.KeyVault.Keys.Tests
 {
     [ClientTestFixture(
         KeyClientOptions.ServiceVersion.V7_0,
-        KeyClientOptions.ServiceVersion.V7_1_Preview)]
+        KeyClientOptions.ServiceVersion.V7_1,
+        KeyClientOptions.ServiceVersion.V7_2,
+        KeyClientOptions.ServiceVersion.V7_3_Preview)]
     [NonParallelizable]
     public abstract class KeysTestBase : RecordedTestBase<KeyVaultTestEnvironment>
     {
-        public const string AzureKeyVaultUrlEnvironmentVariable = "AZURE_KEYVAULT_URL";
+        protected TimeSpan PollingInterval => Recording.Mode == RecordedTestMode.Playback
+            ? TimeSpan.Zero
+            : KeyVaultTestEnvironment.DefaultPollingInterval;
 
-        protected readonly TimeSpan PollingInterval = TimeSpan.FromSeconds(5);
+        public KeyClient Client { get; private set; }
 
-        public KeyClient Client { get; set; }
-
-        public Uri VaultUri { get; set; }
+        public virtual Uri Uri => new Uri(TestEnvironment.KeyVaultUrl);
 
         // Queue deletes, but poll on the top of the purge stack to increase likelihood of others being purged by then.
         private readonly ConcurrentQueue<string> _keysToDelete = new ConcurrentQueue<string>();
@@ -34,15 +35,27 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
         private KeyVaultTestEventListener _listener;
 
-        protected KeysTestBase(bool isAsync, KeyClientOptions.ServiceVersion serviceVersion) : base(isAsync)
+        protected KeysTestBase(bool isAsync, KeyClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode)
+            : base(isAsync, mode /* RecordedTestMode.Record */)
         {
             _serviceVersion = serviceVersion;
         }
 
-        internal KeyClient GetClient(TestRecording recording = null)
-        {
-            recording = recording ?? Recording;
+        /// <summary>
+        /// Gets whether the current text fixture is running against Managed HSM.
+        /// </summary>
+        protected internal virtual bool IsManagedHSM => false;
 
+        internal static void IgnoreIfNotSupported(RequestFailedException ex)
+        {
+            if (ex.Status == 400 && ex.ErrorCode == "NotSupported")
+            {
+                throw new IgnoreException(ex.Message ?? "The feature under test is not supported");
+            }
+        }
+
+        internal KeyClient GetClient()
+        {
             // Until https://github.com/Azure/azure-sdk-for-net/issues/8575 is fixed,
             // we need to delay creation of keys due to aggressive service limits on key creation:
             // https://docs.microsoft.com/azure/key-vault/key-vault-service-limits
@@ -50,9 +63,21 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             return InstrumentClient(
                 new KeyClient(
-                    new Uri(TestEnvironment.KeyVaultUrl),
+                    Uri,
                     TestEnvironment.Credential,
-                    recording.InstrumentClientOptions(new KeyClientOptions(_serviceVersion))),
+                    InstrumentClientOptions(
+                        new KeyClientOptions(_serviceVersion)
+                        {
+                            Diagnostics =
+                            {
+                                LoggedHeaderNames =
+                                {
+                                    "x-ms-request-id",
+                                },
+                                // TODO: Remove once https://github.com/Azure/azure-sdk-for-net/issues/18800 is resolved.
+                                IsLoggingContentEnabled = Mode != RecordedTestMode.Playback,
+                            },
+                        })),
                 interceptors);
         }
 
@@ -63,7 +88,6 @@ namespace Azure.Security.KeyVault.Keys.Tests
             _listener = new KeyVaultTestEventListener();
 
             Client = GetClient();
-            VaultUri = new Uri(TestEnvironment.KeyVaultUrl);
         }
 
         public override void StopTestRecording()
@@ -162,7 +186,10 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.AreEqual(exp.CurveName, act.CurveName);
             Assert.AreEqual(exp.K, act.K);
             Assert.AreEqual(exp.N, act.N);
-            Assert.AreEqual(exp.E, act.E);
+
+            // TODO: Simply assert when https://github.com/Azure/azure-sdk-for-net/issues/18800 is resolved.
+            AssertAreEqual(exp.E, act.E);
+
             Assert.AreEqual(exp.X, act.X);
             Assert.AreEqual(exp.Y, act.Y);
             Assert.AreEqual(exp.D, act.D);
@@ -183,12 +210,42 @@ namespace Azure.Security.KeyVault.Keys.Tests
             AssertAreEqual(exp.Tags, act.Tags);
         }
 
+        protected static void AssertAreEqual(byte[] exp, byte[] act)
+        {
+            static byte[] TrimStart(byte[] buf)
+            {
+                int start = 0;
+                for (; start < buf.Length && buf[start] == 0; start++)
+                {
+                    // The index is incremented within the for expression.
+                }
+
+                if (start != 0)
+                {
+                    return buf.AsSpan().Slice(start, buf.Length - start).ToArray();
+                }
+
+                return buf;
+            }
+
+            if (exp is null && act is null)
+                return;
+
+            if (exp?.Length != act?.Length)
+            {
+                exp = TrimStart(exp);
+                act = TrimStart(act);
+            }
+
+            Assert.AreEqual(exp, act);
+        }
+
         protected static void AssertAreEqual<T>(IReadOnlyCollection<T> exp, IReadOnlyCollection<T> act)
         {
             if (exp is null && act is null)
                 return;
 
-            CollectionAssert.AreEqual(exp, act);
+            CollectionAssert.AreEquivalent(exp, act);
         }
 
         protected static void AssertAreEqual<TKey, TValue>(IDictionary<TKey, TValue> exp, IDictionary<TKey, TValue> act)
@@ -217,11 +274,20 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             using (Recording.DisableRecording())
             {
-                return TestRetryHelper.RetryAsync(async () => await Client.GetDeletedKeyAsync(name), delay: PollingInterval);
+                return TestRetryHelper.RetryAsync(async () => {
+                    try
+                    {
+                        return await Client.GetDeletedKeyAsync(name).ConfigureAwait(false);
+                    }
+                    catch (RequestFailedException ex) when (ex.Status == 404)
+                    {
+                        throw new InconclusiveException($"Timed out while waiting for key '{name}' to be deleted");
+                    }
+                }, delay: PollingInterval);
             }
         }
 
-        protected Task WaitForPurgedKey(string name)
+        protected Task WaitForPurgedKey(string name, TimeSpan? delay = null)
         {
             if (Mode == RecordedTestMode.Playback)
             {
@@ -230,6 +296,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             using (Recording.DisableRecording())
             {
+                delay ??= PollingInterval;
                 return TestRetryHelper.RetryAsync(async () => {
                     try
                     {
@@ -240,7 +307,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                     {
                         return (Response)null;
                     }
-                }, delay: PollingInterval);
+                }, delay: delay.Value);
             }
         }
 

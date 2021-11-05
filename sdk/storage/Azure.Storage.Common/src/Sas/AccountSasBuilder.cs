@@ -22,6 +22,13 @@ namespace Azure.Storage.Sas
         /// with this shared access signature, and the service version to use
         /// when handling requests made with this shared access signature.
         /// </summary>
+        /// <remarks>
+        /// This property has been deprecated and we will always use the latest
+        /// storage SAS version of the Storage service supported. This change
+        /// does not have any impact on how your application generates or makes
+        /// use of SAS tokens.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public string Version { get; set; }
 
         /// <summary>
@@ -77,6 +84,60 @@ namespace Azure.Storage.Sas
         /// user is restricted to operations on the specified resources.
         /// </summary>
         public AccountSasResourceTypes ResourceTypes { get; set; }
+
+        /// <summary>
+        /// Optional.  Encryption scope to use when sending requests authorized with this SAS URI.
+        /// </summary>
+        public string EncryptionScope { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AccountSasBuilder"/>
+        /// class.
+        /// </summary>
+        /// <remarks>
+        /// This constructor has been deprecated. Please consider using
+        /// <see cref="AccountSasBuilder(AccountSasPermissions, DateTimeOffset, AccountSasServices, AccountSasResourceTypes)"/>
+        /// to create a Service SAS. This change does not have any impact on how
+        /// your application generates or makes use of SAS tokens.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public AccountSasBuilder()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AccountSasBuilder"/>
+        /// class to create a Blob Container Service Sas.
+        /// </summary>
+        /// <param name="permissions">
+        /// The time at which the shared access signature becomes invalid.
+        /// This field must be omitted if it has been specified in an
+        /// associated stored access policy.
+        /// </param>
+        /// <param name="expiresOn">
+        /// The time at which the shared access signature becomes invalid.
+        /// This field must be omitted if it has been specified in an
+        /// associated stored access policy.
+        /// </param>
+        /// <param name="services">
+        /// Specifies the services accessible from an account level shared access
+        /// signature.
+        /// </param>
+        /// <param name="resourceTypes">
+        /// Specifies the resource types accessible from an account level shared
+        /// access signature.
+        /// </param>
+        public AccountSasBuilder(
+            AccountSasPermissions permissions,
+            DateTimeOffset expiresOn,
+            AccountSasServices services,
+            AccountSasResourceTypes resourceTypes)
+        {
+            ExpiresOn = expiresOn;
+            SetPermissions(permissions);
+            Services = services;
+            ResourceTypes = resourceTypes;
+        }
 
         /// <summary>
         /// Sets the permissions for an account SAS.
@@ -136,15 +197,14 @@ namespace Azure.Storage.Sas
             {
                 throw Errors.AccountSasMissingData();
             }
-            if (string.IsNullOrEmpty(Version))
-            {
-                Version = SasQueryParameters.DefaultSasVersion;
-            }
-            var startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
-            var expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
+
+            Version = SasQueryParametersInternals.DefaultSasVersionInternal;
+
+            string startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
+            string expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
 
             // String to sign: http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
-            var stringToSign = string.Join("\n",
+            string stringToSign = string.Join("\n",
                 sharedKeyCredential.AccountName,
                 Permissions,
                 Services.ToPermissionsString(),
@@ -154,10 +214,11 @@ namespace Azure.Storage.Sas
                 IPRange.ToString(),
                 Protocol.ToProtocolString(),
                 Version,
-                "");  // That's right, the account SAS requires a terminating extra newline
+                EncryptionScope,
+                string.Empty);  // That's right, the account SAS requires a terminating extra newline
 
-            var signature = sharedKeyCredential.ComputeHMACSHA256(stringToSign);
-            var p = SasQueryParametersInternals.Create(
+            string signature = sharedKeyCredential.ComputeHMACSHA256(stringToSign);
+            SasQueryParameters p = SasQueryParametersInternals.Create(
                 Version,
                 Services,
                 ResourceTypes,
@@ -165,10 +226,11 @@ namespace Azure.Storage.Sas
                 StartsOn,
                 ExpiresOn,
                 IPRange,
-                null, // Identifier
-                null, // Resource
+                identifier: null,
+                resource: null,
                 Permissions,
-                signature);
+                signature,
+                encryptionScope: EncryptionScope);
             return p;
         }
 

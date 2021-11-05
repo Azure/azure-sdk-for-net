@@ -8,49 +8,40 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewayListResult
+    internal partial class ApplicationGatewayListResult
     {
         internal static ApplicationGatewayListResult DeserializeApplicationGatewayListResult(JsonElement element)
         {
-            IReadOnlyList<ApplicationGateway> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<ApplicationGatewayData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ApplicationGateway> array = new List<ApplicationGateway>();
+                    List<ApplicationGatewayData> array = new List<ApplicationGatewayData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ApplicationGateway.DeserializeApplicationGateway(item));
-                        }
+                        array.Add(ApplicationGatewayData.DeserializeApplicationGatewayData(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new ApplicationGatewayListResult(value, nextLink);
+            return new ApplicationGatewayListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

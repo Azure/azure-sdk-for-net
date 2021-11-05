@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Condition="'$(AzureCoreVersion)' == ''" Include="../../Azure.Core/src/Azure.Core.csproj" />
+    <PackageReference Condition="'$(AzureCoreVersion)' != ''" Include="Azure.Core" VersionOverride="$(AzureCoreVersion)" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\..\..\common\Perf\Azure.Test.Perf\Azure.Test.Perf.csproj" />
+    <!-- 
+      Explicit references to pull in patched versions of ASP.NET Core packages
+    -->
+    <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" />
+    <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel.Core" />
+    <PackageReference Include="Microsoft.AspNetCore.Http" />
+    <PackageReference Include="System.IO.Pipelines" />
+  </ItemGroup>
+
+</Project>

@@ -1,7 +1,25 @@
 # Release History
 
-## 4.2.1 (Unreleased)
+## 4.4.0-beta.1 (Unreleased)
 
+
+## 4.3.2 (2021-04-26)
+
+Update package description to include pointer to the new Azure.Messaging.EventHubs.Processor package and the migration guide.
+
+## 4.3.1 (2020-10-29)
+### Breaking Changes
+None
+
+### Bug fixes
+- Fixed a regression in 4.3.0 release in which processor host was not able to checkpoint during CloseAsync call. (https://github.com/Azure/azure-sdk-for-net/pull/15262)
+
+## 4.3.0 (2020-08-11)
+### Breaking Changes
+- Built-in checkpoint store moved from WindowsAzure.Storage SDK to Microsoft.Azure.Storage SDK due to former being deprecated. (https://github.com/Azure/azure-sdk-for-net/pull/13956)
+
+### Bug fixes
+- Fixing a bug in partition pump management where pump gets stuck in unhealthy state forever if pump-open failed. (https://github.com/Azure/azure-sdk-for-net/pull/12691)
 
 ## 4.2.0
 ### Breaking Changes
@@ -20,7 +38,7 @@
 - Don't block PartitionManager loop on close pump call. This avoids expiry of all leases due to blocking renew lease cycle. (https://github.com/Azure/azure-sdk-for-net/pull/10188)
 
 ## 4.1.0
-## Breaking Changes
+### Breaking Changes
 None
 
 ### Improvements

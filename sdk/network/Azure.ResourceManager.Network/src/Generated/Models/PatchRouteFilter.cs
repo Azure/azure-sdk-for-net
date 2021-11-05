@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +17,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of PatchRouteFilter. </summary>
         public PatchRouteFilter()
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
+            Rules = new ChangeTrackingList<RouteFilterRuleData>();
+            Peerings = new ChangeTrackingList<ExpressRouteCircuitPeeringData>();
+            Ipv6Peerings = new ChangeTrackingList<ExpressRouteCircuitPeeringData>();
         }
 
         /// <summary> Initializes a new instance of PatchRouteFilter. </summary>
@@ -27,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="peerings"> A collection of references to express route circuit peerings. </param>
         /// <param name="ipv6Peerings"> A collection of references to express route circuit ipv6 peerings. </param>
         /// <param name="provisioningState"> The provisioning state of the route filter resource. </param>
-        internal PatchRouteFilter(string id, string name, string etag, string type, IDictionary<string, string> tags, IList<RouteFilterRule> rules, IList<ExpressRouteCircuitPeering> peerings, IList<ExpressRouteCircuitPeering> ipv6Peerings, ProvisioningState? provisioningState) : base(id)
+        internal PatchRouteFilter(string id, string name, string etag, string type, IDictionary<string, string> tags, IList<RouteFilterRuleData> rules, IReadOnlyList<ExpressRouteCircuitPeeringData> peerings, IReadOnlyList<ExpressRouteCircuitPeeringData> ipv6Peerings, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -46,13 +52,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Resource type. </summary>
         public string Type { get; }
         /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; set; }
+        public IDictionary<string, string> Tags { get; }
         /// <summary> Collection of RouteFilterRules contained within a route filter. </summary>
-        public IList<RouteFilterRule> Rules { get; set; }
+        public IList<RouteFilterRuleData> Rules { get; }
         /// <summary> A collection of references to express route circuit peerings. </summary>
-        public IList<ExpressRouteCircuitPeering> Peerings { get; }
+        public IReadOnlyList<ExpressRouteCircuitPeeringData> Peerings { get; }
         /// <summary> A collection of references to express route circuit ipv6 peerings. </summary>
-        public IList<ExpressRouteCircuitPeering> Ipv6Peerings { get; }
+        public IReadOnlyList<ExpressRouteCircuitPeeringData> Ipv6Peerings { get; }
         /// <summary> The provisioning state of the route filter resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }

@@ -11,46 +11,36 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
-    public partial class PrivateEndpointConnectionListResult
+    internal partial class PrivateEndpointConnectionListResult
     {
         internal static PrivateEndpointConnectionListResult DeserializePrivateEndpointConnectionListResult(JsonElement element)
         {
-            IReadOnlyList<PrivateEndpointConnection> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<PrivateEndpointConnection>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PrivateEndpointConnection> array = new List<PrivateEndpointConnection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(PrivateEndpointConnection.DeserializePrivateEndpointConnection(item));
-                        }
+                        array.Add(PrivateEndpointConnection.DeserializePrivateEndpointConnection(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new PrivateEndpointConnectionListResult(value, nextLink);
+            return new PrivateEndpointConnectionListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

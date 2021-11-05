@@ -13,13 +13,12 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <summary> Initializes a new instance of NWRuleSetIpRules. </summary>
         public NWRuleSetIpRules()
         {
-            Action = "Allow";
         }
 
         /// <summary> Initializes a new instance of NWRuleSetIpRules. </summary>
         /// <param name="ipMask"> IP Mask. </param>
         /// <param name="action"> The IP Filter Action. </param>
-        internal NWRuleSetIpRules(string ipMask, string action)
+        internal NWRuleSetIpRules(string ipMask, NetworkRuleIPAction? action)
         {
             IpMask = ipMask;
             Action = action;
@@ -28,6 +27,6 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <summary> IP Mask. </summary>
         public string IpMask { get; set; }
         /// <summary> The IP Filter Action. </summary>
-        public string Action { get; set; }
+        public NetworkRuleIPAction? Action { get; set; }
     }
 }

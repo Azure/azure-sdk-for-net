@@ -8,49 +8,40 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ApplicationListResult
+    internal partial class ApplicationListResult
     {
         internal static ApplicationListResult DeserializeApplicationListResult(JsonElement element)
         {
-            IReadOnlyList<Application> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<ApplicationData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Application> array = new List<Application>();
+                    List<ApplicationData> array = new List<ApplicationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(Application.DeserializeApplication(item));
-                        }
+                        array.Add(ApplicationData.DeserializeApplicationData(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new ApplicationListResult(value, nextLink);
+            return new ApplicationListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

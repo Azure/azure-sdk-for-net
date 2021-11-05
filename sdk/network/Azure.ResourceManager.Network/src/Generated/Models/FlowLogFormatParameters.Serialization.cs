@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(Type);
+                writer.WriteStringValue(Type.Value.ToString());
             }
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version");
                 writer.WriteNumberValue(Version.Value);
@@ -30,30 +30,32 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static FlowLogFormatParameters DeserializeFlowLogFormatParameters(JsonElement element)
         {
-            string type = default;
-            int? version = default;
+            Optional<FlowLogFormatType> type = default;
+            Optional<int> version = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    type = property.Value.GetString();
+                    type = new FlowLogFormatType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("version"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     version = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new FlowLogFormatParameters(type, version);
+            return new FlowLogFormatParameters(Optional.ToNullable(type), Optional.ToNullable(version));
         }
     }
 }

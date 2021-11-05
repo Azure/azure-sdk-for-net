@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.ResourceManager.Network;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> IP configuration profile child resource. </summary>
@@ -22,7 +24,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="subnet"> The reference to the subnet resource to create a container network interface ip configuration. </param>
         /// <param name="provisioningState"> The provisioning state of the IP configuration profile resource. </param>
-        internal IPConfigurationProfile(string id, string name, string type, string etag, Subnet subnet, ProvisioningState? provisioningState) : base(id)
+        internal IPConfigurationProfile(string id, string name, string type, string etag, SubnetData subnet, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Type = type;
@@ -38,7 +40,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> The reference to the subnet resource to create a container network interface ip configuration. </summary>
-        public Subnet Subnet { get; set; }
+        public SubnetData Subnet { get; set; }
         /// <summary> The provisioning state of the IP configuration profile resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }

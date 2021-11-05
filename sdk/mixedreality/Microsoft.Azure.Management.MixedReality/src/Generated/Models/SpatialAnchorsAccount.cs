@@ -36,21 +36,35 @@ namespace Microsoft.Azure.Management.MixedReality.Models
         /// </summary>
         /// <param name="location">The geo-location where the resource
         /// lives</param>
-        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource. Ex-
-        /// Microsoft.Compute/virtualMachines or
-        /// Microsoft.Storage/storageAccounts.</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="tags">Resource tags.</param>
+        /// <param name="storageAccountName">The name of the storage account
+        /// associated with this accountId</param>
         /// <param name="accountId">unique id of certain account.</param>
         /// <param name="accountDomain">Correspond domain name of certain
         /// Spatial Anchors Account</param>
-        public SpatialAnchorsAccount(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string accountId = default(string), string accountDomain = default(string))
+        /// <param name="identity">The identity associated with this
+        /// account</param>
+        /// <param name="plan">The plan associated with this account</param>
+        /// <param name="sku">The sku associated with this account</param>
+        /// <param name="kind">The kind of account, if supported</param>
+        /// <param name="systemData">System metadata for this account</param>
+        public SpatialAnchorsAccount(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string storageAccountName = default(string), string accountId = default(string), string accountDomain = default(string), Identity identity = default(Identity), Identity plan = default(Identity), Sku sku = default(Sku), Sku kind = default(Sku), SystemData systemData = default(SystemData))
             : base(location, id, name, type, tags)
         {
+            StorageAccountName = storageAccountName;
             AccountId = accountId;
             AccountDomain = accountDomain;
+            Identity = identity;
+            Plan = plan;
+            Sku = sku;
+            Kind = kind;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -58,6 +72,13 @@ namespace Microsoft.Azure.Management.MixedReality.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the name of the storage account associated with this
+        /// accountId
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.storageAccountName")]
+        public string StorageAccountName { get; set; }
 
         /// <summary>
         /// Gets unique id of certain account.
@@ -72,6 +93,36 @@ namespace Microsoft.Azure.Management.MixedReality.Models
         public string AccountDomain { get; private set; }
 
         /// <summary>
+        /// Gets or sets the identity associated with this account
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public Identity Identity { get; set; }
+
+        /// <summary>
+        /// Gets or sets the plan associated with this account
+        /// </summary>
+        [JsonProperty(PropertyName = "plan")]
+        public Identity Plan { get; set; }
+
+        /// <summary>
+        /// Gets or sets the sku associated with this account
+        /// </summary>
+        [JsonProperty(PropertyName = "sku")]
+        public Sku Sku { get; set; }
+
+        /// <summary>
+        /// Gets or sets the kind of account, if supported
+        /// </summary>
+        [JsonProperty(PropertyName = "kind")]
+        public Sku Kind { get; set; }
+
+        /// <summary>
+        /// Gets or sets system metadata for this account
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -80,6 +131,14 @@ namespace Microsoft.Azure.Management.MixedReality.Models
         public override void Validate()
         {
             base.Validate();
+            if (Sku != null)
+            {
+                Sku.Validate();
+            }
+            if (Kind != null)
+            {
+                Kind.Validate();
+            }
         }
     }
 }

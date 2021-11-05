@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='workspaceName'>
-        /// The name of the workspace
+        /// The name of the workspace.
         /// </param>
         /// <param name='privateEndpointConnectionName'>
         /// The name of the private endpoint connection.
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorContractException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -54,11 +54,14 @@ namespace Microsoft.Azure.Management.Synapse
         /// <summary>
         /// Approve or reject a private endpoint connection.
         /// </summary>
+        /// <param name='request'>
+        /// Request body of private endpoint connection to create.
+        /// </param>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='workspaceName'>
-        /// The name of the workspace
+        /// The name of the workspace.
         /// </param>
         /// <param name='privateEndpointConnectionName'>
         /// The name of the private endpoint connection.
@@ -69,7 +72,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorContractException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -78,7 +81,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<PrivateEndpointConnection>> CreateWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string privateEndpointConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PrivateEndpointConnection>> CreateWithHttpMessagesAsync(PrivateEndpointConnection request, string resourceGroupName, string workspaceName, string privateEndpointConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete a private endpoint connection.
         /// </summary>
@@ -86,7 +89,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='workspaceName'>
-        /// The name of the workspace
+        /// The name of the workspace.
         /// </param>
         /// <param name='privateEndpointConnectionName'>
         /// The name of the private endpoint connection.
@@ -97,7 +100,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorContractException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -114,7 +117,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='workspaceName'>
-        /// The name of the workspace
+        /// The name of the workspace.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -122,7 +125,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorContractException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -135,11 +138,14 @@ namespace Microsoft.Azure.Management.Synapse
         /// <summary>
         /// Approve or reject a private endpoint connection.
         /// </summary>
+        /// <param name='request'>
+        /// Request body of private endpoint connection to create.
+        /// </param>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='workspaceName'>
-        /// The name of the workspace
+        /// The name of the workspace.
         /// </param>
         /// <param name='privateEndpointConnectionName'>
         /// The name of the private endpoint connection.
@@ -150,7 +156,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorContractException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -159,7 +165,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<PrivateEndpointConnection>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string privateEndpointConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PrivateEndpointConnection>> BeginCreateWithHttpMessagesAsync(PrivateEndpointConnection request, string resourceGroupName, string workspaceName, string privateEndpointConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete a private endpoint connection.
         /// </summary>
@@ -167,7 +173,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='workspaceName'>
-        /// The name of the workspace
+        /// The name of the workspace.
         /// </param>
         /// <param name='privateEndpointConnectionName'>
         /// The name of the private endpoint connection.
@@ -178,7 +184,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorContractException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -200,7 +206,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorContractException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">

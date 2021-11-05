@@ -11,46 +11,36 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ListVpnSiteLinksResult
+    internal partial class ListVpnSiteLinksResult
     {
         internal static ListVpnSiteLinksResult DeserializeListVpnSiteLinksResult(JsonElement element)
         {
-            IReadOnlyList<VpnSiteLink> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<VpnSiteLink>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<VpnSiteLink> array = new List<VpnSiteLink>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(VpnSiteLink.DeserializeVpnSiteLink(item));
-                        }
+                        array.Add(VpnSiteLink.DeserializeVpnSiteLink(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new ListVpnSiteLinksResult(value, nextLink);
+            return new ListVpnSiteLinksResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

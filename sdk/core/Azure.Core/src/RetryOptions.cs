@@ -15,6 +15,15 @@ namespace Azure.Core
         {
         }
 
+        internal RetryOptions(RetryOptions retryOptions)
+        {
+            MaxRetries = retryOptions.MaxRetries;
+            Delay = retryOptions.Delay;
+            MaxDelay = retryOptions.MaxDelay;
+            Mode = retryOptions.Mode;
+            NetworkTimeout = retryOptions.NetworkTimeout;
+        }
+
         /// <summary>
         /// The maximum number of retry attempts before giving up.
         /// </summary>

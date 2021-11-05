@@ -11,46 +11,36 @@ using Azure.Core;
 
 namespace Azure.Graph.Rbac.Models
 {
-    public partial class DirectoryObjectListResult
+    internal partial class DirectoryObjectListResult
     {
         internal static DirectoryObjectListResult DeserializeDirectoryObjectListResult(JsonElement element)
         {
-            IReadOnlyList<DirectoryObject> value = default;
-            string odataNextLink = default;
+            Optional<IReadOnlyList<DirectoryObject>> value = default;
+            Optional<string> odataNextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DirectoryObject> array = new List<DirectoryObject>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(DirectoryObject.DeserializeDirectoryObject(item));
-                        }
+                        array.Add(DirectoryObject.DeserializeDirectoryObject(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("odata.nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     odataNextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new DirectoryObjectListResult(value, odataNextLink);
+            return new DirectoryObjectListResult(Optional.ToList(value), odataNextLink.Value);
         }
     }
 }

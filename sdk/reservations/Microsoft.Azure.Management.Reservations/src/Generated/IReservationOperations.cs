@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.Reservations
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Properties>> AvailableScopesWithHttpMessagesAsync(string reservationOrderId, string reservationId, SubscriptionScopeProperties body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<AvailableScopeProperties>> AvailableScopesWithHttpMessagesAsync(string reservationOrderId, string reservationId, AvailableScopeRequest body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Split the `Reservation`.
         /// </summary>
@@ -257,7 +257,7 @@ namespace Microsoft.Azure.Management.Reservations
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Properties>> BeginAvailableScopesWithHttpMessagesAsync(string reservationOrderId, string reservationId, SubscriptionScopeProperties body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<AvailableScopeProperties>> BeginAvailableScopesWithHttpMessagesAsync(string reservationOrderId, string reservationId, AvailableScopeRequest body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Split the `Reservation`.
         /// </summary>

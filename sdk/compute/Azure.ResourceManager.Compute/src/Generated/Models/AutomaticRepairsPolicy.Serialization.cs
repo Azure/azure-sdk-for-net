@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Enabled != null)
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled");
                 writer.WriteBooleanValue(Enabled.Value);
             }
-            if (GracePeriod != null)
+            if (Optional.IsDefined(GracePeriod))
             {
                 writer.WritePropertyName("gracePeriod");
                 writer.WriteStringValue(GracePeriod);
@@ -30,14 +30,15 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static AutomaticRepairsPolicy DeserializeAutomaticRepairsPolicy(JsonElement element)
         {
-            bool? enabled = default;
-            string gracePeriod = default;
+            Optional<bool> enabled = default;
+            Optional<string> gracePeriod = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enabled = property.Value.GetBoolean();
@@ -45,15 +46,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("gracePeriod"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     gracePeriod = property.Value.GetString();
                     continue;
                 }
             }
-            return new AutomaticRepairsPolicy(enabled, gracePeriod);
+            return new AutomaticRepairsPolicy(Optional.ToNullable(enabled), gracePeriod.Value);
         }
     }
 }

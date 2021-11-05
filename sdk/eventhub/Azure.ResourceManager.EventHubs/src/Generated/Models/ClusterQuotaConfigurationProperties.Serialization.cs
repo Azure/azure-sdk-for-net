@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Settings != null)
+            if (Optional.IsCollectionDefined(Settings))
             {
                 writer.WritePropertyName("settings");
                 writer.WriteStartObject();
@@ -32,32 +32,26 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         internal static ClusterQuotaConfigurationProperties DeserializeClusterQuotaConfigurationProperties(JsonElement element)
         {
-            IDictionary<string, string> settings = default;
+            Optional<IDictionary<string, string>> settings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("settings"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     settings = dictionary;
                     continue;
                 }
             }
-            return new ClusterQuotaConfigurationProperties(settings);
+            return new ClusterQuotaConfigurationProperties(Optional.ToDictionary(settings));
         }
     }
 }

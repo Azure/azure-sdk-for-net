@@ -1,6 +1,11 @@
 # Release History
 
-## 2.0.0 (Unreleased)
+## 2.1.0-preview (2020-11-10)
+### Added
+- Added support to train a new iteration using another iteration as the starting point.
+- Added more information about exportable models.
+
+## 2.0.0
 ### Added
 - Added support to import and export projects.
 - Added support to train on a subset of training tags.

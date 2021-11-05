@@ -1,30 +1,36 @@
 {
   "Entries": [
     {
-      "RequestUri": "/vision/v3.0/generateThumbnail?width=64&height=64&smartCropping=false",
-      "EncodedRequestUri": "L3Zpc2lvbi92My4wL2dlbmVyYXRlVGh1bWJuYWlsP3dpZHRoPTY0JmhlaWdodD02NCZzbWFydENyb3BwaW5nPWZhbHNl",
+      "RequestUri": "/vision/v3.2/generateThumbnail?width=64&height=64&smartCropping=false&model-version=latest",
+      "EncodedRequestUri": "L3Zpc2lvbi92My4yL2dlbmVyYXRlVGh1bWJuYWlsP3dpZHRoPTY0JmhlaWdodD02NCZzbWFydENyb3BwaW5nPWZhbHNlJm1vZGVsLXZlcnNpb249bGF0ZXN0",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/psSdkJson6/src/SDKs/CognitiveServices/dataPlane/Vision/ComputerVision/ComputerVision.Tests/TestImages/house.jpg\"\r\n}",
+      "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/main/sdk/cognitiveservices/Vision.ComputerVision/tests/TestImages/house.jpg\"\r\n}",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.8.3815.0",
+          "FxVersion/4.8.4300.0",
           "OSName/Windows",
-          "OSVersion/10.0.18362.0",
-          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/5.0.0.0"
+          "OSVersion/10.0.19042.0",
+          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/7.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "186"
+          "152"
         ]
       },
       "ResponseHeaders": {
+        "csp-billing-usage": [
+          "CognitiveServices.ComputerVision.GenerateThumbnail=1,CognitiveServices.ComputerVision.Transaction=1"
+        ],
+        "x-envoy-upstream-service-time": [
+          "1690"
+        ],
         "apim-request-id": [
-          "4fdb3d5b-66bb-4c9b-982b-fd80d184ff2a"
+          "957b06c2-d529-4f28-8186-be4e572059bd"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -33,7 +39,7 @@
           "nosniff"
         ],
         "Date": [
-          "Thu, 22 Aug 2019 04:06:29 GMT"
+          "Wed, 24 Mar 2021 06:44:34 GMT"
         ],
         "Content-Length": [
           "2523"

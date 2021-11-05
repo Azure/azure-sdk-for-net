@@ -17,9 +17,10 @@ namespace Azure.ResourceManager.Resources.Models
         {
             string resourceId = default;
             ChangeType changeType = default;
-            object before = default;
-            object after = default;
-            IReadOnlyList<WhatIfPropertyChange> delta = default;
+            Optional<string> unsupportedReason = default;
+            Optional<object> before = default;
+            Optional<object> after = default;
+            Optional<IReadOnlyList<WhatIfPropertyChange>> delta = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceId"))
@@ -32,10 +33,16 @@ namespace Azure.ResourceManager.Resources.Models
                     changeType = property.Value.GetString().ToChangeType();
                     continue;
                 }
+                if (property.NameEquals("unsupportedReason"))
+                {
+                    unsupportedReason = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("before"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     before = property.Value.GetObject();
@@ -45,6 +52,7 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     after = property.Value.GetObject();
@@ -54,25 +62,19 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<WhatIfPropertyChange> array = new List<WhatIfPropertyChange>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(WhatIfPropertyChange.DeserializeWhatIfPropertyChange(item));
-                        }
+                        array.Add(WhatIfPropertyChange.DeserializeWhatIfPropertyChange(item));
                     }
                     delta = array;
                     continue;
                 }
             }
-            return new WhatIfChange(resourceId, changeType, before, after, delta);
+            return new WhatIfChange(resourceId, changeType, unsupportedReason.Value, before.Value, after.Value, Optional.ToList(delta));
         }
     }
 }

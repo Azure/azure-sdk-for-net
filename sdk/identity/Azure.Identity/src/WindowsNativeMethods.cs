@@ -10,12 +10,14 @@ namespace Azure.Identity
 {
     internal static class WindowsNativeMethods
     {
+        #pragma warning disable CA1712 // Do not prefix enum members
         public enum CRED_PERSIST : uint
         {
             CRED_PERSIST_SESSION = 1,
             CRED_PERSIST_LOCAL_MACHINE = 2,
             CRED_PERSIST_ENTERPRISE = 3
         }
+#pragma warning restore CA1712 // Do not prefix enum members
 
         public enum CRED_TYPE
         {

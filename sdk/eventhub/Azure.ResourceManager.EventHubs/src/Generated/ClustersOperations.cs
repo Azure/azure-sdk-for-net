@@ -21,10 +21,12 @@ namespace Azure.ResourceManager.EventHubs
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         internal ClustersRestOperations RestClient { get; }
+
         /// <summary> Initializes a new instance of ClustersOperations for mocking. </summary>
         protected ClustersOperations()
         {
         }
+
         /// <summary> Initializes a new instance of ClustersOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
@@ -150,6 +152,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Lists the available Event Hubs Clusters within an ARM resource group. </summary>
         /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public virtual AsyncPageable<Cluster> ListByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -193,6 +196,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Lists the available Event Hubs Clusters within an ARM resource group. </summary>
         /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public virtual Pageable<Cluster> ListByResourceGroup(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -237,6 +241,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
         /// <param name="clusterName"> The name of the Event Hubs Cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
         public virtual async Task<ClustersPutOperation> StartPutAsync(string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -266,6 +271,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
         /// <param name="clusterName"> The name of the Event Hubs Cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
         public virtual ClustersPutOperation StartPut(string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -296,6 +302,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="clusterName"> The name of the Event Hubs Cluster. </param>
         /// <param name="parameters"> The properties of the Event Hubs Cluster which should be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, or <paramref name="parameters"/> is null. </exception>
         public virtual async Task<ClustersPatchOperation> StartPatchAsync(string resourceGroupName, string clusterName, Cluster parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -330,6 +337,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="clusterName"> The name of the Event Hubs Cluster. </param>
         /// <param name="parameters"> The properties of the Event Hubs Cluster which should be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, or <paramref name="parameters"/> is null. </exception>
         public virtual ClustersPatchOperation StartPatch(string resourceGroupName, string clusterName, Cluster parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -363,6 +371,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
         /// <param name="clusterName"> The name of the Event Hubs Cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
         public virtual async Task<ClustersDeleteOperation> StartDeleteAsync(string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -392,6 +401,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
         /// <param name="clusterName"> The name of the Event Hubs Cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
         public virtual ClustersDeleteOperation StartDelete(string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)

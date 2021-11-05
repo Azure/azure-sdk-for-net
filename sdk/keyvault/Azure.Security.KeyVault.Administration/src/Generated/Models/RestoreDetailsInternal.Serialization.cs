@@ -20,7 +20,7 @@ namespace Azure.Security.KeyVault.Administration.Models
             Optional<KeyVaultServiceError> error = default;
             Optional<string> jobId = default;
             Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
+            Optional<DateTimeOffset?> endTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"))
@@ -35,6 +35,11 @@ namespace Azure.Security.KeyVault.Administration.Models
                 }
                 if (property.NameEquals("error"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        error = null;
+                        continue;
+                    }
                     error = KeyVaultServiceError.DeserializeKeyVaultServiceError(property.Value);
                     continue;
                 }
@@ -45,11 +50,21 @@ namespace Azure.Security.KeyVault.Administration.Models
                 }
                 if (property.NameEquals("startTime"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     startTime = property.Value.GetDateTimeOffset("U");
                     continue;
                 }
                 if (property.NameEquals("endTime"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        endTime = null;
+                        continue;
+                    }
                     endTime = property.Value.GetDateTimeOffset("U");
                     continue;
                 }
