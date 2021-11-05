@@ -19,14 +19,15 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         {
             await TestUtility.SendMessagesAsync(messageSender, messageCount);
             var receivedMessages = await TestUtility.ReceiveMessagesAsync(messageReceiver, messageCount);
+            TestUtility.VaidateMessageState(receivedMessages, MessageState.Active);
             await TestUtility.CompleteMessagesAsync(messageReceiver, receivedMessages);
         }
 
         internal async Task ReceiveDeleteTestCase(IMessageSender messageSender, IMessageReceiver messageReceiver, int messageCount, TimeSpan timeout)
         {
             await TestUtility.SendMessagesAsync(messageSender, messageCount);
-            var receivedMessages = await TestUtility.ReceiveMessagesAsync(messageReceiver, messageCount, TimeSpan.FromSeconds(10));
-            TestUtility.Log($"ReceiveDeleteTestCase messageCount: {messageCount} receivedMessagesCount: {receivedMessages}");
+            var receivedMessages = await TestUtility.ReceiveMessagesAsync(messageReceiver, messageCount, timeout);
+            TestUtility.VaidateMessageState(receivedMessages, MessageState.Active);
             Assert.Equal(messageCount, receivedMessages.Count);
         }
 
@@ -102,11 +103,13 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             // Receive / Abandon deferred messages
             receivedMessages = await TestUtility.ReceiveDeferredMessagesAsync(messageReceiver, sequenceNumbers);
             Assert.True(receivedMessages.Count == 5);
+            TestUtility.VaidateMessageState(receivedMessages, MessageState.Deferred);
             await TestUtility.DeferMessagesAsync(messageReceiver, receivedMessages);
 
             // Receive Again and Check delivery count
             receivedMessages = await TestUtility.ReceiveDeferredMessagesAsync(messageReceiver, sequenceNumbers);
             var count = receivedMessages.Count(message => message.SystemProperties.DeliveryCount == 3);
+            TestUtility.VaidateMessageState(receivedMessages, MessageState.Deferred);
             Assert.True(count == receivedMessages.Count);
 
             // Complete messages
