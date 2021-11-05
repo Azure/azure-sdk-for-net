@@ -4,5 +4,5 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 title: SchemaRegistryClient
-input-file: https://github.com/Azure/azure-rest-api-specs/blob/a0a475a6ae578b0b8cd30dec94cbde9ea8de3473/specification/schemaregistry/data-plane/Microsoft.EventHub/stable/2021-10/schemaregistry.json
+require: https://github.com/Azure/azure-rest-api-specs/blob/7aefe11d56a0b48615b0ab01cad566d6c39a5b08/specification/schemaregistry/data-plane/readme.md
 ```
