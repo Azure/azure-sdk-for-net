@@ -51,9 +51,6 @@ namespace Azure.Core.Tests
         [Test]
         public void ApiVersionIsNotSanitizedByDefault()
         {
-            var options = new DefaultClientOptions();
-            options.Diagnostics.LoggedQueryParameters.Add("api-version");
-
             HttpMessageSanitizer sanitizer = ClientDiagnostics.CreateMessageSanitizer(ClientOptions.Default.Diagnostics);
             var uriBuilder = new RequestUriBuilder();
             uriBuilder.Reset(new Uri("http://localhost/"));
