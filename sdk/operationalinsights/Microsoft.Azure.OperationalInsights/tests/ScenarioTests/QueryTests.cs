@@ -115,7 +115,10 @@ namespace OperationalInsights.Data.Test.ScenarioTests
 
             Assert.NotNull(response.Body.Error);
             Assert.Equal("PartialError", response.Body.Error.Code);
-        }
+            Assert.True(response.Body.Error.Details.Count > 0, "Error Details count isn't greater than 0");
+            Assert.StartsWith("Query result set has exceeded the internal record count limit",
+                response.Body.Error.Details[0].InnerError.Message);
+    }
 
         private OperationalInsightsDataClient GetClient(MockContext ctx, string workspaceId = DefaultWorkspaceId, string apiKey = DefaultApiKey)
         {
