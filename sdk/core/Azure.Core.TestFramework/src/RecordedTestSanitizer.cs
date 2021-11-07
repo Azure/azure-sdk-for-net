@@ -14,7 +14,7 @@ namespace Azure.Core.TestFramework
     public class RecordedTestSanitizer
     {
         public const string SanitizeValue = "Sanitized";
-        private List<(string JsonPath, Func<JToken, JToken> Sanitizer)> JsonPathSanitizers { get; } = new();
+        internal List<(string JsonPath, Func<JToken, JToken> Sanitizer)> JsonPathSanitizers { get; } = new();
 
         /// <summary>
         /// This is just a temporary workaround to avoid breaking tests that need to be re-recorded

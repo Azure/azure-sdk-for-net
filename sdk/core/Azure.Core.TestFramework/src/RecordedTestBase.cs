@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Castle.DynamicProxy;
 using NUnit.Framework;
@@ -15,6 +16,10 @@ namespace Azure.Core.TestFramework
 {
     public abstract class RecordedTestBase : ClientTestBase
     {
+        static RecordedTestBase()
+        {
+            //ServicePointManager.Expect100Continue = false;
+        }
         protected RecordedTestSanitizer Sanitizer { get; set; }
 
         protected RecordMatcher Matcher { get; set; }
@@ -55,6 +60,7 @@ namespace Azure.Core.TestFramework
             }
         }
         private bool _saveDebugRecordingsOnFailure;
+        private Process _testProxyProcess;
         protected bool ValidateClientInstrumentation { get; set; }
 
         protected RecordedTestBase(bool isAsync, RecordedTestMode? mode = null) : base(isAsync)
@@ -67,17 +73,23 @@ namespace Azure.Core.TestFramework
         public T InstrumentClientOptions<T>(T clientOptions, TestRecording recording = default) where T : ClientOptions
         {
             recording ??= Recording;
-            clientOptions.Transport = recording.CreateTransport(clientOptions.Transport);
+            // clientOptions.Transport = recording.CreateTransport(clientOptions.Transport);
             if (Mode == RecordedTestMode.Playback)
             {
                 // Not making the timeout zero so retry code still goes async
                 clientOptions.Retry.Delay = TimeSpan.FromMilliseconds(10);
                 clientOptions.Retry.Mode = RetryMode.Fixed;
             }
+
+            if (Mode is RecordedTestMode.Playback or RecordedTestMode.Record)
+            {
+                clientOptions.AddPolicy(new ProxyPolicy(recording), HttpPipelinePosition.PerCall);
+            }
+
             return clientOptions;
         }
 
-        protected string GetSessionFilePath()
+        protected internal string GetSessionFilePath()
         {
             TestContext.TestAdapter testAdapter = TestContext.CurrentContext.Test;
 
@@ -126,6 +138,40 @@ namespace Azure.Core.TestFramework
             {
                 Logger = new TestLogger();
             }
+
+            var processInfo = new ProcessStartInfo(
+                @"dotnet",
+                "tool list -g")
+            {
+                UseShellExecute = false,
+                RedirectStandardOutput = true
+            };
+            Process toolProcess = Process.Start(processInfo);
+            string installedTools = toolProcess.StandardOutput.ReadToEnd();
+            toolProcess.WaitForExit();
+
+            // TODO how to check for latest version
+            if (!installedTools.Contains("azure.sdk.tools.testproxy"))
+            {
+                processInfo = new ProcessStartInfo(
+                    @"dotnet",
+                    "tool install azure.sdk.tools.testproxy " +
+                    "--global " +
+                    "--add-source https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json " +
+                    "--version 1.0.0-dev.20211104.2")
+                {
+                    UseShellExecute = false
+                };
+                Process installProcess = Process.Start(processInfo);
+                installProcess.WaitForExit();
+            }
+
+            processInfo = new ProcessStartInfo(
+                @"test-proxy")
+            {
+                UseShellExecute = true
+            };
+            _testProxyProcess = Process.Start(processInfo);
         }
 
         /// <summary>
@@ -137,6 +183,7 @@ namespace Azure.Core.TestFramework
         {
             Logger?.Dispose();
             Logger = null;
+            _testProxyProcess?.Kill();
         }
 
         [SetUp]
@@ -156,15 +203,14 @@ namespace Azure.Core.TestFramework
                 throw new IgnoreException((string) test.Properties.Get("_SkipLive"));
             }
 
-            Recording = new TestRecording(Mode, GetSessionFilePath(), Sanitizer, Matcher);
-            ValidateClientInstrumentation = Recording.HasRequests;
+            Recording = new TestRecording(Mode, GetSessionFilePath(), Sanitizer);
+            // ValidateClientInstrumentation = Recording.HasRequests;
         }
 
         [TearDown]
         public virtual void StopTestRecording()
         {
             bool testPassed = TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Passed;
-
             if (ValidateClientInstrumentation && testPassed)
             {
                 throw new InvalidOperationException("The test didn't instrument any clients but had recordings. Please call InstrumentClient for the client being recorded.");

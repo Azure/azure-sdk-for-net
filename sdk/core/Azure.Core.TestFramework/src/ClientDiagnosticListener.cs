@@ -146,7 +146,8 @@ namespace Azure.Core.Tests
                 // traverse the activities and check for duplicates among ancestors
                 while (activity != null)
                 {
-                    if (operationName == activity.Parent?.OperationName)
+                    // TODO find a better way to avoid the duplicate Azure.Core spans when using Test-Proxy
+                    if (operationName == activity.Parent?.OperationName && operationName != "Azure.Core.Http.Request")
                     {
                         // Throw this exception lazily on Dispose, rather than when the scope is started, so that we don't trigger a bunch of other
                         // erroneous exceptions relating to scopes not being completed/started that hide the actual issue
