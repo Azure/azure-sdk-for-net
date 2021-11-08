@@ -146,32 +146,32 @@ namespace Azure.Core.TestFramework
                 Logger = new TestLogger();
             }
 
-            var processInfo = new ProcessStartInfo(
-                "dotnet",
-                "tool list -g")
-            {
-                UseShellExecute = false,
-                RedirectStandardOutput = true
-            };
-            Process toolProcess = Process.Start(processInfo);
-            string installedTools = toolProcess.StandardOutput.ReadToEnd();
-            toolProcess.WaitForExit();
-
-            // TODO how to check for latest version
-            if (!installedTools.Contains("azure.sdk.tools.testproxy"))
-            {
-                processInfo = new ProcessStartInfo(
-                    "dotnet",
-                    "tool install azure.sdk.tools.testproxy " +
-                    "--global " +
-                    "--add-source https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json " +
-                    "--version 1.0.0-dev.20211104.2")
-                {
-                    UseShellExecute = false
-                };
-                Process installProcess = Process.Start(processInfo);
-                installProcess.WaitForExit();
-            }
+            // var processInfo = new ProcessStartInfo(
+            //     "dotnet",
+            //     "tool list -g")
+            // {
+            //     UseShellExecute = false,
+            //     RedirectStandardOutput = true
+            // };
+            // Process toolProcess = Process.Start(processInfo);
+            // string installedTools = toolProcess.StandardOutput.ReadToEnd();
+            // toolProcess.WaitForExit();
+            //
+            // // TODO how to check for latest version
+            // if (!installedTools.Contains("azure.sdk.tools.testproxy"))
+            // {
+            //     processInfo = new ProcessStartInfo(
+            //         "dotnet",
+            //         "tool install azure.sdk.tools.testproxy " +
+            //         "--global " +
+            //         "--add-source https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json " +
+            //         "--version 1.0.0-dev.20211104.2")
+            //     {
+            //         UseShellExecute = false
+            //     };
+            //     Process installProcess = Process.Start(processInfo);
+            //     installProcess.WaitForExit();
+            // }
             // processInfo = new ProcessStartInfo(
             //     "dotnet",
             //     "dev-certs https --trust")
@@ -180,7 +180,7 @@ namespace Azure.Core.TestFramework
             // };
             // Process.Start(processInfo).WaitForExit();
 
-            processInfo = new ProcessStartInfo(
+            var processInfo = new ProcessStartInfo(
                 "test-proxy")
             {
                 UseShellExecute = true

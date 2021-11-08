@@ -11,6 +11,7 @@
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageDownload Include="Azure.Sdk.Tools.Testproxy" Version="1.0.0-dev.20211104.2"/>
     <PackageReference Include="Moq" />
     <Reference Include="System.Web" Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'net47'" />
     <!-- 
