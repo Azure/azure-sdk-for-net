@@ -21,21 +21,21 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("titleField");
                 writer.WriteObjectValue(TitleField);
             }
-            if (Optional.IsCollectionDefined(PrioritizedContentFields))
+            if (Optional.IsCollectionDefined(ContentFields))
             {
                 writer.WritePropertyName("prioritizedContentFields");
                 writer.WriteStartArray();
-                foreach (var item in PrioritizedContentFields)
+                foreach (var item in ContentFields)
                 {
                     writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(PrioritizedKeywordsFields))
+            if (Optional.IsCollectionDefined(KeywordsFields))
             {
                 writer.WritePropertyName("prioritizedKeywordsFields");
                 writer.WriteStartArray();
-                foreach (var item in PrioritizedKeywordsFields)
+                foreach (var item in KeywordsFields)
                 {
                     writer.WriteObjectValue(item);
                 }
