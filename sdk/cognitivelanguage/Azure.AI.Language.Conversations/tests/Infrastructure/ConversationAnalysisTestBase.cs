@@ -13,7 +13,7 @@ namespace Azure.AI.Language.Conversations.Tests
     public abstract class ConversationAnalysisTestBase<TClient> : RecordedTestBase<ConversationAnalysisTestEnvironment> where TClient : class
     {
         protected ConversationAnalysisTestBase(bool isAsync, ConversationAnalysisClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode)
-            : base(isAsync, mode)
+            : base(isAsync, RecordedTestMode.Live)
         {
             // TODO: Compare bodies again when https://github.com/Azure/azure-sdk-for-net/issues/22219 is resolved.
             Matcher = new RecordMatcher(compareBodies: false);

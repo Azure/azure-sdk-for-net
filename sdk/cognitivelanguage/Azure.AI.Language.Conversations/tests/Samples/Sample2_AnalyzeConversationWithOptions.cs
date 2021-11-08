@@ -20,15 +20,27 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
 #if SNIPPET
             ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
-            AnalyzeConversationOptions options = new AnalyzeConversationOptions(
-                "We'll have 2 plates of seared salmon nigiri.");
+            AnalyzeConversationOptions options = new AnalyzeConversationOptions(){
+                IsLoggingEnabled = true,
+                Verbose = true,
+                Language = "en"
+            };
 
-            Response<AnalyzeConversationResult> response = client.AnalyzeConversation(conversationsProject, options);
+            Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
+                "We'll have 2 plates of seared salmon nigiri.",
+                conversationsProject,
+                options);
 #else
-            AnalyzeConversationOptions options = new AnalyzeConversationOptions(
-                "We'll have 2 plates of seared salmon nigiri.");
+            AnalyzeConversationOptions options = new AnalyzeConversationOptions(){
+                IsLoggingEnabled = true,
+                Verbose = true,
+                Language = "en"
+            };
 
-            Response<AnalyzeConversationResult> response = client.AnalyzeConversation(TestEnvironment.Project, options);
+            Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
+                "We'll have 2 plates of seared salmon nigiri.",
+                TestEnvironment.Project,
+                options);
 #endif
 
             Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
@@ -49,15 +61,27 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
 #if SNIPPET
             ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
-            AnalyzeConversationOptions options = new AnalyzeConversationOptions(
-                "We'll have 2 plates of seared salmon nigiri.");
+            AnalyzeConversationOptions options = new AnalyzeConversationOptions(){
+                IsLoggingEnabled = true,
+                Verbose = true,
+                Language = "en"
+            };
 
-            Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(conversationsProject, options);
+            Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(
+                "We'll have 2 plates of seared salmon nigiri.",
+                conversationsProject,
+                options);
 #else
-            AnalyzeConversationOptions options = new AnalyzeConversationOptions(
-                "We'll have 2 plates of seared salmon nigiri.");
+            AnalyzeConversationOptions options = new AnalyzeConversationOptions(){
+                IsLoggingEnabled = true,
+                Verbose = true,
+                Language = "en"
+            };
 
-            Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(TestEnvironment.Project, options);
+            Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(
+                "We'll have 2 plates of seared salmon nigiri.",
+                TestEnvironment.Project,
+                options);
 #endif
 
             Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");

@@ -20,19 +20,23 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
 #if SNIPPET
             ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
-            AnalyzeConversationOptions options = new AnalyzeConversationOptions(
-                "Tendremos 2 platos de nigiri de salmón braseado.")
+            AnalyzeConversationOptions options = new AnalyzeConversationOptions()
             {
                 Language = "es"
             };
-            Response<AnalyzeConversationResult> response = client.AnalyzeConversation(conversationsProject, options);
+            Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
+                "Tendremos 2 platos de nigiri de salmón braseado.",
+                conversationsProject,
+                options);
 #else
-            AnalyzeConversationOptions options = new AnalyzeConversationOptions(
-                "Tendremos 2 platos de nigiri de salmón braseado.")
+            AnalyzeConversationOptions options = new AnalyzeConversationOptions()
             {
                 Language = "es"
             };
-            Response<AnalyzeConversationResult> response = client.AnalyzeConversation(TestEnvironment.Project, options);
+            Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
+                "Tendremos 2 platos de nigiri de salmón braseado.",
+                TestEnvironment.Project,
+                options);
 #endif
 
             Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
@@ -53,19 +57,23 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
 #if SNIPPET
             ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
-            AnalyzeConversationOptions options = new AnalyzeConversationOptions(
-                "Tendremos 2 platos de nigiri de salmón braseado.")
+            AnalyzeConversationOptions options = new AnalyzeConversationOptions()
             {
                 Language = "es"
             };
-            Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(conversationsProject, options);
+            Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(
+                "Tendremos 2 platos de nigiri de salmón braseado.",
+                conversationsProject,
+                options);
 #else
-            AnalyzeConversationOptions options = new AnalyzeConversationOptions(
-                "Tendremos 2 platos de nigiri de salmón braseado.")
+            AnalyzeConversationOptions options = new AnalyzeConversationOptions()
             {
                 Language = "es"
             };
-            Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(TestEnvironment.Project, options);
+            Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(
+                "Tendremos 2 platos de nigiri de salmón braseado.",
+                TestEnvironment.Project,
+                options);
 #endif
 
             Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
