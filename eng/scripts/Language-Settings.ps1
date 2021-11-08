@@ -526,5 +526,4 @@ function Import-Dev-Cert-net
 {
   Write-Host "Trusting dev certificate"
   dotnet dev-certs https --clean --import eng/common/testproxy/dotnet-devcert.pfx --password="password"
-  dotnet dev-certs https --trust
 }
