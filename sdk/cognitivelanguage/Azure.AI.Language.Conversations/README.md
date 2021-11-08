@@ -122,7 +122,7 @@ Other optional properties can be set such as verbosity and whether service loggi
 
 ### General
 
-When you interact with the Cognitive Language Services Conversations client library using the .NET SDK, errors returned by the service correspond to the same HTTP status codes returned for [REST API][conversationanalysis_rest_docs] requests.
+When you interact with the Cognitive Language Services Conversations client library using the .NET SDK, errors returned by the service correspond to the same HTTP status codes returned for REST API requests.
 
 For example, if you submit a query to a non-existant project, a `400` error is returned indicating "Bad Request".
 
@@ -218,4 +218,3 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [conversationanalysis_docs]: https://docs.microsoft.com/azure/cognitive-services/language-service/conversational-language-understanding/overview
 [conversationanalysis_docs_demos]: https://docs.microsoft.com/azure/cognitive-services/language-service/conversational-language-understanding/quickstart?pivots=language-studio
 [conversationanalysis_docs_features]: https://docs.microsoft.com/azure/cognitive-services/language-service/conversational-language-understanding/overview#features
-[conversationanalysis_rest_docs]: https://docs.microsoft.com/rest/api/cognitiveservices-qnamaker/
