@@ -10,10 +10,10 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
     public abstract partial class WebPubSubHub
     {
         protected WebPubSubHub() { }
-        public abstract System.Threading.Tasks.ValueTask<Microsoft.Azure.WebPubSub.Common.WebPubSubEventResponse> OnConnectAsync(Microsoft.Azure.WebPubSub.Common.ConnectEventRequest request, System.Threading.CancellationToken cancellationToken);
+        public virtual System.Threading.Tasks.ValueTask<Microsoft.Azure.WebPubSub.Common.WebPubSubEventResponse> OnConnectAsync(Microsoft.Azure.WebPubSub.Common.ConnectEventRequest request, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task OnConnectedAsync(Microsoft.Azure.WebPubSub.Common.ConnectedEventRequest request) { throw null; }
         public virtual System.Threading.Tasks.Task OnDisconnectedAsync(Microsoft.Azure.WebPubSub.Common.DisconnectedEventRequest request) { throw null; }
-        public abstract System.Threading.Tasks.ValueTask<Microsoft.Azure.WebPubSub.Common.WebPubSubEventResponse> OnMessageReceivedAsync(Microsoft.Azure.WebPubSub.Common.UserEventRequest request, System.Threading.CancellationToken cancellationToken);
+        public virtual System.Threading.Tasks.ValueTask<Microsoft.Azure.WebPubSub.Common.WebPubSubEventResponse> OnMessageReceivedAsync(Microsoft.Azure.WebPubSub.Common.UserEventRequest request, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
     public partial class WebPubSubOptions
     {

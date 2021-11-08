@@ -99,42 +99,52 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                     case ConnectEventRequest connectEventRequest:
                         {
                             var response = await hub.OnConnectAsync(connectEventRequest, context.RequestAborted).ConfigureAwait(false);
-                            if (response is EventErrorResponse error)
+                            switch (response)
                             {
-                                context.Response.StatusCode = ConvertToStatusCode(error.Code);
-                                context.Response.ContentType = Constants.ContentTypes.PlainTextContentType;
-                                await context.Response.WriteAsync(error.ErrorMessage).ConfigureAwait(false);
-                                return;
+                                case EventErrorResponse error:
+                                    {
+                                        context.Response.StatusCode = ConvertToStatusCode(error.Code);
+                                        context.Response.ContentType = Constants.ContentTypes.PlainTextContentType;
+                                        await context.Response.WriteAsync(error.ErrorMessage).ConfigureAwait(false);
+                                        return;
+                                    }
+                                case ConnectEventResponse connectResponse:
+                                    {
+                                        SetConnectionState(ref context, connectEventRequest.ConnectionContext, connectResponse.States);
+                                        await context.Response.WriteAsync(JsonSerializer.Serialize(connectResponse)).ConfigureAwait(false);
+                                        return;
+                                    }
+                                case null:
+                                    return;
+                                default:
+                                    throw new ArgumentException($"Invalid type of response returned in SYSTEM.CONNECT event: {response.GetType()}");
                             }
-                            else if (response is ConnectEventResponse connectResponse)
-                            {
-                                SetConnectionState(ref context, connectEventRequest.ConnectionContext, connectResponse.States);
-                                await context.Response.WriteAsync(JsonSerializer.Serialize(connectResponse)).ConfigureAwait(false);
-                                return;
-                            }
-                            // other response is invalid, igonre.
-                            return;
                         }
                     case UserEventRequest messageRequest:
                         {
                             var response = await hub.OnMessageReceivedAsync(messageRequest, context.RequestAborted).ConfigureAwait(false);
-                            if (response is EventErrorResponse error)
+                            switch (response)
                             {
-                                context.Response.StatusCode = ConvertToStatusCode(error.Code);
-                                context.Response.ContentType = Constants.ContentTypes.PlainTextContentType;
-                                await context.Response.WriteAsync(error.ErrorMessage).ConfigureAwait(false);
-                                return;
+                                case EventErrorResponse error:
+                                    {
+                                        context.Response.StatusCode = ConvertToStatusCode(error.Code);
+                                        context.Response.ContentType = Constants.ContentTypes.PlainTextContentType;
+                                        await context.Response.WriteAsync(error.ErrorMessage).ConfigureAwait(false);
+                                        return;
+                                    }
+                                case UserEventResponse msgResponse:
+                                    {
+                                        SetConnectionState(ref context, messageRequest.ConnectionContext, msgResponse.States);
+                                        context.Response.ContentType = ConvertToContentType(msgResponse.DataType);
+                                        var payload = msgResponse.Message.ToArray();
+                                        await context.Response.Body.WriteAsync(payload, 0, payload.Length).ConfigureAwait(false);
+                                        return;
+                                    }
+                                case null:
+                                    return;
+                                default:
+                                    throw new ArgumentException($"Invalid type of response returned in USER event: {response.GetType()}");
                             }
-                            else if (response is UserEventResponse msgResponse)
-                            {
-                                SetConnectionState(ref context, messageRequest.ConnectionContext, msgResponse.States);
-                                context.Response.ContentType = ConvertToContentType(msgResponse.DataType);
-                                var payload = msgResponse.Message.ToArray();
-                                await context.Response.Body.WriteAsync(payload, 0, payload.Length).ConfigureAwait(false);
-                                return;
-                            }
-                            // other response is invalid, igonre.
-                            return;
                         }
                     case ConnectedEventRequest connectedEvent:
                         {
@@ -154,7 +164,11 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
             {
                 context.Response.StatusCode = StatusCodes.Status401Unauthorized;
                 await context.Response.WriteAsync(ex.Message).ConfigureAwait(false);
-                return;
+            }
+            catch (Exception ex)
+            {
+                context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+                await context.Response.WriteAsync(ex.Message).ConfigureAwait(false);
             }
         }
 

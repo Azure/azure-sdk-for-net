@@ -134,6 +134,65 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             Assert.AreEqual("new1", updated["new1"]);
         }
 
+        [Test]
+        public async Task TestHubBaseReturns()
+        {
+            var connectBody = "{\"claims\":{\"http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier\":[\"ddd\"],\"nbf\":[\"1629183374\"],\"exp\":[\"1629186974\"],\"iat\":[\"1629183374\"],\"aud\":[\"http://localhost:8080/client/hubs/chat\"],\"sub\":[\"ddd\"]},\"query\":{\"access_token\":[\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkZGQiLCJuYmYiOjE2MjkxODMzNzQsImV4cCI6MTYyOTE4Njk3NCwiaWF0IjoxNjI5MTgzMzc0LCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvY2xpZW50L2h1YnMvY2hhdCJ9.tqD8ykjv5NmYw6gzLKglUAv-c-AVWu-KNZOptRKkgMM\"]},\"subprotocols\":[\"protocol1\", \"protocol2\"],\"clientCertificates\":[]}";
+            var context = PrepareHttpContext(httpMethod: HttpMethods.Post, eventName: "connect", body: connectBody, hub: nameof(TestDefaultHub));
+            var handler = new ServiceRequestHandlerAdapter(_testOptions, new TestDefaultHub());
+
+            await handler.HandleRequest(context);
+
+            Assert.AreEqual(StatusCodes.Status200OK, context.Response.StatusCode);
+            Assert.Null(context.Response.ContentLength);
+        }
+
+        [Test]
+        public async Task TestHubExceptions()
+        {
+            var context = PrepareHttpContext(httpMethod: HttpMethods.Post, type: WebPubSubEventType.System, eventName: "connected", hub: nameof(TestCornerHub));
+            var handler = new ServiceRequestHandlerAdapter(_testOptions, new TestCornerHub());
+
+            await handler.HandleRequest(context);
+
+            Assert.AreEqual(StatusCodes.Status500InternalServerError, context.Response.StatusCode);
+            context.Response.Body.Seek(0, SeekOrigin.Begin);
+            var response = await new StreamReader(context.Response.Body).ReadToEndAsync();
+            // validate response matches exception
+            Assert.AreEqual("Test Exception", response);
+        }
+
+        [Test]
+        public async Task TestUserErrorReturns()
+        {
+            var context = PrepareHttpContext(httpMethod: HttpMethods.Post, type: WebPubSubEventType.User, eventName: "message", body: "hello world", hub: nameof(TestCornerHub));
+            var handler = new ServiceRequestHandlerAdapter(_testOptions, new TestCornerHub());
+
+            await handler.HandleRequest(context);
+
+            Assert.AreEqual(StatusCodes.Status500InternalServerError, context.Response.StatusCode);
+            context.Response.Body.Seek(0, SeekOrigin.Begin);
+            var response = await new StreamReader(context.Response.Body).ReadToEndAsync();
+            // validate response matches exception
+            Assert.AreEqual("server error", response);
+        }
+
+        [Test]
+        public async Task TestWrongTypeReturns()
+        {
+            var connectBody = "{\"claims\":{\"http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier\":[\"ddd\"],\"nbf\":[\"1629183374\"],\"exp\":[\"1629186974\"],\"iat\":[\"1629183374\"],\"aud\":[\"http://localhost:8080/client/hubs/chat\"],\"sub\":[\"ddd\"]},\"query\":{\"access_token\":[\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkZGQiLCJuYmYiOjE2MjkxODMzNzQsImV4cCI6MTYyOTE4Njk3NCwiaWF0IjoxNjI5MTgzMzc0LCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvY2xpZW50L2h1YnMvY2hhdCJ9.tqD8ykjv5NmYw6gzLKglUAv-c-AVWu-KNZOptRKkgMM\"]},\"subprotocols\":[\"protocol1\", \"protocol2\"],\"clientCertificates\":[]}";
+            var context = PrepareHttpContext(httpMethod: HttpMethods.Post, eventName: "connect", body: connectBody, hub: nameof(TestCornerHub));
+            var handler = new ServiceRequestHandlerAdapter(_testOptions, new TestCornerHub());
+
+            await handler.HandleRequest(context);
+
+            Assert.AreEqual(StatusCodes.Status500InternalServerError, context.Response.StatusCode);
+            context.Response.Body.Seek(0, SeekOrigin.Begin);
+            var response = await new StreamReader(context.Response.Body).ReadToEndAsync();
+            // validate response matches exception
+            Assert.AreEqual("Invalid type of response returned in SYSTEM.CONNECT event: Microsoft.Azure.WebPubSub.Common.UserEventResponse", response);
+        }
+
         private static HttpContext PrepareHttpContext(
             WebPubSubEventType type = WebPubSubEventType.System,
             string eventName = "connect",
@@ -145,7 +204,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             string userId = "testuser",
             string body = null,
             string contentType = Constants.ContentTypes.PlainTextContentType,
-            Dictionary<string,object> connectionState = null)
+            Dictionary<string, object> connectionState = null)
         {
             var context = new DefaultHttpContext();
             var services = new ServiceCollection();
@@ -259,6 +318,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
                 return new ValueTask<WebPubSubEventResponse>(response);
             }
 
+            // test exceptions
             public override Task OnConnectedAsync(ConnectedEventRequest request)
             {
                 Assert.NotNull(request);
@@ -271,6 +331,35 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
                 Assert.NotNull(request);
                 Assert.AreEqual("my-host.webpubsub.net", request.ConnectionContext.Origin);
                 return Task.CompletedTask;
+            }
+        }
+
+        // Test default return correct
+        private sealed class TestDefaultHub : WebPubSubHub
+        {
+        }
+
+        // Test error cases.
+        private sealed class TestCornerHub : WebPubSubHub
+        {
+            // Test invalid type return
+            public override ValueTask<WebPubSubEventResponse> OnConnectAsync(ConnectEventRequest request, CancellationToken cancellationToken)
+            {
+                var response = new UserEventResponse("user event");
+                return new ValueTask<WebPubSubEventResponse>(response);
+            }
+
+            // Test error return correct
+            public override ValueTask<WebPubSubEventResponse> OnMessageReceivedAsync(UserEventRequest request, CancellationToken cancellationToken)
+            {
+                var response = new EventErrorResponse(WebPubSubErrorCode.ServerError, "server error");
+                return new ValueTask<WebPubSubEventResponse>(response);
+            }
+
+            // Test exception return correct
+            public override Task OnConnectedAsync(ConnectedEventRequest request)
+            {
+                throw new Exception("Test Exception");
             }
         }
     }
