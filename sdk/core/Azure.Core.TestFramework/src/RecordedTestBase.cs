@@ -7,6 +7,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
+using Azure.Core.Pipeline;
 using System.Threading.Tasks;
 using Castle.DynamicProxy;
 using NUnit.Framework;
@@ -74,6 +76,11 @@ namespace Azure.Core.TestFramework
         {
             recording ??= Recording;
             // clientOptions.Transport = recording.CreateTransport(clientOptions.Transport);
+            var handler = new HttpClientHandler
+            {
+                ServerCertificateCustomValidationCallback = ((message, certificate2, arg3, arg4) => certificate2.Issuer == "CN=localhost")
+            };
+            clientOptions.Transport = new HttpClientTransport(handler);
             if (Mode == RecordedTestMode.Playback)
             {
                 // Not making the timeout zero so retry code still goes async

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text.Json;
@@ -31,6 +32,11 @@ namespace Azure.Core.TestFramework
             _sessionFile = sessionFile;
             _sanitizer = sanitizer;
             var options = ClientOptions.Default;
+            var handler = new HttpClientHandler
+            {
+                ServerCertificateCustomValidationCallback = ((message, certificate2, arg3, arg4) => certificate2.Issuer == "CN=localhost")
+            };
+            options.Transport = new HttpClientTransport(handler);
             _testProxyClient = new TestProxyRestClient(new ClientDiagnostics(options), HttpPipelineBuilder.Build(options), new Uri("https://localhost:5001"));
 
             switch (Mode)
