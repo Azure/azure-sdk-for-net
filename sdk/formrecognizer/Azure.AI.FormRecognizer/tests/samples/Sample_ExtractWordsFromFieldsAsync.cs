@@ -14,14 +14,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
     public partial class DocumentAnalysisSamples : SamplesBase<DocumentAnalysisTestEnvironment>
     {
         [Test]
-        public async Task ExtractWordsFromField()
+        public async Task ExtractWordsFromFieldsAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
 
             DocumentAnalysisClient client = new DocumentAnalysisClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            #region Snippet:FormRecognizerExtractWordsFromField
+            #region Snippet:FormRecognizerSampleExtractWordsFromFields
 #if SNIPPET
             string filePath = "filePath";
 #else
@@ -58,10 +58,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 
                 Console.WriteLine();
             }
-
             #endregion
         }
 
+        #region Snippet:FormRecognizerSampleGetWordsInSpans
         private IReadOnlyList<DocumentWord> GetWordsInSpans(IReadOnlyList<DocumentPage> pages, IReadOnlyList<DocumentSpan> spans)
         {
             var selectedWords = new List<DocumentWord>();
@@ -88,5 +88,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 
             return selectedWords;
         }
+        #endregion
     }
 }
