@@ -163,7 +163,7 @@ namespace Sql.Tests
                 MaintenanceConfigurationId = mi.MaintenanceConfigurationId,
                 ProxyOverride = mi.ProxyOverride,
                 PublicDataEndpointEnabled = mi.PublicDataEndpointEnabled,
-                RequestedBackupStorageRedundancy = mi.RequestedBackupStorageRedundancy ?? "GRS",
+                RequestedBackupStorageRedundancy = mi.RequestedBackupStorageRedundancy ?? "Geo",
                 StorageSizeInGB = mi.StorageSizeInGB ?? 32,
                 SubnetId = ManagedInstanceTestUtilities.SubnetResourceId,
                 Tags = tags,
