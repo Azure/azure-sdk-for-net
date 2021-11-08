@@ -1,9 +1,11 @@
-﻿#if NETCOREAPP3_0_OR_GREATER
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Azure.WebPubSub.Common;
 using Microsoft.Extensions.DependencyInjection;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests.Samples
 {
@@ -51,4 +53,3 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests.Samples
         }
     }
 }
-#endif
