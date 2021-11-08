@@ -91,8 +91,8 @@ Register a schema to be stored in the Azure Schema Registry.
 ```C# Snippet:SchemaRegistryRegisterSchema
 string name = "employeeSample";
 SchemaFormat format = SchemaFormat.Avro;
-// Example schema's content
-string content = @"
+// Example schema's definition
+string definition = @"
 {
    ""type"" : ""record"",
     ""namespace"" : ""TestSchema"",
@@ -103,7 +103,7 @@ string content = @"
     ]
 }";
 
-Response<SchemaProperties> schemaProperties = client.RegisterSchema(groupName, name, content, format);
+Response<SchemaProperties> schemaProperties = client.RegisterSchema(groupName, name, definition, format);
 ```
 
 ### Retrieve a schema ID
@@ -135,7 +135,7 @@ Retrieve a previously registered schema's content from the Azure Schema Registry
 
 ```C# Snippet:SchemaRegistryRetrieveSchema
 SchemaRegistrySchema schema = client.GetSchema(schemaId);
-string content = schema.Content;
+string definition = schema.Definition;
 ```
 
 ## Troubleshooting

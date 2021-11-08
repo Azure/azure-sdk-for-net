@@ -443,22 +443,25 @@ namespace Azure.Data.Tables.Tests
         private static IEnumerable<object[]> TableClientsWithTableNameInUri()
         {
             var tokenTransport = TableAlreadyExistsTransport();
+            var tokenTransport2 = TableAlreadyExistsTransport();
             var sharedKeyTransport = TableAlreadyExistsTransport();
             var connStrTransport = TableAlreadyExistsTransport();
             var devTransport = TableAlreadyExistsTransport();
 
-            var sharedKeyClient = new TableClient(_url, TableName, new TableSharedKeyCredential(AccountName, Secret), new TableClientOptions { Transport = sharedKeyTransport });
+            var sharedKeyClient = new TableClient(_urlWithTableName, TableName, new TableSharedKeyCredential(AccountName, Secret), new TableClientOptions { Transport = sharedKeyTransport });
             var connStringClient = new TableClient(
                 $"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.table.cosmos.azure.com:443/;",
                 TableName,
                 new TableClientOptions { Transport = connStrTransport });
             var devStorageClient = new TableClient("UseDevelopmentStorage=true", TableName, new TableClientOptions { Transport = devTransport });
-            var tokenCredClient = new TableClient(_url, TableName, new MockCredential(), new TableClientOptions { Transport = tokenTransport });
+            var tokenCredClient = new TableClient(_urlWithTableName, TableName, new MockCredential(), new TableClientOptions { Transport = tokenTransport });
+            var tokenCredClientFromServiceClient = new TableServiceClient(_urlWithTableName, new MockCredential(), new TableClientOptions { Transport = tokenTransport2 }).GetTableClient(TableName);
 
             yield return new object[] { sharedKeyClient, sharedKeyTransport };
             yield return new object[] { connStringClient, connStrTransport };
             yield return new object[] { devStorageClient, devTransport };
             yield return new object[] { tokenCredClient, tokenTransport };
+            yield return new object[] { tokenCredClientFromServiceClient, tokenTransport2 };
         }
 
         [TestCaseSource(nameof(TableClientsWithTableNameInUri))]
@@ -495,6 +498,63 @@ namespace Azure.Data.Tables.Tests
             var actualSas = client.GenerateSasUri(permissions, expires);
 
             Assert.AreEqual("?" + expectedSas, actualSas.Query);
+        }
+
+        [Test]
+        [NonParallelizable]
+        public async Task CreateClientRespectsSingleQuoteEscapeCompatSwithc(
+            [Values(true, false, null)] bool? setDisableSwitch,
+            [Values(true, false, null)] bool? setDisableEnvVar)
+        {
+            TestAppContextSwitch ctx = null;
+            TestEnvVar env = null;
+            string getEntityResponse =
+                "{\"odata.etag\": \"2021-03-23T18%3A28%3A39.9160983Z\", \"PartitionKey\": \"somPartition\", \"RowKey\": \"01\", \"Timestamp\": \"2021-03-23T18:28:39.9160983Z\"}";
+            try
+            {
+                if (setDisableSwitch.HasValue)
+                {
+                    ctx = new TestAppContextSwitch(TableConstants.CompatSwitches.DisableEscapeSingleQuotesOnGetEntitySwitchName, setDisableSwitch.Value.ToString());
+                }
+                if (setDisableEnvVar.HasValue)
+                {
+                    env = new TestEnvVar(TableConstants.CompatSwitches.DisableEscapeSingleQuotesOnGetEntityEnvVar, setDisableEnvVar.Value.ToString());
+                }
+                var response = new MockResponse(200);
+                response.SetContent(getEntityResponse);
+                var transport = new MockTransport(_ => response);
+                var client = new TableClient(_url, TableName, new MockCredential(), new TableClientOptions { Transport = transport });
+
+                await client.GetEntityAsync<TableEntity>("fo'o", "ba'r");
+
+                if (setDisableSwitch.HasValue)
+                {
+                    if (setDisableSwitch.Value)
+                    {
+                        Assert.That(WebUtility.UrlDecode(transport.SingleRequest.Uri.PathAndQuery), Does.Not.Contain("''"));
+                    }
+                    else
+                    {
+                        Assert.That(WebUtility.UrlDecode(transport.SingleRequest.Uri.PathAndQuery), Does.Contain("''"));
+                    }
+                }
+                else
+                {
+                    if (setDisableEnvVar.HasValue && setDisableEnvVar.Value)
+                    {
+                        Assert.That(WebUtility.UrlDecode(transport.SingleRequest.Uri.PathAndQuery), Does.Not.Contain("''"));
+                    }
+                    else
+                    {
+                        Assert.That(WebUtility.UrlDecode(transport.SingleRequest.Uri.PathAndQuery), Does.Contain("''"));
+                    }
+                }
+            }
+            finally
+            {
+                ctx?.Dispose();
+                env?.Dispose();
+            }
         }
 
         private static MockTransport TableAlreadyExistsTransport() =>

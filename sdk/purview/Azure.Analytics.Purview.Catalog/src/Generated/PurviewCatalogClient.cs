@@ -33,7 +33,7 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Initializes a new instance of PurviewCatalogClient. </summary>
-        /// <param name="endpoint"> The catalog endpoint of your Purview account. Example: https://{accountName}.catalog.purview.azure.com. </param>
+        /// <param name="endpoint"> The catalog endpoint of your Purview account. Example: https://{accountName}.purview.azure.com. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
@@ -59,7 +59,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Gets data using search. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -101,10 +101,17 @@ namespace Azure.Analytics.Purview.Catalog
         ///   value: [SearchResultValue]
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> SearchAsync(RequestContent content, RequestOptions options = null)
+        public virtual async Task<Response> SearchAsync(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.Search");
@@ -112,7 +119,7 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateSearchRequest(content);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -123,7 +130,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Gets data using search. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -165,10 +172,17 @@ namespace Azure.Analytics.Purview.Catalog
         ///   value: [SearchResultValue]
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response Search(RequestContent content, RequestOptions options = null)
+        public virtual Response Search(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.Search");
@@ -176,7 +190,7 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateSearchRequest(content);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -187,7 +201,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get search suggestions by query criteria. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -202,10 +216,17 @@ namespace Azure.Analytics.Purview.Catalog
         ///   value: [SuggestResultValue]
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> SuggestAsync(RequestContent content, RequestOptions options = null)
+        public virtual async Task<Response> SuggestAsync(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.Suggest");
@@ -213,7 +234,7 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateSuggestRequest(content);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -224,7 +245,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get search suggestions by query criteria. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -239,10 +260,17 @@ namespace Azure.Analytics.Purview.Catalog
         ///   value: [SuggestResultValue]
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response Suggest(RequestContent content, RequestOptions options = null)
+        public virtual Response Suggest(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.Suggest");
@@ -250,7 +278,99 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateSuggestRequest(content);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Browse entities by path or entity type. </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <code>{
+        ///   entityType: string,
+        ///   path: string,
+        ///   limit: number,
+        ///   offset: number
+        /// }
+        /// </code>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   @search.count: number,
+        ///   value: [BrowseResultValue]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> BrowseAsync(RequestContent content, RequestContext context = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.Browse");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateBrowseRequest(content);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Browse entities by path or entity type. </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <code>{
+        ///   entityType: string,
+        ///   path: string,
+        ///   limit: number,
+        ///   offset: number
+        /// }
+        /// </code>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   @search.count: number,
+        ///   value: [BrowseResultValue]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual Response Browse(RequestContent content, RequestContext context = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.Browse");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateBrowseRequest(content);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -261,7 +381,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get auto complete options. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -276,10 +396,17 @@ namespace Azure.Analytics.Purview.Catalog
         ///   value: [AutoCompleteResultValue]
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> AutoCompleteAsync(RequestContent content, RequestOptions options = null)
+        public virtual async Task<Response> AutoCompleteAsync(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.AutoComplete");
@@ -287,7 +414,7 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateAutoCompleteRequest(content);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -298,7 +425,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get auto complete options. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -313,10 +440,17 @@ namespace Azure.Analytics.Purview.Catalog
         ///   value: [AutoCompleteResultValue]
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response AutoComplete(RequestContent content, RequestOptions options = null)
+        public virtual Response AutoComplete(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.AutoComplete");
@@ -324,229 +458,7 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateAutoCompleteRequest(content);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Get lineage info of the entity specified by GUID. </summary>
-        /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. Allowed values: &quot;BOTH&quot; | &quot;INPUT&quot; | &quot;OUTPUT&quot;. </param>
-        /// <param name="options"> The request options. </param>
-        /// <param name="depth"> The number of hops for lineage. </param>
-        /// <param name="width"> The number of max expanding width in lineage. </param>
-        /// <param name="includeParent"> True to include the parent chain in the response. </param>
-        /// <param name="getDerivedLineage"> True to include derived lineage in the response. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="direction"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   baseEntityGuid: string,
-        ///   guidEntityMap: Dictionary&lt;string, AtlasEntityHeader&gt;,
-        ///   widthCounts: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;,
-        ///   lineageDepth: number,
-        ///   lineageWidth: number,
-        ///   includeParent: boolean,
-        ///   childrenCount: number,
-        ///   lineageDirection: &quot;INPUT&quot; | &quot;OUTPUT&quot; | &quot;BOTH&quot;,
-        ///   parentRelations: [
-        ///     {
-        ///       childEntityId: string,
-        ///       relationshipId: string,
-        ///       parentEntityId: string
-        ///     }
-        ///   ],
-        ///   relations: [
-        ///     {
-        ///       fromEntityId: string,
-        ///       relationshipId: string,
-        ///       toEntityId: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-#pragma warning disable AZC0002
-        public virtual async Task<Response> GetLineageGraphAsync(string guid, string direction, RequestOptions options, int? depth = null, int? width = null, bool? includeParent = null, bool? getDerivedLineage = null)
-#pragma warning restore AZC0002
-        {
-            using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.GetLineageGraph");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetLineageGraphRequest(guid, direction, depth, width, includeParent, getDerivedLineage);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Get lineage info of the entity specified by GUID. </summary>
-        /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. Allowed values: &quot;BOTH&quot; | &quot;INPUT&quot; | &quot;OUTPUT&quot;. </param>
-        /// <param name="options"> The request options. </param>
-        /// <param name="depth"> The number of hops for lineage. </param>
-        /// <param name="width"> The number of max expanding width in lineage. </param>
-        /// <param name="includeParent"> True to include the parent chain in the response. </param>
-        /// <param name="getDerivedLineage"> True to include derived lineage in the response. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="direction"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   baseEntityGuid: string,
-        ///   guidEntityMap: Dictionary&lt;string, AtlasEntityHeader&gt;,
-        ///   widthCounts: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;,
-        ///   lineageDepth: number,
-        ///   lineageWidth: number,
-        ///   includeParent: boolean,
-        ///   childrenCount: number,
-        ///   lineageDirection: &quot;INPUT&quot; | &quot;OUTPUT&quot; | &quot;BOTH&quot;,
-        ///   parentRelations: [
-        ///     {
-        ///       childEntityId: string,
-        ///       relationshipId: string,
-        ///       parentEntityId: string
-        ///     }
-        ///   ],
-        ///   relations: [
-        ///     {
-        ///       fromEntityId: string,
-        ///       relationshipId: string,
-        ///       toEntityId: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-#pragma warning disable AZC0002
-        public virtual Response GetLineageGraph(string guid, string direction, RequestOptions options, int? depth = null, int? width = null, bool? includeParent = null, bool? getDerivedLineage = null)
-#pragma warning restore AZC0002
-        {
-            using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.GetLineageGraph");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetLineageGraphRequest(guid, direction, depth, width, includeParent, getDerivedLineage);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Return immediate next page lineage info about entity with pagination. </summary>
-        /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. Allowed values: &quot;BOTH&quot; | &quot;INPUT&quot; | &quot;OUTPUT&quot;. </param>
-        /// <param name="options"> The request options. </param>
-        /// <param name="getDerivedLineage"> True to include derived lineage in the response. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="direction"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   baseEntityGuid: string,
-        ///   guidEntityMap: Dictionary&lt;string, AtlasEntityHeader&gt;,
-        ///   widthCounts: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;,
-        ///   lineageDepth: number,
-        ///   lineageWidth: number,
-        ///   includeParent: boolean,
-        ///   childrenCount: number,
-        ///   lineageDirection: &quot;INPUT&quot; | &quot;OUTPUT&quot; | &quot;BOTH&quot;,
-        ///   parentRelations: [
-        ///     {
-        ///       childEntityId: string,
-        ///       relationshipId: string,
-        ///       parentEntityId: string
-        ///     }
-        ///   ],
-        ///   relations: [
-        ///     {
-        ///       fromEntityId: string,
-        ///       relationshipId: string,
-        ///       toEntityId: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-#pragma warning disable AZC0002
-        public virtual async Task<Response> NextPageLineageAsync(string guid, string direction, RequestOptions options, bool? getDerivedLineage = null, int? offset = null, int? limit = null)
-#pragma warning restore AZC0002
-        {
-            using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.NextPageLineage");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateNextPageLineageRequest(guid, direction, getDerivedLineage, offset, limit);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Return immediate next page lineage info about entity with pagination. </summary>
-        /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. Allowed values: &quot;BOTH&quot; | &quot;INPUT&quot; | &quot;OUTPUT&quot;. </param>
-        /// <param name="options"> The request options. </param>
-        /// <param name="getDerivedLineage"> True to include derived lineage in the response. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="direction"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   baseEntityGuid: string,
-        ///   guidEntityMap: Dictionary&lt;string, AtlasEntityHeader&gt;,
-        ///   widthCounts: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;,
-        ///   lineageDepth: number,
-        ///   lineageWidth: number,
-        ///   includeParent: boolean,
-        ///   childrenCount: number,
-        ///   lineageDirection: &quot;INPUT&quot; | &quot;OUTPUT&quot; | &quot;BOTH&quot;,
-        ///   parentRelations: [
-        ///     {
-        ///       childEntityId: string,
-        ///       relationshipId: string,
-        ///       parentEntityId: string
-        ///     }
-        ///   ],
-        ///   relations: [
-        ///     {
-        ///       fromEntityId: string,
-        ///       relationshipId: string,
-        ///       toEntityId: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-#pragma warning disable AZC0002
-        public virtual Response NextPageLineage(string guid, string direction, RequestOptions options, bool? getDerivedLineage = null, int? offset = null, int? limit = null)
-#pragma warning restore AZC0002
-        {
-            using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.NextPageLineage");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateNextPageLineageRequest(guid, direction, getDerivedLineage, offset, limit);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -562,7 +474,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/search/query", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -580,8 +492,26 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/search/suggest", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            message.ResponseClassifier = ResponseClassifier200.Instance;
+            return message;
+        }
+
+        internal HttpMessage CreateBrowseRequest(RequestContent content)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/browse", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -598,77 +528,13 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/search/autocomplete", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier200.Instance;
-            return message;
-        }
-
-        internal HttpMessage CreateGetLineageGraphRequest(string guid, string direction, int? depth, int? width, bool? includeParent, bool? getDerivedLineage)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
-            uri.AppendPath("/atlas/v2/lineage/", false);
-            uri.AppendPath(guid, true);
-            if (depth != null)
-            {
-                uri.AppendQuery("depth", depth.Value, true);
-            }
-            if (width != null)
-            {
-                uri.AppendQuery("width", width.Value, true);
-            }
-            uri.AppendQuery("direction", direction, true);
-            if (includeParent != null)
-            {
-                uri.AppendQuery("includeParent", includeParent.Value, true);
-            }
-            if (getDerivedLineage != null)
-            {
-                uri.AppendQuery("getDerivedLineage", getDerivedLineage.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
-            return message;
-        }
-
-        internal HttpMessage CreateNextPageLineageRequest(string guid, string direction, bool? getDerivedLineage, int? offset, int? limit)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
-            uri.AppendPath("/lineage/", false);
-            uri.AppendPath(guid, true);
-            uri.AppendPath("/next/", false);
-            uri.AppendQuery("direction", direction, true);
-            if (getDerivedLineage != null)
-            {
-                uri.AppendQuery("getDerivedLineage", getDerivedLineage.Value, true);
-            }
-            if (offset != null)
-            {
-                uri.AppendQuery("offset", offset.Value, true);
-            }
-            if (limit != null)
-            {
-                uri.AppendQuery("limit", limit.Value, true);
-            }
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }

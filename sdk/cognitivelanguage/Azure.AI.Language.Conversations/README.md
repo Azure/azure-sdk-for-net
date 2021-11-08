@@ -87,7 +87,7 @@ Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
 Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
 ```
 
-The specified parameters can also be used to initialize a `AnalyzeConversationOptions` instance. You can then call `AnalyzeConversation()` using the options object as a parameter as shown below.
+The specified parameters can also be used to initialize a `ConversationAnalysisOptions` instance. You can then call `AnalyzeConversation()` using the options object as a parameter as shown below.
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationWithOptions
 AnalyzeConversationOptions options = new AnalyzeConversationOptions(
@@ -101,7 +101,7 @@ Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
 
 ### Analyze a conversation in a different language
 
-The language property in the `AnalyzeConversationOptions` can be used to specify the language of the conversation.
+The language property in the `ConversationAnalysisOptions` can be used to specify the language of the conversation.
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationWithLanguage
 AnalyzeConversationOptions options = new AnalyzeConversationOptions(

@@ -1,14 +1,17 @@
 # Release History
 
-## 1.0.0-beta.5 (Unreleased)
+## 1.0.0 (2021-11-09)
 
 ### Features Added
 
+- General availability of `Azure.Data.SchemaRegistry`.
+- Added `SchemaRegistryModelFactory`.
+
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- Removed preview service versions.
+- Renamed `Content` property of `SchemaRegistrySchema` to `Definition`.
+- Renamed `name` parameter of `RegisterSchema` and `GetSchemaProperties` methods to `schemaName`.
 
 ## 1.0.0-beta.4 (2021-10-06)
 

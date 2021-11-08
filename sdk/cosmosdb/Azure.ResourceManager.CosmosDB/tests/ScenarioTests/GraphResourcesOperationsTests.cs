@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             if ((Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback) && !setUpRun)
             {
-                InitializeClients();
+                await InitializeClients();
                 resourceGroupName = Recording.GenerateAssetName(CosmosDBTestUtilities.ResourceGroupPrefix);
                 databaseAccountName = Recording.GenerateAssetName("amegraphtest");
                 await CosmosDBTestUtilities.TryRegisterResourceGroupAsync(ResourceGroupsOperations, CosmosDBTestUtilities.Location, resourceGroupName);
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             }
             else if (setUpRun)
             {
-                initNewRecord();
+                await initNewRecord();
             }
         }
 

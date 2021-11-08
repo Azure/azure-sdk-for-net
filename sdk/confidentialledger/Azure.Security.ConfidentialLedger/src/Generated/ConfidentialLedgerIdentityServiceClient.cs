@@ -34,7 +34,7 @@ namespace Azure.Security.ConfidentialLedger
 
         /// <summary> Gets identity information for a Confidential Ledger instance. </summary>
         /// <param name="ledgerId"> Id of the Confidential Ledger instance to get information for. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ledgerId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -55,7 +55,7 @@ namespace Azure.Security.ConfidentialLedger
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetLedgerIdentityAsync(string ledgerId, RequestOptions options)
+        public virtual async Task<Response> GetLedgerIdentityAsync(string ledgerId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerIdentityServiceClient.GetLedgerIdentity");
@@ -63,7 +63,7 @@ namespace Azure.Security.ConfidentialLedger
             try
             {
                 using HttpMessage message = CreateGetLedgerIdentityRequest(ledgerId);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -74,7 +74,7 @@ namespace Azure.Security.ConfidentialLedger
 
         /// <summary> Gets identity information for a Confidential Ledger instance. </summary>
         /// <param name="ledgerId"> Id of the Confidential Ledger instance to get information for. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ledgerId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -95,7 +95,7 @@ namespace Azure.Security.ConfidentialLedger
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetLedgerIdentity(string ledgerId, RequestOptions options)
+        public virtual Response GetLedgerIdentity(string ledgerId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerIdentityServiceClient.GetLedgerIdentity");
@@ -103,7 +103,7 @@ namespace Azure.Security.ConfidentialLedger
             try
             {
                 using HttpMessage message = CreateGetLedgerIdentityRequest(ledgerId);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {

@@ -139,6 +139,14 @@ namespace Microsoft.Azure.Batch
             InheritUtil.InheritClientBehaviorsAndSetPublicProperty(this, baseBehaviors);
         }
 
+        /// <summary>
+        /// Default constructor to support mocking the <see cref="Certificate"/> class.
+        /// </summary>
+        protected Certificate()
+        {
+            this.propertyContainer = new PropertyContainer();
+        }
+
         internal Certificate(
             BatchClient parentBatchClient,
             Models.Certificate protocolObject,

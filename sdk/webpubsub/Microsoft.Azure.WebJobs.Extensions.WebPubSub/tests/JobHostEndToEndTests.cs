@@ -1,23 +1,23 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Azure.Messaging.WebPubSub;
-using Microsoft.Azure.WebJobs.Host;
-using Microsoft.Azure.WebJobs.Host.Indexers;
-using Moq;
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Azure.WebJobs.Extensions.WebPubSub.Operations;
+using Microsoft.Azure.WebJobs.Host;
+using Microsoft.Azure.WebJobs.Host.Indexers;
+using Microsoft.Azure.WebPubSub.Common;
+using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 {
     public class JobHostEndToEndTests
     {
-        private static ConnectionContext TestContext = CreateConnectionContext();
-        private static BinaryData TestMessage = BinaryData.FromString("JobHostEndToEndTests");
-        private static Dictionary<string, string> FuncConfiguration = new Dictionary<string, string>
+        private static readonly WebPubSubConnectionContext TestContext = CreateConnectionContext();
+        private static readonly BinaryData TestMessage = BinaryData.FromString("JobHostEndToEndTests");
+        private static readonly Dictionary<string, string> FuncConfiguration = new()
         {
             { Constants.WebPubSubConnectionStringName, "Endpoint=https://abc;AccessKey=ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789ABCDEFGH;Version=1.0;" }
         };
@@ -84,9 +84,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             };
         }
 
-        private static ConnectionContext CreateConnectionContext()
+        private static WebPubSubConnectionContext CreateConnectionContext()
         {
-            return new ConnectionContext
+            return new WebPubSubConnectionContext
             {
                 ConnectionId = "000000",
                 EventName = "message",
@@ -99,10 +99,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         private sealed class WebPubSubFuncs
         {
             public static void TestWebPubSubTrigger(
-                [WebPubSubTrigger("chat", WebPubSubEventType.System, "connect")] ConnectionContext request)
+                [WebPubSubTrigger("chat", WebPubSubEventType.System, "connect")] ConnectEventRequest request,
+                WebPubSubConnectionContext connectionContext)
             {
                 // Valid case use default url for verification.
-                Assert.AreEqual(TestContext, request);
+                Assert.AreEqual(TestContext, connectionContext);
             }
 
             public static void TestWebPubSubTriggerInvalid(
@@ -135,6 +136,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
                     Message = TestMessage,
                     DataType = MessageDataType.Text
                 });
+            }
+
+            public static Task<string> TestResponse(
+                [HttpTrigger("get", "post")] HttpRequest req)
+            {
+                return Task.FromResult("test-response");
             }
         }
     }

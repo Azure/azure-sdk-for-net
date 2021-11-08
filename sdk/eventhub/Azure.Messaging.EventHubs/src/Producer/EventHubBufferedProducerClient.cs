@@ -7,11 +7,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.Linq;
 using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Diagnostics;
 using Azure.Messaging.EventHubs.Amqp;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
@@ -53,6 +55,15 @@ namespace Azure.Messaging.EventHubs.Producer
     ///
     internal class EventHubBufferedProducerClient : IAsyncDisposable
     {
+        /// <summary>The maximum amount of time, in milliseconds, to allow for acquiring the semaphore guarding a partition's publishing eligibility.</summary>
+        private const int PartitionPublishingGuardAcquireLimitMilliseconds = 100;
+
+        /// <summary>The minimum interval to allow for waiting when building a batch to publish.</summary>
+        private static readonly TimeSpan MinimumPublishingWaitInterval = TimeSpan.FromMilliseconds(5);
+
+        /// <summary>The default interval to delay for events to be available when building a batch to publish.</summary>
+        private static readonly TimeSpan DefaultPublishingDelayInterval = TimeSpan.FromMilliseconds(25);
+
         /// <summary>
         ///   The set of client options to use when options were not passed when the producer was instantiated.
         /// </summary>
@@ -64,7 +75,7 @@ namespace Azure.Messaging.EventHubs.Producer
             };
 
         /// <summary>The set of currently active partition publishing tasks.  Partition identifiers are used as keys.</summary>
-        private readonly ConcurrentDictionary<string, PartitionPublisher> _activePartitionPublishers = new();
+        private readonly ConcurrentDictionary<string, PartitionPublishingState> _activePartitionStateMap = new();
 
         /// <summary>The set of options to use with the <see cref="EventHubBufferedProducerClient" /> instance.</summary>
         private readonly EventHubBufferedProducerClientOptions _options;
@@ -77,12 +88,18 @@ namespace Azure.Messaging.EventHubs.Producer
         [SuppressMessage("Usage", "CA2213:Disposable fields should be disposed", Justification = "It is being disposed via delegation to CloseAsync.")]
         private readonly EventHubProducerClient _producer;
 
-        /// <summary>A <see cref="CancellationTokenSource"/> instance to signal the request to cancel all operations associated with publishing.</summary>
-        [SuppressMessage("Usage", "CA2213:Disposable fields should be disposed", Justification = "It is being disposed via delegation to StopPublishingAsync, which is called by Close Async.")]
-        private CancellationTokenSource _publishingCancellationSource;
+        /// <summary>A <see cref="CancellationTokenSource"/> instance to signal the request to cancel the background tasks responsible for publishing and management after any in-process batches are complete.</summary>
+        [SuppressMessage("Usage", "CA2213:Disposable fields should be disposed", Justification = "It is being disposed via delegation to StopPublishingAsync, which is called by CloseAsync.")]
+        private CancellationTokenSource _backgroundTasksCancellationSource;
+
+        /// <summary>A <see cref="CancellationTokenSource"/> instance to signal that any active publishing operations, including those in-flight, should terminate immediately.</summary>
+        private CancellationTokenSource _activeSendOperationsCancellationSource;
 
         /// <summary>The task responsible for managing the operations of the producer when it is running.</summary>
         private Task _producerManagementTask;
+
+        /// <summary>The task responsible for publishing events.</summary>
+        private Task _publishingTask;
 
         /// <summary>The set of partitions identifiers for the configured Event Hub, intended to be used for partition assignment.</summary>
         private string[] _partitions;
@@ -147,7 +164,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         /// <seealso href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample10_AzureEventSourceListener.md">Capturing Event Hubs logs</seealso>
         ///
-        public virtual bool IsPublishing => (_producerManagementTask != null);
+        public virtual bool IsPublishing => _producerManagementTask != null;
 
         /// <summary>
         ///   Indicates whether or not this <see cref="EventHubBufferedProducerClient" /> has been closed.
@@ -160,7 +177,7 @@ namespace Azure.Messaging.EventHubs.Producer
         public virtual bool IsClosed
         {
             get => _isClosed;
-            protected internal set => _isClosed = value;
+            internal set => _isClosed = value;
         }
 
         /// <summary>
@@ -173,18 +190,45 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   The instance of <see cref="EventHubsEventSource" /> which can be mocked for testing.
         /// </summary>
         ///
+        /// <remarks>
+        ///   This member is exposed internally to support testing only; it is not intended
+        ///   for other use.
+        /// </remarks>
+        ///
         internal EventHubsEventSource Logger { get; set; } = EventHubsEventSource.Log;
 
         /// <summary>
-        ///   The set of currently active partition publishing tasks.  Partition identifiers are used as keys.
-        ///   </summary>
+        ///     The resolver to use for assigning partitions for automatic routing and partition keys.
+        ///  </summary>
         ///
         /// <remarks>
         ///   This member is exposed internally to support testing only; it is not intended
         ///   for other use.
         /// </remarks>
         ///
-        internal ConcurrentDictionary<string, PartitionPublisher> ActivePartitionPublishers => _activePartitionPublishers;
+        internal PartitionResolver PartitionResolver { get; set; } = new();
+
+        /// <summary>
+        ///   The interval at which the background management operations should run.
+        /// </summary>
+        ///
+        /// <remarks>
+        ///   This member is exposed internally to support testing only; it is not intended
+        ///   for other use.
+        /// </remarks>
+        ///
+        internal TimeSpan BackgroundManagementInterval { get; set; } = TimeSpan.FromSeconds(10);
+
+        /// <summary>
+        ///   The set of state for the partitions which are actively being published to.  Partition identifiers are used as keys.
+        /// </summary>
+        ///
+        /// <remarks>
+        ///   This member is exposed internally to support testing only; it is not intended
+        ///   for other use.
+        /// </remarks>
+        ///
+        internal ConcurrentDictionary<string, PartitionPublishingState> ActivePartitionStateMap => _activePartitionStateMap;
 
         /// <summary>
         ///    Invoked after each batch of events has been successfully published to the Event Hub, this
@@ -534,7 +578,7 @@ namespace Azure.Messaging.EventHubs.Producer
             Argument.AssertNotClosed(_isClosed, nameof(EventHubBufferedProducerClient));
             Argument.AssertNotNullOrEmpty(partitionId, nameof(partitionId));
 
-            if (_activePartitionPublishers.TryGetValue(partitionId, out var publisher))
+            if (_activePartitionStateMap.TryGetValue(partitionId, out var publisher))
             {
                 return publisher.BufferedEventCount;
             }
@@ -635,6 +679,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         /// <exception cref="InvalidOperationException">Occurs when no <see cref="SendEventBatchFailedAsync" /> handler is currently registered.</exception>
         /// <exception cref="InvalidOperationException">Occurs when both a partition identifier and partition key have been specified in the <paramref name="options"/>.</exception>
+        /// <exception cref="InvalidOperationException">Occurs when an invalid partition identifier has been specified in the <paramref name="options"/>.</exception>
         ///
         /// <remarks>
         ///   Upon the first attempt to enqueue an event, the <see cref="SendEventBatchSucceededAsync" /> and <see cref="SendEventBatchFailedAsync" /> handlers
@@ -656,8 +701,9 @@ namespace Azure.Messaging.EventHubs.Producer
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             var logPartition = partitionKey ?? partitionId ?? string.Empty;
-            var operationId = Guid.NewGuid().ToString("D", CultureInfo.InvariantCulture);
-            Logger.EventEnqueueStart(EventHubName, logPartition, operationId);
+            var operationId = GenerateOperationId();
+
+            Logger.BufferedProducerEventEnqueueStart(Identifier, EventHubName, logPartition, operationId);
 
             try
             {
@@ -675,6 +721,7 @@ namespace Azure.Messaging.EventHubs.Producer
                         }
 
                         releaseGuard = true;
+                        Argument.AssertNotClosed(_isClosed, nameof(EventHubBufferedProducerClient));
 
                         // StartPublishingAsync will verify that publishing is not already taking
                         // place and act appropriately if nothing needs to be restarted; there's no need
@@ -691,6 +738,14 @@ namespace Azure.Messaging.EventHubs.Producer
                     }
                 }
 
+                // If there was a partition identifier requested, validate that it is part of
+                // the known set, now that publishing has been started.
+
+                if (!string.IsNullOrEmpty(partitionId))
+                {
+                    AssertValidPartition(partitionId, _partitionHash);
+                }
+
                 // Annotate the event with the current time; this is intended to help ensure that
                 // publishing can apply the maximum wait time correctly and will be removed when
                 // the event as added to a batch.
@@ -703,7 +758,7 @@ namespace Azure.Messaging.EventHubs.Producer
 
                 if (!string.IsNullOrEmpty(partitionKey))
                 {
-                    partitionId = AssignPartitionForPartitionKey(partitionKey);
+                    partitionId = PartitionResolver.AssignForPartitionKey(partitionKey, _partitions);
                     amqpMessage.SetPartitionKey(partitionKey);
                 }
 
@@ -711,30 +766,30 @@ namespace Azure.Messaging.EventHubs.Producer
 
                 if (string.IsNullOrEmpty(partitionId))
                 {
-                    partitionId = AssignPartition();
+                    partitionId = PartitionResolver.AssignRoundRobin(_partitions);
                 }
 
                 // Enqueue the event into the channel for the assigned partition.  Note that this call will wait
                 // if there is no room in the channel and may take some time to complete.
 
-                var partitionPublisher = _activePartitionPublishers.GetOrAdd(partitionId, partitionId => new PartitionPublisher(partitionId, _options));
-                var writer = partitionPublisher.PendingEvents.Writer;
+                var partitionPublisher = _activePartitionStateMap.GetOrAdd(partitionId, partitionId => new PartitionPublishingState(partitionId, _options));
+                var writer = partitionPublisher.PendingEventsWriter;
 
                 await writer.WriteAsync(eventData, cancellationToken).ConfigureAwait(false);
 
                 var count = Interlocked.Increment(ref _totalBufferedEventCount);
                 Interlocked.Increment(ref partitionPublisher.BufferedEventCount);
 
-                Logger.EventEnqueued(EventHubName, logPartition, partitionId, operationId, count);
+                Logger.BufferedProducerEventEnqueued(Identifier, EventHubName, logPartition, partitionId, operationId, count);
             }
             catch (Exception ex)
             {
-                Logger.EventEnqueueError(EventHubName, logPartition, operationId, ex.Message);
+                Logger.BufferedProducerEventEnqueueError(Identifier, EventHubName, logPartition, operationId, ex.Message);
                 throw;
             }
             finally
             {
-                Logger.EventEnqueueComplete(EventHubName, logPartition, operationId);
+                Logger.BufferedProducerEventEnqueueComplete(Identifier, EventHubName, logPartition, operationId);
             }
 
             return _totalBufferedEventCount;
@@ -786,6 +841,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         /// <exception cref="InvalidOperationException">Occurs when no <see cref="SendEventBatchFailedAsync" /> handler is currently registered.</exception>
         /// <exception cref="InvalidOperationException">Occurs when both a partition identifier and partition key have been specified in the <paramref name="options"/>.</exception>
+        /// <exception cref="InvalidOperationException">Occurs when an invalid partition identifier has been specified in the <paramref name="options"/>.</exception>
         ///
         /// <remarks>
         ///   Should cancellation or an unexpected exception occur, it is possible for calls to this method to result in a partial failure where some, but not all,
@@ -812,8 +868,9 @@ namespace Azure.Messaging.EventHubs.Producer
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             var logPartition = (partitionKey ?? partitionId ?? string.Empty);
-            var operationId = Guid.NewGuid().ToString("D", CultureInfo.InvariantCulture);
-            Logger.EventEnqueueStart(EventHubName, logPartition, operationId);
+            var operationId = GenerateOperationId();
+
+            Logger.BufferedProducerEventEnqueueStart(Identifier, EventHubName, logPartition, operationId);
 
             try
             {
@@ -831,6 +888,7 @@ namespace Azure.Messaging.EventHubs.Producer
                         }
 
                         releaseGuard = true;
+                        Argument.AssertNotClosed(_isClosed, nameof(EventHubBufferedProducerClient));
 
                         // StartPublishingAsync will verify that publishing is not already taking
                         // place and act appropriately if nothing needs to be restarted; there's no need
@@ -847,18 +905,26 @@ namespace Azure.Messaging.EventHubs.Producer
                     }
                 }
 
+                // If there was a partition identifier requested, validate that it is part of
+                // the known set, now that publishing has been started.
+
+                if (!string.IsNullOrEmpty(partitionId))
+                {
+                    AssertValidPartition(partitionId, _partitionHash);
+                }
+
                 // If there was a partition key requested, calculate the assigned partition.
 
                 if (!string.IsNullOrEmpty(partitionKey))
                 {
-                    partitionId = AssignPartitionForPartitionKey(partitionKey);
+                    partitionId = PartitionResolver.AssignForPartitionKey(partitionKey, _partitions);
                 }
 
                 // If there is a stable partition identifier for all events in the batch, acquire the publisher for it.
 
                 var partitionPublisher = string.IsNullOrEmpty(partitionId)
                     ? null
-                    : _activePartitionPublishers.GetOrAdd(partitionId, partitionId => new PartitionPublisher(partitionId, _options));
+                    : _activePartitionStateMap.GetOrAdd(partitionId, partitionId => new PartitionPublishingState(partitionId, _options));
 
                 // Enumerate the events and enqueue them.
 
@@ -887,31 +953,31 @@ namespace Azure.Messaging.EventHubs.Producer
 
                     if (string.IsNullOrEmpty(eventPartitionId))
                     {
-                        eventPartitionId = AssignPartition();
+                        eventPartitionId = PartitionResolver.AssignRoundRobin(_partitions);
                     }
 
                     // Enqueue the event into the channel for the assigned partition.  Note that this call will wait
                     // if there is no room in the channel and may take some time to complete.
 
-                    var publisher = partitionPublisher ?? _activePartitionPublishers.GetOrAdd(eventPartitionId, partitionId => new PartitionPublisher(eventPartitionId, _options));
-                    var writer = publisher.PendingEvents.Writer;
+                    var publisher = partitionPublisher ?? _activePartitionStateMap.GetOrAdd(eventPartitionId, partitionId => new PartitionPublishingState(eventPartitionId, _options));
+                    var writer = publisher.PendingEventsWriter;
 
                     await writer.WriteAsync(eventData, cancellationToken).ConfigureAwait(false);
 
                     var count = Interlocked.Increment(ref _totalBufferedEventCount);
                     Interlocked.Increment(ref publisher.BufferedEventCount);
 
-                    Logger.EventEnqueued(EventHubName, logPartition, eventPartitionId, operationId, count);
+                    Logger.BufferedProducerEventEnqueued(Identifier, EventHubName, logPartition, eventPartitionId, operationId, count);
                 }
             }
             catch (Exception ex)
             {
-                Logger.EventEnqueueError(EventHubName, logPartition, operationId, ex.Message);
+                Logger.BufferedProducerEventEnqueueError(Identifier, EventHubName, logPartition, operationId, ex.Message);
                 throw;
             }
             finally
             {
-                Logger.EventEnqueueComplete(EventHubName, logPartition, operationId);
+                Logger.BufferedProducerEventEnqueueComplete(Identifier, EventHubName, logPartition, operationId);
             }
 
             return _totalBufferedEventCount;
@@ -931,10 +997,14 @@ namespace Azure.Messaging.EventHubs.Producer
         {
             Argument.AssertNotClosed(_isClosed, nameof(EventHubBufferedProducerClient));
 
+            var releaseGuard = false;
+
             if (!_stateGuard.Wait(0, cancellationToken))
             {
                 await _stateGuard.WaitAsync(cancellationToken).ConfigureAwait(false);
             }
+
+            releaseGuard = true;
 
             try
             {
@@ -943,9 +1013,10 @@ namespace Azure.Messaging.EventHubs.Producer
             }
             finally
             {
-                // If we reached the try block without an exception, it is safe to assume the guard is held.
-
-                _stateGuard.Release();
+                if (releaseGuard)
+                {
+                    _stateGuard.Release();
+                }
             }
         }
 
@@ -970,8 +1041,8 @@ namespace Azure.Messaging.EventHubs.Producer
                 return;
             }
 
-            var guardHeld = false;
-            var capturedException = default(Exception);
+            var releaseGuard = false;
+            var capturedExceptions = default(List<Exception>);
 
             try
             {
@@ -982,7 +1053,7 @@ namespace Azure.Messaging.EventHubs.Producer
 
                 // If we've reached this point without an exception, the guard is held.
 
-                guardHeld = true;
+                releaseGuard = true;
 
                 if (_isClosed)
                 {
@@ -992,54 +1063,58 @@ namespace Azure.Messaging.EventHubs.Producer
                 _isClosed = true;
                 Logger.ClientCloseStart(nameof(EventHubBufferedProducerClient), EventHubName, Identifier);
 
-                if (IsPublishing)
-                {
-                    try
-                    {
-                        if (flush)
-                        {
-                            await FlushInternalAsync(CancellationToken.None).ConfigureAwait(false);
-                        }
-                        else
-                        {
-                           await ClearInternalAsync(CancellationToken.None).ConfigureAwait(false);
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        // If flushing, the exception should cause closing to fail to protect against data loss.  State should be
-                        // reset so that applications can attempt to close/flush again.  This should be rare and limited to unexpected
-                        // scenarios, as normal exceptions during send operations will be surfaced through the handler.
-
-                        if (flush)
-                        {
-                            _isClosed = false;
-                            throw;
-                        }
-                        else
-                        {
-                            // When clearing, the exception is non-blocking; log and continue.
-
-                            Logger.ClientCloseError(nameof(EventHubBufferedProducerClient), EventHubName, Identifier, ex.Message);
-                        }
-                    }
-                }
-
-                // Stop processing and close the producer.  Capture exceptions to allow
-                // cleanup and disposal to complete.
+                // Flushing or clearing the buffered events; these calls will both take responsibility
+                // for stopping any active publishing.
 
                 try
                 {
-                    await Task.WhenAll(
-                        _producer.CloseAsync(CancellationToken.None),
-                        StopPublishingAsync(CancellationToken.None)
-                    ).ConfigureAwait(false);
+                    if (flush)
+                    {
+                        await FlushInternalAsync(CancellationToken.None).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                       ClearInternal(CancellationToken.None);
+                    }
                 }
                 catch (Exception ex)
                 {
                     Logger.ClientCloseError(nameof(EventHubBufferedProducerClient), EventHubName, Identifier, ex.Message);
-                    capturedException = ex;
+                    (capturedExceptions ??= new List<Exception>()).Add(ex);
                 }
+
+                // Close the producer.
+
+                try
+                {
+                    await _producer.CloseAsync(CancellationToken.None).ConfigureAwait(false);
+                }
+                catch (Exception ex)
+                {
+                    Logger.ClientCloseError(nameof(EventHubBufferedProducerClient), EventHubName, Identifier, ex.Message);
+                    (capturedExceptions ??= new List<Exception>()).Add(ex);
+                }
+
+                // Clean up partition state.
+
+                foreach (var pair in _activePartitionStateMap)
+                {
+                    // Dispose for the partition publishers will log exceptions and
+                    // avoid surfacing them, as processing is stopping.
+
+                    try
+                    {
+                        _activePartitionStateMap.TryRemove(pair.Key, out _);
+                        pair.Value.Dispose();
+                    }
+                    catch (Exception ex)
+                    {
+                       Logger.ClientCloseError(nameof(EventHubBufferedProducerClient), EventHubName, Identifier, ex.Message);
+                       (capturedExceptions ??= new List<Exception>()).Add(ex);
+                    }
+                }
+
+                _activePartitionStateMap.Clear();
 
                 // Unregister the event handlers.
 
@@ -1064,7 +1139,7 @@ namespace Azure.Messaging.EventHubs.Producer
             }
             finally
             {
-                if (guardHeld)
+                if (releaseGuard)
                 {
                     _stateGuard.Release();
                 }
@@ -1072,12 +1147,16 @@ namespace Azure.Messaging.EventHubs.Producer
                 Logger.ClientCloseComplete(nameof(EventHubBufferedProducerClient), EventHubName, Identifier);
             }
 
-            // Surface any exception that was captured.
+            // Surface any exceptions that were captured during cleanup.
 
-            if (capturedException != default)
+            if (capturedExceptions?.Count == 1)
             {
-                ExceptionDispatchInfo.Capture(capturedException).Throw();
+                ExceptionDispatchInfo.Capture(capturedExceptions[0]).Throw();
             }
+            else if (capturedExceptions is not null)
+            {
+                throw new AggregateException(capturedExceptions);
+            };
         }
 
         /// <summary>
@@ -1130,8 +1209,7 @@ namespace Azure.Messaging.EventHubs.Producer
         public override string ToString() => base.ToString();
 
         /// <summary>
-        ///   Cancels any active publishing and abandons all events in the buffer that are waiting to be published.
-        ///   Upon completion of this method, the buffer will be empty.
+        ///   Abandons all events in the buffer that are waiting to be published.  Upon completion of this method, the buffer will be empty.
         /// </summary>
         ///
         /// <param name="cancellationToken">An optional <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
@@ -1140,18 +1218,42 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   This method will modify class-level state and should be synchronized.  It is assumed that callers hold responsibility for
         ///   ensuring synchronization concerns; this method should be invoked after any primitives have been acquired.
         ///
-        ///   Callers are also assumed to own responsibility for any validation that the client is in the intended state before calling.
+        ///   Callers are also assumed to own responsibility for stopping all publishing and performing any necessary
+        ///   validation of client state before calling.
         /// </remarks>
         ///
-        internal virtual Task ClearInternalAsync(CancellationToken cancellationToken = default)
+        internal virtual void ClearInternal(CancellationToken cancellationToken = default)
         {
-            // ======================================================================
-            //  NOTE:
-            //    This method is currently just a stub; full functionality will be
-            //    added in a later set of changes.
-            // ======================================================================
+            var operationId = GenerateOperationId();
 
-            return Task.CompletedTask;
+            try
+            {
+                Logger.BufferedProducerClearStart(Identifier, EventHubName, operationId);
+
+                foreach (var partitionStateItem in _activePartitionStateMap)
+                {
+                    cancellationToken.ThrowIfCancellationRequested();
+
+                    if (partitionStateItem.Value.BufferedEventCount > 0)
+                    {
+                        while (partitionStateItem.Value.TryReadEvent(out _))
+                        {
+                        }
+
+                        Interlocked.Add(ref _totalBufferedEventCount, (partitionStateItem.Value.BufferedEventCount * -1));
+                        partitionStateItem.Value.BufferedEventCount = 0;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.BufferedProducerClearError(Identifier, EventHubName, operationId, ex.Message);
+                throw;
+            }
+            finally
+            {
+                Logger.BufferedProducerClearComplete(Identifier, EventHubName, operationId);
+            }
         }
 
         /// <summary>
@@ -1168,26 +1270,364 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   This method will modify class-level state and should be synchronized.  It is assumed that callers hold responsibility for
         ///   ensuring synchronization concerns; this method should be invoked after any primitives have been acquired.
         ///
-        ///   Callers are also assumed to own responsibility for any validation that the client is in the intended state before calling.
+        ///   Callers are also assumed to own responsibility for stopping all publishing and performing any necessary
+        ///   validation of client state before calling.
         /// </remarks>
         ///
         internal virtual async Task FlushInternalAsync(CancellationToken cancellationToken = default)
         {
-            // ======================================================================
-            //  NOTE:
-            //    This method is currently just a stub; full functionality will be
-            //    added in a later set of changes.
-            // ======================================================================
+            var operationId = GenerateOperationId();
+            var activeDrains = new List<Task>(_options.MaximumConcurrentSends);
+            var activeHandlers = new ConcurrentBag<Task>();
 
-            // If publishing is taking place, but the management task has completed,
-            // restart publishing to ensure that send operations are taking place.
-
-            if ((IsPublishing) && (_producerManagementTask?.IsCompleted ?? false))
+            try
             {
-                await StartPublishingAsync(cancellationToken).ConfigureAwait(false);
+                Logger.BufferedProducerFlushStart(Identifier, EventHubName, operationId);
+
+                foreach (var partitionStateItem in _activePartitionStateMap)
+                {
+                    // If cancellation has been requested then do so; outstanding drains and handlers
+                    // will manage their own cancellation.
+
+                    cancellationToken.ThrowIfCancellationRequested();
+
+                    // If needed, wait for drain tasks to complete so there is room.
+
+                    while (activeDrains.Count >= _options.MaximumConcurrentSends)
+                    {
+                        var awaiSingleWatch = ValueStopwatch.StartNew();
+                        Logger.BufferedProducerPublishingAwaitStart(Identifier, EventHubName, activeDrains.Count, operationId);
+
+                        // The drain task is responsible for managing its own exceptions and will not throw.
+
+                        var finished = await Task.WhenAny(activeDrains).ConfigureAwait(false);
+                        activeDrains.Remove(finished);
+
+                        Logger.BufferedProducerPublishingAwaitComplete(Identifier, EventHubName, activeDrains.Count, operationId, awaiSingleWatch.GetElapsedTime().TotalSeconds);
+                    }
+
+                    // Drain the next partition; because this is an exclusive operation and is ensuring only a single
+                    // invocation for each partition, there's no need to acquire the partition guard.
+
+                    if ((!cancellationToken.IsCancellationRequested)
+                        && (partitionStateItem.Value.BufferedEventCount > 0))
+                    {
+                        activeDrains.Add(DrainAndPublishPartitionEvents(partitionStateItem.Value, operationId, activeHandlers, cancellationToken));
+                    }
+                }
+
+                // Wait for any remaining partitions to complete, and then wait for outstanding handlers.  Both are
+                // expected to manage their own exceptions and should not throw.
+
+                await Task.WhenAll(activeDrains).ConfigureAwait(false);
+                await Task.WhenAll(activeHandlers).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                Logger.BufferedProducerFlushError(Identifier, EventHubName, operationId, ex.Message);
+                throw;
+            }
+            finally
+            {
+                Logger.BufferedProducerFlushComplete(Identifier, EventHubName, operationId);
+            }
+        }
+
+        /// <summary>
+        ///   Attempts to publish a single batch of previously buffered events to the requested partition.
+        /// </summary>
+        ///
+        /// <param name="partitionState">The state of publishing for the partition.</param>
+        /// <param name="releaseGuard"><c>true</c> if the <see cref="PartitionPublishingState.PartitionGuard" /> should be released after publishing; otherwise, <c>false</c>.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel publishing.</param>
+        ///
+        /// <remarks>
+        ///   This method has responsibility for invoking the event handlers to communicate
+        ///   success or failure of the operation.
+        /// </remarks>
+        ///
+        internal virtual async Task PublishBatchToPartition(PartitionPublishingState partitionState,
+                                                            bool releaseGuard,
+                                                            CancellationToken cancellationToken)
+        {
+            var batchEventCount = 0;
+            var operationId = GenerateOperationId();
+            var partitionId = partitionState.PartitionId;
+            var publishWatch = default(ValueStopwatch);
+            var batch = default(EventDataBatch);
+
+            Logger.BufferedProducerEventBatchPublishStart(Identifier, EventHubName, partitionState.PartitionId, operationId);
+
+            try
+            {
+                // Determine the intervals for the time limit on building the batch and for delaying between empty reads.
+
+                var totalWaitTime = _options.MaximumWaitTime ?? Timeout.InfiniteTimeSpan;
+                var remainingWaitTime = totalWaitTime;
+                var delayInterval = CalculateDelay(totalWaitTime, DefaultPublishingDelayInterval);
+
+                // The wait time constraint should not consider creating the batch; start tracking after the batch is available to build.
+
+                batch = await _producer.CreateBatchAsync(new CreateBatchOptions { PartitionId = partitionId }, cancellationToken).ConfigureAwait(false);
+                publishWatch = ValueStopwatch.StartNew();
+
+                // Build the batch, stopping either when it is full or when the allowable wait time
+                // has been exceeded.
+
+                while (ShouldWait(remainingWaitTime, MinimumPublishingWaitInterval))
+                {
+                    if (partitionState.TryReadEvent(out var currentEvent))
+                    {
+                        if (batch.TryAdd(currentEvent))
+                        {
+                            ++batchEventCount;
+                            Logger.BufferedProducerEventBatchPublishEventAdded(Identifier, EventHubName, partitionId, operationId, batchEventCount, publishWatch.GetElapsedTime().TotalSeconds);
+                        }
+                        else
+                        {
+                            // If this event is the first for the batch, then it is too large to ever successfully publish.  Because this event is poison
+                            // it should not be stashed.  Since it was not added to the batch, the normal error handler path won't properly report it.
+                            // Instead, perform the logging and handler invocation inline and then exit.
+
+                            if (batch.Count == 0)
+                            {
+                                Interlocked.Decrement(ref partitionState.BufferedEventCount);
+                                Interlocked.Decrement(ref _totalBufferedEventCount);
+
+                                var message = string.Format(CultureInfo.InvariantCulture, Resources.EventTooLargeMask, EventHubName, batch.MaximumSizeInBytes);
+                                var exception = new EventHubsException(EventHubName, message, EventHubsException.FailureReason.MessageSizeExceeded);
+
+                                Logger.BufferedProducerEventBatchPublishError(Identifier, EventHubName, partitionId, operationId, message);
+
+                                // Handler invocation is performed in the background as a fire-and-forget operation.  Exceptions in the handler
+                                // are logged as part of the invocation.
+
+                                _ = InvokeOnSendFailedAsync(new List<EventData>(1) { currentEvent }, exception, partitionId);
+
+                                return;
+                            }
+
+                            // The last read event could not fit in the batch; stash it for the next reader so that it isn't lost.
+
+                            partitionState.StashEvent(currentEvent);
+
+                            // The batch is full; break out of the batch building loop and move onto publishing.
+
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        // If no event was available, delay for a short period to avoid a tight loop while attempting to read.  At
+                        // this point, the remaining time has not been updated, but the attempt to read was a quick synchronous operation,
+                        // so the lack of precision is not a concern.
+
+                        delayInterval = CalculateDelay(remainingWaitTime, delayInterval);
+                        Logger.BufferedProducerEventBatchPublishNoEventRead(Identifier, EventHubName, partitionId, operationId, delayInterval.TotalSeconds, publishWatch.GetElapsedTime().TotalSeconds);
+
+                        if (ShouldWait(remainingWaitTime, MinimumPublishingWaitInterval))
+                        {
+                            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+                            await Task.Delay(delayInterval, cancellationToken).ConfigureAwait(false);
+                        }
+                    }
+
+                    // Adjust the remaining time based on the current total amount of time spent building the batch; if
+                    // no wait time was specified, this will remain infinite.
+
+                    remainingWaitTime = totalWaitTime.CalculateRemaining(publishWatch.GetElapsedTime());
+                }
+
+                // If there were events added to the batch, publish them.
+
+                if (batch.Count > 0)
+                {
+                    // Handler invocation is performed in the background as a fire-and-forget operation.  Exceptions in the handler
+                    // are logged as part of the invocation.
+
+                    await _producer.SendAsync(batch, cancellationToken).ConfigureAwait(false);
+                    _ = InvokeOnSendSucceededAsync(batch.AsEnumerable<EventData>().ToList(), partitionId);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.BufferedProducerEventBatchPublishError(Identifier, EventHubName, partitionId, operationId, ex.Message);
+
+                // Handler invocation is performed in the background as a fire-and-forget operation.  Exceptions in the handler
+                // are logged as part of the invocation.
+
+                if (batch?.Count > 0)
+                {
+                    _ = InvokeOnSendFailedAsync(batch.AsEnumerable<EventData>().ToList(), ex, partitionId);
+                }
+            }
+            finally
+            {
+                // Succeed or fail, the batch events are no longer buffered; remove them from the partition state and the total.
+
+                var delta = (batchEventCount * -1);
+
+                Interlocked.Add(ref partitionState.BufferedEventCount, delta);
+                Interlocked.Add(ref _totalBufferedEventCount, delta);
+
+                batch?.Dispose();
+
+                if (releaseGuard)
+                {
+                    partitionState.PartitionGuard.Release();
+                }
+
+                var duration = publishWatch.IsActive ? publishWatch.GetElapsedTime().TotalSeconds : 0;
+                Logger.BufferedProducerEventBatchPublishComplete(Identifier, EventHubName, partitionId, operationId, batchEventCount, duration);
+            }
+        }
+
+        /// <summary>
+        ///   Attempts to fully drain the events buffered for a partition, publishing them in batches.
+        /// </summary>
+        ///
+        /// <param name="partitionState">The state of publishing for the partition.</param>
+        /// <param name="operationId">An identifier for the publishing operations that can be used to correlate related log entries.  If <c>null</c> or empty, a new identifier will be generated.</param>
+        /// <param name="activeHandlers">The set of active event handler invocations; the collection will be modified by this method.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel publishing.</param>
+        ///
+        /// <remarks>
+        ///   This method has responsibility for invoking the event handlers to communicate success or failure of the
+        ///   operation and will add the resulting <see cref="Task" /> to the <paramref name="activeHandlers" /> set.
+        /// </remarks>
+        ///
+        internal virtual async Task DrainAndPublishPartitionEvents(PartitionPublishingState partitionState,
+                                                                   string operationId,
+                                                                   ConcurrentBag<Task> activeHandlers,
+                                                                   CancellationToken cancellationToken)
+        {
+            ValueStopwatch publishWatch;
+            EventData readEvent;
+
+            var drainComplete = false;
+            var partitionId = partitionState.PartitionId;
+            var batch = default(EventDataBatch);
+
+            if (string.IsNullOrEmpty(operationId))
+            {
+                operationId = GenerateOperationId();
             }
 
-            //TODO: Implement Flush
+            Logger.BufferedProducerDrainStart(Identifier, EventHubName, partitionId, operationId);
+
+            try
+            {
+                while (!drainComplete)
+                {
+                    batch ??= await _producer.CreateBatchAsync(new CreateBatchOptions { PartitionId = partitionId }, cancellationToken).ConfigureAwait(false);
+                    publishWatch = ValueStopwatch.StartNew();
+
+                    // Read events until one does not fit in the batch.
+
+                    while ((partitionState.TryReadEvent(out readEvent)) && (batch.TryAdd(readEvent)))
+                    {
+                        Logger.BufferedProducerEventBatchPublishEventAdded(Identifier, EventHubName, partitionId, operationId, batch.Count, publishWatch.GetElapsedTime().TotalSeconds);
+                    }
+
+                    // If there were no events read and there are none in the batch, then draining is complete.
+
+                    if ((readEvent == null) && (batch.Count == 0))
+                    {
+                        Logger.BufferedProducerEventBatchPublishNoEventRead(Identifier, EventHubName, partitionId, operationId, 0, publishWatch.GetElapsedTime().TotalSeconds);
+                        drainComplete = true;
+                    }
+                    else if (batch.Count == 0)
+                    {
+                        // If the read event is the first for the batch, then it is too large to ever successfully publish.  Because this event is poison
+                        // it should not be stashed.  Since it was not added to the batch, the normal error handler path won't properly report it.
+                        // Instead, perform the logging and handler invocation inline.
+
+                        var message = string.Format(CultureInfo.InvariantCulture, Resources.EventTooLargeMask, EventHubName, batch.MaximumSizeInBytes);
+                        var exception = new EventHubsException(EventHubName, message, EventHubsException.FailureReason.MessageSizeExceeded);
+
+                        Logger.BufferedProducerEventBatchPublishError(Identifier, EventHubName, partitionId, operationId, message);
+                        activeHandlers.Add(InvokeOnSendFailedAsync(new List<EventData>(1) { readEvent }, exception, partitionId));
+                    }
+                    else
+                    {
+                        // There are events in the batch to publish, but may or may not be an event read that could not fit in the batch.
+
+                        if (readEvent != null)
+                        {
+                            partitionState.StashEvent(readEvent);
+                        }
+
+                        Logger.BufferedProducerEventBatchPublishStart(Identifier, EventHubName, partitionState.PartitionId, operationId);
+
+                        try
+                        {
+                            await _producer.SendAsync(batch, cancellationToken).ConfigureAwait(false);
+                            activeHandlers.Add(InvokeOnSendSucceededAsync(batch.AsEnumerable<EventData>().ToList(), partitionState.PartitionId));
+                        }
+                        catch (Exception ex)
+                        {
+                            Logger.BufferedProducerEventBatchPublishError(Identifier, EventHubName, partitionId, operationId, ex.Message);
+                            activeHandlers.Add(InvokeOnSendFailedAsync(batch.AsEnumerable<EventData>().ToList(), ex, partitionId));
+
+                            // If publishing was canceled, break out of the drain loop.
+
+                            if (ex is OperationCanceledException)
+                            {
+                                drainComplete = true;
+                                break;
+                            }
+                        }
+                        finally
+                        {
+                            // Succeed or fail, the batch events are no longer buffered; remove them from the partition state and the total.
+
+                            if (batch.Count > 0)
+                            {
+                                var delta = (batch.Count * -1);
+
+                                Interlocked.Add(ref partitionState.BufferedEventCount, delta);
+                                Interlocked.Add(ref _totalBufferedEventCount, delta);
+                            }
+
+                            Logger.BufferedProducerEventBatchPublishComplete(Identifier, EventHubName, partitionId, operationId, batch.Count, publishWatch.GetElapsedTime().TotalSeconds);
+                        }
+
+                        batch.Dispose();
+                        batch = null;
+                    }
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                // This is expected when cancellation is detected when creating a new batch; the partition
+                // will be left in a consistent state.
+            }
+            catch (Exception ex)
+            {
+                // This path should not be possible under normal conditions; if triggered, then
+                // something is in a corrupt state and the drain cannot continue.  Consider all remaining
+                // events to be failures and cease publishing.
+
+                Logger.BufferedProducerDrainError(Identifier, EventHubName, partitionId, operationId, ex.Message);
+                var events = new List<EventData>();
+
+                while (partitionState.TryReadEvent(out readEvent))
+                {
+                   events.Add(readEvent);
+                }
+
+                activeHandlers.Add(InvokeOnSendFailedAsync(events, ex, partitionId));
+
+                var delta = (events.Count * -1);
+
+                Interlocked.Add(ref partitionState.BufferedEventCount, delta);
+                Interlocked.Add(ref _totalBufferedEventCount, delta);
+            }
+            finally
+            {
+                batch?.Dispose();
+                Logger.BufferedProducerDrainComplete(Identifier, EventHubName, partitionId, operationId);
+            }
         }
 
         /// <summary>
@@ -1205,11 +1645,38 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         /// <param name="events">The set of events belonging to the batch that was successfully published.</param>
         /// <param name="partitionId">The identifier of the partition that the batch of events was published to.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel publishing.</param>
         ///
-        protected virtual Task OnSendSucceededAsync(IReadOnlyList<EventData> events,
-                                                    string partitionId)
+        protected virtual async Task OnSendSucceededAsync(IReadOnlyList<EventData> events,
+                                                          string partitionId,
+                                                          CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            // Once publishing has started, it's not possible to add/remove handlers; its safe to assume that
+            // the reference is valid without caching it.
+
+            if (_sendSucceededHandler == null)
+            {
+                Logger.BufferedProducerNoPublishEventHandler(Identifier, EventHubName, partitionId);
+                return;
+            }
+
+            var operationId = GenerateOperationId();
+            Logger.BufferedProducerOnSendSucceededStart(Identifier, EventHubName, partitionId, operationId);
+
+            try
+            {
+                var args = new SendEventBatchSucceededEventArgs(events, partitionId, cancellationToken);
+                await _sendSucceededHandler(args).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                Logger.BufferedProducerOnSendSucceededError(Identifier, EventHubName, partitionId, operationId, ex.Message);
+                throw;
+            }
+            finally
+            {
+                Logger.BufferedProducerOnSendSucceededComplete(Identifier, EventHubName, partitionId, operationId);
+            }
         }
 
         /// <summary>
@@ -1220,12 +1687,39 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <param name="events">The set of events belonging to the batch that failed to be published.</param>
         /// <param name="exception">The <see cref="Exception"/> that was raised when the events failed to publish.</param>
         /// <param name="partitionId">The identifier of the partition that the batch of events was published to.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel publishing.</param>
         ///
-        protected virtual Task OnSendFailedAsync(IReadOnlyList<EventData> events,
-                                                 Exception exception,
-                                                 string partitionId)
+        protected virtual async Task OnSendFailedAsync(IReadOnlyList<EventData> events,
+                                                       Exception exception,
+                                                       string partitionId,
+                                                       CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            // Once publishing has started, it's not possible to add/remove handlers; its safe to assume that
+            // the reference is valid without caching it.
+
+            if (_sendFailedHandler == null)
+            {
+                Logger.BufferedProducerNoPublishEventHandler(Identifier, EventHubName, partitionId);
+                return;
+            }
+
+            var operationId = GenerateOperationId();
+            Logger.BufferedProducerOnSendFailedStart(Identifier, EventHubName, partitionId, operationId);
+
+            try
+            {
+                var args = new SendEventBatchFailedEventArgs(events, exception, partitionId, cancellationToken);
+                await _sendFailedHandler(args).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                Logger.BufferedProducerOnSendFailedError(Identifier, EventHubName, partitionId, operationId, ex.Message);
+                throw;
+            }
+            finally
+            {
+                Logger.BufferedProducerOnSendFailedComplete(Identifier, EventHubName, partitionId, operationId);
+            }
         }
 
         /// <summary>
@@ -1273,9 +1767,9 @@ namespace Azure.Messaging.EventHubs.Producer
                 // There should be no cancellation source, but guard against leaking resources in the
                 // event of a crash or other exception.
 
-                _publishingCancellationSource?.Cancel();
-                _publishingCancellationSource?.Dispose();
-                _publishingCancellationSource = new CancellationTokenSource();
+                _backgroundTasksCancellationSource?.Cancel();
+                _backgroundTasksCancellationSource?.Dispose();
+                _backgroundTasksCancellationSource = new CancellationTokenSource();
 
                 // If there was a task present, then it will have been previously faulted
                 // or has just been canceled; capture any exception for logging.  This is
@@ -1293,12 +1787,10 @@ namespace Azure.Messaging.EventHubs.Producer
                     }
                 }
 
-                // Ensure that partition state is initialized, and then start the background
-                // processing task responsible for ensuring updated state and managing partition
+                // Start the background processing task responsible for ensuring updated state and managing partition
                 // processing health.
 
-                await EnsurePartitionStateAsync(cancellationToken).ConfigureAwait(false);
-                _producerManagementTask = RunProducerManagementAsync(_publishingCancellationSource.Token);
+                _producerManagementTask = RunProducerManagementAsync(_backgroundTasksCancellationSource.Token);
             }
             catch (Exception ex)
             {
@@ -1321,6 +1813,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   enqueued and published.  Should this method be called while processing is not active, no action is taken.
         /// </summary>
         ///
+        /// <param name="cancelActiveSendOperations"><c>true</c> if active "SendAsync" operations should be canceled; otherwise, <c>false</c>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the stop operation.</param>
         ///
         /// <remarks>
@@ -1329,11 +1822,12 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   assumed to own responsibility for any validation that the client is in the intended state before calling.
         ///
         ///   This method does not consider any events that have been enqueued and are in a pending state.  It is assumed
-        ///   that the caller has responsibility for invoking <see cref="FlushInternalAsync" /> or <see cref="ClearInternalAsync" />
-        ///   prior to this method if needed.
+        ///   that the caller has responsibility for disposing of any active partition state and invoking <see cref="FlushInternalAsync" />
+        ///   or <see cref="ClearInternal" /> as needed.
         /// </remarks>
         ///
-        private async Task StopPublishingAsync(CancellationToken cancellationToken)
+        private async Task StopPublishingAsync(bool cancelActiveSendOperations,
+                                               CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.BufferedProducerBackgroundProcessingStop(Identifier, EventHubName);
@@ -1352,9 +1846,13 @@ namespace Azure.Messaging.EventHubs.Producer
 
                 // Request cancellation of the background processing.
 
-                _publishingCancellationSource?.Cancel();
-                _publishingCancellationSource?.Dispose();
-                _publishingCancellationSource = new CancellationTokenSource();
+                _backgroundTasksCancellationSource?.Cancel();
+                _backgroundTasksCancellationSource?.Dispose();
+
+                if (cancelActiveSendOperations)
+                {
+                    _activeSendOperationsCancellationSource?.Cancel();
+                }
 
                 // Wait for the background tasks to complete.
 
@@ -1372,25 +1870,6 @@ namespace Azure.Messaging.EventHubs.Producer
                     (capturedExceptions ??= new List<Exception>()).Add(ex);
                 }
 
-                // Clean up all partition publishers.
-
-                foreach (var pair in _activePartitionPublishers)
-                {
-                    // Dispose for the partition publishers will log exceptions and
-                    // avoid surfacing them, as processing is stopping.
-
-                    try
-                    {
-                        _activePartitionPublishers.TryRemove(pair.Key, out _);
-                        pair.Value.Dispose();
-                    }
-                    catch (Exception ex)
-                    {
-                       Logger.BufferedProducerBackgroundProcessingStopError(Identifier, EventHubName, ex.Message);
-                       (capturedExceptions ??= new List<Exception>()).Add(ex);
-                    }
-                }
-
                 _producerManagementTask = null;
             }
             catch (Exception ex)
@@ -1405,6 +1884,7 @@ namespace Azure.Messaging.EventHubs.Producer
             }
             finally
             {
+                _activeSendOperationsCancellationSource?.Dispose();
                 Logger.BufferedProducerBackgroundProcessingStopComplete(Identifier, EventHubName);
             }
 
@@ -1421,75 +1901,26 @@ namespace Azure.Messaging.EventHubs.Producer
         }
 
         /// <summary>
-        ///   Performs the actions needed to validate that the partition state information for the
-        ///   producer is current, updating the class members if needed.
+        ///   Responsible for invoking <see cref="OnSendSucceededAsync" /> as an background task.
         /// </summary>
         ///
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        /// <param name="events">The set of events belonging to the batch that was successfully published.</param>
+        /// <param name="partitionId">The identifier of the partition that the batch of events was published to.</param>
         ///
-        /// <remarks>
-        ///   This method will read and mutate class-level state for partitions using the
-        ///   shared producer client instance.
-        /// </remarks>
-        ///
-        private async Task EnsurePartitionStateAsync(CancellationToken cancellationToken = default)
-        {
-            var currentPartitions = await _producer.GetPartitionIdsAsync(cancellationToken).ConfigureAwait(false);
-
-            // Assume that if the count of partitions matches the current count, then no updated is needed.
-            // This is safe because partition identifiers are stable and new partitions can be added but
-            // the can never be removed.
-
-            if ((_partitions?.Length ?? 0) != currentPartitions.Length)
-            {
-                // The partitions need to be updated.  Because the two class members tracking partitions
-                // are used for different purposes, it is permissible for them to drift for a short period.
-                // As a result, there's no need to synchronize them.
-
-                var currentHash = new HashSet<string>(currentPartitions);
-
-                _partitions = currentPartitions;
-                _partitionHash = currentHash;
-            }
-        }
+        private Task InvokeOnSendSucceededAsync(IReadOnlyList<EventData> events,
+                                                string partitionId) => Task.Run(() => OnSendSucceededAsync(events, partitionId), CancellationToken.None);
 
         /// <summary>
-        ///   Assigns a partition for a single event using a round-robin approach.
+        ///   Responsible for invoking <see cref="OnSendFailedAsync" /> as an background task.
         /// </summary>
         ///
-        /// <returns>The identifier of the partition assigned.</returns>
+        /// <param name="events">The set of events belonging to the batch that failed to be published.</param>
+        /// <param name="exception">The <see cref="Exception"/> that was raised when the events failed to publish.</param>
+        /// <param name="partitionId">The identifier of the partition that the batch of events was published to.</param>
         ///
-        private string AssignPartition()
-        {
-            // ======================================================================
-            //  NOTE:
-            //    This method is currently just a stub; full functionality will be
-            //    added in a later set of changes.
-            // ======================================================================
-
-            //TODO: Implement AssignPartition
-            return _partitions[0];
-        }
-
-        /// <summary>
-        ///   Assigns a partition for a partition key, using a stable hash calculation.
-        /// </summary>
-        ///
-        /// <param name="partitionKey">The partition key to assign a partition for.</param>
-        ///
-        /// <returns>The identifier of the partition assigned.</returns>
-        ///
-        private string AssignPartitionForPartitionKey(string partitionKey)
-        {
-            // ======================================================================
-            //  NOTE:
-            //    This method is currently just a stub; full functionality will be
-            //    added in a later set of changes.
-            // ======================================================================
-
-            //TODO: Implement AssignPartitionForPartitionKey
-            return partitionKey.Length >= 0 ? _partitions[0] : _partitions[0];
-        }
+        private Task InvokeOnSendFailedAsync(IReadOnlyList<EventData> events,
+                                             Exception exception,
+                                             string partitionId) => Task.Run(() => OnSendFailedAsync(events, exception, partitionId), CancellationToken.None);
 
         /// <summary>
         ///   Performs the tasks needed to manage state for the <see cref="EventHubBufferedProducerClient" /> and
@@ -1498,17 +1929,227 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
         ///
-        private static Task RunProducerManagementAsync(CancellationToken cancellationToken)
+        private async Task RunProducerManagementAsync(CancellationToken cancellationToken)
         {
-            // ======================================================================
-            //  NOTE:
-            //    This method is currently just a stub; full functionality will be
-            //    added in a later set of changes.
-            // ======================================================================
+            while (!cancellationToken.IsCancellationRequested)
+            {
+                Logger.BufferedProducerManagementCycleStart(Identifier, EventHubName);
+                var cycleDuration = ValueStopwatch.StartNew();
 
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            return Task.CompletedTask;
+                try
+                {
+                    // Refresh the partition information.
+
+                    var currentPartitions = await _producer.GetPartitionIdsAsync(cancellationToken).ConfigureAwait(false);
+
+                    // Assume that if the count of partitions matches the current count, then no updated is needed.
+                    // This is safe because partition identifiers are stable and new partitions can be added but
+                    // the can never be removed.
+
+                    if ((_partitions?.Length ?? 0) != currentPartitions.Length)
+                    {
+                        // The partitions need to be updated.  Because the two class members tracking partitions
+                        // are used for different purposes, it is permissible for them to drift for a short time.
+                        // As a result, there's no need to synchronize them.
+
+                        var currentHash = new HashSet<string>(currentPartitions);
+
+                        _partitions = currentPartitions;
+                        _partitionHash = currentHash;
+                    }
+
+                    // Ensure that the publishing task is running.
+
+                    if (_publishingTask == null)
+                    {
+                        _publishingTask = RunPublishingAsync(cancellationToken);
+                        Logger.BufferedProducerPublishingTaskInitialStart(Identifier, EventHubName);
+                    }
+                    else if (_publishingTask.IsCompleted)
+                    {
+                        try
+                        {
+                            await _publishingTask.ConfigureAwait(false);
+                        }
+                        catch (Exception ex) when (ex is not TaskCanceledException)
+                        {
+                            Logger.BufferedProducerPublishingTaskError(Identifier, EventHubName, ex.Message);
+                        }
+
+                        _publishingTask = RunPublishingAsync(cancellationToken);
+                        Logger.BufferedProducerPublishingTaskRestart(Identifier, EventHubName);
+                    }
+                }
+                catch (OperationCanceledException)
+                {
+                    // This is expected; allow the loop to continue and exit normally
+                    // so that the publishing task can be shut down.
+                }
+                catch (Exception ex)
+                {
+                    // Exceptions in the management operations are not critical; log but
+                    // allow the loop to continue.
+
+                    Logger.BufferedProducerManagementTaskError(Identifier, EventHubName, ex.Message);
+                }
+
+                // Determine the delay to apply before the next management cycle; if cancellation
+                // was requested, then do not delay and allow the loop to terminate.
+
+                var remainingTimeUntilNextCycle = BackgroundManagementInterval.CalculateRemaining(cycleDuration.GetElapsedTime());
+                Logger.BufferedProducerManagementCycleComplete(Identifier, EventHubName, _partitions.Length, cycleDuration.GetElapsedTime().TotalSeconds, remainingTimeUntilNextCycle.TotalSeconds);
+
+                if ((!cancellationToken.IsCancellationRequested) && (ShouldWait(remainingTimeUntilNextCycle, TimeSpan.Zero)))
+                {
+                    try
+                    {
+                        await Task.Delay(remainingTimeUntilNextCycle, cancellationToken).ConfigureAwait(false);
+                    }
+                    catch (OperationCanceledException)
+                    {
+                        // Expected; take no action and allow the loop to exit so shutdown
+                        // can continue.
+                    }
+                }
+            }
+
+            // If there was a publishing task, it has the same cancellation token associated.
+            // Wait for it to complete; allow any exceptions to surface.  In the normal case, this
+            // will be a cancellation exception; otherwise, there was an actual error.
+
+            if (_publishingTask != null)
+            {
+                try
+                {
+                    await _publishingTask.ConfigureAwait(false);
+                }
+                catch (Exception ex) when (ex is not TaskCanceledException)
+                {
+                    Logger.BufferedProducerPublishingTaskError(Identifier, EventHubName, ex.Message);
+                    throw;
+                }
+            }
+
+            throw new TaskCanceledException();
         }
+
+        /// <summary>
+        ///   Performs the tasks needed to perform publishing for the <see cref="EventHubBufferedProducerClient" />.
+        /// </summary>
+        ///
+        /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
+        ///
+        private Task RunPublishingAsync(CancellationToken cancellationToken) =>
+            Task.Run(async () =>
+            {
+                var operationId = GenerateOperationId();
+                Logger.BufferedProducerPublishingManagementStart(Identifier, EventHubName, operationId);
+
+                try
+                {
+                    // There should be only one instance of this background publishing task running, so it is safe to assume
+                    // no other publishing operations are active.  Reset the operation cancellation source to ensure that
+                    // any prior cancellation or disposal does not prevent cancelling operations created here.
+
+                    var activeOperationCancellationSource = new CancellationTokenSource();
+                    var existingSource = Interlocked.Exchange(ref _activeSendOperationsCancellationSource, activeOperationCancellationSource);
+                    existingSource?.Dispose();
+
+                    var partitionIndex = 0u;
+                    var partitions = default(string[]);
+                    var activeTasks = new List<Task>(_options.MaximumConcurrentSends);
+
+                    while (!cancellationToken.IsCancellationRequested)
+                    {
+                        // If needed, wait for publishing tasks to complete so there is room.
+
+                        while (activeTasks.Count >= _options.MaximumConcurrentSends)
+                        {
+                            var awaiSingleWatch = ValueStopwatch.StartNew();
+                            Logger.BufferedProducerPublishingAwaitStart(Identifier, EventHubName, activeTasks.Count, operationId);
+
+                            // The publishing task is responsible for managing its own exceptions and will not throw.
+
+                            var finished = await Task.WhenAny(activeTasks).ConfigureAwait(false);
+                            activeTasks.Remove(finished);
+
+                            Logger.BufferedProducerPublishingAwaitComplete(Identifier, EventHubName, activeTasks.Count, operationId, awaiSingleWatch.GetElapsedTime().TotalSeconds);
+                        }
+
+                        // Select a partition to process; because the set of partitions is unstable, capture a local reference to
+                        // avoid potentially creating an invalid index into the array.
+
+                        partitions = _partitions;
+                        var partition = partitions[partitionIndex % partitions.Length];
+
+                        unchecked
+                        {
+                            ++partitionIndex;
+                        }
+
+                        // If the selected partition is not actively being used to enqueue or its semaphore cannot be
+                        // acquired within the time limit, the partition is not available and the loop should iterate
+                        // to consider the next available partition.
+                        //
+                        // There is a benign race condition in checking the buffered event count, resulting in a partition
+                        // that has just had an event enqueued to be skipped for a cycle, but this is permissible to favor
+                        // building dense batches.
+                        //
+                        // The semaphore guard is intentionally acquired as the last clause to ensure that it is only attempted
+                        // if all other conditions are true; this ensures that it does not need to be released if checks fail
+                        // and a batch isn't going to be published for this iteration.
+
+                        if ((!cancellationToken.IsCancellationRequested)
+                            && (_activePartitionStateMap.TryGetValue(partition, out var partitionState))
+                            && (partitionState.BufferedEventCount > 0)
+                            && (partitionState.PartitionGuard.Wait(PartitionPublishingGuardAcquireLimitMilliseconds, cancellationToken)))
+                        {
+                            // Responsibility for releasing the guard semaphore is passed to the task.
+
+                            activeTasks.Add(PublishBatchToPartition(partitionState, releaseGuard: true, activeOperationCancellationSource.Token));
+                        }
+
+                        // If there are no publishing tasks active, introduce a small
+                        // delay to avoid a tight loop.
+
+                        if (activeTasks.Count == 0)
+                        {
+                            try
+                            {
+                                await Task.Delay(DefaultPublishingDelayInterval, cancellationToken).ConfigureAwait(false);
+                            }
+                            catch (OperationCanceledException)
+                            {
+                                // This is expected; allow the loop to exit with no further interaction.
+                            }
+                        }
+                    }
+
+                    // Wait for all of the active publishing tasks to complete; these hold responsibility for
+                    // managing and logging their exceptions and should never throw.  The tasks also will honor
+                    // cancellation internally and should be fully awaited rather than allowing "WhenAll" to cancel.
+
+                    Logger.BufferedProducerPublishingAwaitAllStart(Identifier, EventHubName, activeTasks.Count, operationId);
+
+                    var awaitAllWatch = ValueStopwatch.StartNew();
+                    await Task.WhenAll(activeTasks).ConfigureAwait(false);
+
+                    Logger.BufferedProducerPublishingAwaitAllComplete(Identifier, EventHubName, activeTasks.Count, operationId, awaitAllWatch.GetElapsedTime().TotalSeconds);
+                }
+                catch (Exception ex)
+                {
+                    // The publishing tasks are responsible for managing their own exceptions and should not
+                    // throw.  If we reach this block, then it indicates something is not working as expected
+                    // and this task should fail.
+
+                    Logger.BufferedProducerPublishingManagementError(Identifier, EventHubName, operationId, ex.Message);
+                    throw;
+                }
+                finally
+                {
+                    Logger.BufferedProducerPublishingManagementComplete(Identifier, EventHubName, operationId);
+                }
+            }, cancellationToken);
 
         /// <summary>
         ///   Ensures that no more than a single partition reference is active.
@@ -1523,6 +2164,23 @@ namespace Azure.Messaging.EventHubs.Producer
             if ((!string.IsNullOrEmpty(partitionId)) && (!string.IsNullOrEmpty(partitionKey)))
             {
                 throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.CannotSendWithPartitionIdAndPartitionKey, partitionKey, partitionId));
+            }
+        }
+
+        /// <summary>
+        ///   Ensures that if a partition identifier was specified, it refers to a valid
+        ///   partition for the Event Hub.
+        /// </summary>
+        ///
+        /// <param name="partitionId">The identifier of the partition to which the producer is bound.</param>
+        /// <param name="validPartitions">The set of valid partitions to consider.</param>
+        ///
+        private static void AssertValidPartition(string partitionId,
+                                                 HashSet<string> validPartitions)
+        {
+            if (!validPartitions.Contains(partitionId))
+            {
+                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.CannotSendToUknownPartition, partitionId));
             }
         }
 
@@ -1559,34 +2217,109 @@ namespace Azure.Messaging.EventHubs.Producer
             });
 
         /// <summary>
+        ///   Generates a unique identifier to be used for correlation in a
+        ///   logging scope.
+        /// </summary>
+        ///
+        /// <returns>The identifier that was generated.</returns>
+        ///
+        private static string GenerateOperationId() => Guid.NewGuid().ToString("D", CultureInfo.InvariantCulture);
+
+        /// <summary>
+        ///   Determines if waiting should take place, taking into account <see cref="Timeout.InfiniteTimeSpan" />
+        ///   as an indicator of a desire to always wait.
+        /// </summary>
+        ///
+        /// <param name="waitTime">The desired interval to wait.</param>
+        /// <param name="minimumAllowedWaitTime">The minimum allowed interval for waiting.</param>
+        ///
+        /// <returns><c>true</c> if waiting should be allowed; otherwise, <c>false</c>.</returns>
+        ///
+        private static bool ShouldWait(TimeSpan waitTime,
+                                       TimeSpan minimumAllowedWaitTime) =>
+          ((waitTime == Timeout.InfiniteTimeSpan) || (waitTime > minimumAllowedWaitTime));
+
+        /// <summary>
+        ///   Calculates the amount of delay to apply, ensuring that the remaining time allotted
+        ///   supersedes the delay amount, if not enough time remains for the full delay.
+        /// </summary>
+        /// <param name="remainingTime">The amount of allotted time remaining.</param>
+        /// <param name="delayInterval">The desired delay interval.</param>
+        ///
+        /// <returns>The amount of delay to apply.</returns>
+        ///
+        private static TimeSpan CalculateDelay(TimeSpan remainingTime,
+                                               TimeSpan delayInterval) => ((remainingTime != Timeout.InfiniteTimeSpan) && (remainingTime < delayInterval)) ? remainingTime : delayInterval;
+
+        /// <summary>
         ///   The set of information needed to track and manage the active publishing
         ///   activities for a partition.
         /// </summary>
         ///
-        internal class PartitionPublisher : IDisposable
+        internal sealed class PartitionPublishingState : IDisposable
         {
+            /// <summary>The writer to use for enqueuing events to be published.</summary>
+            public ChannelWriter<EventData> PendingEventsWriter => _pendingEvents.Writer;
+
             /// <summary>The identifier of the partition that is being published.</summary>
             public readonly string PartitionId;
 
-            /// <summary>The events that have been enqueued and are pending publishing.</summary>
-            public readonly Channel<EventData> PendingEvents;
+            /// <summary>The primitive for synchronizing access for publishing to the partition.</summary>
+            public readonly SemaphoreSlim PartitionGuard;
 
             /// <summary>The number of events that are currently buffered and waiting to be published for this partition.</summary>
             public int BufferedEventCount;
 
+            /// <summary>An event that has been stashed to be read as the next available event; this is necessary due to the inability to peek the channel.</summary>
+            private ConcurrentQueue<EventData> _stashedEvents;
+
+            /// <summary>The events that have been enqueued and are pending publishing.</summary>
+            private readonly Channel<EventData> _pendingEvents;
+
             /// <summary>
-            ///   Initializes a new instance of the <see cref="PartitionPublisher"/> class.
+            ///   Initializes a new instance of the <see cref="PartitionPublishingState"/> class.
             /// </summary>
             ///
             /// <param name="partitionId">The identifier of the partition this publisher is associated with.</param>
             /// <param name="options">The options used for creating the buffered producer.</param>
             ///
-            public PartitionPublisher(string partitionId,
-                                      EventHubBufferedProducerClientOptions options)
+            public PartitionPublishingState(string partitionId,
+                                            EventHubBufferedProducerClientOptions options)
             {
                 PartitionId = partitionId;
-                PendingEvents = CreatePendingEventChannel(options.MaximumEventBufferLengthPerPartition);
+                PartitionGuard = new(options.MaximumConcurrentSendsPerPartition, options.MaximumConcurrentSendsPerPartition);
+
+                _pendingEvents = CreatePendingEventChannel(options.MaximumEventBufferLengthPerPartition);
+                _stashedEvents = new();
             }
+
+            /// <summary>
+            ///   Attempts to read an event to be published.
+            /// </summary>
+            ///
+            /// <param name="readEvent">The event, if one was read; otherwise, <c>null</c>.</param>
+            ///
+            /// <returns><c>true</c> if an event was read; otherwise, <c>false</c>.</returns>
+            ///
+            public bool TryReadEvent(out EventData readEvent)
+            {
+                if (_stashedEvents.TryDequeue(out readEvent))
+                {
+                    return true;
+                }
+
+                return _pendingEvents.Reader.TryRead(out readEvent);
+            }
+
+            /// <summary>
+            ///   Stashes an event with priority for the next time a read is requested.  This is
+            ///   intended to both support concurrent publishing for a partition and to work around
+            ///   the lack of "Peek" operation for channels.
+            /// </summary>
+            ///
+            /// <param name="eventData">The event to stash.</param>
+            ///
+            public void StashEvent(EventData eventData) => _stashedEvents.Enqueue(eventData);
 
             /// <summary>
             ///   Performs tasks needed to clean-up the disposable resources used by the publisher.
@@ -1594,7 +2327,8 @@ namespace Azure.Messaging.EventHubs.Producer
             ///
             public void Dispose()
             {
-                PendingEvents.Writer.TryComplete();
+                _pendingEvents.Writer.TryComplete();
+                PartitionGuard.Dispose();
             }
         }
     }

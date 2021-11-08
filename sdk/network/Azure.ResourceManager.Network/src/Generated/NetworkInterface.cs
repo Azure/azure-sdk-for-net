@@ -521,9 +521,9 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a list of NetworkInterfaceTapConfigurations in the NetworkInterface. </summary>
         /// <returns> An object representing collection of NetworkInterfaceTapConfigurations and their operations over a NetworkInterface. </returns>
-        public NetworkInterfaceTapConfigurationContainer GetNetworkInterfaceTapConfigurations()
+        public NetworkInterfaceTapConfigurationCollection GetNetworkInterfaceTapConfigurations()
         {
-            return new NetworkInterfaceTapConfigurationContainer(this);
+            return new NetworkInterfaceTapConfigurationCollection(this);
         }
     }
 }

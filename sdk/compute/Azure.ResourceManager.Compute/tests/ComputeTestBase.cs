@@ -14,8 +14,7 @@ namespace Azure.ResourceManager.Compute.Tests
     {
         protected Location DefaultLocation => Location.WestUS2;
         protected ArmClient Client { get; private set; }
-        protected Subscription DefaultSubscription => Client.DefaultSubscription;
-
+        protected Subscription DefaultSubscription { get; private set; }
         public ComputeTestBase(bool isAsync) : base(isAsync)
         {
         }
@@ -25,9 +24,10 @@ namespace Azure.ResourceManager.Compute.Tests
         }
 
         [SetUp]
-        public void CreateCommonClient()
+        public async Task CreateCommonClient()
         {
             Client = GetArmClient();
+            DefaultSubscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
         }
 
         protected async Task<ResourceGroup> CreateResourceGroupAsync()

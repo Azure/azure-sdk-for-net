@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.Language.Conversations.Models;
 using Azure.Core;
 
 namespace Azure.AI.Language.Conversations
@@ -27,6 +26,6 @@ namespace Azure.AI.Language.Conversations
         /// <summary> If true, the query will be kept by the service for customers to further review, to improve the model quality. </summary>
         public bool? IsLoggingEnabled { get; set; }
         /// <summary> A dictionary representing the input for each target project. </summary>
-        public IDictionary<string, AnalyzeParameters> Parameters { get; }
+        public IDictionary<string, AnalysisParameters> Parameters { get; }
     }
 }

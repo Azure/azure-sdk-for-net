@@ -62,7 +62,7 @@ namespace Azure.Verticals.AgriFood.Farming
 
         /// <summary> Get weather ingestion job. </summary>
         /// <param name="jobId"> ID of the job. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -105,7 +105,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetDataIngestionJobDetailsAsync(string jobId, RequestOptions options)
+        public virtual async Task<Response> GetDataIngestionJobDetailsAsync(string jobId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetDataIngestionJobDetails");
@@ -113,7 +113,7 @@ namespace Azure.Verticals.AgriFood.Farming
             try
             {
                 using HttpMessage message = CreateGetDataIngestionJobDetailsRequest(jobId);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -124,7 +124,7 @@ namespace Azure.Verticals.AgriFood.Farming
 
         /// <summary> Get weather ingestion job. </summary>
         /// <param name="jobId"> ID of the job. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -167,7 +167,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetDataIngestionJobDetails(string jobId, RequestOptions options)
+        public virtual Response GetDataIngestionJobDetails(string jobId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetDataIngestionJobDetails");
@@ -175,7 +175,7 @@ namespace Azure.Verticals.AgriFood.Farming
             try
             {
                 using HttpMessage message = CreateGetDataIngestionJobDetailsRequest(jobId);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -186,7 +186,7 @@ namespace Azure.Verticals.AgriFood.Farming
 
         /// <summary> Get weather data delete job. </summary>
         /// <param name="jobId"> ID of the job. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -229,7 +229,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetDataDeleteJobDetailsAsync(string jobId, RequestOptions options)
+        public virtual async Task<Response> GetDataDeleteJobDetailsAsync(string jobId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetDataDeleteJobDetails");
@@ -237,7 +237,7 @@ namespace Azure.Verticals.AgriFood.Farming
             try
             {
                 using HttpMessage message = CreateGetDataDeleteJobDetailsRequest(jobId);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -248,7 +248,7 @@ namespace Azure.Verticals.AgriFood.Farming
 
         /// <summary> Get weather data delete job. </summary>
         /// <param name="jobId"> ID of the job. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -291,7 +291,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetDataDeleteJobDetails(string jobId, RequestOptions options)
+        public virtual Response GetDataDeleteJobDetails(string jobId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetDataDeleteJobDetails");
@@ -299,7 +299,7 @@ namespace Azure.Verticals.AgriFood.Farming
             try
             {
                 using HttpMessage message = CreateGetDataDeleteJobDetailsRequest(jobId);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -314,7 +314,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="extensionId"> ID of the weather extension. </param>
         /// <param name="weatherDataType"> Type of weather data (forecast/historical). </param>
         /// <param name="granularity"> Granularity of weather data (daily/hourly). </param>
-        /// <param name="options"> The request options. </param>
         /// <param name="startDateTime"> Weather data start UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
         /// <param name="endDateTime"> Weather data end UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
         /// <param name="maxPageSize">
@@ -322,6 +321,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/>, <paramref name="boundaryId"/>, <paramref name="extensionId"/>, <paramref name="weatherDataType"/>, or <paramref name="granularity"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -387,7 +387,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual AsyncPageable<BinaryData> ListAsync(string farmerId, string boundaryId, string extensionId, string weatherDataType, string granularity, RequestOptions options, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, int? maxPageSize = null, string skipToken = null)
+        public virtual AsyncPageable<BinaryData> GetWeathersAsync(string farmerId, string boundaryId, string extensionId, string weatherDataType, string granularity, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             if (farmerId == null)
@@ -411,15 +411,15 @@ namespace Azure.Verticals.AgriFood.Farming
                 throw new ArgumentNullException(nameof(granularity));
             }
 
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "WeatherClient.List");
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "WeatherClient.GetWeathers");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateListRequest(farmerId, boundaryId, extensionId, weatherDataType, granularity, startDateTime, endDateTime, maxPageSize, skipToken)
-                        : CreateListNextPageRequest(nextLink, farmerId, boundaryId, extensionId, weatherDataType, granularity, startDateTime, endDateTime, maxPageSize, skipToken);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, options, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                        ? CreateGetWeathersRequest(farmerId, boundaryId, extensionId, weatherDataType, granularity, startDateTime, endDateTime, maxPageSize, skipToken)
+                        : CreateGetWeathersNextPageRequest(nextLink, farmerId, boundaryId, extensionId, weatherDataType, granularity, startDateTime, endDateTime, maxPageSize, skipToken);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -432,7 +432,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="extensionId"> ID of the weather extension. </param>
         /// <param name="weatherDataType"> Type of weather data (forecast/historical). </param>
         /// <param name="granularity"> Granularity of weather data (daily/hourly). </param>
-        /// <param name="options"> The request options. </param>
         /// <param name="startDateTime"> Weather data start UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
         /// <param name="endDateTime"> Weather data end UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
         /// <param name="maxPageSize">
@@ -440,6 +439,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/>, <paramref name="boundaryId"/>, <paramref name="extensionId"/>, <paramref name="weatherDataType"/>, or <paramref name="granularity"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -505,7 +505,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Pageable<BinaryData> List(string farmerId, string boundaryId, string extensionId, string weatherDataType, string granularity, RequestOptions options, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, int? maxPageSize = null, string skipToken = null)
+        public virtual Pageable<BinaryData> GetWeathers(string farmerId, string boundaryId, string extensionId, string weatherDataType, string granularity, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             if (farmerId == null)
@@ -529,15 +529,15 @@ namespace Azure.Verticals.AgriFood.Farming
                 throw new ArgumentNullException(nameof(granularity));
             }
 
-            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "WeatherClient.List");
+            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "WeatherClient.GetWeathers");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateListRequest(farmerId, boundaryId, extensionId, weatherDataType, granularity, startDateTime, endDateTime, maxPageSize, skipToken)
-                        : CreateListNextPageRequest(nextLink, farmerId, boundaryId, extensionId, weatherDataType, granularity, startDateTime, endDateTime, maxPageSize, skipToken);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, options, "value", "nextLink");
+                        ? CreateGetWeathersRequest(farmerId, boundaryId, extensionId, weatherDataType, granularity, startDateTime, endDateTime, maxPageSize, skipToken)
+                        : CreateGetWeathersNextPageRequest(nextLink, farmerId, boundaryId, extensionId, weatherDataType, granularity, startDateTime, endDateTime, maxPageSize, skipToken);
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -547,7 +547,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Create a weather data ingestion job. </summary>
         /// <param name="jobId"> Job id supplied by user. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -612,7 +612,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Operation<BinaryData>> CreateDataIngestionJobAsync(string jobId, RequestContent content, RequestOptions options = null)
+        public virtual async Task<Operation<BinaryData>> CreateDataIngestionJobAsync(string jobId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.CreateDataIngestionJob");
@@ -620,7 +620,7 @@ namespace Azure.Verticals.AgriFood.Farming
             try
             {
                 using HttpMessage message = CreateCreateDataIngestionJobRequest(jobId, content);
-                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, "WeatherClient.CreateDataIngestionJob", OperationFinalStateVia.Location, options).ConfigureAwait(false);
+                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, "WeatherClient.CreateDataIngestionJob", OperationFinalStateVia.Location, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -632,7 +632,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Create a weather data ingestion job. </summary>
         /// <param name="jobId"> Job id supplied by user. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -697,7 +697,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Operation<BinaryData> CreateDataIngestionJob(string jobId, RequestContent content, RequestOptions options = null)
+        public virtual Operation<BinaryData> CreateDataIngestionJob(string jobId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.CreateDataIngestionJob");
@@ -705,7 +705,7 @@ namespace Azure.Verticals.AgriFood.Farming
             try
             {
                 using HttpMessage message = CreateCreateDataIngestionJobRequest(jobId, content);
-                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, "WeatherClient.CreateDataIngestionJob", OperationFinalStateVia.Location, options);
+                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, "WeatherClient.CreateDataIngestionJob", OperationFinalStateVia.Location, context);
             }
             catch (Exception e)
             {
@@ -717,7 +717,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Create a weather data delete job. </summary>
         /// <param name="jobId"> Job ID supplied by end user. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -782,7 +782,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Operation<BinaryData>> CreateDataDeleteJobAsync(string jobId, RequestContent content, RequestOptions options = null)
+        public virtual async Task<Operation<BinaryData>> CreateDataDeleteJobAsync(string jobId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.CreateDataDeleteJob");
@@ -790,7 +790,7 @@ namespace Azure.Verticals.AgriFood.Farming
             try
             {
                 using HttpMessage message = CreateCreateDataDeleteJobRequest(jobId, content);
-                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, "WeatherClient.CreateDataDeleteJob", OperationFinalStateVia.Location, options).ConfigureAwait(false);
+                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, "WeatherClient.CreateDataDeleteJob", OperationFinalStateVia.Location, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -802,7 +802,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Create a weather data delete job. </summary>
         /// <param name="jobId"> Job ID supplied by end user. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -867,7 +867,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Operation<BinaryData> CreateDataDeleteJob(string jobId, RequestContent content, RequestOptions options = null)
+        public virtual Operation<BinaryData> CreateDataDeleteJob(string jobId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.CreateDataDeleteJob");
@@ -875,7 +875,7 @@ namespace Azure.Verticals.AgriFood.Farming
             try
             {
                 using HttpMessage message = CreateCreateDataDeleteJobRequest(jobId, content);
-                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, "WeatherClient.CreateDataDeleteJob", OperationFinalStateVia.Location, options);
+                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, "WeatherClient.CreateDataDeleteJob", OperationFinalStateVia.Location, context);
             }
             catch (Exception e)
             {
@@ -884,7 +884,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        internal HttpMessage CreateListRequest(string farmerId, string boundaryId, string extensionId, string weatherDataType, string granularity, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, int? maxPageSize, string skipToken)
+        internal HttpMessage CreateGetWeathersRequest(string farmerId, string boundaryId, string extensionId, string weatherDataType, string granularity, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, int? maxPageSize, string skipToken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -988,7 +988,7 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string farmerId, string boundaryId, string extensionId, string weatherDataType, string granularity, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, int? maxPageSize, string skipToken)
+        internal HttpMessage CreateGetWeathersNextPageRequest(string nextLink, string farmerId, string boundaryId, string extensionId, string weatherDataType, string granularity, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, int? maxPageSize, string skipToken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;

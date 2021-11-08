@@ -3,26 +3,29 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.Storage.Test.Shared;
 
 namespace Azure.Storage.Files.DataLake.Tests
 {
-    public class DisposingFileSystem : IAsyncDisposable
+    public class DisposingFileSystem : IDisposingContainer<DataLakeFileSystemClient>
     {
-        public DataLakeFileSystemClient FileSystem;
+        public DataLakeFileSystemClient FileSystem => Container;
+
+        public DataLakeFileSystemClient Container { get; private set; }
 
         public DisposingFileSystem(DataLakeFileSystemClient fileSystem)
         {
-            FileSystem = fileSystem;
+            Container = fileSystem;
         }
 
         public async ValueTask DisposeAsync()
         {
-            if (FileSystem != null)
+            if (Container != null)
             {
                 try
                 {
-                    await FileSystem.DeleteIfExistsAsync();
-                    FileSystem = null;
+                    await Container.DeleteIfExistsAsync();
+                    Container = null;
                 }
                 catch
                 {

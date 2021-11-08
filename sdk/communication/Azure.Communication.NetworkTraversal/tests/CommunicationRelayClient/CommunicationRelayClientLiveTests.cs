@@ -58,5 +58,35 @@ namespace Azure.Communication.NetworkTraversal.Tests
                 Assert.IsFalse(string.IsNullOrWhiteSpace(serverCredential.Credential));
             }
         }
+
+        [Test]
+        [TestCase(AuthMethod.ConnectionString, TestName = "GettingTurnCredentialsWithConnectionStringWithoutIdentity")]
+        [TestCase(AuthMethod.KeyCredential, TestName = "GettingTurnCredentialsWithKeyCredentialWithoutIdentity")]
+        [TestCase(AuthMethod.TokenCredential, TestName = "GettingTurnCredentialsWithTokenCredentialWithoutIdentity")]
+        public async Task GettingTurnCredentialsGeneratesTurnCredentialsWithoutIdentity(AuthMethod authMethod, params string[] scopes)
+        {
+            CommunicationRelayClient client = authMethod switch
+            {
+                AuthMethod.ConnectionString => CreateClientWithConnectionString(),
+                AuthMethod.KeyCredential => CreateClientWithAzureKeyCredential(),
+                AuthMethod.TokenCredential => CreateClientWithTokenCredential(),
+                _ => throw new ArgumentOutOfRangeException(nameof(authMethod)),
+            };
+
+            Response<CommunicationRelayConfiguration> turnCredentialsResponse = await client.GetRelayConfigurationAsync();
+
+            Assert.IsNotNull(turnCredentialsResponse.Value);
+            Assert.IsNotNull(turnCredentialsResponse.Value.ExpiresOn);
+            Assert.IsNotNull(turnCredentialsResponse.Value.IceServers);
+            foreach (CommunicationIceServer serverCredential in turnCredentialsResponse.Value.IceServers)
+            {
+                foreach (string url in serverCredential.Urls)
+                {
+                    Assert.IsFalse(string.IsNullOrWhiteSpace(url));
+                }
+                Assert.IsFalse(string.IsNullOrWhiteSpace(serverCredential.Username));
+                Assert.IsFalse(string.IsNullOrWhiteSpace(serverCredential.Credential));
+            }
+        }
     }
 }

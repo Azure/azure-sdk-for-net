@@ -19,6 +19,11 @@ namespace Azure.Storage.Test.Shared
         private const string CopySourceAuthorization = "x-ms-copy-source-authorization";
         private const string PreviousSnapshotUrl = "x-ms-previous-snapshot-url";
 
+        public StorageRecordedTestSanitizer()
+        {
+            SanitizedHeaders.Add("x-ms-encryption-key");
+        }
+
         public override string SanitizeUri(string uri)
         {
             var builder = new UriBuilder(base.SanitizeUri(uri));

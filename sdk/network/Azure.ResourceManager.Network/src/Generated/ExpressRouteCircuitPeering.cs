@@ -301,9 +301,9 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a list of ExpressRouteCircuitConnections in the ExpressRouteCircuitPeering. </summary>
         /// <returns> An object representing collection of ExpressRouteCircuitConnections and their operations over a ExpressRouteCircuitPeering. </returns>
-        public ExpressRouteCircuitConnectionContainer GetExpressRouteCircuitConnections()
+        public ExpressRouteCircuitConnectionCollection GetExpressRouteCircuitConnections()
         {
-            return new ExpressRouteCircuitConnectionContainer(this);
+            return new ExpressRouteCircuitConnectionCollection(this);
         }
     }
 }

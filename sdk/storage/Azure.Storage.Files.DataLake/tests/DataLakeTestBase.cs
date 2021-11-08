@@ -27,6 +27,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         DataLakeClientOptions.ServiceVersion.V2020_08_04,
         DataLakeClientOptions.ServiceVersion.V2020_10_02,
         DataLakeClientOptions.ServiceVersion.V2020_12_06,
+        DataLakeClientOptions.ServiceVersion.V2021_02_12,
         StorageVersionExtensions.LatestVersion,
         StorageVersionExtensions.MaxVersion,
         RecordingServiceVersion = StorageVersionExtensions.MaxVersion,
@@ -62,14 +63,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             : base(async, mode)
         {
             _serviceVersion = serviceVersion;
-            DataLakeClientBuilder = new ClientBuilder<DataLakeServiceClient, DataLakeClientOptions>(
-                ServiceEndpoint.Blob,
-                Tenants,
-                (uri, clientOptions) => new DataLakeServiceClient(uri, clientOptions),
-                (uri, sharedKeyCredential, clientOptions) => new DataLakeServiceClient(uri, sharedKeyCredential, clientOptions),
-                (uri, tokenCredential, clientOptions) => new DataLakeServiceClient(uri, tokenCredential, clientOptions),
-                (uri, azureSasCredential, clientOptions) => new DataLakeServiceClient(uri, azureSasCredential, clientOptions),
-                () => new DataLakeClientOptions(_serviceVersion));
+            DataLakeClientBuilder = ClientBuilderExtensions.GetNewDataLakeClientBuilder(Tenants, _serviceVersion);
         }
 
         public TenantConfiguration TestConfigHierarchicalNamespace
@@ -333,7 +327,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             if (match == ReceivedETag)
             {
                 Response<PathProperties> headers = await path.GetPropertiesAsync();
-                return headers.Value.ETag.ToString();
+                return headers.GetRawResponse().Headers.ETag.ToString();
             }
             else
             {

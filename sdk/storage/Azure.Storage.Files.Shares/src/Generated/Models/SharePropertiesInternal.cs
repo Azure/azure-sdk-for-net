@@ -36,6 +36,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <param name="provisionedIops"></param>
         /// <param name="provisionedIngressMBps"></param>
         /// <param name="provisionedEgressMBps"></param>
+        /// <param name="provisionedBandwidthMiBps"></param>
         /// <param name="nextAllowedQuotaDowngradeTime"></param>
         /// <param name="deletedTime"></param>
         /// <param name="remainingRetentionDays"></param>
@@ -47,7 +48,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <param name="leaseDuration"> When a share is leased, specifies whether the lease is of infinite or fixed duration. </param>
         /// <param name="enabledProtocols"></param>
         /// <param name="rootSquash"></param>
-        internal SharePropertiesInternal(DateTimeOffset lastModified, string etag, int quota, int? provisionedIops, int? provisionedIngressMBps, int? provisionedEgressMBps, DateTimeOffset? nextAllowedQuotaDowngradeTime, DateTimeOffset? deletedTime, int? remainingRetentionDays, string accessTier, DateTimeOffset? accessTierChangeTime, string accessTierTransitionState, ShareLeaseStatus? leaseStatus, ShareLeaseState? leaseState, ShareLeaseDuration? leaseDuration, string enabledProtocols, ShareRootSquash? rootSquash)
+        internal SharePropertiesInternal(DateTimeOffset lastModified, string etag, int quota, int? provisionedIops, int? provisionedIngressMBps, int? provisionedEgressMBps, int? provisionedBandwidthMiBps, DateTimeOffset? nextAllowedQuotaDowngradeTime, DateTimeOffset? deletedTime, int? remainingRetentionDays, string accessTier, DateTimeOffset? accessTierChangeTime, string accessTierTransitionState, ShareLeaseStatus? leaseStatus, ShareLeaseState? leaseState, ShareLeaseDuration? leaseDuration, string enabledProtocols, ShareRootSquash? rootSquash)
         {
             LastModified = lastModified;
             Etag = etag;
@@ -55,6 +56,7 @@ namespace Azure.Storage.Files.Shares.Models
             ProvisionedIops = provisionedIops;
             ProvisionedIngressMBps = provisionedIngressMBps;
             ProvisionedEgressMBps = provisionedEgressMBps;
+            ProvisionedBandwidthMiBps = provisionedBandwidthMiBps;
             NextAllowedQuotaDowngradeTime = nextAllowedQuotaDowngradeTime;
             DeletedTime = deletedTime;
             RemainingRetentionDays = remainingRetentionDays;
@@ -80,6 +82,8 @@ namespace Azure.Storage.Files.Shares.Models
         public int? ProvisionedIngressMBps { get; }
         /// <summary> Gets the provisioned egress m bps. </summary>
         public int? ProvisionedEgressMBps { get; }
+        /// <summary> Gets the provisioned bandwidth mi bps. </summary>
+        public int? ProvisionedBandwidthMiBps { get; }
         /// <summary> Gets the next allowed quota downgrade time. </summary>
         public DateTimeOffset? NextAllowedQuotaDowngradeTime { get; }
         /// <summary> Gets the deleted time. </summary>

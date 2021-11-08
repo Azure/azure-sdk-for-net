@@ -14,7 +14,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
         private SchemaRegistryClient client;
 #pragma warning restore IDE1006 // Naming Styles
         private SchemaProperties _schemaProperties;
-        private string _content;
+        private string _definition;
 
         [OneTimeSetUp]
         public void CreateSchemaRegistryClient()
@@ -40,8 +40,8 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
             #region Snippet:SchemaRegistryRegisterSchema
             string name = "employeeSample";
             SchemaFormat format = SchemaFormat.Avro;
-            // Example schema's content
-            string content = @"
+            // Example schema's definition
+            string definition = @"
             {
                ""type"" : ""record"",
                 ""namespace"" : ""TestSchema"",
@@ -52,12 +52,12 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
                 ]
             }";
 
-            Response<SchemaProperties> schemaProperties = client.RegisterSchema(groupName, name, content, format);
+            Response<SchemaProperties> schemaProperties = client.RegisterSchema(groupName, name, definition, format);
             #endregion
 
             Assert.NotNull(schemaProperties);
             _schemaProperties = schemaProperties.Value;
-            _content = content;
+            _definition = definition;
         }
 
         [Test]
@@ -96,10 +96,10 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
 
             #region Snippet:SchemaRegistryRetrieveSchema
             SchemaRegistrySchema schema = client.GetSchema(schemaId);
-            string content = schema.Content;
+            string definition = schema.Definition;
             #endregion
 
-            Assert.AreEqual(Regex.Replace(_content, @"\s+", string.Empty), content);
+            Assert.AreEqual(Regex.Replace(_definition, @"\s+", string.Empty), definition);
         }
     }
 }

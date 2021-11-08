@@ -13,14 +13,14 @@ namespace Azure.Messaging.WebPubSub
     /// Azure Web PubSub Service Client.
     /// </summary>
     [CodeGenSuppress("WebPubSubServiceClient", typeof(string), typeof(Uri), typeof(WebPubSubServiceClientOptions))]
-    [CodeGenSuppress("SendToAll", typeof(RequestContent), typeof(IEnumerable<string>), typeof(RequestOptions))]
-    [CodeGenSuppress("SendToAllAsync", typeof(RequestContent), typeof(IEnumerable<string>), typeof(RequestOptions))]
-    [CodeGenSuppress("SendToConnection", typeof(string), typeof(RequestContent), typeof(RequestOptions))]
-    [CodeGenSuppress("SendToConnectionAsync", typeof(string), typeof(RequestContent), typeof(RequestOptions))]
-    [CodeGenSuppress("SendToGroup", typeof(string), typeof(RequestContent), typeof(IEnumerable<string>), typeof(RequestOptions))]
-    [CodeGenSuppress("SendToGroupAsync", typeof(string),  typeof(RequestContent), typeof(IEnumerable<string>), typeof(RequestOptions))]
-    [CodeGenSuppress("SendToUser", typeof(string), typeof(RequestContent), typeof(RequestOptions))]
-    [CodeGenSuppress("SendToUserAsync", typeof(string), typeof(RequestContent), typeof(RequestOptions))]
+    [CodeGenSuppress("SendToAll", typeof(RequestContent), typeof(IEnumerable<string>), typeof(RequestContext))]
+    [CodeGenSuppress("SendToAllAsync", typeof(RequestContent), typeof(IEnumerable<string>), typeof(RequestContext))]
+    [CodeGenSuppress("SendToConnection", typeof(string), typeof(RequestContent), typeof(RequestContext))]
+    [CodeGenSuppress("SendToConnectionAsync", typeof(string), typeof(RequestContent), typeof(RequestContext))]
+    [CodeGenSuppress("SendToGroup", typeof(string), typeof(RequestContent), typeof(IEnumerable<string>), typeof(RequestContext))]
+    [CodeGenSuppress("SendToGroupAsync", typeof(string),  typeof(RequestContent), typeof(IEnumerable<string>), typeof(RequestContext))]
+    [CodeGenSuppress("SendToUser", typeof(string), typeof(RequestContent), typeof(RequestContext))]
+    [CodeGenSuppress("SendToUserAsync", typeof(string), typeof(RequestContent), typeof(RequestContext))]
     public partial class WebPubSubServiceClient
     {
         private AzureKeyCredential _credential;
@@ -34,7 +34,7 @@ namespace Azure.Messaging.WebPubSub
         /// <summary>
         /// The service endpoint.
         /// </summary>
-        public virtual Uri Endpoint => _endpoint;
+        public virtual Uri Endpoint { get; }
 
         /// <summary> Initializes a new instance of WebPubSubServiceClient. </summary>
         /// <param name="endpoint"> server parameter. </param>
@@ -150,7 +150,8 @@ namespace Azure.Messaging.WebPubSub
             Argument.AssertNotNull(hub, nameof(hub));
 
             _hub = hub;
-            _endpoint = endpoint;
+            _endpoint = endpoint.AbsoluteUri;
+            Endpoint = endpoint;
 
             options ??= new WebPubSubServiceClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
@@ -167,7 +168,7 @@ namespace Azure.Messaging.WebPubSub
 
             if (contentType == default) contentType = ContentType.TextPlain;
 
-            return await SendToAllAsync(RequestContent.Create(content), contentType.ToString(), default, options: default).ConfigureAwait(false);
+            return await SendToAllAsync(RequestContent.Create(content), contentType.ToString(), default, context: default).ConfigureAwait(false);
         }
 
         /// <summary>Broadcast message to all the connected client connections.</summary>
@@ -180,7 +181,7 @@ namespace Azure.Messaging.WebPubSub
 
             if (contentType == default) contentType = ContentType.TextPlain;
 
-            return SendToAll(RequestContent.Create(content), contentType, excluded: default, options: default);
+            return SendToAll(RequestContent.Create(content), contentType, excluded: default, context: default);
         }
 
         /// <summary>
@@ -197,7 +198,7 @@ namespace Azure.Messaging.WebPubSub
 
             if (contentType == default) contentType = ContentType.TextPlain;
 
-            return await SendToUserAsync(userId, RequestContent.Create(content), contentType, options: default).ConfigureAwait(false);
+            return await SendToUserAsync(userId, RequestContent.Create(content), contentType, context: default).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -214,7 +215,7 @@ namespace Azure.Messaging.WebPubSub
 
             if (contentType == default) contentType = ContentType.TextPlain;
 
-            return SendToUser(userId, RequestContent.Create(content), contentType, options: default);
+            return SendToUser(userId, RequestContent.Create(content), contentType, context: default);
         }
 
         /// <summary>
@@ -231,7 +232,7 @@ namespace Azure.Messaging.WebPubSub
 
             if (contentType == default) contentType = ContentType.TextPlain;
 
-            return await SendToConnectionAsync(connectionId, RequestContent.Create(content), contentType, options: default).ConfigureAwait(false);
+            return await SendToConnectionAsync(connectionId, RequestContent.Create(content), contentType, context: default).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -248,7 +249,7 @@ namespace Azure.Messaging.WebPubSub
 
             if (contentType == default) contentType = ContentType.TextPlain;
 
-            return SendToConnection(connectionId, RequestContent.Create(content), contentType, options: default);
+            return SendToConnection(connectionId, RequestContent.Create(content), contentType, context: default);
         }
 
         /// <summary>
@@ -265,7 +266,7 @@ namespace Azure.Messaging.WebPubSub
 
             if (contentType == default) contentType = ContentType.TextPlain;
 
-            return await SendToGroupAsync(group, RequestContent.Create(content), contentType, excluded : default, options: default).ConfigureAwait(false);
+            return await SendToGroupAsync(group, RequestContent.Create(content), contentType, excluded : default, context: default).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -282,60 +283,60 @@ namespace Azure.Messaging.WebPubSub
 
             if (contentType == default) contentType = ContentType.TextPlain;
 
-            return SendToGroup(group, RequestContent.Create(content), contentType, excluded: default, options: default);
+            return SendToGroup(group, RequestContent.Create(content), contentType, excluded: default, context: default);
         }
 
         /// <summary> Check if there are any client connections inside the given group. </summary>
         /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
-        /// <param name="options">Options specifying the cancellation token, controlling error reporting, etc.</param>
-        public virtual async Task<Response<bool>> GroupExistsAsync(string group, RequestOptions options = default)
+        /// <param name="context">Options specifying the cancellation token, controlling error reporting, etc.</param>
+        public virtual async Task<Response<bool>> GroupExistsAsync(string group, RequestContext context = default)
         {
-            var response = await GroupExistsImplAsync(group, options).ConfigureAwait(false);
+            var response = await GroupExistsImplAsync(group, context).ConfigureAwait(false);
             return Response.FromValue(response.Status == 200, response);
         }
 
         /// <summary> Check if there are any client connections inside the given group. </summary>
         /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
-        /// <param name="options">Options specifying the cancellation token, controlling error reporting, etc.</param>
-        public virtual Response<bool> GroupExists(string group, RequestOptions options = default)
+        /// <param name="context">Options specifying the cancellation token, controlling error reporting, etc.</param>
+        public virtual Response<bool> GroupExists(string group, RequestContext context = default)
         {
-            var response = GroupExistsImpl(group, options);
+            var response = GroupExistsImpl(group, context);
             return Response.FromValue(response.Status == 200, response);
         }
 
         /// <summary> Check if there are any client connections connected for the given user. </summary>
         /// <param name="userId"> Target user Id. </param>
-        /// <param name="options">Options specifying the cancellation token, controlling error reporting, etc.</param>
-        public virtual async Task<Response<bool>> UserExistsAsync(string userId, RequestOptions options = default)
+        /// <param name="context">Options specifying the cancellation token, controlling error reporting, etc.</param>
+        public virtual async Task<Response<bool>> UserExistsAsync(string userId, RequestContext context = default)
         {
-            var response = await UserExistsImplAsync(userId, options).ConfigureAwait(false);
+            var response = await UserExistsImplAsync(userId, context).ConfigureAwait(false);
             return Response.FromValue(response.Status == 200, response);
         }
 
         /// <summary> Check if there are any client connections connected for the given user. </summary>
         /// <param name="userId"> Target user Id. </param>
-        /// <param name="options">Options specifying the cancellation token, controlling error reporting, etc.</param>
-        public virtual Response<bool> UserExists(string userId, RequestOptions options = default)
+        /// <param name="context">Options specifying the cancellation token, controlling error reporting, etc.</param>
+        public virtual Response<bool> UserExists(string userId, RequestContext context = default)
         {
-            var response = UserExistsImpl(userId, options);
+            var response = UserExistsImpl(userId, context);
             return Response.FromValue(response.Status == 200, response);
         }
 
         /// <summary> Check if the connection with the given connectionId exists. </summary>
         /// <param name="connectionId"> The connection Id. </param>
-        /// <param name="options">Options specifying the cancellation token, controlling error reporting, etc.</param>
-        public virtual async Task<Response<bool>> ConnectionExistsAsync(string connectionId, RequestOptions options = default)
+        /// <param name="context">Options specifying the cancellation token, controlling error reporting, etc.</param>
+        public virtual async Task<Response<bool>> ConnectionExistsAsync(string connectionId, RequestContext context = default)
         {
-            var response = await ConnectionExistsImplAsync(connectionId, options).ConfigureAwait(false);
+            var response = await ConnectionExistsImplAsync(connectionId, context).ConfigureAwait(false);
             return Response.FromValue(response.Status == 200, response);
         }
 
         /// <summary> Check if the connection with the given connectionId exists. </summary>
         /// <param name="connectionId"> The connection Id. </param>
-        /// <param name="options">Options specifying the cancellation token, controlling error reporting, etc.</param>
-        public virtual Response<bool> ConnectionExists(string connectionId, RequestOptions options = default)
+        /// <param name="context">Options specifying the cancellation token, controlling error reporting, etc.</param>
+        public virtual Response<bool> ConnectionExists(string connectionId, RequestContext context = default)
         {
-            var response = ConnectionExistsImpl(connectionId, options);
+            var response = ConnectionExistsImpl(connectionId, context);
             return Response.FromValue(response.Status == 200, response);
         }
 
@@ -343,10 +344,10 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="permission"> The permission: current supported actions are joinLeaveGroup and sendToGroup. </param>
         /// <param name="connectionId"> Target connection Id. </param>
         /// <param name="targetName"> Optional. If not set, grant the permission to all the targets. If set, grant the permission to the specific target. The meaning of the target depends on the specific permission. </param>
-        /// <param name="options">Options specifying the cancellation token, controlling error reporting, etc.</param>
-        public virtual async Task<Response> GrantPermissionAsync(WebPubSubPermission permission, string connectionId, string targetName = null, RequestOptions options = default)
+        /// <param name="context">Options specifying the cancellation token, controlling error reporting, etc.</param>
+        public virtual async Task<Response> GrantPermissionAsync(WebPubSubPermission permission, string connectionId, string targetName = null, RequestContext context = default)
         {
-            var response = await GrantPermissionAsync(PermissionToString(permission), connectionId, targetName, options).ConfigureAwait(false);
+            var response = await GrantPermissionAsync(PermissionToString(permission), connectionId, targetName, context).ConfigureAwait(false);
             return response;
         }
 
@@ -354,10 +355,10 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="permission"> The permission: current supported actions are joinLeaveGroup and sendToGroup. </param>
         /// <param name="connectionId"> Target connection Id. </param>
         /// <param name="targetName"> Optional. If not set, grant the permission to all the targets. If set, grant the permission to the specific target. The meaning of the target depends on the specific permission. </param>
-        /// <param name="options">Options specifying the cancellation token, controlling error reporting, etc.</param>
-        public virtual Response GrantPermission(WebPubSubPermission permission, string connectionId, string targetName = null, RequestOptions options = default)
+        /// <param name="context">Options specifying the cancellation token, controlling error reporting, etc.</param>
+        public virtual Response GrantPermission(WebPubSubPermission permission, string connectionId, string targetName = null, RequestContext context = default)
         {
-            var response = GrantPermission(PermissionToString(permission), connectionId, targetName, options);
+            var response = GrantPermission(PermissionToString(permission), connectionId, targetName, context);
             return response;
         }
 
@@ -365,10 +366,10 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="permission"> The permission: current supported actions are joinLeaveGroup and sendToGroup. </param>
         /// <param name="connectionId"> Target connection Id. </param>
         /// <param name="targetName"> Optional. If not set, revoke the permission for all targets. If set, revoke the permission for the specific target. The meaning of the target depends on the specific permission. </param>
-        /// <param name="options">Options specifying the cancellation token, controlling error reporting, etc.</param>
-        public virtual async Task<Response> RevokePermissionAsync(WebPubSubPermission permission, string connectionId, string targetName = null, RequestOptions options = default)
+        /// <param name="context">Options specifying the cancellation token, controlling error reporting, etc.</param>
+        public virtual async Task<Response> RevokePermissionAsync(WebPubSubPermission permission, string connectionId, string targetName = null, RequestContext context = default)
         {
-            var response = await RevokePermissionAsync(PermissionToString(permission), connectionId, targetName, options).ConfigureAwait(false);
+            var response = await RevokePermissionAsync(PermissionToString(permission), connectionId, targetName, context).ConfigureAwait(false);
             return response;
         }
 
@@ -376,10 +377,10 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="permission"> The permission: current supported actions are joinLeaveGroup and sendToGroup. </param>
         /// <param name="connectionId"> Target connection Id. </param>
         /// <param name="targetName"> Optional. If not set, revoke the permission for all targets. If set, revoke the permission for the specific target. The meaning of the target depends on the specific permission. </param>
-        /// <param name="options">Options specifying the cancellation token, controlling error reporting, etc.</param>
-        public virtual Response RevokePermission(WebPubSubPermission permission, string connectionId, string targetName = null, RequestOptions options = default)
+        /// <param name="context">Options specifying the cancellation token, controlling error reporting, etc.</param>
+        public virtual Response RevokePermission(WebPubSubPermission permission, string connectionId, string targetName = null, RequestContext context = default)
         {
-            var response = RevokePermission(PermissionToString(permission), connectionId, targetName, options);
+            var response = RevokePermission(PermissionToString(permission), connectionId, targetName, context);
             return response;
         }
 
@@ -387,10 +388,10 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="permission"> The permission: current supported actions are joinLeaveGroup and sendToGroup. </param>
         /// <param name="connectionId"> Target connection Id. </param>
         /// <param name="targetName"> Optional. If not set, get the permission for all targets. If set, get the permission for the specific target. The meaning of the target depends on the specific permission. </param>
-        /// <param name="options">Options specifying the cancellation token, controlling error reporting, etc.</param>
-        public virtual async Task<Response<bool>> CheckPermissionAsync(WebPubSubPermission permission, string connectionId, string targetName = null, RequestOptions options = default)
+        /// <param name="context">Options specifying the cancellation token, controlling error reporting, etc.</param>
+        public virtual async Task<Response<bool>> CheckPermissionAsync(WebPubSubPermission permission, string connectionId, string targetName = null, RequestContext context = default)
         {
-            var response = await CheckPermissionAsync(PermissionToString(permission), connectionId, targetName, options).ConfigureAwait(false);
+            var response = await CheckPermissionAsync(PermissionToString(permission), connectionId, targetName, context).ConfigureAwait(false);
             return Response.FromValue((response.Status == 200), response);
         }
 
@@ -398,10 +399,10 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="permission"> The permission: current supported actions are joinLeaveGroup and sendToGroup. </param>
         /// <param name="connectionId"> Target connection Id. </param>
         /// <param name="targetName"> Optional. If not set, get the permission for all targets. If set, get the permission for the specific target. The meaning of the target depends on the specific permission. </param>
-        /// <param name="options">Options specifying the cancellation token, controlling error reporting, etc.</param>
-        public virtual Response<bool> CheckPermission(WebPubSubPermission permission, string connectionId, string targetName = null, RequestOptions options = default)
+        /// <param name="context">Options specifying the cancellation token, controlling error reporting, etc.</param>
+        public virtual Response<bool> CheckPermission(WebPubSubPermission permission, string connectionId, string targetName = null, RequestContext context = default)
         {
-            var response = CheckPermission(PermissionToString(permission), connectionId, targetName, options);
+            var response = CheckPermission(PermissionToString(permission), connectionId, targetName, context);
             return Response.FromValue((response.Status == 200), response);
         }
     }

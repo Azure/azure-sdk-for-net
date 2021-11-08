@@ -63,7 +63,7 @@ ArmClient armClient = new ArmClient(new DefaultAzureCredential());
         {
             #region Snippet:Readme_CheckIfExistssRG
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = armClient.DefaultSubscription;
+            Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
             string rgName = "myRgName";
 
             bool exists = await subscription.GetResourceGroups().CheckIfExistsAsync(rgName);
@@ -89,7 +89,7 @@ ArmClient armClient = new ArmClient(new DefaultAzureCredential());
         {
             #region Snippet:Readme_TryGetRG
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = armClient.DefaultSubscription;
+            Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
             string rgName = "myRgName";
 
             ResourceGroup myRG = await subscription.GetResourceGroups().GetIfExistsAsync(rgName);
@@ -111,7 +111,7 @@ ArmClient armClient = new ArmClient(new DefaultAzureCredential());
         {
             #region Snippet:Readme_OldCheckIfExistsRG
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = armClient.DefaultSubscription;
+            Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
             string rgName = "myRgName";
 
             try
