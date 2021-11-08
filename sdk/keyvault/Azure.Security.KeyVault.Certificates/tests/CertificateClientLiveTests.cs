@@ -795,7 +795,11 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             KeyVaultCertificate certificate = await Client.GetCertificateAsync(name);
 
             using X509Certificate2 pub = new X509Certificate2(certificate.Cer);
+#if NET6_0_OR_GREATER
+            using RSA pubkey = (RSA)pub.PublicKey.GetRSAPublicKey();
+#else
             using RSA pubkey = (RSA)pub.PublicKey.Key;
+#endif
 
             byte[] plaintext = Encoding.UTF8.GetBytes("Hello, world!");
             byte[] ciphertext = pubkey.Encrypt(plaintext, RSAEncryptionPadding.Pkcs1);
@@ -803,7 +807,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             using X509Certificate2 x509certificate = await Client.DownloadCertificateAsync(name);
             Assert.IsTrue(x509certificate.HasPrivateKey);
 
-            using RSA rsa = (RSA)x509certificate.PrivateKey;
+            using RSA rsa = (RSA)x509certificate.GetRSAPrivateKey();
             byte[] decrypted = rsa.Decrypt(ciphertext, RSAEncryptionPadding.Pkcs1);
 
             CollectionAssert.AreEqual(plaintext, decrypted);
@@ -838,7 +842,11 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             string version = certificate.Properties.Version;
 
             using X509Certificate2 pub = new X509Certificate2(certificate.Cer);
+#if NET6_0_OR_GREATER
+            using RSA pubkey = (RSA)pub.PublicKey.GetRSAPublicKey();
+#else
             using RSA pubkey = (RSA)pub.PublicKey.Key;
+#endif
 
             byte[] plaintext = Encoding.UTF8.GetBytes("Hello, world!");
             byte[] ciphertext = pubkey.Encrypt(plaintext, RSAEncryptionPadding.Pkcs1);
@@ -856,7 +864,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             using X509Certificate2 x509certificate = await Client.DownloadCertificateAsync(name, version);
             Assert.IsTrue(x509certificate.HasPrivateKey);
 
-            using RSA rsa = (RSA)x509certificate.PrivateKey;
+            using RSA rsa = (RSA)x509certificate.GetRSAPrivateKey();
             byte[] decrypted = rsa.Decrypt(ciphertext, RSAEncryptionPadding.Pkcs1);
 
             CollectionAssert.AreEqual(plaintext, decrypted);
