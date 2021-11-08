@@ -23,11 +23,21 @@ namespace Azure.Storage.Test.Shared
         where TClientOptions : ClientOptions
         where TEnvironment : StorageTestEnvironment, new()
     {
+        public enum ModifyDataMode
+        {
+            None = 0,
+            Replace = 1,
+            Append = 2
+        };
+
         private readonly string _generatedResourceNamePrefix;
 
         public ClientBuilder<TServiceClient, TClientOptions> ClientBuilder { get; protected set; }
 
-        public AccessConditionConfigs Conditions { get; protected set; }
+        /// <summary>
+        /// Manages service-agnostic access condition setups for tests.
+        /// </summary>
+        public abstract AccessConditionConfigs Conditions { get; }
 
         public OpenReadTestBase(
             bool async,
@@ -73,8 +83,8 @@ namespace Azure.Storage.Test.Shared
 
         protected abstract Task ModifyDataAsync(
             TResourceClient client,
-            Stream additionalData = default,
-            Stream replacementData = default);
+            Stream data,
+            ModifyDataMode mode);
 
         /// <summary>
         /// Calls the 1:1 download method for the given resource client.
@@ -309,7 +319,7 @@ namespace Azure.Storage.Test.Shared
             await outputStream.ReadAsync(outputBytes, 0, size / 2);
 
             // Modify the blob.
-            await ModifyDataAsync(client, replacementData: new MemoryStream(GetRandomBuffer(size)));
+            await ModifyDataAsync(client, new MemoryStream(GetRandomBuffer(size)), ModifyDataMode.Replace);
 
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 outputStream.ReadAsync(outputBytes, size / 2, size / 2),
@@ -338,7 +348,7 @@ namespace Azure.Storage.Test.Shared
             await outputStream.ReadAsync(outputBytes, 0, size);
 
             // Modify the blob.
-            await ModifyDataAsync(client, additionalData: new MemoryStream(data1));
+            await ModifyDataAsync(client, new MemoryStream(data1), ModifyDataMode.Append);
 
             await outputStream.ReadAsync(outputBytes, size, size);
 
