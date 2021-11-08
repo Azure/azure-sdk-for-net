@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Azure.WebPubSub.Common;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 namespace Microsoft.Azure.WebPubSub.AspNetCore
@@ -17,21 +18,24 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
     {
         private readonly WebPubSubOptions _options;
         private readonly IServiceProvider _provider;
+        private readonly ILogger _logger;
 
         // <hubName, HubImpl>
         private readonly Dictionary<string, WebPubSubHub> _hubRegistry = new(StringComparer.OrdinalIgnoreCase);
 
-        public ServiceRequestHandlerAdapter(IServiceProvider provider, IOptions<WebPubSubOptions> options)
+        public ServiceRequestHandlerAdapter(IServiceProvider provider, IOptions<WebPubSubOptions> options, ILoggerFactory loggerFactory)
         {
             _provider = provider;
             _options = options.Value;
+            _logger = loggerFactory?.CreateLogger<ServiceRequestHandlerAdapter>();
         }
 
         // for tests.
-        internal ServiceRequestHandlerAdapter(WebPubSubOptions options, WebPubSubHub hub)
+        internal ServiceRequestHandlerAdapter(WebPubSubOptions options, WebPubSubHub hub, ILogger logger)
         {
             _options = options;
             _hubRegistry.Add(hub.GetType().Name, hub);
+            _logger = logger;
         }
 
         public void RegisterHub<THub>() where THub : WebPubSubHub
@@ -81,6 +85,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
             try
             {
                 var serviceRequest = await request.ReadWebPubSubEventAsync(_options.ValidationOptions, context.RequestAborted);
+                Log.StartToHandleRequest(_logger, serviceRequest.ConnectionContext);
 
                 switch (serviceRequest)
                 {
@@ -90,11 +95,11 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                             if (preflightRequest.IsValid)
                             {
                                 context.Response.Headers.Add(Constants.Headers.WebHookAllowedOrigin, Constants.AllowedAllOrigins);
-                                return;
+                                break;
                             }
                             context.Response.StatusCode = StatusCodes.Status400BadRequest;
                             await context.Response.WriteAsync("Abuse Protection validation failed.").ConfigureAwait(false);
-                            return;
+                            break;
                         }
                     case ConnectEventRequest connectEventRequest:
                         {
@@ -105,7 +110,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                                 SetConnectionState(ref context, connectEventRequest.ConnectionContext, response.States);
                                 await context.Response.WriteAsync(JsonSerializer.Serialize(response)).ConfigureAwait(false);
                             }
-                            return;
+                            break;
                         }
                     case UserEventRequest messageRequest:
                         {
@@ -121,29 +126,32 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                                 var payload = response.Message.ToArray();
                                 await context.Response.Body.WriteAsync(payload, 0, payload.Length).ConfigureAwait(false);
                             }
-                            return;
+                            break;
                         }
                     case ConnectedEventRequest connectedEvent:
                         {
                             _ = hub.OnConnectedAsync(connectedEvent).ConfigureAwait(false);
-                            return;
+                            break;
                         }
                     case DisconnectedEventRequest disconnectedEvent:
                         {
                             _ = hub.OnDisconnectedAsync(disconnectedEvent).ConfigureAwait(false);
-                            return;
+                            break;
                         }
                     default:
-                        return;
+                        break;
                 }
+                Log.SucceededToHandleRequest(_logger, serviceRequest.ConnectionContext);
             }
             catch (UnauthorizedAccessException ex)
             {
+                Log.FailedToHandleRequest(_logger, ex.Message, ex);
                 context.Response.StatusCode = StatusCodes.Status401Unauthorized;
                 await context.Response.WriteAsync(ex.Message).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
+                Log.FailedToHandleRequest(_logger, ex.Message, ex);
                 // logging to service.
                 context.Response.StatusCode = StatusCodes.Status500InternalServerError;
                 await context.Response.WriteAsync(ex.Message).ConfigureAwait(false);
@@ -158,15 +166,6 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                 context.Response.Headers.Add(Constants.Headers.CloudEvents.State, updatedStates.EncodeConnectionStates());
             }
         }
-
-        private static int ConvertToStatusCode(WebPubSubErrorCode errorCode) =>
-            errorCode switch
-            {
-                WebPubSubErrorCode.UserError => StatusCodes.Status400BadRequest,
-                WebPubSubErrorCode.Unauthorized => StatusCodes.Status401Unauthorized,
-                // default and server error returns 500
-                _ => StatusCodes.Status500InternalServerError
-            };
 
         private static string ConvertToContentType(MessageDataType dataType) =>
             dataType switch
@@ -189,6 +188,33 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                 Debug.Assert(true, $"{typeof(THub)} must not be reused.");
             }
             return hub;
+        }
+
+        private static class Log
+        {
+            private static readonly Action<ILogger, string, string, string, Exception> _startToHandleRequest =
+                LoggerMessage.Define<string, string, string>(LogLevel.Debug, new EventId(1, "StartToHandleRequest"), "Start to handle request, connectionId: {connectionId}, eventType: {eventType}, eventName: {eventName}");
+
+            private static readonly Action<ILogger, string, string, string, Exception> _succeededToHandleRequest =
+                LoggerMessage.Define<string, string, string>(LogLevel.Debug, new EventId(2, "SucceededToHandleRequest"), "Succeeded to handle request, connectionId: {connectionId}, eventType: {eventType}, eventName: {eventName}");
+
+            private static readonly Action<ILogger, string, Exception> _failedToHandleRequest =
+                LoggerMessage.Define<string>(LogLevel.Warning, new EventId(3, "FailedToHandleRequest"), "Handle request failed. {error}");
+
+            public static void StartToHandleRequest(ILogger logger, WebPubSubConnectionContext context)
+            {
+                _startToHandleRequest(logger, context?.ConnectionId, context?.EventType.ToString(), context?.EventName, null);
+            }
+
+            public static void SucceededToHandleRequest(ILogger logger, WebPubSubConnectionContext context)
+            {
+                _succeededToHandleRequest(logger, context?.ConnectionId, context?.EventType.ToString(), context?.EventName, null);
+            }
+
+            public static void FailedToHandleRequest(ILogger logger, string error, Exception exception)
+            {
+                _failedToHandleRequest(logger, error, exception);
+            }
         }
     }
 }

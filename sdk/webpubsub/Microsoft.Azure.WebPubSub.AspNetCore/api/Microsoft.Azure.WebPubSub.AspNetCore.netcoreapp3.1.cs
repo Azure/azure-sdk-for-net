@@ -20,10 +20,6 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         public WebPubSubOptions() { }
         public Microsoft.Azure.WebPubSub.AspNetCore.WebPubSubValidationOptions ValidationOptions { get { throw null; } set { } }
     }
-    public static partial class WebPubSubRequestExtensions
-    {
-        public static System.Threading.Tasks.Task<Microsoft.Azure.WebPubSub.Common.WebPubSubEventRequest> ReadWebPubSubEventAsync(this Microsoft.AspNetCore.Http.HttpRequest request, Microsoft.Azure.WebPubSub.AspNetCore.WebPubSubValidationOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
     public partial class WebPubSubValidationOptions
     {
         public WebPubSubValidationOptions(System.Collections.Generic.IEnumerable<string> connectionStrings) { }

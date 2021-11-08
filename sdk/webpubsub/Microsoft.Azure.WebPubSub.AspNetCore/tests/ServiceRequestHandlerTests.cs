@@ -13,6 +13,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Azure.WebPubSub.Common;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using NUnit.Framework;
 
 namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
@@ -22,18 +24,20 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
     {
         private const string TestEndpoint = "https://my-host.webpubsub.net";
         private readonly WebPubSubOptions _testOptions;
+        private readonly ILogger _logger;
 
         public ServiceRequestHandlerTests()
         {
             _testOptions = new WebPubSubOptions();
             _testOptions.ValidationOptions.Add($"Endpoint={TestEndpoint};AccessKey=7aab239577fd4f24bc919802fb629f5f;Version=1.0;");
+            _logger = NullLogger<ServiceRequestHandlerTests>.Instance;
         }
 
         [Test]
         public async Task TestHandleAbuseProtection()
         {
             var context = PrepareHttpContext(httpMethod: HttpMethods.Options);
-            var handler = new ServiceRequestHandlerAdapter(_testOptions, new TestHub());
+            var handler = new ServiceRequestHandlerAdapter(_testOptions, new TestHub(), _logger);
 
             await handler.HandleRequest(context);
 
@@ -46,7 +50,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
         public async Task TestHandleAbuseProtection_Invalid()
         {
             var context = PrepareHttpContext(httpMethod: HttpMethods.Options, uriStr: "https://attacker.com");
-            var handler = new ServiceRequestHandlerAdapter(_testOptions, new TestHub());
+            var handler = new ServiceRequestHandlerAdapter(_testOptions, new TestHub(), _logger);
 
             await handler.HandleRequest(context);
 
@@ -58,7 +62,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
         {
             var connectBody = "{\"claims\":{\"http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier\":[\"ddd\"],\"nbf\":[\"1629183374\"],\"exp\":[\"1629186974\"],\"iat\":[\"1629183374\"],\"aud\":[\"http://localhost:8080/client/hubs/chat\"],\"sub\":[\"ddd\"]},\"query\":{\"access_token\":[\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkZGQiLCJuYmYiOjE2MjkxODMzNzQsImV4cCI6MTYyOTE4Njk3NCwiaWF0IjoxNjI5MTgzMzc0LCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvY2xpZW50L2h1YnMvY2hhdCJ9.tqD8ykjv5NmYw6gzLKglUAv-c-AVWu-KNZOptRKkgMM\"]},\"subprotocols\":[\"protocol1\", \"protocol2\"],\"clientCertificates\":[]}";
             var context = PrepareHttpContext(httpMethod: HttpMethods.Post, eventName: "connect", body: connectBody);
-            var handler = new ServiceRequestHandlerAdapter(_testOptions, new TestHub());
+            var handler = new ServiceRequestHandlerAdapter(_testOptions, new TestHub(), _logger);
 
             await handler.HandleRequest(context);
 
@@ -73,7 +77,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
         public async Task TestHandleMessage()
         {
             var context = PrepareHttpContext(httpMethod: HttpMethods.Post, type: WebPubSubEventType.User, eventName: "message", body: "hello world");
-            var handler = new ServiceRequestHandlerAdapter(_testOptions, new TestHub());
+            var handler = new ServiceRequestHandlerAdapter(_testOptions, new TestHub(), _logger);
 
             await handler.HandleRequest(context);
 
@@ -92,7 +96,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
                 { "counter", 2 }
             };
             var context = PrepareHttpContext(httpMethod: HttpMethods.Post, type: WebPubSubEventType.User, eventName: "message", body: "hello world", connectionState: initState);
-            var handler = new ServiceRequestHandlerAdapter(_testOptions, new TestHub(1));
+            var handler = new ServiceRequestHandlerAdapter(_testOptions, new TestHub(1), _logger);
 
             // 1 to update counter to 10.
             await handler.HandleRequest(context);
@@ -105,7 +109,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
 
             // 2 to add a new state.
             context = PrepareHttpContext(httpMethod: HttpMethods.Post, type: WebPubSubEventType.User, eventName: "message", body: "hello world", connectionState: initState);
-            handler = new ServiceRequestHandlerAdapter(_testOptions, new TestHub(2));
+            handler = new ServiceRequestHandlerAdapter(_testOptions, new TestHub(2), _logger);
             await handler.HandleRequest(context);
 
             context.Response.Headers.TryGetValue(Constants.Headers.CloudEvents.State, out states);
@@ -116,7 +120,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
 
             // 3 to clear states
             context = PrepareHttpContext(httpMethod: HttpMethods.Post, type: WebPubSubEventType.User, eventName: "message", body: "hello world", connectionState: initState);
-            handler = new ServiceRequestHandlerAdapter(_testOptions, new TestHub(3));
+            handler = new ServiceRequestHandlerAdapter(_testOptions, new TestHub(3), _logger);
             await handler.HandleRequest(context);
 
             var exist = context.Response.Headers.TryGetValue(Constants.Headers.CloudEvents.State, out _);
@@ -124,7 +128,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
 
             // 4 clar and add
             context = PrepareHttpContext(httpMethod: HttpMethods.Post, type: WebPubSubEventType.User, eventName: "message", body: "hello world", connectionState: initState);
-            handler = new ServiceRequestHandlerAdapter(_testOptions, new TestHub(4));
+            handler = new ServiceRequestHandlerAdapter(_testOptions, new TestHub(4), _logger);
             await handler.HandleRequest(context);
 
             context.Response.Headers.TryGetValue(Constants.Headers.CloudEvents.State, out states);
@@ -139,7 +143,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
         {
             var connectBody = "{\"claims\":{\"http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier\":[\"ddd\"],\"nbf\":[\"1629183374\"],\"exp\":[\"1629186974\"],\"iat\":[\"1629183374\"],\"aud\":[\"http://localhost:8080/client/hubs/chat\"],\"sub\":[\"ddd\"]},\"query\":{\"access_token\":[\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkZGQiLCJuYmYiOjE2MjkxODMzNzQsImV4cCI6MTYyOTE4Njk3NCwiaWF0IjoxNjI5MTgzMzc0LCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvY2xpZW50L2h1YnMvY2hhdCJ9.tqD8ykjv5NmYw6gzLKglUAv-c-AVWu-KNZOptRKkgMM\"]},\"subprotocols\":[\"protocol1\", \"protocol2\"],\"clientCertificates\":[]}";
             var context = PrepareHttpContext(httpMethod: HttpMethods.Post, eventName: "connect", body: connectBody, hub: nameof(TestDefaultHub));
-            var handler = new ServiceRequestHandlerAdapter(_testOptions, new TestDefaultHub());
+            var handler = new ServiceRequestHandlerAdapter(_testOptions, new TestDefaultHub(), _logger);
 
             await handler.HandleRequest(context);
 
@@ -151,7 +155,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
         public async Task TestHubExceptions()
         {
             var context = PrepareHttpContext(httpMethod: HttpMethods.Post, type: WebPubSubEventType.System, eventName: "connected", hub: nameof(TestCornerHub));
-            var handler = new ServiceRequestHandlerAdapter(_testOptions, new TestCornerHub());
+            var handler = new ServiceRequestHandlerAdapter(_testOptions, new TestCornerHub(), _logger);
 
             await handler.HandleRequest(context);
 
@@ -166,7 +170,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
         public async Task TestUserErrorReturns()
         {
             var context = PrepareHttpContext(httpMethod: HttpMethods.Post, type: WebPubSubEventType.User, eventName: "message", body: "hello world", hub: nameof(TestCornerHub));
-            var handler = new ServiceRequestHandlerAdapter(_testOptions, new TestCornerHub());
+            var handler = new ServiceRequestHandlerAdapter(_testOptions, new TestCornerHub(), _logger);
 
             await handler.HandleRequest(context);
 
@@ -182,7 +186,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
         {
             var connectBody = "{\"claims\":{\"http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier\":[\"ddd\"],\"nbf\":[\"1629183374\"],\"exp\":[\"1629186974\"],\"iat\":[\"1629183374\"],\"aud\":[\"http://localhost:8080/client/hubs/chat\"],\"sub\":[\"ddd\"]},\"query\":{\"access_token\":[\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkZGQiLCJuYmYiOjE2MjkxODMzNzQsImV4cCI6MTYyOTE4Njk3NCwiaWF0IjoxNjI5MTgzMzc0LCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvY2xpZW50L2h1YnMvY2hhdCJ9.tqD8ykjv5NmYw6gzLKglUAv-c-AVWu-KNZOptRKkgMM\"]},\"subprotocols\":[\"protocol1\", \"protocol2\"],\"clientCertificates\":[]}";
             var context = PrepareHttpContext(httpMethod: HttpMethods.Post, eventName: "connect", body: connectBody, hub: nameof(TestCornerHub));
-            var handler = new ServiceRequestHandlerAdapter(_testOptions, new TestCornerHub());
+            var handler = new ServiceRequestHandlerAdapter(_testOptions, new TestCornerHub(), _logger);
 
             await handler.HandleRequest(context);
 
