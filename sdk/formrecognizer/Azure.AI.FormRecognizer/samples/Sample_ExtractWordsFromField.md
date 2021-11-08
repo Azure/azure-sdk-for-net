@@ -1,6 +1,6 @@
 # Extract words from fields
 
-This sample demonstrates how to select the `DocumentWord` instances that are part of a `DocumentField`. Please note that a similar approach can be used for other document elements, such as `DocumentLine`, `DocumentTable`, `DocumentTableCell`,`DocumentKeyValueElement`, `DocumentEntity`, and `AnalyzedDocument`.
+This sample demonstrates how to select the `DocumentWord` instances that are part of a `DocumentField`. Please note that the same approach can be used for other document elements, such as `DocumentLine`, `DocumentTable`, `DocumentTableCell`,`DocumentKeyValueElement`, `DocumentEntity`, and `AnalyzedDocument`.
 
 To get started you'll need a Cognitive Services resource or a Form Recognizer resource.  See [README][README] for prerequisites and instructions.
 
@@ -19,7 +19,7 @@ var client = new DocumentAnalysisClient(new Uri(endpoint), credential);
 
 ## Select words by correlating spans
 
-In general, a `DocumentWord` is not hierarchically related to other document elements. The only way to select the words that are part of a `DocumentField`, for example, is by correlating their spans. The following piece of code can be used as a helper method to filter all words by a specified list of spans.
+In general, a `DocumentWord` is not hierarchically contained in other document elements. The only way to select the words that are part of a `DocumentField`, for example, is by correlating their spans. The following piece of code can be used as a helper method to filter all words by a specified list of spans.
 
 ```C# Snippet:FormRecognizerSampleGetWordsInSpans
 ```
