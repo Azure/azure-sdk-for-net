@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#if NETCOREAPP3_1_OR_GREATER
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -15,7 +16,6 @@ using Microsoft.Azure.WebPubSub.Common;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
-using Microsoft.Extensions.Options;
 using NUnit.Framework;
 
 namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
@@ -360,3 +360,4 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
         }
     }
 }
+#endif

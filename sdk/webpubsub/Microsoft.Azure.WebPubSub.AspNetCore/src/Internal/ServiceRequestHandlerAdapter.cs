@@ -25,9 +25,9 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
 
         public ServiceRequestHandlerAdapter(IServiceProvider provider, IOptions<WebPubSubOptions> options, ILogger<ServiceRequestHandlerAdapter> logger)
         {
-            _provider = provider;
+            _provider = provider ?? throw new ArgumentNullException(nameof(provider));
             _options = options.Value;
-            _logger = logger;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public void RegisterHub<THub>() where THub : WebPubSubHub

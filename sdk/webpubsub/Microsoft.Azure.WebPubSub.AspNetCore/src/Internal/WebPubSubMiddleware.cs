@@ -22,10 +22,10 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
             ServiceRequestHandlerAdapter handler,
             ILogger<WebPubSubMiddleware> logger)
         {
-            _next = next;
-            _handler = handler;
+            _next = next ?? throw new ArgumentNullException(nameof(next));
+            _handler = handler ?? throw new ArgumentNullException(nameof(handler));
             _options = options.Value;
-            _logger = logger;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public async Task InvokeAsync(HttpContext context)

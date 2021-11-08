@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#if NETCOREAPP3_1_OR_GREATER
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -339,3 +340,4 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
         }
     }
 }
+#endif
