@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static RestorePointCollectionListResult DeserializeRestorePointCollectionListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<RestorePointCollectionData>> value = default;
+            Optional<IReadOnlyList<RestorePointGroupData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<RestorePointCollectionData> array = new List<RestorePointCollectionData>();
+                    List<RestorePointGroupData> array = new List<RestorePointGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RestorePointCollectionData.DeserializeRestorePointCollectionData(item));
+                        array.Add(RestorePointGroupData.DeserializeRestorePointGroupData(item));
                     }
                     value = array;
                     continue;

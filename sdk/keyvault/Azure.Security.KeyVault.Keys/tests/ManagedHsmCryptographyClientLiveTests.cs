@@ -28,6 +28,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
         }
 
+        protected internal override bool IsManagedHSM => true;
+
         public override Uri Uri =>
             Uri.TryCreate(TestEnvironment.ManagedHsmUrl, UriKind.Absolute, out Uri uri)
                 ? uri

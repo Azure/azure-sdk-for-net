@@ -1059,14 +1059,14 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"key1\": \"BBor+dP5kLb++RyeAdxwCDyC5ncG4m3SpAn+alVxO7loA9fI+kNL7jqooKdkeRMdd/96eS7fUcnYRPHjR9eNlw==\",\r\n  \"key2\": \"6SQlWb8FpB5lxE4URrQt36JVH19dbyz2EaTLjllxFvjBg2W1Ec+xL+QkCdOfRUQrBiJAypz56mdVqOo0Mk/ItQ==\"\r\n}",
+      "ResponseBody": "{\r\n  \"key1\": \"Sanitized\",\r\n  \"key2\": \"Sanitized\"\r\n}",
       "StatusCode": 200
     },
     {
       "RequestUri": "/subscriptions/0296790d-427c-48ca-b204-8b729bbd8670/resourceGroups/crptestar2612/providers/Microsoft.Compute/cloudServices/cs2303?api-version=2021-03-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDI5Njc5MGQtNDI3Yy00OGNhLWIyMDQtOGI3MjliYmQ4NjcwL3Jlc291cmNlR3JvdXBzL2NycHRlc3RhcjI2MTIvcHJvdmlkZXJzL01pY3Jvc29mdC5Db21wdXRlL2Nsb3VkU2VydmljZXMvY3MyMzAzP2FwaS12ZXJzaW9uPTIwMjEtMDMtMDE=",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"location\": \"eastus2\",\r\n  \"properties\": {\r\n    \"packageUrl\": \"https://saforcspkg7493.blob.core.windows.net/sascontainer/TestCloudServiceMultiRole_WorkerRole1(Standard_D2_v2)(1)_WorkerRole2(Standard_D1_v2)(1)_WebRole1(Standard_A2_v2)(2).cspkg?sv=2017-04-17&sr=b&sig=TDF4pp7%2B4aUoke8J3daFJoOLmjPiXP%2BMBTPvo35GLR4%3D&st=2021-03-12T22%3A10%3A00Z&se=2021-03-15T22%3A10%3A00Z&sp=rw\",\r\n    \"configuration\": \"<?xml version=\\\"1.0\\\" encoding=\\\"utf-16\\\"?>\\r\\n<ServiceConfiguration xmlns:xsi=\\\"http://www.w3.org/2001/XMLSchema-instance\\\" xmlns:xsd=\\\"http://www.w3.org/2001/XMLSchema\\\" serviceName=\\\"TestCloudServiceMultiRole\\\" osFamily=\\\"5\\\" osVersion=\\\"*\\\" schemaVersion=\\\"2015-04.2.6\\\" xmlns=\\\"http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration\\\">\\r\\n  <Role name=\\\"WorkerRole1\\\">\\r\\n    <Instances count=\\\"1\\\" />\\r\\n    <ConfigurationSettings>\\r\\n      <Setting name=\\\"Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString\\\" value=\\\"UseDevelopmentStorage=true\\\" />\\r\\n    </ConfigurationSettings>\\r\\n  </Role>\\r\\n  <Role name=\\\"WorkerRole2\\\">\\r\\n    <Instances count=\\\"1\\\" />\\r\\n    <ConfigurationSettings>\\r\\n      <Setting name=\\\"Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString\\\" value=\\\"UseDevelopmentStorage=true\\\" />\\r\\n    </ConfigurationSettings>\\r\\n  </Role>\\r\\n  <Role name=\\\"WebRole1\\\">\\r\\n    <Instances count=\\\"2\\\" />\\r\\n    <ConfigurationSettings>\\r\\n      <Setting name=\\\"Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString\\\" value=\\\"UseDevelopmentStorage=true\\\" />\\r\\n    </ConfigurationSettings>\\r\\n  </Role>\\r\\n  <NetworkConfiguration>\\r\\n    <VirtualNetworkSite name=\\\"csvnet5608\\\" />\\r\\n    <AddressAssignments>\\r\\n      <InstanceAddress roleName=\\\"WorkerRole1\\\">\\r\\n        <Subnets>\\r\\n          <Subnet name=\\\"subnet8981\\\" />\\r\\n        </Subnets>\\r\\n      </InstanceAddress>\\r\\n      <InstanceAddress roleName=\\\"WorkerRole2\\\">\\r\\n        <Subnets>\\r\\n          <Subnet name=\\\"subnet8981\\\" />\\r\\n        </Subnets>\\r\\n      </InstanceAddress>\\r\\n      <InstanceAddress roleName=\\\"WebRole1\\\">\\r\\n        <Subnets>\\r\\n          <Subnet name=\\\"subnet8981\\\" />\\r\\n        </Subnets>\\r\\n      </InstanceAddress>\\r\\n    </AddressAssignments>\\r\\n  </NetworkConfiguration>\\r\\n</ServiceConfiguration>\",\r\n    \"roleProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"WorkerRole1\",\r\n          \"sku\": {\r\n            \"name\": \"Standard_D2_v2\",\r\n            \"tier\": \"Standard\",\r\n            \"capacity\": 1\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"WorkerRole2\",\r\n          \"sku\": {\r\n            \"name\": \"Standard_D1_v2\",\r\n            \"tier\": \"Standard\",\r\n            \"capacity\": 1\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"WebRole1\",\r\n          \"sku\": {\r\n            \"name\": \"Standard_A2_v2\",\r\n            \"tier\": \"Standard\",\r\n            \"capacity\": 2\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"networkProfile\": {\r\n      \"loadBalancerConfigurations\": [\r\n        {\r\n          \"name\": \"lb4279\",\r\n          \"properties\": {\r\n            \"frontendIPConfigurations\": [\r\n              {\r\n                \"name\": \"lbfe9680\",\r\n                \"properties\": {\r\n                  \"publicIPAddress\": {\r\n                    \"id\": \"/subscriptions/0296790d-427c-48ca-b204-8b729bbd8670/resourceGroups/crptestar2612/providers/Microsoft.Network/publicIPAddresses/cspip1067\"\r\n                  }\r\n                }\r\n              }\r\n            ]\r\n          }\r\n        }\r\n      ]\r\n    }\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"location\": \"eastus2\",\r\n  \"properties\": {\r\n    \"packageUrl\": \"Sanitized\",\r\n    \"configuration\": \"<?xml version=\\\"1.0\\\" encoding=\\\"utf-16\\\"?>\\r\\n<ServiceConfiguration xmlns:xsi=\\\"http://www.w3.org/2001/XMLSchema-instance\\\" xmlns:xsd=\\\"http://www.w3.org/2001/XMLSchema\\\" serviceName=\\\"TestCloudServiceMultiRole\\\" osFamily=\\\"5\\\" osVersion=\\\"*\\\" schemaVersion=\\\"2015-04.2.6\\\" xmlns=\\\"http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration\\\">\\r\\n  <Role name=\\\"WorkerRole1\\\">\\r\\n    <Instances count=\\\"1\\\" />\\r\\n    <ConfigurationSettings>\\r\\n      <Setting name=\\\"Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString\\\" value=\\\"UseDevelopmentStorage=true\\\" />\\r\\n    </ConfigurationSettings>\\r\\n  </Role>\\r\\n  <Role name=\\\"WorkerRole2\\\">\\r\\n    <Instances count=\\\"1\\\" />\\r\\n    <ConfigurationSettings>\\r\\n      <Setting name=\\\"Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString\\\" value=\\\"UseDevelopmentStorage=true\\\" />\\r\\n    </ConfigurationSettings>\\r\\n  </Role>\\r\\n  <Role name=\\\"WebRole1\\\">\\r\\n    <Instances count=\\\"2\\\" />\\r\\n    <ConfigurationSettings>\\r\\n      <Setting name=\\\"Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString\\\" value=\\\"UseDevelopmentStorage=true\\\" />\\r\\n    </ConfigurationSettings>\\r\\n  </Role>\\r\\n  <NetworkConfiguration>\\r\\n    <VirtualNetworkSite name=\\\"csvnet5608\\\" />\\r\\n    <AddressAssignments>\\r\\n      <InstanceAddress roleName=\\\"WorkerRole1\\\">\\r\\n        <Subnets>\\r\\n          <Subnet name=\\\"subnet8981\\\" />\\r\\n        </Subnets>\\r\\n      </InstanceAddress>\\r\\n      <InstanceAddress roleName=\\\"WorkerRole2\\\">\\r\\n        <Subnets>\\r\\n          <Subnet name=\\\"subnet8981\\\" />\\r\\n        </Subnets>\\r\\n      </InstanceAddress>\\r\\n      <InstanceAddress roleName=\\\"WebRole1\\\">\\r\\n        <Subnets>\\r\\n          <Subnet name=\\\"subnet8981\\\" />\\r\\n        </Subnets>\\r\\n      </InstanceAddress>\\r\\n    </AddressAssignments>\\r\\n  </NetworkConfiguration>\\r\\n</ServiceConfiguration>\",\r\n    \"roleProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"WorkerRole1\",\r\n          \"sku\": {\r\n            \"name\": \"Standard_D2_v2\",\r\n            \"tier\": \"Standard\",\r\n            \"capacity\": 1\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"WorkerRole2\",\r\n          \"sku\": {\r\n            \"name\": \"Standard_D1_v2\",\r\n            \"tier\": \"Standard\",\r\n            \"capacity\": 1\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"WebRole1\",\r\n          \"sku\": {\r\n            \"name\": \"Standard_A2_v2\",\r\n            \"tier\": \"Standard\",\r\n            \"capacity\": 2\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"networkProfile\": {\r\n      \"loadBalancerConfigurations\": [\r\n        {\r\n          \"name\": \"lb4279\",\r\n          \"properties\": {\r\n            \"frontendIPConfigurations\": [\r\n              {\r\n                \"name\": \"lbfe9680\",\r\n                \"properties\": {\r\n                  \"publicIPAddress\": {\r\n                    \"id\": \"/subscriptions/0296790d-427c-48ca-b204-8b729bbd8670/resourceGroups/crptestar2612/providers/Microsoft.Network/publicIPAddresses/cspip1067\"\r\n                  }\r\n                }\r\n              }\r\n            ]\r\n          }\r\n        }\r\n      ]\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
           "6ee0091c-4bb9-4e64-908c-3022b4f06e12"
@@ -1141,7 +1141,7 @@
       "RequestUri": "/subscriptions/0296790d-427c-48ca-b204-8b729bbd8670/resourceGroups/crptestar2612/providers/Microsoft.Compute/cloudServices/cs2303?api-version=2021-03-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDI5Njc5MGQtNDI3Yy00OGNhLWIyMDQtOGI3MjliYmQ4NjcwL3Jlc291cmNlR3JvdXBzL2NycHRlc3RhcjI2MTIvcHJvdmlkZXJzL01pY3Jvc29mdC5Db21wdXRlL2Nsb3VkU2VydmljZXMvY3MyMzAzP2FwaS12ZXJzaW9uPTIwMjEtMDMtMDE=",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"location\": \"eastus2\",\r\n  \"properties\": {\r\n    \"packageUrl\": \"https://saforcspkg1592.blob.core.windows.net/sascontainer/TestCloudServiceMultiRole_WorkerRole2(Standard_D2_v2)(1)_WebRole1(Standard_A2_v2)(1).cspkg?sv=2017-04-17&sr=b&sig=4IwyYHcmmH6Fjy7ZQaHRPoiG1%2FTWZoAvtMdK8z4MGzs%3D&st=2021-03-12T22%3A18%3A01Z&se=2021-03-15T22%3A18%3A01Z&sp=rw\",\r\n    \"configuration\": \"<?xml version=\\\"1.0\\\" encoding=\\\"utf-16\\\"?>\\r\\n<ServiceConfiguration xmlns:xsi=\\\"http://www.w3.org/2001/XMLSchema-instance\\\" xmlns:xsd=\\\"http://www.w3.org/2001/XMLSchema\\\" serviceName=\\\"TestCloudServiceMultiRole\\\" osFamily=\\\"5\\\" osVersion=\\\"*\\\" schemaVersion=\\\"2015-04.2.6\\\" xmlns=\\\"http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration\\\">\\r\\n  <Role name=\\\"WorkerRole2\\\">\\r\\n    <Instances count=\\\"1\\\" />\\r\\n    <ConfigurationSettings>\\r\\n      <Setting name=\\\"Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString\\\" value=\\\"UseDevelopmentStorage=true\\\" />\\r\\n    </ConfigurationSettings>\\r\\n  </Role>\\r\\n  <Role name=\\\"WebRole1\\\">\\r\\n    <Instances count=\\\"1\\\" />\\r\\n    <ConfigurationSettings>\\r\\n      <Setting name=\\\"Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString\\\" value=\\\"UseDevelopmentStorage=true\\\" />\\r\\n    </ConfigurationSettings>\\r\\n  </Role>\\r\\n  <NetworkConfiguration>\\r\\n    <VirtualNetworkSite name=\\\"csvnet5608\\\" />\\r\\n    <AddressAssignments>\\r\\n      <InstanceAddress roleName=\\\"WorkerRole2\\\">\\r\\n        <Subnets>\\r\\n          <Subnet name=\\\"subnet8981\\\" />\\r\\n        </Subnets>\\r\\n      </InstanceAddress>\\r\\n      <InstanceAddress roleName=\\\"WebRole1\\\">\\r\\n        <Subnets>\\r\\n          <Subnet name=\\\"subnet8981\\\" />\\r\\n        </Subnets>\\r\\n      </InstanceAddress>\\r\\n    </AddressAssignments>\\r\\n  </NetworkConfiguration>\\r\\n</ServiceConfiguration>\",\r\n    \"roleProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"WorkerRole2\",\r\n          \"sku\": {\r\n            \"name\": \"Standard_D2_v2\",\r\n            \"tier\": \"Standard\",\r\n            \"capacity\": 1\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"WebRole1\",\r\n          \"sku\": {\r\n            \"name\": \"Standard_A2_v2\",\r\n            \"tier\": \"Standard\",\r\n            \"capacity\": 1\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"networkProfile\": {\r\n      \"loadBalancerConfigurations\": [\r\n        {\r\n          \"name\": \"lb4279\",\r\n          \"properties\": {\r\n            \"frontendIPConfigurations\": [\r\n              {\r\n                \"name\": \"lbfe9680\",\r\n                \"properties\": {\r\n                  \"publicIPAddress\": {\r\n                    \"id\": \"/subscriptions/0296790d-427c-48ca-b204-8b729bbd8670/resourceGroups/crptestar2612/providers/Microsoft.Network/publicIPAddresses/cspip1067\"\r\n                  }\r\n                }\r\n              }\r\n            ]\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"extensionProfile\": {\r\n      \"extensions\": [\r\n        {\r\n          \"name\": \"RDPExtension\",\r\n          \"properties\": {\r\n            \"publisher\": \"Microsoft.Windows.Azure.Extensions\",\r\n            \"type\": \"RDP\",\r\n            \"typeHandlerVersion\": \"1.2.1\",\r\n            \"autoUpgradeMinorVersion\": true,\r\n            \"settings\": \"<PublicConfig><UserName>adminRdpTest</UserName><Expiration>2021-10-27T23:59:59</Expiration></PublicConfig>\",\r\n            \"protectedSettings\": \"<PrivateConfig><Password>VsmrdpTest!</Password></PrivateConfig>\"\r\n          }\r\n        }\r\n      ]\r\n    }\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"location\": \"eastus2\",\r\n  \"properties\": {\r\n    \"packageUrl\": \"Sanitized\",\r\n    \"configuration\": \"<?xml version=\\\"1.0\\\" encoding=\\\"utf-16\\\"?>\\r\\n<ServiceConfiguration xmlns:xsi=\\\"http://www.w3.org/2001/XMLSchema-instance\\\" xmlns:xsd=\\\"http://www.w3.org/2001/XMLSchema\\\" serviceName=\\\"TestCloudServiceMultiRole\\\" osFamily=\\\"5\\\" osVersion=\\\"*\\\" schemaVersion=\\\"2015-04.2.6\\\" xmlns=\\\"http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration\\\">\\r\\n  <Role name=\\\"WorkerRole2\\\">\\r\\n    <Instances count=\\\"1\\\" />\\r\\n    <ConfigurationSettings>\\r\\n      <Setting name=\\\"Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString\\\" value=\\\"UseDevelopmentStorage=true\\\" />\\r\\n    </ConfigurationSettings>\\r\\n  </Role>\\r\\n  <Role name=\\\"WebRole1\\\">\\r\\n    <Instances count=\\\"1\\\" />\\r\\n    <ConfigurationSettings>\\r\\n      <Setting name=\\\"Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString\\\" value=\\\"UseDevelopmentStorage=true\\\" />\\r\\n    </ConfigurationSettings>\\r\\n  </Role>\\r\\n  <NetworkConfiguration>\\r\\n    <VirtualNetworkSite name=\\\"csvnet5608\\\" />\\r\\n    <AddressAssignments>\\r\\n      <InstanceAddress roleName=\\\"WorkerRole2\\\">\\r\\n        <Subnets>\\r\\n          <Subnet name=\\\"subnet8981\\\" />\\r\\n        </Subnets>\\r\\n      </InstanceAddress>\\r\\n      <InstanceAddress roleName=\\\"WebRole1\\\">\\r\\n        <Subnets>\\r\\n          <Subnet name=\\\"subnet8981\\\" />\\r\\n        </Subnets>\\r\\n      </InstanceAddress>\\r\\n    </AddressAssignments>\\r\\n  </NetworkConfiguration>\\r\\n</ServiceConfiguration>\",\r\n    \"roleProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"WorkerRole2\",\r\n          \"sku\": {\r\n            \"name\": \"Standard_D2_v2\",\r\n            \"tier\": \"Standard\",\r\n            \"capacity\": 1\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"WebRole1\",\r\n          \"sku\": {\r\n            \"name\": \"Standard_A2_v2\",\r\n            \"tier\": \"Standard\",\r\n            \"capacity\": 1\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"networkProfile\": {\r\n      \"loadBalancerConfigurations\": [\r\n        {\r\n          \"name\": \"lb4279\",\r\n          \"properties\": {\r\n            \"frontendIPConfigurations\": [\r\n              {\r\n                \"name\": \"lbfe9680\",\r\n                \"properties\": {\r\n                  \"publicIPAddress\": {\r\n                    \"id\": \"/subscriptions/0296790d-427c-48ca-b204-8b729bbd8670/resourceGroups/crptestar2612/providers/Microsoft.Network/publicIPAddresses/cspip1067\"\r\n                  }\r\n                }\r\n              }\r\n            ]\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"extensionProfile\": {\r\n      \"extensions\": [\r\n        {\r\n          \"name\": \"RDPExtension\",\r\n          \"properties\": {\r\n            \"publisher\": \"Microsoft.Windows.Azure.Extensions\",\r\n            \"type\": \"RDP\",\r\n            \"typeHandlerVersion\": \"1.2.1\",\r\n            \"autoUpgradeMinorVersion\": true,\r\n            \"settings\": \"<PublicConfig><UserName>adminRdpTest</UserName><Expiration>2021-10-27T23:59:59</Expiration></PublicConfig>\",\r\n            \"protectedSettings\": \"<PrivateConfig><Password>VsmrdpTest!</Password></PrivateConfig>\"\r\n          }\r\n        }\r\n      ]\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
           "54319939-a6c4-4ccb-99cf-ac8a434497af"
@@ -1270,7 +1270,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-14T03:40:06.8959855+05:30\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"40a096ae-d81c-4c65-9783-a5c4d37ed280\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-13T14:10:06.8959855-08:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"40a096ae-d81c-4c65-9783-a5c4d37ed280\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -1331,7 +1331,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-14T03:40:06.8959855+05:30\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"40a096ae-d81c-4c65-9783-a5c4d37ed280\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-13T14:10:06.8959855-08:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"40a096ae-d81c-4c65-9783-a5c4d37ed280\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -1392,7 +1392,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-14T03:40:06.8959855+05:30\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"40a096ae-d81c-4c65-9783-a5c4d37ed280\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-13T14:10:06.8959855-08:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"40a096ae-d81c-4c65-9783-a5c4d37ed280\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -1453,7 +1453,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-14T03:40:06.8959855+05:30\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"40a096ae-d81c-4c65-9783-a5c4d37ed280\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-13T14:10:06.8959855-08:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"40a096ae-d81c-4c65-9783-a5c4d37ed280\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -1514,7 +1514,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-14T03:40:06.8959855+05:30\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"40a096ae-d81c-4c65-9783-a5c4d37ed280\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-13T14:10:06.8959855-08:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"40a096ae-d81c-4c65-9783-a5c4d37ed280\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -1575,7 +1575,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-14T03:40:06.8959855+05:30\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"40a096ae-d81c-4c65-9783-a5c4d37ed280\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-13T14:10:06.8959855-08:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"40a096ae-d81c-4c65-9783-a5c4d37ed280\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -1636,7 +1636,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-14T03:40:06.8959855+05:30\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"40a096ae-d81c-4c65-9783-a5c4d37ed280\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-13T14:10:06.8959855-08:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"40a096ae-d81c-4c65-9783-a5c4d37ed280\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -1697,7 +1697,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-14T03:40:06.8959855+05:30\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"40a096ae-d81c-4c65-9783-a5c4d37ed280\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-13T14:10:06.8959855-08:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"40a096ae-d81c-4c65-9783-a5c4d37ed280\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -1758,7 +1758,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-14T03:40:06.8959855+05:30\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"40a096ae-d81c-4c65-9783-a5c4d37ed280\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-13T14:10:06.8959855-08:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"40a096ae-d81c-4c65-9783-a5c4d37ed280\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -1819,7 +1819,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-14T03:40:06.8959855+05:30\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"40a096ae-d81c-4c65-9783-a5c4d37ed280\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-13T14:10:06.8959855-08:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"40a096ae-d81c-4c65-9783-a5c4d37ed280\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -1880,7 +1880,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-14T03:40:06.8959855+05:30\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"40a096ae-d81c-4c65-9783-a5c4d37ed280\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-13T14:10:06.8959855-08:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"40a096ae-d81c-4c65-9783-a5c4d37ed280\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -1941,7 +1941,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-14T03:40:06.8959855+05:30\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"40a096ae-d81c-4c65-9783-a5c4d37ed280\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-13T14:10:06.8959855-08:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"40a096ae-d81c-4c65-9783-a5c4d37ed280\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -2002,7 +2002,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-14T03:40:06.8959855+05:30\",\r\n  \"endTime\": \"2021-03-14T03:46:36.1648185+05:30\",\r\n  \"status\": \"Succeeded\",\r\n  \"name\": \"40a096ae-d81c-4c65-9783-a5c4d37ed280\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-13T14:10:06.8959855-08:00\",\r\n  \"endTime\": \"2021-03-13T14:16:36.1648185-08:00\",\r\n  \"status\": \"Succeeded\",\r\n  \"name\": \"40a096ae-d81c-4c65-9783-a5c4d37ed280\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -2512,7 +2512,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"key1\": \"iDEAPOnPPJgRJm1pKnirMRtRpHE+mRZqQneD8JAs/uAV9BFzvhkJtxIBh0A053njzgLRj6HBsADMXawg8kx1sQ==\",\r\n  \"key2\": \"ZKfRLiNblQKr5Xp/XH4PGBYnpmAYLcYSX6Zc/r2HofHtqybOfwF0wv57yGty5t4G7zyPUZhG0v0+DUE+bFm3gQ==\"\r\n}",
+      "ResponseBody": "{\r\n  \"key1\": \"Sanitized\",\r\n  \"key2\": \"Sanitized\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -2573,7 +2573,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-14T03:48:03.1027603+05:30\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"2ac2e1ea-7f77-4e7c-85a4-c937f60cfcb1\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-13T14:18:03.1027603-08:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"2ac2e1ea-7f77-4e7c-85a4-c937f60cfcb1\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -2634,7 +2634,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-14T03:48:03.1027603+05:30\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"2ac2e1ea-7f77-4e7c-85a4-c937f60cfcb1\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-13T14:18:03.1027603-08:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"2ac2e1ea-7f77-4e7c-85a4-c937f60cfcb1\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -2695,7 +2695,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-14T03:48:03.1027603+05:30\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"2ac2e1ea-7f77-4e7c-85a4-c937f60cfcb1\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-13T14:18:03.1027603-08:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"2ac2e1ea-7f77-4e7c-85a4-c937f60cfcb1\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -2756,7 +2756,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-14T03:48:03.1027603+05:30\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"2ac2e1ea-7f77-4e7c-85a4-c937f60cfcb1\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-13T14:18:03.1027603-08:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"2ac2e1ea-7f77-4e7c-85a4-c937f60cfcb1\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -2817,7 +2817,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-14T03:48:03.1027603+05:30\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"2ac2e1ea-7f77-4e7c-85a4-c937f60cfcb1\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-13T14:18:03.1027603-08:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"2ac2e1ea-7f77-4e7c-85a4-c937f60cfcb1\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -2878,7 +2878,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-14T03:48:03.1027603+05:30\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"2ac2e1ea-7f77-4e7c-85a4-c937f60cfcb1\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-13T14:18:03.1027603-08:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"2ac2e1ea-7f77-4e7c-85a4-c937f60cfcb1\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -2939,7 +2939,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-14T03:48:03.1027603+05:30\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"2ac2e1ea-7f77-4e7c-85a4-c937f60cfcb1\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-13T14:18:03.1027603-08:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"2ac2e1ea-7f77-4e7c-85a4-c937f60cfcb1\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -3000,7 +3000,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-14T03:48:03.1027603+05:30\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"2ac2e1ea-7f77-4e7c-85a4-c937f60cfcb1\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-13T14:18:03.1027603-08:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"2ac2e1ea-7f77-4e7c-85a4-c937f60cfcb1\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -3061,7 +3061,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-14T03:48:03.1027603+05:30\",\r\n  \"endTime\": \"2021-03-14T03:52:22.5254775+05:30\",\r\n  \"status\": \"Succeeded\",\r\n  \"name\": \"2ac2e1ea-7f77-4e7c-85a4-c937f60cfcb1\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-13T14:18:03.1027603-08:00\",\r\n  \"endTime\": \"2021-03-13T14:22:22.5254775-08:00\",\r\n  \"status\": \"Succeeded\",\r\n  \"name\": \"2ac2e1ea-7f77-4e7c-85a4-c937f60cfcb1\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -3191,7 +3191,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-14T03:52:41.0880971+05:30\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"512f9244-d77e-4d10-be10-dba21ed111ab\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-13T14:22:41.0880971-08:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"512f9244-d77e-4d10-be10-dba21ed111ab\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -3252,7 +3252,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-14T03:52:41.0880971+05:30\",\r\n  \"endTime\": \"2021-03-14T03:53:41.8384444+05:30\",\r\n  \"status\": \"Succeeded\",\r\n  \"name\": \"512f9244-d77e-4d10-be10-dba21ed111ab\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-13T14:22:41.0880971-08:00\",\r\n  \"endTime\": \"2021-03-13T14:23:41.8384444-08:00\",\r\n  \"status\": \"Succeeded\",\r\n  \"name\": \"512f9244-d77e-4d10-be10-dba21ed111ab\"\r\n}",
       "StatusCode": 200
     },
     {

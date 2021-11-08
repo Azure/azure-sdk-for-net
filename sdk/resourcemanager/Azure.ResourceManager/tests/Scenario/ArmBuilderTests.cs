@@ -1,5 +1,6 @@
 ﻿using System;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public void TestCreateOrUpdate(string value)
         {
-            Assert.ThrowsAsync<ArgumentException>(async delegate { await _client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(value); });
+            Assert.ThrowsAsync<ArgumentException>(async delegate { await (await _client.GetDefaultSubscriptionAsync()).GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(value); });
         }
 
         [TestCase(null)]
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public void TestStartCreateOrUpdate(string value)
         {
-            Assert.ThrowsAsync<ArgumentException>(async delegate { await _client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(value, false); });
+            Assert.ThrowsAsync<ArgumentException>(async delegate { await (await _client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(value, false); });
         }
     }
 }

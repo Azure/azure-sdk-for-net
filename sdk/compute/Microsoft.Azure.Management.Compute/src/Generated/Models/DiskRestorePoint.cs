@@ -45,6 +45,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// include: 'V1', 'V2'</param>
         /// <param name="purchasePlan">Purchase plan information for the the
         /// image from which the OS disk was created.</param>
+        /// <param name="supportedCapabilities">List of supported capabilities
+        /// (like accelerated networking) for the image from which the OS disk
+        /// was created.</param>
         /// <param name="familyId">id of the backing snapshot's MIS
         /// family</param>
         /// <param name="sourceUniqueId">unique incarnation id of the source
@@ -54,7 +57,16 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// keys.</param>
         /// <param name="supportsHibernation">Indicates the OS on a disk
         /// supports hibernation.</param>
-        public DiskRestorePoint(string id = default(string), string name = default(string), string type = default(string), System.DateTime? timeCreated = default(System.DateTime?), string sourceResourceId = default(string), OperatingSystemTypes? osType = default(OperatingSystemTypes?), string hyperVGeneration = default(string), PurchasePlan purchasePlan = default(PurchasePlan), string familyId = default(string), string sourceUniqueId = default(string), Encryption encryption = default(Encryption), bool? supportsHibernation = default(bool?))
+        /// <param name="networkAccessPolicy">Possible values include:
+        /// 'AllowAll', 'AllowPrivate', 'DenyAll'</param>
+        /// <param name="publicNetworkAccess">Possible values include:
+        /// 'Enabled', 'Disabled'</param>
+        /// <param name="diskAccessId">ARM id of the DiskAccess resource for
+        /// using private endpoints on disks.</param>
+        /// <param name="completionPercent">Percentage complete for the
+        /// background copy when a resource is created via the CopyStart
+        /// operation.</param>
+        public DiskRestorePoint(string id = default(string), string name = default(string), string type = default(string), System.DateTime? timeCreated = default(System.DateTime?), string sourceResourceId = default(string), OperatingSystemTypes? osType = default(OperatingSystemTypes?), string hyperVGeneration = default(string), PurchasePlan purchasePlan = default(PurchasePlan), SupportedCapabilities supportedCapabilities = default(SupportedCapabilities), string familyId = default(string), string sourceUniqueId = default(string), Encryption encryption = default(Encryption), bool? supportsHibernation = default(bool?), string networkAccessPolicy = default(string), string publicNetworkAccess = default(string), string diskAccessId = default(string), double? completionPercent = default(double?))
             : base(id, name, type)
         {
             TimeCreated = timeCreated;
@@ -62,10 +74,15 @@ namespace Microsoft.Azure.Management.Compute.Models
             OsType = osType;
             HyperVGeneration = hyperVGeneration;
             PurchasePlan = purchasePlan;
+            SupportedCapabilities = supportedCapabilities;
             FamilyId = familyId;
             SourceUniqueId = sourceUniqueId;
             Encryption = encryption;
             SupportsHibernation = supportsHibernation;
+            NetworkAccessPolicy = networkAccessPolicy;
+            PublicNetworkAccess = publicNetworkAccess;
+            DiskAccessId = diskAccessId;
+            CompletionPercent = completionPercent;
             CustomInit();
         }
 
@@ -108,6 +125,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         public PurchasePlan PurchasePlan { get; set; }
 
         /// <summary>
+        /// Gets or sets list of supported capabilities (like accelerated
+        /// networking) for the image from which the OS disk was created.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.supportedCapabilities")]
+        public SupportedCapabilities SupportedCapabilities { get; set; }
+
+        /// <summary>
         /// Gets id of the backing snapshot's MIS family
         /// </summary>
         [JsonProperty(PropertyName = "properties.familyId")]
@@ -131,6 +155,33 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.supportsHibernation")]
         public bool? SupportsHibernation { get; set; }
+
+        /// <summary>
+        /// Gets or sets possible values include: 'AllowAll', 'AllowPrivate',
+        /// 'DenyAll'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.networkAccessPolicy")]
+        public string NetworkAccessPolicy { get; set; }
+
+        /// <summary>
+        /// Gets or sets possible values include: 'Enabled', 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.publicNetworkAccess")]
+        public string PublicNetworkAccess { get; set; }
+
+        /// <summary>
+        /// Gets or sets ARM id of the DiskAccess resource for using private
+        /// endpoints on disks.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.diskAccessId")]
+        public string DiskAccessId { get; set; }
+
+        /// <summary>
+        /// Gets or sets percentage complete for the background copy when a
+        /// resource is created via the CopyStart operation.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.completionPercent")]
+        public double? CompletionPercent { get; set; }
 
         /// <summary>
         /// Validate the object.

@@ -16,6 +16,9 @@ clear-output-folder: true
 skip-csproj: true
 modelerfour:
   lenient-model-deduplication: true
+#TODO: remove after we resolve why RestorePoint has no list
+list-exception:
+  RestorePoints
 operation-group-to-resource-type:
   CloudServiceRoles: Microsoft.Compute/cloudServices/roles
   CloudServiceOperatingSystems: Microsoft.Compute/locations/cloudServiceOsFamilies
@@ -45,9 +48,10 @@ operation-group-to-resource:
   Locations: NonResource
   DiskRestorePoint: DiskRestorePoint
   GallerySharingProfile: NonResource
-  SharedGalleries: SharedGallery
-  SharedGalleryImages: SharedGalleryImage
-  SharedGalleryImageVersions: SharedGalleryImageVersion
+  SharedGalleries: NonResource
+  SharedGalleryImages: NonResource
+  SharedGalleryImageVersions: NonResource
+  RestorePointCollections: RestorePointGroup
 operation-group-to-parent:
   Usage: subscriptions
   LogAnalytics: subscriptions
@@ -67,8 +71,8 @@ operation-group-to-parent:
   ResourceSkus: subscriptions
   DiskRestorePoint: Microsoft.Compute/restorePointCollections/restorePoints
   SharedGalleries: subscriptions
-  SharedGalleryImages: Microsoft.Compute/locations/sharedGalleries
-  SharedGalleryImageVersions: Microsoft.Compute/locations/sharedGalleries/images
+  SharedGalleryImages: subscriptions
+  SharedGalleryImageVersions: subscriptions
 operation-group-is-extension: VirtualMachineRunCommands;VirtualMachineScaleSetVMRunCommands;VirtualMachineScaleSetVMExtensions;VirtualMachineExtensions
 directive:
   ## first we need to unify all the paths by changing `virtualmachines` to `virtualMachines` so that every path could have consistent casing
@@ -148,4 +152,7 @@ directive:
   - from: swagger-document
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}/start'].post.operationId
     transform: return 'CloudServices_PowerOn';
+  - rename-model:
+      from: RestorePointCollection
+      to: RestorePointGroup
 ```

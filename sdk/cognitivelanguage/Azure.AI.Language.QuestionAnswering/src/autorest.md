@@ -8,11 +8,12 @@ title: Question Answering
 license-header: MICROSOFT_MIT_NO_VERSION
 
 batch:
-- input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/33138867cd88a4a8689feb591a98dda26d96a63e/specification/cognitiveservices/data-plane/Language/preview/2021-07-15-preview/questionanswering.json
+- input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/34a2c0723155d134311419fd997925ce96b85bec/specification/cognitiveservices/data-plane/Language/stable/2021-10-01/questionanswering.json
   clear-output-folder: true
+  model-namespace: false
 
 # TODO: Uncomment when we ship authoring support and remove ./QuestionAnsweringClientOptions.cs.
-# - input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/33138867cd88a4a8689feb591a98dda26d96a63e/specification/cognitiveservices/data-plane/Language/preview/2021-07-15-preview/questionanswering-authoring.json
+# - input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/34a2c0723155d134311419fd997925ce96b85bec/specification/cognitiveservices/data-plane/Language/stable/2021-10-01/questionanswering-authoring.json
 #   add-credentials: true
 #   low-level-client: true
 
@@ -44,11 +45,6 @@ directive:
           "AzureKey": []
         }
     ];
-
-# Temporary until common.json#/parameters/DeploymentNameQueryParameter is updated.
-- from: swagger-document
-  where: $.parameters
-  transform: $.DeploymentNameQueryParameter.required = true;
 ```
 
 ### C# customizations

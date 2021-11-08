@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/4fb495a7-bdba-44c6-8058-4f25be33c3ec/providers/Microsoft.HDInsight/locations/East%20US%202/checkNameAvailability?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/4fb495a7-bdba-44c6-8058-4f25be33c3ec/providers/Microsoft.HDInsight/locations/South%20Central%20US/checkNameAvailability?api-version=2021-06-01",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"name\": \"testclustername\",\r\n  \"type\": \"clusters\"\r\n}",
       "RequestHeaders": {

@@ -12,18 +12,18 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> VpnSiteLinkConnection Resource. </summary>
-    public partial class VpnSiteLinkConnection : WritableSubResource
+    public partial class VpnSiteLinkConnection : SubResource
     {
         /// <summary> Initializes a new instance of VpnSiteLinkConnection. </summary>
         public VpnSiteLinkConnection()
         {
             IpsecPolicies = new ChangeTrackingList<IpsecPolicy>();
-            IngressNatRules = new ChangeTrackingList<SubResource>();
-            EgressNatRules = new ChangeTrackingList<SubResource>();
+            IngressNatRules = new ChangeTrackingList<WritableSubResource>();
+            EgressNatRules = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of VpnSiteLinkConnection. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"> Resource ID. </param>
         /// <param name="name"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="type"> Resource type. </param>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="provisioningState"> The provisioning state of the VPN site link connection resource. </param>
         /// <param name="ingressNatRules"> List of ingress NatRules. </param>
         /// <param name="egressNatRules"> List of egress NatRules. </param>
-        internal VpnSiteLinkConnection(string id, string name, string etag, string type, SubResource vpnSiteLink, int? routingWeight, VpnLinkConnectionMode? vpnLinkConnectionMode, VpnConnectionStatus? connectionStatus, VirtualNetworkGatewayConnectionProtocol? vpnConnectionProtocolType, long? ingressBytesTransferred, long? egressBytesTransferred, int? connectionBandwidth, string sharedKey, bool? enableBgp, bool? usePolicyBasedTrafficSelectors, IList<IpsecPolicy> ipsecPolicies, bool? enableRateLimiting, bool? useLocalAzureIpAddress, ProvisioningState? provisioningState, IList<SubResource> ingressNatRules, IList<SubResource> egressNatRules) : base(id)
+        internal VpnSiteLinkConnection(string id, string name, string etag, string type, WritableSubResource vpnSiteLink, int? routingWeight, VpnLinkConnectionMode? vpnLinkConnectionMode, VpnConnectionStatus? connectionStatus, VirtualNetworkGatewayConnectionProtocol? vpnConnectionProtocolType, long? ingressBytesTransferred, long? egressBytesTransferred, int? connectionBandwidth, string sharedKey, bool? enableBgp, bool? usePolicyBasedTrafficSelectors, IList<IpsecPolicy> ipsecPolicies, bool? enableRateLimiting, bool? useLocalAzureIpAddress, ProvisioningState? provisioningState, IList<WritableSubResource> ingressNatRules, IList<WritableSubResource> egressNatRules) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Resource type. </summary>
         public string Type { get; }
         /// <summary> Id of the connected vpn site link. </summary>
-        public SubResource VpnSiteLink { get; set; }
+        public WritableSubResource VpnSiteLink { get; set; }
         /// <summary> Routing weight for vpn connection. </summary>
         public int? RoutingWeight { get; set; }
         /// <summary> Vpn link connection mode. </summary>
@@ -105,8 +105,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The provisioning state of the VPN site link connection resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> List of ingress NatRules. </summary>
-        public IList<SubResource> IngressNatRules { get; }
+        public IList<WritableSubResource> IngressNatRules { get; }
         /// <summary> List of egress NatRules. </summary>
-        public IList<SubResource> EgressNatRules { get; }
+        public IList<WritableSubResource> EgressNatRules { get; }
     }
 }

@@ -1670,9 +1670,15 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 });
                 var tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
 
+                int messageCount = 0;
                 async Task ProcessMessage(ProcessMessageEventArgs args)
                 {
-                    tcs.TrySetResult(true);
+                    var count = Interlocked.Increment(ref messageCount);
+                    if (count == 10)
+                    {
+                        tcs.TrySetResult(true);
+                    }
+
                     await Task.Delay(TimeSpan.FromSeconds(10));
                     await args.CompleteMessageAsync(args.Message);
                 }
@@ -1683,7 +1689,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 await tcs.Task;
                 // call stop processing as soon as the callback is invoked but before it is done processing
                 await processor.StopProcessingAsync();
-
                 var receiver = client.CreateReceiver(scope.QueueName);
                 // poll for the lock duration to make sure that messages are actually gone rather than just locked
                 var msg = await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(30));
@@ -1850,7 +1855,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                     if (count == 50)
                     {
-                        Assert.GreaterOrEqual(processor.InnerProcessor._tasks.Count, 20);
+                        Assert.GreaterOrEqual(processor.InnerProcessor.TaskTuples.Count, 20);
                     }
                     if (count == 75)
                     {
@@ -1860,7 +1865,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     }
                     if (count == 95)
                     {
-                        Assert.LessOrEqual(processor.InnerProcessor._tasks.Where(t => !t.Task.IsCompleted).Count(), 1);
+                        Assert.LessOrEqual(processor.InnerProcessor.TaskTuples.Where(t => !t.Task.IsCompleted).Count(), 1);
                     }
                 }
 
@@ -1914,14 +1919,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     if (count == 50)
                     {
                         // tasks will generally be 100 here, but allow some forgiveness as this is not deterministic
-                        Assert.GreaterOrEqual(processor.InnerProcessor._tasks.Count, 50);
+                        Assert.GreaterOrEqual(processor.InnerProcessor.TaskTuples.Count, 50);
                         processor.UpdateConcurrency(1, 1);
                         Assert.AreEqual(1, processor.MaxConcurrentSessions);
                         Assert.AreEqual(1, processor.MaxConcurrentCallsPerSession);
                     }
                     if (count == 95)
                     {
-                        Assert.LessOrEqual(processor.InnerProcessor._tasks.Where(t => !t.Task.IsCompleted).Count(), 1);
+                        Assert.LessOrEqual(processor.InnerProcessor.TaskTuples.Where(t => !t.Task.IsCompleted).Count(), 1);
                     }
                 }
 

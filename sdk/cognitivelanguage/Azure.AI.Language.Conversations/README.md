@@ -1,56 +1,56 @@
 # Azure Cognitive Language Services Conversations client library for .NET
 
-The Question Answering service is a cloud-based API service that lets you create a conversational question-and-answer layer over your existing data. Use it to build a knowledge base by extracting questions and answers from your semi-structured content, including FAQ, manuals, and documents. Answer users’ questions with the best answers from the QnAs in your knowledge base—automatically. Your knowledge base gets smarter, too, as it continually learns from user behavior.
+Azure Conversations - the new version of Language Understanding (LUIS) - is a cloud-based conversational AI service that applies custom machine-learning intelligence to a user's conversational, natural language text to predict overall meaning; and pulls out relevant, detailed information. The service utilizes state-of-the-art technology to create and utilize natively multilingual models, which means that users would be able to train their models in one language but predict in others.
 
-[Source code][questionanswering_client_src] | [Package (NuGet)][questionanswering_nuget_package] | [API reference documentation][questionanswering_refdocs] | [Product documentation][questionanswering_docs] | [Samples][questionanswering_samples]
+[Source code][conversationanalysis_client_src] | [Package (NuGet)][conversationanalysis_nuget_package] | [API reference documentation][conversationanalysis_refdocs] | [Product documentation][conversationanalysis_docs] | [Samples][conversationanalysis_samples]
 
 ## Getting started
 
 ### Install the package
 
-Install the Azure Cognitive Language Services Question Answering client library for .NET with [NuGet][nuget]:
+Install the Azure Cognitive Language Services Conversations client library for .NET with [NuGet][nuget]:
 
 ```powershell
-dotnet add package Azure.AI.Language.QuestionAnswering --prerelease
+dotnet add package Azure.AI.Language.Conversations --prerelease
 ```
 
 ### Prerequisites
 
 * An [Azure subscription][azure_subscription]
-* An existing Question Answering resource
+* An existing Text Analytics resource
 
 > Note: the new unified Cognitive Language Services are not currently available for deployment.
 
 ### Authenticate the client
 
-In order to interact with the Question Answering service, you'll need to create an instance of the [`QuestionAnsweringClient`][questionanswering_client_class] class. You will need an **endpoint**, and an **API key** to instantiate a client object. For more information regarding authenticating with Cognitive Services, see [Authenticate requests to Azure Cognitive Services][cognitive_auth].
+In order to interact with the Conversations service, you'll need to create an instance of the [`ConversationAnalysisClient`][conversationanalysis_client_class] class. You will need an **endpoint**, and an **API key** to instantiate a client object. For more information regarding authenticating with Cognitive Services, see [Authenticate requests to Azure Cognitive Services][cognitive_auth].
 
 #### Get an API key
 
-You can get the **endpoint** and an **API key** from the Cognitive Services resource or Question Answering resource in the [Azure Portal][azure_portal].
+You can get the **endpoint** and an **API key** from the Cognitive Services resource in the [Azure Portal][azure_portal].
 
-Alternatively, use the [Azure CLI][azure_cli] command shown below to get the API key from the Question Answering resource.
+Alternatively, use the [Azure CLI][azure_cli] command shown below to get the API key from the Cognitive Service resource.
 
 ```powershell
 az cognitiveservices account keys list --resource-group <resource-group-name> --name <resource-name>
 ```
 
-#### Create a QuestionAnsweringClient
+#### Create a ConversationAnalysisClient
 
-Once you've determined your **endpoint** and **API key** you can instantiate a `QuestionAnsweringClient`:
+Once you've determined your **endpoint** and **API key** you can instantiate a `ConversationAnalysisClient`:
 
-```C# Snippet:QuestionAnsweringClient_Create
+```C# Snippet:ConversationAnalysisClient_Create
 Uri endpoint = new Uri("https://myaccount.api.cognitive.microsoft.com");
 AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 
-QuestionAnsweringClient client = new QuestionAnsweringClient(endpoint, credential);
+ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 ```
 
 ## Key concepts
 
-### QuestionAnsweringClient
+### ConversationAnalysisClient
 
-The [`QuestionAnsweringClient`][questionanswering_client_class] is the primary interface for asking questions using a knowledge base with your own information, or text input using pre-trained models. It provides both synchronous and asynchronous APIs to ask questions.
+The [`ConversationAnalysisClient`][conversationanalysis_client_class] is the primary interface for making predictions using your deployed Conversations models. It provides both synchronous and asynchronous APIs to submit queries.
 
 ### Thread safety
 
@@ -70,61 +70,61 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
-The Azure.AI.Language.QuestionAnswering client library provides both synchronous and asynchronous APIs.
+The Azure.AI.Language.Conversations client library provides both synchronous and asynchronous APIs.
 
-The following examples show common scenarios using the `client` [created above](#create-a-questionansweringclient).
+The following examples show common scenarios using the `client` [created above](#Create a ConversationAnalysisClient).
 
-### Ask a question
+### Analyze a conversation
 
-The only input required to a ask a question using an existing knowledge base is just the question itself:
+To analyze a conversation, we can then call the `client.AnalyzeConversation()` method which takes the project name, deployment name, and query as parameters.
 
-```C# Snippet:QuestionAnsweringClient_QueryKnowledgeBase
-string projectName = "FAQ";
-string deploymentName = "prod";
-QueryKnowledgeBaseOptions options = new QueryKnowledgeBaseOptions(projectName, deploymentName, "How long should my Surface battery last?");
-Response<KnowledgeBaseAnswers> response = client.QueryKnowledgeBase(options);
+```C# Snippet:ConversationAnalysis_AnalyzeConversation
+Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
+    "Menu",
+    "production",
+    "We'll have 2 plates of seared salmon nigiri.");
 
-foreach (KnowledgeBaseAnswer answer in response.Value.Answers)
-{
-    Console.WriteLine($"({answer.ConfidenceScore:P2}) {answer.Answer}");
-    Console.WriteLine($"Source: {answer.Source}");
-    Console.WriteLine();
-}
+Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
 ```
 
-You can set additional properties on `QuestionAnsweringClientOptions` to limit the number of answers, specify a minimum confidence score, and more.
+The specified parameters can also be used to initialize a `ConversationAnalysisOptions` instance. You can then call `AnalyzeConversation()` using the options object as a parameter as shown below.
 
-### Ask a follow-up question
+```C# Snippet:ConversationAnalysis_AnalyzeConversationWithOptions
+AnalyzeConversationOptions options = new AnalyzeConversationOptions(
+    "Menu",
+    "production",
+    "We'll have 2 plates of seared salmon nigiri.");
+Response<AnalyzeConversationResult> response = client.AnalyzeConversation(options);
 
-If your knowledge base is configured for [chit-chat][questionanswering_docs_chat], you can ask a follow-up question provided the previous question-answering ID and, optionally, the exact question the user asked:
+Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
+```
 
-```C# Snippet:QuestionAnsweringClient_Chat
-string projectName = "FAQ";
-string deploymentName = "prod";
-// Answers are ordered by their ConfidenceScore so assume the user choose the first answer below:
-KnowledgeBaseAnswer previousAnswer = answers.Answers.First();
-QueryKnowledgeBaseOptions options = new QueryKnowledgeBaseOptions(projectName, deploymentName, "How long should charging take?")
+### Analyze a conversation in a different language
+
+The language property in the `ConversationAnalysisOptions` can be used to specify the language of the conversation.
+
+```C# Snippet:ConversationAnalysis_AnalyzeConversationWithLanguage
+AnalyzeConversationOptions options = new AnalyzeConversationOptions(
+    "Menu",
+    "production", 
+    "Tendremos 2 platos de nigiri de salmón braseado.")
 {
-    Context = new KnowledgeBaseAnswerRequestContext(previousAnswer.Id.Value)
+    Language = "es"
 };
+Response<AnalyzeConversationResult> response = client.AnalyzeConversation(options);
 
-Response<KnowledgeBaseAnswers> response = client.QueryKnowledgeBase(options);
-
-foreach (KnowledgeBaseAnswer answer in response.Value.Answers)
-{
-    Console.WriteLine($"({answer.ConfidenceScore:P2}) {answer.Answer}");
-    Console.WriteLine($"Source: {answer.Source}");
-    Console.WriteLine();
-}
+Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
 ```
+
+Other optional properties can be set such as verbosity and whether service logging is enabled.
 
 ## Troubleshooting
 
 ### General
 
-When you interact with the Cognitive Language Services Question Answering client library using the .NET SDK, errors returned by the service correspond to the same HTTP status codes returned for [REST API][questionanswering_rest_docs] requests.
+When you interact with the Cognitive Language Services Conversations client library using the .NET SDK, errors returned by the service correspond to the same HTTP status codes returned for [REST API][conversationanalysis_rest_docs] requests.
 
-For example, if you submit a question to a non-existant knowledge base, a `400` error is returned indicating "Bad Request".
+For example, if you submit a query to a non-existant project, a `400` error is returned indicating "Bad Request".
 
 ```C# Snippet:ConversationAnalysisClient_BadRequest
 try
@@ -143,26 +143,32 @@ catch (RequestFailedException ex)
 You will notice that additional information is logged, like the client request ID of the operation.
 
 ```text
-Azure.RequestFailedException: Please verify azure search service is up, restart the WebApp and try again
+Azure.RequestFailedException: The input parameter is invalid.
 Status: 400 (Bad Request)
-ErrorCode: BadArgument
+ErrorCode: InvalidArgument
 
 Content:
 {
-    "error": {
-    "code": "BadArgument",
-    "message": "Please verify azure search service is up, restart the WebApp and try again"
+  "error": {
+    "code": "InvalidArgument",
+    "message": "The input parameter is invalid.",
+    "innerError": {
+      "code": "InvalidArgument",
+      "message": "The input parameter \"payload\" cannot be null or empty."
     }
+  }
 }
 
 Headers:
-x-envoy-upstream-service-time: 23
-apim-request-id: 76a83876-22d1-4977-a0b1-559a674f3605
+Transfer-Encoding: chunked
+pragma: no-cache
+request-id: 0303b4d0-0954-459f-8a3d-1be6819745b5
+apim-request-id: 0303b4d0-0954-459f-8a3d-1be6819745b5
+x-envoy-upstream-service-time: 15
 Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
-X-Content-Type-Options: nosniff
-Date: Wed, 30 Jun 2021 00:32:07 GMT
-Content-Length: 139
-Content-Type: application/json; charset=utf-8
+x-content-type-options: nosniff
+Cache-Control: no-store, proxy-revalidate, no-cache, max-age=0, private
+Content-Type: application/json
 ```
 
 ### Setting up console logging
@@ -178,9 +184,9 @@ To learn more about other logging mechanisms see [here][core_logging].
 
 ## Next steps
 
-* View our [samples][questionanswering_samples].
-* Read about the different [features][questionanswering_docs_features] of the Question Answering service.
-* Try our service [demos][questionanswering_docs_demos].
+* View our [samples][conversationanalysis_samples].
+* Read about the different [features][conversationanalysis_docs_features] of the Conversations service.
+* Try our service [demos][conversationanalysis_docs_demos].
 
 ## Contributing
 
@@ -204,15 +210,17 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [contributing]: https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md
 [core_logging]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md
 [nuget]: https://www.nuget.org/
-[questionanswering_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering/src/QuestionAnsweringClient.cs
-[questionanswering_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering/src/
-[questionanswering_docs]: https://docs.microsoft.com/azure/cognitive-services/qnamaker/
-[questionanswering_docs_chat]: https://docs.microsoft.com/azure/cognitive-services/qnamaker/how-to/chit-chat-knowledge-base
-[questionanswering_docs_demos]: https://azure.microsoft.com/services/cognitive-services/qna-maker/#demo
-[questionanswering_docs_features]: https://azure.microsoft.com/services/cognitive-services/qna-maker/#features
-[questionanswering_nuget_package]: https://nuget.org/packages/Azure.AI.Language.QuestionAnswering/
-[questionanswering_refdocs]: https://docs.microsoft.com/dotnet/api/Azure.AI.Language.QuestionAnswering/
-[questionanswering_rest_docs]: https://docs.microsoft.com/rest/api/cognitiveservices-qnamaker/
-[questionanswering_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering/samples/README.md
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fcognitivelanguage%2FAzure.AI.Language.QuestionAnswering%2FREADME.png)
+[conversationanalysis_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/src/ConversationAnalysisClient.cs
+[conversationanalysis_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/src/
+[conversationanalysis_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/samples/
+
+<!--Update once nuget is released-->
+[conversationanalysis_nuget_package]: https://nuget.org/packages
+
+<!--Will be updated once service documentation is public-->
+[conversationanalysis_docs]: https://docs.microsoft.com/azure/cognitive-services/qnamaker/
+[conversationanalysis_docs_demos]: https://azure.microsoft.com/services/cognitive-services/qna-maker/#demo
+[conversationanalysis_docs_features]: https://azure.microsoft.com/services/cognitive-services/qna-maker/#features
+[conversationanalysis_refdocs]: https://docs.microsoft.com/dotnet/api/Azure.AI.Language.QuestionAnswering/
+[conversationanalysis_rest_docs]: https://docs.microsoft.com/rest/api/cognitiveservices-qnamaker/

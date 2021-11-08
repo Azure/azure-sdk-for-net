@@ -217,10 +217,10 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.AreEqual("name", ex.ParamName);
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.ReleaseKeyAsync("test", null));
-            Assert.AreEqual("target", ex.ParamName);
+            Assert.AreEqual("targetAttestationToken", ex.ParamName);
 
             ex = Assert.ThrowsAsync<ArgumentException>(async () => await Client.ReleaseKeyAsync("test", string.Empty));
-            Assert.AreEqual("target", ex.ParamName);
+            Assert.AreEqual("targetAttestationToken", ex.ParamName);
         }
 
         [Test]
@@ -228,10 +228,10 @@ namespace Azure.Security.KeyVault.Keys.Tests
         public void GetCryptographyClientValidation()
         {
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => Client.GetCryptographyClient(null));
-            Assert.AreEqual("name", ex.ParamName);
+            Assert.AreEqual("keyName", ex.ParamName);
 
             ex = Assert.Throws<ArgumentException>(() => Client.GetCryptographyClient(string.Empty));
-            Assert.AreEqual("name", ex.ParamName);
+            Assert.AreEqual("keyName", ex.ParamName);
         }
 
         [Test]
@@ -257,6 +257,39 @@ namespace Azure.Security.KeyVault.Keys.Tests
             CryptographyClient cryptographyClient = keyClient.GetCryptographyClient(key.Name, key.Properties.Version);
             WrapResult result = await cryptographyClient.WrapKeyAsync(KeyWrapAlgorithm.A128KW, new byte[] { 0x74, 0x65, 0x73, 0x74 });
             Assert.AreEqual(Convert.FromBase64String("dGVzdA=="), result.EncryptedKey);
+        }
+
+        [Test]
+        public void GetKeyRotationPolicyValidation()
+        {
+            ArgumentException ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.GetKeyRotationPolicyAsync(null));
+            Assert.AreEqual("name", ex.ParamName);
+
+            ex = Assert.ThrowsAsync<ArgumentException>(async () => await Client.GetKeyRotationPolicyAsync(string.Empty));
+            Assert.AreEqual("name", ex.ParamName);
+        }
+
+        [Test]
+        public void RotateKeyValidation()
+        {
+            ArgumentException ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.RotateKeyAsync(null));
+            Assert.AreEqual("name", ex.ParamName);
+
+            ex = Assert.ThrowsAsync<ArgumentException>(async () => await Client.RotateKeyAsync(string.Empty));
+            Assert.AreEqual("name", ex.ParamName);
+        }
+
+        [Test]
+        public void UpdateKeyRotationPolicyValidation()
+        {
+            ArgumentException ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.UpdateKeyRotationPolicyAsync(null, null));
+            Assert.AreEqual("name", ex.ParamName);
+
+            ex = Assert.ThrowsAsync<ArgumentException>(async () => await Client.UpdateKeyRotationPolicyAsync(string.Empty, null));
+            Assert.AreEqual("name", ex.ParamName);
+
+            ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.UpdateKeyRotationPolicyAsync("test", null));
+            Assert.AreEqual("policy", ex.ParamName);
         }
 
         private class MockCredential : TokenCredential

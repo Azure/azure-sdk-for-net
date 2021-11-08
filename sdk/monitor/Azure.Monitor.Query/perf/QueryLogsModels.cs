@@ -18,12 +18,12 @@ namespace Azure.Data.AppConfiguration.Perf
 
         public override void Run(CancellationToken cancellationToken)
         {
-            LogsQueryClient.Query<TestModelForTypes>(TestEnvironment.WorkspaceId, LogsQuery, QueryTimeRange.All, cancellationToken: cancellationToken);
+            LogsQueryClient.QueryWorkspace<TestModelForTypes>(TestEnvironment.WorkspaceId, LogsQuery, QueryTimeRange.All, cancellationToken: cancellationToken);
         }
 
         public override async Task RunAsync(CancellationToken cancellationToken)
         {
-            await LogsQueryClient.QueryAsync<TestModelForTypes>(TestEnvironment.WorkspaceId, LogsQuery, QueryTimeRange.All, cancellationToken: cancellationToken).ConfigureAwait(false);
+            await LogsQueryClient.QueryWorkspaceAsync<TestModelForTypes>(TestEnvironment.WorkspaceId, LogsQuery, QueryTimeRange.All, cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
         private record TestModelForTypes

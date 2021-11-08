@@ -51,6 +51,9 @@ namespace Azure.Data.Tables.Tests
                 entityResults = await client.QueryAsync<TableEntity>(TableOdataFilter.Create($"PartitionKey eq {partitionKeyValue} and RowKey eq {rowKeyValue}")).ToEnumerableAsync().ConfigureAwait(false);
             }
             Assert.AreEqual(1, entityResults.Count, "The entity result count should match the created count");
+
+            // GetEntity works also
+            await client.GetEntityAsync<TableEntity>(partitionKeyValue, rowKeyValue);
         }
 
         /// <summary>
@@ -1105,6 +1108,7 @@ namespace Azure.Data.Tables.Tests
                 Assert.That(entityResults[i].DoubleTypeProperty, Is.EqualTo(entitiesToCreate[i].DoubleTypeProperty), "The entities should be equivalent");
                 Assert.That(entityResults[i].GuidTypeProperty, Is.EqualTo(entitiesToCreate[i].GuidTypeProperty), "The entities should be equivalent");
                 Assert.That(entityResults[i].Int64TypeProperty, Is.EqualTo(entitiesToCreate[i].Int64TypeProperty), "The entities should be equivalent");
+                Assert.That(entityResults[i].UInt64TypeProperty, Is.EqualTo(entitiesToCreate[i].UInt64TypeProperty), "The entities should be equivalent");
                 Assert.That(entityResults[i].IntTypeProperty, Is.EqualTo(entitiesToCreate[i].IntTypeProperty), "The entities should be equivalent");
                 Assert.That(entityResults[i].PartitionKey, Is.EqualTo(entitiesToCreate[i].PartitionKey), "The entities should be equivalent");
                 Assert.That(entityResults[i].RowKey, Is.EqualTo(entitiesToCreate[i].RowKey), "The entities should be equivalent");
@@ -1186,6 +1190,42 @@ namespace Azure.Data.Tables.Tests
         {
             TableEntity entityResults;
             List<TableEntity> entitiesToCreate = CreateTableEntities(PartitionKeyValue, 1);
+
+            // Upsert the new entities.
+
+            await UpsertTestEntities(entitiesToCreate, TableUpdateMode.Replace).ConfigureAwait(false);
+
+            // Get the single entity by PartitionKey and RowKey.
+
+            entityResults = (await client.GetEntityAsync<TableEntity>(PartitionKeyValue, "01").ConfigureAwait(false)).Value;
+
+            Assert.That(entityResults, Is.Not.Null, "The entity should not be null.");
+        }
+
+        [RecordedTest]
+        public async Task StronglyTypedModelDoubleNaNRoundTrips()
+        {
+            TestEntity entityResults;
+            List<TestEntity> entitiesToCreate = CreateCustomTableEntities(PartitionKeyValue, 1);
+            entitiesToCreate[0].DoubleTypeProperty = Double.NaN;
+
+            // Upsert the new entities.
+
+            await UpsertTestEntities(entitiesToCreate, TableUpdateMode.Replace).ConfigureAwait(false);
+
+            // Get the single entity by PartitionKey and RowKey.
+
+            entityResults = (await client.GetEntityAsync<TestEntity>(PartitionKeyValue, "01").ConfigureAwait(false)).Value;
+
+            Assert.That(entityResults, Is.Not.Null, "The entity should not be null.");
+        }
+
+        [RecordedTest]
+        public async Task TableEntityDoubleNaNRoundTrips()
+        {
+            TableEntity entityResults;
+            List<TableEntity> entitiesToCreate = CreateTableEntities(PartitionKeyValue, 1);
+            entitiesToCreate[0][DoubleTypePropertyName] = Double.NaN;
 
             // Upsert the new entities.
 

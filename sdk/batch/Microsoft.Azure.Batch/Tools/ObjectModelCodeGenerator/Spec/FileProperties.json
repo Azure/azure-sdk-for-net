@@ -2,7 +2,7 @@
       "Name": "FileProperties",
       "ProtocolName": "Models.FileProperties",
       "SummaryComment": "The properties of a file on a compute node.",
-      "IsConstructorPublic": false,
+      "ConstructorAccess": "internal",
       "Properties": [
         {
           "Key": {

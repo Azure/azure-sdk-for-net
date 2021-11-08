@@ -363,16 +363,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a list of Subnets in the VirtualNetwork. </summary>
         /// <returns> An object representing collection of Subnets and their operations over a VirtualNetwork. </returns>
-        public SubnetContainer GetSubnets()
+        public SubnetCollection GetSubnets()
         {
-            return new SubnetContainer(this);
+            return new SubnetCollection(this);
         }
 
         /// <summary> Gets a list of VirtualNetworkPeerings in the VirtualNetwork. </summary>
         /// <returns> An object representing collection of VirtualNetworkPeerings and their operations over a VirtualNetwork. </returns>
-        public VirtualNetworkPeeringContainer GetVirtualNetworkPeerings()
+        public VirtualNetworkPeeringCollection GetVirtualNetworkPeerings()
         {
-            return new VirtualNetworkPeeringContainer(this);
+            return new VirtualNetworkPeeringCollection(this);
         }
     }
 }
