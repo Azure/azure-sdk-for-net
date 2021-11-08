@@ -14,8 +14,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Azure.WebPubSub.Common;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Abstractions;
 using NUnit.Framework;
 
 namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
@@ -24,19 +22,14 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
     public class ServiceRequestHandlerTests
     {
         private const string TestEndpoint = "https://my-host.webpubsub.net";
-        private readonly WebPubSubOptions _testOptions;
-        private readonly ILogger _logger;
         private readonly ServiceRequestHandlerAdapter _adaptor;
 
         public ServiceRequestHandlerTests()
         {
-            _testOptions = new WebPubSubOptions();
-            _testOptions.ValidationOptions.Add($"Endpoint={TestEndpoint};AccessKey=7aab239577fd4f24bc919802fb629f5f;Version=1.0;");
-            _logger = NullLogger<ServiceRequestHandlerTests>.Instance;
-            var services = new ServiceCollection()
-                .AddLogging();
-            services.AddWebPubSub(x => x.ValidationOptions.Add($"Endpoint={TestEndpoint};AccessKey=7aab239577fd4f24bc919802fb629f5f;Version=1.0;"));
-            var provider = services.BuildServiceProvider();
+            var provider = new ServiceCollection()
+                .AddLogging()
+                .AddWebPubSub(x => x.ValidationOptions.Add($"Endpoint={TestEndpoint};AccessKey=7aab239577fd4f24bc919802fb629f5f;Version=1.0;"))
+                .BuildServiceProvider();
             _adaptor = provider.GetRequiredService<ServiceRequestHandlerAdapter>();
         }
 
