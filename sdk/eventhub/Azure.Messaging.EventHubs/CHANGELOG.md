@@ -20,6 +20,8 @@
 
 - `EventData` now allows the `EventBody` to be set after construction and supports an empty constructor.
 
+- Based on a new series of profiling and testing in real-world application scenarios, the default values for `EventProcessor<T>` load balancing are being updated to provide better performance and stability.  The default load balancing interval was changed from 10 seconds to 30 seconds.  The default ownership expiration interval was changed from 30 seconds to 2 minutes.  The default load balancing strategy has been changed from balanced to greedy.
+
 - Added additional heuristics for the `EventProcessor<T>` load balancing cycle to help discover issues that can impact processor performance and stability; these validations will produce warnings should potential concerns be found.
 
 - `EventProcessor<T>` will now log a verbose message indicating what event position was chosen to read from when initializing a partition.
