@@ -24,6 +24,7 @@ namespace Azure.Storage
         /// Gets the default service version to use when building shared access
         /// signatures.
         /// </summary>
+        // TODO https://github.com/Azure/azure-sdk-for-net/issues/25140
         public const string DefaultSasVersion = "2020-12-06";
 
         /// <summary>
