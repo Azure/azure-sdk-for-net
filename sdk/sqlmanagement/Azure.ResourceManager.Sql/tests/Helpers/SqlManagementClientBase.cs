@@ -31,6 +31,11 @@ namespace Azure.ResourceManager.Sql.Tests
             return Task.CompletedTask;
         }
 
+        protected string CreateGeneralPassword()
+        {
+            return "HvVJ%paVC@%GBKmi";
+        }
+
         //protected SqlManagementClient GetSqlManagementClient()
         //{
         //    return CreateClient<SqlManagementClient>(this.TestEnvironment.SubscriptionId,

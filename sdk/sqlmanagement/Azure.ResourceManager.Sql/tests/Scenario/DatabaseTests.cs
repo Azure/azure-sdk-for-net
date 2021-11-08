@@ -64,11 +64,11 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             }
         }
 
-        private async Task<Database> CreateOrUpdateDatabase(string databaseName)
-        {
-
-            return server.Value;
-        }
+        //private async Task<Database> CreateOrUpdateDatabase(string databaseName)
+        //{
+        //    _resourceGroup.GetResourceGroupLocationLongTermRetentionServerLongTermRetentionDatabaseLongTermRetentionBackups();
+        //    throw new Exception();
+        //}
 
         //[Test]
         //[RecordedTest]
@@ -79,12 +79,12 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         //    Assert.AreEqual(true, _resourceGroup.GetServers().CheckIfExists(serverName).Value);
         //}
 
-        [Test]
-        [RecordedTest]
-        public async Task CreateOrUpdate()
-        {
-            string databaseName = Recording.GenerateAssetName("database-");
-            var database =await CreateOrUpdateDatabase(databaseName);
-        }
+        //[Test]
+        //[RecordedTest]
+        //public async Task CreateOrUpdate()
+        //{
+        //    string databaseName = Recording.GenerateAssetName("database-");
+        //    var database =await CreateOrUpdateDatabase(databaseName);
+        //}
     }
 }
