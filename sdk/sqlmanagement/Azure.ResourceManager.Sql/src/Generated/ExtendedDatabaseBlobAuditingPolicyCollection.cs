@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ExtendedDatabaseBlobAuditingPolicyCreateOrUpdateOperation CreateOrUpdate(Enum5 blobAuditingPolicyName, ExtendedDatabaseBlobAuditingPolicyData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ExtendedDatabaseBlobAuditingPolicyCreateOrUpdateOperation CreateOrUpdate(BlobAuditingPolicyName blobAuditingPolicyName, ExtendedDatabaseBlobAuditingPolicyData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ExtendedDatabaseBlobAuditingPolicyCreateOrUpdateOperation> CreateOrUpdateAsync(Enum5 blobAuditingPolicyName, ExtendedDatabaseBlobAuditingPolicyData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ExtendedDatabaseBlobAuditingPolicyCreateOrUpdateOperation> CreateOrUpdateAsync(BlobAuditingPolicyName blobAuditingPolicyName, ExtendedDatabaseBlobAuditingPolicyData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets an extended database&apos;s blob auditing policy. </summary>
         /// <param name="blobAuditingPolicyName"> The name of the blob auditing policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ExtendedDatabaseBlobAuditingPolicy> Get(Enum5 blobAuditingPolicyName, CancellationToken cancellationToken = default)
+        public virtual Response<ExtendedDatabaseBlobAuditingPolicy> Get(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ExtendedDatabaseBlobAuditingPolicyCollection.Get");
             scope.Start();
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets an extended database&apos;s blob auditing policy. </summary>
         /// <param name="blobAuditingPolicyName"> The name of the blob auditing policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ExtendedDatabaseBlobAuditingPolicy>> GetAsync(Enum5 blobAuditingPolicyName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<ExtendedDatabaseBlobAuditingPolicy>> GetAsync(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ExtendedDatabaseBlobAuditingPolicyCollection.Get");
             scope.Start();
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="blobAuditingPolicyName"> The name of the blob auditing policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ExtendedDatabaseBlobAuditingPolicy> GetIfExists(Enum5 blobAuditingPolicyName, CancellationToken cancellationToken = default)
+        public virtual Response<ExtendedDatabaseBlobAuditingPolicy> GetIfExists(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ExtendedDatabaseBlobAuditingPolicyCollection.GetIfExists");
             scope.Start();
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="blobAuditingPolicyName"> The name of the blob auditing policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ExtendedDatabaseBlobAuditingPolicy>> GetIfExistsAsync(Enum5 blobAuditingPolicyName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<ExtendedDatabaseBlobAuditingPolicy>> GetIfExistsAsync(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ExtendedDatabaseBlobAuditingPolicyCollection.GetIfExistsAsync");
             scope.Start();
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="blobAuditingPolicyName"> The name of the blob auditing policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> CheckIfExists(Enum5 blobAuditingPolicyName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> CheckIfExists(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ExtendedDatabaseBlobAuditingPolicyCollection.CheckIfExists");
             scope.Start();
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="blobAuditingPolicyName"> The name of the blob auditing policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(Enum5 blobAuditingPolicyName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> CheckIfExistsAsync(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ExtendedDatabaseBlobAuditingPolicyCollection.CheckIfExistsAsync");
             scope.Start();

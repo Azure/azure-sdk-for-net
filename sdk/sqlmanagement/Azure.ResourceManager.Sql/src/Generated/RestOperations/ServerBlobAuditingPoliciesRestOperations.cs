@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sql
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateGetRequest(string resourceGroupName, string serverName, Enum5 blobAuditingPolicyName)
+        internal HttpMessage CreateGetRequest(string resourceGroupName, string serverName, BlobAuditingPolicyName blobAuditingPolicyName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="blobAuditingPolicyName"> The name of the blob auditing policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is null. </exception>
-        public async Task<Response<ServerBlobAuditingPolicyData>> GetAsync(string resourceGroupName, string serverName, Enum5 blobAuditingPolicyName, CancellationToken cancellationToken = default)
+        public async Task<Response<ServerBlobAuditingPolicyData>> GetAsync(string resourceGroupName, string serverName, BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="blobAuditingPolicyName"> The name of the blob auditing policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is null. </exception>
-        public Response<ServerBlobAuditingPolicyData> Get(string resourceGroupName, string serverName, Enum5 blobAuditingPolicyName, CancellationToken cancellationToken = default)
+        public Response<ServerBlobAuditingPolicyData> Get(string resourceGroupName, string serverName, BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string serverName, Enum5 blobAuditingPolicyName, ServerBlobAuditingPolicyData parameters)
+        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string serverName, BlobAuditingPolicyName blobAuditingPolicyName, ServerBlobAuditingPolicyData parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parameters"> Properties of blob auditing policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string serverName, Enum5 blobAuditingPolicyName, ServerBlobAuditingPolicyData parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string serverName, BlobAuditingPolicyName blobAuditingPolicyName, ServerBlobAuditingPolicyData parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parameters"> Properties of blob auditing policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response CreateOrUpdate(string resourceGroupName, string serverName, Enum5 blobAuditingPolicyName, ServerBlobAuditingPolicyData parameters, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string resourceGroupName, string serverName, BlobAuditingPolicyName blobAuditingPolicyName, ServerBlobAuditingPolicyData parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

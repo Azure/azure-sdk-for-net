@@ -12,15 +12,15 @@ using Azure.ResourceManager.Sql;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A list of server firewall rules. </summary>
-    internal partial class FirewallRuleList
+    public partial class FirewallRuleList
     {
         /// <summary> Initializes a new instance of FirewallRuleList. </summary>
-        internal FirewallRuleList()
+        public FirewallRuleList()
         {
             Values = new ChangeTrackingList<FirewallRuleData>();
         }
 
         /// <summary> Gets the values. </summary>
-        public IReadOnlyList<FirewallRuleData> Values { get; }
+        public IList<FirewallRuleData> Values { get; }
     }
 }

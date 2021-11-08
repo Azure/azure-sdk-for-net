@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.Sql
         private readonly DatabasesRestOperations _databasesRestClient;
         private readonly ReplicationLinksRestOperations _replicationLinksRestClient;
         private readonly ServerUsagesRestOperations _serverUsagesRestClient;
+        private readonly FirewallRulesRestOperations _firewallRulesRestClient;
         private readonly ServerRestOperations _serverOperationsRestClient;
         private readonly TdeCertificatesRestOperations _tdeCertificatesRestClient;
         private readonly ServerData _data;
@@ -48,6 +49,7 @@ namespace Azure.ResourceManager.Sql
             _databasesRestClient = new DatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
             _replicationLinksRestClient = new ReplicationLinksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
             _serverUsagesRestClient = new ServerUsagesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _firewallRulesRestClient = new FirewallRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
             _serverOperationsRestClient = new ServerRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
             _tdeCertificatesRestClient = new TdeCertificatesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
@@ -62,6 +64,7 @@ namespace Azure.ResourceManager.Sql
             _databasesRestClient = new DatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
             _replicationLinksRestClient = new ReplicationLinksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
             _serverUsagesRestClient = new ServerUsagesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _firewallRulesRestClient = new FirewallRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
             _serverOperationsRestClient = new ServerRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
             _tdeCertificatesRestClient = new TdeCertificatesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
@@ -79,6 +82,7 @@ namespace Azure.ResourceManager.Sql
             _databasesRestClient = new DatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
             _replicationLinksRestClient = new ReplicationLinksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
             _serverUsagesRestClient = new ServerUsagesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _firewallRulesRestClient = new FirewallRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
             _serverOperationsRestClient = new ServerRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
             _tdeCertificatesRestClient = new TdeCertificatesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
@@ -668,6 +672,62 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/firewallRules
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
+        /// OperationId: FirewallRules_Replace
+        /// <summary> Replaces all firewall rules on the server. </summary>
+        /// <param name="parameters"> The FirewallRuleList to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public async virtual Task<Response<FirewallRuleData>> ReplaceFirewallRuleAsync(FirewallRuleList parameters, CancellationToken cancellationToken = default)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("Server.ReplaceFirewallRule");
+            scope.Start();
+            try
+            {
+                var response = await _firewallRulesRestClient.ReplaceAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/firewallRules
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
+        /// OperationId: FirewallRules_Replace
+        /// <summary> Replaces all firewall rules on the server. </summary>
+        /// <param name="parameters"> The FirewallRuleList to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual Response<FirewallRuleData> ReplaceFirewallRule(FirewallRuleList parameters, CancellationToken cancellationToken = default)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("Server.ReplaceFirewallRule");
+            scope.Start();
+            try
+            {
+                var response = _firewallRulesRestClient.Replace(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/operations

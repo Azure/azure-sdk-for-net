@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sql
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateGetRequest(string resourceGroupName, string serverName, string databaseName, Enum5 blobAuditingPolicyName)
+        internal HttpMessage CreateGetRequest(string resourceGroupName, string serverName, string databaseName, BlobAuditingPolicyName blobAuditingPolicyName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="blobAuditingPolicyName"> The name of the blob auditing policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, or <paramref name="databaseName"/> is null. </exception>
-        public async Task<Response<DatabaseBlobAuditingPolicyData>> GetAsync(string resourceGroupName, string serverName, string databaseName, Enum5 blobAuditingPolicyName, CancellationToken cancellationToken = default)
+        public async Task<Response<DatabaseBlobAuditingPolicyData>> GetAsync(string resourceGroupName, string serverName, string databaseName, BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="blobAuditingPolicyName"> The name of the blob auditing policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, or <paramref name="databaseName"/> is null. </exception>
-        public Response<DatabaseBlobAuditingPolicyData> Get(string resourceGroupName, string serverName, string databaseName, Enum5 blobAuditingPolicyName, CancellationToken cancellationToken = default)
+        public Response<DatabaseBlobAuditingPolicyData> Get(string resourceGroupName, string serverName, string databaseName, BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string serverName, string databaseName, Enum5 blobAuditingPolicyName, DatabaseBlobAuditingPolicyData parameters)
+        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string serverName, string databaseName, BlobAuditingPolicyName blobAuditingPolicyName, DatabaseBlobAuditingPolicyData parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parameters"> The database blob auditing policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response<DatabaseBlobAuditingPolicyData>> CreateOrUpdateAsync(string resourceGroupName, string serverName, string databaseName, Enum5 blobAuditingPolicyName, DatabaseBlobAuditingPolicyData parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<DatabaseBlobAuditingPolicyData>> CreateOrUpdateAsync(string resourceGroupName, string serverName, string databaseName, BlobAuditingPolicyName blobAuditingPolicyName, DatabaseBlobAuditingPolicyData parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parameters"> The database blob auditing policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response<DatabaseBlobAuditingPolicyData> CreateOrUpdate(string resourceGroupName, string serverName, string databaseName, Enum5 blobAuditingPolicyName, DatabaseBlobAuditingPolicyData parameters, CancellationToken cancellationToken = default)
+        public Response<DatabaseBlobAuditingPolicyData> CreateOrUpdate(string resourceGroupName, string serverName, string databaseName, BlobAuditingPolicyName blobAuditingPolicyName, DatabaseBlobAuditingPolicyData parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
