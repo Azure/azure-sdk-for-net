@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             AccessKeys keys = await rule.GetKeysAsync();
             Assert.NotNull(keys);
 
-            //break pairing and wait for competion
+            //break pairing and wait for completion
             await armDisasterRecovery.BreakPairingAsync();
             armDisasterRecovery = await eHNamespace1.GetArmDisasterRecoveries().GetAsync(disasterRecoveryName);
             i = 0;
