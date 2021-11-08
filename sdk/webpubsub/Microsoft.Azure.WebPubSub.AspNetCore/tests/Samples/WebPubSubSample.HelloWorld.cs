@@ -41,6 +41,13 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests.Samples
                 return new ValueTask<WebPubSubEventResponse>(response);
             }
             #endregion
+
+            #region Snippet:WebPubSubDefaultMethods
+            public override ValueTask<WebPubSubEventResponse> OnMessageReceivedAsync(UserEventRequest request, CancellationToken cancellationToken)
+            {
+                return base.OnMessageReceivedAsync(request, cancellationToken);
+            }
+            #endregion
         }
     }
 }
