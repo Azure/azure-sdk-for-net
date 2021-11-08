@@ -1,0 +1,13 @@
+{
+  "parameters": {
+    "endpoint": "https://contoso.westus.communications.azure.com",
+    "api-version": "2021-12-31-preview",
+    "mediaCompositionId": "49b2b09f-5be7-4a67-835e-9b11aa260f08"
+  },
+  "responses": {
+    "200": {
+      "body": "running"
+    },
+    "400": {}
+  }
+}

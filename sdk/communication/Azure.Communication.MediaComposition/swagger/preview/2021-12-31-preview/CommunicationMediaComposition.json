@@ -1,0 +1,583 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Azure Communication Media Composition Service",
+    "description": "Azure Communication Media Composition Service",
+    "version": "2021-12-31-preview"
+  },
+  "paths": {
+    "/mediaCompositions/{mediaCompositionId}": {
+      "get": {
+        "tags": [
+          "MediaComposition"
+        ],
+        "operationId": "MediaComposition_Get",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "mediaCompositionId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/MediaCompositionBody"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        },
+        "x-ms-examples": {
+          "Issue Turn Credentials": {
+            "$ref": "./examples/MediaComposition_GetMediaComposition.json"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "MediaComposition"
+        ],
+        "operationId": "MediaComposition_Create",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "mediaCompositionId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/MediaCompositionBody"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/MediaCompositionBody"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        },
+        "x-ms-examples": {
+          "Issue Turn Credentials": {
+            "$ref": "./examples/MediaComposition_CreateMediaComposition.json"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "MediaComposition"
+        ],
+        "operationId": "MediaComposition_Update",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "mediaCompositionId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/MediaCompositionBody"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/MediaCompositionBody"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        },
+        "x-ms-examples": {
+          "Issue Turn Credentials": {
+            "$ref": "./examples/MediaComposition_UpdateMediaComposition.json"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "MediaComposition"
+        ],
+        "operationId": "MediaComposition_Delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "mediaCompositionId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Success"
+          }
+        },
+        "x-ms-examples": {
+          "Issue Turn Credentials": {
+            "$ref": "./examples/MediaComposition_DeleteMediaComposition.json"
+          }
+        }
+      }
+    },
+    "/mediaCompositions/{mediaCompositionId}/start": {
+      "post": {
+        "tags": [
+          "MediaComposition"
+        ],
+        "operationId": "MediaComposition_Start",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "mediaCompositionId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/CompositionStreamState"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        },
+        "x-ms-examples": {
+          "Issue Turn Credentials": {
+            "$ref": "./examples/MediaComposition_StartMediaComposition.json"
+          }
+        }
+      }
+    },
+    "/mediaCompositions/{mediaCompositionId}/stop": {
+      "post": {
+        "tags": [
+          "MediaComposition"
+        ],
+        "operationId": "MediaComposition_Stop",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "mediaCompositionId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/CompositionStreamState"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        },
+        "x-ms-examples": {
+          "Issue Turn Credentials": {
+            "$ref": "./examples/MediaComposition_StopMediaComposition.json"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "AudiencePosition": {
+      "enum": [
+        "top",
+        "right",
+        "bottom",
+        "left"
+      ],
+      "type": "string"
+    },
+    "CommunicationUserIdentifierModel": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      }
+    },
+    "CompositionStreamState": {
+      "enum": [
+        "notStarted",
+        "running",
+        "stopped"
+      ],
+      "type": "string"
+    },
+    "Container": {
+      "type": "object",
+      "properties": {
+        "position": {
+          "$ref": "#/definitions/Position"
+        },
+        "width": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "height": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "sourceIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "GridLayoutOptions": {
+      "type": "object",
+      "properties": {
+        "columns": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "rows": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "GroupCall": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      }
+    },
+    "Layout": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/definitions/LayoutType"
+        },
+        "resolution": {
+          "$ref": "#/definitions/Resolution"
+        },
+        "trackActiveSpeaker": {
+          "type": "boolean"
+        },
+        "presentationWithContentLayoutOptions": {
+          "$ref": "#/definitions/PresentationWithContentLayoutOptions"
+        },
+        "gridOptions": {
+          "$ref": "#/definitions/GridLayoutOptions"
+        },
+        "presentationOptions": {
+          "$ref": "#/definitions/PresentationLayoutOptions"
+        },
+        "presenterOptions": {
+          "$ref": "#/definitions/PresenterLayoutOptions"
+        },
+        "containers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Container"
+          }
+        }
+      }
+    },
+    "LayoutType": {
+      "enum": [
+        "grid",
+        "dynamicGrid",
+        "presentation",
+        "presenter",
+        "weatherPerson",
+        "together",
+        "custom",
+        "presentationWithContent",
+        "warhol"
+      ],
+      "type": "string"
+    },
+    "MediaCompositionBody": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "layout": {
+          "$ref": "#/definitions/Layout"
+        },
+        "mediaInputs": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/MediaInput"
+          }
+        },
+        "mediaOutputs": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/MediaOutput"
+          }
+        },
+        "sources": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/Source"
+          }
+        },
+        "streamState": {
+          "$ref": "#/definitions/CompositionStreamState"
+        }
+      }
+    },
+    "MediaInput": {
+      "type": "object",
+      "properties": {
+        "mediaType": {
+          "$ref": "#/definitions/MediaType"
+        },
+        "groupCall": {
+          "$ref": "#/definitions/GroupCall"
+        },
+        "teamsMeeting": {
+          "$ref": "#/definitions/TeamsMeeting"
+        },
+        "rtmp": {
+          "$ref": "#/definitions/RtmpStream"
+        },
+        "srt": {
+          "$ref": "#/definitions/SrtStream"
+        }
+      }
+    },
+    "MediaOutput": {
+      "type": "object",
+      "properties": {
+        "mediaType": {
+          "$ref": "#/definitions/MediaType"
+        },
+        "groupCall": {
+          "$ref": "#/definitions/GroupCall"
+        },
+        "teamsMeeting": {
+          "$ref": "#/definitions/TeamsMeeting"
+        },
+        "rtmp": {
+          "$ref": "#/definitions/RtmpStream"
+        },
+        "srt": {
+          "$ref": "#/definitions/SrtStream"
+        }
+      }
+    },
+    "MediaType": {
+      "enum": [
+        "groupCall",
+        "teamsMeeting",
+        "srt",
+        "rtmp"
+      ],
+      "type": "string"
+    },
+    "Position": {
+      "type": "object",
+      "properties": {
+        "x": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "y": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "z": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "PresentationLayoutOptions": {
+      "type": "object",
+      "properties": {
+        "presenterSourceId": {
+          "type": "string"
+        },
+        "audiencePosition": {
+          "$ref": "#/definitions/AudiencePosition"
+        }
+      }
+    },
+    "PresentationWithContentLayoutOptions": {
+      "type": "object",
+      "properties": {
+        "contentSourceId": {
+          "type": "string"
+        },
+        "presenterSourceId": {
+          "type": "string"
+        }
+      }
+    },
+    "PresenterLayoutOptions": {
+      "type": "object",
+      "properties": {
+        "presenterSourceId": {
+          "type": "string"
+        },
+        "supportSourceId": {
+          "type": "string"
+        },
+        "supportPosition": {
+          "$ref": "#/definitions/SupportPosition"
+        },
+        "supportAspectRatio": {
+          "format": "double",
+          "type": "number"
+        }
+      }
+    },
+    "Resolution": {
+      "type": "object",
+      "properties": {
+        "width": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "height": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "RtmpMode": {
+      "enum": [
+        "push",
+        "pull"
+      ],
+      "type": "string"
+    },
+    "RtmpStream": {
+      "type": "object",
+      "properties": {
+        "enableSsl": {
+          "type": "boolean"
+        },
+        "streamUrl": {
+          "type": "string"
+        },
+        "streamKey": {
+          "type": "string"
+        },
+        "resolution": {
+          "$ref": "#/definitions/Resolution"
+        },
+        "mode": {
+          "$ref": "#/definitions/RtmpMode"
+        }
+      }
+    },
+    "Source": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "sourceType": {
+          "$ref": "#/definitions/SourceType"
+        },
+        "participant": {
+          "$ref": "#/definitions/CommunicationUserIdentifierModel"
+        },
+        "location": {
+          "type": "string"
+        },
+        "mediaInputId": {
+          "type": "string"
+        }
+      }
+    },
+    "SourceType": {
+      "enum": [
+        "participant",
+        "sprite",
+        "rtmp",
+        "srt",
+        "screenShare"
+      ],
+      "type": "string"
+    },
+    "SrtStream": {
+      "type": "object",
+      "properties": {
+        "streamUrl": {
+          "format": "uri",
+          "type": "string"
+        },
+        "resolution": {
+          "$ref": "#/definitions/Resolution"
+        }
+      }
+    },
+    "SupportPosition": {
+      "enum": [
+        "topLeft",
+        "topRight",
+        "bottomLeft",
+        "bottomRight"
+      ],
+      "type": "string"
+    },
+    "TeamsMeeting": {
+      "type": "object",
+      "properties": {
+        "teamsJoinUrl": {
+          "format": "uri",
+          "type": "string"
+        }
+      }
+    }
+  }
+}

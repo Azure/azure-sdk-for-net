@@ -1,0 +1,60 @@
+{
+  "parameters": {
+    "endpoint": "https://contoso.westus.communications.azure.com",
+    "api-version": "2021-12-31-preview",
+    "mediaCompositionId": "49b2b09f-5be7-4a67-835e-9b11aa260f08",
+    "updatedMediaComposition": {
+      "sources": {
+        "presenter": {
+          "mediaInputId": "watchParty",
+          "sourceType": "participant",
+          "participant": {
+            "id": "fbb3436a-4ec7-46e0-b20d-e6de72513e58"
+          }
+        }
+      }
+    }
+  },
+  "responses": {
+    "200": {
+      "body": {
+        "id": "49b2b09f-5be7-4a67-835e-9b11aa260f08",
+        "layout": {
+          "type": "warhol",
+          "resolution": {
+            "width": 1920,
+            "height": 1080
+          },
+          "trackActiveSpeaker": false
+        },
+        "mediaInputs": {
+          "watchParty": {
+            "mediaType": "teamsMeeting",
+            "teamsMeeting": {
+              "teamsJoinUrl": "https://teams.microsoft.com/l/meetup-join/19%3ameeting_ZjhlYTc5NTEtYjQ0Ny00ZDkwLWIxZTYtYzg0MDNmMTg5MGIy%40thread.v2/0?context=%7b%22Tid%22%3a%2221fa45a2-67de-4731-b654-ccf5c9c0d577%22%2c%22Oid%22%3a%22fbb3436a-4ec7-46e0-b20d-e6de72513e58%22%7d"
+            }
+          }
+        },
+        "mediaOutputs": {
+          "teams": {
+            "mediaType": "teamsMeeting",
+            "teamsMeeting": {
+              "teamsJoinUrl": "https://teams.microsoft.com/l/meetup-join/19%3ameeting_Yzc2MmYzNzktMjc5OS00NjJjLWJjODktMzVjNzM4NjY5ZDhl%40thread.v2/0?context=%7b%22Tid%22%3a%2221fa45a2-67de-4731-b654-ccf5c9c0d577%22%2c%22Oid%22%3a%22f3ba9014-6dca-4456-8ec0-fa03cfa2b7b7%22%7d"
+            }
+          }
+        },
+        "sources": {
+          "presenter": {
+            "sourceType": "participant",
+            "participant": {
+              "id": "fbb3436a-4ec7-46e0-b20d-e6de72513e58"
+            },
+            "mediaInputId": "watchParty"
+          }
+        },
+        "streamState": "notStarted"
+      }
+    },
+    "400": {}
+  }
+}
