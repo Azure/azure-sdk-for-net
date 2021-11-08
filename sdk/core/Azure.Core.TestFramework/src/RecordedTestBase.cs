@@ -165,13 +165,13 @@ namespace Azure.Core.TestFramework
                 Process installProcess = Process.Start(processInfo);
                 installProcess.WaitForExit();
             }
-            processInfo = new ProcessStartInfo(
-                "dotnet",
-                "dev-certs https --trust")
-            {
-                UseShellExecute = false
-            };
-            Process.Start(processInfo).WaitForExit();
+            // processInfo = new ProcessStartInfo(
+            //     "dotnet",
+            //     "dev-certs https --trust")
+            // {
+            //     UseShellExecute = false
+            // };
+            // Process.Start(processInfo).WaitForExit();
 
             processInfo = new ProcessStartInfo(
                 "test-proxy")
