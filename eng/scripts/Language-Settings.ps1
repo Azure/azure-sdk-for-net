@@ -521,3 +521,9 @@ function UpdateDocsMsPackages($DocConfigFile, $Mode, $DocsMetadata) {
   }
   Set-Content -Path $DocConfigFile -Value $outputLines
 }
+
+function Import-Dev-Cert-net
+{
+  Write-Host "Trusting dev certificate"
+  dotnet dev-certs https --trust
+}
