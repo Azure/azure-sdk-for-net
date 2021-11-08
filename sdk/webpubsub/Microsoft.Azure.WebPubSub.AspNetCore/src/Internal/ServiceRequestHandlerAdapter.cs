@@ -23,18 +23,10 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         // <hubName, HubImpl>
         private readonly Dictionary<string, WebPubSubHub> _hubRegistry = new(StringComparer.OrdinalIgnoreCase);
 
-        public ServiceRequestHandlerAdapter(IServiceProvider provider, IOptions<WebPubSubOptions> options, ILoggerFactory loggerFactory)
+        public ServiceRequestHandlerAdapter(IServiceProvider provider, IOptions<WebPubSubOptions> options, ILogger<ServiceRequestHandlerAdapter> logger)
         {
             _provider = provider;
             _options = options.Value;
-            _logger = loggerFactory?.CreateLogger<ServiceRequestHandlerAdapter>();
-        }
-
-        // for tests.
-        internal ServiceRequestHandlerAdapter(WebPubSubOptions options, WebPubSubHub hub, ILogger logger)
-        {
-            _options = options;
-            _hubRegistry.Add(hub.GetType().Name, hub);
             _logger = logger;
         }
 

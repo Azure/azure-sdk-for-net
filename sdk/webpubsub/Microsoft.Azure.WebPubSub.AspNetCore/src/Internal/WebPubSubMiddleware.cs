@@ -20,12 +20,12 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
             RequestDelegate next,
             IOptions<WebPubSubOptions> options,
             ServiceRequestHandlerAdapter handler,
-            ILoggerFactory loggerFactory)
+            ILogger<WebPubSubMiddleware> logger)
         {
             _next = next;
             _handler = handler;
             _options = options.Value;
-            _logger = loggerFactory?.CreateLogger<WebPubSubMiddleware>();
+            _logger = logger;
         }
 
         public async Task InvokeAsync(HttpContext context)
