@@ -8,7 +8,16 @@ namespace Azure.AI.Language.Conversations
 {
     /// <summary> The request body. </summary>
     [CodeGenModel("ConversationAnalysisOptions")]
+    [CodeGenSuppress("AnalyzeConversationOptions", typeof(string))]
     public partial class AnalyzeConversationOptions
     {
+        /// <summary> Initializes a new instance of AnalyzeConversationOptions. </summary>
+        public AnalyzeConversationOptions()
+        {
+            Parameters = new ChangeTrackingDictionary<string, AnalysisParameters>();
+        }
+
+        /// <summary> The conversation utterance to be analyzed. </summary>
+        internal string Query { get; set; }
     }
 }

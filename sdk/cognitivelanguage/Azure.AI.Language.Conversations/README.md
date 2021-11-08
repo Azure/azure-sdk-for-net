@@ -76,7 +76,7 @@ The following examples show common scenarios using the `client` [created above](
 
 ### Analyze a conversation
 
-To analyze a conversation, we can then call the `client.AnalyzeConversation()` method which takes the project name, deployment name, and query as parameters.
+To analyze a conversation, we can then call the `client.AnalyzeConversation()` method which takes a conversations project and an utterance as parameters.
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversation
 ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
@@ -124,7 +124,7 @@ Other optional properties can be set such as verbosity and whether service loggi
 
 When you interact with the Cognitive Language Services Conversations client library using the .NET SDK, errors returned by the service correspond to the same HTTP status codes returned for [REST API][conversationanalysis_rest_docs] requests.
 
-For example, if you submit a query to a non-existant project, a `400` error is returned indicating "Bad Request".
+For example, if you submit a utterance to a non-existant project, a `400` error is returned indicating "Bad Request".
 
 ```C# Snippet:ConversationAnalysisClient_BadRequest
 try

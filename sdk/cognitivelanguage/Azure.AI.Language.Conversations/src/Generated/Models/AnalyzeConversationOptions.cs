@@ -14,22 +14,6 @@ namespace Azure.AI.Language.Conversations
     /// <summary> The request body. </summary>
     public partial class AnalyzeConversationOptions
     {
-        /// <summary> Initializes a new instance of AnalyzeConversationOptions. </summary>
-        /// <param name="query"> The conversation utterance to be analyzed. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="query"/> is null. </exception>
-        public AnalyzeConversationOptions(string query)
-        {
-            if (query == null)
-            {
-                throw new ArgumentNullException(nameof(query));
-            }
-
-            Query = query;
-            Parameters = new ChangeTrackingDictionary<string, AnalysisParameters>();
-        }
-
-        /// <summary> The conversation utterance to be analyzed. </summary>
-        public string Query { get; }
         /// <summary> The name of the target project this request is sending to directly. </summary>
         public string DirectTarget { get; set; }
         /// <summary> The language to use in this request. This will be the language setting when communicating with all other target projects. </summary>
