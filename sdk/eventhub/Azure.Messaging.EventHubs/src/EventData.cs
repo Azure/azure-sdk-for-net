@@ -48,6 +48,13 @@ namespace Azure.Messaging.EventHubs
             set => _amqpMessage.Body = AmqpMessageBody.FromData(MessageBody.FromReadOnlyMemorySegment(value.ToMemory()));
         }
 
+        /// <summary>
+        ///   The data associated with the event, in <see cref="BinaryData" /> form, providing support
+        ///   for a variety of data transformations and <see cref="ObjectSerializer" /> integration.
+        /// </summary>
+        ///
+        /// <seealso cref="BinaryData" />
+        ///
         BinaryData IMessageWithContentType.Data
         {
             get => EventBody;
