@@ -35,10 +35,10 @@ namespace Microsoft.Azure.Management.KeyVault
       // BEGIN: Code Generation Metadata Section
       public static readonly String AutoRestVersion = "v2";
       public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/keyvault/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --tag=package-preview-2021-06 --csharp.output-folder=C:\\repo\\azure-sdk-for-net\\sdk\\keyvault\\Microsoft.Azure.Management.KeyVault\\src\\Generated";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/keyvault/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --tag=package-preview-2021-06 --csharp.output-folder=C:\\repo\\azure-sdk-for-net\\sdk\\keyvault\\Microsoft.Azure.Management.KeyVault\\src\\Generated";
       public static readonly String GithubForkName = "Azure";
-      public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "694fe69245024447f8d3647be1da88e9ad942058";
+      public static readonly String GithubBranchName = "main";
+      public static readonly String GithubCommidId = "27c89d071d6a3d6edc908d86655773e0aa9e59d0";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
