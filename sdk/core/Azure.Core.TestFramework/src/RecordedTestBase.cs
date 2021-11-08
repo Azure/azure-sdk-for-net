@@ -140,7 +140,7 @@ namespace Azure.Core.TestFramework
             }
 
             var processInfo = new ProcessStartInfo(
-                @"dotnet",
+                "dotnet",
                 "tool list -g")
             {
                 UseShellExecute = false,
@@ -154,7 +154,7 @@ namespace Azure.Core.TestFramework
             if (!installedTools.Contains("azure.sdk.tools.testproxy"))
             {
                 processInfo = new ProcessStartInfo(
-                    @"dotnet",
+                    "dotnet",
                     "tool install azure.sdk.tools.testproxy " +
                     "--global " +
                     "--add-source https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json " +
@@ -165,9 +165,16 @@ namespace Azure.Core.TestFramework
                 Process installProcess = Process.Start(processInfo);
                 installProcess.WaitForExit();
             }
+            processInfo = new ProcessStartInfo(
+                "dotnet",
+                "dev-certs https --trust")
+            {
+                UseShellExecute = false
+            };
+            Process.Start(processInfo).WaitForExit();
 
             processInfo = new ProcessStartInfo(
-                @"test-proxy")
+                "test-proxy")
             {
                 UseShellExecute = true
             };
