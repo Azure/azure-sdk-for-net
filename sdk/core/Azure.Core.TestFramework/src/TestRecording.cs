@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text.Json;
 using System.Threading;
@@ -210,17 +211,10 @@ namespace Azure.Core.TestFramework
             return id.Length > maxLength ? id.Substring(0, maxLength) : id;
         }
 
-        // public string GenerateAssetName(string prefix, [CallerMemberName] string callerMethodName = "testframework_failed")
-        // {
-        //     if (Mode == RecordedTestMode.Playback && IsTrack1SessionRecord())
-        //     {
-        //         return Session.Names[callerMethodName].Dequeue();
-        //     }
-        //     else
-        //     {
-        //         return prefix + Random.Next(9999);
-        //     }
-        // }
+        public string GenerateAssetName(string prefix, [CallerMemberName] string callerMethodName = "testframework_failed")
+        {
+            return prefix + Random.Next(9999);
+        }
 
         public string GetVariable(string variableName, string defaultValue, Func<string, string> sanitizer = default)
         {
