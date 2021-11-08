@@ -174,7 +174,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             context.Response.Body.Seek(0, SeekOrigin.Begin);
             var response = await new StreamReader(context.Response.Body).ReadToEndAsync();
             // validate response matches exception
-            Assert.AreEqual("server error", response);
+            Assert.AreEqual("Test Exception", response);
         }
 
         [Test]
@@ -186,11 +186,11 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
 
             await handler.HandleRequest(context);
 
-            Assert.AreEqual(StatusCodes.Status500InternalServerError, context.Response.StatusCode);
+            Assert.AreEqual(StatusCodes.Status401Unauthorized, context.Response.StatusCode);
             context.Response.Body.Seek(0, SeekOrigin.Begin);
             var response = await new StreamReader(context.Response.Body).ReadToEndAsync();
             // validate response matches exception
-            Assert.AreEqual("Invalid type of response returned in SYSTEM.CONNECT event: Microsoft.Azure.WebPubSub.Common.UserEventResponse", response);
+            Assert.AreEqual("Invalid user", response);
         }
 
         private static HttpContext PrepareHttpContext(
@@ -281,18 +281,18 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
                 _flag = flag;
             }
 
-            public override ValueTask<WebPubSubEventResponse> OnConnectAsync(ConnectEventRequest request, CancellationToken cancellationToken)
+            public override ValueTask<ConnectEventResponse> OnConnectAsync(ConnectEventRequest request, CancellationToken cancellationToken)
             {
                 Assert.NotNull(request);
                 Assert.AreEqual("my-host.webpubsub.net", request.ConnectionContext.Origin);
 
-                return new ValueTask<WebPubSubEventResponse>(new ConnectEventResponse
+                return new ValueTask<ConnectEventResponse>(new ConnectEventResponse
                 {
                     UserId = request.ConnectionContext.UserId
                 });
             }
 
-            public override ValueTask<WebPubSubEventResponse> OnMessageReceivedAsync(UserEventRequest request, CancellationToken cancellationToken)
+            public override ValueTask<UserEventResponse> OnMessageReceivedAsync(UserEventRequest request, CancellationToken cancellationToken)
             {
                 Assert.NotNull(request);
                 Assert.AreEqual("my-host.webpubsub.net", request.ConnectionContext.Origin);
@@ -315,7 +315,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
                     default:
                         break;
                 };
-                return new ValueTask<WebPubSubEventResponse>(response);
+                return new ValueTask<UserEventResponse>(response);
             }
 
             // test exceptions
@@ -342,21 +342,19 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
         // Test error cases.
         private sealed class TestCornerHub : WebPubSubHub
         {
-            // Test invalid type return
-            public override ValueTask<WebPubSubEventResponse> OnConnectAsync(ConnectEventRequest request, CancellationToken cancellationToken)
+            // Test invalid type return 401
+            public override ValueTask<ConnectEventResponse> OnConnectAsync(ConnectEventRequest request, CancellationToken cancellationToken)
             {
-                var response = new UserEventResponse("user event");
-                return new ValueTask<WebPubSubEventResponse>(response);
+                throw new UnauthorizedAccessException("Invalid user");
             }
 
-            // Test error return correct
-            public override ValueTask<WebPubSubEventResponse> OnMessageReceivedAsync(UserEventRequest request, CancellationToken cancellationToken)
+            // Test error return correct 500
+            public override ValueTask<UserEventResponse> OnMessageReceivedAsync(UserEventRequest request, CancellationToken cancellationToken)
             {
-                var response = new EventErrorResponse(WebPubSubErrorCode.ServerError, "server error");
-                return new ValueTask<WebPubSubEventResponse>(response);
+                throw new Exception("Test Exception");
             }
 
-            // Test exception return correct
+            // Test exception return correct 500
             public override Task OnConnectedAsync(ConnectedEventRequest request)
             {
                 throw new Exception("Test Exception");

@@ -99,52 +99,29 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                     case ConnectEventRequest connectEventRequest:
                         {
                             var response = await hub.OnConnectAsync(connectEventRequest, context.RequestAborted).ConfigureAwait(false);
-                            switch (response)
+                            // default as null is allowed.
+                            if (response != null)
                             {
-                                case EventErrorResponse error:
-                                    {
-                                        context.Response.StatusCode = ConvertToStatusCode(error.Code);
-                                        context.Response.ContentType = Constants.ContentTypes.PlainTextContentType;
-                                        await context.Response.WriteAsync(error.ErrorMessage).ConfigureAwait(false);
-                                        return;
-                                    }
-                                case ConnectEventResponse connectResponse:
-                                    {
-                                        SetConnectionState(ref context, connectEventRequest.ConnectionContext, connectResponse.States);
-                                        await context.Response.WriteAsync(JsonSerializer.Serialize(connectResponse)).ConfigureAwait(false);
-                                        return;
-                                    }
-                                case null:
-                                    return;
-                                default:
-                                    throw new ArgumentException($"Invalid type of response returned in SYSTEM.CONNECT event: {response.GetType()}");
+                                SetConnectionState(ref context, connectEventRequest.ConnectionContext, response.States);
+                                await context.Response.WriteAsync(JsonSerializer.Serialize(response)).ConfigureAwait(false);
                             }
+                            return;
                         }
                     case UserEventRequest messageRequest:
                         {
                             var response = await hub.OnMessageReceivedAsync(messageRequest, context.RequestAborted).ConfigureAwait(false);
-                            switch (response)
+                            // default as null is allowed.
+                            if (response != null)
                             {
-                                case EventErrorResponse error:
-                                    {
-                                        context.Response.StatusCode = ConvertToStatusCode(error.Code);
-                                        context.Response.ContentType = Constants.ContentTypes.PlainTextContentType;
-                                        await context.Response.WriteAsync(error.ErrorMessage).ConfigureAwait(false);
-                                        return;
-                                    }
-                                case UserEventResponse msgResponse:
-                                    {
-                                        SetConnectionState(ref context, messageRequest.ConnectionContext, msgResponse.States);
-                                        context.Response.ContentType = ConvertToContentType(msgResponse.DataType);
-                                        var payload = msgResponse.Message.ToArray();
-                                        await context.Response.Body.WriteAsync(payload, 0, payload.Length).ConfigureAwait(false);
-                                        return;
-                                    }
-                                case null:
-                                    return;
-                                default:
-                                    throw new ArgumentException($"Invalid type of response returned in USER event: {response.GetType()}");
+                                SetConnectionState(ref context, messageRequest.ConnectionContext, response.States);
                             }
+                            if (response.Message != null)
+                            {
+                                context.Response.ContentType = ConvertToContentType(response.DataType);
+                                var payload = response.Message.ToArray();
+                                await context.Response.Body.WriteAsync(payload, 0, payload.Length).ConfigureAwait(false);
+                            }
+                            return;
                         }
                     case ConnectedEventRequest connectedEvent:
                         {
@@ -167,6 +144,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
             }
             catch (Exception ex)
             {
+                // logging to service.
                 context.Response.StatusCode = StatusCodes.Status500InternalServerError;
                 await context.Response.WriteAsync(ex.Message).ConfigureAwait(false);
             }

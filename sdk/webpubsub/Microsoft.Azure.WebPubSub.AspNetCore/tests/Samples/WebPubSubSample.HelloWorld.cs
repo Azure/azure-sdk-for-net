@@ -32,18 +32,18 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests.Samples
         private sealed class SampleHub : WebPubSubHub
         {
             #region Snippet:WebPubSubConnectMethods
-            public override ValueTask<WebPubSubEventResponse> OnConnectAsync(ConnectEventRequest request, CancellationToken cancellationToken)
+            public override ValueTask<ConnectEventResponse> OnConnectAsync(ConnectEventRequest request, CancellationToken cancellationToken)
             {
                 var response = new ConnectEventResponse
                 {
                     UserId = request.ConnectionContext.UserId
                 };
-                return new ValueTask<WebPubSubEventResponse>(response);
+                return new ValueTask<ConnectEventResponse>(response);
             }
             #endregion
 
             #region Snippet:WebPubSubDefaultMethods
-            public override ValueTask<WebPubSubEventResponse> OnMessageReceivedAsync(UserEventRequest request, CancellationToken cancellationToken)
+            public override ValueTask<UserEventResponse> OnMessageReceivedAsync(UserEventRequest request, CancellationToken cancellationToken)
             {
                 return base.OnMessageReceivedAsync(request, cancellationToken);
             }
