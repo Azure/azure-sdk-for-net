@@ -66,7 +66,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.FunctionalTests
         protected async Task<ApplicationInsightsDataClient> GetApplicationInsightsDataClientAsync()
         {
             var creds = await TestEnvironment.GetServiceClientCredentialsAsync();
-            var handler = new HttpPipelineMessageHandler(new HttpPipeline(Recording.CreateTransport(new HttpClientTransport())));
+            var handler = new HttpPipelineMessageHandler(new HttpPipeline((new HttpClientTransport())));
             var httpClient = new HttpClient(handler);
 
             var client = new ApplicationInsightsDataClient(credentials: creds, httpClient: httpClient, disposeHttpClient: true);

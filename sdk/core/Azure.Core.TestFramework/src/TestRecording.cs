@@ -252,6 +252,10 @@ namespace Azure.Core.TestFramework
             return new DisableRecordingScope(this, EntryRecordModel.DoNotRecord);
         }
 
+        public void DisableIdReuse()
+        {
+        }
+
         public DisableRecordingScope DisableRequestBodyRecording()
         {
             return new DisableRecordingScope(this, EntryRecordModel.RecordWithoutRequestBody);
