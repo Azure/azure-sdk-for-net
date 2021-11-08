@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-using System.Linq;
 using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Channels;
@@ -2247,10 +2246,8 @@ namespace Azure.Messaging.EventHubs.Producer
                 // are used for different purposes, it is permissible for them to drift for a short time.
                 // As a result, there's no need to synchronize them.
 
-                var queriedHash = new HashSet<string>(queriedPartitions);
-
                 _partitions = queriedPartitions;
-                _partitionHash = queriedHash;
+                _partitionHash = new HashSet<string>(queriedPartitions);;
             }
         }
 

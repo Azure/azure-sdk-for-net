@@ -49,7 +49,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var events = EventGenerator.CreateSmallEvents(partitionCount * eventsPerPartition).ToList();
             var handlerEvents = new ConcurrentBag<EventWithPartition>();
             var readEvents = new List<EventWithPartition>();
-            var completionSource = new TaskCompletionSource<bool>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
 
             await using var scope = await EventHubScope.CreateAsync(partitionCount);
             await using var producer = new EventHubBufferedProducerClient(EventHubsTestEnvironment.Instance.EventHubsConnectionString, scope.EventHubName);
@@ -139,7 +139,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var events = EventGenerator.CreateSmallEvents(partitionCount * eventsPerPartition).ToList();
             var handlerEvents = new ConcurrentBag<EventWithPartition>();
             var readEvents = new List<EventWithPartition>();
-            var completionSource = new TaskCompletionSource<bool>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
 
             await using var scope = await EventHubScope.CreateAsync(partitionCount);
             await using var producer = new EventHubBufferedProducerClient(EventHubsTestEnvironment.Instance.EventHubsConnectionString, scope.EventHubName);
@@ -237,7 +237,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var events = EventGenerator.CreateSmallEvents(partitionCount * eventsPerPartition).ToList();
             var handlerEvents = new ConcurrentBag<EventWithPartition>();
             var readEvents = new List<EventWithPartition>();
-            var completionSource = new TaskCompletionSource<bool>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
 
             await using var scope = await EventHubScope.CreateAsync(partitionCount);
             await using var producer = new EventHubBufferedProducerClient(EventHubsTestEnvironment.Instance.EventHubsConnectionString, scope.EventHubName);
@@ -336,7 +336,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var events = EventGenerator.CreateSmallEvents(partitionCount * eventsPerPartition).ToList();
             var handlerEvents = new ConcurrentBag<EventWithPartition>();
             var readEvents = new List<EventWithPartition>();
-            var completionSource = new TaskCompletionSource<bool>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
 
             await using var scope = await EventHubScope.CreateAsync(partitionCount);
             await using var producer = new EventHubBufferedProducerClient(EventHubsTestEnvironment.Instance.EventHubsConnectionString, scope.EventHubName);
@@ -442,7 +442,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var events = EventGenerator.CreateSmallEvents(partitionCount * eventsPerPartition).ToList();
             var handlerEvents = new ConcurrentBag<EventWithPartition>();
             var readEvents = new List<EventWithPartition>();
-            var completionSource = new TaskCompletionSource<bool>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var options = new EventHubBufferedProducerClientOptions { MaximumConcurrentSends = concurrentSends };
 
             await using var scope = await EventHubScope.CreateAsync(partitionCount);
@@ -547,7 +547,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var events = EventGenerator.CreateSmallEvents(partitionCount * eventsPerPartition).ToList();
             var handlerEvents = new ConcurrentBag<EventWithPartition>();
             var readEvents = new List<EventWithPartition>();
-            var completionSource = new TaskCompletionSource<bool>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
 
             var options = new EventHubBufferedProducerClientOptions
             {
