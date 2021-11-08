@@ -20,8 +20,7 @@ namespace ApiManagement.Tests.ManagementApiTests
         [Trait("owner", "jikang")]
         public async Task CreateListUpdateDelete()
         {
-            Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Record");
-            Environment.SetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION", "SubscriptionId=faa080af-c1d8-40ad-9cce-e1a450ca5b57;Environment=Prod;ServicePrincipal=939d7965-718a-4e62-b6c7-91a9271e8286;ServicePrincipalSecret=ac6061e5-1ee3-4407-bf4b-8e3cc4a3e8de;AADTenant=72f988bf-86f1-41af-91ab-2d7cd011db47;HttpRecorderMode=Record;ServiceName=;ResourceGroup=rg-nibhatimonitor;Location=westus2;TestCertificate=test;TestCertificatePassword=tester;testKeyVaultSecretUrl=https://api.loganalytics.io");
+            Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new ApiManagementTestBase(context);
