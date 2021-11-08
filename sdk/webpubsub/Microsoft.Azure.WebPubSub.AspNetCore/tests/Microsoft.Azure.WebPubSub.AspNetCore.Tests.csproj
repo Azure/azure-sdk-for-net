@@ -3,6 +3,7 @@
   <PropertyGroup>
     <RequiredTargetFrameworks>netcoreapp3.1;net5.0</RequiredTargetFrameworks>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <IsTestProject>true</IsTestProject>
 
     <!-- We don't care about XML doc comments on test types and members -->
     <NoWarn>$(NoWarn);CS1591</NoWarn>
