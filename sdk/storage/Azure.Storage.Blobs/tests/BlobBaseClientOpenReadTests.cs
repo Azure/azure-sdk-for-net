@@ -14,6 +14,20 @@ using Azure.Storage.Test.Shared;
 
 namespace Azure.Storage.Blobs.Tests
 {
+    [ClientTestFixture(
+        BlobClientOptions.ServiceVersion.V2019_02_02,
+        BlobClientOptions.ServiceVersion.V2019_07_07,
+        BlobClientOptions.ServiceVersion.V2019_12_12,
+        BlobClientOptions.ServiceVersion.V2020_02_10,
+        BlobClientOptions.ServiceVersion.V2020_04_08,
+        BlobClientOptions.ServiceVersion.V2020_06_12,
+        BlobClientOptions.ServiceVersion.V2020_08_04,
+        BlobClientOptions.ServiceVersion.V2020_10_02,
+        BlobClientOptions.ServiceVersion.V2020_12_06,
+        StorageVersionExtensions.LatestVersion,
+        StorageVersionExtensions.MaxVersion,
+        RecordingServiceVersion = BlobClientOptions.ServiceVersion.V2020_12_06,
+        LiveServiceVersions = new object[] { StorageVersionExtensions.LatestVersion })]
     public abstract class BlobBaseClientOpenReadTests<TBlobClient> : OpenReadTestBase<
         BlobServiceClient,
         BlobContainerClient,
@@ -36,6 +50,7 @@ namespace Azure.Storage.Blobs.Tests
             : base(async, _blobResourcePrefix, mode)
         {
             ClientBuilder = ClientBuilderExtensions.GetNewBlobsClientBuilder(Tenants, serviceVersion);
+            BlobConditions = new BlobAccessConditionConfigs(this);
         }
 
         #region Service-Specific Impl

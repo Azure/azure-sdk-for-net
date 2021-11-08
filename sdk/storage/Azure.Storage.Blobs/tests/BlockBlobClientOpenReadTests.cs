@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 
 namespace Azure.Storage.Blobs.Tests
@@ -54,14 +55,14 @@ namespace Azure.Storage.Blobs.Tests
                     await UpdateBlobContentsAsync(
                         client,
                         data,
-                        (await client.GetBlockListAsync()).Value.CommittedBlocks.Select(item => item.Name).ToList());
+                        await client.GetBlockListAsync());
                     break;
                 default:
                     throw Errors.InvalidArgument(nameof(mode));
             }
         }
 
-        private async Task UpdateBlobContentsAsync(BlockBlobClient client, Stream data, List<string> blockIds = default)
+        private async Task UpdateBlobContentsAsync(BlockBlobClient client, Stream data, BlockList blockList = default)
         {
             Argument.AssertNotNull(client, nameof(client));
             Argument.AssertNotNull(data, nameof(data));
@@ -73,7 +74,8 @@ namespace Azure.Storage.Blobs.Tests
             var buffer = new byte[maxBlockSize];
 
             int lastReadSize;
-            blockIds ??= new List<string>();
+            List<string> blockIds = blockList?.CommittedBlocks.Select(block => block.Name).ToList() ?? new List<string>();
+            long position = blockList?.CommittedBlocks.Select(block => block.SizeLong).Sum() ?? 0;
             while (true)
             {
                 lastReadSize = await data.ReadAsync(buffer, 0, buffer.Length);
@@ -82,7 +84,7 @@ namespace Azure.Storage.Blobs.Tests
                     break;
                 }
 
-                string blockId = Convert.ToBase64String(Recording.Random.NewGuid().ToByteArray());
+                string blockId = Shared.StorageExtensions.GenerateBlockId(position);
                 await client.StageBlockAsync(blockId, new MemoryStream(buffer, 0, lastReadSize));
                 blockIds.Add(blockId);
             }

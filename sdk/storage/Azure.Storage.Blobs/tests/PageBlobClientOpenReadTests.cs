@@ -78,7 +78,7 @@ namespace Azure.Storage.Blobs.Tests
             };
 
             await client.ResizeAsync(position + data.Length);
-            using Stream writeStream = await client.OpenWriteAsync(overwrite: true, position, new PageBlobOpenWriteOptions
+            using Stream writeStream = await client.OpenWriteAsync(overwrite: false, position, new PageBlobOpenWriteOptions
             {
                 Size = data.Length
             });

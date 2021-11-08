@@ -29,9 +29,12 @@ namespace Azure.Storage.Blobs.Test
 {
     public class BlobBaseClientTests : BlobTestBase
     {
+        public BlobAccessConditionConfigs BlobConditions { get; }
+
         public BlobBaseClientTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
             : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
+            BlobConditions = new BlobAccessConditionConfigs(this);
         }
 
         [RecordedTest]
@@ -7299,11 +7302,11 @@ namespace Azure.Storage.Blobs.Test
 
         private RequestConditions BuildRequestConditions(
             AccessConditionParameters parameters)
-            => BlobsClientBuilder.BuildRequestConditions(parameters);
+            => BlobConditions.BuildRequestConditions(parameters);
 
         private BlobRequestConditions BuildAccessConditions(
             AccessConditionParameters parameters,
             bool lease = true)
-            => BlobsClientBuilder.BuildAccessConditions(parameters, lease);
+            => BlobConditions.BuildAccessConditions(parameters, lease);
     }
 }
