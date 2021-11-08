@@ -245,7 +245,7 @@ namespace Azure.Core.TestFramework
             }
         }
 
-        // public bool HasRequests => _sessionInternal?.Entries.Count > 0;
+        public bool HasRequests { get; internal set; }
 
         public DisableRecordingScope DisableRecording()
         {

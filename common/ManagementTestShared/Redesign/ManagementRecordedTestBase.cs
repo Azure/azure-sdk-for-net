@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.TestFramework
             {
                 throw new IgnoreException((string)test.Properties.Get("SkipRecordings"));
             }
-            SessionRecording = new TestRecording(Mode, GetSessionFilePath(), Sanitizer, Matcher);
+            SessionRecording = new TestRecording(Mode, GetSessionFilePath(), Sanitizer);
             SessionEnvironment.SetRecording(SessionRecording);
             ValidateClientInstrumentation = SessionRecording.HasRequests;
         }

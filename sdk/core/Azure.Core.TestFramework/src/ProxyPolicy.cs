@@ -11,9 +11,11 @@ namespace Azure.Core.TestFramework
     {
         private readonly string _recordingId;
         private readonly RecordedTestMode _mode;
+        private readonly TestRecording _recording;
 
         public ProxyPolicy(TestRecording recording)
         {
+            _recording = recording;
             _recordingId = recording.RecordingId;
             _mode = recording.Mode;
         }
@@ -40,6 +42,8 @@ namespace Azure.Core.TestFramework
             {
                 ProcessNext(message, pipeline);
             }
+
+            _recording.HasRequests = true;
             // TODO see if we can get a response header rather than needing to parse the content
             if (message.Response.Status == 404 && message.Response.Content.ToString().Contains("Unable to find a record"))
             {
