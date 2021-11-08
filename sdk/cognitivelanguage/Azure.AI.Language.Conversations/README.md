@@ -92,10 +92,16 @@ The specified parameters can also be used to initialize a `ConversationAnalysisO
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationWithOptions
 ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
-AnalyzeConversationOptions options = new AnalyzeConversationOptions(
-    "We'll have 2 plates of seared salmon nigiri.");
+AnalyzeConversationOptions options = new AnalyzeConversationOptions(){
+    IsLoggingEnabled = true,
+    Verbose = true,
+    Language = "en"
+};
 
-Response<AnalyzeConversationResult> response = client.AnalyzeConversation(conversationsProject, options);
+Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
+    "We'll have 2 plates of seared salmon nigiri.",
+    conversationsProject,
+    options);
 
 Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
 ```
@@ -106,12 +112,14 @@ The language property in the `ConversationAnalysisOptions` can be used to specif
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationWithLanguage
 ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
-AnalyzeConversationOptions options = new AnalyzeConversationOptions(
-    "Tendremos 2 platos de nigiri de salmón braseado.")
+AnalyzeConversationOptions options = new AnalyzeConversationOptions()
 {
     Language = "es"
 };
-Response<AnalyzeConversationResult> response = client.AnalyzeConversation(conversationsProject, options);
+Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
+    "Tendremos 2 platos de nigiri de salmón braseado.",
+    conversationsProject,
+    options);
 
 Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
 ```

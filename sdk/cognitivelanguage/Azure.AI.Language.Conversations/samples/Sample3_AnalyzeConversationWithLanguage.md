@@ -17,12 +17,14 @@ Once you have created a client, you can call synchronous or asynchronous methods
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationWithLanguage
 ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
-AnalyzeConversationOptions options = new AnalyzeConversationOptions(
-    "Tendremos 2 platos de nigiri de salmón braseado.")
+AnalyzeConversationOptions options = new AnalyzeConversationOptions()
 {
     Language = "es"
 };
-Response<AnalyzeConversationResult> response = client.AnalyzeConversation(conversationsProject, options);
+Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
+    "Tendremos 2 platos de nigiri de salmón braseado.",
+    conversationsProject,
+    options);
 
 Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
 ```
@@ -31,12 +33,14 @@ Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationWithLanguageAsync
 ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
-AnalyzeConversationOptions options = new AnalyzeConversationOptions(
-    "Tendremos 2 platos de nigiri de salmón braseado.")
+AnalyzeConversationOptions options = new AnalyzeConversationOptions()
 {
     Language = "es"
 };
-Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(conversationsProject, options);
+Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(
+    "Tendremos 2 platos de nigiri de salmón braseado.",
+    conversationsProject,
+    options);
 
 Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
 ```

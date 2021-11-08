@@ -17,10 +17,16 @@ Once you have created a client, you can call synchronous or asynchronous methods
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationWithOptions
 ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
-AnalyzeConversationOptions options = new AnalyzeConversationOptions(
-    "We'll have 2 plates of seared salmon nigiri.");
+AnalyzeConversationOptions options = new AnalyzeConversationOptions(){
+    IsLoggingEnabled = true,
+    Verbose = true,
+    Language = "en"
+};
 
-Response<AnalyzeConversationResult> response = client.AnalyzeConversation(conversationsProject, options);
+Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
+    "We'll have 2 plates of seared salmon nigiri.",
+    conversationsProject,
+    options);
 
 Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
 ```
@@ -29,10 +35,16 @@ Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationWithOptionsAsync
 ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
-AnalyzeConversationOptions options = new AnalyzeConversationOptions(
-    "We'll have 2 plates of seared salmon nigiri.");
+AnalyzeConversationOptions options = new AnalyzeConversationOptions(){
+    IsLoggingEnabled = true,
+    Verbose = true,
+    Language = "en"
+};
 
-Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(conversationsProject, options);
+Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(
+    "We'll have 2 plates of seared salmon nigiri.",
+    conversationsProject,
+    options);
 
 Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
 ```
