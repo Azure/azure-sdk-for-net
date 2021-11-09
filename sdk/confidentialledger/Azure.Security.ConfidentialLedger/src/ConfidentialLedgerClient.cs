@@ -77,22 +77,22 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="subLedgerId"> The sub-ledger id. </param>
         /// <param name="waitForCompletion"> If <c>true</c>, the <see cref="PostLedgerEntryOperation"/> will not be returned until the ledger entry is committed.
         /// If <c>false</c>,<see cref="Operation.WaitForCompletionResponse(System.Threading.CancellationToken)"/> must be called to ensure the operation has completed.</param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
 #pragma warning disable AZC0002
         public virtual PostLedgerEntryOperation PostLedgerEntry(
             RequestContent content,
             string subLedgerId = null,
             bool waitForCompletion = true,
-            RequestOptions options = null)
+            RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            var response = PostLedgerEntry(content, subLedgerId, options);
+            var response = PostLedgerEntry(content, subLedgerId, context);
             response.Headers.TryGetValue(ConfidentialLedgerConstants.TransactionIdHeaderName, out string transactionId);
 
             var operation = new PostLedgerEntryOperation(this, transactionId);
             if (waitForCompletion)
             {
-                operation.WaitForCompletionResponse(DefaultPollingInterval, options?.CancellationToken ?? default);
+                operation.WaitForCompletionResponse(DefaultPollingInterval, context?.CancellationToken ?? default);
             }
             return operation;
         }
@@ -133,98 +133,98 @@ namespace Azure.Security.ConfidentialLedger
         /// will automatically poll for status until the ledger entry is committed before it is returned.
         /// If <c>false</c>,<see cref="Operation.WaitForCompletionResponseAsync(System.Threading.CancellationToken)"/>
         /// must be called to ensure the operation has completed.</param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
 #pragma warning disable AZC0002
         public virtual async Task<PostLedgerEntryOperation> PostLedgerEntryAsync(
             RequestContent content,
             string subLedgerId = null,
             bool waitForCompletion = true,
-            RequestOptions options = null)
+            RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            var response = await PostLedgerEntryAsync(content, subLedgerId, options).ConfigureAwait(false);
+            var response = await PostLedgerEntryAsync(content, subLedgerId, context).ConfigureAwait(false);
             response.Headers.TryGetValue(ConfidentialLedgerConstants.TransactionIdHeaderName, out string transactionId);
 
             var operation = new PostLedgerEntryOperation(this, transactionId);
             if (waitForCompletion)
             {
-                await operation.WaitForCompletionResponseAsync(DefaultPollingInterval, options?.CancellationToken ?? default).ConfigureAwait(false);
+                await operation.WaitForCompletionResponseAsync(DefaultPollingInterval, context?.CancellationToken ?? default).ConfigureAwait(false);
             }
             return operation;
         }
 
-#pragma warning disable AZC0002
-        internal virtual async Task<Response> PostLedgerEntryAsync(RequestContent content, string subLedgerId = null, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            HttpMessage message = CreatePostLedgerEntryRequest(content, subLedgerId);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.PostLedgerEntry");
-            scope.Start();
-            try
-            {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-#pragma warning disable AZC0002
-        internal virtual Response PostLedgerEntry(RequestContent content, string subLedgerId = null, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            HttpMessage message = CreatePostLedgerEntryRequest(content, subLedgerId);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.PostLedgerEntry");
-            scope.Start();
-            try
-            {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+// #pragma warning disable AZC0002
+//         internal virtual async Task<Response> PostLedgerEntryAsync(RequestContent content, string subLedgerId = null, RequestContext options = null)
+// #pragma warning restore AZC0002
+//         {
+//             options ??= new RequestContext();
+//             HttpMessage message = CreatePostLedgerEntryRequest(content, subLedgerId);
+//             if (options.PerCallPolicy != null)
+//             {
+//                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
+//             }
+//             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.PostLedgerEntry");
+//             scope.Start();
+//             try
+//             {
+//                 await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+//                 if (options.StatusOption == ResponseStatusOption.Default)
+//                 {
+//                     switch (message.Response.Status)
+//                     {
+//                         case 200:
+//                             return message.Response;
+//                         default:
+//                             throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+//                     }
+//                 }
+//                 else
+//                 {
+//                     return message.Response;
+//                 }
+//             }
+//             catch (Exception e)
+//             {
+//                 scope.Failed(e);
+//                 throw;
+//             }
+//         }
+//
+// #pragma warning disable AZC0002
+//         internal virtual Response PostLedgerEntry(RequestContent content, string subLedgerId = null, RequestContext  context = null)
+// #pragma warning restore AZC0002
+//         {
+//             context ??= new RequestContext();
+//             HttpMessage message = CreatePostLedgerEntryRequest(content, subLedgerId);
+//             if (context.PerCallPolicy != null)
+//             {
+//                 message.SetProperty("RequestOptionsPerCallPolicyCallback", context.PerCallPolicy);
+//             }
+//             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.PostLedgerEntry");
+//             scope.Start();
+//             try
+//             {
+//                 Pipeline.Send(message, context.CancellationToken);
+//                 if (context.StatusOption == ResponseStatusOption.Default)
+//                 {
+//                     switch (message.Response.Status)
+//                     {
+//                         case 200:
+//                             return message.Response;
+//                         default:
+//                             throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+//                     }
+//                 }
+//                 else
+//                 {
+//                     return message.Response;
+//                 }
+//             }
+//             catch (Exception e)
+//             {
+//                 scope.Failed(e);
+//                 throw;
+//             }
+//         }
     }
 }

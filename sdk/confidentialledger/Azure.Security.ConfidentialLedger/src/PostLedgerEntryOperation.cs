@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Security.ConfidentialLedger
 {
     /// <summary>
-    /// Tracks the status of a call to <see cref="ConfidentialLedgerClient.PostLedgerEntry(Azure.Core.RequestContent,string,bool,Azure.RequestOptions)"/> and <see cref="ConfidentialLedgerClient.PostLedgerEntryAsync(Azure.Core.RequestContent,string,bool,Azure.RequestOptions)"/>
+    /// Tracks the status of a call to <see cref="ConfidentialLedgerClient.PostLedgerEntry(Azure.Core.RequestContent,string,bool,Azure.RequestContext)"/> and <see cref="ConfidentialLedgerClient.PostLedgerEntryAsync(Azure.Core.RequestContent,string,bool,Azure.RequestContext)"/>
     /// until completion.
     /// </summary>
     public class PostLedgerEntryOperation : Operation, IOperation
@@ -27,7 +27,7 @@ namespace Azure.Security.ConfidentialLedger
         /// </summary>
         /// <param name="client"> Tje <see cref="ConfidentialLedgerClient"/>. </param>
         /// <param name="transactionId"> The transaction id from a previous call to
-        /// <see cref="ConfidentialLedgerClient.PostLedgerEntry(Azure.Core.RequestContent,string,bool,Azure.RequestOptions)"/>. </param>
+        /// <see cref="ConfidentialLedgerClient.PostLedgerEntry(Azure.Core.RequestContent,string,bool,Azure.RequestContext)"/>. </param>
         public PostLedgerEntryOperation(ConfidentialLedgerClient client, string transactionId)
         {
             _client = client;
@@ -51,14 +51,6 @@ namespace Azure.Security.ConfidentialLedger
         /// <inheritdoc />
         public override Response UpdateStatus(CancellationToken cancellationToken = default) =>
             _operationInternal.UpdateStatus(cancellationToken);
-
-        /// <inheritdoc />
-        public override ValueTask<Response> WaitForCompletionResponseAsync(CancellationToken cancellationToken = default) =>
-            this.DefaultWaitForCompletionResponseAsync(cancellationToken);
-
-        /// <inheritdoc />
-        public override ValueTask<Response> WaitForCompletionResponseAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
-            this.DefaultWaitForCompletionResponseAsync(pollingInterval, cancellationToken);
 
         async ValueTask<OperationState> IOperation.UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
