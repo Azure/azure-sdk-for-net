@@ -76,7 +76,7 @@ namespace ApiManagement.Tests.ManagementApiTests
 
                     Assert.NotNull(getSecrets2);
                     Assert.Equal(getSecrets.SecondaryKey, getSecrets2.SecondaryKey);
-                    if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                    if (HttpMockServer.Mode == HttpRecorderMode.None)
                         Assert.NotEqual(getSecrets.PrimaryKey, getSecrets2.PrimaryKey);
 
                     testBase.client.TenantAccess.RegenerateSecondaryKey(testBase.rgName, testBase.serviceName, "access");
