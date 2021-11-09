@@ -21,7 +21,7 @@ namespace Azure.Messaging.EventHubs.Processor
     {
         /// <summary>
         ///   Indicates whether or not the arguments contain an event to be processed.  In
-        ///   the case where no event is contained, then and creation of checkpoints and reading the last
+        ///   the case where no event is contained, then the creation of checkpoints and reading the last
         ///   enqueued event properties are unavailable.
         /// </summary>
         ///
