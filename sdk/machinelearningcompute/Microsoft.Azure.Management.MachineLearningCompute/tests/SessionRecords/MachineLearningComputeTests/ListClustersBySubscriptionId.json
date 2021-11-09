@@ -126,7 +126,7 @@
       "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/mlcrp-dotnet-test-list-sub3616/providers/Microsoft.MachineLearningCompute/operationalizationClusters/mlcrp-dotnet-test-list-sub3160?api-version=2017-08-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Jlc291cmNlR3JvdXBzL21sY3JwLWRvdG5ldC10ZXN0LWxpc3Qtc3ViMzYxNi9wcm92aWRlcnMvTWljcm9zb2Z0Lk1hY2hpbmVMZWFybmluZ0NvbXB1dGUvb3BlcmF0aW9uYWxpemF0aW9uQ2x1c3RlcnMvbWxjcnAtZG90bmV0LXRlc3QtbGlzdC1zdWIzMTYwP2FwaS12ZXJzaW9uPTIwMTctMDgtMDEtcHJldmlldw==",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"description\": \"Test cluster\",\r\n    \"clusterType\": \"ACS\",\r\n    \"containerService\": {\r\n      \"orchestratorType\": \"Kubernetes\",\r\n      \"orchestratorProperties\": {\r\n        \"servicePrincipal\": {\r\n          \"clientId\": \"aa27224e-3aa1-4f06-b581-c67da491bd44\",\r\n          \"secret\": \"fhAdF8f/nAGHyoIiQR2pZk33o5L2GjnqLjHWlUPfGeQ=\"\r\n        }\r\n      }\r\n    }\r\n  },\r\n  \"location\": \"East US 2\"\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"description\": \"Test cluster\",\r\n    \"clusterType\": \"ACS\",\r\n    \"containerService\": {\r\n      \"orchestratorType\": \"Kubernetes\",\r\n      \"orchestratorProperties\": {\r\n        \"servicePrincipal\": {\r\n          \"clientId\": \"aa27224e-3aa1-4f06-b581-c67da491bd44\",\r\n          \"secret\": \"Sanitized\"\r\n        }\r\n      }\r\n    }\r\n  },\r\n  \"location\": \"East US 2\"\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
