@@ -92,10 +92,10 @@ namespace Azure.Search.Documents
                 writer.WritePropertyName("scoringProfile");
                 writer.WriteStringValue(ScoringProfile);
             }
-            if (Optional.IsDefined(SemanticConfiguration))
+            if (Optional.IsDefined(SemanticConfigurationName))
             {
                 writer.WritePropertyName("semanticConfiguration");
-                writer.WriteStringValue(SemanticConfiguration);
+                writer.WriteStringValue(SemanticConfigurationName);
             }
             if (Optional.IsDefined(SearchText))
             {

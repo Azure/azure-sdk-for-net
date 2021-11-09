@@ -143,7 +143,7 @@ namespace Azure.Search.Documents
         public System.Collections.Generic.IList<string> SearchFields { get { throw null; } }
         public Azure.Search.Documents.Models.SearchMode? SearchMode { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Select { get { throw null; } }
-        public string SemanticConfiguration { get { throw null; } set { } }
+        public string SemanticConfigurationName { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> SemanticFields { get { throw null; } }
         public string SessionId { get { throw null; } set { } }
         public int? Size { get { throw null; } set { } }
