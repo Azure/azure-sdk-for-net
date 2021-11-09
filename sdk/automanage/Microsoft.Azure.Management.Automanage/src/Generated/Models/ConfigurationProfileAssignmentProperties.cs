@@ -32,25 +32,26 @@ namespace Microsoft.Azure.Management.Automanage.Models
         /// ConfigurationProfileAssignmentProperties class.
         /// </summary>
         /// <param name="configurationProfile">A value indicating configuration
-        /// profile. Possible values include: 'Azure Best Practices - TestDev',
-        /// 'Azure Best Practices - Prod'</param>
+        /// profile. Possible values include: 'Azure virtual machine best
+        /// practices – Dev/Test', 'Azure virtual machine best practices –
+        /// Production'</param>
         /// <param name="targetId">The target VM resource URI</param>
         /// <param name="accountId">The Automanage account ARM Resource
         /// URI</param>
         /// <param name="configurationProfilePreferenceId">The configuration
         /// profile custom preferences ARM resource URI</param>
-        /// <param name="provisioningStatus">The state of onboarding, which
-        /// only appears in the response. Possible values include: 'Succeeded',
+        /// <param name="provisioningState">The state of onboarding, which only
+        /// appears in the response. Possible values include: 'Succeeded',
         /// 'Failed', 'Created'</param>
         /// <param name="compliance">The configuration setting for the
         /// configuration profile.</param>
-        public ConfigurationProfileAssignmentProperties(string configurationProfile = default(string), string targetId = default(string), string accountId = default(string), string configurationProfilePreferenceId = default(string), string provisioningStatus = default(string), ConfigurationProfileAssignmentCompliance compliance = default(ConfigurationProfileAssignmentCompliance))
+        public ConfigurationProfileAssignmentProperties(string configurationProfile = default(string), string targetId = default(string), string accountId = default(string), string configurationProfilePreferenceId = default(string), string provisioningState = default(string), ConfigurationProfileAssignmentCompliance compliance = default(ConfigurationProfileAssignmentCompliance))
         {
             ConfigurationProfile = configurationProfile;
             TargetId = targetId;
             AccountId = accountId;
             ConfigurationProfilePreferenceId = configurationProfilePreferenceId;
-            ProvisioningStatus = provisioningStatus;
+            ProvisioningState = provisioningState;
             Compliance = compliance;
             CustomInit();
         }
@@ -62,8 +63,8 @@ namespace Microsoft.Azure.Management.Automanage.Models
 
         /// <summary>
         /// Gets or sets a value indicating configuration profile. Possible
-        /// values include: 'Azure Best Practices - TestDev', 'Azure Best
-        /// Practices - Prod'
+        /// values include: 'Azure virtual machine best practices – Dev/Test',
+        /// 'Azure virtual machine best practices – Production'
         /// </summary>
         [JsonProperty(PropertyName = "configurationProfile")]
         public string ConfigurationProfile { get; set; }
@@ -91,8 +92,8 @@ namespace Microsoft.Azure.Management.Automanage.Models
         /// Gets the state of onboarding, which only appears in the response.
         /// Possible values include: 'Succeeded', 'Failed', 'Created'
         /// </summary>
-        [JsonProperty(PropertyName = "provisioningStatus")]
-        public string ProvisioningStatus { get; private set; }
+        [JsonProperty(PropertyName = "provisioningState")]
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets or sets the configuration setting for the configuration

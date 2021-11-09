@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Automanage
         /// Name of the Automanage account.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// The resource group name.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='parameters'>
         /// Parameters supplied to create or update Automanage account.
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.Automanage
         /// The Automanage account name.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// The resource group name.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.Automanage
         /// Delete a Automanage account
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The resource group name.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Name of the Automanage account
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Management.Automanage
         /// Name of the Automanage account.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// The resource group name.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='parameters'>
         /// Parameters supplied to update Automanage account.
@@ -125,13 +125,13 @@ namespace Microsoft.Azure.Management.Automanage
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Account>> UpdateWithHttpMessagesAsync(string accountName, string resourceGroupName, Account parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Account>> UpdateWithHttpMessagesAsync(string accountName, string resourceGroupName, AccountUpdate parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieve a list of Automanage accounts within a given resource
         /// group
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The resource group name.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

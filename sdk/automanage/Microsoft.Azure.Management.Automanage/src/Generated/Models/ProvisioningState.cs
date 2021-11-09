@@ -12,9 +12,9 @@ namespace Microsoft.Azure.Management.Automanage.Models
 {
 
     /// <summary>
-    /// Defines values for ProvisioningStatus.
+    /// Defines values for ProvisioningState.
     /// </summary>
-    public static class ProvisioningStatus
+    public static class ProvisioningState
     {
         public const string Succeeded = "Succeeded";
         public const string Failed = "Failed";

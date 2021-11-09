@@ -33,16 +33,19 @@ namespace Microsoft.Azure.Management.Automanage.Models
         /// Initializes a new instance of the ConfigurationProfilePreference
         /// class.
         /// </summary>
-        /// <param name="id">ARM resource id of the Automanage
-        /// assignment.</param>
-        /// <param name="name">Name of the Automanage assignment.</param>
-        /// <param name="location">Region where the VM is located.</param>
-        /// <param name="type">The type of the resource.</param>
+        /// <param name="location">The geo-location where the resource
+        /// lives</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="tags">Resource tags.</param>
         /// <param name="properties">Properties of the configuration profile
         /// preference.</param>
-        public ConfigurationProfilePreference(string id = default(string), string name = default(string), string location = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ConfigurationProfilePreferenceProperties properties = default(ConfigurationProfilePreferenceProperties))
-            : base(id, name, location, type, tags)
+        public ConfigurationProfilePreference(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ConfigurationProfilePreferenceProperties properties = default(ConfigurationProfilePreferenceProperties))
+            : base(location, id, name, type, tags)
         {
             Properties = properties;
             CustomInit();
@@ -59,5 +62,15 @@ namespace Microsoft.Azure.Management.Automanage.Models
         [JsonProperty(PropertyName = "properties")]
         public ConfigurationProfilePreferenceProperties Properties { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public override void Validate()
+        {
+            base.Validate();
+        }
     }
 }

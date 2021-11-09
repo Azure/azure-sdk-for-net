@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Automanage
         /// Name of the configuration profile preference.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// The resource group name.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='parameters'>
         /// Parameters supplied to create or update configuration profile
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.Automanage
         /// The configuration profile preference name.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// The resource group name.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.Automanage
         /// Delete a configuration profile preference
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The resource group name.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='configurationProfilePreferenceName'>
         /// Name of the configuration profile preference
@@ -106,7 +106,7 @@ namespace Microsoft.Azure.Management.Automanage
         /// Name of the configuration profile preference.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// The resource group name.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='parameters'>
         /// Parameters supplied to create or update configuration profile
@@ -127,13 +127,13 @@ namespace Microsoft.Azure.Management.Automanage
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ConfigurationProfilePreference>> UpdateWithHttpMessagesAsync(string configurationProfilePreferenceName, string resourceGroupName, ConfigurationProfilePreference parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ConfigurationProfilePreference>> UpdateWithHttpMessagesAsync(string configurationProfilePreferenceName, string resourceGroupName, ConfigurationProfilePreferenceUpdate parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieve a list of configuration profile preferences within a given
         /// resource group
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The resource group name.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
