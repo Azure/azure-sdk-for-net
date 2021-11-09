@@ -131,7 +131,7 @@ namespace CustomerInsights.Tests.Tests
                     HubName,
                     policyName);
                 
-                if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                if (HttpMockServer.Mode != HttpRecorderMode.Playback)
                         Assert.NotEqual(resultPolicy.PrimaryKey, policyWithNewKey.PrimaryKey);
                 Assert.NotEmpty(policyWithNewKey.PrimaryKey);
             }
@@ -158,7 +158,7 @@ namespace CustomerInsights.Tests.Tests
                     HubName,
                     policyName);
 
-                if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                if (HttpMockServer.Mode != HttpRecorderMode.Playback)
                     Assert.NotEqual(resultPolicy.SecondaryKey, policyWithNewKey.SecondaryKey);
                 Assert.NotEmpty(policyWithNewKey.SecondaryKey);
             }
