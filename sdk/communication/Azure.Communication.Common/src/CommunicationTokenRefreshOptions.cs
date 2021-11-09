@@ -31,7 +31,6 @@ namespace Azure.Communication
         /// <summary>The function that provides the token acquired from CommunicationIdentityClient. </summary>
         internal Func<CancellationToken, string> TokenRefresher { get; }
 
-
         /// <summary>The asynchronous token refresher.</summary>
         private Func<CancellationToken, ValueTask<string>> _asyncTokenRefresher;
 
@@ -47,7 +46,7 @@ namespace Azure.Communication
             Argument.AssertNotNull(tokenRefresher, nameof(tokenRefresher));
             RefreshProactively = refreshProactively;
             TokenRefresher = tokenRefresher;
-            RefreshOffsetTime = new TimeSpan( 0, 0, DefaultExpiringOffsetMinutes, 0);
+            RefreshOffsetTime = new TimeSpan(0, 0, DefaultExpiringOffsetMinutes, 0);
         }
 
         /// <summary>
@@ -59,7 +58,7 @@ namespace Azure.Communication
         public CommunicationTokenRefreshOptions(
             bool refreshProactively,
             TimeSpan refreshOffsetTime,
-            Func<CancellationToken, string> tokenRefresher) :this(refreshProactively, tokenRefresher)
+            Func<CancellationToken, string> tokenRefresher) : this(refreshProactively, tokenRefresher)
         {
             RefreshOffsetTime = refreshOffsetTime;
         }

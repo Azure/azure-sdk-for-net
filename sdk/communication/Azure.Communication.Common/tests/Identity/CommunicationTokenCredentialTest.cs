@@ -317,7 +317,7 @@ namespace Azure.Communication.Identity
 
             Assert.AreEqual(1, testClock.ScheduledActions.Count());
             var firstTimer = testClock.ScheduledActions.First();
-            // go into soon to expire window
+            // Go into the soon-to-expire window
             testClock.Tick(TimeSpan.FromMinutes(20 - CommunicationTokenRefreshOptions.DefaultExpiringOffsetMinutes + 0.5));
 
             Assert.AreEqual(1, testClock.ScheduledActions.Count());
@@ -342,7 +342,7 @@ namespace Azure.Communication.Identity
 
             Assert.AreEqual(1, testClock.ScheduledActions.Count());
             var firstTimer = testClock.ScheduledActions.First();
-            // go into soon to expire window
+            // Go into the soon-to-expire window
             testClock.Tick(TimeSpan.FromMinutes(20 - proactiveRefreshIntervalInMinutes + 0.5));
 
             Assert.AreEqual(1, testClock.ScheduledActions.Count());
