@@ -74,7 +74,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
             #endregion
 
             #region Snippet:ListRoleAssignments
-            Response roleAssignmentsResponse = roleAssignmentsClient.GetRoleAssignments(new());
+            Response roleAssignmentsResponse = roleAssignmentsClient.GetRoleAssignments();
             BinaryData roleAssignmentsContent = roleAssignmentsResponse.Content;
             JsonDocument roleAssignmentsJson = JsonDocument.Parse(roleAssignmentsContent.ToMemory());
 

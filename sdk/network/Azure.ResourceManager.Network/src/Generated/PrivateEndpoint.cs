@@ -188,9 +188,9 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a list of PrivateDnsZoneGroups in the PrivateEndpoint. </summary>
         /// <returns> An object representing collection of PrivateDnsZoneGroups and their operations over a PrivateEndpoint. </returns>
-        public PrivateDnsZoneGroupContainer GetPrivateDnsZoneGroups()
+        public PrivateDnsZoneGroupCollection GetPrivateDnsZoneGroups()
         {
-            return new PrivateDnsZoneGroupContainer(this);
+            return new PrivateDnsZoneGroupCollection(this);
         }
     }
 }

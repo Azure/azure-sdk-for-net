@@ -2,13 +2,10 @@
 
 ## 1.0.0-beta.6 (Unreleased)
 
-### Features Added
-
 ### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Removed types `DocumentTranslationError` and `DocumentTranslationErrorCode`. These affected the classes `DocumentStatusResult` and `TranslationStatusResult`. Errors in both classes are now exposed as `ResponseError`.
+- Renamed method `DocumentStatus` to `DocumentStatusResult` in `DocumentTranslationModelFactory`, which now takes a `BinaryData` type instead of `DocumentTranslationError`.
+- Renamed method `TranslationStatus` to `TranslationStatusResult` in `DocumentTranslationModelFactory`, which now takes a `BinaryData` type instead of `DocumentTranslationError`.
 
 ## 1.0.0-beta.5 (2021-09-08)
 

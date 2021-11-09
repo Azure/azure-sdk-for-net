@@ -68,16 +68,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Score != null)
+            if (Score > 100)
             {
-                if (Score > 100)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMaximum, "Score", 100);
-                }
-                if (Score < 1)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMinimum, "Score", 1);
-                }
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "Score", 100);
+            }
+            if (Score < 1)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "Score", 1);
             }
         }
     }

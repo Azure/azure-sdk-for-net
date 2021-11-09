@@ -177,6 +177,7 @@ namespace Microsoft.Azure.ServiceBus
             public string LockToken { get; }
             public System.DateTime LockedUntilUtc { get; }
             public long SequenceNumber { get; }
+            public Microsoft.Azure.ServiceBus.MessageState State { get; }
         }
     }
     public sealed class MessageHandlerOptions
@@ -201,6 +202,12 @@ namespace Microsoft.Azure.ServiceBus
     {
         public MessageSizeExceededException(string message) { }
         public MessageSizeExceededException(string message, System.Exception innerException) { }
+    }
+    public enum MessageState
+    {
+        Active = 0,
+        Deferred = 1,
+        Scheduled = 2,
     }
     public sealed class MessagingEntityDisabledException : Microsoft.Azure.ServiceBus.ServiceBusException
     {

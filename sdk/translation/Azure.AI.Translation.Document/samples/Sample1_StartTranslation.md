@@ -52,7 +52,7 @@ await foreach (DocumentStatusResult document in operation.Value)
     }
     else
     {
-        Console.WriteLine($"  Error Code: {document.Error.ErrorCode}");
+        Console.WriteLine($"  Error Code: {document.Error.Code}");
         Console.WriteLine($"  Message: {document.Error.Message}");
     }
 }

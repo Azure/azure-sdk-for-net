@@ -1,14 +1,22 @@
 # Release History
 
-## 5.2.0-beta.2 (Unreleased)
+## 5.2.0-beta.3 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 5.2.0-beta.2 (2021-11-02)
 
 ### Features Added
 - Adding support for three new actions in `StartAnalyzeActions`: `RecognizeCustomEntities`, `SingleCategoryClassify`, and `MultiCategoriesClassify`. The new actions allow you to use custom models to perform entity recognition and category classification.
 - Added property `ActionName` to all `xxActions` input types so user can specify a name per action. If not provided, service will generate a name.
 - Added property `ActionName` to all `xxActionResult` output types that displays the name of each action.
 - Added suppport for multiple actions of the same type.
-
-### Breaking Changes
 
 ### Bugs Fixed
 - `AnalyzeActionsOperation.GetValuesAsync()` and `AnalyzeHealthcareEntitiesOperation.GetValuesAsync()` are now validating that the operation has completed successfully before attempting to return any values. An `InvalidOperationException` is thrown if this is not true.

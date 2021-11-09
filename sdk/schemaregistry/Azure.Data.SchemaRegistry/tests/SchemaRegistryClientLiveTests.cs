@@ -78,7 +78,7 @@ namespace Azure.Data.SchemaRegistry.Tests
             AssertSchemaProperties(schema.Properties);
             Assert.AreEqual(
                 Regex.Replace(SchemaContent, @"\s+", string.Empty),
-                Regex.Replace(schema.Content, @"\s+", string.Empty));
+                Regex.Replace(schema.Definition, @"\s+", string.Empty));
         }
 
         private void AssertSchemaProperties(SchemaProperties properties)
@@ -86,11 +86,13 @@ namespace Azure.Data.SchemaRegistry.Tests
             Assert.IsNotNull(properties);
             Assert.IsNotNull(properties.Id);
             Assert.IsTrue(Guid.TryParse(properties.Id, out Guid _));
+            Assert.AreEqual(SchemaFormat.Avro, properties.Format);
         }
 
         private void AssertPropertiesAreEqual(SchemaProperties registeredSchema, SchemaProperties schema)
         {
             Assert.AreEqual(registeredSchema.Id, schema.Id);
+            Assert.AreEqual(registeredSchema.Format, schema.Format);
         }
     }
 }
