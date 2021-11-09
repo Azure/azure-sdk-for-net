@@ -993,7 +993,6 @@ namespace Microsoft.Azure.Management.Sql
             BaseUri = new System.Uri("https://management.azure.com");
             ApiVersion = "2021-05-01-preview";
             AcceptLanguage = "en-US";
-            ApiVersion = "2021-05-01-preview";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
             SerializationSettings = new JsonSerializerSettings
