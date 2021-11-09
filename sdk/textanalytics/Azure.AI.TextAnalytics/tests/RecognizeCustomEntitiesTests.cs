@@ -79,7 +79,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             var operation = await client.StartAnalyzeActionsAsync(new List<string> { EnglishDocument1 }, batchActions);
 
-            await PollUntilTime(operation);
+            await PollUntilTimeout(operation);
             Assert.IsTrue(operation.HasCompleted);
 
             RecognizeCustomEntitiesResultCollection results = ExtractDocumentsResultsFromResponse(operation);
@@ -103,7 +103,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             var operation = await client.StartAnalyzeActionsAsync(new List<string> { EnglishDocument1 }, batchActions);
 
-            await PollUntilTime(operation);
+            await PollUntilTimeout(operation);
             Assert.IsTrue(operation.HasCompleted);
 
             RecognizeCustomEntitiesResultCollection results = ExtractDocumentsResultsFromResponse(operation);
@@ -132,7 +132,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             var operation = await client.StartAnalyzeActionsAsync(documentsBatch, batchActions);
 
-            await PollUntilTime(operation);
+            await PollUntilTimeout(operation);
             Assert.IsTrue(operation.HasCompleted);
 
             RecognizeCustomEntitiesResultCollection results = ExtractDocumentsResultsFromResponse(operation);
@@ -162,7 +162,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             var operation = await client.StartAnalyzeActionsAsync(documents, batchActions);
 
-            await PollUntilTime(operation);
+            await PollUntilTimeout(operation);
             Assert.IsTrue(operation.HasCompleted);
 
             var results = ExtractDocumentsResultsFromResponse(operation);
@@ -190,7 +190,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             var operation = await client.StartAnalyzeActionsAsync(e_batchConvenienceDocuments, batchActions);
 
-            await PollUntilTime(operation);
+            await PollUntilTimeout(operation);
             Assert.IsTrue(operation.HasCompleted);
 
             var results = ExtractDocumentsResultsFromResponse(operation);
@@ -218,7 +218,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             var operation = await client.StartAnalyzeActionsAsync(s_batchDocuments, batchActions);
 
-            await PollUntilTime(operation);
+            await PollUntilTimeout(operation);
             Assert.IsTrue(operation.HasCompleted);
 
             var results = ExtractDocumentsResultsFromResponse(operation);
@@ -274,7 +274,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(e_batchConvenienceDocuments, batchActions);
 
-            await PollUntilTime(operation);
+            await PollUntilTimeout(operation);
             Assert.IsTrue(operation.HasCompleted);
 
             // Take the first page

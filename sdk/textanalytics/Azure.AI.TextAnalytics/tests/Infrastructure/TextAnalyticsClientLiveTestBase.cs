@@ -55,10 +55,10 @@ namespace Azure.AI.TextAnalytics.Tests
         // This has been added to stop the custom tests to run forever while we
         // get more reliable information on which scenarios cause timeouts.
         // Issue https://github.com/Azure/azure-sdk-for-net/issues/25152
-        internal async Task PollUntilTime(AnalyzeActionsOperation operation)
+        internal async Task PollUntilTimeout(AnalyzeActionsOperation operation, int timeoutInMinutes = default)
         {
             TimeSpan pollingInterval = TimeSpan.FromSeconds(10);
-            int timeout = (int)TimeSpan.FromMinutes(20).TotalMilliseconds;
+            var timeout = TimeSpan.FromMinutes(timeoutInMinutes != 0 ? timeoutInMinutes : 20);
             using CancellationTokenSource cts = new CancellationTokenSource(timeout);
             try
             {

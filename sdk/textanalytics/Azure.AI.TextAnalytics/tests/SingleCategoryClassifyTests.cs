@@ -53,7 +53,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(s_singleCategoryClassifyBatchConvenienceDocuments, batchActions);
 
-            await PollUntilTime(operation);
+            await PollUntilTimeout(operation);
             Assert.IsTrue(operation.HasCompleted);
 
             // Take the first page
@@ -84,7 +84,7 @@ namespace Azure.AI.TextAnalytics.Tests
             };
 
             AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(documents, batchActions, "en");
-            await PollUntilTime(operation);
+            await PollUntilTimeout(operation);
             Assert.IsTrue(operation.HasCompleted);
 
             // Take the first page
@@ -115,7 +115,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(s_singleCategoryClassifyBatchConvenienceDocuments, batchActions);
 
-            await PollUntilTime(operation);
+            await PollUntilTimeout(operation);
             Assert.IsTrue(operation.HasCompleted);
 
             // Take the first page
@@ -147,7 +147,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(s_singleCategoryClassifyBatchConvenienceDocuments, batchActions, "en", options);
 
-            await PollUntilTime(operation);
+            await PollUntilTimeout(operation);
             Assert.IsTrue(operation.HasCompleted);
 
             // Take the first page
@@ -174,7 +174,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(s_singleCategoryClassifyBatchDocuments, batchActions);
 
-            await PollUntilTime(operation);
+            await PollUntilTimeout(operation);
             Assert.IsTrue(operation.HasCompleted);
 
             // Take the first page
@@ -206,7 +206,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(s_singleCategoryClassifyBatchDocuments, batchActions, options);
 
-            await PollUntilTime(operation);
+            await PollUntilTimeout(operation);
             Assert.IsTrue(operation.HasCompleted);
 
             // Take the first page
@@ -242,7 +242,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(s_singleCategoryClassifyBatchConvenienceDocuments, batchActions);
 
-            await PollUntilTime(operation);
+            await PollUntilTimeout(operation);
             Assert.IsTrue(operation.HasCompleted);
 
             // Take the first page
