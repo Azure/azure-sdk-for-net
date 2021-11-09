@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.Data.SchemaRegistry.Models
 {
-    /// <summary> JSON Object received from the registry containing schema identifiers. </summary>
+    /// <summary> Object received from the registry containing schema identifiers. </summary>
     internal readonly partial struct SchemaId
     {
         /// <summary> Initializes a new instance of SchemaId. </summary>

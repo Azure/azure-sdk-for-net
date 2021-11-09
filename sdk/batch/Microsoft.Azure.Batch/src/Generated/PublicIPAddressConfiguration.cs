@@ -61,6 +61,14 @@ namespace Microsoft.Azure.Batch
             this.Provision = provision;
         }
 
+        /// <summary>
+        /// Default constructor to support mocking the <see cref="PublicIPAddressConfiguration"/> class.
+        /// </summary>
+        protected PublicIPAddressConfiguration()
+        {
+            this.propertyContainer = new PropertyContainer();
+        }
+
         internal PublicIPAddressConfiguration(Models.PublicIPAddressConfiguration protocolObject)
         {
             this.propertyContainer = new PropertyContainer(protocolObject);
