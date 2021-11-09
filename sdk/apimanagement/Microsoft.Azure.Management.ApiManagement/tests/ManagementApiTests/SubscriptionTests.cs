@@ -11,6 +11,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System;
 using System.Net;
+using Microsoft.Azure.Test.HttpRecorder;
 
 namespace ApiManagement.Tests.ManagementApiTests
 {
@@ -111,7 +112,8 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.Equal(firstSubscription.OwnerId, subscriptionContract.OwnerId);
                     Assert.Equal(newSubscriptionState, subscriptionContract.State);
                     Assert.Equal(newSubscriptionSk, subscriptionContract.SecondaryKey);
-                    Assert.Equal(newSubscriptionPk, subscriptionContract.PrimaryKey);
+                    if (HttpMockServer.Mode == HttpRecorderMode.None)
+                        Assert.Equal(newSubscriptionPk, subscriptionContract.PrimaryKey);
                     Assert.Equal(newSubscriptionName, subscriptionContract.DisplayName);
 
                     var subscriptionResponse = await testBase.client.Subscription.GetWithHttpMessagesAsync(
@@ -167,7 +169,8 @@ namespace ApiManagement.Tests.ManagementApiTests
                         testBase.rgName,
                         testBase.serviceName,
                         newSubscriptionId);
-                    Assert.Equal(patchedPk, secretsResponse.PrimaryKey);
+                    if (HttpMockServer.Mode == HttpRecorderMode.None)
+                        Assert.Equal(patchedPk, secretsResponse.PrimaryKey);
                     Assert.Equal(patchedSk, secretsResponse.SecondaryKey);
 
                     // regenerate primary key
