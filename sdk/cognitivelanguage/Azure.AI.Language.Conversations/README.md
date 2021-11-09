@@ -76,7 +76,7 @@ The following examples show common scenarios using the `client` [created above](
 
 ### Analyze a conversation
 
-To analyze a conversation, we can then call the `client.AnalyzeConversation()` method which takes a conversations project and an utterance as parameters.
+To analyze a conversation, we can then call the `client.AnalyzeConversation()` method which takes a Conversations project and an utterance as parameters.
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversation
 ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
