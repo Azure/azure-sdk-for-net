@@ -13,8 +13,8 @@ using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    [JsonConverter(typeof(MappingDataFlowConverter))]
-    public partial class MappingDataFlow : IUtf8JsonSerializable
+    [JsonConverter(typeof(FlowletConverter))]
+    public partial class Flowlet : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -92,7 +92,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static MappingDataFlow DeserializeMappingDataFlow(JsonElement element)
+        internal static Flowlet DeserializeFlowlet(JsonElement element)
         {
             string type = default;
             Optional<string> description = default;
@@ -218,19 +218,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new MappingDataFlow(type, description.Value, Optional.ToList(annotations), folder.Value, Optional.ToList(sources), Optional.ToList(sinks), Optional.ToList(transformations), script.Value, Optional.ToList(scriptLines));
+            return new Flowlet(type, description.Value, Optional.ToList(annotations), folder.Value, Optional.ToList(sources), Optional.ToList(sinks), Optional.ToList(transformations), script.Value, Optional.ToList(scriptLines));
         }
 
-        internal partial class MappingDataFlowConverter : JsonConverter<MappingDataFlow>
+        internal partial class FlowletConverter : JsonConverter<Flowlet>
         {
-            public override void Write(Utf8JsonWriter writer, MappingDataFlow model, JsonSerializerOptions options)
+            public override void Write(Utf8JsonWriter writer, Flowlet model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model);
             }
-            public override MappingDataFlow Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            public override Flowlet Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeMappingDataFlow(document.RootElement);
+                return DeserializeFlowlet(document.RootElement);
             }
         }
     }
