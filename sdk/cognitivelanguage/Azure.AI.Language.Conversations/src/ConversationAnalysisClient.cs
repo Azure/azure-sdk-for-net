@@ -86,7 +86,7 @@ namespace Azure.AI.Language.Conversations
             Argument.AssertNotNull(utterance, nameof(utterance));
 
             options = options ?? new();
-            options.Query = utterance;
+            options.Utterance = utterance;
 
             using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(ConversationAnalysisClient)}.{nameof(AnalyzeConversation)}");
             scope.AddAttribute("projectName", project.ProjectName);
@@ -117,7 +117,7 @@ namespace Azure.AI.Language.Conversations
             Argument.AssertNotNull(utterance, nameof(utterance));
 
             options = options ?? new();
-            options.Query = utterance;
+            options.Utterance = utterance;
 
             using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(ConversationAnalysisClient)}.{nameof(AnalyzeConversation)}");
             scope.AddAttribute("projectName", project.ProjectName);

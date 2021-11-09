@@ -18,6 +18,7 @@ namespace Azure.AI.Language.Conversations
         }
 
         /// <summary> The conversation utterance to be analyzed. </summary>
-        internal string Query { get; set; }
+        [CodeGenMember("Query")]
+        internal string Utterance { get; set; }
     }
 }
