@@ -26,6 +26,7 @@ namespace Azure.Core.Pipeline
             _delay = delay;
             _maxDelay = maxDelay;
             _maxRetries = maxRetries;
+            IsRetryPolicy = true;
         }
 
         private const string RetryAfterHeaderName = "Retry-After";

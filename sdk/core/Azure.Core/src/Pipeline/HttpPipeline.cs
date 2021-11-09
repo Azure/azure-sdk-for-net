@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace Azure.Core.Pipeline
 {
@@ -40,15 +41,11 @@ namespace Azure.Core.Pipeline
             all[policies.Length] = new HttpPipelineTransportPolicy(_transport);
             policies.CopyTo(all, 0);
 
+            _perCallIndex = 0;
+            _perRetryIndex = policies.ToList().FindIndex(p => p.IsRetryPolicy) + 1;
             _transportIndex = policies.Length;
 
             _pipeline = all;
-        }
-
-        internal HttpPipeline(HttpPipelineTransport transport, int perCallIndex, int perRetryIndex, HttpPipelinePolicy[]? policies = null, ResponseClassifier? responseClassifier = null) : this(transport, policies, responseClassifier)
-        {
-            _perCallIndex = perCallIndex;
-            _perRetryIndex = perRetryIndex;
         }
 
         /// <summary>
