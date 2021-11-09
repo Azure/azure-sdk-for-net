@@ -18,7 +18,7 @@ namespace Azure.Data.SchemaRegistry
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string AvroValue = "avro";
+        private const string AvroValue = "Avro";
 
         /// <summary> Avro Serialization schema type. </summary>
         public static SchemaFormat Avro { get; } = new SchemaFormat(AvroValue);

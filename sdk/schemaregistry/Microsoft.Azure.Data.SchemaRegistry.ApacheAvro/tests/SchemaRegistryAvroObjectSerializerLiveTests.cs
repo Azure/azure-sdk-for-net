@@ -103,36 +103,36 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             await Task.CompletedTask;
         }
 
-        [RecordedTest]
-        public async Task CanUseEncoderWithEventData()
-        {
-            var client = CreateClient();
-            var groupName = TestEnvironment.SchemaRegistryGroup;
-
-            using var memoryStream = new MemoryStream();
-            var encoder = new SchemaRegistryAvroEncoder(client, groupName, new SchemaRegistryAvroObjectEncoderOptions { AutoRegisterSchemas = true });
-
-            var employee = new Employee { Age = 42, Name = "Caketown" };
-            var message = new EventData();
-            await encoder.EncodeMessageDataAsync(message, employee);
-
-            string[] contentType = message.ContentType.Split('+');
-            Assert.AreEqual(2, contentType.Length);
-            Assert.AreEqual("avro/binary", contentType[0]);
-            Assert.IsNotEmpty(contentType[1]);
-
-            Employee deserialized = (Employee)await encoder.DecodeMessageDataAsync(message, typeof(Employee));
-
-            // decoding should not alter the message
-            contentType = message.ContentType.Split('+');
-            Assert.AreEqual(2, contentType.Length);
-            Assert.AreEqual("avro/binary", contentType[0]);
-            Assert.IsNotEmpty(contentType[1]);
-
-            // verify the payload was decoded correctly
-            Assert.IsNotNull(deserialized);
-            Assert.AreEqual("Caketown", deserialized.Name);
-            Assert.AreEqual(42, deserialized.Age);
-        }
+        // [RecordedTest]
+        // public async Task CanUseEncoderWithEventData()
+        // {
+        //     var client = CreateClient();
+        //     var groupName = TestEnvironment.SchemaRegistryGroup;
+        //
+        //     using var memoryStream = new MemoryStream();
+        //     var encoder = new SchemaRegistryAvroEncoder(client, groupName, new SchemaRegistryAvroObjectEncoderOptions { AutoRegisterSchemas = true });
+        //
+        //     var employee = new Employee { Age = 42, Name = "Caketown" };
+        //     var message = new EventData();
+        //     await encoder.EncodeMessageDataAsync(message, employee);
+        //
+        //     string[] contentType = message.ContentType.Split('+');
+        //     Assert.AreEqual(2, contentType.Length);
+        //     Assert.AreEqual("avro/binary", contentType[0]);
+        //     Assert.IsNotEmpty(contentType[1]);
+        //
+        //     Employee deserialized = (Employee)await encoder.DecodeMessageDataAsync(message, typeof(Employee));
+        //
+        //     // decoding should not alter the message
+        //     contentType = message.ContentType.Split('+');
+        //     Assert.AreEqual(2, contentType.Length);
+        //     Assert.AreEqual("avro/binary", contentType[0]);
+        //     Assert.IsNotEmpty(contentType[1]);
+        //
+        //     // verify the payload was decoded correctly
+        //     Assert.IsNotNull(deserialized);
+        //     Assert.AreEqual("Caketown", deserialized.Name);
+        //     Assert.AreEqual(42, deserialized.Age);
+        // }
     }
 }
