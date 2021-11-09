@@ -192,12 +192,7 @@ namespace Azure.Core
                     return response;
                 }
 
-                TimeSpan serverDelay = OperationHelpers.GetServerDelay(response);
-
-                TimeSpan delay = serverDelay > pollingInterval
-                    ? serverDelay
-                    : pollingInterval;
-
+                TimeSpan delay = OperationHelpers.GetServerDelay(response, pollingInterval);
                 await WaitAsync(delay, cancellationToken).ConfigureAwait(false);
             }
         }

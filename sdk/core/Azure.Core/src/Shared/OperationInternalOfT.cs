@@ -100,14 +100,11 @@ namespace Azure.Core
                 {
                     return _value;
                 }
-                else if (_operationFailedException != null)
+                if (_operationFailedException != null)
                 {
                     throw _operationFailedException;
                 }
-                else
-                {
-                    throw new InvalidOperationException("The operation has not completed yet.");
-                }
+                throw new InvalidOperationException("The operation has not completed yet.");
             }
             private set
             {
@@ -165,12 +162,7 @@ namespace Azure.Core
                     return Response.FromValue(Value, response);
                 }
 
-                TimeSpan serverDelay = OperationHelpers.GetServerDelay(response);
-
-                TimeSpan delay = serverDelay > pollingInterval
-                    ? serverDelay : pollingInterval;
-
-                await WaitAsync(delay, cancellationToken).ConfigureAwait(false);
+                OperationHelpers.GetServerDelay(response, pollingInterval);
             }
         }
 

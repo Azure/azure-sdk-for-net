@@ -69,7 +69,8 @@ namespace Azure
         /// <remarks>
         /// This method will periodically call UpdateStatusAsync till HasCompleted is true, then return the final result of the operation.
         /// </remarks>
-        public abstract ValueTask<Response<T>> WaitForCompletionAsync(CancellationToken cancellationToken = default);
+        public virtual ValueTask<Response<T>> WaitForCompletionAsync(CancellationToken cancellationToken = default)
+            => this.DefaultWaitForCompletionAsync(cancellationToken);
 
         /// <summary>
         /// Periodically calls the server till the long-running operation completes.
@@ -84,20 +85,17 @@ namespace Azure
         /// <remarks>
         /// This method will periodically call UpdateStatusAsync till HasCompleted is true, then return the final result of the operation.
         /// </remarks>
-        public abstract ValueTask<Response<T>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken);
+        public virtual ValueTask<Response<T>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken)
+            => this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override async ValueTask<Response> WaitForCompletionResponseAsync(CancellationToken cancellationToken = default)
-        {
-            return (await WaitForCompletionAsync(cancellationToken).ConfigureAwait(false)).GetRawResponse();
-        }
+            => (await WaitForCompletionAsync(cancellationToken).ConfigureAwait(false)).GetRawResponse();
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override async ValueTask<Response> WaitForCompletionResponseAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default)
-        {
-            return (await WaitForCompletionAsync(pollingInterval, cancellationToken).ConfigureAwait(false)).GetRawResponse();
-        }
+            => (await WaitForCompletionAsync(pollingInterval, cancellationToken).ConfigureAwait(false)).GetRawResponse();
     }
 }

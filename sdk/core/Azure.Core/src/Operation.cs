@@ -66,7 +66,7 @@ namespace Azure
         /// This method will periodically call UpdateStatusAsync till HasCompleted is true, then return the final response of the operation.
         /// </remarks>
         public virtual ValueTask<Response> WaitForCompletionResponseAsync(CancellationToken cancellationToken = default)
-            => this.DefaultWaitForCompletionResponseAsync(cancellationToken);
+            => WaitForCompletionResponseAsync(OperationHelpers.DefaultPollingInterval, cancellationToken);
 
         /// <summary>
         /// Periodically calls the server till the long-running operation completes.

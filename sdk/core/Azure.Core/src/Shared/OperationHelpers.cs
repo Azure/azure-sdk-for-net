@@ -51,13 +51,13 @@ namespace Azure.Core
         {
             while (true)
             {
-                await operation.UpdateStatusAsync(cancellationToken).ConfigureAwait(false);
+                Response response = await operation.UpdateStatusAsync(cancellationToken).ConfigureAwait(false);
                 if (operation.HasCompleted)
                 {
                     return Response.FromValue(operation.Value, operation.GetRawResponse());
                 }
-
-                await Task.Delay(pollingInterval, cancellationToken).ConfigureAwait(false);
+                TimeSpan delay = GetServerDelay(response, pollingInterval);
+                await Task.Delay(delay, cancellationToken).ConfigureAwait(false);
             }
         }
 
@@ -75,14 +75,14 @@ namespace Azure.Core
         {
             while (true)
             {
-                operation.UpdateStatus(cancellationToken);
+                Response response = operation.UpdateStatus(cancellationToken);
 
                 if (operation.HasCompleted)
                 {
                     return Response.FromValue(operation.Value, operation.GetRawResponse());
                 }
-
-                Thread.Sleep(pollingInterval);
+                TimeSpan delay = GetServerDelay(response, pollingInterval);
+                Thread.Sleep(delay);
             }
         }
 
@@ -98,13 +98,13 @@ namespace Azure.Core
         {
             while (true)
             {
-                await operation.UpdateStatusAsync(cancellationToken).ConfigureAwait(false);
+                Response response = await operation.UpdateStatusAsync(cancellationToken).ConfigureAwait(false);
                 if (operation.HasCompleted)
                 {
                     return operation.GetRawResponse();
                 }
-
-                await Task.Delay(pollingInterval, cancellationToken).ConfigureAwait(false);
+                TimeSpan delay = GetServerDelay(response, pollingInterval);
+                await Task.Delay(delay, cancellationToken).ConfigureAwait(false);
             }
         }
 
@@ -115,37 +115,39 @@ namespace Azure.Core
         {
             while (true)
             {
-                operation.UpdateStatus(cancellationToken);
+                Response response = operation.UpdateStatus(cancellationToken);
 
                 if (operation.HasCompleted)
                 {
                     return operation.GetRawResponse();
                 }
-
-                Thread.Sleep(pollingInterval);
+                TimeSpan delay = GetServerDelay(response, pollingInterval);
+                Thread.Sleep(delay);
             }
         }
 
-        public static TimeSpan GetServerDelay(Response response)
+        public static TimeSpan GetServerDelay(Response response, TimeSpan pollingInterval)
         {
+            TimeSpan serverDelay = pollingInterval;
             if (response.Headers.TryGetValue(RetryAfterMsHeaderName, out string? retryAfterValue) ||
                 response.Headers.TryGetValue(XRetryAfterMsHeaderName, out retryAfterValue))
             {
                 if (int.TryParse(retryAfterValue, out int serverDelayInMilliseconds))
                 {
-                    return TimeSpan.FromMilliseconds(serverDelayInMilliseconds);
+                    serverDelay = TimeSpan.FromMilliseconds(serverDelayInMilliseconds);
                 }
             }
-
-            if (response.Headers.TryGetValue(RetryAfterHeaderName, out retryAfterValue))
+            else if (response.Headers.TryGetValue(RetryAfterHeaderName, out retryAfterValue))
             {
                 if (int.TryParse(retryAfterValue, out int serverDelayInSeconds))
                 {
-                    return TimeSpan.FromSeconds(serverDelayInSeconds);
+                    serverDelay = TimeSpan.FromSeconds(serverDelayInSeconds);
                 }
             }
 
-            return TimeSpan.Zero;
+            return serverDelay > pollingInterval
+                ? serverDelay
+                : pollingInterval;
         }
     }
 }
