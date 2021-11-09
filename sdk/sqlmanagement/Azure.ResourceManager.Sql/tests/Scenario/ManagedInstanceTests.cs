@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
     {
         private ResourceGroup _resourceGroup;
         private ResourceIdentifier _resourceGroupIdentifier;
+        private string SubnetId;
 
         public ManagedInstanceTests(bool isAsync)
             : base(isAsync)
@@ -31,38 +32,27 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         public async Task GlobalSetUp()
         {
             var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(SessionRecording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(Location.WestUS2));
-            ResourceGroup rg = rgLro.Value;
-            _resourceGroupIdentifier = rg.Id;
-            StopSessionRecording();
-        }
+            ResourceGroup resourceGroup = rgLro.Value;
+            _resourceGroupIdentifier = resourceGroup.Id;
 
-        [SetUp]
-        public async Task TestSetUp()
-        {
-            var client = GetArmClient();
-            _resourceGroup = await client.GetResourceGroup(_resourceGroupIdentifier).GetAsync();
-        }
-
-        private async Task<ManagedInstance> CreateOrUpdateManagedInstance(string managedInstanceName)
-        {
-            //1. create NetworkSecurityGroup
-            string networkSecurityGroupName = Recording.GenerateAssetName("networkSecurityGroup-");
+            //Prerequisites: 1. create NetworkSecurityGroup
+            string networkSecurityGroupName = SessionRecording.GenerateAssetName("networkSecurityGroup-");
             NetworkSecurityGroupData networkSecurityGroupData = new NetworkSecurityGroupData()
             {
                 Location = Location.WestUS2,
             };
-            var networkSecurityGroup = await _resourceGroup.GetNetworkSecurityGroups().CreateOrUpdateAsync(networkSecurityGroupName, networkSecurityGroupData);
+            var networkSecurityGroup = await resourceGroup.GetNetworkSecurityGroups().CreateOrUpdateAsync(networkSecurityGroupName, networkSecurityGroupData);
 
             //2. create Route table
-            string routeTableName = Recording.GenerateAssetName("routeTable-");
+            string routeTableName = SessionRecording.GenerateAssetName("routeTable-");
             RouteTableData routeTableData = new RouteTableData()
             {
                 Location = Location.WestUS2,
             };
-            var routeTable = await _resourceGroup.GetRouteTables().CreateOrUpdateAsync(routeTableName, routeTableData);
+            var routeTable = await resourceGroup.GetRouteTables().CreateOrUpdateAsync(routeTableName, routeTableData);
 
             //3. create Virtual network
-            string vnetName = Recording.GenerateAssetName("vnet-");
+            string vnetName = SessionRecording.GenerateAssetName("vnet-");
             var vnetData = new VirtualNetworkData()
             {
                 Location = "westus2",
@@ -81,18 +71,40 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
                         {
                             new Delegation() { ServiceName  = "Microsoft.Sql/managedInstances",Name="Microsoft.Sql/managedInstances" ,Type="Microsoft.Sql"}
                         },
+                        RouteTable = new RouteTableData(){ Id = routeTable.Value.Data.Id.ToString() },
+                        NetworkSecurityGroup = new NetworkSecurityGroupData(){ Id = networkSecurityGroup.Value.Data.Id.ToString() },
                     }
                 },
             };
-            var vnet = await _resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(vnetName, vnetData);
+            var vnet = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(vnetName, vnetData);
+            SubnetId = $"{vnet.Value.Data.Id.ToString()}/subnets/ManagedInstance";
+            StopSessionRecording();
+        }
 
-            string subid = vnet.Value.Data.Id.ToString() + "/subnets/ManagedInstance";
+        [SetUp]
+        public async Task TestSetUp()
+        {
+            var client = GetArmClient();
+            _resourceGroup = await client.GetResourceGroup(_resourceGroupIdentifier).GetAsync();
+        }
 
+        [TearDown]
+        public async Task TearDown()
+        {
+            var list = await _resourceGroup.GetManagedInstances().GetAllAsync().ToEnumerableAsync();
+            foreach (var item in list)
+            {
+                await item.DeleteAsync();
+            }
+        }
+
+        private async Task<ManagedInstance> CreateOrUpdateManagedInstance(string managedInstanceName)
+        {
             ManagedInstanceData data = new ManagedInstanceData(Location.WestUS2)
             {
                 AdministratorLogin = $"admin-{managedInstanceName}",
                 AdministratorLoginPassword = CreateGeneralPassword(),
-                SubnetId = subid,
+                SubnetId = SubnetId,
                 PublicDataEndpointEnabled = false,
                 MaintenanceConfigurationId = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default",
                 ProxyOverride = new ManagedInstanceProxyOverride("Proxy") { },
@@ -100,18 +112,64 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
                 StorageAccountType = new StorageAccountType("GRS"),
                 ZoneRedundant = false,
             };
-            var managedInstancedLro = await _resourceGroup.GetManagedInstances().CreateOrUpdateAsync(managedInstanceName, data);
-            var managedInstanced = managedInstancedLro.Value;
-            return managedInstanced;
+            var managedInstanceLro = await _resourceGroup.GetManagedInstances().CreateOrUpdateAsync(managedInstanceName, data);
+            var managedInstance = managedInstanceLro.Value;
+            return managedInstance;
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task CheckIfExist()
+        {
+            string managedInstanceName = Recording.GenerateAssetName("Managed-Instance-");
+            await CreateOrUpdateManagedInstance(managedInstanceName);
+            Assert.IsTrue(_resourceGroup.GetManagedInstances().CheckIfExists(managedInstanceName));
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task CreateOrUpdate()
+        {
+            string managedInstanceName = Recording.GenerateAssetName("Managed-Instance-");
+            var managedInstance = await CreateOrUpdateManagedInstance(managedInstanceName);
+            Assert.IsNotNull(managedInstance.Data);
+            Assert.AreEqual(managedInstanceName, managedInstance.Data.Name);
+        }
+        [Test]
+        [RecordedTest]
+        public async Task Delete()
+        {
+            string managedInstanceName = Recording.GenerateAssetName("Managed-Instance-");
+            var managedInstance = await CreateOrUpdateManagedInstance(managedInstanceName);
+            var list = await _resourceGroup.GetManagedInstances().GetAllAsync().ToEnumerableAsync();
+            Assert.AreEqual(1,list.Count);
+
+            await managedInstance.DeleteAsync();
+            list = await _resourceGroup.GetManagedInstances().GetAllAsync().ToEnumerableAsync();
+            Assert.AreEqual(0, list.Count);
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task Get()
+        {
+            string managedInstanceName = Recording.GenerateAssetName("Managed-Instance-");
+            await CreateOrUpdateManagedInstance(managedInstanceName);
+            var managedInstance = await _resourceGroup.GetManagedInstances().GetAsync(managedInstanceName);
+            Assert.IsNotNull(managedInstance.Value.Data);
+            Assert.AreEqual(managedInstanceName, managedInstance.Value.Data.Name);
         }
 
         [Test]
         [RecordedTest]
         public async Task GetAll()
         {
+            var list = await _resourceGroup.GetManagedInstances().GetAllAsync().ToEnumerableAsync();
+            Assert.IsEmpty(list);
             string managedInstanceName = Recording.GenerateAssetName("Managed-Instance-");
-            var managedInstance = await CreateOrUpdateManagedInstance(managedInstanceName);
-            Assert.NotNull(managedInstance.Data);
+            await CreateOrUpdateManagedInstance(managedInstanceName);
+            list = await _resourceGroup.GetManagedInstances().GetAllAsync().ToEnumerableAsync();
+            Assert.IsNotEmpty(list);
         }
     }
 }

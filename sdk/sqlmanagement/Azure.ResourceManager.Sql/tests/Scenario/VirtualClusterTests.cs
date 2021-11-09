@@ -43,10 +43,54 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
 
         [Test]
         [RecordedTest]
+        public async Task CheckIfExist()
+        {
+            string managedInstanceName = Recording.GenerateAssetName("Managed-Instance-");
+            await CreateDefaultManagedInstance(managedInstanceName, _resourceGroup);
+            var list = await _resourceGroup.GetVirtualClusters().GetAllAsync().ToEnumerableAsync();
+            Assert.IsTrue(_resourceGroup.GetVirtualClusters().CheckIfExists(list[0].Data.Name));
+            Assert.IsNotEmpty(list);
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task Delete()
+        {
+            string managedInstanceName = Recording.GenerateAssetName("Managed-Instance-");
+            await CreateDefaultManagedInstance(managedInstanceName, _resourceGroup);
+            var list = await _resourceGroup.GetVirtualClusters().GetAllAsync().ToEnumerableAsync();
+            Assert.IsNotEmpty(list);
+
+            await list[0].DeleteAsync();
+            list = await _resourceGroup.GetVirtualClusters().GetAllAsync().ToEnumerableAsync();
+            Assert.IsEmpty(list);
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task Get()
+        {
+            string managedInstanceName = Recording.GenerateAssetName("Managed-Instance-");
+            await CreateDefaultManagedInstance(managedInstanceName, _resourceGroup);
+            var list = await _resourceGroup.GetVirtualClusters().GetAllAsync().ToEnumerableAsync();
+            string virtualClusterName = list[0].Data.Name;
+            var virtualCluster =await _resourceGroup.GetVirtualClusters().GetAsync(virtualClusterName);
+            Assert.IsNotNull(virtualCluster.Value.Data);
+            Assert.AreEqual(virtualClusterName,virtualCluster.Value.Data.Name);
+            Assert.AreEqual("westus2",virtualCluster.Value.Data.Location.ToString());
+        }
+
+        [Test]
+        [RecordedTest]
         public async Task GetAll()
         {
             var list = await _resourceGroup.GetVirtualClusters().GetAllAsync().ToEnumerableAsync();
             Assert.IsEmpty(list);
+
+            string managedInstanceName = Recording.GenerateAssetName("Managed-Instance-");
+            await CreateDefaultManagedInstance(managedInstanceName, _resourceGroup);
+            list = await _resourceGroup.GetVirtualClusters().GetAllAsync().ToEnumerableAsync();
+            Assert.IsNotEmpty(list);
         }
     }
 }

@@ -1,32 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <UseNewMgmtFramework>false</UseNewMgmtFramework>
-    <IsMgmtSubLibrary>false</IsMgmtSubLibrary>
-  </PropertyGroup>
-  <ItemGroup>
-    <Compile Remove="Utilities\**" />
-    <EmbeddedResource Remove="Utilities\**" />
-    <None Remove="Utilities\**" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Remove="ServerCrudScenarioTests.cs" />
-  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.Sql.csproj" />
   </ItemGroup>
+  
   <ItemGroup>
-    <!--<PackageReference Include="Azure.ResourceManager.Network"/>-->
+    <PackageReference Include="Azure.ResourceManager.Network"/>
     <PackageReference Include="Microsoft.Azure.AutoRest.CSharp" VersionOverride="$(MgmtAutorestVersion)" PrivateAssets="All" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="..\..\..\..\common\ManagementTestShared\Redesign\JsonHelper.cs" Link="TestShared\JsonHelper.cs" />
-    <Compile Include="..\..\..\..\common\ManagementTestShared\Redesign\ManagementGroupCleanupPolicy.cs" Link="TestShared\ManagementGroupCleanupPolicy.cs" />
-    <Compile Include="..\..\..\..\common\ManagementTestShared\Redesign\ManagementRecordedTestBase.cs" Link="TestShared\ManagementRecordedTestBase.cs" />
-    <Compile Include="..\..\..\..\common\ManagementTestShared\Redesign\MockTestBase.cs" Link="TestShared\MockTestBase.cs" />
-    <Compile Include="..\..\..\..\common\ManagementTestShared\Redesign\MockTestEnvironment.cs" Link="TestShared\MockTestEnvironment.cs" />
-    <Compile Include="..\..\..\..\common\ManagementTestShared\Redesign\ResourceGroupCleanupPolicy.cs" Link="TestShared\ResourceGroupCleanupPolicy.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="TestShared\" />
   </ItemGroup>
 </Project>
