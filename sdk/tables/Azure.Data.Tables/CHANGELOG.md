@@ -1,10 +1,6 @@
 # Release History
 
-## 12.3.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 12.3.0 (2021-11-09)
 
 ### Bugs Fixed
 - Table entities now support UInt64 (ulong) properties. ([#24750](https://github.com/Azure/azure-sdk-for-net/issues/24750))
@@ -18,8 +14,6 @@
     <RuntimeHostConfigurationOption Include="Azure.Data.Tables.DisableEscapeSingleQuotesOnGetEntity" Value="true" />
 </ItemGroup> 
   ```
-
-### Other Changes
 
 ## 12.2.1 (2021-10-14)
 

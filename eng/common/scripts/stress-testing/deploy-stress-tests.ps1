@@ -156,6 +156,7 @@ function DeployStressPackage(
 
     Write-Host "Creating namespace $($pkg.Namespace) if it does not exist..."
     kubectl create namespace $pkg.Namespace --dry-run=client -o yaml | kubectl apply -f -
+    if ($LASTEXITCODE) {exit $LASTEXITCODE}
 
     Write-Host "Installing or upgrading stress test $($pkg.ReleaseName) from $($pkg.Directory)"
     Run helm upgrade $pkg.ReleaseName $pkg.Directory `

@@ -1,5 +1,4 @@
-﻿#if NETCOREAPP3_0_OR_GREATER
-using System;
+﻿using System;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Azure.WebPubSub.AspNetCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -46,4 +45,3 @@ namespace Microsoft.AspNetCore.Builder
         }
     }
 }
-#endif

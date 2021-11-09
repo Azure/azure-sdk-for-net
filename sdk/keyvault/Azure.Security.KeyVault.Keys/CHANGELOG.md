@@ -1,14 +1,13 @@
 # Release History
 
-## 4.3.0-beta.3 (Unreleased)
-
-### Features Added
+## 4.3.0-beta.3 (2021-11-09)
 
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- Changed return type from `RandomBytes` to `byte[]` on `KeyClient.GetRandomBytes` and `GetRandomBytesAsync`.
+- Renamed `KeyReleasePolicy.Data` to `KeyReleasePolicy.EncodedPolicy` and changed property type from `byte[]` to `BinaryData`.
+- Renamed `name` and `version` parameters on `KeyClient.GetCryptographyClient` to `keyName` and `keyVersion`, respectively.
+- Renamed `target` parameter on `KeyClient.ReleaseKey` and `ReleaseKeyAsync` to `targetAttestationToken`.
 
 ## 4.3.0-beta.2 (2021-10-14)
 

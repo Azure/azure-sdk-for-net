@@ -217,10 +217,10 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.AreEqual("name", ex.ParamName);
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.ReleaseKeyAsync("test", null));
-            Assert.AreEqual("target", ex.ParamName);
+            Assert.AreEqual("targetAttestationToken", ex.ParamName);
 
             ex = Assert.ThrowsAsync<ArgumentException>(async () => await Client.ReleaseKeyAsync("test", string.Empty));
-            Assert.AreEqual("target", ex.ParamName);
+            Assert.AreEqual("targetAttestationToken", ex.ParamName);
         }
 
         [Test]
@@ -228,10 +228,10 @@ namespace Azure.Security.KeyVault.Keys.Tests
         public void GetCryptographyClientValidation()
         {
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => Client.GetCryptographyClient(null));
-            Assert.AreEqual("name", ex.ParamName);
+            Assert.AreEqual("keyName", ex.ParamName);
 
             ex = Assert.Throws<ArgumentException>(() => Client.GetCryptographyClient(string.Empty));
-            Assert.AreEqual("name", ex.ParamName);
+            Assert.AreEqual("keyName", ex.ParamName);
         }
 
         [Test]

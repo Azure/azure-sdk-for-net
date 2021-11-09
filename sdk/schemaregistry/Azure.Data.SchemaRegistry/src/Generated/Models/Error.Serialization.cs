@@ -10,20 +10,20 @@ using Azure.Core;
 
 namespace Azure.Data.SchemaRegistry.Models
 {
-    internal partial struct SchemaId
+    internal partial class Error
     {
-        internal static SchemaId DeserializeSchemaId(JsonElement element)
+        internal static Error DeserializeError(JsonElement element)
         {
-            Optional<string> id = default;
+            ErrorDetail error = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("error"))
                 {
-                    id = property.Value.GetString();
+                    error = ErrorDetail.DeserializeErrorDetail(property.Value);
                     continue;
                 }
             }
-            return new SchemaId(id.Value);
+            return new Error(error);
         }
     }
 }

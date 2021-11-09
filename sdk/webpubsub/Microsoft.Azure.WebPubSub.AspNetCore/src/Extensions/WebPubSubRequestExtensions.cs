@@ -21,7 +21,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
     /// <summary>
     /// Helper methods to parse upstream requests.
     /// </summary>
-    public static class WebPubSubRequestExtensions
+    internal static class WebPubSubRequestExtensions
     {
         /// <summary>
         /// Parse request to system/user type ServiceRequest.
@@ -30,7 +30,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns>Deserialize <see cref="WebPubSubEventRequest"/></returns>
-        public static async Task<WebPubSubEventRequest> ReadWebPubSubEventAsync(this HttpRequest request, WebPubSubValidationOptions options = null, CancellationToken cancellationToken = default)
+        internal static async Task<WebPubSubEventRequest> ReadWebPubSubEventAsync(this HttpRequest request, WebPubSubValidationOptions options = null, CancellationToken cancellationToken = default)
         {
             if (request == null)
             {
