@@ -4063,14 +4063,14 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"keys\": [\r\n    {\r\n      \"keyName\": \"key1\",\r\n      \"value\": \"V6Dcm0G+1DI5q+3qXUW3jczKuSdI7dRg/OkHnU/keck0ZsW17qMOrsWqXYfRvAE91MIUF7PJrvswIlmDDYwh1Q==\",\r\n      \"permissions\": \"FULL\"\r\n    },\r\n    {\r\n      \"keyName\": \"key2\",\r\n      \"value\": \"NPhVZZuQgWk2w90+/bf36cMXslWPTlmVMzOYre5w2Ym51midDsZU+W8zJYaRU8ZJoCd7zJ4LbLWir3uO3fkOVQ==\",\r\n      \"permissions\": \"FULL\"\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"keys\": [\r\n    {\r\n      \"keyName\": \"key1\",\r\n      \"value\": \"Sanitized\",\r\n      \"permissions\": \"FULL\"\r\n    },\r\n    {\r\n      \"keyName\": \"key2\",\r\n      \"value\": \"Sanitized\",\r\n      \"permissions\": \"FULL\"\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     },
     {
       "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/sdktestrg258/providers/Microsoft.ApiManagement/service/sdktestapim4219/backup?api-version=2020-12-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzI1OC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0YXBpbTQyMTkvYmFja3VwP2FwaS12ZXJzaW9uPTIwMjAtMTItMDE=",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"storageAccount\": \"sdkapimbackup6744\",\r\n  \"accessKey\": \"V6Dcm0G+1DI5q+3qXUW3jczKuSdI7dRg/OkHnU/keck0ZsW17qMOrsWqXYfRvAE91MIUF7PJrvswIlmDDYwh1Q==\",\r\n  \"containerName\": \"apimbackupcontainer\",\r\n  \"backupName\": \"apimbackup.zip\"\r\n}",
+      "RequestBody": "{\r\n  \"storageAccount\": \"sdkapimbackup6744\",\r\n  \"accessKey\": \"Sanitized\",\r\n  \"containerName\": \"apimbackupcontainer\",\r\n  \"backupName\": \"apimbackup.zip\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
           "09ba4fbc-9b1f-4d9f-8da6-075aeb9a4d2c"
@@ -4736,7 +4736,7 @@
       "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/sdktestrg258/providers/Microsoft.ApiManagement/service/sdktestapim4219/restore?api-version=2020-12-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzI1OC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0YXBpbTQyMTkvcmVzdG9yZT9hcGktdmVyc2lvbj0yMDIwLTEyLTAx",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"storageAccount\": \"sdkapimbackup6744\",\r\n  \"accessKey\": \"V6Dcm0G+1DI5q+3qXUW3jczKuSdI7dRg/OkHnU/keck0ZsW17qMOrsWqXYfRvAE91MIUF7PJrvswIlmDDYwh1Q==\",\r\n  \"containerName\": \"apimbackupcontainer\",\r\n  \"backupName\": \"apimbackup.zip\"\r\n}",
+      "RequestBody": "{\r\n  \"storageAccount\": \"sdkapimbackup6744\",\r\n  \"accessKey\": \"Sanitized\",\r\n  \"containerName\": \"apimbackupcontainer\",\r\n  \"backupName\": \"apimbackup.zip\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
           "b8029951-bcf6-4f23-8da2-ed6987130b83"

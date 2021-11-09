@@ -590,7 +590,7 @@
           "Microsoft.Azure.Management.Storage.StorageManagementClient/6.5.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"keys\": [\r\n    {\r\n      \"keyName\": \"key1\",\r\n      \"value\": \"Wbg1odTf7EtZKj6df+CXcEAYPj4CInalIDBKUVt6t2JraN4nX4PeIhtmZ7LZyCK5ct/DdFN6DdiE8zYzkmRPLw==\",\r\n      \"permissions\": \"FULL\"\r\n    },\r\n    {\r\n      \"keyName\": \"key2\",\r\n      \"value\": \"J3B0+THCJrw2ksip0ow1dEq9M/XswbTrhQIFTnrYmplaYiyEqhR/pJZGCefNSfmRRkY5v+jzUHYuEMhPAJtPqA==\",\r\n      \"permissions\": \"FULL\"\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"keys\": [\r\n    {\r\n      \"keyName\": \"key1\",\r\n      \"value\": \"Sanitized\",\r\n      \"permissions\": \"FULL\"\r\n    },\r\n    {\r\n      \"keyName\": \"key2\",\r\n      \"value\": \"Sanitized\",\r\n      \"permissions\": \"FULL\"\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json"
