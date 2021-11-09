@@ -62,7 +62,7 @@ namespace ApiManagement.Tests
         {
             var testEnv = TestEnvironmentFactory.GetTestEnvironment();
 
-            if (HttpMockServer.Mode == HttpRecorderMode.None)
+            if (HttpMockServer.Mode == HttpRecorderMode.Record)
             {
                 if (!testEnv.ConnectionString.KeyValuePairs.TryGetValue(ServiceNameKey, out string apimServiceName))
                 {

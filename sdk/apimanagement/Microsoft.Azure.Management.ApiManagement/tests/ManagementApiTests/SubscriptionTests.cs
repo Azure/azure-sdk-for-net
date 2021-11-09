@@ -112,7 +112,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.Equal(firstSubscription.OwnerId, subscriptionContract.OwnerId);
                     Assert.Equal(newSubscriptionState, subscriptionContract.State);
                     Assert.Equal(newSubscriptionSk, subscriptionContract.SecondaryKey);
-                    if (HttpMockServer.Mode == HttpRecorderMode.None)
+                    if (HttpMockServer.Mode != HttpRecorderMode.Playback)
                         Assert.Equal(newSubscriptionPk, subscriptionContract.PrimaryKey);
                     Assert.Equal(newSubscriptionName, subscriptionContract.DisplayName);
 
@@ -169,7 +169,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                         testBase.rgName,
                         testBase.serviceName,
                         newSubscriptionId);
-                    if (HttpMockServer.Mode == HttpRecorderMode.None)
+                    if (HttpMockServer.Mode != HttpRecorderMode.Playback)
                         Assert.Equal(patchedPk, secretsResponse.PrimaryKey);
                     Assert.Equal(patchedSk, secretsResponse.SecondaryKey);
 
