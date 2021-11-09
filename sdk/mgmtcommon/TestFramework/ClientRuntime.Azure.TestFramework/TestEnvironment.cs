@@ -315,7 +315,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             else
             {
 //#if FullNetFx
-#if NET452_OR_GREATER
+#if net452
                 InteractiveLogin(this.Tenant, PowerShellClientId,
                                     aadServiceSettings, graphAADServiceSettings);
 #else
