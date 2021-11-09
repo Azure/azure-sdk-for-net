@@ -20,10 +20,10 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
 #if SNIPPET
             ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
-            AnalyzeConversationOptions options = new AnalyzeConversationOptions(){
+            AnalyzeConversationOptions options = new AnalyzeConversationOptions()
+            {
                 IsLoggingEnabled = true,
                 Verbose = true,
-                Language = "en"
             };
 
             Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
@@ -31,10 +31,10 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 conversationsProject,
                 options);
 #else
-            AnalyzeConversationOptions options = new AnalyzeConversationOptions(){
+            AnalyzeConversationOptions options = new AnalyzeConversationOptions()
+            {
                 IsLoggingEnabled = true,
                 Verbose = true,
-                Language = "en"
             };
 
             Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
@@ -61,10 +61,10 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
 #if SNIPPET
             ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
-            AnalyzeConversationOptions options = new AnalyzeConversationOptions(){
+            AnalyzeConversationOptions options = new AnalyzeConversationOptions()
+            {
                 IsLoggingEnabled = true,
                 Verbose = true,
-                Language = "en"
             };
 
             Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(
@@ -72,10 +72,10 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 conversationsProject,
                 options);
 #else
-            AnalyzeConversationOptions options = new AnalyzeConversationOptions(){
+            AnalyzeConversationOptions options = new AnalyzeConversationOptions()
+            {
                 IsLoggingEnabled = true,
                 Verbose = true,
-                Language = "en"
             };
 
             Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(

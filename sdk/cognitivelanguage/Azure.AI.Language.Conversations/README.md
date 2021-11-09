@@ -92,10 +92,10 @@ The specified parameters can also be used to initialize a `ConversationAnalysisO
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationWithOptions
 ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
-AnalyzeConversationOptions options = new AnalyzeConversationOptions(){
+AnalyzeConversationOptions options = new AnalyzeConversationOptions()
+{
     IsLoggingEnabled = true,
     Verbose = true,
-    Language = "en"
 };
 
 Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
