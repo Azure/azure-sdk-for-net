@@ -1,16 +1,20 @@
 # Release History
 
-## 5.7.0-beta.1 (Unreleased)
+## 5.7.0-beta.1 (2021-11-09)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- The `EventHubBufferedProducerClient` is being introduced, intended to allow for efficient publishing of events without having to explicitly manage batches in the application.  More information can be found in its [design document](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs/design/proposal-event-hub-buffered-producer.md).
 
 ### Other Changes
 
+- `EventData` now allows the `EventBody` to be set after construction and supports an empty constructor.
+
 - Added additional heuristics for the `EventProcessor<T>` load balancing cycle to help discover issues that can impact processor performance and stability; these validations will produce warnings should potential concerns be found.
+
+- `EventProcessor<T>` will now log a verbose message indicating what event position was chosen to read from when initializing a partition.
+
+- `EventPosition` now exposes its `ToString` method for code completion, making it more discoverable.
 
 ## 5.6.2 (2021-10-05)
 

@@ -73,7 +73,8 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Perform a database extension operation, like polybase import
+            /// Perform a database extension operation, like database import, database
+            /// export, or polybase import
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -99,7 +100,8 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Perform a database extension operation, like polybase import
+            /// Perform a database extension operation, like database import, database
+            /// export, or polybase import
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -181,7 +183,8 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Perform a database extension operation, like polybase import
+            /// Perform a database extension operation, like database import, database
+            /// export, or polybase import
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -207,7 +210,8 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Perform a database extension operation, like polybase import
+            /// Perform a database extension operation, like database import, database
+            /// export, or polybase import
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

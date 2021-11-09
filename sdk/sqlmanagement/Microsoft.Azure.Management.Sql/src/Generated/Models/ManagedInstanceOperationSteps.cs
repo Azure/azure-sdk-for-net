@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="currentStep">The number of current operation
         /// steps.</param>
         /// <param name="stepsList">The operation steps list.</param>
-        public ManagedInstanceOperationSteps(string totalSteps = default(string), int? currentStep = default(int?), IList<UpsertManagedServerOperationStep> stepsList = default(IList<UpsertManagedServerOperationStep>))
+        public ManagedInstanceOperationSteps(string totalSteps = default(string), int? currentStep = default(int?), IList<UpsertManagedServerOperationStepWithEstimatesAndDuration> stepsList = default(IList<UpsertManagedServerOperationStepWithEstimatesAndDuration>))
         {
             TotalSteps = totalSteps;
             CurrentStep = currentStep;
@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Gets the operation steps list.
         /// </summary>
         [JsonProperty(PropertyName = "stepsList")]
-        public IList<UpsertManagedServerOperationStep> StepsList { get; private set; }
+        public IList<UpsertManagedServerOperationStepWithEstimatesAndDuration> StepsList { get; private set; }
 
     }
 }

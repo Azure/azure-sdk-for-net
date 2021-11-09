@@ -30,8 +30,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Initializes a new instance of the StorageCapability class.
         /// </summary>
         /// <param name="storageAccountType">The storage account type for the
-        /// database's backups. Possible values include: 'GRS', 'LRS',
-        /// 'ZRS'</param>
+        /// database's backups. Possible values include: 'GRS', 'LRS', 'ZRS',
+        /// 'GZRS'</param>
         /// <param name="status">The status of the capability. Possible values
         /// include: 'Visible', 'Available', 'Default', 'Disabled'</param>
         /// <param name="reason">The reason for the capability not being
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Sql.Models
 
         /// <summary>
         /// Gets the storage account type for the database's backups. Possible
-        /// values include: 'GRS', 'LRS', 'ZRS'
+        /// values include: 'GRS', 'LRS', 'ZRS', 'GZRS'
         /// </summary>
         [JsonProperty(PropertyName = "storageAccountType")]
         public string StorageAccountType { get; private set; }

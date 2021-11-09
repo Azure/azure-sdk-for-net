@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// An export managed database operation result resource.
+    /// An Import, Export, or PolybaseImport resource.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class DatabaseExtensions : ProxyResource
@@ -32,27 +32,48 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Initializes a new instance of the DatabaseExtensions class.
         /// </summary>
-        /// <param name="storageKeyType">Storage key type. Possible values
-        /// include: 'SharedAccessKey', 'StorageAccessKey'</param>
-        /// <param name="storageKey">Storage key.</param>
-        /// <param name="storageUri">Storage Uri.</param>
+        /// <param name="operationMode">Operation mode of the operation:
+        /// Import, Export, or PolybaseImport. Possible values include:
+        /// 'PolybaseImport', 'Import', 'Export'</param>
+        /// <param name="storageKeyType">Storage key type: StorageAccessKey or
+        /// SharedAccessKey. Possible values include: 'SharedAccessKey',
+        /// 'StorageAccessKey'</param>
+        /// <param name="storageKey">Storage key for the storage
+        /// account.</param>
+        /// <param name="storageUri">Storage Uri for the storage
+        /// account.</param>
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
-        public DatabaseExtensions(string storageKeyType, string storageKey, string storageUri, string id = default(string), string name = default(string), string type = default(string))
+        /// <param name="administratorLogin">Administrator login name.</param>
+        /// <param name="administratorLoginPassword">Administrator login
+        /// password.</param>
+        /// <param name="authenticationType">Authentication type: SQL
+        /// authentication or AD password.</param>
+        /// <param name="databaseEdition">Database edition for the newly
+        /// created database in the case of an import operation.</param>
+        /// <param name="serviceObjectiveName">Database service level objective
+        /// for the newly created database in the case of an import
+        /// operation.</param>
+        /// <param name="maxSizeBytes">Database max size in bytes for the newly
+        /// created database in the case of an import operation.</param>
+        /// <param name="networkIsolation">Optional resource information to
+        /// enable network isolation for request.</param>
+        public DatabaseExtensions(string operationMode, string storageKeyType, string storageKey, string storageUri, string id = default(string), string name = default(string), string type = default(string), string administratorLogin = default(string), string administratorLoginPassword = default(string), string authenticationType = default(string), string databaseEdition = default(string), string serviceObjectiveName = default(string), string maxSizeBytes = default(string), NetworkIsolationSettings networkIsolation = default(NetworkIsolationSettings))
             : base(id, name, type)
         {
+            OperationMode = operationMode;
             StorageKeyType = storageKeyType;
             StorageKey = storageKey;
             StorageUri = storageUri;
+            AdministratorLogin = administratorLogin;
+            AdministratorLoginPassword = administratorLoginPassword;
+            AuthenticationType = authenticationType;
+            DatabaseEdition = databaseEdition;
+            ServiceObjectiveName = serviceObjectiveName;
+            MaxSizeBytes = maxSizeBytes;
+            NetworkIsolation = networkIsolation;
             CustomInit();
-        }
-        /// <summary>
-        /// Static constructor for DatabaseExtensions class.
-        /// </summary>
-        static DatabaseExtensions()
-        {
-            OperationMode = "PolybaseImport";
         }
 
         /// <summary>
@@ -61,29 +82,78 @@ namespace Microsoft.Azure.Management.Sql.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets storage key type. Possible values include:
-        /// 'SharedAccessKey', 'StorageAccessKey'
+        /// Gets or sets operation mode of the operation: Import, Export, or
+        /// PolybaseImport. Possible values include: 'PolybaseImport',
+        /// 'Import', 'Export'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.operationMode")]
+        public string OperationMode { get; set; }
+
+        /// <summary>
+        /// Gets or sets storage key type: StorageAccessKey or SharedAccessKey.
+        /// Possible values include: 'SharedAccessKey', 'StorageAccessKey'
         /// </summary>
         [JsonProperty(PropertyName = "properties.storageKeyType")]
         public string StorageKeyType { get; set; }
 
         /// <summary>
-        /// Gets or sets storage key.
+        /// Gets or sets storage key for the storage account.
         /// </summary>
         [JsonProperty(PropertyName = "properties.storageKey")]
         public string StorageKey { get; set; }
 
         /// <summary>
-        /// Gets or sets storage Uri.
+        /// Gets or sets storage Uri for the storage account.
         /// </summary>
         [JsonProperty(PropertyName = "properties.storageUri")]
         public string StorageUri { get; set; }
 
         /// <summary>
-        /// Operation Mode.
+        /// Gets or sets administrator login name.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.operationMode")]
-        public static string OperationMode { get; private set; }
+        [JsonProperty(PropertyName = "properties.administratorLogin")]
+        public string AdministratorLogin { get; set; }
+
+        /// <summary>
+        /// Gets or sets administrator login password.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.administratorLoginPassword")]
+        public string AdministratorLoginPassword { get; set; }
+
+        /// <summary>
+        /// Gets or sets authentication type: SQL authentication or AD
+        /// password.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.authenticationType")]
+        public string AuthenticationType { get; set; }
+
+        /// <summary>
+        /// Gets or sets database edition for the newly created database in the
+        /// case of an import operation.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.databaseEdition")]
+        public string DatabaseEdition { get; set; }
+
+        /// <summary>
+        /// Gets or sets database service level objective for the newly created
+        /// database in the case of an import operation.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.serviceObjectiveName")]
+        public string ServiceObjectiveName { get; set; }
+
+        /// <summary>
+        /// Gets or sets database max size in bytes for the newly created
+        /// database in the case of an import operation.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.maxSizeBytes")]
+        public string MaxSizeBytes { get; set; }
+
+        /// <summary>
+        /// Gets or sets optional resource information to enable network
+        /// isolation for request.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.networkIsolation")]
+        public NetworkIsolationSettings NetworkIsolation { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -93,6 +163,10 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </exception>
         public virtual void Validate()
         {
+            if (OperationMode == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "OperationMode");
+            }
             if (StorageKeyType == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "StorageKeyType");

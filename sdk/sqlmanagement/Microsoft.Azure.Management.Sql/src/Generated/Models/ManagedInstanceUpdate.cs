@@ -124,8 +124,10 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// encryption.</param>
         /// <param name="administrators">The Azure Active Directory
         /// administrator of the server.</param>
+        /// <param name="servicePrincipal">The managed instance's service
+        /// principal.</param>
         /// <param name="tags">Resource tags.</param>
-        public ManagedInstanceUpdate(Sku sku = default(Sku), ResourceIdentity identity = default(ResourceIdentity), string provisioningState = default(string), string managedInstanceCreateMode = default(string), string fullyQualifiedDomainName = default(string), string administratorLogin = default(string), string administratorLoginPassword = default(string), string subnetId = default(string), string state = default(string), string licenseType = default(string), int? vCores = default(int?), int? storageSizeInGB = default(int?), string collation = default(string), string dnsZone = default(string), string dnsZonePartner = default(string), bool? publicDataEndpointEnabled = default(bool?), string sourceManagedInstanceId = default(string), System.DateTime? restorePointInTime = default(System.DateTime?), string proxyOverride = default(string), string timezoneId = default(string), string instancePoolId = default(string), string maintenanceConfigurationId = default(string), IList<ManagedInstancePecProperty> privateEndpointConnections = default(IList<ManagedInstancePecProperty>), string minimalTlsVersion = default(string), string currentBackupStorageRedundancy = default(string), string requestedBackupStorageRedundancy = default(string), bool? zoneRedundant = default(bool?), string primaryUserAssignedIdentityId = default(string), string keyId = default(string), ManagedInstanceExternalAdministrator administrators = default(ManagedInstanceExternalAdministrator), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public ManagedInstanceUpdate(Sku sku = default(Sku), ResourceIdentity identity = default(ResourceIdentity), string provisioningState = default(string), string managedInstanceCreateMode = default(string), string fullyQualifiedDomainName = default(string), string administratorLogin = default(string), string administratorLoginPassword = default(string), string subnetId = default(string), string state = default(string), string licenseType = default(string), int? vCores = default(int?), int? storageSizeInGB = default(int?), string collation = default(string), string dnsZone = default(string), string dnsZonePartner = default(string), bool? publicDataEndpointEnabled = default(bool?), string sourceManagedInstanceId = default(string), System.DateTime? restorePointInTime = default(System.DateTime?), string proxyOverride = default(string), string timezoneId = default(string), string instancePoolId = default(string), string maintenanceConfigurationId = default(string), IList<ManagedInstancePecProperty> privateEndpointConnections = default(IList<ManagedInstancePecProperty>), string minimalTlsVersion = default(string), string currentBackupStorageRedundancy = default(string), string requestedBackupStorageRedundancy = default(string), bool? zoneRedundant = default(bool?), string primaryUserAssignedIdentityId = default(string), string keyId = default(string), ManagedInstanceExternalAdministrator administrators = default(ManagedInstanceExternalAdministrator), ServicePrincipal servicePrincipal = default(ServicePrincipal), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Sku = sku;
             Identity = identity;
@@ -157,6 +159,7 @@ namespace Microsoft.Azure.Management.Sql.Models
             PrimaryUserAssignedIdentityId = primaryUserAssignedIdentityId;
             KeyId = keyId;
             Administrators = administrators;
+            ServicePrincipal = servicePrincipal;
             Tags = tags;
             CustomInit();
         }
@@ -391,6 +394,12 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.administrators")]
         public ManagedInstanceExternalAdministrator Administrators { get; set; }
+
+        /// <summary>
+        /// Gets or sets the managed instance's service principal.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.servicePrincipal")]
+        public ServicePrincipal ServicePrincipal { get; set; }
 
         /// <summary>
         /// Gets or sets resource tags.
