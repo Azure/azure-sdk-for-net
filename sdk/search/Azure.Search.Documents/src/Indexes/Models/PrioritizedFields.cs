@@ -20,6 +20,6 @@ namespace Azure.Search.Documents.Indexes.Models
         /// Fields with lower priority may get truncated if the content is long. </para>
         /// </summary>
         [CodeGenMember("PrioritizedKeywordsFields")]
-        public IList<SemanticField> KeywordsFields { get; }
+        public IList<SemanticField> KeywordFields { get; }
     }
 }

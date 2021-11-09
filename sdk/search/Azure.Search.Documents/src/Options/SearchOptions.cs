@@ -328,6 +328,7 @@ namespace Azure.Search.Documents
             destination.SearchMode = source.SearchMode;
             destination.SearchText = source.SearchText;
             destination.Select = source.Select;
+            destination.SemanticConfiguration = source.SemanticConfiguration;
             destination.SemanticFields = source.SemanticFields;
             destination.Size = source.Size;
             destination.Skip = source.Skip;

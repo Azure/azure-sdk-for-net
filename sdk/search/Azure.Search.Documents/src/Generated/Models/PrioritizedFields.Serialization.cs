@@ -31,11 +31,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(KeywordsFields))
+            if (Optional.IsCollectionDefined(KeywordFields))
             {
                 writer.WritePropertyName("prioritizedKeywordsFields");
                 writer.WriteStartArray();
-                foreach (var item in KeywordsFields)
+                foreach (var item in KeywordFields)
                 {
                     writer.WriteObjectValue(item);
                 }
