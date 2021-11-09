@@ -49,7 +49,8 @@ namespace ApiManagement.Tests.ResourceProviderTests
                     testBase.serviceProperties.PublisherEmail,
                     testBase.serviceProperties.PublisherName,
                     testBase.serviceProperties.Sku.Name,
-                    testBase.tags);
+                    testBase.tags, 
+                    PlatformVersion.Stv2);
 
                 // skuoperations api at service level
                 var apimSkus = testBase.client.ApiManagementServiceSkus.ListAvailableServiceSkus(testBase.rgName, testBase.serviceName);
@@ -78,7 +79,8 @@ namespace ApiManagement.Tests.ResourceProviderTests
                     testBase.serviceProperties.PublisherEmail,
                     testBase.serviceProperties.PublisherName,
                     testBase.serviceProperties.Sku.Name,
-                    testBase.tags);
+                    testBase.tags,
+                    PlatformVersion.Stv2);
 
                 // get sso token
                 var ssoTokenResponse = testBase.client.ApiManagementService.GetSsoToken(

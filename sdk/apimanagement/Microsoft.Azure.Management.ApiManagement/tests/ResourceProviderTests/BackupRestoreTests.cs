@@ -41,7 +41,8 @@ namespace ApiManagement.Tests.ResourceProviderTests
                     testBase.serviceProperties.PublisherEmail,
                     testBase.serviceProperties.PublisherName,
                     testBase.serviceProperties.Sku.Name,
-                    testBase.tags);
+                    testBase.tags,
+                    PlatformVersion.Stv2);
                 // validate apiversion constraint is set
                 Assert.NotNull(createdService.ApiVersionConstraint);
                 Assert.Equal("2019-01-01", createdService.ApiVersionConstraint.MinApiVersion);
@@ -79,7 +80,8 @@ namespace ApiManagement.Tests.ResourceProviderTests
                     testBase.serviceProperties.PublisherEmail,
                     testBase.serviceProperties.PublisherName,
                     testBase.serviceProperties.Sku.Name,
-                    testBase.tags);
+                    testBase.tags,
+                    PlatformVersion.Stv2);
 
                 var restoreServiceResponse = testBase.client.ApiManagementService.Restore(testBase.rgName, testBase.serviceName, parameters);
                 Assert.NotNull(restoreServiceResponse);
@@ -91,7 +93,8 @@ namespace ApiManagement.Tests.ResourceProviderTests
                     testBase.serviceProperties.PublisherEmail,
                     testBase.serviceProperties.PublisherName,
                     testBase.serviceProperties.Sku.Name,
-                    testBase.tags);
+                    testBase.tags,
+                    PlatformVersion.Stv2);
             }
         }
     }

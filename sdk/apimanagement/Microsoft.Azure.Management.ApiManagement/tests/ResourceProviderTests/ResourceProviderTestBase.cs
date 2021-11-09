@@ -22,7 +22,8 @@ namespace ApiManagement.Tests.ResourceProviderTests
             string expectedPublisherEmail,
             string expectedPublisherName,
             string expectedSkuName,
-            Dictionary<string, string> expectedTags)
+            Dictionary<string, string> expectedTags,
+            string platformVersion)
         {
             Assert.NotNull(service);
 
@@ -46,6 +47,8 @@ namespace ApiManagement.Tests.ResourceProviderTests
             }
             Assert.Equal(expectedPublisherName, service.PublisherName);
             Assert.Equal(expectedPublisherEmail, service.PublisherEmail);
+            Assert.Equal(platformVersion, service.PlatformVersion);
+            Assert.Equal("Enabled", service.PublicNetworkAccess);
         }
     }
 }

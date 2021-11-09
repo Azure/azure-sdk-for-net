@@ -52,7 +52,8 @@ namespace ApiManagement.Tests.ResourceProviderTests
                     testBase.serviceProperties.PublisherEmail,
                     testBase.serviceProperties.PublisherName,
                     testBase.serviceProperties.Sku.Name,
-                    testBase.tags);
+                    testBase.tags,
+                    PlatformVersion.Stv2);
 
                 Assert.NotNull(createdService.AdditionalLocations);
                 Assert.Single(createdService.AdditionalLocations);
@@ -76,7 +77,8 @@ namespace ApiManagement.Tests.ResourceProviderTests
                    testBase.serviceProperties.PublisherEmail,
                    testBase.serviceProperties.PublisherName,
                    testBase.serviceProperties.Sku.Name,
-                   testBase.tags);
+                   testBase.tags,
+                   PlatformVersion.Stv2);
 
                 // validate primary region is disabled
                 Assert.True(createdService.DisableGateway);
