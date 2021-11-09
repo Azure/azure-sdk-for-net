@@ -5,6 +5,12 @@
     "description": "Azure Communication Media Composition Service",
     "version": "2021-12-31-preview"
   },
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
   "paths": {
     "/mediaCompositions/{mediaCompositionId}": {
       "get": {
@@ -12,9 +18,6 @@
           "MediaComposition"
         ],
         "operationId": "MediaComposition_Get",
-        "produces": [
-          "application/json"
-        ],
         "parameters": [
           {
             "in": "path",
@@ -31,7 +34,11 @@
             }
           },
           "400": {
-            "description": "Bad Request"
+            "description": "BadRequest",
+            "schema": {
+              "$ref": "common.json#/definitions/CommunicationErrorResponse"
+            },
+            "x-ms-error-response": true
           }
         },
         "x-ms-examples": {
@@ -45,12 +52,6 @@
           "MediaComposition"
         ],
         "operationId": "MediaComposition_Create",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
         "parameters": [
           {
             "in": "path",
@@ -74,7 +75,11 @@
             }
           },
           "400": {
-            "description": "Bad Request"
+            "description": "BadRequest",
+            "schema": {
+              "$ref": "common.json#/definitions/CommunicationErrorResponse"
+            },
+            "x-ms-error-response": true
           }
         },
         "x-ms-examples": {
@@ -88,12 +93,6 @@
           "MediaComposition"
         ],
         "operationId": "MediaComposition_Update",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
         "parameters": [
           {
             "in": "path",
@@ -117,7 +116,11 @@
             }
           },
           "400": {
-            "description": "Bad Request"
+            "description": "BadRequest",
+            "schema": {
+              "$ref": "common.json#/definitions/CommunicationErrorResponse"
+            },
+            "x-ms-error-response": true
           }
         },
         "x-ms-examples": {
@@ -157,11 +160,6 @@
           "MediaComposition"
         ],
         "operationId": "MediaComposition_Start",
-        "produces": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
         "parameters": [
           {
             "in": "path",
@@ -178,7 +176,11 @@
             }
           },
           "400": {
-            "description": "Bad Request"
+            "description": "BadRequest",
+            "schema": {
+              "$ref": "common.json#/definitions/CommunicationErrorResponse"
+            },
+            "x-ms-error-response": true
           }
         },
         "x-ms-examples": {
@@ -194,11 +196,6 @@
           "MediaComposition"
         ],
         "operationId": "MediaComposition_Stop",
-        "produces": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
         "parameters": [
           {
             "in": "path",
@@ -215,7 +212,11 @@
             }
           },
           "400": {
-            "description": "Bad Request"
+            "description": "BadRequest",
+            "schema": {
+              "$ref": "common.json#/definitions/CommunicationErrorResponse"
+            },
+            "x-ms-error-response": true
           }
         },
         "x-ms-examples": {
