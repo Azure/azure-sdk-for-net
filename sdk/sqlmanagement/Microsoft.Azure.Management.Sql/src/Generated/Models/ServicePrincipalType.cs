@@ -12,15 +12,11 @@ namespace Microsoft.Azure.Management.Sql.Models
 {
 
     /// <summary>
-    /// Defines values for UnitDefinitionType.
+    /// Defines values for ServicePrincipalType.
     /// </summary>
-    public static class UnitDefinitionType
+    public static class ServicePrincipalType
     {
-        public const string Count = "Count";
-        public const string Bytes = "Bytes";
-        public const string Seconds = "Seconds";
-        public const string Percent = "Percent";
-        public const string CountPerSecond = "CountPerSecond";
-        public const string BytesPerSecond = "BytesPerSecond";
+        public const string None = "None";
+        public const string SystemAssigned = "SystemAssigned";
     }
 }

@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// Time Zone.
+    /// Time Zone property.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class TimeZone : ProxyResource

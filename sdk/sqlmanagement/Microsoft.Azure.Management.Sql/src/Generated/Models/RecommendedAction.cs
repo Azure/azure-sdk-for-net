@@ -95,7 +95,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// any.</param>
         /// <param name="details">Gets additional details specific to this
         /// recommended action.</param>
-        public RecommendedAction(RecommendedActionStateInfo state, string id = default(string), string name = default(string), string type = default(string), string kind = default(string), string location = default(string), string recommendationReason = default(string), System.DateTime? validSince = default(System.DateTime?), System.DateTime? lastRefresh = default(System.DateTime?), bool? isExecutableAction = default(bool?), bool? isRevertableAction = default(bool?), bool? isArchivedAction = default(bool?), System.DateTime? executeActionStartTime = default(System.DateTime?), string executeActionDuration = default(string), System.DateTime? revertActionStartTime = default(System.DateTime?), string revertActionDuration = default(string), RecommendedActionInitiatedBy? executeActionInitiatedBy = default(RecommendedActionInitiatedBy?), System.DateTime? executeActionInitiatedTime = default(System.DateTime?), RecommendedActionInitiatedBy? revertActionInitiatedBy = default(RecommendedActionInitiatedBy?), System.DateTime? revertActionInitiatedTime = default(System.DateTime?), int? score = default(int?), RecommendedActionImplementationInfo implementationDetails = default(RecommendedActionImplementationInfo), RecommendedActionErrorInfo errorDetails = default(RecommendedActionErrorInfo), IList<RecommendedActionImpactRecord> estimatedImpact = default(IList<RecommendedActionImpactRecord>), IList<RecommendedActionImpactRecord> observedImpact = default(IList<RecommendedActionImpactRecord>), IList<RecommendedActionMetricInfo> timeSeries = default(IList<RecommendedActionMetricInfo>), IList<string> linkedObjects = default(IList<string>), IDictionary<string, object> details = default(IDictionary<string, object>))
+        public RecommendedAction(RecommendedActionStateInfo state, string id = default(string), string name = default(string), string type = default(string), string kind = default(string), string location = default(string), string recommendationReason = default(string), System.DateTime? validSince = default(System.DateTime?), System.DateTime? lastRefresh = default(System.DateTime?), bool? isExecutableAction = default(bool?), bool? isRevertableAction = default(bool?), bool? isArchivedAction = default(bool?), System.DateTime? executeActionStartTime = default(System.DateTime?), System.TimeSpan? executeActionDuration = default(System.TimeSpan?), System.DateTime? revertActionStartTime = default(System.DateTime?), System.TimeSpan? revertActionDuration = default(System.TimeSpan?), RecommendedActionInitiatedBy? executeActionInitiatedBy = default(RecommendedActionInitiatedBy?), System.DateTime? executeActionInitiatedTime = default(System.DateTime?), RecommendedActionInitiatedBy? revertActionInitiatedBy = default(RecommendedActionInitiatedBy?), System.DateTime? revertActionInitiatedTime = default(System.DateTime?), int? score = default(int?), RecommendedActionImplementationInfo implementationDetails = default(RecommendedActionImplementationInfo), RecommendedActionErrorInfo errorDetails = default(RecommendedActionErrorInfo), IList<RecommendedActionImpactRecord> estimatedImpact = default(IList<RecommendedActionImpactRecord>), IList<RecommendedActionImpactRecord> observedImpact = default(IList<RecommendedActionImpactRecord>), IList<RecommendedActionMetricInfo> timeSeries = default(IList<RecommendedActionMetricInfo>), IList<string> linkedObjects = default(IList<string>), IDictionary<string, object> details = default(IDictionary<string, object>))
             : base(id, name, type)
         {
             Kind = kind;
@@ -200,7 +200,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// resource. e.g., time taken for index creation
         /// </summary>
         [JsonProperty(PropertyName = "properties.executeActionDuration")]
-        public string ExecuteActionDuration { get; private set; }
+        public System.TimeSpan? ExecuteActionDuration { get; private set; }
 
         /// <summary>
         /// Gets the time when system started reverting changes of this
@@ -216,7 +216,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// index.
         /// </summary>
         [JsonProperty(PropertyName = "properties.revertActionDuration")]
-        public string RevertActionDuration { get; private set; }
+        public System.TimeSpan? RevertActionDuration { get; private set; }
 
         /// <summary>
         /// Gets if approval for applying this recommended action was given by

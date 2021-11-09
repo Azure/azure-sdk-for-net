@@ -13,26 +13,31 @@ namespace Microsoft.Azure.Management.Sql.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    public partial class UpsertManagedServerOperationStep
+    public partial class UpsertManagedServerOperationStepWithEstimatesAndDuration
     {
         /// <summary>
-        /// Initializes a new instance of the UpsertManagedServerOperationStep
-        /// class.
+        /// Initializes a new instance of the
+        /// UpsertManagedServerOperationStepWithEstimatesAndDuration class.
         /// </summary>
-        public UpsertManagedServerOperationStep()
+        public UpsertManagedServerOperationStepWithEstimatesAndDuration()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the UpsertManagedServerOperationStep
-        /// class.
+        /// Initializes a new instance of the
+        /// UpsertManagedServerOperationStepWithEstimatesAndDuration class.
         /// </summary>
+        /// <param name="timeElapsed">A string that returns the number of
+        /// minutes passed from stepStartTime</param>
         /// <param name="status">Possible values include: 'NotStarted',
         /// 'InProgress', 'SlowedDown', 'Completed', 'Failed',
         /// 'Canceled'</param>
-        public UpsertManagedServerOperationStep(int? order = default(int?), string name = default(string), string status = default(string))
+        public UpsertManagedServerOperationStepWithEstimatesAndDuration(System.DateTime? stepStartTime = default(System.DateTime?), System.DateTime? stepEndTime = default(System.DateTime?), string timeElapsed = default(string), int? order = default(int?), string name = default(string), string status = default(string))
         {
+            StepStartTime = stepStartTime;
+            StepEndTime = stepEndTime;
+            TimeElapsed = timeElapsed;
             Order = order;
             Name = name;
             Status = status;
@@ -43,6 +48,23 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "stepStartTime")]
+        public System.DateTime? StepStartTime { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "stepEndTime")]
+        public System.DateTime? StepEndTime { get; set; }
+
+        /// <summary>
+        /// Gets or sets a string that returns the number of minutes passed
+        /// from stepStartTime
+        /// </summary>
+        [JsonProperty(PropertyName = "timeElapsed")]
+        public string TimeElapsed { get; set; }
 
         /// <summary>
         /// </summary>

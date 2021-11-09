@@ -13,8 +13,6 @@ namespace Microsoft.Azure.Management.Sql
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -23,108 +21,6 @@ namespace Microsoft.Azure.Management.Sql
     /// </summary>
     public static partial class ElasticPoolsOperationsExtensions
     {
-            /// <summary>
-            /// Returns elastic pool  metrics.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            /// <param name='elasticPoolName'>
-            /// The name of the elastic pool.
-            /// </param>
-            /// <param name='filter'>
-            /// An OData filter expression that describes a subset of metrics to return.
-            /// </param>
-            public static IEnumerable<Metric> ListMetrics(this IElasticPoolsOperations operations, string resourceGroupName, string serverName, string elasticPoolName, string filter)
-            {
-                return operations.ListMetricsAsync(resourceGroupName, serverName, elasticPoolName, filter).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Returns elastic pool  metrics.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            /// <param name='elasticPoolName'>
-            /// The name of the elastic pool.
-            /// </param>
-            /// <param name='filter'>
-            /// An OData filter expression that describes a subset of metrics to return.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IEnumerable<Metric>> ListMetricsAsync(this IElasticPoolsOperations operations, string resourceGroupName, string serverName, string elasticPoolName, string filter, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListMetricsWithHttpMessagesAsync(resourceGroupName, serverName, elasticPoolName, filter, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Returns elastic pool metric definitions.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            /// <param name='elasticPoolName'>
-            /// The name of the elastic pool.
-            /// </param>
-            public static IEnumerable<MetricDefinition> ListMetricDefinitions(this IElasticPoolsOperations operations, string resourceGroupName, string serverName, string elasticPoolName)
-            {
-                return operations.ListMetricDefinitionsAsync(resourceGroupName, serverName, elasticPoolName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Returns elastic pool metric definitions.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            /// <param name='elasticPoolName'>
-            /// The name of the elastic pool.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IEnumerable<MetricDefinition>> ListMetricDefinitionsAsync(this IElasticPoolsOperations operations, string resourceGroupName, string serverName, string elasticPoolName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListMetricDefinitionsWithHttpMessagesAsync(resourceGroupName, serverName, elasticPoolName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
             /// <summary>
             /// Gets all elastic pools in a server.
             /// </summary>
@@ -141,7 +37,7 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='skip'>
             /// The number of elements in the collection to skip.
             /// </param>
-            public static IPage<ElasticPool> ListByServer(this IElasticPoolsOperations operations, string resourceGroupName, string serverName, int? skip = default(int?))
+            public static IPage<ElasticPool> ListByServer(this IElasticPoolsOperations operations, string resourceGroupName, string serverName, long? skip = default(long?))
             {
                 return operations.ListByServerAsync(resourceGroupName, serverName, skip).GetAwaiter().GetResult();
             }
@@ -165,7 +61,7 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ElasticPool>> ListByServerAsync(this IElasticPoolsOperations operations, string resourceGroupName, string serverName, int? skip = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ElasticPool>> ListByServerAsync(this IElasticPoolsOperations operations, string resourceGroupName, string serverName, long? skip = default(long?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByServerWithHttpMessagesAsync(resourceGroupName, serverName, skip, null, cancellationToken).ConfigureAwait(false))
                 {

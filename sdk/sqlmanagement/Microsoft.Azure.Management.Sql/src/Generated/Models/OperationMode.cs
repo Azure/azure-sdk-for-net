@@ -12,12 +12,12 @@ namespace Microsoft.Azure.Management.Sql.Models
 {
 
     /// <summary>
-    /// Defines values for TargetBackupStorageRedundancy.
+    /// Defines values for OperationMode.
     /// </summary>
-    public static class TargetBackupStorageRedundancy
+    public static class OperationMode
     {
-        public const string Geo = "Geo";
-        public const string Local = "Local";
-        public const string Zone = "Zone";
+        public const string PolybaseImport = "PolybaseImport";
+        public const string Import = "Import";
+        public const string Export = "Export";
     }
 }

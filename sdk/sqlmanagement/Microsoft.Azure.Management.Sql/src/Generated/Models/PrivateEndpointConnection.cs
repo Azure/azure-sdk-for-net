@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.Sql.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -37,15 +39,17 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="type">Resource type.</param>
         /// <param name="privateEndpoint">Private endpoint which the connection
         /// belongs to.</param>
+        /// <param name="groupIds">Group IDs.</param>
         /// <param name="privateLinkServiceConnectionState">Connection state of
         /// the private endpoint connection.</param>
         /// <param name="provisioningState">State of the private endpoint
         /// connection. Possible values include: 'Approving', 'Ready',
         /// 'Dropping', 'Failed', 'Rejecting'</param>
-        public PrivateEndpointConnection(string id = default(string), string name = default(string), string type = default(string), PrivateEndpointProperty privateEndpoint = default(PrivateEndpointProperty), PrivateLinkServiceConnectionStateProperty privateLinkServiceConnectionState = default(PrivateLinkServiceConnectionStateProperty), string provisioningState = default(string))
+        public PrivateEndpointConnection(string id = default(string), string name = default(string), string type = default(string), PrivateEndpointProperty privateEndpoint = default(PrivateEndpointProperty), IList<string> groupIds = default(IList<string>), PrivateLinkServiceConnectionStateProperty privateLinkServiceConnectionState = default(PrivateLinkServiceConnectionStateProperty), string provisioningState = default(string))
             : base(id, name, type)
         {
             PrivateEndpoint = privateEndpoint;
+            GroupIds = groupIds;
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
             ProvisioningState = provisioningState;
             CustomInit();
@@ -61,6 +65,12 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.privateEndpoint")]
         public PrivateEndpointProperty PrivateEndpoint { get; set; }
+
+        /// <summary>
+        /// Gets group IDs.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.groupIds")]
+        public IList<string> GroupIds { get; private set; }
 
         /// <summary>
         /// Gets or sets connection state of the private endpoint connection.

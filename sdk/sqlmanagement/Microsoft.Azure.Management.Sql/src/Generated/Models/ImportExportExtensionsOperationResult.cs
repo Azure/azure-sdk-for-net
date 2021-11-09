@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.Sql.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -44,7 +46,11 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="databaseName">Database name.</param>
         /// <param name="status">Operation status.</param>
         /// <param name="errorMessage">Error message.</param>
-        public ImportExportExtensionsOperationResult(string id = default(string), string name = default(string), string type = default(string), System.Guid? requestId = default(System.Guid?), string requestType = default(string), string lastModifiedTime = default(string), string serverName = default(string), string databaseName = default(string), string status = default(string), string errorMessage = default(string))
+        /// <param name="queuedTime">Queued time.</param>
+        /// <param name="blobUri">Blob URI.</param>
+        /// <param name="privateEndpointConnections">Gets the status of private
+        /// endpoints associated with this request.</param>
+        public ImportExportExtensionsOperationResult(string id = default(string), string name = default(string), string type = default(string), System.Guid? requestId = default(System.Guid?), string requestType = default(string), string lastModifiedTime = default(string), string serverName = default(string), string databaseName = default(string), string status = default(string), string errorMessage = default(string), string queuedTime = default(string), string blobUri = default(string), IList<PrivateEndpointConnectionRequestStatus> privateEndpointConnections = default(IList<PrivateEndpointConnectionRequestStatus>))
             : base(id, name, type)
         {
             RequestId = requestId;
@@ -54,6 +60,9 @@ namespace Microsoft.Azure.Management.Sql.Models
             DatabaseName = databaseName;
             Status = status;
             ErrorMessage = errorMessage;
+            QueuedTime = queuedTime;
+            BlobUri = blobUri;
+            PrivateEndpointConnections = privateEndpointConnections;
             CustomInit();
         }
 
@@ -103,6 +112,24 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.errorMessage")]
         public string ErrorMessage { get; private set; }
+
+        /// <summary>
+        /// Gets queued time.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.queuedTime")]
+        public string QueuedTime { get; private set; }
+
+        /// <summary>
+        /// Gets blob URI.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.blobUri")]
+        public string BlobUri { get; private set; }
+
+        /// <summary>
+        /// Gets the status of private endpoints associated with this request.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.privateEndpointConnections")]
+        public IList<PrivateEndpointConnectionRequestStatus> PrivateEndpointConnections { get; private set; }
 
     }
 }

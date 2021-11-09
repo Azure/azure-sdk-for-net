@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='top'>
             /// The number of elements to return from the collection.
             /// </param>
-            public static IPage<JobExecution> ListByAgent(this IJobExecutionsOperations operations, string resourceGroupName, string serverName, string jobAgentName, System.DateTime? createTimeMin = default(System.DateTime?), System.DateTime? createTimeMax = default(System.DateTime?), System.DateTime? endTimeMin = default(System.DateTime?), System.DateTime? endTimeMax = default(System.DateTime?), bool? isActive = default(bool?), int? skip = default(int?), int? top = default(int?))
+            public static IPage<JobExecution> ListByAgent(this IJobExecutionsOperations operations, string resourceGroupName, string serverName, string jobAgentName, System.DateTime? createTimeMin = default(System.DateTime?), System.DateTime? createTimeMax = default(System.DateTime?), System.DateTime? endTimeMin = default(System.DateTime?), System.DateTime? endTimeMax = default(System.DateTime?), bool? isActive = default(bool?), long? skip = default(long?), long? top = default(long?))
             {
                 return operations.ListByAgentAsync(resourceGroupName, serverName, jobAgentName, createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top).GetAwaiter().GetResult();
             }
@@ -111,7 +111,7 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<JobExecution>> ListByAgentAsync(this IJobExecutionsOperations operations, string resourceGroupName, string serverName, string jobAgentName, System.DateTime? createTimeMin = default(System.DateTime?), System.DateTime? createTimeMax = default(System.DateTime?), System.DateTime? endTimeMin = default(System.DateTime?), System.DateTime? endTimeMax = default(System.DateTime?), bool? isActive = default(bool?), int? skip = default(int?), int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<JobExecution>> ListByAgentAsync(this IJobExecutionsOperations operations, string resourceGroupName, string serverName, string jobAgentName, System.DateTime? createTimeMin = default(System.DateTime?), System.DateTime? createTimeMax = default(System.DateTime?), System.DateTime? endTimeMin = default(System.DateTime?), System.DateTime? endTimeMax = default(System.DateTime?), bool? isActive = default(bool?), long? skip = default(long?), long? top = default(long?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByAgentWithHttpMessagesAsync(resourceGroupName, serverName, jobAgentName, createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -274,7 +274,7 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='top'>
             /// The number of elements to return from the collection.
             /// </param>
-            public static IPage<JobExecution> ListByJob(this IJobExecutionsOperations operations, string resourceGroupName, string serverName, string jobAgentName, string jobName, System.DateTime? createTimeMin = default(System.DateTime?), System.DateTime? createTimeMax = default(System.DateTime?), System.DateTime? endTimeMin = default(System.DateTime?), System.DateTime? endTimeMax = default(System.DateTime?), bool? isActive = default(bool?), int? skip = default(int?), int? top = default(int?))
+            public static IPage<JobExecution> ListByJob(this IJobExecutionsOperations operations, string resourceGroupName, string serverName, string jobAgentName, string jobName, System.DateTime? createTimeMin = default(System.DateTime?), System.DateTime? createTimeMax = default(System.DateTime?), System.DateTime? endTimeMin = default(System.DateTime?), System.DateTime? endTimeMax = default(System.DateTime?), bool? isActive = default(bool?), long? skip = default(long?), long? top = default(long?))
             {
                 return operations.ListByJobAsync(resourceGroupName, serverName, jobAgentName, jobName, createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top).GetAwaiter().GetResult();
             }
@@ -326,7 +326,7 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<JobExecution>> ListByJobAsync(this IJobExecutionsOperations operations, string resourceGroupName, string serverName, string jobAgentName, string jobName, System.DateTime? createTimeMin = default(System.DateTime?), System.DateTime? createTimeMax = default(System.DateTime?), System.DateTime? endTimeMin = default(System.DateTime?), System.DateTime? endTimeMax = default(System.DateTime?), bool? isActive = default(bool?), int? skip = default(int?), int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<JobExecution>> ListByJobAsync(this IJobExecutionsOperations operations, string resourceGroupName, string serverName, string jobAgentName, string jobName, System.DateTime? createTimeMin = default(System.DateTime?), System.DateTime? createTimeMax = default(System.DateTime?), System.DateTime? endTimeMin = default(System.DateTime?), System.DateTime? endTimeMax = default(System.DateTime?), bool? isActive = default(bool?), long? skip = default(long?), long? top = default(long?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByJobWithHttpMessagesAsync(resourceGroupName, serverName, jobAgentName, jobName, createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top, null, cancellationToken).ConfigureAwait(false))
                 {

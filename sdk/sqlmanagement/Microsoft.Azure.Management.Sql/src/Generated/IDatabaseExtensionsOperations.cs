@@ -54,7 +54,8 @@ namespace Microsoft.Azure.Management.Sql
         /// </exception>
         Task<AzureOperationResponse> GetWithHttpMessagesAsync(string resourceGroupName, string serverName, string databaseName, string extensionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Perform a database extension operation, like polybase import
+        /// Perform a database extension operation, like database import,
+        /// database export, or polybase import
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
@@ -120,7 +121,8 @@ namespace Microsoft.Azure.Management.Sql
         /// </exception>
         Task<AzureOperationResponse<IPage<ImportExportExtensionsOperationResult>>> ListByDatabaseWithHttpMessagesAsync(string resourceGroupName, string serverName, string databaseName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Perform a database extension operation, like polybase import
+        /// Perform a database extension operation, like database import,
+        /// database export, or polybase import
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can

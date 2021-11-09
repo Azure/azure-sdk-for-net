@@ -60,8 +60,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// CMK scenario</param>
         /// <param name="keyId">A CMK URI of the key to use for
         /// encryption.</param>
-        /// <param name="administrators">The Azure Active Directory identity of
-        /// the server.</param>
+        /// <param name="administrators">The Azure Active Directory
+        /// administrator of the server.</param>
         /// <param name="restrictOutboundNetworkAccess">Whether or not to
         /// restrict outbound network access for this server.  Value is
         /// optional but if passed in, must be 'Enabled' or 'Disabled'.
@@ -180,7 +180,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         public string KeyId { get; set; }
 
         /// <summary>
-        /// Gets or sets the Azure Active Directory identity of the server.
+        /// Gets or sets the Azure Active Directory administrator of the
+        /// server.
         /// </summary>
         [JsonProperty(PropertyName = "properties.administrators")]
         public ServerExternalAdministrator Administrators { get; set; }

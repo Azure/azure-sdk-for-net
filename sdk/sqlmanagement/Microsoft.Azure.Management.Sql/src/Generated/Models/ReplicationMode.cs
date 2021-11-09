@@ -12,15 +12,11 @@ namespace Microsoft.Azure.Management.Sql.Models
 {
 
     /// <summary>
-    /// Defines values for PrimaryAggregationType.
+    /// Defines values for ReplicationMode.
     /// </summary>
-    public static class PrimaryAggregationType
+    public static class ReplicationMode
     {
-        public const string None = "None";
-        public const string Average = "Average";
-        public const string Count = "Count";
-        public const string Minimum = "Minimum";
-        public const string Maximum = "Maximum";
-        public const string Total = "Total";
+        public const string Async = "Async";
+        public const string Sync = "Sync";
     }
 }
