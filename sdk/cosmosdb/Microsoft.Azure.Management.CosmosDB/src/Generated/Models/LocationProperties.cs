@@ -31,17 +31,14 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// <summary>
         /// Initializes a new instance of the LocationProperties class.
         /// </summary>
-        /// <param name="status">The current status of location in
-        /// Azure.</param>
         /// <param name="supportsAvailabilityZone">Flag indicating whether the
         /// location supports availability zones or not.</param>
         /// <param name="isResidencyRestricted">Flag indicating whether the
         /// location is residency sensitive.</param>
         /// <param name="backupStorageRedundancies">The properties of available
         /// backup storage redundancies.</param>
-        public LocationProperties(string status = default(string), bool? supportsAvailabilityZone = default(bool?), bool? isResidencyRestricted = default(bool?), IList<string> backupStorageRedundancies = default(IList<string>))
+        public LocationProperties(bool? supportsAvailabilityZone = default(bool?), bool? isResidencyRestricted = default(bool?), IList<string> backupStorageRedundancies = default(IList<string>))
         {
-            Status = status;
             SupportsAvailabilityZone = supportsAvailabilityZone;
             IsResidencyRestricted = isResidencyRestricted;
             BackupStorageRedundancies = backupStorageRedundancies;
@@ -52,12 +49,6 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets the current status of location in Azure.
-        /// </summary>
-        [JsonProperty(PropertyName = "status")]
-        public string Status { get; private set; }
 
         /// <summary>
         /// Gets flag indicating whether the location supports availability

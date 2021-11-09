@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.AI.Language.QuestionAnswering.Models
+namespace Azure.AI.Language.QuestionAnswering
 {
     /// <summary> filters over knowledge base. </summary>
     public partial class QueryFilters
@@ -21,9 +21,9 @@ namespace Azure.AI.Language.QuestionAnswering.Models
 
         /// <summary> Find QnAs that are associated with the given list of metadata. </summary>
         public MetadataFilter MetadataFilter { get; set; }
-        /// <summary> Find QnAs that are associated with the given list of sources in knowledge base. </summary>
+        /// <summary> Find QnAs that are associated with any of the given list of sources in knowledge base. </summary>
         public IList<string> SourceFilter { get; }
-        /// <summary> Logical operation used to join metadata filters with source filters. </summary>
+        /// <summary> Logical operation used to join metadata filter with source filter. </summary>
         public LogicalOperationKind? LogicalOperation { get; set; }
     }
 }

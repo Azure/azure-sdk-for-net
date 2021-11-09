@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/videoanalyzer/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --opt-in-extensible-enums --tag=package-preview-2021-11 --csharp-sdks-folder=D:\\GitHub\\Azure\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "e81093786c17f18d3bf322970a48cb0bf6967dd5";
+      public static readonly String GithubCommidId = "6959ec51046a91ffe26627ba8df2ead27c5ffd46";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

@@ -53,6 +53,9 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers
         /// <summary>
         /// Check the availability of name for server
         /// </summary>
+        /// <param name='locationName'>
+        /// The name of the location.
+        /// </param>
         /// <param name='nameAvailabilityRequest'>
         /// The required parameters for checking if server name is available.
         /// </param>
@@ -77,7 +80,7 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<NameAvailability>> ExecuteWithHttpMessagesAsync(NameAvailabilityRequest nameAvailabilityRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<NameAvailability>> ExecuteWithHttpMessagesAsync(string locationName, NameAvailabilityRequest nameAvailabilityRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -101,6 +104,10 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers
                     throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
                 }
             }
+            if (locationName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "locationName");
+            }
             if (nameAvailabilityRequest == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "nameAvailabilityRequest");
@@ -116,14 +123,16 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("locationName", locationName);
                 tracingParameters.Add("nameAvailabilityRequest", nameAvailabilityRequest);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Execute", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.DBForMySql/checkNameAvailability").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.DBforMySQL/locations/{locationName}/checkNameAvailability").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
+            _url = _url.Replace("{locationName}", System.Uri.EscapeDataString(locationName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {

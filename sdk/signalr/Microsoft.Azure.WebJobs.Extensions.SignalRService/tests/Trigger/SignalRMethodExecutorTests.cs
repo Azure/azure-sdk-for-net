@@ -100,7 +100,7 @@ namespace SignalRServiceExtension.Tests.Trigger
             var arguments = new object[] { Guid.NewGuid().ToString(), Guid.NewGuid().ToString() };
 
             var message = new Microsoft.AspNetCore.SignalR.Protocol.InvocationMessage(Guid.NewGuid().ToString(), @event, arguments);
-            IHubProtocol protocol = protocolName == "json" ? (IHubProtocol)new JsonHubProtocol() : new MessagePackHubProtocol();
+            var protocol = protocolName == "json" ? (IHubProtocol)new JsonHubProtocol() : new MessagePackHubProtocol();
             var contentType = protocolName == "json" ? Constants.JsonContentType : Constants.MessagePackContentType;
             var bytes = new ReadOnlySequence<byte>(protocol.GetMessageBytes(message));
             ReadOnlySequence<byte> payload;

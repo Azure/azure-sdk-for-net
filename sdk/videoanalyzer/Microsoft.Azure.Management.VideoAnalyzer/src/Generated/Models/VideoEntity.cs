@@ -114,10 +114,11 @@ namespace Microsoft.Azure.Management.VideoAnalyzer.Models
         public VideoContentUrls ContentUrls { get; private set; }
 
         /// <summary>
-        /// Gets contains information about the video and audio content.
+        /// Gets or sets contains information about the video and audio
+        /// content.
         /// </summary>
         [JsonProperty(PropertyName = "properties.mediaInfo")]
-        public VideoMediaInfo MediaInfo { get; private set; }
+        public VideoMediaInfo MediaInfo { get; set; }
 
         /// <summary>
         /// Gets or sets video archival properties.

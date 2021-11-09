@@ -133,6 +133,7 @@ pr:
     - sdk/providerhub/Microsoft.Azure.Management.ProviderHub
     - sdk/purview/Microsoft.Azure.Management.Purview
     - sdk/quantum/Microsoft.Azure.Management.Quantum
+    - sdk/quota/Microsoft.Azure.Management.Quota
     - sdk/recoveryservices/Microsoft.Azure.Management.RecoveryServices
     - sdk/recoveryservices-backup/Microsoft.Azure.Management.RecoveryServices.Backup
     - sdk/recoveryservices-siterecovery/Microsoft.Azure.Management.RecoveryServices.SiteRecovery

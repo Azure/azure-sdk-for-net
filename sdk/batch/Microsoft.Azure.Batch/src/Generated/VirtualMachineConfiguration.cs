@@ -112,6 +112,14 @@ namespace Microsoft.Azure.Batch
             this.NodeAgentSkuId = nodeAgentSkuId;
         }
 
+        /// <summary>
+        /// Default constructor to support mocking the <see cref="VirtualMachineConfiguration"/> class.
+        /// </summary>
+        protected VirtualMachineConfiguration()
+        {
+            this.propertyContainer = new PropertyContainer();
+        }
+
         internal VirtualMachineConfiguration(Models.VirtualMachineConfiguration protocolObject)
         {
             this.propertyContainer = new PropertyContainer(protocolObject);

@@ -231,6 +231,21 @@ namespace Microsoft.Azure.Management.Network
         IFirewallPolicyRuleCollectionGroupsOperations FirewallPolicyRuleCollectionGroups { get; }
 
         /// <summary>
+        /// Gets the IFirewallPolicyIdpsSignaturesOperations.
+        /// </summary>
+        IFirewallPolicyIdpsSignaturesOperations FirewallPolicyIdpsSignatures { get; }
+
+        /// <summary>
+        /// Gets the IFirewallPolicyIdpsSignaturesOverridesOperations.
+        /// </summary>
+        IFirewallPolicyIdpsSignaturesOverridesOperations FirewallPolicyIdpsSignaturesOverrides { get; }
+
+        /// <summary>
+        /// Gets the IFirewallPolicyIdpsSignaturesFilterValuesOperations.
+        /// </summary>
+        IFirewallPolicyIdpsSignaturesFilterValuesOperations FirewallPolicyIdpsSignaturesFilterValues { get; }
+
+        /// <summary>
         /// Gets the IIpAllocationsOperations.
         /// </summary>
         IIpAllocationsOperations IpAllocations { get; }
@@ -609,6 +624,11 @@ namespace Microsoft.Azure.Management.Network
         /// Gets the IHubRouteTablesOperations.
         /// </summary>
         IHubRouteTablesOperations HubRouteTables { get; }
+
+        /// <summary>
+        /// Gets the IRoutingIntentOperations.
+        /// </summary>
+        IRoutingIntentOperations RoutingIntent { get; }
 
         /// <summary>
         /// Gets the IWebApplicationFirewallPoliciesOperations.

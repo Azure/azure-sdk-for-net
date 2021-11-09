@@ -10,10 +10,10 @@
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.8.4300.0",
+          "FxVersion/5.0.1121.47308",
           "OSName/Windows",
-          "OSVersion/10.0.19042.0",
-          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/7.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/7.1.0.0"
         ],
         "Content-Type": [
           "application/octet-stream"
@@ -27,19 +27,19 @@
           "CognitiveServices.ComputerVision.Celebrities=1,CognitiveServices.ComputerVision.Transaction=1"
         ],
         "x-envoy-upstream-service-time": [
-          "212"
+          "151"
         ],
         "apim-request-id": [
-          "3990dba7-09fa-48b4-8f3e-e85575f10a4c"
+          "22a916fe-729b-4caa-b607-976e7ddfd76d"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
         ],
-        "x-content-type-options": [
+        "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 24 Mar 2021 06:44:22 GMT"
+          "Thu, 04 Nov 2021 04:51:47 GMT"
         ],
         "Content-Length": [
           "279"
@@ -48,7 +48,7 @@
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"result\": {\r\n    \"celebrities\": [\r\n      {\r\n        \"name\": \"Satya Nadella\",\r\n        \"confidence\": 0.96440011262893677,\r\n        \"faceRectangle\": {\r\n          \"left\": 211,\r\n          \"top\": 50,\r\n          \"width\": 55,\r\n          \"height\": 55\r\n        }\r\n      }\r\n    ]\r\n  },\r\n  \"requestId\": \"3990dba7-09fa-48b4-8f3e-e85575f10a4c\",\r\n  \"metadata\": {\r\n    \"height\": 288,\r\n    \"width\": 512,\r\n    \"format\": \"Jpeg\"\r\n  },\r\n  \"modelVersion\": \"2021-04-01\"\r\n}",
+      "ResponseBody": "{\r\n  \"result\": {\r\n    \"celebrities\": [\r\n      {\r\n        \"name\": \"Satya Nadella\",\r\n        \"confidence\": 0.9643999338150024,\r\n        \"faceRectangle\": {\r\n          \"left\": 211,\r\n          \"top\": 50,\r\n          \"width\": 55,\r\n          \"height\": 55\r\n        }\r\n      }\r\n    ]\r\n  },\r\n  \"requestId\": \"22a916fe-729b-4caa-b607-976e7ddfd76d\",\r\n  \"metadata\": {\r\n    \"height\": 288,\r\n    \"width\": 512,\r\n    \"format\": \"Jpeg\"\r\n  },\r\n  \"modelVersion\": \"2021-04-01\"\r\n}",
       "StatusCode": 200
     }
   ],

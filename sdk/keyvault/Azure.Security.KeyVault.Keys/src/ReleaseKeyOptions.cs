@@ -11,7 +11,7 @@ namespace Azure.Security.KeyVault.Keys
     /// </summary>
     public class ReleaseKeyOptions : IJsonSerializable
     {
-        private static readonly JsonEncodedText s_targetPropertyNameBytes = JsonEncodedText.Encode("target");
+        private static readonly JsonEncodedText s_targetAttestationTokenPropertyNameBytes = JsonEncodedText.Encode("target");
         private static readonly JsonEncodedText s_noncePropertyNameBytes = JsonEncodedText.Encode("nonce");
         private static readonly JsonEncodedText s_algorithmPropertyNameBytes = JsonEncodedText.Encode("enc");
 
@@ -35,13 +35,13 @@ namespace Azure.Security.KeyVault.Keys
         /// <summary>
         /// Gets or sets the attestation assertion for the target of the key release.
         /// </summary>
-        internal string Target { get; set; }
+        internal string TargetAttestationToken { get; set; }
 
         internal void WriteProperties(Utf8JsonWriter json)
         {
-            if (!string.IsNullOrEmpty(Target))
+            if (!string.IsNullOrEmpty(TargetAttestationToken))
             {
-                json.WriteString(s_targetPropertyNameBytes, Target);
+                json.WriteString(s_targetAttestationTokenPropertyNameBytes, TargetAttestationToken);
             }
 
             if (!string.IsNullOrEmpty(Nonce))

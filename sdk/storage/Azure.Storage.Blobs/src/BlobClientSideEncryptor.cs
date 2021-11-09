@@ -48,10 +48,12 @@ namespace Azure.Storage.Blobs
                 async,
                 cancellationToken).ConfigureAwait(false);
 
-            metadata ??= new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-            metadata[Constants.ClientSideEncryption.EncryptionDataKey] = EncryptionDataSerializer.Serialize(EncryptionData);
+            Metadata modifiedMetadata = metadata == default
+                ? new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+                : new Dictionary<string, string>(metadata, StringComparer.OrdinalIgnoreCase);
+            modifiedMetadata[Constants.ClientSideEncryption.EncryptionDataKey] = EncryptionDataSerializer.Serialize(EncryptionData);
 
-            return (NonSeekableCiphertext, metadata);
+            return (NonSeekableCiphertext, modifiedMetadata);
         }
     }
 }

@@ -67,6 +67,14 @@ namespace Microsoft.Azure.Batch
             this.ResourceId = resourceId;
         }
 
+        /// <summary>
+        /// Default constructor to support mocking the <see cref="UserAssignedIdentity"/> class.
+        /// </summary>
+        protected UserAssignedIdentity()
+        {
+            this.propertyContainer = new PropertyContainer();
+        }
+
         internal UserAssignedIdentity(Models.UserAssignedIdentity protocolObject)
         {
             this.propertyContainer = new PropertyContainer(protocolObject);

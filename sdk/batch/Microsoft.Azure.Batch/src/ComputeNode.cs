@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Batch
     public partial class ComputeNode : IRefreshable
     {
 
-#region ComputeNode
+        #region ComputeNode
 
         /// <summary>
         /// Instantiates an unbound ComputeNodeUser object to be populated by the caller and used to create a user account on the compute node in the Azure Batch service.

@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the FirewallPolicySku class.
         /// </summary>
         /// <param name="tier">Tier of Firewall Policy. Possible values
-        /// include: 'Standard', 'Premium'</param>
+        /// include: 'Standard', 'Premium', 'Basic'</param>
         public FirewallPolicySku(string tier = default(string))
         {
             Tier = tier;
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets tier of Firewall Policy. Possible values include:
-        /// 'Standard', 'Premium'
+        /// 'Standard', 'Premium', 'Basic'
         /// </summary>
         [JsonProperty(PropertyName = "tier")]
         public string Tier { get; set; }

@@ -65,7 +65,29 @@ namespace Azure.Monitor.Query.Models
         /// </summary>
         /// <param name="index">The column index.</param>
         /// <returns>The <see cref="Nullable{Double}"/> value of the column.</returns>
-        public double? GetDouble(int index) => _row[index].ValueKind == JsonValueKind.Null ? null : _row[index].GetDouble();
+        public double? GetDouble(int index)
+        {
+            if (_row[index].ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            else
+            {
+                if (_row[index].ValueKind == JsonValueKind.String)
+                {
+                    string result = _row[index].GetString();
+                    switch (result) {
+                        case "NaN":
+                            return Double.NaN;
+                        case "Infinity":
+                            return Double.PositiveInfinity;
+                        case "-Infinity":
+                            return Double.NegativeInfinity;
+                    }
+                }
+                return _row[index].GetDouble();
+            }
+        }
 
         /// <summary>
         /// Gets the value of the column at the specified index as <see cref="string"/>.
