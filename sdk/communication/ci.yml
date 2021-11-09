@@ -42,3 +42,5 @@ extends:
       safeName: AzureCommunicationPhoneNumbers
     - name: Azure.ResourceManager.Communication
       safeName: AzureResourceManagerCommunication
+    - name: Azure.Communication.MediaComposition
+      safeName: AzureCommunicationMediaComposition

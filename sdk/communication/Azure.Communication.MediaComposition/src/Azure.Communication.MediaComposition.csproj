@@ -16,6 +16,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Azure.Core" />
+    <PackageReference Include="Azure.Communication.Common" />
+    <PackageReference Include="System.Text.Json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Include="..\..\Shared\src\ClientOptionsExtensions.cs" LinkBase="Shared\Communication" />
     <Compile Include="..\..\Shared\src\HMACAuthenticationPolicy.cs" LinkBase="Shared\Communication" />
     <Compile Include="$(AzureCoreSharedSources)AppContextSwitchHelper.cs" LinkBase="Shared" />
@@ -31,9 +37,5 @@
     <Compile Include="$(AzureCoreSharedSources)RetriableStream.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)OperationHelpers.cs" LinkBase="Shared" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Azure.Communication.Common" />
-    <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 </Project>
