@@ -158,7 +158,7 @@ namespace Sql.Tests
         {
             Assert.Equal(databaseResultPolicy.State, databasePolicy.State);
             Assert.Equal(databaseResultPolicy.StorageEndpoint, databasePolicy.StorageEndpoint);
-            Assert.Equal(databaseResultPolicy.StorageAccountAccessKey, "Sanitized");
+            Assert.Equal(databaseResultPolicy.StorageAccountAccessKey, string.Empty);
             Assert.Equal(databaseResultPolicy.RetentionDays, databasePolicy.RetentionDays);
             Assert.Equal(databaseResultPolicy.IsStorageSecondaryKeyInUse, databasePolicy.IsStorageSecondaryKeyInUse);
             Assert.Equal(databaseResultPolicy.IsAzureMonitorTargetEnabled, databasePolicy.IsAzureMonitorTargetEnabled);
