@@ -925,7 +925,7 @@ namespace Azure.Communication.CallingServer.Tests
         }
 
         [TestCaseSource(nameof(TestData_AnswerCall))]
-        public void AnswerCall_Returns404NotFound(string incomingCallContext, IEnumerable<CallMediaType> requestedMediaTypes, IEnumerable<CallingEventSubscriptionType> requestedCallEvents, Uri callbackUri, int timeoutInSeconds)
+        public void AnswerCall_Returns404NotFound(string incomingCallContext, IEnumerable<CallMediaType> requestedMediaTypes, IEnumerable<CallingEventSubscriptionType> requestedCallEvents, Uri callbackUri)
         {
             CallingServerClient serverCallRestClient = CreateMockCallingServerClient(404);
 
@@ -1194,8 +1194,8 @@ namespace Azure.Communication.CallingServer.Tests
                 new object?[]
                 {
                     "dummyIincomingCallContext",
-                    new List<CallMediaType> { CallMediaType.Audio },
-                    new List<CallingEventSubscriptionType> { CallingEventSubscriptionType.ParticipantsUpdated },
+                    new CallMediaType[] { CallMediaType.Audio },
+                    new CallingEventSubscriptionType[] { CallingEventSubscriptionType.ParticipantsUpdated },
                     new Uri("https://bot.contoso.com/callback")
                 },
             };
