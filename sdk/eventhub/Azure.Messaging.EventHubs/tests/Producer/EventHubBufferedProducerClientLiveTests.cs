@@ -8,7 +8,6 @@ using System.Linq;
 using System.Net;
 using System.Net.WebSockets;
 using System.Runtime.ExceptionServices;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -91,9 +90,14 @@ namespace Azure.Messaging.EventHubs.Tests
             // Ensure that publishing completed with the expected state.
 
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been signaled.");
-            Assert.That(producer.TotalBufferedEventCount, Is.EqualTo(0), "No events should remain in the buffer.");
             Assert.That(handlerEvents.Count, Is.EqualTo(events.Count), "All events should have been sent.");
             Assert.That(handlerEvents.Select(item => item.PartitionId).Distinct().Count(), Is.EqualTo(partitionCount), "All partitions should have received events.");
+
+            // Because the handlers are fired in the background before state is updated, it is possible that the buffered event count may not have been fully updated
+            // when the handler sets the completion source.  Allow for a short spin and back-off if needed to allow it to settle.
+
+            await PollForZeroBufferedEventCount(producer);
+            Assert.That(producer.TotalBufferedEventCount, Is.EqualTo(0), "No events should remain in the buffer.");
 
             // Read back the events and ensure all were successfully published.
 
@@ -190,8 +194,13 @@ namespace Azure.Messaging.EventHubs.Tests
             // Ensure that publishing completed with the expected state.
 
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been signaled.");
-            Assert.That(producer.TotalBufferedEventCount, Is.EqualTo(0), "No events should remain in the buffer.");
             Assert.That(handlerEvents.Count, Is.EqualTo(events.Count), "All events should have been sent.");
+
+            // Because the handlers are fired in the background before state is updated, it is possible that the buffered event count may not have been fully updated
+            // when the handler sets the completion source.  Allow for a short spin and back-off if needed to allow it to settle.
+
+            await PollForZeroBufferedEventCount(producer);
+            Assert.That(producer.TotalBufferedEventCount, Is.EqualTo(0), "No events should remain in the buffer.");
 
             // Read back the events and ensure all were successfully published.
 
@@ -290,8 +299,13 @@ namespace Azure.Messaging.EventHubs.Tests
             // Ensure that publishing completed with the expected state.
 
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been signaled.");
-            Assert.That(producer.TotalBufferedEventCount, Is.EqualTo(0), "No events should remain in the buffer.");
             Assert.That(handlerEvents.Count, Is.EqualTo(events.Count), "All events should have been sent.");
+
+            // Because the handlers are fired in the background before state is updated, it is possible that the buffered event count may not have been fully updated
+            // when the handler sets the completion source.  Allow for a short spin and back-off if needed to allow it to settle.
+
+            await PollForZeroBufferedEventCount(producer);
+            Assert.That(producer.TotalBufferedEventCount, Is.EqualTo(0), "No events should remain in the buffer.");
 
             // Read back the events and ensure all were successfully published.
 
@@ -395,8 +409,13 @@ namespace Azure.Messaging.EventHubs.Tests
             // Ensure that publishing completed with the expected state.
 
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been signaled.");
-            Assert.That(producer.TotalBufferedEventCount, Is.EqualTo(0), "No events should remain in the buffer.");
             Assert.That(handlerEvents.Count, Is.EqualTo(events.Count), "All events should have been sent.");
+
+            // Because the handlers are fired in the background before state is updated, it is possible that the buffered event count may not have been fully updated
+            // when the handler sets the completion source.  Allow for a short spin and back-off if needed to allow it to settle.
+
+            await PollForZeroBufferedEventCount(producer);
+            Assert.That(producer.TotalBufferedEventCount, Is.EqualTo(0), "No events should remain in the buffer.");
 
             // Read back the events and ensure all were successfully published.
 
@@ -502,8 +521,13 @@ namespace Azure.Messaging.EventHubs.Tests
             // Ensure that publishing completed with the expected state.
 
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been signaled.");
-            Assert.That(producer.TotalBufferedEventCount, Is.EqualTo(0), "No events should remain in the buffer.");
             Assert.That(handlerEvents.Count, Is.EqualTo(events.Count), "All events should have been sent.");
+
+            // Because the handlers are fired in the background before state is updated, it is possible that the buffered event count may not have been fully updated
+            // when the handler sets the completion source.  Allow for a short spin and back-off if needed to allow it to settle.
+
+            await PollForZeroBufferedEventCount(producer);
+            Assert.That(producer.TotalBufferedEventCount, Is.EqualTo(0), "No events should remain in the buffer.");
 
             // Read back the events and ensure all were successfully published.
 
@@ -595,9 +619,14 @@ namespace Azure.Messaging.EventHubs.Tests
             // Ensure that publishing completed with the expected state.
 
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been signaled.");
-            Assert.That(producer.TotalBufferedEventCount, Is.EqualTo(0), "No events should remain in the buffer.");
             Assert.That(handlerEvents.Count, Is.EqualTo(events.Count), "All events should have been sent.");
             Assert.That(handlerEvents.Select(item => item.PartitionId).Distinct().Count(), Is.EqualTo(partitionCount), "All partitions should have received events.");
+
+            // Because the handlers are fired in the background before state is updated, it is possible that the buffered event count may not have been fully updated
+            // when the handler sets the completion source.  Allow for a short spin and back-off if needed to allow it to settle.
+
+            await PollForZeroBufferedEventCount(producer);
+            Assert.That(producer.TotalBufferedEventCount, Is.EqualTo(0), "No events should remain in the buffer.");
 
             // Read back the events and ensure all were successfully published.
 
@@ -1228,6 +1257,25 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(async () => await invalidProxyProducer.GetPartitionIdsAsync(), Throws.InstanceOf<WebSocketException>().Or.InstanceOf<TimeoutException>());
             Assert.That(async () => await invalidProxyProducer.GetEventHubPropertiesAsync(), Throws.InstanceOf<WebSocketException>().Or.InstanceOf<TimeoutException>());
             Assert.That(async () => await invalidProxyProducer.GetPartitionPropertiesAsync(partition), Throws.InstanceOf<WebSocketException>().Or.InstanceOf<TimeoutException>());
+        }
+
+        /// <summary>
+        ///   Polls the count of buffered events for a producer until it has been updated to
+        ///   0 or the maximum number of iterations has been reached.
+        /// </summary>
+        ///
+        /// <param name="producer">The producer to poll.</param>
+        /// <param name="maxIterations">The maximum number of polling iterations to make.</param>
+        ///
+        private static async Task PollForZeroBufferedEventCount(EventHubBufferedProducerClient producer,
+                                                                int maxIterations = 5)
+        {
+            var iterations = 0;
+
+            if ((producer.TotalBufferedEventCount > 0) && (++iterations <= maxIterations))
+            {
+                await Task.Delay(TimeSpan.FromMilliseconds(125));
+            }
         }
 
         /// <summary>
