@@ -100,8 +100,6 @@ namespace Azure.Communication.NetworkTraversal.Samples
             //@@var connectionString = "<connection_string>";
             var client = new CommunicationRelayClient(connectionString);
             client = CreateClientWithConnectionString();
-
-            #region Snippet:GetRelayConfigurationAsyncWithoutIdentity
             Response<CommunicationRelayConfiguration> relayConfiguration = await client.GetRelayConfigurationAsync();
             DateTimeOffset turnTokenExpiresOn = relayConfiguration.Value.ExpiresOn;
             IReadOnlyList<CommunicationIceServer> iceServers = relayConfiguration.Value.IceServers;
@@ -115,7 +113,6 @@ namespace Azure.Communication.NetworkTraversal.Samples
                 Console.WriteLine($"ICE Server Username: {iceServer.Username}");
                 Console.WriteLine($"ICE Server Credential: {iceServer.Credential}");
             }
-            #endregion Snippet:GetRelayConfigurationAsyncWithoutIdentity
         }
 
         [Test]
