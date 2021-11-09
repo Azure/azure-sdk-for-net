@@ -28,6 +28,7 @@ namespace Azure.Storage.Test.Shared
         BlobClientOptions.ServiceVersion.V2020_08_04,
         BlobClientOptions.ServiceVersion.V2020_10_02,
         BlobClientOptions.ServiceVersion.V2020_12_06,
+        BlobClientOptions.ServiceVersion.V2021_02_12,
         StorageVersionExtensions.LatestVersion,
         StorageVersionExtensions.MaxVersion,
         RecordingServiceVersion = StorageVersionExtensions.MaxVersion,

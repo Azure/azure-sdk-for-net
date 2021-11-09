@@ -13,7 +13,7 @@ namespace Azure.Messaging.EventHubs.Producer
     ///   to.
     /// </summary>
     ///
-    internal class SendEventBatchFailedEventArgs : EventArgs
+    public class SendEventBatchFailedEventArgs : EventArgs
     {
         /// <summary>
         ///   The set of events that were in the batch that failed to publish.

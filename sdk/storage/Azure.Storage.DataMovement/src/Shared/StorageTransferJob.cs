@@ -14,6 +14,7 @@ namespace Azure.Storage.DataMovement
     /// </summary>
     public abstract class StorageTransferJob
     {
+
         /// <summary>
         /// Job Id in form of a Guid
         /// </summary>

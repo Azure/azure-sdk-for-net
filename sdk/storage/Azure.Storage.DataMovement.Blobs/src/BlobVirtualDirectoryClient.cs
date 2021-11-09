@@ -319,7 +319,7 @@ namespace Azure.Storage.DataMovement.Blobs
             StorageSharedKeyCredential storageSharedKeyCredential)
         {
             Argument.AssertNotNull(blobDirectoryUri, nameof(blobDirectoryUri));
-            options ??= new BlobClientOptions();
+            options ??= new `BlobClientOptions();
             _uri = blobDirectoryUri;
 
             _clientConfiguration = new BlobClientConfiguration(
@@ -391,6 +391,19 @@ namespace Azure.Storage.DataMovement.Blobs
                 ClientConfiguration,
                 ClientSideEncryption);
         }
+
+        /// <summary>
+        /// Create a new <see cref="BlockBlobClient"/> object by
+        /// concatenating <paramref name="blobName"/> to
+        /// the end of the <see cref="Uri"/>. The new
+        /// <see cref="BlockBlobClient"/>
+        /// uses the same request policy pipeline as the
+        /// <see cref="BlobContainerClient"/>.
+        /// </summary>
+        /// <param name="blobName">The name of the block blob.</param>
+        /// <returns>A new <see cref="BlockBlobClient"/> instance.</returns>
+        public virtual BlockBlobClient GetBlockBlobClientCore(string blobName)
+            => GetBlockBlobClientCore(blobName);
 
         /// <summary>
         /// Create a new <see cref="BlockBlobClient"/> object by

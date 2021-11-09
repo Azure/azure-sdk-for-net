@@ -82,8 +82,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V7_3_Preview)]
         public async Task GetRandomBytes(int count)
         {
-            RandomBytes rand = await Client.GetRandomBytesAsync(count);
-            Assert.AreEqual(count, rand.Value.Length);
+            byte[] rand = await Client.GetRandomBytesAsync(count);
+            Assert.AreEqual(count, rand.Length);
         }
     }
 }

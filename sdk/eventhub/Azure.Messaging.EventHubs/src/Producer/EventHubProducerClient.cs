@@ -23,11 +23,20 @@ namespace Azure.Messaging.EventHubs.Producer
     ///   A client responsible for publishing <see cref="EventData" /> to a specific Event Hub,
     ///   grouped together in batches.  Depending on the options specified when sending, events may
     ///   be automatically assigned an available partition or may request a specific partition.
+    ///
+    ///   The <see cref="EventHubProducerClient" /> publishes immediately, ensuring a deterministic
+    ///   outcome for each send operation, though requires that callers own the responsibility of
+    ///   building and managing batches.
+    ///
+    ///   In scenarios where it is not important to have events published immediately and where
+    ///   maximizing partition availability is not a requirement, it is recommended to consider
+    ///   using the <see cref="EventHubBufferedProducerClient" />, which takes responsibility for
+    ///   building and managing batches to reduce the complexity of doing so in application code.
     /// </summary>
     ///
     /// <remarks>
     ///   <list type="bullet">
-    ///     <listheader><description>Allowing automatic routing of partitions is recommended when:</description></listheader>
+    ///     <listheader><description>Allowing partition assignment is recommended when:</description></listheader>
     ///     <item><description>The sending of events needs to be highly available.</description></item>
     ///     <item><description>The event data should be evenly distributed among all available partitions.</description></item>
     ///   </list>
@@ -45,6 +54,8 @@ namespace Azure.Messaging.EventHubs.Producer
     ///     method as the application is shutting down will ensure that network resources and other unmanaged objects are properly cleaned up.
     ///   </para>
     /// </remarks>
+    ///
+    /// <seealso cref="EventHubBufferedProducerClient" />
     ///
     public class EventHubProducerClient : IAsyncDisposable
     {

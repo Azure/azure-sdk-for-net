@@ -11,6 +11,7 @@ using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.DataMovement.Models;
 using Azure.Storage.DataMovement.Blobs;
+using Azure.Storage.DataMovement.Blobs.Models;
 using Azure.Storage.Sas;
 using NUnit.Framework;
 using Azure.Storage.DataMovement;
@@ -144,7 +145,7 @@ namespace Azure.Storage.Blobs.Samples
                 transferManager.ScheduleDownload(
                     sourceBlob2,
                     downloadPath2,
-                    options: new BlobDownloadOptions()
+                    options: new BlobDownloadToOptions()
                     {
                         ProgressHandler = blob2Progress,
                         TransferOptions = new StorageTransferOptions
@@ -426,4 +427,140 @@ namespace Azure.Storage.Blobs.Samples
 
             blobTransferManager.Clean();
         }
+
+        /// <summary>
+        /// Use a connection string to connect to a Storage account and upload two single blobs.
+        /// </summary>
+        [Test]
+        public async Task CopySingle_ConnectionStringAsync()
+        {
+            // Create a temporary Lorem Ipsum file on disk that we can upload
+            string originalPath = CreateTempFile(SampleFileContent);
+
+            // Get a connection string to our Azure Storage account.  You can
+            // obtain your connection string from the Azure Portal (click
+            // Access Keys under Settings in the Portal Storage account blade)
+            // or using the Azure CLI with:
+            //
+            //     az storage account show-connection-string --name <account_name> --resource-group <resource_group>
+            //
+            // And you can provide the connection string to your application
+            // using an environment variable.
+
+            string connectionString = ConnectionString;
+            string containerName = Randomize("sample-container");
+
+            // Create a client that can authenticate with a connection string
+            BlobContainerClient container = new BlobContainerClient(connectionString, containerName);
+            await container.CreateIfNotExistsAsync();
+
+            // Make a service request to verify we've successfully authenticated
+            try
+            {
+                // Get a reference to a destination blobs
+                BlobClient destinationBlob = container.GetBlobClient(Randomize("sample-blob"));
+                BlobClient destinationBlob2 = container.GetBlobClient(Randomize("sample-blob"));
+
+                // Upload file data
+                BlobTransferManager transferManager = new BlobTransferManager();
+
+                // Create simple transfer single blob upload job
+                string jobId = transferManager.ScheduleUpload(originalPath, destinationBlob);
+
+                // Create transfer single blob upload job with transfer options concurrency specified
+                // i.e. it's a bigger blob so it maybe need more help uploading fast
+
+                // Also I want to specify the progress handler
+                Progress<long> blob2Progress = new Progress<long>();
+                transferManager.ScheduleUpload(
+                    originalPath,
+                    destinationBlob2,
+                    uploadOptions: new BlobUploadOptions()
+                    {
+                        ProgressHandler = blob2Progress,
+                        TransferOptions = new StorageTransferOptions()
+                        {
+                            MaximumConcurrency = 4
+                        }
+                    });
+            }
+            finally
+            {
+                await container.DeleteIfExistsAsync();
+            }
+        }
+
+        /// <summary>
+        /// Use a shared key to access a Storage Account to download two single blobs
+        /// </summary>
+        [Test]
+        public async Task CopySingle_SharedKeyAuthAsync()
+        {
+            // Create a temporary Lorem Ipsum file on disk that we can upload
+            string originalPath = CreateTempFile(SampleFileContent);
+
+            // Get a temporary path on disk where we can download the file
+            string downloadPath = CreateTempPath();
+            string downloadPath2 = CreateTempPath();
+
+            // Get a Storage account name, shared key, and endpoint Uri.
+            //
+            // You can obtain both from the Azure Portal by clicking Access
+            // Keys under Settings in the Portal Storage account blade.
+            //
+            // You can also get access to your account keys from the Azure CLI
+            // with:
+            //
+            //     az storage account keys list --account-name <account_name> --resource-group <resource_group>
+            //
+            string accountName = StorageAccountName;
+            string accountKey = StorageAccountKey;
+            Uri serviceUri = StorageAccountBlobUri;
+
+            // Create a SharedKeyCredential that we can use to authenticate
+            StorageSharedKeyCredential credential = new StorageSharedKeyCredential(accountName, accountKey);
+
+            // Create a client that can authenticate with a connection string
+            BlobServiceClient service = new BlobServiceClient(serviceUri, credential);
+            BlobContainerClient container = service.GetBlobContainerClient(Randomize("sample-container"));
+
+            await container.CreateIfNotExistsAsync();
+
+            // Make a service request to verify we've successfully authenticated
+            try
+            {
+                // Get a reference to a source blobs and upload sample content to download
+                BlobClient sourceBlob = container.GetBlobClient(Randomize("sample-blob"));
+                BlobClient sourceBlob2 = container.GetBlobClient(Randomize("sample-blob"));
+
+                await sourceBlob.UploadAsync(originalPath);
+                await sourceBlob2.UploadAsync(originalPath);
+
+                // Create Blob Transfer Manager
+                BlobTransferManager transferManager = new BlobTransferManager();
+
+                // Simple Download Single Blob Job
+                transferManager.ScheduleDownload(sourceBlob, downloadPath);
+
+                // Create transfer single blob upload job with transfer options concurrency specified
+                // i.e. it's a bigger blob so it maybe need more help uploading fast
+                Progress<long> blob2Progress = new Progress<long>();
+                transferManager.ScheduleDownload(
+                    sourceBlob2,
+                    downloadPath2,
+                    options: new BlobDownloadToOptions()
+                    {
+                        ProgressHandler = blob2Progress,
+                        TransferOptions = new StorageTransferOptions
+                        {
+                            MaximumConcurrency = 4
+                        }
+                    });
+            }
+            finally
+            {
+                await container.DeleteIfExistsAsync();
+            }
+        }
     }
+}

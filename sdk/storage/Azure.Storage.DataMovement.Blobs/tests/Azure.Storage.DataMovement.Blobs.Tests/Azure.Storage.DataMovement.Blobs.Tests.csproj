@@ -10,6 +10,7 @@
     <PackageReference Include="Mono.Posix" VersionOverride="7.0.0-alpha8.21302.6" />
     <PackageReference Include="System.IO.FileSystem.AccessControl" VersionOverride="5.0.0" />
     <ProjectReference Include="..\..\..\Azure.Storage.Blobs\src\Azure.Storage.Blobs.csproj" />
+    <ProjectReference Include="..\..\..\Azure.Storage.Blobs\tests\Azure.Storage.Blobs.Tests.csproj" />
     <ProjectReference Include="..\..\..\Azure.Storage.Common\tests\Azure.Storage.Common.Tests.csproj" />
     <ProjectReference Include="..\..\..\Azure.Storage.DataMovement\src\Azure.Storage.DataMovement.csproj" />
     <ProjectReference Include="..\..\..\Azure.Storage.DataMovement\tests\TestProject1\Azure.Storage.DataMovement.Tests.csproj" />

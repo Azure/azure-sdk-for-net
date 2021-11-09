@@ -13,6 +13,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Messaging.EventHubs.Amqp;
 using Azure.Messaging.EventHubs.Authorization;
+using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
 using Azure.Messaging.EventHubs.Producer;
 using Moq;
@@ -277,6 +278,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task GetEventHubPropertiesAsyncIsDelegated()
         {
             using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var mockProducer = new Mock<EventHubProducerClient>();
             var bufferedProducer = new EventHubBufferedProducerClient(mockProducer.Object);
@@ -293,6 +295,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void GetPartitionIdsAsyncValidatesClosed()
         {
             using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var mockProducer = new Mock<EventHubProducerClient>();
             var bufferedProducer = new EventHubBufferedProducerClient(mockProducer.Object);
@@ -309,6 +312,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task GetPartitionIdsAsyncIsDelegated()
         {
             using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var mockProducer = new Mock<EventHubProducerClient>();
             var bufferedProducer = new EventHubBufferedProducerClient(mockProducer.Object);
@@ -329,6 +333,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void GetPartitionPropertiesAsyncValidatesClosed()
         {
             using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var mockProducer = new Mock<EventHubProducerClient>();
             var bufferedProducer = new EventHubBufferedProducerClient(mockProducer.Object);
@@ -345,6 +350,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task GetPartitionPropertiesAsyncIsDelegated()
         {
             using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var expectedPartition = "0";
             var mockProducer = new Mock<EventHubProducerClient>();
@@ -558,6 +564,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task CloseAsyncClosesTheProducer()
         {
             using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
             var bufferedProducer = new EventHubBufferedProducerClient(mockProducer.Object);
@@ -594,6 +601,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task CloseAsyncUnregistersTheEventHandlers()
         {
             using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
             var bufferedProducer = new EventHubBufferedProducerClient(mockProducer.Object);
@@ -897,6 +905,42 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubBufferedProducerClient.CloseAsync" />.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task CloseStopsPublishing(bool flush)
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            var partitions = new[] { "0", "1", "2", "3" };
+            var mockProducer = new Mock<EventHubProducerClient>("fakeNs", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
+            var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>(mockProducer.Object, default(EventHubBufferedProducerClientOptions)) { CallBase = true };
+
+            mockProducer
+                .Setup(producer => producer.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(partitions));
+
+            try
+            {
+                await InvokeStartPublishingAsync(mockBufferedProducer.Object, cancellationSource.Token);
+                await mockBufferedProducer.Object.CloseAsync(flush);
+
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
+                Assert.That(mockBufferedProducer.Object.IsClosed, Is.True, "The producer should be closed.");
+                Assert.That(mockBufferedProducer.Object.IsPublishing, Is.False, "The producer should report that it is not publishing.");
+                Assert.That(GetBackgroundPublishingTask(mockBufferedProducer.Object).IsCompleted, Is.True, "The publishing task should have been completed.");
+            }
+            finally
+            {
+                await InvokeStopPublishingAsync(mockBufferedProducer.Object, cancellationSource.Token);
+            }
+        }
+
+        /// <summary>
         ///   Verifies functionality of the <see cref="EventHubBufferedProducerClient.FlushAsync" /> method.
         /// </summary>
         ///
@@ -945,7 +989,6 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(producer => producer.DrainAndPublishPartitionEvents(
                     It.IsAny<EventHubBufferedProducerClient.PartitionPublishingState>(),
                     It.IsAny<string>(),
-                    It.IsAny<ConcurrentBag<Task>>(),
                     It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
@@ -992,7 +1035,6 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(producer => producer.DrainAndPublishPartitionEvents(
                     It.IsAny<EventHubBufferedProducerClient.PartitionPublishingState>(),
                     It.IsAny<string>(),
-                    It.IsAny<ConcurrentBag<Task>>(),
                     It.IsAny<CancellationToken>()))
                 .Throws(expectedException);
 
@@ -1018,6 +1060,53 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        public async Task FlushAsyncStopsPublishing()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            var partitions = new[] { "0", "1", "2", "3" };
+            var options = new EventHubBufferedProducerClientOptions();
+            var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
+            var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>(mockProducer.Object, options) { CallBase = true };
+
+            mockProducer
+                .Setup(producer => producer.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(partitions));
+
+            mockBufferedProducer
+                .Setup(producer => producer.DrainAndPublishPartitionEvents(
+                    It.IsAny<EventHubBufferedProducerClient.PartitionPublishingState>(),
+                    It.IsAny<string>(),
+                    It.IsAny<CancellationToken>()))
+                .Returns(Task.CompletedTask);
+
+            try
+            {
+                await InvokeStartPublishingAsync(mockBufferedProducer.Object, cancellationSource.Token);
+
+                foreach (var partition in partitions)
+                {
+                    mockBufferedProducer.Object.ActivePartitionStateMap[partition] = new EventHubBufferedProducerClient.PartitionPublishingState(partition, options) { BufferedEventCount = 1 };
+                }
+
+                await mockBufferedProducer.Object.FlushAsync(cancellationSource.Token);
+
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
+                Assert.That(mockBufferedProducer.Object.IsPublishing, Is.False, "The producer should report that it is not publishing.");
+                Assert.That(GetBackgroundPublishingTask(mockBufferedProducer.Object).IsCompleted, Is.True, "The publishing task should have been completed.");
+            }
+            finally
+            {
+                await InvokeStopPublishingAsync(mockBufferedProducer.Object, cancellationSource.Token);
+            }
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubBufferedProducerClient.FlushAsync" /> method.
+        /// </summary>
+        ///
+        [Test]
         public async Task FlushAsyncDoesNotDrainWhenNoPartitionsAreMapped()
         {
             using var cancellationSource = new CancellationTokenSource();
@@ -1031,7 +1120,6 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(producer => producer.DrainAndPublishPartitionEvents(
                     It.IsAny<EventHubBufferedProducerClient.PartitionPublishingState>(),
                     It.IsAny<string>(),
-                    It.IsAny<ConcurrentBag<Task>>(),
                     It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
@@ -1044,7 +1132,6 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Verify(producer => producer.DrainAndPublishPartitionEvents(
                     It.IsAny<EventHubBufferedProducerClient.PartitionPublishingState>(),
                     It.IsAny<string>(),
-                    It.IsAny<ConcurrentBag<Task>>(),
                     It.IsAny<CancellationToken>()),
                 Times.Never);
         }
@@ -1067,7 +1154,6 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(producer => producer.DrainAndPublishPartitionEvents(
                     It.IsAny<EventHubBufferedProducerClient.PartitionPublishingState>(),
                     It.IsAny<string>(),
-                    It.IsAny<ConcurrentBag<Task>>(),
                     It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
@@ -1085,7 +1171,6 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Verify(producer => producer.DrainAndPublishPartitionEvents(
                     It.IsAny<EventHubBufferedProducerClient.PartitionPublishingState>(),
                     It.IsAny<string>(),
-                    It.IsAny<ConcurrentBag<Task>>(),
                     It.IsAny<CancellationToken>()),
                 Times.Never);
         }
@@ -1109,7 +1194,6 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(producer => producer.DrainAndPublishPartitionEvents(
                     It.IsAny<EventHubBufferedProducerClient.PartitionPublishingState>(),
                     It.IsAny<string>(),
-                    It.IsAny<ConcurrentBag<Task>>(),
                     It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
@@ -1127,7 +1211,6 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Verify(producer => producer.DrainAndPublishPartitionEvents(
                     It.Is<EventHubBufferedProducerClient.PartitionPublishingState>(value => partitions.Any(item => item == value.PartitionId)),
                     It.IsAny<string>(),
-                    It.IsAny<ConcurrentBag<Task>>(),
                     It.IsAny<CancellationToken>()),
                 Times.Exactly(partitions.Length));
         }
@@ -1143,7 +1226,7 @@ namespace Azure.Messaging.EventHubs.Tests
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var expectedPartition = "7";
-            var completionSource = new TaskCompletionSource<bool>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var options = new EventHubBufferedProducerClientOptions();
             var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
             var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>(mockProducer.Object, options) { CallBase = true };
@@ -1152,11 +1235,14 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(producer => producer.DrainAndPublishPartitionEvents(
                     It.IsAny<EventHubBufferedProducerClient.PartitionPublishingState>(),
                     It.IsAny<string>(),
-                    It.IsAny<ConcurrentBag<Task>>(),
                     It.IsAny<CancellationToken>()))
-                .Returns<EventHubBufferedProducerClient.PartitionPublishingState, string, ConcurrentBag<Task>, CancellationToken>((state, operation, handlers, token) =>
+                .Returns<EventHubBufferedProducerClient.PartitionPublishingState, string, CancellationToken>((state, operation, token) =>
                 {
-                    handlers.Add(completionSource.Task);
+                    var activeHandlers = GetActivePublishingHandlers(mockBufferedProducer.Object);
+
+                    var handlerTask = completionSource.Task.ContinueWith(t => activeHandlers.TryRemove(completionSource.Task, out _));
+                    activeHandlers[completionSource.Task] = 0;
+
                     return Task.CompletedTask;
                 });
 
@@ -1182,7 +1268,6 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Verify(producer => producer.DrainAndPublishPartitionEvents(
                     It.IsAny<EventHubBufferedProducerClient.PartitionPublishingState>(),
                     It.IsAny<string>(),
-                    It.IsAny<ConcurrentBag<Task>>(),
                     It.IsAny<CancellationToken>()),
                 Times.Once);
         }
@@ -1702,13 +1787,19 @@ namespace Azure.Messaging.EventHubs.Tests
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var partitionId = "7";
+            var partitions = new[] { partitionId };
             var events = new[] { new EventData("One"), new EventData("Two") };
+            var mockPartitionResolver = new Mock<PartitionResolver>();
             var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
             var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>(mockProducer.Object, default(EventHubBufferedProducerClientOptions)) { CallBase = true };
 
+            mockPartitionResolver
+                .Setup(resolver => resolver.AssignRoundRobin(It.IsAny<string[]>()))
+                .Returns(partitionId);
+
             mockProducer
                 .Setup(producer => producer.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new[] { partitionId });
+                .ReturnsAsync(partitions);
 
             mockBufferedProducer
                 .Setup(producer => producer.PublishBatchToPartition(
@@ -1717,6 +1808,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
+            mockBufferedProducer.Object.PartitionResolver = mockPartitionResolver.Object;
             mockBufferedProducer.Object.SendEventBatchFailedAsync += args => Task.CompletedTask;
 
             try
@@ -1739,6 +1831,15 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 await mockBufferedProducer.Object.CloseAsync(false).IgnoreExceptions();
             }
+
+            mockPartitionResolver
+                .Verify(resolver => resolver.AssignRoundRobin(partitions), Times.Exactly(events.Length));
+
+            mockPartitionResolver
+                .Verify(resolver => resolver.AssignForPartitionKey(
+                    It.IsAny<string>(),
+                    It.IsAny<string[]>()),
+                Times.Never);
         }
 
         /// <summary>
@@ -1752,14 +1853,20 @@ namespace Azure.Messaging.EventHubs.Tests
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var partitionId = "3";
+            var partitions = new[] { partitionId };
             var partitionKey = "test-key";
             var events = new[] { new EventData("One"), new EventData("Two") };
+            var mockPartitionResolver = new Mock<PartitionResolver>();
             var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
             var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>(mockProducer.Object, default(EventHubBufferedProducerClientOptions)) { CallBase = true };
 
+            mockPartitionResolver
+                .Setup(resolver => resolver.AssignForPartitionKey(It.IsAny<string>(), It.IsAny<string[]>()))
+                .Returns(partitionId);
+
             mockProducer
                 .Setup(producer => producer.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new[] { partitionId });
+                .ReturnsAsync(partitions);
 
             mockBufferedProducer
                 .Setup(producer => producer.PublishBatchToPartition(
@@ -1768,6 +1875,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
+            mockBufferedProducer.Object.PartitionResolver = mockPartitionResolver.Object;
             mockBufferedProducer.Object.SendEventBatchFailedAsync += args => Task.CompletedTask;
 
             try
@@ -1792,6 +1900,12 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 await mockBufferedProducer.Object.CloseAsync(false).IgnoreExceptions();
             }
+
+            mockPartitionResolver
+                .Verify(resolver => resolver.AssignRoundRobin(It.IsAny<string[]>()), Times.Never);
+
+            mockPartitionResolver
+                .Verify(resolver => resolver.AssignForPartitionKey(partitionKey, partitions), Times.Once);
         }
 
         /// <summary>
@@ -1806,6 +1920,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var partitionId = "2";
             var events = new[] { new EventData("One"), new EventData("Two") };
+            var mockPartitionResolver = new Mock<PartitionResolver>();
             var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
             var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>(mockProducer.Object, default(EventHubBufferedProducerClientOptions)) { CallBase = true };
 
@@ -1820,6 +1935,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
+            mockBufferedProducer.Object.PartitionResolver = mockPartitionResolver.Object;
             mockBufferedProducer.Object.SendEventBatchFailedAsync += args => Task.CompletedTask;
 
             try
@@ -1844,6 +1960,15 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 await mockBufferedProducer.Object.CloseAsync(false).IgnoreExceptions();
             }
+
+            mockPartitionResolver
+                .Verify(resolver => resolver.AssignRoundRobin(It.IsAny<string[]>()), Times.Never);
+
+            mockPartitionResolver
+                .Verify(resolver => resolver.AssignForPartitionKey(
+                    It.IsAny<string>(),
+                    It.IsAny<string[]>()),
+                Times.Never);
         }
 
         /// <summary>
@@ -2411,20 +2536,27 @@ namespace Azure.Messaging.EventHubs.Tests
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var partitionId = "7";
+            var partitions = new[] { partitionId };
             var expectedEvent = new EventData("One");
+            var mockPartitionResolver = new Mock<PartitionResolver>();
             var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
-            var bufferedProducer = new EventHubBufferedProducerClient(mockProducer.Object);
+            var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>(mockProducer.Object, default(EventHubBufferedProducerClientOptions)) { CallBase = true };
+
+            mockPartitionResolver
+                .Setup(resolver => resolver.AssignRoundRobin(It.IsAny<string[]>()))
+                .Returns(partitionId);
 
             mockProducer
                 .Setup(producer => producer.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new[] { partitionId });
+                .ReturnsAsync(partitions);
 
-            bufferedProducer.SendEventBatchFailedAsync += args => Task.CompletedTask;
+            mockBufferedProducer.Object.PartitionResolver = mockPartitionResolver.Object;
+            mockBufferedProducer.Object.SendEventBatchFailedAsync += args => Task.CompletedTask;
 
             try
             {
-                await bufferedProducer.EnqueueEventAsync(expectedEvent, cancellationSource.Token);
-                Assert.That(bufferedProducer.ActivePartitionStateMap.TryGetValue(partitionId, out var partitionPublisher), Is.True, "A publisher should have been registered for the partition.");
+                await mockBufferedProducer.Object.EnqueueEventAsync(expectedEvent, cancellationSource.Token);
+                Assert.That(mockBufferedProducer.Object.ActivePartitionStateMap.TryGetValue(partitionId, out var partitionPublisher), Is.True, "A publisher should have been registered for the partition.");
 
                 var readEventCount = 0;
 
@@ -2439,8 +2571,17 @@ namespace Azure.Messaging.EventHubs.Tests
             }
             finally
             {
-                await bufferedProducer.CloseAsync(false).IgnoreExceptions();
+                await mockBufferedProducer.Object.CloseAsync(false).IgnoreExceptions();
             }
+
+            mockPartitionResolver
+                .Verify(resolver => resolver.AssignRoundRobin(partitions), Times.Once);
+
+            mockPartitionResolver
+                .Verify(resolver => resolver.AssignForPartitionKey(
+                    It.IsAny<string>(),
+                    It.IsAny<string[]>()),
+                Times.Never);
         }
 
         /// <summary>
@@ -2454,14 +2595,20 @@ namespace Azure.Messaging.EventHubs.Tests
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var partitionId = "3";
+            var partitions = new[] { partitionId };
             var partitionKey = "test-key";
             var expectedEvent = new EventData("One");
+            var mockPartitionResolver = new Mock<PartitionResolver>();
             var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
             var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>(mockProducer.Object, default(EventHubBufferedProducerClientOptions)) { CallBase = true };
 
+            mockPartitionResolver
+                .Setup(resolver => resolver.AssignForPartitionKey(It.IsAny<string>(), It.IsAny<string[]>()))
+                .Returns(partitionId);
+
             mockProducer
                 .Setup(producer => producer.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new[] { partitionId });
+                .ReturnsAsync(partitions);
 
             mockBufferedProducer
                 .Setup(producer => producer.PublishBatchToPartition(
@@ -2470,6 +2617,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
+            mockBufferedProducer.Object.PartitionResolver = mockPartitionResolver.Object;
             mockBufferedProducer.Object.SendEventBatchFailedAsync += args => Task.CompletedTask;
 
             try
@@ -2494,6 +2642,12 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 await mockBufferedProducer.Object.CloseAsync(false).IgnoreExceptions();
             }
+
+            mockPartitionResolver
+                .Verify(resolver => resolver.AssignRoundRobin(It.IsAny<string[]>()), Times.Never);
+
+            mockPartitionResolver
+                .Verify(resolver => resolver.AssignForPartitionKey(partitionKey, partitions), Times.Once);
         }
 
          /// <summary>
@@ -2508,6 +2662,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var partitionId = "2";
             var expectedEvent = new EventData("One");
+            var mockPartitionResolver = new Mock<PartitionResolver>();
             var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
             var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>(mockProducer.Object, default(EventHubBufferedProducerClientOptions)) { CallBase = true };
 
@@ -2522,6 +2677,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
+            mockBufferedProducer.Object.PartitionResolver = mockPartitionResolver.Object;
             mockBufferedProducer.Object.SendEventBatchFailedAsync += args => Task.CompletedTask;
 
             try
@@ -2546,6 +2702,15 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 await mockBufferedProducer.Object.CloseAsync(false).IgnoreExceptions();
             }
+
+            mockPartitionResolver
+                .Verify(resolver => resolver.AssignRoundRobin(It.IsAny<string[]>()), Times.Never);
+
+            mockPartitionResolver
+                .Verify(resolver => resolver.AssignForPartitionKey(
+                    It.IsAny<string>(),
+                    It.IsAny<string[]>()),
+                Times.Never);
         }
 
         /// <summary>
@@ -2939,7 +3104,7 @@ namespace Azure.Messaging.EventHubs.Tests
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var partitionRequsts = 0;
-            var completionSource = new TaskCompletionSource<bool>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
             var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>(mockProducer.Object, default(EventHubBufferedProducerClientOptions)) { CallBase = true };
 
@@ -2990,7 +3155,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var expectedInterval = TimeSpan.FromMilliseconds(250);
             var expectedPartitionRequests = 3;
             var partitionRequsts = 0;
-            var completionSource = new TaskCompletionSource<bool>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
             var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>(mockProducer.Object, default(EventHubBufferedProducerClientOptions)) { CallBase = true };
 
@@ -3043,7 +3208,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var expectedInterval = TimeSpan.FromMilliseconds(250);
             var partitionRequsts = 0;
-            var completionSource = new TaskCompletionSource<bool>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var mockLogger = new Mock<EventHubsEventSource>();
             var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
             var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>(mockProducer.Object, default(EventHubBufferedProducerClientOptions)) { CallBase = true };
@@ -3092,8 +3257,8 @@ namespace Azure.Messaging.EventHubs.Tests
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var expectedErrorMessage = "This is an error that we expect.";
-            var initialCompletionSource = new TaskCompletionSource<bool>();
-            var faultCompletionSource = new TaskCompletionSource<bool>();
+            var initialCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var faultCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var mockLogger = new Mock<EventHubsEventSource>();
             var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
             var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>(mockProducer.Object, default(EventHubBufferedProducerClientOptions)) { CallBase = true };
@@ -3150,8 +3315,8 @@ namespace Azure.Messaging.EventHubs.Tests
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var faultInjected = false;
-            var initialCompletionSource = new TaskCompletionSource<bool>();
-            var restartedCompletionSource = new TaskCompletionSource<bool>();
+            var initialCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var restartedCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var mockLogger = new Mock<EventHubsEventSource>();
             var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
             var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>(mockProducer.Object, default(EventHubBufferedProducerClientOptions)) { CallBase = true };
@@ -3221,7 +3386,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var partitionRequsts = 0;
             var expectedErrorMessage = "This is an error that we expect.";
-            var completionSource = new TaskCompletionSource<bool>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var mockLogger = new Mock<EventHubsEventSource>();
             var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
             var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>(mockProducer.Object, default(EventHubBufferedProducerClientOptions)) { CallBase = true };
@@ -3755,7 +3920,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var expectedEvents = EventGenerator.CreateSmallEvents(10).ToList();
             var batchedEvents = new List<EventData>();
             var handlerArgs = default(SendEventBatchSucceededEventArgs);
-            var completionSource = new TaskCompletionSource<bool>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var options = new EventHubBufferedProducerClientOptions { MaximumWaitTime = EventHubsTestEnvironment.Instance.TestExecutionTimeLimit };
             var partitionState = new EventHubBufferedProducerClient.PartitionPublishingState(expectedPartition, options);
             var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
@@ -3837,7 +4002,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var expectedEvents = EventGenerator.CreateSmallEvents(10).ToList();
             var batchedEvents = new List<EventData>();
             var handlerArgs = default(SendEventBatchFailedEventArgs);
-            var completionSource = new TaskCompletionSource<bool>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var options = new EventHubBufferedProducerClientOptions { MaximumWaitTime = EventHubsTestEnvironment.Instance.TestExecutionTimeLimit };
             var partitionState = new EventHubBufferedProducerClient.PartitionPublishingState(expectedPartition, options);
             var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
@@ -3919,7 +4084,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var expectedEvents = EventGenerator.CreateSmallEvents(10).ToList();
             var batchedEvents = new List<EventData>();
             var handlerArgs = default(SendEventBatchFailedEventArgs);
-            var completionSource = new TaskCompletionSource<bool>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var options = new EventHubBufferedProducerClientOptions { MaximumWaitTime = EventHubsTestEnvironment.Instance.TestExecutionTimeLimit };
             var partitionState = new EventHubBufferedProducerClient.PartitionPublishingState(expectedPartition, options);
             var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
@@ -4002,7 +4167,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var extraEvent = EventGenerator.CreateSmallEvents(1).First();
             var bufferedEvents = EventGenerator.CreateSmallEvents(10).ToList();
             var handlerInvoked = false;
-            var completionSource = new TaskCompletionSource<bool>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var options = new EventHubBufferedProducerClientOptions { MaximumWaitTime = EventHubsTestEnvironment.Instance.TestExecutionTimeLimit };
             var partitionState = new EventHubBufferedProducerClient.PartitionPublishingState(expectedPartition, options);
             var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
@@ -4073,7 +4238,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var expectedEvents = EventGenerator.CreateSmallEvents(5).ToList();
             var batchedEvents = new List<EventData>();
             var handlerArgs = default(SendEventBatchFailedEventArgs);
-            var completionSource = new TaskCompletionSource<bool>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var options = new EventHubBufferedProducerClientOptions { MaximumWaitTime = EventHubsTestEnvironment.Instance.TestExecutionTimeLimit };
             var partitionState = new EventHubBufferedProducerClient.PartitionPublishingState(expectedPartition, options);
             var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
@@ -4158,7 +4323,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var expectedPartition = "4";
             var poisonEvent = EventGenerator.CreateEventFromBody(new byte[] { 0x65, 0x66, 0x67 });
             var handlerArgs = default(SendEventBatchFailedEventArgs);
-            var completionSource = new TaskCompletionSource<bool>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var options = new EventHubBufferedProducerClientOptions { MaximumWaitTime = EventHubsTestEnvironment.Instance.TestExecutionTimeLimit };
             var partitionState = new EventHubBufferedProducerClient.PartitionPublishingState(expectedPartition, options);
             var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
@@ -4368,7 +4533,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var extraEvent = EventGenerator.CreateSmallEvents(1).First();
             var expectedEvents = EventGenerator.CreateSmallEvents(10).ToList();
             var batchedEvents = new List<EventData>();
-            var completionSource = new TaskCompletionSource<bool>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var options = new EventHubBufferedProducerClientOptions { MaximumWaitTime = EventHubsTestEnvironment.Instance.TestExecutionTimeLimit };
             var partitionState = new EventHubBufferedProducerClient.PartitionPublishingState(expectedPartition, options);
             var mockLogger = new Mock<EventHubsEventSource>();
@@ -4439,7 +4604,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var expectedPartition = "4";
             var poisonEvent = EventGenerator.CreateEventFromBody(new byte[] { 0x65, 0x66, 0x67 });
-            var completionSource = new TaskCompletionSource<bool>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var options = new EventHubBufferedProducerClientOptions { MaximumWaitTime = EventHubsTestEnvironment.Instance.TestExecutionTimeLimit };
             var mockLogger = new Mock<EventHubsEventSource>();
             var partitionState = new EventHubBufferedProducerClient.PartitionPublishingState(expectedPartition, options);
@@ -4502,7 +4667,7 @@ namespace Azure.Messaging.EventHubs.Tests
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var expectedPartition = "4";
-            var completionSource = new TaskCompletionSource<bool>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var options = new EventHubBufferedProducerClientOptions { MaximumConcurrentSends = 1, MaximumConcurrentSendsPerPartition = 1 };
             var state = new EventHubBufferedProducerClient.PartitionPublishingState(expectedPartition, options);
             var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
@@ -4571,7 +4736,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var publishCount = 0;
             var validPartitions = new[] { "5", "8", "11", "frank" };
-            var completionSource = new TaskCompletionSource<bool>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var options = new EventHubBufferedProducerClientOptions { MaximumConcurrentSends = validPartitions.Length, MaximumConcurrentSendsPerPartition = 1 };
             var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
             var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>(mockProducer.Object, options) { CallBase = true };
@@ -4652,7 +4817,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var validPartitions = new[] { "5", "8", "11", "frank" };
             var publishCount = 0;
             var expectedPublishCount = validPartitions.Length * eventsPerPartition;
-            var completionSource = new TaskCompletionSource<bool>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var options = new EventHubBufferedProducerClientOptions { MaximumConcurrentSends = validPartitions.Length, MaximumConcurrentSendsPerPartition = 1 };
             var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
             var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>(mockProducer.Object, options) { CallBase = true };
@@ -4737,7 +4902,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var concurentSends = (int)Math.Floor(validPartitions.Length / 2.0);
             var publishCount = 0;
             var expectedPublishCount = validPartitions.Length * eventsPerPartition;
-            var completionSource = new TaskCompletionSource<bool>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var options = new EventHubBufferedProducerClientOptions { MaximumConcurrentSends = concurentSends, MaximumConcurrentSendsPerPartition = 1 };
             var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
             var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>(mockProducer.Object, options) { CallBase = true };
@@ -4823,7 +4988,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var concurentSends = (validPartitions.Length * concurrentSendsPerPartition);
             var publishCount = 0;
             var expectedPublishCount = validPartitions.Length * eventsPerPartition;
-            var completionSource = new TaskCompletionSource<bool>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var options = new EventHubBufferedProducerClientOptions { MaximumConcurrentSends = concurentSends, MaximumConcurrentSendsPerPartition = concurrentSendsPerPartition };
             var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
             var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>(mockProducer.Object, options) { CallBase = true };
@@ -4907,8 +5072,8 @@ namespace Azure.Messaging.EventHubs.Tests
             var startCount = 0;
             var finishCount = 0;
             var validPartitions = new[] { "5", "8", "11", "frank" };
-            var startedCompletionSource = new TaskCompletionSource<bool>();
-            var finishedCompletionSource = new TaskCompletionSource<bool>();
+            var startedCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var finishedCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var options = new EventHubBufferedProducerClientOptions { MaximumConcurrentSends = validPartitions.Length, MaximumConcurrentSendsPerPartition = 1 };
             var mockLogger = new Mock<EventHubsEventSource>();
             var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
@@ -4969,7 +5134,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 // Start publishing and validate that publishing does not complete right away.
 
                 await InvokeStartPublishingAsync(mockBufferedProducer.Object, cancellationSource.Token);
-                await startedCompletionSource.Task;
+                await startedCompletionSource.Task.AwaitWithCancellation(cancellationSource.Token);;
                 await Task.Delay(500);
 
                 Assert.That(executionLimitCancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested for the test time limit.");
@@ -5022,7 +5187,7 @@ namespace Azure.Messaging.EventHubs.Tests
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var expectedPartition = "0";
-            var completionSource = new TaskCompletionSource<bool>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var options = new EventHubBufferedProducerClientOptions { MaximumWaitTime = null };
             var publishingState = new EventHubBufferedProducerClient.PartitionPublishingState(expectedPartition, options);
             var mockLogger = new Mock<EventHubsEventSource>();
@@ -5085,8 +5250,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var expectedPartition = "0";
             var expectedException = new DivideByZeroException("Boom!");
-            var startCompletionSource = new TaskCompletionSource<bool>();
-            var publishCompletionSource = new TaskCompletionSource<bool>();
+            var startCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var publishCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var options = new EventHubBufferedProducerClientOptions { MaximumWaitTime = null };
             var publishingState = new EventHubBufferedProducerClient.PartitionPublishingState(expectedPartition, options);
             var mockLogger = new Mock<EventHubsEventSource>();
@@ -5124,7 +5289,7 @@ namespace Azure.Messaging.EventHubs.Tests
             finally
             {
                 await InvokeStopPublishingAsync(mockBufferedProducer.Object, cancellationSource.Token).IgnoreExceptions();
-                //await publishCompletionSource.Task.AwaitWithCancellation(cancellationSource.Token);
+                await publishCompletionSource.Task.AwaitWithCancellation(cancellationSource.Token);
             }
 
             mockLogger
@@ -5150,8 +5315,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var expectedPartition = "4";
             var expectedEvents = EventGenerator.CreateSmallEvents(10).ToList();
             var publishedEvents = new List<EventData>();
-            var activeHandlers = new ConcurrentBag<Task>();
-            var completionSource = new TaskCompletionSource<bool>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var options = new EventHubBufferedProducerClientOptions();
             var partitionState = new EventHubBufferedProducerClient.PartitionPublishingState(expectedPartition, options);            var mockLogger = new Mock<EventHubsEventSource>();
             var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
@@ -5184,7 +5348,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Drain and verify.
 
-            await mockBufferedProducer.Object.DrainAndPublishPartitionEvents(partitionState, null, activeHandlers, cancellationSource.Token);
+            await mockBufferedProducer.Object.DrainAndPublishPartitionEvents(partitionState, null, cancellationSource.Token);
             await completionSource.Task;
 
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
@@ -5224,8 +5388,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var handlerCallCount = 0;
             var batchEvents = new List<EventData>();
             var publishedEvents = new List<EventData>();
-            var activeHandlers = new ConcurrentBag<Task>();
-            var completionSource = new TaskCompletionSource<bool>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var options = new EventHubBufferedProducerClientOptions();
             var partitionState = new EventHubBufferedProducerClient.PartitionPublishingState(expectedPartition, options);
             var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
@@ -5274,7 +5437,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Drain and verify.
 
-            await mockBufferedProducer.Object.DrainAndPublishPartitionEvents(partitionState, null, activeHandlers, cancellationSource.Token);
+            await mockBufferedProducer.Object.DrainAndPublishPartitionEvents(partitionState, null, cancellationSource.Token);
             await completionSource.Task;
 
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
@@ -5328,7 +5491,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Drain and verify.
 
-            await mockBufferedProducer.Object.DrainAndPublishPartitionEvents(partitionState, null, new ConcurrentBag<Task>(), cancellationSource.Token);
+            await mockBufferedProducer.Object.DrainAndPublishPartitionEvents(partitionState, null, cancellationSource.Token);
 
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
             Assert.That(partitionState.BufferedEventCount, Is.EqualTo(0), "The partition state should have been drained, but has a count.");
@@ -5349,8 +5512,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var expectedException = new AccessViolationException("My access has been violated.");
             var expectedEvents = EventGenerator.CreateSmallEvents(10).ToList();
             var capturedFailArgs = default(SendEventBatchFailedEventArgs);
-            var activeHandlers = new ConcurrentBag<Task>();
-            var completionSource = new TaskCompletionSource<bool>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var options = new EventHubBufferedProducerClientOptions();
             var partitionState = new EventHubBufferedProducerClient.PartitionPublishingState(expectedPartition, options);
             var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
@@ -5381,7 +5543,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Drain and verify.
 
-            await mockBufferedProducer.Object.DrainAndPublishPartitionEvents(partitionState, null, activeHandlers, cancellationSource.Token);
+            await mockBufferedProducer.Object.DrainAndPublishPartitionEvents(partitionState, null, cancellationSource.Token);
             await completionSource.Task;
 
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
@@ -5417,8 +5579,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var expectedPartition = "4";
             var expectedEvent = EventGenerator.CreateSmallEvents(1).First();
             var capturedFailArgs = default(SendEventBatchFailedEventArgs);
-            var activeHandlers = new ConcurrentBag<Task>();
-            var completionSource = new TaskCompletionSource<bool>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var options = new EventHubBufferedProducerClientOptions();
             var partitionState = new EventHubBufferedProducerClient.PartitionPublishingState(expectedPartition, options);
             var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
@@ -5446,7 +5607,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Drain and verify.
 
-            await mockBufferedProducer.Object.DrainAndPublishPartitionEvents(partitionState, null, activeHandlers, cancellationSource.Token);
+            await mockBufferedProducer.Object.DrainAndPublishPartitionEvents(partitionState, null, cancellationSource.Token);
             await completionSource.Task;
 
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
@@ -5476,7 +5637,6 @@ namespace Azure.Messaging.EventHubs.Tests
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var expectedPartition = "4";
-            var activeHandlers = new ConcurrentBag<Task>();
             var options = new EventHubBufferedProducerClientOptions();
             var partitionState = new EventHubBufferedProducerClient.PartitionPublishingState(expectedPartition, options);
             var mockLogger = new Mock<EventHubsEventSource>();
@@ -5495,7 +5655,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Drain and verify.
 
-            await mockBufferedProducer.Object.DrainAndPublishPartitionEvents(partitionState, null, activeHandlers, cancellationSource.Token);
+            await mockBufferedProducer.Object.DrainAndPublishPartitionEvents(partitionState, null, cancellationSource.Token);
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
 
             mockLogger
@@ -5527,7 +5687,6 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var expectedPartition = "4";
             var expectedException = new DivideByZeroException("You have just created a black hole.");
-            var activeHandlers = new ConcurrentBag<Task>();
             var options = new EventHubBufferedProducerClientOptions();
             var partitionState = new EventHubBufferedProducerClient.PartitionPublishingState(expectedPartition, options);
             var mockLogger = new Mock<EventHubsEventSource>();
@@ -5542,7 +5701,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Drain and verify.
 
-            await mockBufferedProducer.Object.DrainAndPublishPartitionEvents(partitionState, null, activeHandlers, cancellationSource.Token);
+            await mockBufferedProducer.Object.DrainAndPublishPartitionEvents(partitionState, null, cancellationSource.Token);
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
 
             mockLogger
@@ -5568,7 +5727,6 @@ namespace Azure.Messaging.EventHubs.Tests
             var publishedEventsCount = 0;
             var expectedPartition = "4";
             var expectedEvents = EventGenerator.CreateSmallEvents(10).ToList();
-            var activeHandlers = new ConcurrentBag<Task>();
             var options = new EventHubBufferedProducerClientOptions { MaximumWaitTime = TimeSpan.FromMilliseconds(150) };
             var partitionState = new EventHubBufferedProducerClient.PartitionPublishingState(expectedPartition, options);
             var mockLogger = new Mock<EventHubsEventSource>();
@@ -5596,7 +5754,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Drain and verify.
 
-            await mockBufferedProducer.Object.DrainAndPublishPartitionEvents(partitionState, null, activeHandlers, cancellationSource.Token);
+            await mockBufferedProducer.Object.DrainAndPublishPartitionEvents(partitionState, null, cancellationSource.Token);
 
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
             Assert.That(publishedEventsCount, Is.EqualTo(expectedEvents.Count), "The number of events published should match.");
@@ -5660,6 +5818,17 @@ namespace Azure.Messaging.EventHubs.Tests
             (Task)
                 typeof(EventHubBufferedProducerClient)
                     .GetField("_publishingTask", BindingFlags.Instance | BindingFlags.NonPublic)
+                    .GetValue(client);
+
+        /// <summary>
+        ///   Sets the non-public set of active publishing event handler invocations on the specified
+        ///   client instance using its private field.
+        /// </summary>
+        ///
+        private ConcurrentDictionary<Task, byte> GetActivePublishingHandlers(EventHubBufferedProducerClient client) =>
+            (ConcurrentDictionary<Task, byte>)
+                typeof(EventHubBufferedProducerClient)
+                    .GetField("_activePublishingHandlers", BindingFlags.Instance | BindingFlags.NonPublic)
                     .GetValue(client);
 
         /// <summary>

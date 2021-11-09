@@ -73,6 +73,7 @@ namespace Azure.Storage.DataMovement.Blobs
             _options = options;
             //ProgressTracker = progressTracker;
             CancellationToken = cancellationToken;
+            internalString = "hello";
         }
 
         /// <summary>

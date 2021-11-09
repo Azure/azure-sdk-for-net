@@ -350,6 +350,41 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_10_02)]
+        [NonParallelizable]
+        public async Task ListContainersSegmentAsync_System()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobServiceProperties properties = await service.GetPropertiesAsync();
+            BlobStaticWebsite originalBlobStaticWebsite = properties.StaticWebsite;
+
+            string errorDocument404Path = "error/404.html";
+            string defaultIndexDocumentPath = "index.html";
+
+            properties.StaticWebsite = new BlobStaticWebsite
+            {
+                Enabled = true,
+                ErrorDocument404Path = errorDocument404Path,
+                DefaultIndexDocumentPath = defaultIndexDocumentPath
+            };
+
+            await service.SetPropertiesAsync(properties);
+
+            // Act
+            IList<BlobContainerItem> containers = await service.GetBlobContainersAsync(states: BlobContainerStates.System).ToListAsync();
+            BlobContainerItem logsBlobContainerItem = containers.Where(r => r.Name == "$web").FirstOrDefault();
+
+            // Assert
+            Assert.IsTrue(containers.Count > 0);
+            Assert.IsNotNull(logsBlobContainerItem);
+
+            // Cleanup
+            properties.StaticWebsite = originalBlobStaticWebsite;
+            await service.SetPropertiesAsync(properties);
+        }
+
+        [RecordedTest]
         [AsyncOnly]
         public async Task ListContainersSegmentAsync_Error()
         {

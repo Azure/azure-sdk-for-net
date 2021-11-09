@@ -25,6 +25,16 @@ namespace Azure.Storage.DataMovement
     public class StorageTransferManager
     {
         /// <summary>
+        /// TransferItemScheduler
+        /// </summary>
+        private TransferItemScheduler _scheduler;
+
+        /// <summary>
+        /// TransferItemScheduler
+        /// </summary>
+        protected internal TransferItemScheduler Scheduler => _scheduler;
+
+        /// <summary>
         /// To hold the jobs to scan
         /// This is a weird thing to have because we have regular Blob Directory Upload / Download which will
         /// also call the scanner on it's own. Something to think about is whehter or not doing scanning in a separate
@@ -92,10 +102,7 @@ namespace Azure.Storage.DataMovement
         /// <param name="jobId"></param>
         /// <returns></returns>
        public virtual StorageTransferJob GetJob(string jobId)
-        {
-            //stub
-            return new StorageTransferJob(Guid.NewGuid().ToString());
-        }
+       =>new StorageTransferJob(Guid.NewGuid().ToString());
 
         /// <summary>
         /// Pauses transfers that are currently being processed.

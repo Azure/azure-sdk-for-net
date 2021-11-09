@@ -561,27 +561,6 @@ namespace Azure.Storage.Blobs
             new BlobLeaseClient(this, leaseId);
 
         /// <summary>
-        /// Create a new <see cref="BlobVirtualDirectoryClient"/> object by appending
-        /// <paramref name="path"/> to the end of <see cref="Uri"/>.  The
-        /// new <see cref="BlobVirtualDirectoryClient"/> uses the same request policy
-        /// pipeline as the <see cref="BlobContainerClient"/>.
-        /// </summary>
-        /// <param name="path">The name of the blob.</param>
-        /// <returns>A new <see cref="BlobClient"/> instance.</returns>
-        protected internal BlobVirtualDirectoryClient GetBlobVirtualDirectoryClientCore(string path)
-        {
-            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri)
-            {
-                BlobName = path
-            };
-
-            return new BlobVirtualDirectoryClient(
-                blobUriBuilder.ToUri(),
-                ClientConfiguration,
-                ClientSideEncryption);
-        }
-
-        /// <summary>
         /// Sets the various name fields if they are currently null.
         /// </summary>
         private void SetNameFieldsIfNull()

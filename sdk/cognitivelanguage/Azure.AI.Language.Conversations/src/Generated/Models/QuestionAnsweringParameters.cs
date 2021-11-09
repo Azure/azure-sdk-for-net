@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations
 {
     /// <summary> This is a set of request parameters for Question Answering knowledge bases. </summary>
     public partial class QuestionAnsweringParameters : AnalysisParameters

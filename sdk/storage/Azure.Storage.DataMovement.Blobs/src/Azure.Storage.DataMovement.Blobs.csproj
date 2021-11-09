@@ -5,7 +5,7 @@
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure.Storage.DataMovement client library</AssemblyTitle>
     <Version>12.0.0-preview.1</Version>
-    <DefineConstants>CommonSDK;$(DefineConstants)</DefineConstants>
+    <DefineConstants>BlobDataMovementSDK;$(DefineConstants)</DefineConstants>
     <PackageTags>Microsoft Azure Storage Common DataMovement, Microsoft, Azure, StorageScalable, azureofficial</PackageTags>
     <Description>
       This client library enables working with the Microsoft Azure Storage services which include the blob and file services for storing binary and text data, and the queue service for storing messages that may be accessed by a client.
@@ -66,8 +66,5 @@
     <Compile Include="$(AzureStorageSharedSources)LazyLoadingReadOnlyStream.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)WindowStream.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StorageWriteStream.cs" LinkBase="Shared" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="$(AzureStorageSharedSources)Constants.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
   </ItemGroup>
 </Project>

@@ -17,6 +17,7 @@ namespace Azure.Storage.Files.DataLake
             V2020_08_04 = 7,
             V2020_10_02 = 8,
             V2020_12_06 = 9,
+            V2021_02_12 = 10,
         }
     }
     public partial class DataLakeDirectoryClient : Azure.Storage.Files.DataLake.DataLakePathClient
@@ -747,6 +748,7 @@ namespace Azure.Storage.Files.DataLake.Models
     {
         None = 0,
         Deleted = 1,
+        System = 2,
     }
     [System.FlagsAttribute]
     public enum FileSystemTraits
