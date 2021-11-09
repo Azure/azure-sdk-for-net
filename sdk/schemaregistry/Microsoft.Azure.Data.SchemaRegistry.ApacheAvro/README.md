@@ -79,23 +79,6 @@ Details on generating a class using the Apache Avro library can be found in the 
 ### Encode and decode data using the Event Hub EventData model
 
 
-```C# Snippet:SchemaRegistryAvroEncodeEventData
-var employee = new Employee { Age = 42, Name = "John Doe" };
-var encoder = new SchemaRegistryAvroEncoder(schemaRegistryClient, groupName, new SchemaRegistryAvroObjectEncoderOptions { AutoRegisterSchemas = true });
-var eventData = new EventData();
-
-encoder.EncodeMessageData(eventData, employee, typeof(Employee));
-
-// the schema Id will be included as a parameter of the content type
-Console.WriteLine(eventData.ContentType);
-
-// the serialized Avro data will be stored in the EventBody
-Console.WriteLine(eventData.EventBody);
-
-// We can also get the Employee model back out from the serialized data
-employee = (Employee) encoder.DecodeMessageData(eventData, typeof(Employee));
-```
-
 ## Troubleshooting
 
 Information on troubleshooting steps will be provided as potential issues are discovered.
