@@ -39,11 +39,16 @@ namespace Azure.Storage.Test.Shared
         /// </summary>
         public abstract AccessConditionConfigs Conditions { get; }
 
+        /// <summary>
+        /// Error code expected from the service when attempted to open read on a nonexistent blob.
+        /// </summary>
+        protected abstract string OpenReadAsync_Error_Code { get; }
+
         public OpenReadTestBase(
             bool async,
             string generatedResourceNamePrefix = default,
             RecordedTestMode? mode = null)
-            : base(async, mode)
+            : base(async, RecordedTestMode.Playback)
         {
             _generatedResourceNamePrefix = generatedResourceNamePrefix ?? "test-resource-";
         }
@@ -198,11 +203,11 @@ namespace Azure.Storage.Test.Shared
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 OpenReadAsync(client),
-                e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
+                e => Assert.AreEqual(OpenReadAsync_Error_Code, e.ErrorCode));
         }
 
         [RecordedTest]
-        public async Task OpenReadAsync_AccessConditions()
+        public virtual async Task OpenReadAsync_AccessConditions()
         {
             // Arrange
             int size = Constants.KB;
@@ -239,7 +244,7 @@ namespace Azure.Storage.Test.Shared
         }
 
         [RecordedTest]
-        public async Task OpenReadAsync_AccessConditionsFail()
+        public virtual async Task OpenReadAsync_AccessConditionsFail()
         {
             // Arrange
             int size = Constants.KB;
@@ -302,7 +307,7 @@ namespace Azure.Storage.Test.Shared
         }
 
         [RecordedTest]
-        public async Task OpenReadAsync_Modified()
+        public virtual async Task OpenReadAsync_Modified()
         {
             int size = Constants.KB;
             int bufferSize = size / 2;
@@ -321,10 +326,18 @@ namespace Azure.Storage.Test.Shared
             // Modify the blob.
             await ModifyDataAsync(client, new MemoryStream(GetRandomBuffer(size)), ModifyDataMode.Replace);
 
-            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                outputStream.ReadAsync(outputBytes, size / 2, size / 2),
-                e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
+            // Assert
+            await AssertExpectedExceptionOpenReadModifiedAsync(outputStream.ReadAsync(outputBytes, size / 2, size / 2));
         }
+
+        /// <summary>
+        /// For the test <see cref="OpenReadAsync_Modified"/>, different services surface different exception types
+        /// and we check fields in that exception to ensure they are as expected. This method allows service-specific
+        /// subclasses to specify how they check this expected error.
+        /// </summary>
+        /// <param name="readTask">Task to asynchronously read from the stream.</param>
+        /// <returns></returns>
+        public abstract Task AssertExpectedExceptionOpenReadModifiedAsync(Task readTask);
 
         [RecordedTest]
         public async Task OpenReadAsync_ModifiedAllowBlobModifications()
@@ -489,7 +502,7 @@ namespace Azure.Storage.Test.Shared
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task OpenReadAsync_Seek_NewPositionGreaterThanBlobLength(bool allowModifications)
+        public async Task OpenReadAsync_Seek_NewPositionGreaterThanResourceLength(bool allowModifications)
         {
             int size = Constants.KB;
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();

@@ -10,7 +10,9 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
+using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Tests
 {
@@ -42,6 +44,8 @@ namespace Azure.Storage.Blobs.Tests
 
         /// <inheritdoc/>
         public override AccessConditionConfigs Conditions => BlobConditions;
+
+        protected override string OpenReadAsync_Error_Code => "BlobNotFound";
 
         public BlobBaseClientOpenReadTests(
             bool async,
@@ -90,6 +94,11 @@ namespace Azure.Storage.Blobs.Tests
                 Position = position,
                 Conditions = conditions
             });
+
+        public override async Task AssertExpectedExceptionOpenReadModifiedAsync(Task readTask)
+            => await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                readTask,
+                e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
         #endregion
     }
 }
