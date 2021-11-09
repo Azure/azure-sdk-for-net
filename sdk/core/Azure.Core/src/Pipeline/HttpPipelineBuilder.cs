@@ -34,6 +34,9 @@ namespace Azure.Core.Pipeline
         /// <returns>A new instance of <see cref="HttpPipeline"/></returns>
         public static HttpPipeline Build(ClientOptions options, HttpPipelinePolicy[] perCallPolicies, HttpPipelinePolicy[] perRetryPolicies, ResponseClassifier responseClassifier)
         {
+            int perCallIndex;
+            int perRetryIndex;
+
             if (perCallPolicies == null)
             {
                 throw new ArgumentNullException(nameof(perCallPolicies));
@@ -75,6 +78,9 @@ namespace Azure.Core.Pipeline
 
             AddCustomerPolicies(HttpPipelinePosition.PerCall);
 
+            policies.RemoveAll(static policy => policy == null);
+            perCallIndex = policies.Count;
+
             policies.Add(ClientRequestIdPolicy.Shared);
 
             if (diagnostics.IsTelemetryEnabled)
@@ -90,6 +96,9 @@ namespace Azure.Core.Pipeline
             policies.AddRange(perRetryPolicies);
 
             AddCustomerPolicies(HttpPipelinePosition.PerRetry);
+
+            policies.RemoveAll(static policy => policy == null);
+            perRetryIndex = policies.Count;
 
             if (diagnostics.IsLoggingEnabled)
             {
@@ -107,6 +116,8 @@ namespace Azure.Core.Pipeline
             policies.RemoveAll(static policy => policy == null);
 
             return new HttpPipeline(options.Transport,
+                perCallIndex,
+                perRetryIndex,
                 policies.ToArray(),
                 responseClassifier);
         }

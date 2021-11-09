@@ -11,18 +11,14 @@ namespace Azure.Core.Experimental
     {
         public static async ValueTask<Response> ProcessMessageAsync(this HttpPipeline pipeline, HttpMessage message, ClientDiagnostics clientDiagnostics, RequestContext? requestContext, CancellationToken cancellationToken = default)
         {
-            ErrorOptions errorOptions = ErrorOptions.Default;
-            CancellationToken operationCancellationToken = CancellationToken.None;
-
-            if (requestContext != null)
-            {
-                errorOptions = requestContext.ErrorOptions;
-                operationCancellationToken = MergeCancellationTokens(requestContext, cancellationToken);
-            }
+            // Note: this is thinking about how this could be refactored.
+            requestContext ??= new RequestContext();
+            CancellationToken operationCancellationToken = MergeCancellationTokens(requestContext, cancellationToken);
+            message.Apply(requestContext);
 
             await pipeline.SendAsync(message, operationCancellationToken).ConfigureAwait(false);
 
-            if (errorOptions == ErrorOptions.NoThrow || !message.ResponseClassifier.IsErrorResponse(message))
+            if (requestContext.ErrorOptions == ErrorOptions.NoThrow || !message.ResponseClassifier.IsErrorResponse(message))
             {
                 return message.Response;
             }
@@ -55,6 +51,7 @@ namespace Azure.Core.Experimental
         {
             if (context.CancellationToken.CanBeCanceled && cancellationToken.CanBeCanceled)
             {
+                // TODO: This is disposed when the method returns -- solve this.
                 using var cts = CancellationTokenSource.CreateLinkedTokenSource(context.CancellationToken, cancellationToken);
                 return cts.Token;
             }

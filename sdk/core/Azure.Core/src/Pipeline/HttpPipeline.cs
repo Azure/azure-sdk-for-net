@@ -19,6 +19,10 @@ namespace Azure.Core.Pipeline
 
         private readonly ReadOnlyMemory<HttpPipelinePolicy> _pipeline;
 
+        private readonly int _perCallIndex;
+        private readonly int _perRetryIndex;
+        private readonly int _transportIndex;
+
         /// <summary>
         /// Creates a new instance of <see cref="HttpPipeline"/> with the provided transport, policies and response classifier.
         /// </summary>
@@ -36,7 +40,15 @@ namespace Azure.Core.Pipeline
             all[policies.Length] = new HttpPipelineTransportPolicy(_transport);
             policies.CopyTo(all, 0);
 
+            _transportIndex = policies.Length;
+
             _pipeline = all;
+        }
+
+        internal HttpPipeline(HttpPipelineTransport transport, int perCallIndex, int perRetryIndex, HttpPipelinePolicy[]? policies = null, ResponseClassifier? responseClassifier = null) : this(transport, policies, responseClassifier)
+        {
+            _perCallIndex = perCallIndex;
+            _perRetryIndex = perRetryIndex;
         }
 
         /// <summary>
@@ -70,7 +82,8 @@ namespace Azure.Core.Pipeline
         {
             message.CancellationToken = cancellationToken;
             AddHttpMessageProperties(message);
-            return _pipeline.Span[0].ProcessAsync(message, _pipeline.Slice(1));
+            var pipeline = message.CustomizedPipeline ?? _pipeline;
+            return pipeline.Span[0].ProcessAsync(message, pipeline.Slice(1));
         }
 
         /// <summary>
@@ -82,8 +95,37 @@ namespace Azure.Core.Pipeline
         {
             message.CancellationToken = cancellationToken;
             AddHttpMessageProperties(message);
-            _pipeline.Span[0].Process(message, _pipeline.Slice(1));
+            var pipeline = message.CustomizedPipeline ?? _pipeline;
+            pipeline.Span[0].Process(message, pipeline.Slice(1));
         }
+
+        ///// <summary>
+        ///// Invokes the pipeline asynchronously. After the task completes response would be set to the <see cref="HttpMessage.Response"/> property.
+        ///// </summary>
+        ///// <param name="message">The <see cref="HttpMessage"/> to send.</param>
+        ///// <param name="pipeline"></param>
+        ///// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
+        ///// <returns>The <see cref="ValueTask"/> representing the asynchronous operation.</returns>
+        //public static ValueTask SendAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, CancellationToken cancellationToken)
+        //{
+        //    message.CancellationToken = cancellationToken;
+        //    AddHttpMessageProperties(message);
+        //    return pipeline.Span[0].ProcessAsync(message, pipeline.Slice(1));
+        //}
+
+        ///// <summary>
+        ///// Invokes the pipeline synchronously. After the task completes response would be set to the <see cref="HttpMessage.Response"/> property.
+        ///// </summary>
+        ///// <param name="message">The <see cref="HttpMessage"/> to send.</param>
+        ///// <param name="pipeline"></param>
+        ///// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
+        //public static void Send(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, CancellationToken cancellationToken)
+        //{
+        //    message.CancellationToken = cancellationToken;
+        //    AddHttpMessageProperties(message);
+        //    pipeline.Span[0].Process(message, pipeline.Slice(1));
+        //}
+
         /// <summary>
         /// Invokes the pipeline asynchronously with the provided request.
         /// </summary>
@@ -142,6 +184,29 @@ namespace Azure.Core.Pipeline
             Argument.AssertNotNull(messageProperties, nameof(messageProperties));
             CurrentHttpMessagePropertiesScope.Value = new HttpMessagePropertiesScope(messageProperties, CurrentHttpMessagePropertiesScope.Value);
             return CurrentHttpMessagePropertiesScope.Value;
+        }
+
+        internal ReadOnlyMemory<HttpPipelinePolicy> GetCustomizedPipeline(RequestContext context)
+        {
+            int length = _pipeline.Length + context.PolicyCount;
+
+            var policies = new HttpPipelinePolicy[length];
+
+            _pipeline.Slice(0, _perCallIndex).CopyTo(policies);
+
+            int customCount = context.AppendPolicies(policies, HttpPipelinePosition.PerCall, policies.Length);
+            int sectionCount = _perRetryIndex - _perCallIndex;
+            _pipeline.Slice(_perCallIndex, sectionCount).CopyTo(new Memory<HttpPipelinePolicy>(policies, policies.Length, sectionCount));
+
+            customCount += context.AppendPolicies(policies, HttpPipelinePosition.PerRetry, policies.Length);
+            sectionCount = _transportIndex - _perRetryIndex;
+            _pipeline.Slice(_perRetryIndex, sectionCount).CopyTo(new Memory<HttpPipelinePolicy>(policies, policies.Length, sectionCount));
+
+            customCount += context.AppendPolicies(policies, HttpPipelinePosition.BeforeTransport, policies.Length);
+            sectionCount = _pipeline.Length - _transportIndex;
+            _pipeline.Slice(_transportIndex, sectionCount).CopyTo(new Memory<HttpPipelinePolicy>(policies, policies.Length, sectionCount));
+
+            return new ReadOnlyMemory<HttpPipelinePolicy>(policies);
         }
 
         private static void AddHttpMessageProperties(HttpMessage message)

@@ -123,6 +123,16 @@ namespace Azure.Core
             }
         }
 
+        public void Apply(RequestContext context)
+        {
+            if (context.PolicyCount > 0)
+            {
+                CustomizedPipeline =  // Do we want this on this type?  It would be like ResponseClassifier
+            }
+        }
+
+        internal ReadOnlyMemory<HttpPipelinePolicy>? CustomizedPipeline { get; private set; }
+
         /// <summary>
         /// Disposes the request and response.
         /// </summary>

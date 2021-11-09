@@ -18,6 +18,8 @@ namespace Azure
         private readonly List<HttpPipelinePolicy> _perCallPolicies = new();
         private readonly List<HttpPipelinePolicy> _beforeTrasportPolicies = new();
 
+        internal int PolicyCount => _perRetryPolicies.Count + _perCallPolicies.Count + _beforeTrasportPolicies.Count;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="RequestContext"/> class.
         /// </summary>
@@ -51,16 +53,38 @@ namespace Azure
             {
                 case HttpPipelinePosition.PerCall:
                     _perCallPolicies.Add(policy);
+                    HasPolicies = true;
                     break;
                 case HttpPipelinePosition.PerRetry:
                     _perRetryPolicies.Add(policy);
+                    HasPolicies = true;
                     break;
                 case HttpPipelinePosition.BeforeTransport:
                     _beforeTrasportPolicies.Add(policy);
+                    HasPolicies = true;
                     break;
                 default:
                     break;
             }
+        }
+
+        internal int AppendPolicies(HttpPipelinePolicy[] target, HttpPipelinePosition position, int start)
+        {
+            var source = position switch
+            {
+                HttpPipelinePosition.PerCall => _perCallPolicies,
+                HttpPipelinePosition.PerRetry => _perRetryPolicies,
+                HttpPipelinePosition.BeforeTransport => _beforeTrasportPolicies,
+                _ => throw new NotSupportedException("Unexpected 'position' value.")
+            };
+
+            int i = 0;
+            foreach (var policy in source)
+            {
+                target[start + i++] = policy;
+            }
+
+            return i;
         }
     }
 }
