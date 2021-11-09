@@ -57,16 +57,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         public WebPubSubFunctionsOptions() { }
         public string ConnectionString { get { throw null; } set { } }
         public string Hub { get { throw null; } set { } }
-        public string Format() { throw null; }
+        string Microsoft.Azure.WebJobs.Hosting.IOptionsFormatter.Format() { throw null; }
     }
     public static partial class WebPubSubJobsBuilderExtensions
     {
         public static Microsoft.Azure.WebJobs.IWebJobsBuilder AddWebPubSub(this Microsoft.Azure.WebJobs.IWebJobsBuilder builder) { throw null; }
-    }
-    public enum WebPubSubPermission
-    {
-        SendToGroup = 1,
-        JoinLeaveGroup = 2,
     }
     [Microsoft.Azure.WebJobs.Description.BindingAttribute(TriggerHandlesReturnValue=true)]
     [System.AttributeUsageAttribute(System.AttributeTargets.Parameter)]
@@ -128,7 +123,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Operations
     {
         public GrantPermission() { }
         public string ConnectionId { get { throw null; } set { } }
-        public Microsoft.Azure.WebJobs.Extensions.WebPubSub.WebPubSubPermission Permission { get { throw null; } set { } }
+        public Azure.Messaging.WebPubSub.WebPubSubPermission Permission { get { throw null; } set { } }
         public string TargetName { get { throw null; } set { } }
     }
     [Newtonsoft.Json.JsonObjectAttribute(NamingStrategyType=typeof(Newtonsoft.Json.Serialization.CamelCaseNamingStrategy))]
@@ -156,7 +151,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Operations
     {
         public RevokePermission() { }
         public string ConnectionId { get { throw null; } set { } }
-        public Microsoft.Azure.WebJobs.Extensions.WebPubSub.WebPubSubPermission Permission { get { throw null; } set { } }
+        public Azure.Messaging.WebPubSub.WebPubSubPermission Permission { get { throw null; } set { } }
         public string TargetName { get { throw null; } set { } }
     }
     [Newtonsoft.Json.JsonObjectAttribute(NamingStrategyType=typeof(Newtonsoft.Json.Serialization.CamelCaseNamingStrategy))]
@@ -196,6 +191,5 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Operations
     public abstract partial class WebPubSubOperation
     {
         protected WebPubSubOperation() { }
-        public string OperationKind { get { throw null; } }
     }
 }

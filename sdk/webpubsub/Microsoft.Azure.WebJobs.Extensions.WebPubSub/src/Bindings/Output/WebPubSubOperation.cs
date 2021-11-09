@@ -12,16 +12,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Operations
     [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
     public abstract class WebPubSubOperation
     {
-        /// <summary>
-        /// Name of the opeartion. Used in js to identify the operation.
-        /// </summary>
-        public string OperationKind
+        internal string OperationKind
         {
             get
             {
                 return GetType().Name;
             }
-            internal set
+            set
             {
                 // used in type-less for deserialize.
                 _ = value;
