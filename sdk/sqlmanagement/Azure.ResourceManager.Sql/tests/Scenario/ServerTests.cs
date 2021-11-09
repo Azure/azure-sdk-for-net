@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             ServerData data = new ServerData(Location.WestUS2)
             {
                 AdministratorLogin = "Admin-" + serverName,
-                AdministratorLoginPassword = "Xx123456123456*",
+                AdministratorLoginPassword = CreateGeneralPassword(),
             };
             var server = await _resourceGroup.GetServers().CreateOrUpdateAsync(serverName, data);
             return server.Value;

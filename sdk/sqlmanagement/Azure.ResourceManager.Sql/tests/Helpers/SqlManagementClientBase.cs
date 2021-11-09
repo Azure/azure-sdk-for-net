@@ -108,12 +108,5 @@ namespace Azure.ResourceManager.Sql.Tests
             var managedInstance = managedInstanceLro.Value;
             return managedInstance;
         }
-
-        //protected SqlManagementClient GetSqlManagementClient()
-        //{
-        //    return CreateClient<SqlManagementClient>(this.TestEnvironment.SubscriptionId,
-        //        TestEnvironment.Credential,
-        //        InstrumentClientOptions(new SqlManagementClientOptions()));
-        //}
     }
 }

@@ -40,23 +40,60 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             _resourceGroup = await client.GetResourceGroup(_resourceGroupIdentifier).GetAsync();
         }
 
-        private async Task<InstanceFailoverGroup> CreateInstanceFailoverGroup(string locationName,string instanceFailoverGroupName)
+        private async Task<InstanceFailoverGroup> CreateInstanceFailoverGroup(string locationName, string instanceFailoverGroupName)
         {
+            // create PrimaryManagedInstance
+            string primaryManagedInstanceName = Recording.GenerateAssetName("managed-instance-primary-");
+            var primaryManagedInstance = await CreateDefaultManagedInstance(primaryManagedInstanceName, _resourceGroup);
+
+            // create PartnerManagedInstance
+            string partnerManagedInstanceName = Recording.GenerateAssetName("managed-instance-primary-");
+            var partnerManagedInstance = await CreateDefaultManagedInstance(partnerManagedInstanceName, _resourceGroup);
+
+            InstanceFailoverGroupReadWriteEndpoint instanceFailoverGroupReadWriteEndpoint = new InstanceFailoverGroupReadWriteEndpoint(ReadWriteEndpointFailoverPolicy.Automatic);
+            instanceFailoverGroupReadWriteEndpoint.FailoverWithDataLossGracePeriodMinutes = 60;
             InstanceFailoverGroupData data = new InstanceFailoverGroupData()
             {
-                ReadWriteEndpoint = new InstanceFailoverGroupReadWriteEndpoint(new ReadWriteEndpointFailoverPolicy()),
+                ReadWriteEndpoint = instanceFailoverGroupReadWriteEndpoint,
+                ManagedInstancePairs =
+                {
+                    new ManagedInstancePairInfo(primaryManagedInstance.Data.Id.ToString(),partnerManagedInstance.Data.Id.ToString()),
+                },
             };
             var instanceFailoverGroupLro = await _resourceGroup.GetInstanceFailoverGroups().CreateOrUpdateAsync(locationName, instanceFailoverGroupName, data);
             return instanceFailoverGroupLro.Value;
         }
 
         [Test]
-        public async Task CheckIfExist()
+        [RecordedTest]
+        public async Task InstanceFailoverGroupApiTests()
         {
+            // 1.CreateOrUpdate
             string instanceFailoverGroupName = Recording.GenerateAssetName("InstanceFailoverGroup-");
             string locationName = Location.WestUS2.ToString();
-            await CreateInstanceFailoverGroup(locationName,instanceFailoverGroupName);
-            Assert.IsTrue(_resourceGroup.GetInstanceFailoverGroups().CheckIfExists(locationName,instanceFailoverGroupName));
+            var instanceFailoverGroup = await CreateInstanceFailoverGroup(locationName, instanceFailoverGroupName);
+            Assert.IsNotNull(instanceFailoverGroup.Data);
+            Assert.AreEqual(instanceFailoverGroupName,instanceFailoverGroup.Data.Name);
+
+            // 2.CheckIfExist
+            Assert.IsTrue(_resourceGroup.GetInstanceFailoverGroups().CheckIfExists(locationName, instanceFailoverGroupName));
+            Assert.IsTrue(_resourceGroup.GetInstanceFailoverGroups().CheckIfExists(locationName, instanceFailoverGroupName+"0"));
+
+            // 3.Get
+            var getInstanceFailoverGroup = await _resourceGroup.GetInstanceFailoverGroups().GetAsync(locationName, instanceFailoverGroupName);
+            Assert.IsNotNull(instanceFailoverGroup.Data);
+            Assert.AreEqual(instanceFailoverGroupName, instanceFailoverGroup.Data.Name);
+
+            // 4.GetAll
+            var list = await _resourceGroup.GetInstanceFailoverGroups().GetAllAsync(locationName).ToEnumerableAsync();
+            Assert.IsNotEmpty(list);
+            Assert.AreEqual(instanceFailoverGroupName, list.FirstOrDefault().Data.Name);
+
+            // 5.Delete
+            var deleteInstanceFailoverGroup =( await _resourceGroup.GetInstanceFailoverGroups().GetAsync(locationName, instanceFailoverGroupName)).Value;
+            await deleteInstanceFailoverGroup.DeleteAsync();
+            list = await _resourceGroup.GetInstanceFailoverGroups().GetAllAsync(locationName).ToEnumerableAsync();
+            Assert.IsEmpty(list);
         }
     }
 }
