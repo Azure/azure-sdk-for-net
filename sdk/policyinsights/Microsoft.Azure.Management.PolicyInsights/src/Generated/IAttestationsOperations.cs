@@ -19,15 +19,15 @@ namespace Microsoft.Azure.Management.PolicyInsights
     using System.Threading.Tasks;
 
     /// <summary>
-    /// PolicyEventsOperations operations.
+    /// AttestationsOperations operations.
     /// </summary>
-    public partial interface IPolicyEventsOperations
+    public partial interface IAttestationsOperations
     {
         /// <summary>
-        /// Queries policy events for the resources under the management group.
+        /// Gets all attestations for the subscription.
         /// </summary>
-        /// <param name='managementGroupName'>
-        /// Management group name.
+        /// <param name='subscriptionId'>
+        /// The ID of the target subscription.
         /// </param>
         /// <param name='queryOptions'>
         /// Additional parameters for the operation
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="QueryFailureException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -47,15 +47,18 @@ namespace Microsoft.Azure.Management.PolicyInsights
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<PolicyEvent>>> ListQueryResultsForManagementGroupWithHttpMessagesAsync(string managementGroupName, QueryOptions queryOptions = default(QueryOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<Attestation>>> ListForSubscriptionWithHttpMessagesAsync(string subscriptionId, QueryOptions queryOptions = default(QueryOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Queries policy events for the resources under the subscription.
+        /// Creates or updates an attestation at subscription scope.
         /// </summary>
         /// <param name='subscriptionId'>
-        /// Microsoft Azure subscription ID.
+        /// The ID of the target subscription.
         /// </param>
-        /// <param name='queryOptions'>
-        /// Additional parameters for the operation
+        /// <param name='attestationName'>
+        /// The name of the attestation.
+        /// </param>
+        /// <param name='parameters'>
+        /// The attestation parameters.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -63,7 +66,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="QueryFailureException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -72,15 +75,62 @@ namespace Microsoft.Azure.Management.PolicyInsights
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<PolicyEvent>>> ListQueryResultsForSubscriptionWithHttpMessagesAsync(string subscriptionId, QueryOptions queryOptions = default(QueryOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Attestation>> CreateOrUpdateAtSubscriptionWithHttpMessagesAsync(string subscriptionId, string attestationName, Attestation parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Queries policy events for the resources under the resource group.
+        /// Gets an existing attestation at subscription scope.
         /// </summary>
         /// <param name='subscriptionId'>
-        /// Microsoft Azure subscription ID.
+        /// The ID of the target subscription.
+        /// </param>
+        /// <param name='attestationName'>
+        /// The name of the attestation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<Attestation>> GetAtSubscriptionWithHttpMessagesAsync(string subscriptionId, string attestationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Deletes an existing attestation at subscription scope.
+        /// </summary>
+        /// <param name='subscriptionId'>
+        /// The ID of the target subscription.
+        /// </param>
+        /// <param name='attestationName'>
+        /// The name of the attestation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> DeleteAtSubscriptionWithHttpMessagesAsync(string subscriptionId, string attestationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets all attestations for the resource group.
+        /// </summary>
+        /// <param name='subscriptionId'>
+        /// The ID of the target subscription.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Resource group name.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='queryOptions'>
         /// Additional parameters for the operation
@@ -91,7 +141,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="QueryFailureException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -100,9 +150,93 @@ namespace Microsoft.Azure.Management.PolicyInsights
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<PolicyEvent>>> ListQueryResultsForResourceGroupWithHttpMessagesAsync(string subscriptionId, string resourceGroupName, QueryOptions queryOptions = default(QueryOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<Attestation>>> ListForResourceGroupWithHttpMessagesAsync(string subscriptionId, string resourceGroupName, QueryOptions queryOptions = default(QueryOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Queries policy events for the resource.
+        /// Creates or updates an attestation at resource group scope.
+        /// </summary>
+        /// <param name='subscriptionId'>
+        /// The ID of the target subscription.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='attestationName'>
+        /// The name of the attestation.
+        /// </param>
+        /// <param name='parameters'>
+        /// The attestation parameters.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<Attestation>> CreateOrUpdateAtResourceGroupWithHttpMessagesAsync(string subscriptionId, string resourceGroupName, string attestationName, Attestation parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets an existing attestation at resource group scope.
+        /// </summary>
+        /// <param name='subscriptionId'>
+        /// The ID of the target subscription.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='attestationName'>
+        /// The name of the attestation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<Attestation>> GetAtResourceGroupWithHttpMessagesAsync(string subscriptionId, string resourceGroupName, string attestationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Deletes an existing attestation at resource group scope.
+        /// </summary>
+        /// <param name='subscriptionId'>
+        /// The ID of the target subscription.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='attestationName'>
+        /// The name of the attestation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> DeleteAtResourceGroupWithHttpMessagesAsync(string subscriptionId, string resourceGroupName, string attestationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets all attestations for a resource.
         /// </summary>
         /// <param name='resourceId'>
         /// Resource ID.
@@ -116,7 +250,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="QueryFailureException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -125,19 +259,18 @@ namespace Microsoft.Azure.Management.PolicyInsights
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<PolicyEvent>>> ListQueryResultsForResourceWithHttpMessagesAsync(string resourceId, QueryOptions queryOptions = default(QueryOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<Attestation>>> ListForResourceWithHttpMessagesAsync(string resourceId, QueryOptions queryOptions = default(QueryOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Queries policy events for the subscription level policy set
-        /// definition.
+        /// Creates or updates an attestation at resource scope.
         /// </summary>
-        /// <param name='subscriptionId'>
-        /// Microsoft Azure subscription ID.
+        /// <param name='resourceId'>
+        /// Resource ID.
         /// </param>
-        /// <param name='policySetDefinitionName'>
-        /// Policy set definition name.
+        /// <param name='attestationName'>
+        /// The name of the attestation.
         /// </param>
-        /// <param name='queryOptions'>
-        /// Additional parameters for the operation
+        /// <param name='parameters'>
+        /// The attestation parameters.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -145,7 +278,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="QueryFailureException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -154,18 +287,15 @@ namespace Microsoft.Azure.Management.PolicyInsights
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<PolicyEvent>>> ListQueryResultsForPolicySetDefinitionWithHttpMessagesAsync(string subscriptionId, string policySetDefinitionName, QueryOptions queryOptions = default(QueryOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Attestation>> CreateOrUpdateAtResourceWithHttpMessagesAsync(string resourceId, string attestationName, Attestation parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Queries policy events for the subscription level policy definition.
+        /// Gets an existing attestation at resource scope.
         /// </summary>
-        /// <param name='subscriptionId'>
-        /// Microsoft Azure subscription ID.
+        /// <param name='resourceId'>
+        /// Resource ID.
         /// </param>
-        /// <param name='policyDefinitionName'>
-        /// Policy definition name.
-        /// </param>
-        /// <param name='queryOptions'>
-        /// Additional parameters for the operation
+        /// <param name='attestationName'>
+        /// The name of the attestation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -173,7 +303,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="QueryFailureException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -182,18 +312,15 @@ namespace Microsoft.Azure.Management.PolicyInsights
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<PolicyEvent>>> ListQueryResultsForPolicyDefinitionWithHttpMessagesAsync(string subscriptionId, string policyDefinitionName, QueryOptions queryOptions = default(QueryOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Attestation>> GetAtResourceWithHttpMessagesAsync(string resourceId, string attestationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Queries policy events for the subscription level policy assignment.
+        /// Deletes an existing attestation at individual resource scope.
         /// </summary>
-        /// <param name='subscriptionId'>
-        /// Microsoft Azure subscription ID.
+        /// <param name='resourceId'>
+        /// Resource ID.
         /// </param>
-        /// <param name='policyAssignmentName'>
-        /// Policy assignment name.
-        /// </param>
-        /// <param name='queryOptions'>
-        /// Additional parameters for the operation
+        /// <param name='attestationName'>
+        /// The name of the attestation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -201,7 +328,32 @@ namespace Microsoft.Azure.Management.PolicyInsights
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="QueryFailureException">
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> DeleteAtResourceWithHttpMessagesAsync(string resourceId, string attestationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Creates or updates an attestation at subscription scope.
+        /// </summary>
+        /// <param name='subscriptionId'>
+        /// The ID of the target subscription.
+        /// </param>
+        /// <param name='attestationName'>
+        /// The name of the attestation.
+        /// </param>
+        /// <param name='parameters'>
+        /// The attestation parameters.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -210,22 +362,21 @@ namespace Microsoft.Azure.Management.PolicyInsights
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<PolicyEvent>>> ListQueryResultsForSubscriptionLevelPolicyAssignmentWithHttpMessagesAsync(string subscriptionId, string policyAssignmentName, QueryOptions queryOptions = default(QueryOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Attestation>> BeginCreateOrUpdateAtSubscriptionWithHttpMessagesAsync(string subscriptionId, string attestationName, Attestation parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Queries policy events for the resource group level policy
-        /// assignment.
+        /// Creates or updates an attestation at resource group scope.
         /// </summary>
         /// <param name='subscriptionId'>
-        /// Microsoft Azure subscription ID.
+        /// The ID of the target subscription.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Resource group name.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
-        /// <param name='policyAssignmentName'>
-        /// Policy assignment name.
+        /// <param name='attestationName'>
+        /// The name of the attestation.
         /// </param>
-        /// <param name='queryOptions'>
-        /// Additional parameters for the operation
+        /// <param name='parameters'>
+        /// The attestation parameters.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -233,7 +384,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="QueryFailureException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -242,9 +393,37 @@ namespace Microsoft.Azure.Management.PolicyInsights
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<PolicyEvent>>> ListQueryResultsForResourceGroupLevelPolicyAssignmentWithHttpMessagesAsync(string subscriptionId, string resourceGroupName, string policyAssignmentName, QueryOptions queryOptions = default(QueryOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Attestation>> BeginCreateOrUpdateAtResourceGroupWithHttpMessagesAsync(string subscriptionId, string resourceGroupName, string attestationName, Attestation parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Queries policy events for the resources under the management group.
+        /// Creates or updates an attestation at resource scope.
+        /// </summary>
+        /// <param name='resourceId'>
+        /// Resource ID.
+        /// </param>
+        /// <param name='attestationName'>
+        /// The name of the attestation.
+        /// </param>
+        /// <param name='parameters'>
+        /// The attestation parameters.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<Attestation>> BeginCreateOrUpdateAtResourceWithHttpMessagesAsync(string resourceId, string attestationName, Attestation parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets all attestations for the subscription.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -255,7 +434,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="QueryFailureException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -264,9 +443,9 @@ namespace Microsoft.Azure.Management.PolicyInsights
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<PolicyEvent>>> NextLinkWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<Attestation>>> ListForSubscriptionNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Queries policy events for the resources under the subscription.
+        /// Gets all attestations for the resource group.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -277,7 +456,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="QueryFailureException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -286,9 +465,9 @@ namespace Microsoft.Azure.Management.PolicyInsights
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<PolicyEvent>>> NextLink1WithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<Attestation>>> ListForResourceGroupNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Queries policy events for the resources under the resource group.
+        /// Gets all attestations for a resource.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -299,7 +478,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="QueryFailureException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -308,118 +487,6 @@ namespace Microsoft.Azure.Management.PolicyInsights
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<PolicyEvent>>> NextLink2WithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Queries policy events for the resource.
-        /// </summary>
-        /// <param name='nextPageLink'>
-        /// The NextLink from the previous successful call to List operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="QueryFailureException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<PolicyEvent>>> NextLink3WithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Queries policy events for the subscription level policy set
-        /// definition.
-        /// </summary>
-        /// <param name='nextPageLink'>
-        /// The NextLink from the previous successful call to List operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="QueryFailureException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<PolicyEvent>>> NextLink4WithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Queries policy events for the subscription level policy definition.
-        /// </summary>
-        /// <param name='nextPageLink'>
-        /// The NextLink from the previous successful call to List operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="QueryFailureException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<PolicyEvent>>> NextLink5WithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Queries policy events for the subscription level policy assignment.
-        /// </summary>
-        /// <param name='nextPageLink'>
-        /// The NextLink from the previous successful call to List operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="QueryFailureException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<PolicyEvent>>> NextLink6WithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Queries policy events for the resource group level policy
-        /// assignment.
-        /// </summary>
-        /// <param name='nextPageLink'>
-        /// The NextLink from the previous successful call to List operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="QueryFailureException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<PolicyEvent>>> NextLink7WithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<Attestation>>> ListForResourceNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
