@@ -2,7 +2,7 @@
 
 ## 1.1.0 (2020-11-10)
 
-- Added partial error types
+- Added error property to QueryResults.
 
 ## 1.0.0 (2020-10-15)
 
