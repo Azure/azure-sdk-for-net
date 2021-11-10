@@ -1,5 +1,15 @@
 # Release History
 
+## 7.6.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 7.5.0 (2021-11-10)
 
 ### Breaking Changes
