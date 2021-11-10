@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
         [Ignore("get and list not working")]
         public async Task GetAllSchemaGroups()
         {
-            //create two eventhubs
+            //create a schema group
             string schemaGroupName1 = Recording.GenerateAssetName("schemagroup1");
             SchemaGroupData parameters = new SchemaGroupData()
             {
