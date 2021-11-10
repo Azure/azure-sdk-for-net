@@ -1,4 +1,4 @@
-# Azure.Temp;ate.LLC Code Generation
+# Azure.Template.LLC Code Generation
 
 Run `dotnet build /t:GenerateCode` to generate code.
 
