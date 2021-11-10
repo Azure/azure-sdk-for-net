@@ -82,7 +82,7 @@ namespace Microsoft.Azure.ServiceBus
         {
             if (string.IsNullOrWhiteSpace(connectionString))
             {
-                throw Fx.Exception.ArgumentNullOrWhiteSpace(connectionString);
+                throw Fx.Exception.ArgumentNullOrWhiteSpace(nameof(connectionString));
             }
 
             this.OwnsConnection = true;
@@ -125,11 +125,11 @@ namespace Microsoft.Azure.ServiceBus
         {
             if (string.IsNullOrWhiteSpace(topicPath))
             {
-                throw Fx.Exception.ArgumentNullOrWhiteSpace(topicPath);
+                throw Fx.Exception.ArgumentNullOrWhiteSpace(nameof(topicPath));
             }
             if (string.IsNullOrWhiteSpace(subscriptionName))
             {
-                throw Fx.Exception.ArgumentNullOrWhiteSpace(subscriptionName);
+                throw Fx.Exception.ArgumentNullOrWhiteSpace(nameof(subscriptionName));
             }
 
             MessagingEventSource.Log.SubscriptionClientCreateStart(serviceBusConnection?.Endpoint.Authority, topicPath, subscriptionName, receiveMode.ToString());
