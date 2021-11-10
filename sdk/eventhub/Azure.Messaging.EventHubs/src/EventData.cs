@@ -19,7 +19,7 @@ namespace Azure.Messaging.EventHubs
     ///   An Event Hubs event, encapsulating a set of data and its associated metadata.
     /// </summary>
     ///
-    public class EventData : IMessageWithContentType
+    public class EventData
     {
         /// <summary>The AMQP representation of the event, allowing access to additional protocol data elements not used directly by the Event Hubs client library.</summary>
         private readonly AmqpAnnotatedMessage _amqpMessage;
@@ -46,19 +46,6 @@ namespace Azure.Messaging.EventHubs
         {
             get => _amqpMessage.GetEventBody();
             set => _amqpMessage.Body = AmqpMessageBody.FromData(MessageBody.FromReadOnlyMemorySegment(value.ToMemory()));
-        }
-
-        /// <summary>
-        ///   The data associated with the event, in <see cref="BinaryData" /> form, providing support
-        ///   for a variety of data transformations and <see cref="ObjectSerializer" /> integration.
-        /// </summary>
-        ///
-        /// <seealso cref="BinaryData" />
-        ///
-        BinaryData IMessageWithContentType.Data
-        {
-            get => EventBody;
-            set => EventBody = value;
         }
 
         /// <summary>
@@ -127,7 +114,6 @@ namespace Azure.Messaging.EventHubs
         ///   how Event Hubs identifies the event.
         /// </remarks>
         ///
-
         public string MessageId
         {
             get
@@ -167,7 +153,6 @@ namespace Azure.Messaging.EventHubs
         ///   telemetry, distributed tracing, or logging.
         /// </remarks>
         ///
-
         public string CorrelationId
         {
             get
