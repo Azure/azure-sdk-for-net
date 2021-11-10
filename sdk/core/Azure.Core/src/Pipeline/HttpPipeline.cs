@@ -20,6 +20,7 @@ namespace Azure.Core.Pipeline
 
         private readonly ReadOnlyMemory<HttpPipelinePolicy> _pipeline;
 
+        private bool _builderConstructed;
         private readonly int _perCallIndex;
         private readonly int _perRetryIndex;
         private readonly int _transportIndex;
@@ -41,11 +42,15 @@ namespace Azure.Core.Pipeline
             all[policies.Length] = new HttpPipelineTransportPolicy(_transport);
             policies.CopyTo(all, 0);
 
-            _perCallIndex = 0;
-            _perRetryIndex = policies.ToList().FindIndex(p => p.IsRetryPolicy) + 1;
             _transportIndex = policies.Length;
 
             _pipeline = all;
+        }
+        internal HttpPipeline(HttpPipelineTransport transport, int perCallIndex, int perRetryIndex, HttpPipelinePolicy[]? policies = null, ResponseClassifier? responseClassifier = null) : this(transport, policies, responseClassifier)
+        {
+            _perCallIndex = perCallIndex;
+            _perRetryIndex = perRetryIndex;
+            _builderConstructed = true;
         }
 
         /// <summary>

@@ -116,6 +116,8 @@ namespace Azure.Core.Pipeline
             policies.RemoveAll(static policy => policy == null);
 
             return new HttpPipeline(options.Transport,
+                perCallIndex,
+                perRetryIndex,
                 policies.ToArray(),
                 responseClassifier);
         }

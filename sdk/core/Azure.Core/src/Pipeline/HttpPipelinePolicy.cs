@@ -14,11 +14,6 @@ namespace Azure.Core.Pipeline
     public abstract class HttpPipelinePolicy
     {
         /// <summary>
-        /// Indicates whether this policy implements the pipeline's retry policy.
-        /// </summary>
-        public bool IsRetryPolicy { get; protected set; }
-
-        /// <summary>
         /// Applies the policy to the <paramref name="message"/>. Implementers are expected to mutate <see cref="HttpMessage.Request"/> before calling <see cref="ProcessNextAsync"/> and observe the <see cref="HttpMessage.Response"/> changes after.
         /// </summary>
         /// <param name="message">The <see cref="HttpMessage"/> this policy would be applied to.</param>
