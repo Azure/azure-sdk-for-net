@@ -63,10 +63,6 @@ jobs:
           $versioningProperties = "/p:OfficialBuildId=$(OfficialBuildId) /p:SkipDevBuildNumber=$skipDevBuildNumber";
           echo "##vso[task.setvariable variable=VersioningProperties]$versioningProperties"
         displayName: "Setup .NET specific versioning properties"
-      - pwsh: |
-          Write-Host "##vso[task.setvariable variable=ASPNETCORE_Kestrel__Certificates__Default__Path]$(Build.SourcesDirectory)/eng/common/testproxy/dotnet-devcert.pfx"
-          Write-Host "##vso[task.setvariable variable=ASPNETCORE_Kestrel__Certificates__Default__Password]password"
-        displayName: 'Configure Kestrel Environment Variables'
       - task: UsePythonVersion@0
         displayName: 'Use Python 3.6'
         inputs:

@@ -8,6 +8,8 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Reflection;
+using System.Runtime.InteropServices;
 using Azure.Core.Pipeline;
 using System.Threading.Tasks;
 using Castle.DynamicProxy;
@@ -20,14 +22,24 @@ namespace Azure.Core.TestFramework
     {
         static RecordedTestBase()
         {
-            //ServicePointManager.Expect100Continue = false;
+            var installDir = Environment.GetEnvironmentVariable("DOTNET_INSTALL_DIR");
+            if (!HasDotNetExe(installDir))
+            {
+                installDir = Environment.GetEnvironmentVariable("PATH")?.Split(Path.PathSeparator).FirstOrDefault(HasDotNetExe);
+            }
+
+            s_dotNetExe = Path.Combine(installDir, s_dotNetExeName);
+            ServicePointManager.Expect100Continue = false;
         }
+        private static bool HasDotNetExe(string dotnetDir) => dotnetDir != null && File.Exists(Path.Combine(dotnetDir, s_dotNetExeName));
+
         protected RecordedTestSanitizer Sanitizer { get; set; }
 
         protected RecordMatcher Matcher { get; set; }
 
         public TestRecording Recording { get; private set; }
 
+        private static readonly string s_dotNetExeName = "dotnet" + (Path.DirectorySeparatorChar == '/' ? "" : ".exe");
         public RecordedTestMode Mode { get; set; }
 
         // copied the Windows version https://github.com/dotnet/runtime/blob/master/src/libraries/System.Private.CoreLib/src/System/IO/Path.Windows.cs
@@ -63,6 +75,7 @@ namespace Azure.Core.TestFramework
         }
         private bool _saveDebugRecordingsOnFailure;
         private Process _testProxyProcess;
+        private static readonly string s_dotNetExe;
         protected bool ValidateClientInstrumentation { get; set; }
 
         protected RecordedTestBase(bool isAsync, RecordedTestMode? mode = null) : base(isAsync)
@@ -147,7 +160,7 @@ namespace Azure.Core.TestFramework
             }
 
             // var processInfo = new ProcessStartInfo(
-            //     "dotnet",
+            //     s_dotNetExe,
             //     "tool list -g")
             // {
             //     UseShellExecute = false,
@@ -161,7 +174,7 @@ namespace Azure.Core.TestFramework
             // if (!installedTools.Contains("azure.sdk.tools.testproxy"))
             // {
             //     processInfo = new ProcessStartInfo(
-            //         "dotnet",
+            //         s_dotNetExe,
             //         "tool install azure.sdk.tools.testproxy " +
             //         "--global " +
             //         "--add-source https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json " +
@@ -172,16 +185,24 @@ namespace Azure.Core.TestFramework
             //     Process installProcess = Process.Start(processInfo);
             //     installProcess.WaitForExit();
             // }
-            // processInfo = new ProcessStartInfo(
-            //     "dotnet",
-            //     "dev-certs https --trust")
-            // {
-            //     UseShellExecute = false
-            // };
-            // Process.Start(processInfo).WaitForExit();
-
+            var certPath = Path.Combine(TestEnvironment.RepositoryRoot, "eng", "common", "testproxy", "dotnet-devcert.pfx");
             var processInfo = new ProcessStartInfo(
-                "test-proxy")
+                s_dotNetExe,
+                $"dev-certs https --clean --import {certPath} --password=\"password\"")
+            {
+                UseShellExecute = false,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true
+            };
+            var p = Process.Start(processInfo);
+            var output = p.StandardOutput.ReadToEnd();
+            var error = p.StandardError.ReadToEnd();
+            p.WaitForExit();
+
+            var testProxyPath = GetType().Assembly.GetCustomAttributes<AssemblyMetadataAttribute>().Single(a => a.Key == "TestProxyPath").Value;
+            processInfo = new ProcessStartInfo(
+                s_dotNetExe,
+                testProxyPath)
             {
                 UseShellExecute = true
             };

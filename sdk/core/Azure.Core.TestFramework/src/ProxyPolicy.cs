@@ -47,7 +47,7 @@ namespace Azure.Core.TestFramework
             // TODO see if we can get a response header rather than needing to parse the content
             if (message.Response.Status == 404 && message.Response.Content.ToString().Contains("Unable to find a record"))
             {
-                throw new TestRecordingMismatchException();
+                throw new TestRecordingMismatchException(message.Response.Content.ToString());
             }
         }
 
