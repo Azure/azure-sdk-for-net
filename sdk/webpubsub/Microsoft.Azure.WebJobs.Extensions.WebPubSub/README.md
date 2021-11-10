@@ -84,9 +84,9 @@ public static class WebPubSubOutputBindingFunction
     [FunctionName("WebPubSubOutputBindingFunction")]
     public static async Task RunAsync(
         [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequest req,
-        [WebPubSub(Hub = "hub", Connection = "<connection-string>")] IAsyncCollector<WebPubSubOperation> operation)
+        [WebPubSub(Hub = "hub", Connection = "<connection-string>")] IAsyncCollector<WebPubSubAction> operation)
     {
-        await operation.AddAsync(WebPubSubOperation.SendToAll("Hello Web PubSub!", WebPubSubDataType.Text));
+        await operation.AddAsync(WebPubSubAction.CreateSendToAllAction("Hello Web PubSub!", WebPubSubDataType.Text));
     }
 }
 ```
