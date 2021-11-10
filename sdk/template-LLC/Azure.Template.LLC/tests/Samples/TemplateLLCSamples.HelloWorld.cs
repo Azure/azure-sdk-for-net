@@ -3,6 +3,7 @@
 
 using System;
 using Azure.Core.TestFramework;
+using NUnit.Framework;
 
 namespace Azure.Template.LLC.Tests.Samples
 {
@@ -17,6 +18,6 @@ namespace Azure.Template.LLC.Tests.Samples
             #endregion
         }
 
-        // Add samples here
+        // Add sample tests here
     }
 }
