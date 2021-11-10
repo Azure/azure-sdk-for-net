@@ -40,5 +40,7 @@ namespace Azure.Data.SchemaRegistry
         public override int GetHashCode() => _value?.GetHashCode() ?? 0;
         /// <inheritdoc />
         public override string ToString() => _value;
+
+        internal string ContentType => $"application/json; serialization={_value}";
     }
 }
