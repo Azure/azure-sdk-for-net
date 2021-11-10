@@ -23,7 +23,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         /// </summary>
         public string ConnectionString { get; set; }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Returns a string representation of this <see cref="WebPubSubFunctionsOptions"/>.
+        /// </summary>
+        /// <returns>A string representation of this <see cref="WebPubSubFunctionsOptions"/> instance.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         string IOptionsFormatter.Format()
         {
