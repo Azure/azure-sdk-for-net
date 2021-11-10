@@ -279,7 +279,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             var request = serialize["request"];
 
             Assert.NotNull(request);
-            Assert.AreEqual("test", request["message"].ToString());
+            Assert.AreEqual("test", request["data"].ToString());
             Assert.NotNull(serialize["response"]);
             Assert.AreEqual("", serialize["errorMessage"].ToString());
             Assert.AreEqual("False", serialize["hasError"].ToString());

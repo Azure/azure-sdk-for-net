@@ -82,9 +82,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                         {
                             var content = await req.Content.ReadAsStringAsync().ConfigureAwait(false);
                             var request = JsonSerializer.Deserialize<ConnectEventRequest>(content);
-                            claims = request.Claims;
+                            claims = request.Claims.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
                             subprotocols = new List<string>(request.Subprotocols);
-                            query = request.Query;
+                            query = request.Query.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
                             certificates = new List<WebPubSubClientCertificate>(request.ClientCertificates);
                             request.ConnectionContext = context;
                             eventRequest = request;
