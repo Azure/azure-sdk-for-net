@@ -1,6 +1,6 @@
 # Release History
 
-## 2.8.0-publicpreview.preview.1 (2021-11-15)
+## 2.8.0-publicpreview-preview.1 (2021-11-15)
 - Add support for new detection attribute `qualityForRecognition`
 - Adjusted version name to highlight preview endpoint status
 
