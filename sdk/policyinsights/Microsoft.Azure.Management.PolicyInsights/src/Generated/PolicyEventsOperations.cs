@@ -2244,7 +2244,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<PolicyEvent>>> NextLinkWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<PolicyEvent>>> ListQueryResultsForManagementGroupNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -2259,7 +2259,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("nextPageLink", nextPageLink);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "NextLink", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListQueryResultsForManagementGroupNext", tracingParameters);
             }
             // Construct URL
             string _url = "{nextLink}";
@@ -2412,7 +2412,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<PolicyEvent>>> NextLink1WithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<PolicyEvent>>> ListQueryResultsForSubscriptionNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -2427,7 +2427,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("nextPageLink", nextPageLink);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "NextLink1", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListQueryResultsForSubscriptionNext", tracingParameters);
             }
             // Construct URL
             string _url = "{nextLink}";
@@ -2580,7 +2580,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<PolicyEvent>>> NextLink2WithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<PolicyEvent>>> ListQueryResultsForResourceGroupNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -2595,7 +2595,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("nextPageLink", nextPageLink);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "NextLink2", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListQueryResultsForResourceGroupNext", tracingParameters);
             }
             // Construct URL
             string _url = "{nextLink}";
@@ -2748,7 +2748,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<PolicyEvent>>> NextLink3WithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<PolicyEvent>>> ListQueryResultsForResourceNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -2763,7 +2763,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("nextPageLink", nextPageLink);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "NextLink3", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListQueryResultsForResourceNext", tracingParameters);
             }
             // Construct URL
             string _url = "{nextLink}";
@@ -2916,7 +2916,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<PolicyEvent>>> NextLink4WithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<PolicyEvent>>> ListQueryResultsForPolicySetDefinitionNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -2931,7 +2931,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("nextPageLink", nextPageLink);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "NextLink4", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListQueryResultsForPolicySetDefinitionNext", tracingParameters);
             }
             // Construct URL
             string _url = "{nextLink}";
@@ -3084,7 +3084,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<PolicyEvent>>> NextLink5WithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<PolicyEvent>>> ListQueryResultsForPolicyDefinitionNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -3099,7 +3099,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("nextPageLink", nextPageLink);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "NextLink5", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListQueryResultsForPolicyDefinitionNext", tracingParameters);
             }
             // Construct URL
             string _url = "{nextLink}";
@@ -3252,7 +3252,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<PolicyEvent>>> NextLink6WithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<PolicyEvent>>> ListQueryResultsForSubscriptionLevelPolicyAssignmentNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -3267,7 +3267,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("nextPageLink", nextPageLink);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "NextLink6", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListQueryResultsForSubscriptionLevelPolicyAssignmentNext", tracingParameters);
             }
             // Construct URL
             string _url = "{nextLink}";
@@ -3420,7 +3420,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<PolicyEvent>>> NextLink7WithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<PolicyEvent>>> ListQueryResultsForResourceGroupLevelPolicyAssignmentNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -3435,7 +3435,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("nextPageLink", nextPageLink);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "NextLink7", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListQueryResultsForResourceGroupLevelPolicyAssignmentNext", tracingParameters);
             }
             // Construct URL
             string _url = "{nextLink}";

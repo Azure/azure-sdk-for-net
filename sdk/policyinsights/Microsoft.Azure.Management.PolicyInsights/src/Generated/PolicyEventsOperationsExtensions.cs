@@ -386,9 +386,9 @@ namespace Microsoft.Azure.Management.PolicyInsights
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<PolicyEvent> NextLink(this IPolicyEventsOperations operations, string nextPageLink)
+            public static IPage<PolicyEvent> ListQueryResultsForManagementGroupNext(this IPolicyEventsOperations operations, string nextPageLink)
             {
-                return operations.NextLinkAsync(nextPageLink).GetAwaiter().GetResult();
+                return operations.ListQueryResultsForManagementGroupNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -403,9 +403,9 @@ namespace Microsoft.Azure.Management.PolicyInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<PolicyEvent>> NextLinkAsync(this IPolicyEventsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<PolicyEvent>> ListQueryResultsForManagementGroupNextAsync(this IPolicyEventsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.NextLinkWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListQueryResultsForManagementGroupNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -420,9 +420,9 @@ namespace Microsoft.Azure.Management.PolicyInsights
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<PolicyEvent> NextLink1(this IPolicyEventsOperations operations, string nextPageLink)
+            public static IPage<PolicyEvent> ListQueryResultsForSubscriptionNext(this IPolicyEventsOperations operations, string nextPageLink)
             {
-                return operations.NextLink1Async(nextPageLink).GetAwaiter().GetResult();
+                return operations.ListQueryResultsForSubscriptionNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -437,9 +437,9 @@ namespace Microsoft.Azure.Management.PolicyInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<PolicyEvent>> NextLink1Async(this IPolicyEventsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<PolicyEvent>> ListQueryResultsForSubscriptionNextAsync(this IPolicyEventsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.NextLink1WithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListQueryResultsForSubscriptionNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -454,9 +454,9 @@ namespace Microsoft.Azure.Management.PolicyInsights
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<PolicyEvent> NextLink2(this IPolicyEventsOperations operations, string nextPageLink)
+            public static IPage<PolicyEvent> ListQueryResultsForResourceGroupNext(this IPolicyEventsOperations operations, string nextPageLink)
             {
-                return operations.NextLink2Async(nextPageLink).GetAwaiter().GetResult();
+                return operations.ListQueryResultsForResourceGroupNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -471,9 +471,9 @@ namespace Microsoft.Azure.Management.PolicyInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<PolicyEvent>> NextLink2Async(this IPolicyEventsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<PolicyEvent>> ListQueryResultsForResourceGroupNextAsync(this IPolicyEventsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.NextLink2WithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListQueryResultsForResourceGroupNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -488,9 +488,9 @@ namespace Microsoft.Azure.Management.PolicyInsights
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<PolicyEvent> NextLink3(this IPolicyEventsOperations operations, string nextPageLink)
+            public static IPage<PolicyEvent> ListQueryResultsForResourceNext(this IPolicyEventsOperations operations, string nextPageLink)
             {
-                return operations.NextLink3Async(nextPageLink).GetAwaiter().GetResult();
+                return operations.ListQueryResultsForResourceNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -505,9 +505,9 @@ namespace Microsoft.Azure.Management.PolicyInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<PolicyEvent>> NextLink3Async(this IPolicyEventsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<PolicyEvent>> ListQueryResultsForResourceNextAsync(this IPolicyEventsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.NextLink3WithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListQueryResultsForResourceNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -522,9 +522,9 @@ namespace Microsoft.Azure.Management.PolicyInsights
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<PolicyEvent> NextLink4(this IPolicyEventsOperations operations, string nextPageLink)
+            public static IPage<PolicyEvent> ListQueryResultsForPolicySetDefinitionNext(this IPolicyEventsOperations operations, string nextPageLink)
             {
-                return operations.NextLink4Async(nextPageLink).GetAwaiter().GetResult();
+                return operations.ListQueryResultsForPolicySetDefinitionNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -539,9 +539,9 @@ namespace Microsoft.Azure.Management.PolicyInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<PolicyEvent>> NextLink4Async(this IPolicyEventsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<PolicyEvent>> ListQueryResultsForPolicySetDefinitionNextAsync(this IPolicyEventsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.NextLink4WithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListQueryResultsForPolicySetDefinitionNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -556,9 +556,9 @@ namespace Microsoft.Azure.Management.PolicyInsights
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<PolicyEvent> NextLink5(this IPolicyEventsOperations operations, string nextPageLink)
+            public static IPage<PolicyEvent> ListQueryResultsForPolicyDefinitionNext(this IPolicyEventsOperations operations, string nextPageLink)
             {
-                return operations.NextLink5Async(nextPageLink).GetAwaiter().GetResult();
+                return operations.ListQueryResultsForPolicyDefinitionNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -573,9 +573,9 @@ namespace Microsoft.Azure.Management.PolicyInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<PolicyEvent>> NextLink5Async(this IPolicyEventsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<PolicyEvent>> ListQueryResultsForPolicyDefinitionNextAsync(this IPolicyEventsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.NextLink5WithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListQueryResultsForPolicyDefinitionNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -590,9 +590,9 @@ namespace Microsoft.Azure.Management.PolicyInsights
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<PolicyEvent> NextLink6(this IPolicyEventsOperations operations, string nextPageLink)
+            public static IPage<PolicyEvent> ListQueryResultsForSubscriptionLevelPolicyAssignmentNext(this IPolicyEventsOperations operations, string nextPageLink)
             {
-                return operations.NextLink6Async(nextPageLink).GetAwaiter().GetResult();
+                return operations.ListQueryResultsForSubscriptionLevelPolicyAssignmentNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -607,9 +607,9 @@ namespace Microsoft.Azure.Management.PolicyInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<PolicyEvent>> NextLink6Async(this IPolicyEventsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<PolicyEvent>> ListQueryResultsForSubscriptionLevelPolicyAssignmentNextAsync(this IPolicyEventsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.NextLink6WithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListQueryResultsForSubscriptionLevelPolicyAssignmentNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -624,9 +624,9 @@ namespace Microsoft.Azure.Management.PolicyInsights
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<PolicyEvent> NextLink7(this IPolicyEventsOperations operations, string nextPageLink)
+            public static IPage<PolicyEvent> ListQueryResultsForResourceGroupLevelPolicyAssignmentNext(this IPolicyEventsOperations operations, string nextPageLink)
             {
-                return operations.NextLink7Async(nextPageLink).GetAwaiter().GetResult();
+                return operations.ListQueryResultsForResourceGroupLevelPolicyAssignmentNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -641,9 +641,9 @@ namespace Microsoft.Azure.Management.PolicyInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<PolicyEvent>> NextLink7Async(this IPolicyEventsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<PolicyEvent>> ListQueryResultsForResourceGroupLevelPolicyAssignmentNextAsync(this IPolicyEventsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.NextLink7WithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListQueryResultsForResourceGroupLevelPolicyAssignmentNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
