@@ -30,16 +30,16 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// <summary>
         /// Initializes a new instance of the LargeFaceList class.
         /// </summary>
-        /// <param name="largeFaceListId">LargeFaceListId of the target large
-        /// face list.</param>
         /// <param name="name">User defined name, maximum length is
         /// 128.</param>
+        /// <param name="largeFaceListId">LargeFaceListId of the target large
+        /// face list.</param>
         /// <param name="userData">User specified data. Length should not
         /// exceed 16KB.</param>
         /// <param name="recognitionModel">Possible values include:
         /// 'recognition_01', 'recognition_02', 'recognition_03',
         /// 'recognition_04'</param>
-        public LargeFaceList(string largeFaceListId, string name = default(string), string userData = default(string), string recognitionModel = default(string))
+        public LargeFaceList(string name, string largeFaceListId, string userData = default(string), string recognitionModel = default(string))
             : base(name, userData, recognitionModel)
         {
             LargeFaceListId = largeFaceListId;

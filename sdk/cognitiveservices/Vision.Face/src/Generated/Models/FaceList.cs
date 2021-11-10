@@ -32,10 +32,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// <summary>
         /// Initializes a new instance of the FaceList class.
         /// </summary>
-        /// <param name="faceListId">FaceListId of the target face
-        /// list.</param>
         /// <param name="name">User defined name, maximum length is
         /// 128.</param>
+        /// <param name="faceListId">FaceListId of the target face
+        /// list.</param>
         /// <param name="userData">User specified data. Length should not
         /// exceed 16KB.</param>
         /// <param name="recognitionModel">Possible values include:
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// 'recognition_04'</param>
         /// <param name="persistedFaces">Persisted faces within the face
         /// list.</param>
-        public FaceList(string faceListId, string name = default(string), string userData = default(string), string recognitionModel = default(string), IList<PersistedFace> persistedFaces = default(IList<PersistedFace>))
+        public FaceList(string name, string faceListId, string userData = default(string), string recognitionModel = default(string), IList<PersistedFace> persistedFaces = default(IList<PersistedFace>))
             : base(name, userData, recognitionModel)
         {
             FaceListId = faceListId;
