@@ -126,7 +126,7 @@ function LoadCloudConfig([string] $env)
 function MergeHashes([hashtable] $source, [psvariable] $dest)
 {
     foreach ($key in $source.Keys) {
-        if ($dest.Value.ContainsKey($key) -and $dest.Value[$key] -ne $source[$key]) {
+        if ($dest.Value.Contains($key) -and $dest.Value[$key] -ne $source[$key]) {
             Write-Warning ("Overwriting '$($dest.Name).$($key)' with value '$($dest.Value[$key])' " +
                           "to new value '$($source[$key])'")
         }
@@ -153,6 +153,122 @@ function BuildBicepFile([System.IO.FileSystemInfo] $file)
     }
 
     return $templateFilePath
+}
+
+function BuildDeploymentOutputs([string]$serviceDirectoryPrefix, [object]$azContext, [object]$deployment) {
+    # Add default values
+    $deploymentOutputs = [Ordered]@{
+        "${serviceDirectoryPrefix}CLIENT_ID" = $TestApplicationId;
+        "${serviceDirectoryPrefix}CLIENT_SECRET" = $TestApplicationSecret;
+        "${serviceDirectoryPrefix}TENANT_ID" = $azContext.Tenant.Id;
+        "${serviceDirectoryPrefix}SUBSCRIPTION_ID" =  $azContext.Subscription.Id;
+        "${serviceDirectoryPrefix}RESOURCE_GROUP" = $resourceGroup.ResourceGroupName;
+        "${serviceDirectoryPrefix}LOCATION" = $resourceGroup.Location;
+        "${serviceDirectoryPrefix}ENVIRONMENT" = $azContext.Environment.Name;
+        "${serviceDirectoryPrefix}AZURE_AUTHORITY_HOST" = $azContext.Environment.ActiveDirectoryAuthority;
+        "${serviceDirectoryPrefix}RESOURCE_MANAGER_URL" = $azContext.Environment.ResourceManagerUrl;
+        "${serviceDirectoryPrefix}SERVICE_MANAGEMENT_URL" = $azContext.Environment.ServiceManagementUrl;
+    }
+
+    MergeHashes $EnvironmentVariables $(Get-Variable deploymentOutputs)
+
+    foreach ($key in $deployment.Outputs.Keys) {
+        $variable = $deployment.Outputs[$key]
+
+        # Work around bug that makes the first few characters of environment variables be lowercase.
+        $key = $key.ToUpperInvariant()
+
+        if ($variable.Type -eq 'String' -or $variable.Type -eq 'SecureString') {
+            $deploymentOutputs[$key] = $variable.Value
+        }
+    }
+
+    return $deploymentOutputs
+}
+
+function ShouldMarkValueAsSecret([string]$serviceDirectoryPrefix, [string]$key, [string]$value, [array]$allowedValues) {
+    $logOutputNonSecret = @(
+        # Environment Variables
+        "RESOURCEGROUP_NAME",
+        # Deployment Outputs
+        "CLIENT_ID",
+        "TENANT_ID",
+        "SUBSCRIPTION_ID",
+        "RESOURCE_GROUP",
+        "LOCATION",
+        "ENVIRONMENT",
+        "AZURE_AUTHORITY_HOST",
+        "RESOURCE_MANAGER_URL",
+        "SERVICE_MANAGEMENT_URL"
+    )
+
+    $suffix1 = $key -replace $serviceDirectoryPrefix, ""
+    $suffix2 = $key -replace "AZURE_", ""
+    $variants = @($key, $suffix1, $suffix2)
+    if ($variants | Where-Object { $logOutputNonSecret -contains $_ }) {
+        return $false
+    }
+
+    if ($allowedValues -contains $value) {
+        return $false
+    }
+
+    return $true
+}
+
+function SetDeploymentOutputs([string]$serviceName, [object]$azContext, [object]$deployment, [object]$templateFile) {
+    $serviceDirectoryPrefix = $serviceName.ToUpperInvariant() + "_"
+    $deploymentOutputs = BuildDeploymentOutputs $serviceDirectoryPrefix $azContext $deployment
+
+    if ($OutFile) {
+        if (!$IsWindows) {
+            Write-Host 'File option is supported only on Windows'
+        }
+
+        $outputFile = "$($templateFile.originalFilePath).env"
+
+        $environmentText = $deploymentOutputs | ConvertTo-Json;
+        $bytes = [System.Text.Encoding]::UTF8.GetBytes($environmentText)
+        $protectedBytes = [Security.Cryptography.ProtectedData]::Protect($bytes, $null, [Security.Cryptography.DataProtectionScope]::CurrentUser)
+
+        Set-Content $outputFile -Value $protectedBytes -AsByteStream -Force
+
+        Write-Host "Test environment settings`n $environmentText`nstored into encrypted $outputFile"
+    } else {
+        if (!$CI) {
+            # Write an extra new line to isolate the environment variables for easy reading.
+            Log "Persist the following environment variables based on your detected shell ($shell):`n"
+        }
+
+        # Marking values as secret by allowed keys below is not sufficient, as there may be outputs set in the ARM/bicep
+        # file that re-mark those values as secret (since all user-provided deployment outputs are treated as secret by default).
+        # This variable supports a second check on not marking previously allowed keys/values as secret.
+        $notSecretValues = @()
+        foreach ($key in $deploymentOutputs.Keys) {
+            $value = $deploymentOutputs[$key]
+            $EnvironmentVariables[$key] = $value
+
+            if ($CI) {
+                if (ShouldMarkValueAsSecret $serviceDirectoryPrefix $key $value $notSecretValues) {
+                    # Treat all ARM template output variables as secrets since "SecureString" variables do not set values.
+                    # In order to mask secrets but set environment variables for any given ARM template, we set variables twice as shown below.
+                    Write-Host "##vso[task.setvariable variable=_$key;issecret=true;]$value"
+                } else {
+                    $notSecretValues += $value
+                }
+                Write-Host "Setting variable '$key': $value"
+                Write-Host "##vso[task.setvariable variable=$key;]$value"
+            } else {
+                Write-Host ($shellExportFormat -f $key, $value)
+            }
+        }
+
+        if ($key) {
+            # Isolate the environment variables for easy reading.
+            Write-Host "`n"
+            $key = $null
+        }
+    }
 }
 
 # Support actions to invoke on exit.
@@ -580,78 +696,7 @@ try {
             Write-Verbose "Successfully deployed template '$($templateFile.jsonFilePath)' to resource group '$($resourceGroup.ResourceGroupName)'"
         }
 
-        $serviceDirectoryPrefix = $serviceName.ToUpperInvariant() + "_"
-
-        # Add default values
-        $deploymentOutputs = @{
-            "$($serviceDirectoryPrefix)CLIENT_ID" = $TestApplicationId;
-            "$($serviceDirectoryPrefix)CLIENT_SECRET" = $TestApplicationSecret;
-            "$($serviceDirectoryPrefix)TENANT_ID" = $context.Tenant.Id;
-            "$($serviceDirectoryPrefix)SUBSCRIPTION_ID" =  $context.Subscription.Id;
-            "$($serviceDirectoryPrefix)RESOURCE_GROUP" = $resourceGroup.ResourceGroupName;
-            "$($serviceDirectoryPrefix)LOCATION" = $resourceGroup.Location;
-            "$($serviceDirectoryPrefix)ENVIRONMENT" = $context.Environment.Name;
-            "$($serviceDirectoryPrefix)AZURE_AUTHORITY_HOST" = $context.Environment.ActiveDirectoryAuthority;
-            "$($serviceDirectoryPrefix)RESOURCE_MANAGER_URL" = $context.Environment.ResourceManagerUrl;
-            "$($serviceDirectoryPrefix)SERVICE_MANAGEMENT_URL" = $context.Environment.ServiceManagementUrl;
-            "$($serviceDirectoryPrefix)STORAGE_ENDPOINT_SUFFIX" = $context.Environment.StorageEndpointSuffix;
-        }
-
-        MergeHashes $EnvironmentVariables $(Get-Variable deploymentOutputs)
-
-        foreach ($key in $deployment.Outputs.Keys) {
-            $variable = $deployment.Outputs[$key]
-
-            # Work around bug that makes the first few characters of environment variables be lowercase.
-            $key = $key.ToUpperInvariant()
-
-            if ($variable.Type -eq 'String' -or $variable.Type -eq 'SecureString') {
-                $deploymentOutputs[$key] = $variable.Value
-            }
-        }
-
-        if ($OutFile) {
-            if (!$IsWindows) {
-                Write-Host 'File option is supported only on Windows'
-            }
-
-            $outputFile = "$($templateFile.originalFilePath).env"
-
-            $environmentText = $deploymentOutputs | ConvertTo-Json;
-            $bytes = [System.Text.Encoding]::UTF8.GetBytes($environmentText)
-            $protectedBytes = [Security.Cryptography.ProtectedData]::Protect($bytes, $null, [Security.Cryptography.DataProtectionScope]::CurrentUser)
-
-            Set-Content $outputFile -Value $protectedBytes -AsByteStream -Force
-
-            Write-Host "Test environment settings`n $environmentText`nstored into encrypted $outputFile"
-        } else {
-
-            if (!$CI) {
-                # Write an extra new line to isolate the environment variables for easy reading.
-                Log "Persist the following environment variables based on your detected shell ($shell):`n"
-            }
-
-            foreach ($key in $deploymentOutputs.Keys) {
-                $value = $deploymentOutputs[$key]
-                $EnvironmentVariables[$key] = $value
-
-                if ($CI) {
-                    # Treat all ARM template output variables as secrets since "SecureString" variables do not set values.
-                    # In order to mask secrets but set environment variables for any given ARM template, we set variables twice as shown below.
-                    Write-Host "Setting variable '$key': ***"
-                    Write-Host "##vso[task.setvariable variable=_$key;issecret=true;]$($value)"
-                    Write-Host "##vso[task.setvariable variable=$key;]$($value)"
-                } else {
-                    Write-Host ($shellExportFormat -f $key, $value)
-                }
-            }
-
-            if ($key) {
-                # Isolate the environment variables for easy reading.
-                Write-Host "`n"
-                $key = $null
-            }
-        }
+        SetDeploymentOutputs $serviceName $context $deployment $templateFile
 
         $postDeploymentScript = $templateFile.originalFilePath | Split-Path | Join-Path -ChildPath 'test-resources-post.ps1'
         if (Test-Path $postDeploymentScript) {
