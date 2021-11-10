@@ -92,10 +92,10 @@ namespace Azure.Communication.NetworkTraversal
 
         /// <summary>Gets a Relay Configuration for a <see cref="CommunicationUserIdentifier"/>.</summary>
         /// <param name="communicationUser">The <see cref="CommunicationUserIdentifier"/> for whom to issue a token.</param>
-        /// <param name="routeType"> The specified <see cref="CommunicationRelayConfigurationRequestRouteType"/> for the relay request </param>
+        /// <param name="routeType"> The specified <see cref="RouteType"/> for the relay request </param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         /// <exception cref="RequestFailedException">The server returned an error.</exception>
-        public virtual Response<CommunicationRelayConfiguration> GetRelayConfiguration(CommunicationUserIdentifier communicationUser = null, CommunicationRelayConfigurationRequestRouteType? routeType = null, CancellationToken cancellationToken = default)
+        public virtual Response<CommunicationRelayConfiguration> GetRelayConfiguration(CommunicationUserIdentifier communicationUser = null, RouteType? routeType = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationRelayClient)}.{nameof(GetRelayConfiguration)}");
             scope.Start();
@@ -112,9 +112,9 @@ namespace Azure.Communication.NetworkTraversal
 
         /// <summary>Asynchronously gets a Relay Configuration for a <see cref="CommunicationUserIdentifier"/>.</summary>
         /// <param name="communicationUser">The <see cref="CommunicationUserIdentifier"/> for whom to issue a token.</param>
-        /// <param name="routeType"> The specified <see cref="CommunicationRelayConfigurationRequestRouteType"/> for the relay request </param>
+        /// <param name="routeType"> The specified <see cref="RouteType"/> for the relay request </param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
-        public virtual async Task<Response<CommunicationRelayConfiguration>> GetRelayConfigurationAsync(CommunicationUserIdentifier communicationUser = null, CommunicationRelayConfigurationRequestRouteType? routeType = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CommunicationRelayConfiguration>> GetRelayConfigurationAsync(CommunicationUserIdentifier communicationUser = null, RouteType? routeType = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationRelayClient)}.{nameof(GetRelayConfiguration)}");
             scope.Start();

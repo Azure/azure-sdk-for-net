@@ -18,7 +18,7 @@ namespace Azure.Communication.NetworkTraversal
             IReadOnlyList<string> urls = default;
             string username = default;
             string credential = default;
-            CommunicationIceServerRouteType routeType = default;
+            RouteType routeType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("urls"))
@@ -43,7 +43,7 @@ namespace Azure.Communication.NetworkTraversal
                 }
                 if (property.NameEquals("routeType"))
                 {
-                    routeType = new CommunicationIceServerRouteType(property.Value.GetString());
+                    routeType = new RouteType(property.Value.GetString());
                     continue;
                 }
             }

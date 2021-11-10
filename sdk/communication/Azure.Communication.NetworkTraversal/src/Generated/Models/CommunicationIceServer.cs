@@ -20,7 +20,7 @@ namespace Azure.Communication.NetworkTraversal
         /// <param name="credential"> Credential for the server. </param>
         /// <param name="routeType"> The routing methodology to where the ICE server will be located from the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="urls"/>, <paramref name="username"/>, or <paramref name="credential"/> is null. </exception>
-        internal CommunicationIceServer(IEnumerable<string> urls, string username, string credential, CommunicationIceServerRouteType routeType)
+        internal CommunicationIceServer(IEnumerable<string> urls, string username, string credential, RouteType routeType)
         {
             if (urls == null)
             {
@@ -46,7 +46,7 @@ namespace Azure.Communication.NetworkTraversal
         /// <param name="username"> User account name which uniquely identifies the credentials. </param>
         /// <param name="credential"> Credential for the server. </param>
         /// <param name="routeType"> The routing methodology to where the ICE server will be located from the client. </param>
-        internal CommunicationIceServer(IReadOnlyList<string> urls, string username, string credential, CommunicationIceServerRouteType routeType)
+        internal CommunicationIceServer(IReadOnlyList<string> urls, string username, string credential, RouteType routeType)
         {
             Urls = urls;
             Username = username;
@@ -61,6 +61,6 @@ namespace Azure.Communication.NetworkTraversal
         /// <summary> Credential for the server. </summary>
         public string Credential { get; }
         /// <summary> The routing methodology to where the ICE server will be located from the client. </summary>
-        public CommunicationIceServerRouteType RouteType { get; }
+        public RouteType RouteType { get; }
     }
 }

@@ -34,11 +34,9 @@ namespace Azure.Communication.NetworkTraversal.Samples
             Response<CommunicationUserIdentifier> response = await communicationIdentityClient.CreateUserAsync();
             var user = response.Value;
 
-            #region Snippet:CreateCommunicationRelayClientAsync
             // Get a connection string to our Azure Communication resource.
             //@@var connectionString = "<connection_string>";
             var client = new CommunicationRelayClient(connectionString);
-            #endregion Snippet:CreateCommunicationRelayClientAsync
             client = CreateClientWithConnectionString();
 
             #region Snippet:GetRelayConfigurationAsync
@@ -54,6 +52,7 @@ namespace Azure.Communication.NetworkTraversal.Samples
                 }
                 Console.WriteLine($"ICE Server Username: {iceServer.Username}");
                 Console.WriteLine($"ICE Server Credential: {iceServer.Credential}");
+                Console.WriteLine($"Route type: {iceServer.RouteType}");
             }
             #endregion Snippet:GetRelayConfigurationAsync
         }
@@ -73,7 +72,7 @@ namespace Azure.Communication.NetworkTraversal.Samples
             var client = new CommunicationRelayClient(connectionString);
             client = CreateClientWithConnectionString();
 
-            Response<CommunicationRelayConfiguration> relayConfiguration = await client.GetRelayConfigurationAsync(user, CommunicationRelayConfigurationRequestRouteType.Nearest);
+            Response<CommunicationRelayConfiguration> relayConfiguration = await client.GetRelayConfigurationAsync(user, RouteType.Nearest);
             DateTimeOffset turnTokenExpiresOn = relayConfiguration.Value.ExpiresOn;
             IReadOnlyList<CommunicationIceServer> iceServers = relayConfiguration.Value.IceServers;
             Console.WriteLine($"Expires On: {turnTokenExpiresOn}");
@@ -132,7 +131,6 @@ namespace Azure.Communication.NetworkTraversal.Samples
             #endregion Snippet:CreateCommunicationRelayClient
             client = CreateClientWithConnectionString();
 
-            #region Snippet:GetRelayConfiguration
             Response<CommunicationRelayConfiguration> relayConfiguration = client.GetRelayConfiguration(user);
             DateTimeOffset turnTokenExpiresOn = relayConfiguration.Value.ExpiresOn;
             IReadOnlyList<CommunicationIceServer> iceServers = relayConfiguration.Value.IceServers;
@@ -146,7 +144,6 @@ namespace Azure.Communication.NetworkTraversal.Samples
                 Console.WriteLine($"ICE Server Username: {iceServer.Username}");
                 Console.WriteLine($"ICE Server Credential: {iceServer.Credential}");
             }
-            #endregion Snippet:GetRelayConfiguration
         }
 
         [Test]
@@ -164,7 +161,7 @@ namespace Azure.Communication.NetworkTraversal.Samples
             var client = new CommunicationRelayClient(connectionString);
             client = CreateClientWithConnectionString();
 
-            Response<CommunicationRelayConfiguration> relayConfiguration = client.GetRelayConfiguration(user, CommunicationRelayConfigurationRequestRouteType.Nearest);
+            Response<CommunicationRelayConfiguration> relayConfiguration = client.GetRelayConfiguration(user, RouteType.Nearest);
             DateTimeOffset turnTokenExpiresOn = relayConfiguration.Value.ExpiresOn;
             IReadOnlyList<CommunicationIceServer> iceServers = relayConfiguration.Value.IceServers;
             Console.WriteLine($"Expires On: {turnTokenExpiresOn}");

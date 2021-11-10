@@ -31,7 +31,7 @@ namespace Azure.Communication.NetworkTraversal
         /// <param name="credential"> Credential for the server. </param>
         /// <param name="routeType"> The routing methodology to where the ICE server will be located from the client. </param>
         /// <returns> A new <see cref="NetworkTraversal.CommunicationIceServer"/> instance for mocking. </returns>
-        public static CommunicationIceServer CommunicationIceServer(IEnumerable<string> urls = null, string username = null, string credential = null, CommunicationIceServerRouteType routeType = default)
+        public static CommunicationIceServer CommunicationIceServer(IEnumerable<string> urls = null, string username = null, string credential = null, RouteType routeType = default)
         {
             urls ??= new List<string>();
 

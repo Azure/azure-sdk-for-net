@@ -36,7 +36,7 @@ namespace Azure.Communication.NetworkTraversal
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateIssueRelayConfigurationRequest(string id, CommunicationRelayConfigurationRequestRouteType? routeType)
+        internal HttpMessage CreateIssueRelayConfigurationRequest(string id, RouteType? routeType)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -63,7 +63,7 @@ namespace Azure.Communication.NetworkTraversal
         /// <param name="id"> An existing ACS identity. </param>
         /// <param name="routeType"> The routing methodology to where the ICE server will be located from the client. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<CommunicationRelayConfiguration>> IssueRelayConfigurationAsync(string id = null, CommunicationRelayConfigurationRequestRouteType? routeType = null, CancellationToken cancellationToken = default)
+        public async Task<Response<CommunicationRelayConfiguration>> IssueRelayConfigurationAsync(string id = null, RouteType? routeType = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateIssueRelayConfigurationRequest(id, routeType);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -85,7 +85,7 @@ namespace Azure.Communication.NetworkTraversal
         /// <param name="id"> An existing ACS identity. </param>
         /// <param name="routeType"> The routing methodology to where the ICE server will be located from the client. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<CommunicationRelayConfiguration> IssueRelayConfiguration(string id = null, CommunicationRelayConfigurationRequestRouteType? routeType = null, CancellationToken cancellationToken = default)
+        public Response<CommunicationRelayConfiguration> IssueRelayConfiguration(string id = null, RouteType? routeType = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateIssueRelayConfigurationRequest(id, routeType);
             _pipeline.Send(message, cancellationToken);

@@ -18,6 +18,6 @@ namespace Azure.Communication.NetworkTraversal
         /// <summary> An existing ACS identity. </summary>
         public string Id { get; set; }
         /// <summary> The routing methodology to where the ICE server will be located from the client. </summary>
-        public CommunicationRelayConfigurationRequestRouteType? RouteType { get; set; }
+        public RouteType? RouteType { get; set; }
     }
 }
