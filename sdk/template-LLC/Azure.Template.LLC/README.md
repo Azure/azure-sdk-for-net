@@ -68,7 +68,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 Include code snippets and short descriptions for each task you listed in the [Introduction](#introduction) (the bulleted list). Briefly explain each operation, but include enough clarity to explain complex or otherwise tricky operations.
 
-If possible, use the same example snippets that your in-code documentation uses. For example, use the snippets in your `samples` that Sphinx ingests via its [literalinclude](https://www.sphinx-doc.org/en/1.5/markup/code.html?highlight=code%20examples#includes) directive. The `sample` file containing the snippets should reside alongside your package's code, and should be tested in an automated fashion.
+If possible, use the same example snippets that your in-code documentation uses. For example, use the snippets in your `samples`. The `sample` file containing the snippets should reside alongside your package's code, and should be tested in an automated fashion. Please refer [this](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md#updating-sample-snippets) doc to know more about snippets.
 
 Each example in the *Examples* section starts with an H3 that describes the example. At the top of this section, just under the *Examples* H2, add a bulleted list linking to each example H3. Each example should deep-link to the types and/or members used in the example.
 
@@ -78,10 +78,10 @@ Each example in the *Examples* section starts with an H3 that describes the exam
 
 ### Create the data
 
-Use the `CreateData` method to create a data reference; this method does not make a network call.
+Use the `CreateData` method to create a data reference.
 
 ```C#
-var data = await client.CreateData(id, name);
+var data = client.CreateData(id, name);
 ```
 
 ### Get the data
