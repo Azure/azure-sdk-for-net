@@ -6,9 +6,7 @@ dotnet restore $RepoRoot\eng\service.proj
 
 Push-Location $PSScriptRoot
 
-$diff = git diff --name-only main -- $RepoRoot\sdk\core\Azure.Core\src\Shared\
-$staged = git status -s
-$diff = ($diff + "`n" + $staged)
+$diff = git diff --name-only upstream/main -- $RepoRoot/sdk/core/Azure.Core/src/Shared/
 
 Write-Host "Building solution for projects referencing shared source:"
 Write-Host $diff
@@ -53,7 +51,7 @@ try
     }
 
     # Do another pass to get all projects that reference the ones discovered in the first pass. This will typically be test projects.
-    Write-Host "Checking for additional projects that referenc shared source"
+    Write-Host "Checking for additional projects that reference shared source"
     $foundProjectsPattern = Join-String -Separator "|" -InputObject $projects
     $foundProjectsPattern = $foundProjectsPattern.Replace("\", "\\\\").Replace(".", "\.")
 
