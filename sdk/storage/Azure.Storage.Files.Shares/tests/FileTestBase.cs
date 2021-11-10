@@ -30,8 +30,8 @@ namespace Azure.Storage.Files.Shares.Tests
         ShareClientOptions.ServiceVersion.V2021_04_10,
         StorageVersionExtensions.LatestVersion,
         StorageVersionExtensions.MaxVersion,
-        RecordingServiceVersion = StorageVersionExtensions.MaxVersion,
-        LiveServiceVersions = new object[] { StorageVersionExtensions.LatestVersion, })]
+        RecordingServiceVersion = ShareClientOptions.ServiceVersion.V2020_12_06,
+        LiveServiceVersions = new object[] { ShareClientOptions.ServiceVersion.V2020_12_06, })]
     public class FileTestBase : StorageTestBase<StorageTestEnvironment>
     {
         /// <summary>
@@ -44,7 +44,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public static Uri s_invalidUri = new Uri("https://error.file.core.windows.net");
 
         public FileTestBase(bool async, ShareClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode = null)
-            : base(async, mode)
+            : base(async, RecordedTestMode.Live)
         {
             _serviceVersion = serviceVersion;
             SharesClientBuilder = ClientBuilderExtensions.GetNewShareClientBuilder(Tenants, _serviceVersion);
