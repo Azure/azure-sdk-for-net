@@ -30,16 +30,16 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// <summary>
         /// Initializes a new instance of the PersonGroup class.
         /// </summary>
-        /// <param name="personGroupId">PersonGroupId of the target person
-        /// group.</param>
         /// <param name="name">User defined name, maximum length is
         /// 128.</param>
+        /// <param name="personGroupId">PersonGroupId of the target person
+        /// group.</param>
         /// <param name="userData">User specified data. Length should not
         /// exceed 16KB.</param>
         /// <param name="recognitionModel">Possible values include:
         /// 'recognition_01', 'recognition_02', 'recognition_03',
         /// 'recognition_04'</param>
-        public PersonGroup(string personGroupId, string name = default(string), string userData = default(string), string recognitionModel = default(string))
+        public PersonGroup(string name, string personGroupId, string userData = default(string), string recognitionModel = default(string))
             : base(name, userData, recognitionModel)
         {
             PersonGroupId = personGroupId;
