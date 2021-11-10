@@ -40,7 +40,7 @@ namespace Microsoft.Azure.OperationalInsights.Models
         public IDictionary<string, object> Statistics{ get; set; }
 
         /// <summary>
-        /// Contains information of errors.
+        /// Contains information of errors, may contain partial query errors.
         /// </summary>
         public QueryResponseError Error { get; set; }
     }
