@@ -19,9 +19,9 @@ $testResourceProviders = "Microsoft.Advisor", "Microsoft.AlertsManagement", "Mic
     "Microsoft.Relay", "Microsoft.Reservations", "Microsoft.ResourceGraph", "Microsoft.Resources", "Microsoft.Scheduler",
     "Microsoft.Search", "Microsoft.SecurityCenter", "Microsoft.SecurityInsights", "Microsoft.ServiceBus", "Microsoft.ServiceFabric",
     "Microsoft.ServiceFabricManagedClusters", "Microsoft.SignalR", "Microsoft.SqlVirtualMachine", "Microsoft.Storage", "Microsoft.StorageCache",
-    "Microsoft.StoragePool", "Microsoft.StorageSync", "Microsoft.StorSimple8000Series", "Microsoft.StreamAnalytics", "Microsoft.Subscription",
-    "Microsoft.Support", "Microsoft.Synapse", "Microsoft.TrafficManager", "Microsoft.VideoAnalyzer", "Microsoft.WebPubSub",
-    "Microsoft.AppService", "Microsoft.WorkLoadMonitor"
+    "Microsoft.StoragePool", "Microsoft.StorageSync", "Microsoft.StorSimple", "Microsoft.StorSimple8000Series", "Microsoft.StreamAnalytics",
+    "Microsoft.Subscription", "Microsoft.Support", "Microsoft.Synapse", "Microsoft.TrafficManager", "Microsoft.VideoAnalyzer",
+    "Microsoft.WebPubSub", "Microsoft.AppService", "Microsoft.WorkLoadMonitor"
 $successResourceProviders = @()
 $genFailResourceProviders = @()
 $buildFailResourceProviders = @()

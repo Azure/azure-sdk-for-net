@@ -123,32 +123,36 @@
         "datatype": "string",
         "cases": [
           {
-            "condition": "('provider' == 'Microsoft.AppService')",
-            "value": "web"
-          },
-          {
             "condition": "('provider' == 'Microsoft.Avs')",
             "value": "vmware"
-          },
-          {
-            "condition": "('provider' == 'Microsoft.Kusto')",
-            "value": "azure-kusto"
           },
           {
             "condition": "('provider' == 'Microsoft.CosmosDB')",
             "value": "cosmos-db"
           },
           {
-            "condition": "('provider' == 'Microsoft.CustomerInsights')",
-            "value": "customer-insights"
-          },
-          {
             "condition": "('provider' == 'Microsoft.Insights')",
             "value": "monitor"
           },
           {
+            "condition": "('provider' == 'Microsoft.Kusto')",
+            "value": "azure-kusto"
+          },
+          {
             "condition": "('provider' == 'Microsoft.ManagedServiceIdentity')",
             "value": "msi"
+          },
+          {
+            "condition": "('provider' == 'Microsoft.SecurityCenter')",
+            "value": "security"
+          },
+          {
+            "condition": "('provider' == 'Microsoft.StorSimple')",
+            "value": "storSimple1200Series"
+          },
+          {
+            "condition": "('provider' == 'Microsoft.AppService')",
+            "value": "web"
           },
           {
             "condition": "('provider' == 'provider')",
@@ -166,7 +170,7 @@
     },
     "ProviderMappingForm": {
       "identifier": "replace",
-      "pattern": "^(avs|kusto|cosmosdb|customerinsights|insights|managedserviceidentity|appservice)$",
+      "pattern": "^(avs|cosmosdb|insights|kusto|managedserviceidentity|securitycenter|storsimple|appservice)$",
       "replacement": ""
     },
     "ProviderShortNameLowerForm": {
