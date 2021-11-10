@@ -8,7 +8,6 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Description;
-using Microsoft.Azure.WebJobs.Extensions.WebPubSub.Operations;
 using Microsoft.Azure.WebJobs.Host.Config;
 using Microsoft.Azure.WebJobs.Logging;
 using Microsoft.Azure.WebPubSub.Common;
@@ -213,14 +212,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         {
             if (input.TryGetValue("dataType", StringComparison.OrdinalIgnoreCase, out var value))
             {
-                var dataType = value.ToObject<MessageDataType>();
+                var dataType = value.ToObject<WebPubSubDataType>();
 
-                input.TryGetValue("message", StringComparison.OrdinalIgnoreCase, out var message);
+                input.TryGetValue("data", StringComparison.OrdinalIgnoreCase, out var data);
 
-                if (dataType == MessageDataType.Binary &&
-                    !(message["type"] != null && message["type"].ToString().Equals("Buffer", StringComparison.OrdinalIgnoreCase)))
+                if (dataType == WebPubSubDataType.Binary &&
+                    !(data["type"] != null && data["type"].ToString().Equals("Buffer", StringComparison.OrdinalIgnoreCase)))
                 {
-                    throw new ArgumentException("MessageDataType is binary, please use ArrayBuffer as message type.");
+                    throw new ArgumentException("WebPubSubDataType is binary, please use ArrayBuffer as message data type.");
                 }
             }
         }

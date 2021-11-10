@@ -2,13 +2,8 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
-using System.Threading;
-using System.Threading.Tasks;
-using Azure;
-using Azure.Core;
 using Azure.Messaging.WebPubSub;
 using Microsoft.Azure.WebJobs.Description;
-using Microsoft.Azure.WebJobs.Extensions.WebPubSub.Operations;
 using Microsoft.Azure.WebJobs.Host.Config;
 using Moq;
 

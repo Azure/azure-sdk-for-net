@@ -290,7 +290,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
                 Assert.AreEqual("my-host.webpubsub.net", request.ConnectionContext.Origin);
                 var response = new UserEventResponse("ACK");
                 // simple tests.
-                switch (request.Message.ToString())
+                switch (request.Data.ToString())
                 {
                     case "1": response.SetState("counter", 10);
                         break;
