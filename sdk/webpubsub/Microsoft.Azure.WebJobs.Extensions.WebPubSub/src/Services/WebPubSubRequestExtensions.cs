@@ -78,12 +78,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                     {
                         using var ms = new MemoryStream();
                         await request.Body.CopyToAsync(ms).ConfigureAwait(false);
-                        var message = BinaryData.FromBytes(ms.ToArray());
+                        var data = BinaryData.FromBytes(ms.ToArray());
                         if (!MediaTypeHeaderValue.Parse(request.ContentType).MediaType.IsValidMediaType(out var dataType))
                         {
                             throw new ArgumentException($"ContentType is not supported: {request.ContentType}");
                         }
-                        return new UserEventRequest(context, message, dataType);
+                        return new UserEventRequest(context, data, dataType);
                     }
                 case RequestType.Connected:
                     {
@@ -126,6 +126,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
             if (options.TryGetKey(connectionContext.Origin, out var accessKey))
             {
+                // server side disable signature checks.
+                if (string.IsNullOrEmpty(accessKey))
+                {
+                    return true;
+                }
+
                 var signatures = connectionContext.Signature.ToHeaderList();
                 if (signatures == null)
                 {
@@ -286,16 +292,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             return header.TryGetValue(key, out StringValues values) && values.Count > 0 ? values[0] : null;
         }
 
-        private static bool IsValidMediaType(this string mediaType, out MessageDataType dataType)
+        private static bool IsValidMediaType(this string mediaType, out WebPubSubDataType dataType)
         {
             try
             {
-                dataType = mediaType.GetMessageDataType();
+                dataType = mediaType.GetDataType();
                 return true;
             }
             catch (Exception)
             {
-                dataType = MessageDataType.Binary;
+                dataType = WebPubSubDataType.Binary;
                 return false;
             }
         }
@@ -317,12 +323,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 WebPubSubEventType.User;
         }
 
-        private static MessageDataType GetMessageDataType(this string mediaType) =>
+        private static WebPubSubDataType GetDataType(this string mediaType) =>
             mediaType.ToLowerInvariant() switch
             {
-                Constants.ContentTypes.PlainTextContentType => MessageDataType.Text,
-                Constants.ContentTypes.BinaryContentType => MessageDataType.Binary,
-                Constants.ContentTypes.JsonContentType => MessageDataType.Json,
+                Constants.ContentTypes.PlainTextContentType => WebPubSubDataType.Text,
+                Constants.ContentTypes.BinaryContentType => WebPubSubDataType.Binary,
+                Constants.ContentTypes.JsonContentType => WebPubSubDataType.Json,
                 _ => throw new ArgumentException($"Invalid content type: {mediaType}")
             };
     }

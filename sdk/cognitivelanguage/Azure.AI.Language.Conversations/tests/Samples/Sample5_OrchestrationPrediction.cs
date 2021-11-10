@@ -21,15 +21,14 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             #region Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPrediction
 
 #if SNIPPET
+            ConversationsProject orchestrationProject = new ConversationsProject("DomainOrchestrator", "production");
             Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
-                "DomainOrchestrator",
-                "production",
-                "Where are the calories per recipe?");
+                "Where are the calories per recipe?",
+                orchestrationProject);
 #else
             Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
-                TestEnvironment.OrchestrationProjectName,
-                TestEnvironment.DeploymentName,
-                "Where are the calories per recipe?");
+                "Where are the calories per recipe?",
+                TestEnvironment.OrchestrationProject);
 #endif
 
             OrchestratorPrediction orchestratorPrediction = response.Value.Prediction as OrchestratorPrediction;
@@ -65,9 +64,8 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             ConversationAnalysisClient client = Client;
 
             Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
-                TestEnvironment.OrchestrationProjectName,
-                TestEnvironment.DeploymentName,
-                "We'll have 2 plates of seared salmon nigiri.");
+                "We'll have 2 plates of seared salmon nigiri.",
+                TestEnvironment.OrchestrationProject);
 
             OrchestratorPrediction orchestratorPrediction = response.Value.Prediction as OrchestratorPrediction;
 
@@ -118,9 +116,8 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             ConversationAnalysisClient client = Client;
 
             Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
-                TestEnvironment.OrchestrationProjectName,
-                TestEnvironment.DeploymentName,
-                "Book me flight from London to Paris");
+                "Book me flight from London to Paris",
+                TestEnvironment.OrchestrationProject);
 
             OrchestratorPrediction orchestratorPrediction = response.Value.Prediction as OrchestratorPrediction;
 
@@ -150,15 +147,14 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             #region Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPredictionAsync
 
 #if SNIPPET
+            ConversationsProject orchestrationProject = new ConversationsProject("DomainOrchestrator", "production");
             Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(
-                "DomainOrchestrator",
-                "production",
-                "Where are the calories per recipe?");
+                "Where are the calories per recipe?",
+                orchestrationProject);
 #else
             Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(
-                TestEnvironment.OrchestrationProjectName,
-                TestEnvironment.DeploymentName,
-                "Where are the calories per recipe?");
+                "Where are the calories per recipe?",
+                TestEnvironment.OrchestrationProject);
 #endif
 
             OrchestratorPrediction orchestratorPrediction = response.Value.Prediction as OrchestratorPrediction;
@@ -193,9 +189,8 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             ConversationAnalysisClient client = Client;
 
             Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(
-                TestEnvironment.OrchestrationProjectName,
-                TestEnvironment.DeploymentName,
-                "We'll have 2 plates of seared salmon nigiri.");
+                "We'll have 2 plates of seared salmon nigiri.",
+                TestEnvironment.OrchestrationProject);
 
             OrchestratorPrediction orchestratorPrediction = response.Value.Prediction as OrchestratorPrediction;
 
@@ -245,9 +240,8 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             ConversationAnalysisClient client = Client;
 
             Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(
-                TestEnvironment.OrchestrationProjectName,
-                TestEnvironment.DeploymentName,
-                "Book me flight from London to Paris");
+                "Book me flight from London to Paris",
+                TestEnvironment.OrchestrationProject);
 
             OrchestratorPrediction orchestratorPrediction = response.Value.Prediction as OrchestratorPrediction;
 

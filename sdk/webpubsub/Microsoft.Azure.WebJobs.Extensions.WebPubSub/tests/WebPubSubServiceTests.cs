@@ -27,14 +27,23 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         }
 
         [TestCase]
-        public void TestConfigParser()
+        public void TestValidationOptionsParser()
         {
             var testconnection = "Endpoint=http://abc;Port=888;AccessKey=ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789ABCDEFGH==A;Version=1.0;";
-            var configs = new ServiceConfigParser(testconnection);
+            var configs = new WebPubSubValidationOptions(testconnection);
 
-            Assert.AreEqual("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789ABCDEFGH==A", configs.AccessKey);
-            Assert.AreEqual("http://abc/", configs.Endpoint.ToString());
-            Assert.AreEqual(888, configs.Port);
+            Assert.IsTrue(configs.TryGetKey("abc", out var key));
+            Assert.AreEqual("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789ABCDEFGH==A", key);
+        }
+
+        [TestCase]
+        public void TestValidationOptionsWithoutAccessKey()
+        {
+            var testconnection = "Endpoint=http://abc;Version=1.0;";
+            var configs = new WebPubSubValidationOptions(testconnection);
+
+            Assert.IsTrue(configs.TryGetKey("abc", out var key));
+            Assert.Null(key);
         }
     }
 }

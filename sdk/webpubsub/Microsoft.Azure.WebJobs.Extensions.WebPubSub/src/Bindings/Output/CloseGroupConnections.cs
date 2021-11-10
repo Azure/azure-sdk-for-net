@@ -3,8 +3,9 @@
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using System.Collections.Generic;
 
-namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Operations
+namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
     /// <summary>
     /// Operation to close connections in a group.
@@ -20,7 +21,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Operations
         /// <summary>
         /// ConnectionIds to exclude.
         /// </summary>
-        public string[] Excluded { get; set; }
+        public IList<string> Excluded { get; set; }
 
         /// <summary>
         /// Reason to close the connections.
