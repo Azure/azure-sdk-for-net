@@ -19,6 +19,7 @@ namespace Azure.Storage.Blobs.Tests
         {
         }
 
+        #region Client-Specific Impl
         protected override BlockBlobClient GetResourceClient(BlobContainerClient container, string resourceName = null, BlobClientOptions options = null)
         {
             Argument.AssertNotNull(container, nameof(container));
@@ -90,5 +91,6 @@ namespace Azure.Storage.Blobs.Tests
             }
             await client.CommitBlockListAsync(blockIds);
         }
+        #endregion
     }
 }

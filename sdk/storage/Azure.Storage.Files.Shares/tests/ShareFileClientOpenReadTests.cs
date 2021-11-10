@@ -53,6 +53,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Conditions = new AccessConditionConfigs(this);
         }
 
+        #region Client-Specific Impl
         protected override async Task<IDisposingContainer<ShareClient>> GetDisposingContainerAsync(ShareServiceClient service = null, string containerName = null)
             => await ClientBuilder.GetTestShareAsync(service, containerName);
 
@@ -131,6 +132,7 @@ namespace Azure.Storage.Files.Shares.Tests
                     throw Errors.InvalidArgument(nameof(mode));
             };
         }
+        #endregion
 
         #region Test Overrides
         /// <summary>

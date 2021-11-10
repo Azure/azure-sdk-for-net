@@ -35,12 +35,13 @@ namespace Azure.Storage.Test.Shared
         public ClientBuilder<TServiceClient, TClientOptions> ClientBuilder { get; protected set; }
 
         /// <summary>
-        /// Manages service-agnostic access condition setups for tests.
+        /// Supplies service-agnostic access conditions for tests.
         /// </summary>
         public abstract AccessConditionConfigs Conditions { get; }
 
         /// <summary>
         /// Error code expected from the service when attempted to open read on a nonexistent blob.
+        /// Different services supply different error codes.
         /// </summary>
         protected abstract string OpenReadAsync_Error_Code { get; }
 
@@ -48,7 +49,7 @@ namespace Azure.Storage.Test.Shared
             bool async,
             string generatedResourceNamePrefix = default,
             RecordedTestMode? mode = null)
-            : base(async, RecordedTestMode.Playback)
+            : base(async, mode)
         {
             _generatedResourceNamePrefix = generatedResourceNamePrefix ?? "test-resource-";
         }
@@ -369,43 +370,38 @@ namespace Azure.Storage.Test.Shared
             TestHelper.AssertSequenceEqual(expectedData, outputBytes);
         }
 
-        //[RecordedTest]
-        //[Ignore("Don't want to record 1 GB of data.")]
-        //public async Task OpenReadAsync_LargeData()
-        //{
-        //    // Arrange
-        //    await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
-        //    int length = 1 * Constants.GB;
-        //    byte[] exectedData = GetRandomBuffer(length);
-        //    BlobClient blobClient = InstrumentClient(disposingContainer.Container.GetBlobClient(GetNewBlobName()));
-        //    using Stream stream = new MemoryStream(exectedData);
-        //    await blobClient.UploadAsync(stream,
-        //        transferOptions: new StorageTransferOptions
-        //        {
-        //            MaximumTransferLength = 8 * Constants.MB,
-        //            MaximumConcurrency = 8
-        //        });
+        [RecordedTest]
+        [Ignore("Don't want to record 1 GB of data.")]
+        public async Task OpenReadAsync_LargeData()
+        {
+            // Arrange
+            await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
+            int length = 1 * Constants.GB;
+            byte[] expectedData = GetRandomBuffer(length);
+            TResourceClient client = GetResourceClient(disposingContainer.Container);
+            using Stream stream = new MemoryStream(expectedData);
+            await StageDataAsync(client, stream);
 
-        //    Stream outputStream = await blobClient.OpenReadAsync();
-        //    int readSize = 8 * Constants.MB;
-        //    byte[] actualData = new byte[readSize];
-        //    int offset = 0;
+            Stream outputStream = await OpenReadAsync(client);
+            int readSize = 8 * Constants.MB;
+            byte[] actualData = new byte[readSize];
+            int offset = 0;
 
-        //    // Act
-        //    for (int i = 0; i < length / readSize; i++)
-        //    {
-        //        await outputStream.ReadAsync(actualData, 0, readSize);
-        //        for (int j = 0; j < readSize; j++)
-        //        {
-        //            // Assert
-        //            if (actualData[j] != exectedData[offset + j])
-        //            {
-        //                Assert.Fail($"Index {offset + j} does not match.  Expected: {exectedData[offset + j]} Actual: {actualData[j]}");
-        //            }
-        //        }
-        //        offset += readSize;
-        //    }
-        //}
+            // Act
+            for (int i = 0; i < length / readSize; i++)
+            {
+                int actualRead = await outputStream.ReadAsync(actualData, 0, readSize);
+                for (int j = 0; j < actualRead; j++)
+                {
+                    // Assert
+                    if (actualData[j] != expectedData[offset + j])
+                    {
+                        Assert.Fail($"Index {offset + j} does not match.  Expected: {expectedData[offset + j]} Actual: {actualData[j]}");
+                    }
+                }
+                offset += actualRead;
+            }
+        }
 
         [RecordedTest]
         public async Task OpenReadAsync_CopyReadStreamToAnotherStream()

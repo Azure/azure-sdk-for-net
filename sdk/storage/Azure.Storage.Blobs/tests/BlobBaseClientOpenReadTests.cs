@@ -40,6 +40,9 @@ namespace Azure.Storage.Blobs.Tests
     {
         private const string _blobResourcePrefix = "test-blob-";
 
+        /// <summary>
+        /// Supplies <see cref="BlobRequestConditions"/> instances for tests.
+        /// </summary>
         public BlobAccessConditionConfigs BlobConditions { get; }
 
         /// <inheritdoc/>
@@ -57,7 +60,7 @@ namespace Azure.Storage.Blobs.Tests
             BlobConditions = new BlobAccessConditionConfigs(this);
         }
 
-        #region Service-Specific Impl
+        #region Client-Specific Impl
         protected override BlobRequestConditions BuildRequestConditions(AccessConditionParameters parameters, bool lease = true)
             => BlobConditions.BuildAccessConditions(parameters, lease);
 

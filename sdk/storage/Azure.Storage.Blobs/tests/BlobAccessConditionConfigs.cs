@@ -13,6 +13,10 @@ using Azure.Storage.Test.Shared;
 
 namespace Azure.Storage.Blobs.Tests
 {
+    /// <summary>
+    /// Extends <see cref="AccessConditionConfigs"/> to setup blob-service-specific
+    /// request conditions.
+    /// </summary>
     public class BlobAccessConditionConfigs : AccessConditionConfigs
     {
         public BlobAccessConditionConfigs(RecordedTestBase recordedTestBase)

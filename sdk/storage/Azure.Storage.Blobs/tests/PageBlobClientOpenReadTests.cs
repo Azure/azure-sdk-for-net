@@ -1,16 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
-using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Tests
 {
@@ -21,6 +16,7 @@ namespace Azure.Storage.Blobs.Tests
         {
         }
 
+        #region Client-Specific Impl
         protected override PageBlobClient GetResourceClient(BlobContainerClient container, string resourceName = null, BlobClientOptions options = null)
         {
             Argument.AssertNotNull(container, nameof(container));
@@ -41,15 +37,6 @@ namespace Azure.Storage.Blobs.Tests
             Argument.AssertNotNull(client, nameof(client));
             Argument.AssertNotNull(data, nameof(data));
 
-            if (!data.CanSeek)
-            {
-                throw new ArgumentException("Test setup requires seekable data.");
-            }
-            if (data.Length % Constants.Blob.Page.PageSizeBytes != 0)
-            {
-                CancelTestUnallignedPageBlob();
-            }
-
             using Stream writeStream = await client.OpenWriteAsync(overwrite: true, position: 0, new PageBlobOpenWriteOptions
             {
                 Size = data.Length
@@ -61,14 +48,6 @@ namespace Azure.Storage.Blobs.Tests
         {
             Argument.AssertNotNull(client, nameof(client));
             Argument.AssertNotNull(data, nameof(data));
-            if (!data.CanSeek)
-            {
-                throw new ArgumentException("Test setup requires seekable data.");
-            }
-            if (data.Length % Constants.Blob.Page.PageSizeBytes != 0)
-            {
-                CancelTestUnallignedPageBlob();
-            }
 
             long position = mode switch
             {
@@ -84,8 +63,6 @@ namespace Azure.Storage.Blobs.Tests
             });
             await data.CopyToAsync(writeStream);
         }
-
-        private void CancelTestUnallignedPageBlob()
-            => Assert.Inconclusive($"Cannot test odd data sizes with page blobs. Data must be in increments of {Constants.Blob.Page.PageSizeBytes}.");
+        #endregion
     }
 }

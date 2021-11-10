@@ -51,6 +51,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             FileConditions = new DataLakeAccessConditionConfigs(this);
         }
 
+        #region Client-Specific Impl
         protected override async Task<IDisposingContainer<DataLakeFileSystemClient>> GetDisposingContainerAsync(DataLakeServiceClient service = null, string containerName = null)
             => await ClientBuilder.GetNewFileSystem(service, containerName);
 
@@ -124,5 +125,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             => await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 readTask,
                 e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
+        #endregion
     }
 }

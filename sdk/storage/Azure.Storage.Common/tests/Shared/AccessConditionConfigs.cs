@@ -7,6 +7,9 @@ using Azure.Core.TestFramework;
 
 namespace Azure.Storage.Test.Shared
 {
+    /// <summary>
+    /// Supplies request conditions for tests.
+    /// </summary>
     public class AccessConditionConfigs
     {
         private readonly RecordedTestBase _azureCoreRecordedTestBase;
@@ -18,7 +21,6 @@ namespace Azure.Storage.Test.Shared
             _azureCoreRecordedTestBase = recordedTestBase;
         }
 
-        // TODO does this belong in a "client builder"
         public RequestConditions BuildRequestConditions(
             AccessConditionParameters parameters)
             => new RequestConditions

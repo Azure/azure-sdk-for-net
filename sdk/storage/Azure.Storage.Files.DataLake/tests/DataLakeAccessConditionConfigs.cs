@@ -8,6 +8,10 @@ using Azure.Storage.Test.Shared;
 
 namespace Azure.Storage.Files.DataLake.Tests
 {
+    /// <summary>
+    /// Extends <see cref="AccessConditionConfigs"/> to setup datalake-service-specific
+    /// request conditions.
+    /// </summary>
     public class DataLakeAccessConditionConfigs : AccessConditionConfigs
     {
         public DataLakeAccessConditionConfigs(RecordedTestBase recordedTestBase)
