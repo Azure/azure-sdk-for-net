@@ -1,0 +1,123 @@
+﻿{
+  "swagger": "2.0",
+  "info": {
+    "title": "Template LLC",
+    "description": "Template LLC",
+    "version": "1.0.0"
+  },
+  "host": "localhost:3000",
+  "schemes": ["http"],
+  "produces": ["application/json"],
+  "consumes": ["application/json"],
+  "paths": {
+    "/test1": {
+      "get": {
+        "operationId": "NoRequestBodyResponseBody",
+        "description": "No RequestBody and ResponseBody",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "$top",
+            "description": "Query parameter top",
+            "type": "integer",
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "id",
+            "description": "Query parameter Id",
+            "type": "integer",
+            "required": true,
+            "x-nullable": true
+          },
+          {
+            "in": "query",
+            "name": "skip",
+            "description": "Query parameter skip",
+            "type": "integer",
+            "required": true,
+            "x-ms-client-default": 12
+          },
+          {
+            "in": "query",
+            "name": "status",
+            "description": "Query parameter status",
+            "type": "string",
+            "x-ms-client-default": "start"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "String Response",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "put": {
+        "operationId": "RequestBodyResponseBody",
+        "description": "RequestBody and ResponseBody",
+        "parameters": [
+          {
+            "name": "model",
+            "description": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/TestModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "String Response",
+            "schema": {
+              "$ref": "#/definitions/TestModel"
+            }
+          }
+        }
+      }
+    },
+    "/test2": {
+      "get": {
+        "operationId": "NoRequestBodyNoResponseBody",
+        "description": "No RequestBody and No ResponseBody",
+        "responses": {
+          "200": {
+            "description": "Empty Response"
+          }
+        }
+      },
+      "put": {
+        "operationId": "RequestBodyNoResponseBody",
+        "description": "RequestBody and No ResponseBody",
+        "parameters": [
+          {
+            "name": "stringBody",
+            "description": "string body",
+            "in": "body",
+            "schema": {
+              "type": "string",
+              "x-nullable": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Empty Response"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "TestModel": {
+      "type": "object",
+      "properties": {
+        "Code": { "type": "string" },
+        "Status": { "type": "string" }
+      },
+      "description": "."
+    }
+  }
+}
