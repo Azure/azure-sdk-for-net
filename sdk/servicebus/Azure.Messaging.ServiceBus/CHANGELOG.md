@@ -1,14 +1,25 @@
 # Release History
 
-## 7.5.0-beta.2 (Unreleased)
-
-### Features Added
+## 7.5.0 (2021-11-10)
 
 ### Breaking Changes
 
+- Default `To`, `ReplyTo`, and `CorrelationId` properties of `ServiceBusMessage` to null, rather than empty string.
+To retain the old behavior, you can set the properties to empty string when constructing your message:
+```c#
+var message = new ServiceBusMessage
+    {
+        ReplyTo = "",
+        To = "",
+        CorrelationId = ""
+    };
+```
+
 ### Bugs Fixed
 
-### Other Changes
+- Fixed memory leak in ServiceBusSessionProcessor.
+- Fixed bug where AMQP sequence/value messages could not be created from a received message.
+- Fixed bug where a named session of empty string could not be accepted.
 
 ## 7.5.0-beta.1 (2021-10-05)
 
