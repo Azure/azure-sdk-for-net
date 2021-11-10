@@ -8,11 +8,11 @@
 To retain the old behavior, you can set the properties to empty string when constructing your message:
 ```c#
 var message = new ServiceBusMessage
-    {
-        ReplyTo = "",
-        To = "",
-        CorrelationId = ""
-    };
+{
+    ReplyTo = "",
+    To = "",
+    CorrelationId = ""
+};
 ```
 
 ### Bugs Fixed
