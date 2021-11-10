@@ -22,18 +22,5 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         /// Global connection string works for output binding and input validations.
         /// </summary>
         public string ConnectionString { get; set; }
-
-        /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        string IOptionsFormatter.Format()
-        {
-            // Not expose ConnectionString in logging.
-            JObject options = new()
-            {
-                { nameof(Hub), Hub }
-            };
-
-            return options.ToString(Formatting.Indented);
-        }
     }
 }
