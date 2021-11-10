@@ -68,7 +68,7 @@ namespace Azure.Communication.CallingServer.Tests
         [TestCaseSource(nameof(TestData_CreateCall))]
         public async Task CreateCallAsync_Returns201Created(CommunicationIdentifier source, IEnumerable<CommunicationIdentifier> targets, CreateCallOptions createCallOptions)
         {
-            CallingServerClient callingServerClient = CreateMockCallingServerClient(201, CreateOrJoinCallPayload);
+            CallingServerClient callingServerClient = CreateMockCallingServerClient(201, CreateOrJoinOrAnswerCallPayload);
 
             var response = await callingServerClient.CreateCallConnectionAsync(source, targets, createCallOptions).ConfigureAwait(false);
             Assert.AreEqual((int)HttpStatusCode.Created, response.GetRawResponse().Status);
@@ -78,7 +78,7 @@ namespace Azure.Communication.CallingServer.Tests
         [TestCaseSource(nameof(TestData_CreateCall))]
         public void CreateCall_Returns201Created(CommunicationIdentifier source, IEnumerable<CommunicationIdentifier> targets, CreateCallOptions createCallOptions)
         {
-            CallingServerClient callingServerClient = CreateMockCallingServerClient(201, CreateOrJoinCallPayload);
+            CallingServerClient callingServerClient = CreateMockCallingServerClient(201, CreateOrJoinOrAnswerCallPayload);
 
             var response = callingServerClient.CreateCallConnection(source, targets, createCallOptions);
             Assert.AreEqual((int)HttpStatusCode.Created, response.GetRawResponse().Status);
@@ -108,7 +108,7 @@ namespace Azure.Communication.CallingServer.Tests
         [TestCaseSource(nameof(TestData_JoinCall))]
         public async Task JoinCallAsync_Returns202Accepted(string serverCallId, CommunicationIdentifier source, JoinCallOptions joinCallOptions)
         {
-            CallingServerClient callingServerClient = CreateMockCallingServerClient(202, CreateOrJoinCallPayload);
+            CallingServerClient callingServerClient = CreateMockCallingServerClient(202, CreateOrJoinOrAnswerCallPayload);
 
             var callLocator = new ServerCallLocator(serverCallId);
 
@@ -120,7 +120,7 @@ namespace Azure.Communication.CallingServer.Tests
         [TestCaseSource(nameof(TestData_JoinCall))]
         public void JoinCall_Returns202Accepted(string serverCallId, CommunicationIdentifier source, JoinCallOptions joinCallOptions)
         {
-            CallingServerClient callingServerClient = CreateMockCallingServerClient(202, CreateOrJoinCallPayload);
+            CallingServerClient callingServerClient = CreateMockCallingServerClient(202, CreateOrJoinOrAnswerCallPayload);
 
             var callLocator = new ServerCallLocator(serverCallId);
 
@@ -859,6 +859,24 @@ namespace Azure.Communication.CallingServer.Tests
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.Status);
         }
 
+        [TestCaseSource(nameof(TestData_AnswerCall))]
+        public async Task AnswerCallAsync_Return200OK(string incomingCallContext, IEnumerable<CallMediaType> requestedMediaTypes, IEnumerable<CallingEventSubscriptionType> requestedCallEvents, Uri callbackUri)
+        {
+            CallingServerClient serverCallRestClient = CreateMockCallingServerClient(202, CreateOrJoinOrAnswerCallPayload);
+
+            var response = await serverCallRestClient.AnswerCallAsync(incomingCallContext, requestedMediaTypes, requestedCallEvents, callbackUri);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+        }
+
+        [TestCaseSource(nameof(TestData_AnswerCall))]
+        public void AnswerCall_Return202OK(string incomingCallContext, IEnumerable<CallMediaType> requestedMediaTypes, IEnumerable<CallingEventSubscriptionType> requestedCallEvents, Uri callbackUri)
+        {
+            CallingServerClient serverCallRestClient = CreateMockCallingServerClient(202, CreateOrJoinOrAnswerCallPayload);
+
+            var response = serverCallRestClient.AnswerCall(incomingCallContext, requestedMediaTypes, requestedCallEvents, callbackUri);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+        }
+
         [TestCaseSource(nameof(TestData_RedirectCall))]
         public void RedirectCallAsync_Returns404NotFound(string incomingCallContext, IEnumerable<CommunicationIdentifier> targets, Uri callbackUri, int timeoutInSeconds)
         {
@@ -886,6 +904,36 @@ namespace Azure.Communication.CallingServer.Tests
                 callbackUri,
                 timeoutInSeconds
                 ));
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
+        }
+
+        [TestCaseSource(nameof(TestData_AnswerCall))]
+        public void AnswerCallAsync_Returns404NotFound(string incomingCallContext, IEnumerable<CallMediaType> requestedMediaTypes, IEnumerable<CallingEventSubscriptionType> requestedCallEvents, Uri callbackUri)
+        {
+            CallingServerClient serverCallRestClient = CreateMockCallingServerClient(404);
+
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await serverCallRestClient.AnswerCallAsync(
+                incomingCallContext,
+                requestedMediaTypes,
+                requestedCallEvents,
+                callbackUri)
+            .ConfigureAwait(false));
+
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
+        }
+
+        [TestCaseSource(nameof(TestData_AnswerCall))]
+        public void AnswerCall_Returns404NotFound(string incomingCallContext, IEnumerable<CallMediaType> requestedMediaTypes, IEnumerable<CallingEventSubscriptionType> requestedCallEvents, Uri callbackUri)
+        {
+            CallingServerClient serverCallRestClient = CreateMockCallingServerClient(404);
+
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => serverCallRestClient.AnswerCall(
+                incomingCallContext,
+                requestedMediaTypes,
+                requestedCallEvents,
+                callbackUri));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
         }
@@ -1135,6 +1183,20 @@ namespace Azure.Communication.CallingServer.Tests
                     },
                     new Uri("https://bot.contoso.com/callback"),
                     3,
+                },
+            };
+        }
+
+        private static IEnumerable<object?[]> TestData_AnswerCall()
+        {
+            return new[]
+            {
+                new object?[]
+                {
+                    "dummyIincomingCallContext",
+                    new CallMediaType[] { CallMediaType.Audio },
+                    new CallingEventSubscriptionType[] { CallingEventSubscriptionType.ParticipantsUpdated },
+                    new Uri("https://bot.contoso.com/callback")
                 },
             };
         }

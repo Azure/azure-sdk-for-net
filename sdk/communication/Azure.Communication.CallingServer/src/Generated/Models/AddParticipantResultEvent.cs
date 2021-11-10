@@ -7,7 +7,7 @@
 
 namespace Azure.Communication.CallingServer
 {
-    /// <summary> The AddParticipantResultEvent. </summary>
+    /// <summary> The add participant result event. </summary>
     public partial class AddParticipantResultEvent
     {
         /// <summary> Initializes a new instance of AddParticipantResultEvent. </summary>
