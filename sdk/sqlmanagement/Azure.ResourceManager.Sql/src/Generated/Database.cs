@@ -969,11 +969,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="skiptoken"> An opaque token that identifies a starting point in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DatabaseColumnData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DatabaseColumnData> GetByDatabaseDatabaseColumnsAsync(IEnumerable<string> schema = null, IEnumerable<string> table = null, IEnumerable<string> column = null, IEnumerable<string> orderBy = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DatabaseColumnData> GetDatabaseColumnsAsync(IEnumerable<string> schema = null, IEnumerable<string> table = null, IEnumerable<string> column = null, IEnumerable<string> orderBy = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<DatabaseColumnData>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Database.GetByDatabaseDatabaseColumns");
+                using var scope = _clientDiagnostics.CreateScope("Database.GetDatabaseColumns");
                 scope.Start();
                 try
                 {
@@ -988,7 +988,7 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<DatabaseColumnData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Database.GetByDatabaseDatabaseColumns");
+                using var scope = _clientDiagnostics.CreateScope("Database.GetDatabaseColumns");
                 scope.Start();
                 try
                 {
@@ -1015,11 +1015,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="skiptoken"> An opaque token that identifies a starting point in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DatabaseColumnData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DatabaseColumnData> GetByDatabaseDatabaseColumns(IEnumerable<string> schema = null, IEnumerable<string> table = null, IEnumerable<string> column = null, IEnumerable<string> orderBy = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<DatabaseColumnData> GetDatabaseColumns(IEnumerable<string> schema = null, IEnumerable<string> table = null, IEnumerable<string> column = null, IEnumerable<string> orderBy = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
             Page<DatabaseColumnData> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Database.GetByDatabaseDatabaseColumns");
+                using var scope = _clientDiagnostics.CreateScope("Database.GetDatabaseColumns");
                 scope.Start();
                 try
                 {
@@ -1034,7 +1034,7 @@ namespace Azure.ResourceManager.Sql
             }
             Page<DatabaseColumnData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Database.GetByDatabaseDatabaseColumns");
+                using var scope = _clientDiagnostics.CreateScope("Database.GetDatabaseColumns");
                 scope.Start();
                 try
                 {
@@ -1123,11 +1123,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SensitivityLabelData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SensitivityLabelData> GetCurrentByDatabaseSensitivityLabelsAsync(string skipToken = null, bool? count = null, string filter = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SensitivityLabelData> GetCurrentSensitivityLabelsAsync(string skipToken = null, bool? count = null, string filter = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<SensitivityLabelData>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Database.GetCurrentByDatabaseSensitivityLabels");
+                using var scope = _clientDiagnostics.CreateScope("Database.GetCurrentSensitivityLabels");
                 scope.Start();
                 try
                 {
@@ -1142,7 +1142,7 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<SensitivityLabelData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Database.GetCurrentByDatabaseSensitivityLabels");
+                using var scope = _clientDiagnostics.CreateScope("Database.GetCurrentSensitivityLabels");
                 scope.Start();
                 try
                 {
@@ -1167,11 +1167,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SensitivityLabelData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SensitivityLabelData> GetCurrentByDatabaseSensitivityLabels(string skipToken = null, bool? count = null, string filter = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<SensitivityLabelData> GetCurrentSensitivityLabels(string skipToken = null, bool? count = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Page<SensitivityLabelData> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Database.GetCurrentByDatabaseSensitivityLabels");
+                using var scope = _clientDiagnostics.CreateScope("Database.GetCurrentSensitivityLabels");
                 scope.Start();
                 try
                 {
@@ -1186,7 +1186,7 @@ namespace Azure.ResourceManager.Sql
             }
             Page<SensitivityLabelData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Database.GetCurrentByDatabaseSensitivityLabels");
+                using var scope = _clientDiagnostics.CreateScope("Database.GetCurrentSensitivityLabels");
                 scope.Start();
                 try
                 {
@@ -1267,11 +1267,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SensitivityLabelData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SensitivityLabelData> GetRecommendedByDatabaseSensitivityLabelsAsync(string skipToken = null, bool? includeDisabledRecommendations = null, string filter = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SensitivityLabelData> GetRecommendedSensitivityLabelsAsync(string skipToken = null, bool? includeDisabledRecommendations = null, string filter = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<SensitivityLabelData>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Database.GetRecommendedByDatabaseSensitivityLabels");
+                using var scope = _clientDiagnostics.CreateScope("Database.GetRecommendedSensitivityLabels");
                 scope.Start();
                 try
                 {
@@ -1286,7 +1286,7 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<SensitivityLabelData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Database.GetRecommendedByDatabaseSensitivityLabels");
+                using var scope = _clientDiagnostics.CreateScope("Database.GetRecommendedSensitivityLabels");
                 scope.Start();
                 try
                 {
@@ -1311,11 +1311,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SensitivityLabelData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SensitivityLabelData> GetRecommendedByDatabaseSensitivityLabels(string skipToken = null, bool? includeDisabledRecommendations = null, string filter = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<SensitivityLabelData> GetRecommendedSensitivityLabels(string skipToken = null, bool? includeDisabledRecommendations = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Page<SensitivityLabelData> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Database.GetRecommendedByDatabaseSensitivityLabels");
+                using var scope = _clientDiagnostics.CreateScope("Database.GetRecommendedSensitivityLabels");
                 scope.Start();
                 try
                 {
@@ -1330,7 +1330,7 @@ namespace Azure.ResourceManager.Sql
             }
             Page<SensitivityLabelData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Database.GetRecommendedByDatabaseSensitivityLabels");
+                using var scope = _clientDiagnostics.CreateScope("Database.GetRecommendedSensitivityLabels");
                 scope.Start();
                 try
                 {
@@ -1482,11 +1482,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> List database extension. This will return an empty list as it is not supported. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ImportExportExtensionsOperationResult" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ImportExportExtensionsOperationResult> GetByDatabaseDatabaseExtensionsAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ImportExportExtensionsOperationResult> GetDatabaseExtensionsAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ImportExportExtensionsOperationResult>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Database.GetByDatabaseDatabaseExtensions");
+                using var scope = _clientDiagnostics.CreateScope("Database.GetDatabaseExtensions");
                 scope.Start();
                 try
                 {
@@ -1501,7 +1501,7 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<ImportExportExtensionsOperationResult>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Database.GetByDatabaseDatabaseExtensions");
+                using var scope = _clientDiagnostics.CreateScope("Database.GetDatabaseExtensions");
                 scope.Start();
                 try
                 {
@@ -1523,11 +1523,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> List database extension. This will return an empty list as it is not supported. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ImportExportExtensionsOperationResult" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ImportExportExtensionsOperationResult> GetByDatabaseDatabaseExtensions(CancellationToken cancellationToken = default)
+        public virtual Pageable<ImportExportExtensionsOperationResult> GetDatabaseExtensions(CancellationToken cancellationToken = default)
         {
             Page<ImportExportExtensionsOperationResult> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Database.GetByDatabaseDatabaseExtensions");
+                using var scope = _clientDiagnostics.CreateScope("Database.GetDatabaseExtensions");
                 scope.Start();
                 try
                 {
@@ -1542,7 +1542,7 @@ namespace Azure.ResourceManager.Sql
             }
             Page<ImportExportExtensionsOperationResult> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Database.GetByDatabaseDatabaseExtensions");
+                using var scope = _clientDiagnostics.CreateScope("Database.GetDatabaseExtensions");
                 scope.Start();
                 try
                 {
@@ -1608,11 +1608,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a list of operations performed on the database. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DatabaseOperation" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DatabaseOperation> GetByDatabaseDatabaseOperationsAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DatabaseOperation> GetDatabaseOperationsAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<DatabaseOperation>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Database.GetByDatabaseDatabaseOperations");
+                using var scope = _clientDiagnostics.CreateScope("Database.GetDatabaseOperations");
                 scope.Start();
                 try
                 {
@@ -1627,7 +1627,7 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<DatabaseOperation>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Database.GetByDatabaseDatabaseOperations");
+                using var scope = _clientDiagnostics.CreateScope("Database.GetDatabaseOperations");
                 scope.Start();
                 try
                 {
@@ -1649,11 +1649,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a list of operations performed on the database. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DatabaseOperation" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DatabaseOperation> GetByDatabaseDatabaseOperations(CancellationToken cancellationToken = default)
+        public virtual Pageable<DatabaseOperation> GetDatabaseOperations(CancellationToken cancellationToken = default)
         {
             Page<DatabaseOperation> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Database.GetByDatabaseDatabaseOperations");
+                using var scope = _clientDiagnostics.CreateScope("Database.GetDatabaseOperations");
                 scope.Start();
                 try
                 {
@@ -1668,7 +1668,7 @@ namespace Azure.ResourceManager.Sql
             }
             Page<DatabaseOperation> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Database.GetByDatabaseDatabaseOperations");
+                using var scope = _clientDiagnostics.CreateScope("Database.GetDatabaseOperations");
                 scope.Start();
                 try
                 {
@@ -1690,11 +1690,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets database usages. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DatabaseUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DatabaseUsage> GetByDatabaseDatabaseUsagesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DatabaseUsage> GetDatabaseUsagesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<DatabaseUsage>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Database.GetByDatabaseDatabaseUsages");
+                using var scope = _clientDiagnostics.CreateScope("Database.GetDatabaseUsages");
                 scope.Start();
                 try
                 {
@@ -1709,7 +1709,7 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<DatabaseUsage>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Database.GetByDatabaseDatabaseUsages");
+                using var scope = _clientDiagnostics.CreateScope("Database.GetDatabaseUsages");
                 scope.Start();
                 try
                 {
@@ -1731,11 +1731,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets database usages. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DatabaseUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DatabaseUsage> GetByDatabaseDatabaseUsages(CancellationToken cancellationToken = default)
+        public virtual Pageable<DatabaseUsage> GetDatabaseUsages(CancellationToken cancellationToken = default)
         {
             Page<DatabaseUsage> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Database.GetByDatabaseDatabaseUsages");
+                using var scope = _clientDiagnostics.CreateScope("Database.GetDatabaseUsages");
                 scope.Start();
                 try
                 {
@@ -1750,7 +1750,7 @@ namespace Azure.ResourceManager.Sql
             }
             Page<DatabaseUsage> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Database.GetByDatabaseDatabaseUsages");
+                using var scope = _clientDiagnostics.CreateScope("Database.GetDatabaseUsages");
                 scope.Start();
                 try
                 {

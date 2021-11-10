@@ -455,11 +455,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="skiptoken"> An opaque token that identifies a starting point in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DatabaseColumnData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DatabaseColumnData> GetByDatabaseManagedDatabaseColumnsAsync(IEnumerable<string> schema = null, IEnumerable<string> table = null, IEnumerable<string> column = null, IEnumerable<string> orderBy = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DatabaseColumnData> GetManagedDatabaseColumnsByDatabaseAsync(IEnumerable<string> schema = null, IEnumerable<string> table = null, IEnumerable<string> column = null, IEnumerable<string> orderBy = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<DatabaseColumnData>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetByDatabaseManagedDatabaseColumns");
+                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetManagedDatabaseColumnsByDatabase");
                 scope.Start();
                 try
                 {
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<DatabaseColumnData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetByDatabaseManagedDatabaseColumns");
+                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetManagedDatabaseColumnsByDatabase");
                 scope.Start();
                 try
                 {
@@ -501,11 +501,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="skiptoken"> An opaque token that identifies a starting point in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DatabaseColumnData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DatabaseColumnData> GetByDatabaseManagedDatabaseColumns(IEnumerable<string> schema = null, IEnumerable<string> table = null, IEnumerable<string> column = null, IEnumerable<string> orderBy = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<DatabaseColumnData> GetManagedDatabaseColumnsByDatabase(IEnumerable<string> schema = null, IEnumerable<string> table = null, IEnumerable<string> column = null, IEnumerable<string> orderBy = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
             Page<DatabaseColumnData> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetByDatabaseManagedDatabaseColumns");
+                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetManagedDatabaseColumnsByDatabase");
                 scope.Start();
                 try
                 {
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.Sql
             }
             Page<DatabaseColumnData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetByDatabaseManagedDatabaseColumns");
+                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetManagedDatabaseColumnsByDatabase");
                 scope.Start();
                 try
                 {
@@ -610,11 +610,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="skiptoken"> An opaque token that identifies a starting point in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SecurityEvent" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SecurityEvent> GetByDatabaseManagedDatabaseSecurityEventsAsync(string filter = null, int? skip = null, int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SecurityEvent> GetManagedDatabaseSecurityEventsByDatabaseAsync(string filter = null, int? skip = null, int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<SecurityEvent>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetByDatabaseManagedDatabaseSecurityEvents");
+                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetManagedDatabaseSecurityEventsByDatabase");
                 scope.Start();
                 try
                 {
@@ -629,7 +629,7 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<SecurityEvent>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetByDatabaseManagedDatabaseSecurityEvents");
+                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetManagedDatabaseSecurityEventsByDatabase");
                 scope.Start();
                 try
                 {
@@ -655,11 +655,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="skiptoken"> An opaque token that identifies a starting point in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SecurityEvent" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SecurityEvent> GetByDatabaseManagedDatabaseSecurityEvents(string filter = null, int? skip = null, int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<SecurityEvent> GetManagedDatabaseSecurityEventsByDatabase(string filter = null, int? skip = null, int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
             Page<SecurityEvent> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetByDatabaseManagedDatabaseSecurityEvents");
+                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetManagedDatabaseSecurityEventsByDatabase");
                 scope.Start();
                 try
                 {
@@ -674,7 +674,7 @@ namespace Azure.ResourceManager.Sql
             }
             Page<SecurityEvent> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetByDatabaseManagedDatabaseSecurityEvents");
+                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetManagedDatabaseSecurityEventsByDatabase");
                 scope.Start();
                 try
                 {

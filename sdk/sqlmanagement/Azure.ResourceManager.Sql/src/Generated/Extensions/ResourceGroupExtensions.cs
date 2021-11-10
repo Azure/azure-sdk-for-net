@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        public static AsyncPageable<LongTermRetentionBackupData> GetByResourceGroupLocationLongTermRetentionBackupsAsync(this ResourceGroup resourceGroup, string locationName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsByResourceGroupLocationAsync(this ResourceGroup resourceGroup, string locationName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             if (locationName == null)
             {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Sql
                 var restOperations = GetLongTermRetentionBackupsRestOperations(clientDiagnostics, credential, options, pipeline, resourceGroup.Id.SubscriptionId, baseUri);
                 async Task<Page<LongTermRetentionBackupData>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetByResourceGroupLocationLongTermRetentionBackups");
+                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetLongTermRetentionBackupsByResourceGroupLocation");
                     scope.Start();
                     try
                     {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Sql
                 }
                 async Task<Page<LongTermRetentionBackupData>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetByResourceGroupLocationLongTermRetentionBackups");
+                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetLongTermRetentionBackupsByResourceGroupLocation");
                     scope.Start();
                     try
                     {
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        public static Pageable<LongTermRetentionBackupData> GetByResourceGroupLocationLongTermRetentionBackups(this ResourceGroup resourceGroup, string locationName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public static Pageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsByResourceGroupLocation(this ResourceGroup resourceGroup, string locationName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             if (locationName == null)
             {
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Sql
                 var restOperations = GetLongTermRetentionBackupsRestOperations(clientDiagnostics, credential, options, pipeline, resourceGroup.Id.SubscriptionId, baseUri);
                 Page<LongTermRetentionBackupData> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetByResourceGroupLocationLongTermRetentionBackups");
+                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetLongTermRetentionBackupsByResourceGroupLocation");
                     scope.Start();
                     try
                     {
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Sql
                 }
                 Page<LongTermRetentionBackupData> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetByResourceGroupLocationLongTermRetentionBackups");
+                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetLongTermRetentionBackupsByResourceGroupLocation");
                     scope.Start();
                     try
                     {
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="longTermRetentionServerName"/> is null. </exception>
-        public static AsyncPageable<LongTermRetentionBackupData> GetByResourceGroupServerLongTermRetentionBackupsAsync(this ResourceGroup resourceGroup, string locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsByResourceGroupServerAsync(this ResourceGroup resourceGroup, string locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             if (locationName == null)
             {
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Sql
                 var restOperations = GetLongTermRetentionBackupsRestOperations(clientDiagnostics, credential, options, pipeline, resourceGroup.Id.SubscriptionId, baseUri);
                 async Task<Page<LongTermRetentionBackupData>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetByResourceGroupServerLongTermRetentionBackups");
+                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetLongTermRetentionBackupsByResourceGroupServer");
                     scope.Start();
                     try
                     {
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Sql
                 }
                 async Task<Page<LongTermRetentionBackupData>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetByResourceGroupServerLongTermRetentionBackups");
+                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetLongTermRetentionBackupsByResourceGroupServer");
                     scope.Start();
                     try
                     {
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="longTermRetentionServerName"/> is null. </exception>
-        public static Pageable<LongTermRetentionBackupData> GetByResourceGroupServerLongTermRetentionBackups(this ResourceGroup resourceGroup, string locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public static Pageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsByResourceGroupServer(this ResourceGroup resourceGroup, string locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             if (locationName == null)
             {
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Sql
                 var restOperations = GetLongTermRetentionBackupsRestOperations(clientDiagnostics, credential, options, pipeline, resourceGroup.Id.SubscriptionId, baseUri);
                 Page<LongTermRetentionBackupData> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetByResourceGroupServerLongTermRetentionBackups");
+                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetLongTermRetentionBackupsByResourceGroupServer");
                     scope.Start();
                     try
                     {
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.Sql
                 }
                 Page<LongTermRetentionBackupData> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetByResourceGroupServerLongTermRetentionBackups");
+                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetLongTermRetentionBackupsByResourceGroupServer");
                     scope.Start();
                     try
                     {
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="managedInstanceName"/> is null. </exception>
-        public static AsyncPageable<ManagedInstanceLongTermRetentionBackupData> GetByResourceGroupInstanceLongTermRetentionManagedInstanceBackupsAsync(this ResourceGroup resourceGroup, string locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsByResourceGroupInstanceAsync(this ResourceGroup resourceGroup, string locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             if (locationName == null)
             {
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.Sql
                 var restOperations = GetLongTermRetentionManagedInstanceBackupsRestOperations(clientDiagnostics, credential, options, pipeline, resourceGroup.Id.SubscriptionId, baseUri);
                 async Task<Page<ManagedInstanceLongTermRetentionBackupData>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetByResourceGroupInstanceLongTermRetentionManagedInstanceBackups");
+                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetLongTermRetentionManagedInstanceBackupsByResourceGroupInstance");
                     scope.Start();
                     try
                     {
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.Sql
                 }
                 async Task<Page<ManagedInstanceLongTermRetentionBackupData>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetByResourceGroupInstanceLongTermRetentionManagedInstanceBackups");
+                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetLongTermRetentionManagedInstanceBackupsByResourceGroupInstance");
                     scope.Start();
                     try
                     {
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="managedInstanceName"/> is null. </exception>
-        public static Pageable<ManagedInstanceLongTermRetentionBackupData> GetByResourceGroupInstanceLongTermRetentionManagedInstanceBackups(this ResourceGroup resourceGroup, string locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public static Pageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsByResourceGroupInstance(this ResourceGroup resourceGroup, string locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             if (locationName == null)
             {
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.Sql
                 var restOperations = GetLongTermRetentionManagedInstanceBackupsRestOperations(clientDiagnostics, credential, options, pipeline, resourceGroup.Id.SubscriptionId, baseUri);
                 Page<ManagedInstanceLongTermRetentionBackupData> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetByResourceGroupInstanceLongTermRetentionManagedInstanceBackups");
+                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetLongTermRetentionManagedInstanceBackupsByResourceGroupInstance");
                     scope.Start();
                     try
                     {
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.Sql
                 }
                 Page<ManagedInstanceLongTermRetentionBackupData> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetByResourceGroupInstanceLongTermRetentionManagedInstanceBackups");
+                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetLongTermRetentionManagedInstanceBackupsByResourceGroupInstance");
                     scope.Start();
                     try
                     {
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        public static AsyncPageable<ManagedInstanceLongTermRetentionBackupData> GetByResourceGroupLocationLongTermRetentionManagedInstanceBackupsAsync(this ResourceGroup resourceGroup, string locationName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsByResourceGroupLocationAsync(this ResourceGroup resourceGroup, string locationName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             if (locationName == null)
             {
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.Sql
                 var restOperations = GetLongTermRetentionManagedInstanceBackupsRestOperations(clientDiagnostics, credential, options, pipeline, resourceGroup.Id.SubscriptionId, baseUri);
                 async Task<Page<ManagedInstanceLongTermRetentionBackupData>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetByResourceGroupLocationLongTermRetentionManagedInstanceBackups");
+                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetLongTermRetentionManagedInstanceBackupsByResourceGroupLocation");
                     scope.Start();
                     try
                     {
@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.Sql
                 }
                 async Task<Page<ManagedInstanceLongTermRetentionBackupData>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetByResourceGroupLocationLongTermRetentionManagedInstanceBackups");
+                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetLongTermRetentionManagedInstanceBackupsByResourceGroupLocation");
                     scope.Start();
                     try
                     {
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        public static Pageable<ManagedInstanceLongTermRetentionBackupData> GetByResourceGroupLocationLongTermRetentionManagedInstanceBackups(this ResourceGroup resourceGroup, string locationName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public static Pageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsByResourceGroupLocation(this ResourceGroup resourceGroup, string locationName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             if (locationName == null)
             {
@@ -553,7 +553,7 @@ namespace Azure.ResourceManager.Sql
                 var restOperations = GetLongTermRetentionManagedInstanceBackupsRestOperations(clientDiagnostics, credential, options, pipeline, resourceGroup.Id.SubscriptionId, baseUri);
                 Page<ManagedInstanceLongTermRetentionBackupData> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetByResourceGroupLocationLongTermRetentionManagedInstanceBackups");
+                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetLongTermRetentionManagedInstanceBackupsByResourceGroupLocation");
                     scope.Start();
                     try
                     {
@@ -568,7 +568,7 @@ namespace Azure.ResourceManager.Sql
                 }
                 Page<ManagedInstanceLongTermRetentionBackupData> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetByResourceGroupLocationLongTermRetentionManagedInstanceBackups");
+                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetLongTermRetentionManagedInstanceBackupsByResourceGroupLocation");
                     scope.Start();
                     try
                     {

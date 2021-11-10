@@ -218,19 +218,19 @@ namespace Azure.ResourceManager.Sql
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataMaskingPolicies/{dataMaskingPolicyName}/rules
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataMaskingPolicies/{dataMaskingPolicyName}
-        /// OperationId: DataMaskingRules_ListByDatabase
+        /// OperationId: DataMaskingRules_List
         /// <summary> Gets a list of database data masking rules. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DataMaskingRule" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DataMaskingRule> GetByDatabaseDataMaskingRulesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DataMaskingRule> GetDataMaskingRulesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<DataMaskingRule>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DataMaskingPolicy.GetByDatabaseDataMaskingRules");
+                using var scope = _clientDiagnostics.CreateScope("DataMaskingPolicy.GetDataMaskingRules");
                 scope.Start();
                 try
                 {
-                    var response = await _dataMaskingRulesRestClient.ListByDatabaseAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _dataMaskingRulesRestClient.ListAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -244,19 +244,19 @@ namespace Azure.ResourceManager.Sql
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataMaskingPolicies/{dataMaskingPolicyName}/rules
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataMaskingPolicies/{dataMaskingPolicyName}
-        /// OperationId: DataMaskingRules_ListByDatabase
+        /// OperationId: DataMaskingRules_List
         /// <summary> Gets a list of database data masking rules. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataMaskingRule" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DataMaskingRule> GetByDatabaseDataMaskingRules(CancellationToken cancellationToken = default)
+        public virtual Pageable<DataMaskingRule> GetDataMaskingRules(CancellationToken cancellationToken = default)
         {
             Page<DataMaskingRule> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DataMaskingPolicy.GetByDatabaseDataMaskingRules");
+                using var scope = _clientDiagnostics.CreateScope("DataMaskingPolicy.GetDataMaskingRules");
                 scope.Start();
                 try
                 {
-                    var response = _dataMaskingRulesRestClient.ListByDatabase(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken: cancellationToken);
+                    var response = _dataMaskingRulesRestClient.List(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)

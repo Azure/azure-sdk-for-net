@@ -449,11 +449,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="top"> The number of elements to return from the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="JobExecutionData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<JobExecutionData> GetByAgentJobExecutionsAsync(DateTimeOffset? createTimeMin = null, DateTimeOffset? createTimeMax = null, DateTimeOffset? endTimeMin = null, DateTimeOffset? endTimeMax = null, bool? isActive = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<JobExecutionData> GetJobExecutionsByAgentAsync(DateTimeOffset? createTimeMin = null, DateTimeOffset? createTimeMax = null, DateTimeOffset? endTimeMin = null, DateTimeOffset? endTimeMax = null, bool? isActive = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<JobExecutionData>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("JobAgent.GetByAgentJobExecutions");
+                using var scope = _clientDiagnostics.CreateScope("JobAgent.GetJobExecutionsByAgent");
                 scope.Start();
                 try
                 {
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<JobExecutionData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("JobAgent.GetByAgentJobExecutions");
+                using var scope = _clientDiagnostics.CreateScope("JobAgent.GetJobExecutionsByAgent");
                 scope.Start();
                 try
                 {
@@ -497,11 +497,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="top"> The number of elements to return from the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="JobExecutionData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<JobExecutionData> GetByAgentJobExecutions(DateTimeOffset? createTimeMin = null, DateTimeOffset? createTimeMax = null, DateTimeOffset? endTimeMin = null, DateTimeOffset? endTimeMax = null, bool? isActive = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<JobExecutionData> GetJobExecutionsByAgent(DateTimeOffset? createTimeMin = null, DateTimeOffset? createTimeMax = null, DateTimeOffset? endTimeMin = null, DateTimeOffset? endTimeMax = null, bool? isActive = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Page<JobExecutionData> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("JobAgent.GetByAgentJobExecutions");
+                using var scope = _clientDiagnostics.CreateScope("JobAgent.GetJobExecutionsByAgent");
                 scope.Start();
                 try
                 {
@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.Sql
             }
             Page<JobExecutionData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("JobAgent.GetByAgentJobExecutions");
+                using var scope = _clientDiagnostics.CreateScope("JobAgent.GetJobExecutionsByAgent");
                 scope.Start();
                 try
                 {

@@ -746,11 +746,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a server trust groups by instance name. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ServerTrustGroupData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServerTrustGroupData> GetByInstanceServerTrustGroupsAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ServerTrustGroupData> GetServerTrustGroupsByInstanceAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ServerTrustGroupData>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetByInstanceServerTrustGroups");
+                using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetServerTrustGroupsByInstance");
                 scope.Start();
                 try
                 {
@@ -765,7 +765,7 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<ServerTrustGroupData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetByInstanceServerTrustGroups");
+                using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetServerTrustGroupsByInstance");
                 scope.Start();
                 try
                 {
@@ -787,11 +787,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a server trust groups by instance name. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ServerTrustGroupData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServerTrustGroupData> GetByInstanceServerTrustGroups(CancellationToken cancellationToken = default)
+        public virtual Pageable<ServerTrustGroupData> GetServerTrustGroupsByInstance(CancellationToken cancellationToken = default)
         {
             Page<ServerTrustGroupData> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetByInstanceServerTrustGroups");
+                using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetServerTrustGroupsByInstance");
                 scope.Start();
                 try
                 {
@@ -806,7 +806,7 @@ namespace Azure.ResourceManager.Sql
             }
             Page<ServerTrustGroupData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetByInstanceServerTrustGroups");
+                using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetServerTrustGroupsByInstance");
                 scope.Start();
                 try
                 {

@@ -43,6 +43,9 @@ directive:
     - rename-operation:
         from: ManagedDatabaseQueries_ListByQuery
         to: ManagedDatabaseQueries_GetQueryStatistics
+    - rename-operation:
+        from: DataMaskingRules_ListByDatabase
+        to: DataMaskingRules_List
     - from: BlobAuditing.json
       where: $.parameters.BlobAuditingPolicyNameParameter
       transform: >
