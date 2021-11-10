@@ -7,7 +7,7 @@ trigger:
     - release/*
   paths:
     include:
-    - sdk/webpubsub/
+    - sdk/template-LLC/
 
 pr:
   branches:
@@ -18,7 +18,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/webpubsub/
+    - sdk/template-LLC/
 
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
