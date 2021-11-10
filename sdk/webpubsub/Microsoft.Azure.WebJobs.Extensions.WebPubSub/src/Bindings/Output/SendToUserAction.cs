@@ -12,7 +12,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
     /// Operation to send message to a user.
     /// </summary>
     [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
-    public class SendToUser : WebPubSubOperation
+    public class SendToUserAction : WebPubSubAction
     {
         /// <summary>
         /// Target UserId.

@@ -25,7 +25,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             throw new NotImplementedException();
         }
 
-        private IAsyncCollector<WebPubSubOperation> CreateTestCollector(WebPubSubAttribute attribute)
+        private IAsyncCollector<WebPubSubAction> CreateTestCollector(WebPubSubAttribute attribute)
         {
             var service = new Mock<WebPubSubServiceClient>();
             //service.Setup(x => x.SendToAll(It.IsAny<RequestContent>(), It.IsAny<string>(), null, It.IsAny<CancellationToken>()))

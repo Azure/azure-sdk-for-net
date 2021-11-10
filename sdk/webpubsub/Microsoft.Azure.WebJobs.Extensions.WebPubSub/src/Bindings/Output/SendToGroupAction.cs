@@ -13,7 +13,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
     /// Operation to send message to a group.
     /// </summary>
     [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
-    public class SendToGroup : WebPubSubOperation
+    public class SendToGroupAction : WebPubSubAction
     {
         /// <summary>
         /// Target group name.
@@ -34,6 +34,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         /// <summary>
         /// ConnectionIds to exclude.
         /// </summary>
-        public IList<string> Excluded { get; set; }
+        public IList<string> Excluded { get; set; } = new List<string>();
     }
 }

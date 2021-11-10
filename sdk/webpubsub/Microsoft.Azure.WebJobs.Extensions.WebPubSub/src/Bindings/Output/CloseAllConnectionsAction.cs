@@ -11,12 +11,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
     /// Operation to close all connections.
     /// </summary>
     [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
-    public class CloseAllConnections : WebPubSubOperation
+    public class CloseAllConnectionsAction : WebPubSubAction
     {
         /// <summary>
         /// ConnectionIds to exclude.
         /// </summary>
-        public IList<string> Excluded { get; set; }
+        public IList<string> Excluded { get; set; } = new List<string>();
 
         /// <summary>
         /// Reason to close the connections.

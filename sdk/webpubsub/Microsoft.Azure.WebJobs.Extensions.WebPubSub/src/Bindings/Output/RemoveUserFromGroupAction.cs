@@ -7,14 +7,19 @@ using Newtonsoft.Json.Serialization;
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
     /// <summary>
-    /// Operation to remove user from all groups.
+    /// Operation to remove a user from group.
     /// </summary>
     [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
-    public class RemoveUserFromAllGroups : WebPubSubOperation
+    public class RemoveUserFromGroupAction : WebPubSubAction
     {
         /// <summary>
-        /// Target UserId.
+        /// Target userId.
         /// </summary>
         public string UserId { get; set; }
+
+        /// <summary>
+        /// Target group name.
+        /// </summary>
+        public string Group { get; set; }
     }
 }

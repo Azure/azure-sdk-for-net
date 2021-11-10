@@ -1,31 +1,33 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Messaging.WebPubSub;
+using System;
+using Microsoft.Azure.WebPubSub.Common;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
     /// <summary>
-    /// Operation to remove permission.
+    /// Operation to send message to a connection.
     /// </summary>
     [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
-    public class RevokePermission : WebPubSubOperation
+    public class SendToConnectionAction : WebPubSubAction
     {
         /// <summary>
-        /// Targe connectionId.
+        /// Target ConnectionId.
         /// </summary>
         public string ConnectionId { get; set; }
 
         /// <summary>
-        /// Target permission.
+        /// Message to send.
         /// </summary>
-        public WebPubSubPermission Permission { get; set; }
+        [JsonConverter(typeof(BinaryDataJsonConverter))]
+        public BinaryData Data { get; set; }
 
         /// <summary>
-        /// Target name.
+        /// Message data type.
         /// </summary>
-        public string TargetName { get; set; }
+        public WebPubSubDataType DataType { get; set; } = WebPubSubDataType.Text;
     }
 }

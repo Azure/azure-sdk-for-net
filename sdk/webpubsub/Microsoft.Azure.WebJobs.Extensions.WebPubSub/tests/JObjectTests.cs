@@ -16,20 +16,20 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 {
     public class JObjectTests
     {
-        [TestCase(nameof(SendToAll))]
-        [TestCase(nameof(SendToConnection))]
-        [TestCase(nameof(SendToGroup))]
-        [TestCase(nameof(SendToUser))]
-        [TestCase(nameof(AddConnectionToGroup))]
-        [TestCase(nameof(AddUserToGroup))]
-        [TestCase(nameof(RemoveConnectionFromGroup))]
-        [TestCase(nameof(RemoveUserFromAllGroups))]
-        [TestCase(nameof(RemoveUserFromGroup))]
-        [TestCase(nameof(CloseAllConnections))]
-        [TestCase(nameof(CloseClientConnection))]
-        [TestCase(nameof(CloseGroupConnections))]
-        [TestCase(nameof(GrantPermission))]
-        [TestCase(nameof(RevokePermission))]
+        [TestCase(nameof(SendToAllAction))]
+        [TestCase(nameof(SendToConnectionAction))]
+        [TestCase(nameof(SendToGroupAction))]
+        [TestCase(nameof(SendToUserAction))]
+        [TestCase(nameof(AddConnectionToGroupAction))]
+        [TestCase(nameof(AddUserToGroupAction))]
+        [TestCase(nameof(RemoveConnectionFromGroupAction))]
+        [TestCase(nameof(RemoveUserFromAllGroupsAction))]
+        [TestCase(nameof(RemoveUserFromGroupAction))]
+        [TestCase(nameof(CloseAllConnectionsAction))]
+        [TestCase(nameof(CloseClientConnectionAction))]
+        [TestCase(nameof(CloseGroupConnectionsAction))]
+        [TestCase(nameof(GrantPermissionAction))]
+        [TestCase(nameof(RevokePermissionAction))]
         public void TestOutputConvert(string operationKind)
         {
             WebPubSubConfigProvider.RegisterJsonConverter();
@@ -45,10 +45,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             Assert.AreEqual(operationKind, converted.OperationKind.ToString());
         }
 
-        [TestCase(nameof(SendToAll))]
-        [TestCase(nameof(SendToConnection))]
-        [TestCase(nameof(SendToGroup))]
-        [TestCase(nameof(SendToUser))]
+        [TestCase(nameof(SendToAllAction))]
+        [TestCase(nameof(SendToConnectionAction))]
+        [TestCase(nameof(SendToGroupAction))]
+        [TestCase(nameof(SendToUserAction))]
         public void TestInvalidSendConvert(string operationKind)
         {
             WebPubSubConfigProvider.RegisterJsonConverter();
@@ -62,10 +62,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             Assert.Throws<ArgumentException>(() => WebPubSubConfigProvider.ConvertToWebPubSubOperation(jObject));
         }
 
-        [TestCase(typeof(SendToAll))]
-        [TestCase(typeof(SendToConnection))]
-        [TestCase(typeof(SendToGroup))]
-        [TestCase(typeof(SendToUser))]
+        [TestCase(typeof(SendToAllAction))]
+        [TestCase(typeof(SendToConnectionAction))]
+        [TestCase(typeof(SendToGroupAction))]
+        [TestCase(typeof(SendToUserAction))]
         public void TestValidSendBinaryConvert(Type operationKind)
         {
             WebPubSubConfigProvider.RegisterJsonConverter();
@@ -106,7 +106,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 
             var input = @"{ operationKind : ""sendToAll"", dataType: ""text"", data: ""2""}";
 
-            var converted = JObject.Parse(input).ToObject<SendToAll>();
+            var converted = JObject.Parse(input).ToObject<SendToAllAction>();
 
             Assert.AreEqual("2", converted.Data.ToString());
         }
@@ -118,7 +118,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 
             var input = @"{ operationKind : ""sendToAll"", dataType: ""text"", data: 2}";
 
-            Assert.Throws<ArgumentException>(() => JObject.Parse(input).ToObject<SendToAll>(), "Message data should be string, please stringify object.");
+            Assert.Throws<ArgumentException>(() => JObject.Parse(input).ToObject<SendToAllAction>(), "Message data should be string, please stringify object.");
         }
 
         [TestCase]
