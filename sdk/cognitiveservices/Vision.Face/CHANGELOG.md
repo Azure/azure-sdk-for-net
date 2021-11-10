@@ -1,8 +1,8 @@
 # Release History
 
-## 2.8.0-publicpreview-preview.1 (2021-11-15)
+## 2.8.0-preview.2 (2021-11-15)
 - Add support for new detection attribute `qualityForRecognition`
-- Adjusted version name to highlight preview endpoint status
+- Note that this version points to the face/v1.0-preview (public preview) endpoints.
 
 ## 2.8.0-preview.1 (2021-07-21)
 
