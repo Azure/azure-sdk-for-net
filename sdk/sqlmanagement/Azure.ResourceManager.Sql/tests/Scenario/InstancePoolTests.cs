@@ -45,8 +45,14 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
 
         private async Task CreateInstancePool(string instancePoolName)
         {
+            //-ResourceGroupName "Sql-RG-0001" `  -Name "mi-pool-name" `  -SubnetId $subnet.Id `  -LicenseType "LicenseIncluded" `
+            //-VCore 8 `  -Edition "GeneralPurpose" `  -ComputeGeneration "Gen5" `  -Location "westus2"
             InstancePoolData data = new InstancePoolData(Location.WestUS2)
             {
+                Sku = new Models.Sku("P3", "GeneralPurpose", "2", "Gen5", 8),
+                LicenseType = InstancePoolLicenseType.LicenseIncluded,
+                Location = Location.WestUS2,
+                //SubnetId = subnetId,
             };
             await _resourceGroup.GetInstancePools().CreateOrUpdateAsync(instancePoolName, data);
         }
@@ -55,7 +61,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         [RecordedTest]
         public async Task CheckIfExiest()
         {
-            string instancePoolName = Recording.GenerateAssetName("InstancePool-");
+            string instancePoolName = Recording.GenerateAssetName("instance-pool-");
             await CreateInstancePool(instancePoolName);
         }
     }

@@ -42,14 +42,19 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
 
         private async Task<InstanceFailoverGroup> CreateInstanceFailoverGroup(string locationName, string instanceFailoverGroupName)
         {
-            // create PrimaryManagedInstance
+            // create PrimaryManagedInstance and PartnerManagedInstance
             string primaryManagedInstanceName = Recording.GenerateAssetName("managed-instance-primary-");
-            var primaryManagedInstance = await CreateDefaultManagedInstance(primaryManagedInstanceName, _resourceGroup);
+            string partnerManagedInstanceName = Recording.GenerateAssetName("managed-instance-partner-");
+            Task[] tasks = new Task[]
+            {
+                CreateDefaultManagedInstance(primaryManagedInstanceName, _resourceGroup),
+                CreateDefaultManagedInstance(partnerManagedInstanceName, _resourceGroup)
+            };
+            Task.WaitAll(tasks);
+            string primaryManagedInstanceId = (await _resourceGroup.GetManagedInstances().GetAsync(primaryManagedInstanceName)).Value.Data.Id.ToString();
+            string partnerManagedInstanceId = (await _resourceGroup.GetManagedInstances().GetAsync(partnerManagedInstanceName)).Value.Data.Id.ToString();
 
-            // create PartnerManagedInstance
-            string partnerManagedInstanceName = Recording.GenerateAssetName("managed-instance-primary-");
-            var partnerManagedInstance = await CreateDefaultManagedInstance(partnerManagedInstanceName, _resourceGroup);
-
+            // create InstanceFailoverGroup
             InstanceFailoverGroupReadWriteEndpoint instanceFailoverGroupReadWriteEndpoint = new InstanceFailoverGroupReadWriteEndpoint(ReadWriteEndpointFailoverPolicy.Automatic);
             instanceFailoverGroupReadWriteEndpoint.FailoverWithDataLossGracePeriodMinutes = 60;
             InstanceFailoverGroupData data = new InstanceFailoverGroupData()
@@ -57,7 +62,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
                 ReadWriteEndpoint = instanceFailoverGroupReadWriteEndpoint,
                 ManagedInstancePairs =
                 {
-                    new ManagedInstancePairInfo(primaryManagedInstance.Data.Id.ToString(),partnerManagedInstance.Data.Id.ToString()),
+                    new ManagedInstancePairInfo(primaryManagedInstanceId,partnerManagedInstanceId),
                 },
             };
             var instanceFailoverGroupLro = await _resourceGroup.GetInstanceFailoverGroups().CreateOrUpdateAsync(locationName, instanceFailoverGroupName, data);
@@ -73,11 +78,11 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             string locationName = Location.WestUS2.ToString();
             var instanceFailoverGroup = await CreateInstanceFailoverGroup(locationName, instanceFailoverGroupName);
             Assert.IsNotNull(instanceFailoverGroup.Data);
-            Assert.AreEqual(instanceFailoverGroupName,instanceFailoverGroup.Data.Name);
+            Assert.AreEqual(instanceFailoverGroupName, instanceFailoverGroup.Data.Name);
 
             // 2.CheckIfExist
             Assert.IsTrue(_resourceGroup.GetInstanceFailoverGroups().CheckIfExists(locationName, instanceFailoverGroupName));
-            Assert.IsTrue(_resourceGroup.GetInstanceFailoverGroups().CheckIfExists(locationName, instanceFailoverGroupName+"0"));
+            Assert.IsTrue(_resourceGroup.GetInstanceFailoverGroups().CheckIfExists(locationName, instanceFailoverGroupName + "0"));
 
             // 3.Get
             var getInstanceFailoverGroup = await _resourceGroup.GetInstanceFailoverGroups().GetAsync(locationName, instanceFailoverGroupName);
@@ -90,7 +95,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             Assert.AreEqual(instanceFailoverGroupName, list.FirstOrDefault().Data.Name);
 
             // 5.Delete
-            var deleteInstanceFailoverGroup =( await _resourceGroup.GetInstanceFailoverGroups().GetAsync(locationName, instanceFailoverGroupName)).Value;
+            var deleteInstanceFailoverGroup = (await _resourceGroup.GetInstanceFailoverGroups().GetAsync(locationName, instanceFailoverGroupName)).Value;
             await deleteInstanceFailoverGroup.DeleteAsync();
             list = await _resourceGroup.GetInstanceFailoverGroups().GetAllAsync(locationName).ToEnumerableAsync();
             Assert.IsEmpty(list);
