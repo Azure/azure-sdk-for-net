@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Microsoft.Azure.WebJobs.Extensions.WebPubSub.Operations;
 using Microsoft.Azure.WebPubSub.Common;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
@@ -35,7 +34,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         {
             WebPubSubConfigProvider.RegisterJsonConverter();
 
-            var input = @"{ ""operationKind"":""{0}"",""userId"":""user"", ""group"":""group1"",""connectionId"":""connection"",""message"":""test"",""dataType"":""text"", ""reason"":""close"", ""excluded"":[""aa"",""bb""]}";
+            var input = @"{ ""operationKind"":""{0}"",""userId"":""user"", ""group"":""group1"",""connectionId"":""connection"",""data"":""test"",""dataType"":""text"", ""reason"":""close"", ""excluded"":[""aa"",""bb""]}";
 
             var replacedInput = input.Replace("{0}", operationKind);
 
@@ -54,7 +53,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         {
             WebPubSubConfigProvider.RegisterJsonConverter();
 
-            var input = @"{ ""operationKind"":""{0}"",""userId"":""user"", ""group"":""group1"",""connectionId"":""connection"",""message"": {""type"":""binary"", ""data"": [66, 105, 110, 97, 114, 121, 68, 97, 116, 97]} ,""dataType"":""binary"", ""reason"":""close"", ""excluded"":[""aa"",""bb""]}";
+            var input = @"{ ""operationKind"":""{0}"",""userId"":""user"", ""group"":""group1"",""connectionId"":""connection"",""data"": {""type"":""binary"", ""data"": [66, 105, 110, 97, 114, 121, 68, 97, 116, 97]} ,""dataType"":""binary"", ""reason"":""close"", ""excluded"":[""aa"",""bb""]}";
 
             var replacedInput = input.Replace("{0}", operationKind);
 
@@ -71,7 +70,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         {
             WebPubSubConfigProvider.RegisterJsonConverter();
 
-            var input = @"{ ""operationKind"":""{0}"",""userId"":""user"", ""group"":""group1"",""connectionId"":""connection"",""message"": {""type"":""Buffer"", ""data"": [66, 105, 110, 97, 114, 121, 68, 97, 116, 97]} ,""dataType"":""binary"", ""reason"":""close"", ""excluded"":[""aa"",""bb""]}";
+            var input = @"{ ""operationKind"":""{0}"",""userId"":""user"", ""group"":""group1"",""connectionId"":""connection"",""data"": {""type"":""Buffer"", ""data"": [66, 105, 110, 97, 114, 121, 68, 97, 116, 97]} ,""dataType"":""binary"", ""reason"":""close"", ""excluded"":[""aa"",""bb""]}";
 
             var replacedInput = input.Replace("{0}", operationKind.Name);
 
@@ -80,7 +79,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             var converted = WebPubSubConfigProvider.ConvertToWebPubSubOperation(jObject);
 
             // Use json format for message value validation.
-            Assert.AreEqual("BinaryData", JObject.FromObject(converted)["message"].ToString());
+            Assert.AreEqual("BinaryData", JObject.FromObject(converted)["data"].ToString());
         }
 
         [TestCase("webpubsuboperation")]
@@ -89,7 +88,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         {
             WebPubSubConfigProvider.RegisterJsonConverter();
 
-            var input = @"{ ""operationKind"":""{0}"",""userId"":""user"", ""group"":""group1"",""connectionId"":""connection"",""message"":""test"",""dataType"":""text"", ""reason"":""close"", ""excluded"":[""aa"",""bb""]}";
+            var input = @"{ ""operationKind"":""{0}"",""userId"":""user"", ""group"":""group1"",""connectionId"":""connection"",""data"":""test"",""dataType"":""text"", ""reason"":""close"", ""excluded"":[""aa"",""bb""]}";
 
             var replacedInput = input.Replace("{0}", operationKind);
 
@@ -105,11 +104,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         {
             WebPubSubConfigProvider.RegisterJsonConverter();
 
-            var input = @"{ operationKind : ""sendToAll"", dataType: ""text"", message: ""2""}";
+            var input = @"{ operationKind : ""sendToAll"", dataType: ""text"", data: ""2""}";
 
             var converted = JObject.Parse(input).ToObject<SendToAll>();
 
-            Assert.AreEqual("2", converted.Message.ToString());
+            Assert.AreEqual("2", converted.Data.ToString());
         }
 
         [TestCase]
@@ -117,9 +116,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         {
             WebPubSubConfigProvider.RegisterJsonConverter();
 
-            var input = @"{ operationKind : ""sendToAll"", dataType: ""text"", message: 2}";
+            var input = @"{ operationKind : ""sendToAll"", dataType: ""text"", data: 2}";
 
-            Assert.Throws<ArgumentException>(() => JObject.Parse(input).ToObject<SendToAll>(), "Message should be string, please stringify object.");
+            Assert.Throws<ArgumentException>(() => JObject.Parse(input).ToObject<SendToAll>(), "Message data should be string, please stringify object.");
         }
 
         [TestCase]
@@ -178,7 +177,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         [TestCase]
         public async Task ParseMessageResponse()
         {
-            var test = @"{""message"":""test"", ""dataType"":""text""}";
+            var test = @"{""data"":""test"", ""dataType"":""text""}";
 
             var result = BuildResponse(test, RequestType.User);
 
@@ -274,13 +273,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
                 EventName = "connected",
                 EventType = WebPubSubEventType.System
             };
-            var test = new WebPubSubContext(new UserEventRequest(context, BinaryData.FromString("test"), MessageDataType.Text));
+            var test = new WebPubSubContext(new UserEventRequest(context, BinaryData.FromString("test"), WebPubSubDataType.Text));
 
             var serialize = JObject.FromObject(test);
             var request = serialize["request"];
 
             Assert.NotNull(request);
-            Assert.AreEqual("test", request["message"].ToString());
+            Assert.AreEqual("test", request["data"].ToString());
             Assert.NotNull(serialize["response"]);
             Assert.AreEqual("", serialize["errorMessage"].ToString());
             Assert.AreEqual("False", serialize["hasError"].ToString());

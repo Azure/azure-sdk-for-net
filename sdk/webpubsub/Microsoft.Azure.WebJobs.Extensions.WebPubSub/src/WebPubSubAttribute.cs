@@ -3,7 +3,6 @@
 
 using System;
 using Microsoft.Azure.WebJobs.Description;
-using Microsoft.Azure.WebJobs.Extensions.WebPubSub.Operations;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {

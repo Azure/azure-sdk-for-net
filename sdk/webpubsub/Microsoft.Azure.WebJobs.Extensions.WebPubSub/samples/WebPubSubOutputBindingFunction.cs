@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Azure.WebJobs.Extensions.WebPubSub;
-using Microsoft.Azure.WebJobs.Extensions.WebPubSub.Operations;
 using Microsoft.Azure.WebPubSub.Common;
 
 namespace Microsoft.Azure.WebJobs.Samples
@@ -19,11 +18,7 @@ namespace Microsoft.Azure.WebJobs.Samples
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequest req,
             [WebPubSub(Hub = "hub", Connection = "<connection-string>")] IAsyncCollector<WebPubSubOperation> operation)
         {
-            await operation.AddAsync(new SendToAll
-            {
-                Message = BinaryData.FromString("Hello Web PubSub"),
-                DataType = MessageDataType.Text
-            });
+            await operation.AddAsync(WebPubSubOperation.SendToAll("Hello Web PubSub!", WebPubSubDataType.Text));
         }
     }
     #endregion

@@ -6,7 +6,7 @@ namespace Microsoft.Azure.WebPubSub.Common
     /// <summary>
     /// Message data type.
     /// </summary>
-    public enum MessageDataType
+    public enum WebPubSubDataType
     {
         /// <summary>
         /// binary of content type application/octet-stream.

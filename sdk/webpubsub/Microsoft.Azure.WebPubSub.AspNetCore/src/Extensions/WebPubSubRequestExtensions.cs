@@ -131,6 +131,12 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
             // TODO: considering add cache to improve.
             if (options.TryGetKey(connectionContext.Origin, out var accessKey))
             {
+                // server side disable signature checks.
+                if (string.IsNullOrEmpty(accessKey))
+                {
+                    return true;
+                }
+
                 var signatures = connectionContext.Signature.ToHeaderList();
                 if (signatures == null)
                 {
@@ -240,9 +246,14 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                 connectionContext.Hub = request.Headers.GetFirstHeaderValueOrDefault(Constants.Headers.CloudEvents.Hub);
                 connectionContext.EventType = GetEventType(request.Headers.GetFirstHeaderValueOrDefault(Constants.Headers.CloudEvents.Type));
                 connectionContext.EventName = request.Headers.GetFirstHeaderValueOrDefault(Constants.Headers.CloudEvents.EventName);
-                connectionContext.Signature = request.Headers.GetFirstHeaderValueOrDefault(Constants.Headers.CloudEvents.Signature);
                 connectionContext.Origin = request.Headers.GetFirstHeaderValueOrDefault(Constants.Headers.WebHookRequestOrigin);
                 connectionContext.InitHeaders(request.Headers.ToDictionary(x => x.Key, v => v.Value.ToArray(), StringComparer.OrdinalIgnoreCase));
+
+                // Signature is optional
+                if (request.Headers.ContainsKey(Constants.Headers.CloudEvents.Signature))
+                {
+                    connectionContext.Signature = request.Headers.GetFirstHeaderValueOrDefault(Constants.Headers.CloudEvents.Signature);
+                }
 
                 // UserId is optional, e.g. connect
                 if (request.Headers.ContainsKey(Constants.Headers.CloudEvents.UserId))
@@ -291,16 +302,16 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
             return header.TryGetValue(key, out StringValues values) && values.Count > 0 ? values[0] : null;
         }
 
-        private static bool IsValidMediaType(this string mediaType, out MessageDataType dataType)
+        private static bool IsValidMediaType(this string mediaType, out WebPubSubDataType dataType)
         {
             try
             {
-                dataType = mediaType.GetMessageDataType();
+                dataType = mediaType.GetDataType();
                 return true;
             }
             catch (Exception)
             {
-                dataType = MessageDataType.Binary;
+                dataType = WebPubSubDataType.Binary;
                 return false;
             }
         }
@@ -322,12 +333,12 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                 WebPubSubEventType.User;
         }
 
-        private static MessageDataType GetMessageDataType(this string mediaType) =>
+        private static WebPubSubDataType GetDataType(this string mediaType) =>
             mediaType.ToLowerInvariant() switch
             {
-                Constants.ContentTypes.PlainTextContentType => MessageDataType.Text,
-                Constants.ContentTypes.BinaryContentType => MessageDataType.Binary,
-                Constants.ContentTypes.JsonContentType => MessageDataType.Json,
+                Constants.ContentTypes.PlainTextContentType => WebPubSubDataType.Text,
+                Constants.ContentTypes.BinaryContentType => WebPubSubDataType.Binary,
+                Constants.ContentTypes.JsonContentType => WebPubSubDataType.Json,
                 _ => throw new ArgumentException($"Invalid content type: {mediaType}")
             };
     }

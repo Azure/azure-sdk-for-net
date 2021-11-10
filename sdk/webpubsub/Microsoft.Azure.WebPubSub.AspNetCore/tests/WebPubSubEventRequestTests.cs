@@ -135,7 +135,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
                 Origin = TestUri.Host
             };
 
-            var request = new UserEventRequest(connectionContext, BinaryData.FromString("Hello World"), MessageDataType.Text);
+            var request = new UserEventRequest(connectionContext, BinaryData.FromString("Hello World"), WebPubSubDataType.Text);
 
             var serialized = JsonSerializer.Serialize(request);
         }
@@ -195,7 +195,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
 
             Assert.NotNull(userRequest.ConnectionContext);
             Assert.AreEqual(TestUri.Host, userRequest.ConnectionContext.Origin);
-            Assert.AreEqual(text, userRequest.Message.ToString());
+            Assert.AreEqual(text, userRequest.Data.ToString());
         }
 
         [TestCase("7aab239577fd4f24bc919802fb629f5f", true)]
@@ -214,7 +214,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
         }
 
         [Test]
-        public void TestSignatureCheck_OptionsNull()
+        public void TestSignatureCheck_OptionsNullSuccess()
         {
             var connectionContext = new WebPubSubConnectionContext()
             {
@@ -227,7 +227,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
         }
 
         [Test]
-        public void TestSignatureCheck_OptionsEmpty()
+        public void TestSignatureCheck_OptionsEmptySuccess()
         {
             var connectionContext = new WebPubSubConnectionContext()
             {
@@ -237,6 +237,34 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             };
             var result = connectionContext.IsValidSignature(null);
             Assert.True(result);
+        }
+
+        [Test]
+        public void TestSignatureCheck_AccessKeyEmptySuccess()
+        {
+            var connectionContext = new WebPubSubConnectionContext()
+            {
+                ConnectionId = "0f9c97a2f0bf4706afe87a14e0797b11",
+                Signature = "sha256=7767effcb3946f3e1de039df4b986ef02c110b1469d02c0a06f41b3b727ab561",
+                Origin = TestUri.Host
+            };
+            var options = new WebPubSubValidationOptions($"Endpoint={TestUri};Version=1.0;");
+            var result = connectionContext.IsValidSignature(options);
+            Assert.True(result);
+        }
+
+        [Test]
+        public void TestSignatureCheck_SignatureNullFail()
+        {
+            var connectionContext = new WebPubSubConnectionContext()
+            {
+                ConnectionId = "0f9c97a2f0bf4706afe87a14e0797b11",
+                Signature = null,
+                Origin = TestUri.Host
+            };
+            var options = new WebPubSubValidationOptions($"Endpoint={TestUri};AccessKey=7aab239577fd4f24bc919802fb629f5f;Version=1.0;");
+            var result = connectionContext.IsValidSignature(options);
+            Assert.False(result);
         }
 
         [TestCase("OPTIONS", true)]
