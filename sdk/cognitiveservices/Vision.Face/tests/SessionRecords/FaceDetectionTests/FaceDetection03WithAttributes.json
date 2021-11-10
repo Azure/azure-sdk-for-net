@@ -57,15 +57,20 @@
           "-1"
         ]
       },
-      "ResponseBody": "[,
-      {
-        "\\\"faceId\\\": \\\"cc7ed45b-b4e0-40a2-a3b2-0fccd25d4041\\\"," "\\\"faceRectangle\\\": {",
-        "\\\"top\\\": 202," "\\\"left\\\": 550,",
-        "\\\"width\\\": 127," "\\\"height\\\": 127"
-      },
-      "\\\"faceLandmarks\\\": {" "\\\"pupilLeft\\\": {",
-      "\\\"x\\\": 579.2," "\\\"y\\\": 242.6"
+      "ResponseBody": "[
+  {
+    \"faceId\": \"cc7ed45b-b4e0-40a2-a3b2-0fccd25d4041\",
+    \"faceRectangle\": {
+      \"top\": 202,
+      \"left\": 550,
+      \"width\": 127,
+      \"height\": 127
     },
+    \"faceLandmarks\": {
+      \"pupilLeft\": {
+        \"x\": 579.2,
+        \"y\": 242.6
+      },
       \"pupilRight\": {
         \"x\": 626.3,
         \"y\": 226.7
