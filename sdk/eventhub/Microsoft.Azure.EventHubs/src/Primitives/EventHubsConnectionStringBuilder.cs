@@ -266,7 +266,7 @@ namespace Microsoft.Azure.EventHubs
         {
             if (this.Endpoint == null)
             {
-                throw Fx.Exception.ArgumentNullOrWhiteSpace(EndpointConfigName);
+                throw Fx.Exception.ArgumentNullOrWhiteSpace(nameof(EndpointConfigName));
             }
 
             // if one supplied sharedAccessKeyName, they need to supply sharedAccesssecret, and vise versa
