@@ -113,7 +113,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             SafeAddContract(() => contract.Add("Request", parameterInfo.ParameterType));
             SafeAddContract(() => contract.Add("ConnectionContext", typeof(WebPubSubConnectionContext)));
             SafeAddContract(() => contract.Add("Message", typeof(BinaryData)));
-            SafeAddContract(() => contract.Add("DataType", typeof(MessageDataType)));
+            SafeAddContract(() => contract.Add("DataType", typeof(WebPubSubDataType)));
             SafeAddContract(() => contract.Add("Claims", typeof(IDictionary<string, string[]>)));
             SafeAddContract(() => contract.Add("Query", typeof(IDictionary<string, string[]>)));
             SafeAddContract(() => contract.Add("Reason", typeof(string)));

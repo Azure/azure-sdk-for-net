@@ -14,22 +14,22 @@ namespace Microsoft.Azure.WebPubSub.Common
         /// <summary>
         /// Message content.
         /// </summary>
-        [JsonPropertyName("message"), JsonConverter(typeof(BinaryDataJsonConverter))]
-        public BinaryData Message { get; }
+        [JsonPropertyName("data"), JsonConverter(typeof(BinaryDataJsonConverter))]
+        public BinaryData Data { get; }
 
         /// <summary>
         /// Message data type.
         /// </summary>
         [JsonPropertyName("dataType"), JsonConverter(typeof(JsonStringEnumConverter))]
-        public MessageDataType DataType { get; }
+        public WebPubSubDataType DataType { get; }
 
         /// <summary>
         /// Create <see cref="UserEventResponse"/>.
         /// </summary>
         /// <param name="message">String message to return caller.</param>
-        /// <param name="dataType">Message <see cref="MessageDataType"/>, default as Text.</param>
+        /// <param name="dataType">Message <see cref="WebPubSubDataType"/>, default as Text.</param>
         /// <returns>A message response to return caller.</returns>
-        public UserEventResponse CreateResponse(string message, MessageDataType dataType = MessageDataType.Text)
+        public UserEventResponse CreateResponse(string message, WebPubSubDataType dataType = WebPubSubDataType.Text)
         {
             return new UserEventResponse(message, dataType);
         }
@@ -38,9 +38,9 @@ namespace Microsoft.Azure.WebPubSub.Common
         /// Create <see cref="UserEventResponse"/>.
         /// </summary>
         /// <param name="message">BinaryData message to return caller.</param>
-        /// <param name="dataType">Message <see cref="MessageDataType"/>.</param>
+        /// <param name="dataType">Message <see cref="WebPubSubDataType"/>.</param>
         /// <returns>A message response to return caller.</returns>
-        public UserEventResponse CreateResponse(BinaryData message, MessageDataType dataType)
+        public UserEventResponse CreateResponse(BinaryData message, WebPubSubDataType dataType)
         {
             return new UserEventResponse(message, dataType);
         }
@@ -56,10 +56,10 @@ namespace Microsoft.Azure.WebPubSub.Common
             return new EventErrorResponse(code, message);
         }
 
-        internal UserEventRequest(WebPubSubConnectionContext connectionContext, BinaryData message, MessageDataType dataType)
+        internal UserEventRequest(WebPubSubConnectionContext connectionContext, BinaryData message, WebPubSubDataType dataType)
             : base(connectionContext)
         {
-            Message = message;
+            Data = message;
             DataType = dataType;
         }
 

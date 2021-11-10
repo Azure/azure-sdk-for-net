@@ -4,6 +4,7 @@
 using Microsoft.Azure.WebJobs.Hosting;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.ComponentModel;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
@@ -22,10 +23,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         /// </summary>
         public string ConnectionString { get; set; }
 
-        /// <summary>
-        /// Formats the options as JSON objects for display.
-        /// </summary>
-        /// <returns>Options formatted as JSON.</returns>
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         string IOptionsFormatter.Format()
         {
             // Not expose ConnectionString in logging.

@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Azure.WebJobs.Extensions.WebPubSub.Operations;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Indexers;
 using Microsoft.Azure.WebPubSub.Common;
@@ -79,7 +78,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             {
                 ConnectionContext = TestContext,
                 Message = TestMessage,
-                DataType = MessageDataType.Text,
+                DataType = WebPubSubDataType.Text,
                 TaskCompletionSource = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously)
             };
         }
@@ -123,8 +122,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             {
                 await operation.AddAsync(new SendToAll
                 {
-                    Message = TestMessage,
-                    DataType = MessageDataType.Text
+                    Data = TestMessage,
+                    DataType = WebPubSubDataType.Text
                 });
             }
 
@@ -133,8 +132,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             {
                 await operation.AddAsync(new SendToAll
                 {
-                    Message = TestMessage,
-                    DataType = MessageDataType.Text
+                    Data = TestMessage,
+                    DataType = WebPubSubDataType.Text
                 });
             }
 

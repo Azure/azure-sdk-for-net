@@ -5,7 +5,6 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Microsoft.Azure.WebJobs.Extensions.WebPubSub.Operations;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
@@ -28,19 +27,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             switch (item)
             {
                 case SendToAll sendToAll:
-                    await _service.Client.SendToAllAsync(RequestContent.Create(sendToAll.Message),
+                    await _service.Client.SendToAllAsync(RequestContent.Create(sendToAll.Data),
                         Utilities.GetContentType(sendToAll.DataType), sendToAll.Excluded).ConfigureAwait(false);
                     break;
                 case SendToConnection sendToConnection:
-                    await _service.Client.SendToConnectionAsync(sendToConnection.ConnectionId, RequestContent.Create(sendToConnection.Message),
+                    await _service.Client.SendToConnectionAsync(sendToConnection.ConnectionId, RequestContent.Create(sendToConnection.Data),
                         Utilities.GetContentType(sendToConnection.DataType)).ConfigureAwait(false);
                     break;
                 case SendToUser sendToUser:
-                    await _service.Client.SendToUserAsync(sendToUser.UserId, RequestContent.Create(sendToUser.Message),
+                    await _service.Client.SendToUserAsync(sendToUser.UserId, RequestContent.Create(sendToUser.Data),
                         Utilities.GetContentType(sendToUser.DataType)).ConfigureAwait(false);
                     break;
                 case SendToGroup sendToGroup:
-                    await _service.Client.SendToGroupAsync(sendToGroup.Group, RequestContent.Create(sendToGroup.Message),
+                    await _service.Client.SendToGroupAsync(sendToGroup.Group, RequestContent.Create(sendToGroup.Data),
                         Utilities.GetContentType(sendToGroup.DataType), sendToGroup.Excluded).ConfigureAwait(false);
                     break;
                 case AddUserToGroup addUserToGroup:

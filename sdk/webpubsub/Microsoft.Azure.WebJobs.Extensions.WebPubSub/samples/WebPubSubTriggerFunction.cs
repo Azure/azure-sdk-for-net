@@ -15,7 +15,7 @@ namespace Microsoft.Azure.WebJobs.Samples
             ILogger logger,
             [WebPubSubTrigger("hub", WebPubSubEventType.User, "message")] UserEventRequest request,
             string message,
-            MessageDataType dataType)
+            WebPubSubDataType dataType)
         {
             logger.LogInformation("Request from: {user}, message: {message}, dataType: {dataType}",
                 request.ConnectionContext.UserId, message, dataType);

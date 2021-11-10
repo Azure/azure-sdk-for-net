@@ -68,7 +68,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             public static void Func1([WebPubSubTrigger("testchat", WebPubSubEventType.System, "connect")] WebPubSubConnectionContext connectionContext)
             { }
 
-            public static void Func2([WebPubSubTrigger("testchat", WebPubSubEventType.User, "message")] WebPubSubConnectionContext connectionContext, BinaryData message, MessageDataType dataType)
+            public static void Func2([WebPubSubTrigger("testchat", WebPubSubEventType.User, "message")] WebPubSubConnectionContext connectionContext, BinaryData message, WebPubSubDataType dataType)
             { }
 
             public static void Func3([WebPubSubTrigger("testchat", WebPubSubEventType.System, "connect")] JObject connectionContext)
@@ -134,7 +134,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
                 },
                 Reason = "reason",
                 Message = BinaryData.FromString("message"),
-                DataType = MessageDataType.Text
+                DataType = WebPubSubDataType.Text
             };
         }
     }
