@@ -66,7 +66,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                     return new HttpResponseMessage(HttpStatusCode.BadRequest);
                 }
 
-                BinaryData message = null;
+                BinaryData data = null;
                 WebPubSubDataType dataType = WebPubSubDataType.Text;
                 IDictionary<string, string[]> claims = null;
                 IDictionary<string, string[]> query = null;
@@ -110,8 +110,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                             }
 
                             var payload = await req.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
-                            message = BinaryData.FromBytes(payload);
-                            eventRequest = new UserEventRequest(context, message, dataType);
+                            data = BinaryData.FromBytes(payload);
+                            eventRequest = new UserEventRequest(context, data, dataType);
                             break;
                         }
                     case RequestType.Connected:
@@ -126,7 +126,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 var triggerEvent = new WebPubSubTriggerEvent
                 {
                     ConnectionContext = context,
-                    Message = message,
+                    Data = data,
                     DataType = dataType,
                     Claims = claims,
                     Query = query,

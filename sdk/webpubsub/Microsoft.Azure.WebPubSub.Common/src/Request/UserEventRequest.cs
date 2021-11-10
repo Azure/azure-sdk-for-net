@@ -26,23 +26,23 @@ namespace Microsoft.Azure.WebPubSub.Common
         /// <summary>
         /// Create <see cref="UserEventResponse"/>.
         /// </summary>
-        /// <param name="message">String message to return caller.</param>
+        /// <param name="data">String message to return caller.</param>
         /// <param name="dataType">Message <see cref="WebPubSubDataType"/>, default as Text.</param>
         /// <returns>A message response to return caller.</returns>
-        public UserEventResponse CreateResponse(string message, WebPubSubDataType dataType = WebPubSubDataType.Text)
+        public UserEventResponse CreateResponse(string data, WebPubSubDataType dataType = WebPubSubDataType.Text)
         {
-            return new UserEventResponse(message, dataType);
+            return new UserEventResponse(data, dataType);
         }
 
         /// <summary>
         /// Create <see cref="UserEventResponse"/>.
         /// </summary>
-        /// <param name="message">BinaryData message to return caller.</param>
+        /// <param name="data">BinaryData message to return caller.</param>
         /// <param name="dataType">Message <see cref="WebPubSubDataType"/>.</param>
         /// <returns>A message response to return caller.</returns>
-        public UserEventResponse CreateResponse(BinaryData message, WebPubSubDataType dataType)
+        public UserEventResponse CreateResponse(BinaryData data, WebPubSubDataType dataType)
         {
-            return new UserEventResponse(message, dataType);
+            return new UserEventResponse(data, dataType);
         }
 
         /// <summary>
@@ -56,10 +56,10 @@ namespace Microsoft.Azure.WebPubSub.Common
             return new EventErrorResponse(code, message);
         }
 
-        internal UserEventRequest(WebPubSubConnectionContext connectionContext, BinaryData message, WebPubSubDataType dataType)
+        internal UserEventRequest(WebPubSubConnectionContext connectionContext, BinaryData data, WebPubSubDataType dataType)
             : base(connectionContext)
         {
-            Data = message;
+            Data = data;
             DataType = dataType;
         }
 

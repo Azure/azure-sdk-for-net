@@ -78,12 +78,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                     {
                         using var ms = new MemoryStream();
                         await request.Body.CopyToAsync(ms).ConfigureAwait(false);
-                        var message = BinaryData.FromBytes(ms.ToArray());
+                        var data = BinaryData.FromBytes(ms.ToArray());
                         if (!MediaTypeHeaderValue.Parse(request.ContentType).MediaType.IsValidMediaType(out var dataType))
                         {
                             throw new ArgumentException($"ContentType is not supported: {request.ContentType}");
                         }
-                        return new UserEventRequest(context, message, dataType);
+                        return new UserEventRequest(context, data, dataType);
                     }
                 case RequestType.Connected:
                     {

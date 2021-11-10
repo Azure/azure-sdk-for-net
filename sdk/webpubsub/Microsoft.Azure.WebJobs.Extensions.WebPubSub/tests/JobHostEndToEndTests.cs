@@ -77,7 +77,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             return new WebPubSubTriggerEvent
             {
                 ConnectionContext = TestContext,
-                Message = TestMessage,
+                Data = TestMessage,
                 DataType = WebPubSubDataType.Text,
                 TaskCompletionSource = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously)
             };

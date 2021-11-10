@@ -214,10 +214,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             {
                 var dataType = value.ToObject<WebPubSubDataType>();
 
-                input.TryGetValue("data", StringComparison.OrdinalIgnoreCase, out var message);
+                input.TryGetValue("data", StringComparison.OrdinalIgnoreCase, out var data);
 
                 if (dataType == WebPubSubDataType.Binary &&
-                    !(message["type"] != null && message["type"].ToString().Equals("Buffer", StringComparison.OrdinalIgnoreCase)))
+                    !(data["type"] != null && data["type"].ToString().Equals("Buffer", StringComparison.OrdinalIgnoreCase)))
                 {
                     throw new ArgumentException("WebPubSubDataType is binary, please use ArrayBuffer as message data type.");
                 }

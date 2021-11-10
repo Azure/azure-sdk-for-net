@@ -100,11 +100,11 @@ public static class WebPubSubTriggerFunction
     public static void Run(
         ILogger logger,
         [WebPubSubTrigger("hub", WebPubSubEventType.User, "message")] UserEventRequest request,
-        string message,
+        string data,
         WebPubSubDataType dataType)
     {
-        logger.LogInformation("Request from: {user}, message: {message}, dataType: {dataType}",
-            request.ConnectionContext.UserId, message, dataType);
+        logger.LogInformation("Request from: {user}, data: {data}, dataType: {dataType}",
+            request.ConnectionContext.UserId, data, dataType);
     }
 }
 ```
