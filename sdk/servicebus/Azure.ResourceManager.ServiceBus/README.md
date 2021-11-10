@@ -9,20 +9,34 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 Install the Azure Azure.ResourceManager.ServiceBus management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```PowerShell
-Install-Package Azure.ResourceManager.ServiceBus -Version 1.0.0-preview.1 
+Install-Package Azure.ResourceManager.ServiceBus -Version 1.0.0-beta.1 
 ```
 
 ### Prerequisites
+Set up a way to authenticate to Azure with Azure Identity.
 
-* You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/)
+Some options are:
+- Through the [Azure CLI Login](https://docs.microsoft.com/cli/azure/authenticate-azure-cli).
+- Via [Visual Studio](https://docs.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet#authenticating-via-visual-studio).
+- Setting [Environment Variables](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/docs/AuthUsingEnvironmentVariables.md).
+
+More information and different authentication approaches using Azure Identity can be found in [this document](https://docs.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet).
 
 ### Authenticate the Client
 
-To create an authenticated client and start interacting with Azure resources, please see the [quickstart guide here](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/mgmt_preview_quickstart.md)
+The default option to create an authenticated client is to use `DefaultAzureCredential`. Since all management APIs go through the same endpoint, in order to interact with resources, only one top-level `ArmClient` has to be created.
+
+To authenticate to Azure and create an `ArmClient`, do the following:
+
+```C# Snippet:Managing_ServiceBus_AuthClient
+```
+
+Additional documentation for the `Azure.Identity.DefaultAzureCredential` class can be found in [this document](https://docs.microsoft.com/dotnet/api/azure.identity.defaultazurecredential).
 
 ## Key concepts
 
-Key concepts of the Azure .NET SDK can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html)
+Key concepts of the Azure .NET SDK can be found [here](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/README.md#key-concepts)
+
 
 ## Documentation
 
@@ -34,8 +48,42 @@ Documentation is available to help you learn how to use this package
 
 ## Examples
 
-Code samples for using the management library for .NET can be found in the following locations
-- [.NET Management Library Code Samples](https://docs.microsoft.com/samples/browse/?branch=master&languages=csharp&term=managing%20using%20Azure%20.NET%20SDK)
+### Create a namespace
+
+Before creating a namespace, we need to have a resource group.
+
+```C# Snippet:Managing_ServiceBusNamespaces_GetSubscription
+```
+```C# Snippet:Managing_ServiceBusNamespaces_CreateResourceGroup
+```
+
+Then we can create a namespace inside this resource group.
+
+```C# Snippet:Managing_ServiceBusNamespaces_CreateNamespace
+```
+
+### Get all namespaces in a resource group
+
+```C# Snippet:Managing_ServiceBusNamespaces_ListNamespaces
+```
+
+### Get a namespace
+
+```C# Snippet:Managing_ServiceBusNamespaces_GetNamespace
+```
+
+### Try to get a namespace if it exists
+
+
+```C# Snippet:Managing_ServiceBusNamespaces_GetNamespaceIfExists
+```
+
+### Delete a namespace
+```C# Snippet:Managing_ServiceBusNamespaces_DeleteNamespace
+```
+
+
+For more detailed examples, take a look at [samples](https://github.com/yukun-dong/azure-sdk-for-net/tree/eventhub-2018-01-preview/sdk/eventhub/Azure.ResourceManager.EventHubs/samples) we have available.
 
 ## Troubleshooting
 
