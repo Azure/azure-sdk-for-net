@@ -68,7 +68,7 @@ namespace Azure.Communication.CallingServer.Tests
         [TestCaseSource(nameof(TestData_CreateCall))]
         public async Task CreateCallAsync_Returns201Created(CommunicationIdentifier source, IEnumerable<CommunicationIdentifier> targets, CreateCallOptions createCallOptions)
         {
-            CallingServerClient callingServerClient = CreateMockCallingServerClient(201, CreateOrJoinCallPayload);
+            CallingServerClient callingServerClient = CreateMockCallingServerClient(201, CreateOrJoinOrAnswerCallPayload);
 
             var response = await callingServerClient.CreateCallConnectionAsync(source, targets, createCallOptions).ConfigureAwait(false);
             Assert.AreEqual((int)HttpStatusCode.Created, response.GetRawResponse().Status);
@@ -78,7 +78,7 @@ namespace Azure.Communication.CallingServer.Tests
         [TestCaseSource(nameof(TestData_CreateCall))]
         public void CreateCall_Returns201Created(CommunicationIdentifier source, IEnumerable<CommunicationIdentifier> targets, CreateCallOptions createCallOptions)
         {
-            CallingServerClient callingServerClient = CreateMockCallingServerClient(201, CreateOrJoinCallPayload);
+            CallingServerClient callingServerClient = CreateMockCallingServerClient(201, CreateOrJoinOrAnswerCallPayload);
 
             var response = callingServerClient.CreateCallConnection(source, targets, createCallOptions);
             Assert.AreEqual((int)HttpStatusCode.Created, response.GetRawResponse().Status);
@@ -108,7 +108,7 @@ namespace Azure.Communication.CallingServer.Tests
         [TestCaseSource(nameof(TestData_JoinCall))]
         public async Task JoinCallAsync_Returns202Accepted(string serverCallId, CommunicationIdentifier source, JoinCallOptions joinCallOptions)
         {
-            CallingServerClient callingServerClient = CreateMockCallingServerClient(202, CreateOrJoinCallPayload);
+            CallingServerClient callingServerClient = CreateMockCallingServerClient(202, CreateOrJoinOrAnswerCallPayload);
 
             var callLocator = new ServerCallLocator(serverCallId);
 
@@ -120,7 +120,7 @@ namespace Azure.Communication.CallingServer.Tests
         [TestCaseSource(nameof(TestData_JoinCall))]
         public void JoinCall_Returns202Accepted(string serverCallId, CommunicationIdentifier source, JoinCallOptions joinCallOptions)
         {
-            CallingServerClient callingServerClient = CreateMockCallingServerClient(202, CreateOrJoinCallPayload);
+            CallingServerClient callingServerClient = CreateMockCallingServerClient(202, CreateOrJoinOrAnswerCallPayload);
 
             var callLocator = new ServerCallLocator(serverCallId);
 
@@ -862,7 +862,7 @@ namespace Azure.Communication.CallingServer.Tests
         [TestCaseSource(nameof(TestData_AnswerCall))]
         public async Task AnswerCallAsync_Return200OK(string incomingCallContext, IEnumerable<CallMediaType> requestedMediaTypes, IEnumerable<CallingEventSubscriptionType> requestedCallEvents, Uri callbackUri)
         {
-            CallingServerClient serverCallRestClient = CreateMockCallingServerClient(202);
+            CallingServerClient serverCallRestClient = CreateMockCallingServerClient(202, CreateOrJoinOrAnswerCallPayload);
 
             var response = await serverCallRestClient.AnswerCallAsync(incomingCallContext, requestedMediaTypes, requestedCallEvents, callbackUri);
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
@@ -871,7 +871,7 @@ namespace Azure.Communication.CallingServer.Tests
         [TestCaseSource(nameof(TestData_AnswerCall))]
         public void AnswerCall_Return202OK(string incomingCallContext, IEnumerable<CallMediaType> requestedMediaTypes, IEnumerable<CallingEventSubscriptionType> requestedCallEvents, Uri callbackUri)
         {
-            CallingServerClient serverCallRestClient = CreateMockCallingServerClient(202);
+            CallingServerClient serverCallRestClient = CreateMockCallingServerClient(202, CreateOrJoinOrAnswerCallPayload);
 
             var response = serverCallRestClient.AnswerCall(incomingCallContext, requestedMediaTypes, requestedCallEvents, callbackUri);
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);

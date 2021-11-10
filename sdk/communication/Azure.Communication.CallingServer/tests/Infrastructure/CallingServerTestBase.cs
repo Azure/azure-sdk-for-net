@@ -10,7 +10,7 @@ namespace Azure.Communication.CallingServer.Tests
     {
         protected const string connectionString = "endpoint=https://contoso.azure.com/;accesskey=ZHVtbXlhY2Nlc3NrZXk=";
 
-        protected const string CreateOrJoinCallPayload = "{" +
+        protected const string CreateOrJoinOrAnswerCallPayload = "{" +
                                                  "\"callConnectionId\": \"cad9df7b-f3ac-4c53-96f7-c76e7437b3c1\"" +
                                                  "}";
 
