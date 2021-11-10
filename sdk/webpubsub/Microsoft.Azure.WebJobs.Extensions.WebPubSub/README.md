@@ -118,7 +118,7 @@ public static class WebPubSubTriggerReturnValueFunction
     public static UserEventResponse Run(
         [WebPubSubTrigger("hub", WebPubSubEventType.User, "message")] UserEventRequest request)
     {
-        return request.CreateResponse(BinaryData.FromString("ack"), MessageDataType.Text);
+        return request.CreateResponse(BinaryData.FromString("ack"), WebPubSubDataType.Text);
     }
 }
 ```
