@@ -8,6 +8,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 
+#nullable enable
+
 namespace Azure.Core
 {
     /// <summary>
@@ -30,14 +32,13 @@ namespace Azure.Core
     internal class OperationInternal
     {
         private readonly IOperation _operation;
-
         private readonly ClientDiagnostics _diagnostics;
-
         private readonly string _updateStatusScopeName;
-
-        private readonly IReadOnlyDictionary<string, string> _scopeAttributes;
-
-        private RequestFailedException _operationFailedException;
+        private readonly IReadOnlyDictionary<string, string>? _scopeAttributes;
+        private RequestFailedException _operationFailedException = null!;
+        private const string RetryAfterHeaderName = "Retry-After";
+        private const string RetryAfterMsHeaderName = "retry-after-ms";
+        private const string XRetryAfterMsHeaderName = "x-ms-retry-after-ms";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OperationInternal"/> class.
@@ -65,8 +66,8 @@ namespace Azure.Core
             ClientDiagnostics clientDiagnostics,
             IOperation operation,
             Response rawResponse,
-            string operationTypeName = null,
-            IEnumerable<KeyValuePair<string, string>> scopeAttributes = null)
+            string? operationTypeName = null,
+            IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null)
         {
             operationTypeName ??= operation.GetType().Name;
 
@@ -192,7 +193,7 @@ namespace Azure.Core
                     return response;
                 }
 
-                TimeSpan delay = OperationHelpers.GetServerDelay(response, pollingInterval);
+                TimeSpan delay = GetServerDelay(response, pollingInterval);
                 await WaitAsync(delay, cancellationToken).ConfigureAwait(false);
             }
         }
@@ -241,7 +242,9 @@ namespace Azure.Core
                 {
                     _operationFailedException = state.OperationFailedException ??
                                                 (async
-                                                    ? await _diagnostics.CreateRequestFailedExceptionAsync(state.RawResponse).ConfigureAwait(false)
+                                                    ? await _diagnostics
+                                                        .CreateRequestFailedExceptionAsync(state.RawResponse)
+                                                        .ConfigureAwait(false)
                                                     : _diagnostics.CreateRequestFailedException(state.RawResponse));
                     HasCompleted = true;
 
@@ -250,6 +253,30 @@ namespace Azure.Core
             }
 
             return state.RawResponse;
+        }
+
+        protected static TimeSpan GetServerDelay(Response response, TimeSpan pollingInterval)
+        {
+            TimeSpan serverDelay = pollingInterval;
+            if (response.Headers.TryGetValue(RetryAfterMsHeaderName, out string? retryAfterValue) ||
+                response.Headers.TryGetValue(XRetryAfterMsHeaderName, out retryAfterValue))
+            {
+                if (int.TryParse(retryAfterValue, out int serverDelayInMilliseconds))
+                {
+                    serverDelay = TimeSpan.FromMilliseconds(serverDelayInMilliseconds);
+                }
+            }
+            else if (response.Headers.TryGetValue(RetryAfterHeaderName, out retryAfterValue))
+            {
+                if (int.TryParse(retryAfterValue, out int serverDelayInSeconds))
+                {
+                    serverDelay = TimeSpan.FromSeconds(serverDelayInSeconds);
+                }
+            }
+
+            return serverDelay > pollingInterval
+                ? serverDelay
+                : pollingInterval;
         }
     }
 
@@ -301,7 +328,7 @@ namespace Azure.Core
     /// </summary>
     internal readonly struct OperationState
     {
-        private OperationState(Response rawResponse, bool hasCompleted, bool hasSucceeded, RequestFailedException operationFailedException)
+        private OperationState(Response rawResponse, bool hasCompleted, bool hasSucceeded, RequestFailedException? operationFailedException)
         {
             RawResponse = rawResponse;
             HasCompleted = hasCompleted;
@@ -315,7 +342,7 @@ namespace Azure.Core
 
         public bool HasSucceeded { get; }
 
-        public RequestFailedException OperationFailedException { get; }
+        public RequestFailedException? OperationFailedException { get; }
 
         /// <summary>
         /// Instantiates an <see cref="OperationState"/> indicating the operation has completed successfully.
@@ -340,7 +367,7 @@ namespace Azure.Core
         /// </param>
         /// <returns>A new <see cref="OperationState"/> instance.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="rawResponse"/> is <c>null</c>.</exception>
-        public static OperationState Failure(Response rawResponse, RequestFailedException operationFailedException = null)
+        public static OperationState Failure(Response rawResponse, RequestFailedException? operationFailedException = null)
         {
             Argument.AssertNotNull(rawResponse, nameof(rawResponse));
             return new OperationState(rawResponse, true, false, operationFailedException);

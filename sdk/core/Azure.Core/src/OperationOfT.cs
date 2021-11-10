@@ -17,7 +17,7 @@ namespace Azure
     /// <typeparam name="T">The final result of the long-running operation.</typeparam>
 #pragma warning disable SA1649 // File name should match first type name
 #pragma warning disable AZC0012 // Avoid single word type names
-    public abstract class Operation<T>: Operation where T : notnull
+    public abstract class Operation<T> : Operation where T : notnull
 #pragma warning restore AZC0012 // Avoid single word type names
 #pragma warning restore SA1649 // File name should match first type name
     {
@@ -43,7 +43,7 @@ namespace Azure
         /// This method will periodically call UpdateStatusAsync till HasCompleted is true, then return the final result of the operation.
         /// </remarks>
         public virtual Response<T> WaitForCompletion(CancellationToken cancellationToken = default)
-           => this.DefaultWaitForCompletion(cancellationToken);
+           => WaitForCompletion(DefaultPollingInterval, cancellationToken);
 
         /// <summary>
         /// Periodically calls the server till the long-running operation completes.
@@ -59,7 +59,19 @@ namespace Azure
         /// This method will periodically call UpdateStatusAsync till HasCompleted is true, then return the final result of the operation.
         /// </remarks>
         public virtual Response<T> WaitForCompletion(TimeSpan pollingInterval, CancellationToken cancellationToken)
-            => this.DefaultWaitForCompletion(pollingInterval, cancellationToken);
+        {
+            while (true)
+            {
+                Response response = UpdateStatus(cancellationToken);
+
+                if (HasCompleted)
+                {
+                    return Response.FromValue(Value, GetRawResponse());
+                }
+                TimeSpan delay = GetServerDelay(response, pollingInterval);
+                Thread.Sleep(delay);
+            }
+        }
 
         /// <summary>
         /// Periodically calls the server till the long-running operation completes.
@@ -70,7 +82,7 @@ namespace Azure
         /// This method will periodically call UpdateStatusAsync till HasCompleted is true, then return the final result of the operation.
         /// </remarks>
         public virtual ValueTask<Response<T>> WaitForCompletionAsync(CancellationToken cancellationToken = default)
-            => this.DefaultWaitForCompletionAsync(cancellationToken);
+            => WaitForCompletionAsync(DefaultPollingInterval, cancellationToken);
 
         /// <summary>
         /// Periodically calls the server till the long-running operation completes.
@@ -85,8 +97,19 @@ namespace Azure
         /// <remarks>
         /// This method will periodically call UpdateStatusAsync till HasCompleted is true, then return the final result of the operation.
         /// </remarks>
-        public virtual ValueTask<Response<T>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken)
-            => this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
+        public virtual async ValueTask<Response<T>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken)
+        {
+            while (true)
+            {
+                Response response = await UpdateStatusAsync(cancellationToken).ConfigureAwait(false);
+                if (HasCompleted)
+                {
+                    return Response.FromValue(Value, GetRawResponse());
+                }
+                TimeSpan delay = GetServerDelay(response, pollingInterval);
+                await Task.Delay(delay, cancellationToken).ConfigureAwait(false);
+            }
+        }
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

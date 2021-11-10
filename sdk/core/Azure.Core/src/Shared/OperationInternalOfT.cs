@@ -162,7 +162,7 @@ namespace Azure.Core
                     return Response.FromValue(Value, response);
                 }
 
-                OperationHelpers.GetServerDelay(response, pollingInterval);
+                GetServerDelay(response, pollingInterval);
             }
         }
 

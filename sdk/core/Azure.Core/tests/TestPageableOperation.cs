@@ -79,11 +79,5 @@ namespace Azure.Core.Tests.TestFramework
             UpdateStatus(cancellationToken);
             return new ValueTask<Response>(GetRawResponse() ?? new MockResponse(200));
         }
-
-        public override ValueTask<Response<AsyncPageable<T>>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
-            this.DefaultWaitForCompletionAsync(cancellationToken);
-
-        public override ValueTask<Response<AsyncPageable<T>>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken) =>
-            this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
     }
 }

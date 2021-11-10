@@ -46,7 +46,6 @@
     <Compile Include="Shared\HashCodeBuilder.cs" />
     <Compile Include="Shared\HttpMessageSanitizer.cs" />
     <Compile Include="Shared\NullableAttributes.cs" />
-    <Compile Include="Shared\OperationHelpers.cs" />
     <Compile Include="Shared\TaskExtensions.cs" />
   </ItemGroup>
 

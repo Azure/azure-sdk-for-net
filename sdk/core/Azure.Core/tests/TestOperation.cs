@@ -24,7 +24,7 @@ namespace Azure.Core.Tests.TestFramework
         public override bool HasCompleted => _completed;
         public override bool HasValue => _completed;
         public override Response GetRawResponse() => _rawResponse;
-        public override T Value => OperationHelpers.GetValue(ref _value);
+        public override T Value => GetValue(ref _value);
 
         public Action UpdateCalled { get; set; }
 
@@ -55,11 +55,5 @@ namespace Azure.Core.Tests.TestFramework
             }
             return null;
         }
-
-        public override ValueTask<Response<T>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
-            this.DefaultWaitForCompletionAsync(cancellationToken);
-
-        public override ValueTask<Response<T>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken) =>
-            this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
     }
 }
