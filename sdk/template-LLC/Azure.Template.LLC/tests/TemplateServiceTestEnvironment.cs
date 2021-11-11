@@ -5,7 +5,7 @@ using Azure.Core.TestFramework;
 
 namespace Azure.Template.LLC.Tests
 {
-    public class TemplateLLCTestEnvironment : TestEnvironment
+    public class TemplateServiceTestEnvironment : TestEnvironment
     {
         public string Endpoint => GetRecordedVariable("Template_ENDPOINT");
     }

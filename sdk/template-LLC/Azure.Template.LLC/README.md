@@ -41,7 +41,7 @@ If your library requires authentication for use, such as for Azure services, inc
 For example, include details on obtaining an account key and endpoint URI, setting environment variables for each, and initializing the client object.
 
 ```C# Snippet:TemplateLLCAuthenticate
-var serviceClient = new TemplateLLCClient(new DefaultAzureCredential(), new Uri(endpoint));
+var serviceClient = new TemplateServiceClient(new DefaultAzureCredential(), new Uri(endpoint));
 ```
 
 ## Key concepts

@@ -13,8 +13,8 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Template.LLC
 {
-    /// <summary> The TemplateLLC service client. </summary>
-    public partial class TemplateLLCClient
+    /// <summary> The TemplateService service client. </summary>
+    public partial class TemplateServiceClient
     {
         private static readonly string[] AuthorizationScopes = { "https://dev.LLCtemplate.net/.default" };
         private readonly TokenCredential _tokenCredential;
@@ -26,17 +26,17 @@ namespace Azure.Template.LLC
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline { get => _pipeline; }
 
-        /// <summary> Initializes a new instance of TemplateLLCClient for mocking. </summary>
-        protected TemplateLLCClient()
+        /// <summary> Initializes a new instance of TemplateServiceClient for mocking. </summary>
+        protected TemplateServiceClient()
         {
         }
 
-        /// <summary> Initializes a new instance of TemplateLLCClient. </summary>
+        /// <summary> Initializes a new instance of TemplateServiceClient. </summary>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="credential"/> is null. </exception>
-        public TemplateLLCClient(TokenCredential credential, Uri endpoint = null, TemplateLLCClientOptions options = null)
+        public TemplateServiceClient(TokenCredential credential, Uri endpoint = null, TemplateServiceClientOptions options = null)
         {
             if (credential == null)
             {
@@ -44,7 +44,7 @@ namespace Azure.Template.LLC
             }
             endpoint ??= new Uri("http://localhost:3000");
 
-            options ??= new TemplateLLCClientOptions();
+            options ??= new TemplateServiceClientOptions();
 
             _clientDiagnostics = new ClientDiagnostics(options);
             _tokenCredential = credential;
@@ -52,81 +52,28 @@ namespace Azure.Template.LLC
             _endpoint = endpoint;
         }
 
-        /// <summary> No RequestBody and ResponseBody. </summary>
-        /// <param name="id"> Query parameter Id. </param>
-        /// <param name="top"> Query parameter top. </param>
-        /// <param name="skip"> Query parameter skip. </param>
-        /// <param name="status"> Query parameter status. </param>
+        /// <summary> Create or update resource. </summary>
+        /// <param name="resourceId"> The id of the resource. </param>
         /// <param name="context"> The request context. </param>
-#pragma warning disable AZC0002
-        public virtual async Task<Response> NoRequestBodyResponseBodyAsync(int id, int? top = null, int skip = 12, string status = "start", RequestContext context = null)
-#pragma warning restore AZC0002
-        {
-            using var scope = _clientDiagnostics.CreateScope("TemplateLLCClient.NoRequestBodyResponseBody");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateNoRequestBodyResponseBodyRequest(id, top, skip, status);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> No RequestBody and ResponseBody. </summary>
-        /// <param name="id"> Query parameter Id. </param>
-        /// <param name="top"> Query parameter top. </param>
-        /// <param name="skip"> Query parameter skip. </param>
-        /// <param name="status"> Query parameter status. </param>
-        /// <param name="context"> The request context. </param>
-#pragma warning disable AZC0002
-        public virtual Response NoRequestBodyResponseBody(int id, int? top = null, int skip = 12, string status = "start", RequestContext context = null)
-#pragma warning restore AZC0002
-        {
-            using var scope = _clientDiagnostics.CreateScope("TemplateLLCClient.NoRequestBodyResponseBody");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateNoRequestBodyResponseBodyRequest(id, top, skip, status);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> RequestBody and ResponseBody. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   Code: string,
-        ///   Status: string
-        /// }
-        /// </code>
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   Code: string,
-        ///   Status: string
+        ///   name: string,
+        ///   id: string
         /// }
         /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> RequestBodyResponseBodyAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<Response> CreateAsync(string resourceId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("TemplateLLCClient.RequestBodyResponseBody");
+            using var scope = _clientDiagnostics.CreateScope("TemplateServiceClient.Create");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateRequestBodyResponseBodyRequest(content);
+                using HttpMessage message = CreateCreateRequest(resourceId);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -136,33 +83,28 @@ namespace Azure.Template.LLC
             }
         }
 
-        /// <summary> RequestBody and ResponseBody. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <summary> Create or update resource. </summary>
+        /// <param name="resourceId"> The id of the resource. </param>
         /// <param name="context"> The request context. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   Code: string,
-        ///   Status: string
-        /// }
-        /// </code>
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   Code: string,
-        ///   Status: string
+        ///   name: string,
+        ///   id: string
         /// }
         /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response RequestBodyResponseBody(RequestContent content, RequestContext context = null)
+        public virtual Response Create(string resourceId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("TemplateLLCClient.RequestBodyResponseBody");
+            using var scope = _clientDiagnostics.CreateScope("TemplateServiceClient.Create");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateRequestBodyResponseBodyRequest(content);
+                using HttpMessage message = CreateCreateRequest(resourceId);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -172,17 +114,19 @@ namespace Azure.Template.LLC
             }
         }
 
-        /// <summary> No RequestBody and No ResponseBody. </summary>
+        /// <summary> Delete resource. </summary>
+        /// <param name="resourceId"> The id of the resource. </param>
         /// <param name="context"> The request context. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> NoRequestBodyNoResponseBodyAsync(RequestContext context = null)
+        public virtual async Task<Response> DeleteAsync(string resourceId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("TemplateLLCClient.NoRequestBodyNoResponseBody");
+            using var scope = _clientDiagnostics.CreateScope("TemplateServiceClient.Delete");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateNoRequestBodyNoResponseBodyRequest();
+                using HttpMessage message = CreateDeleteRequest(resourceId);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -192,17 +136,19 @@ namespace Azure.Template.LLC
             }
         }
 
-        /// <summary> No RequestBody and No ResponseBody. </summary>
+        /// <summary> Delete resource. </summary>
+        /// <param name="resourceId"> The id of the resource. </param>
         /// <param name="context"> The request context. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
 #pragma warning disable AZC0002
-        public virtual Response NoRequestBodyNoResponseBody(RequestContext context = null)
+        public virtual Response Delete(string resourceId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("TemplateLLCClient.NoRequestBodyNoResponseBody");
+            using var scope = _clientDiagnostics.CreateScope("TemplateServiceClient.Delete");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateNoRequestBodyNoResponseBodyRequest();
+                using HttpMessage message = CreateDeleteRequest(resourceId);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -212,18 +158,28 @@ namespace Azure.Template.LLC
             }
         }
 
-        /// <summary> RequestBody and No ResponseBody. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <summary> Retrieves information about the resource. </summary>
+        /// <param name="resourceId"> The id of the resource. </param>
         /// <param name="context"> The request context. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   name: string,
+        ///   id: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> RequestBodyNoResponseBodyAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<Response> GetAsync(string resourceId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("TemplateLLCClient.RequestBodyNoResponseBody");
+            using var scope = _clientDiagnostics.CreateScope("TemplateServiceClient.Get");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateRequestBodyNoResponseBodyRequest(content);
+                using HttpMessage message = CreateGetRequest(resourceId);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -233,18 +189,28 @@ namespace Azure.Template.LLC
             }
         }
 
-        /// <summary> RequestBody and No ResponseBody. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <summary> Retrieves information about the resource. </summary>
+        /// <param name="resourceId"> The id of the resource. </param>
         /// <param name="context"> The request context. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   name: string,
+        ///   id: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response RequestBodyNoResponseBody(RequestContent content, RequestContext context = null)
+        public virtual Response Get(string resourceId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("TemplateLLCClient.RequestBodyNoResponseBody");
+            using var scope = _clientDiagnostics.CreateScope("TemplateServiceClient.Get");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateRequestBodyNoResponseBodyRequest(content);
+                using HttpMessage message = CreateGetRequest(resourceId);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -254,70 +220,126 @@ namespace Azure.Template.LLC
             }
         }
 
-        internal HttpMessage CreateNoRequestBodyResponseBodyRequest(int id, int? top, int skip, string status)
+        /// <summary> Retrieves the list of resources. </summary>
+        /// <param name="context"> The request context. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [
+        ///     {
+        ///       name: string,
+        ///       id: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetResourcesAsync(RequestContext context = null)
+#pragma warning restore AZC0002
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/test1", false);
-            if (top != null)
+            using var scope = _clientDiagnostics.CreateScope("TemplateServiceClient.GetResources");
+            scope.Start();
+            try
             {
-                uri.AppendQuery("$top", top.Value, true);
+                using HttpMessage message = CreateGetResourcesRequest();
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
-            uri.AppendQuery("id", id, true);
-            uri.AppendQuery("skip", skip, true);
-            if (status != null)
+            catch (Exception e)
             {
-                uri.AppendQuery("status", status, true);
+                scope.Failed(e);
+                throw;
             }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
-            return message;
         }
 
-        internal HttpMessage CreateRequestBodyResponseBodyRequest(RequestContent content)
+        /// <summary> Retrieves the list of resources. </summary>
+        /// <param name="context"> The request context. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [
+        ///     {
+        ///       name: string,
+        ///       id: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual Response GetResources(RequestContext context = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("TemplateServiceClient.GetResources");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetResourcesRequest();
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        internal HttpMessage CreateCreateRequest(string resourceId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/test1", false);
+            uri.AppendPath("/providers/Microsoft.Template/resource/", false);
+            uri.AppendPath(resourceId, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
             message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        internal HttpMessage CreateNoRequestBodyNoResponseBodyRequest()
+        internal HttpMessage CreateDeleteRequest(string resourceId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Template/resource/", false);
+            uri.AppendPath(resourceId, true);
+            request.Uri = uri;
+            message.ResponseClassifier = ResponseClassifier200.Instance;
+            return message;
+        }
+
+        internal HttpMessage CreateGetRequest(string resourceId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/test2", false);
+            uri.AppendPath("/providers/Microsoft.Template/resource/", false);
+            uri.AppendPath(resourceId, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        internal HttpMessage CreateRequestBodyNoResponseBodyRequest(RequestContent content)
+        internal HttpMessage CreateGetResourcesRequest()
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
-            request.Method = RequestMethod.Put;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/test2", false);
+            uri.AppendPath("/providers/Microsoft.Template/resource", false);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
+            request.Headers.Add("Accept", "application/json");
             message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }

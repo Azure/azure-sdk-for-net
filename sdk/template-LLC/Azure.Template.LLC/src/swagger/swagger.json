@@ -1,123 +1,121 @@
 ﻿{
   "swagger": "2.0",
   "info": {
-    "title": "Template LLC",
-    "description": "Template LLC",
+    "title": "Template Service",
+    "description": "Template Service",
     "version": "1.0.0"
   },
   "host": "localhost:3000",
-  "schemes": ["http"],
-  "produces": ["application/json"],
-  "consumes": ["application/json"],
+  "schemes": [
+    "http"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "consumes": [
+    "application/json"
+  ],
   "paths": {
-    "/test1": {
-      "get": {
-        "operationId": "NoRequestBodyResponseBody",
-        "description": "No RequestBody and ResponseBody",
+    "/providers/Microsoft.Template/resource/{resourceId}": {
+      "put": {
+        "operationId": "Create",
+        "description": "Create or update resource.",
         "parameters": [
           {
-            "in": "query",
-            "name": "$top",
-            "description": "Query parameter top",
-            "type": "integer",
-            "required": false
-          },
-          {
-            "in": "query",
-            "name": "id",
-            "description": "Query parameter Id",
-            "type": "integer",
+            "name": "resourceId",
+            "in": "path",
             "required": true,
-            "x-nullable": true
-          },
-          {
-            "in": "query",
-            "name": "skip",
-            "description": "Query parameter skip",
-            "type": "integer",
-            "required": true,
-            "x-ms-client-default": 12
-          },
-          {
-            "in": "query",
-            "name": "status",
-            "description": "Query parameter status",
             "type": "string",
-            "x-ms-client-default": "start"
+            "description": "The id of the resource."
           }
         ],
         "responses": {
           "200": {
-            "description": "String Response",
+            "description": "OK",
             "schema": {
-              "type": "string"
+              "$ref": "#/definitions/Resource"
             }
           }
         }
       },
-      "put": {
-        "operationId": "RequestBodyResponseBody",
-        "description": "RequestBody and ResponseBody",
+      "delete": {
+        "operationId": "Delete",
+        "description": "Delete resource.",
         "parameters": [
           {
-            "name": "model",
-            "description": "body",
-            "in": "body",
-            "schema": {
-              "$ref": "#/definitions/TestModel"
-            }
+            "name": "resourceId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The id of the resource."
           }
         ],
         "responses": {
           "200": {
-            "description": "String Response",
+            "description": "OK"
+          }
+        }
+      },
+      "get": {
+        "operationId": "Get",
+        "description": "Retrieves information about the resource.",
+        "parameters": [
+          {
+            "name": "resourceId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The id of the resource."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
             "schema": {
-              "$ref": "#/definitions/TestModel"
+              "$ref": "#/definitions/Resource"
             }
           }
         }
       }
     },
-    "/test2": {
+    "/providers/Microsoft.Template/resource": {
       "get": {
-        "operationId": "NoRequestBodyNoResponseBody",
-        "description": "No RequestBody and No ResponseBody",
+        "operationId": "ListResources",
+        "description": "Retrieves the list of resources.",
         "responses": {
           "200": {
-            "description": "Empty Response"
-          }
-        }
-      },
-      "put": {
-        "operationId": "RequestBodyNoResponseBody",
-        "description": "RequestBody and No ResponseBody",
-        "parameters": [
-          {
-            "name": "stringBody",
-            "description": "string body",
-            "in": "body",
+            "description": "OK",
             "schema": {
-              "type": "string",
-              "x-nullable": true
+              "$ref": "#/definitions/ResourceListResult"
             }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Empty Response"
           }
         }
       }
     }
   },
   "definitions": {
-    "TestModel": {
-      "type": "object",
+    "Resource": {
       "properties": {
-        "Code": { "type": "string" },
-        "Status": { "type": "string" }
+        "name": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        }
       },
       "description": "."
+    },
+    "ResourceListResult": {
+      "properties": {
+        "value": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Resource"
+          },
+          "description": "The list of resources"
+        }
+      },
+      "description": "The List resource operation response."
     }
   }
 }

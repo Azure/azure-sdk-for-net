@@ -7,14 +7,14 @@ using NUnit.Framework;
 
 namespace Azure.Template.LLC.Tests.Samples
 {
-    public class TemplateLLCSamples : SamplesBase<TemplateLLCTestEnvironment>
+    public class TemplateServiceSamples : SamplesBase<TemplateServiceTestEnvironment>
     {
         public void Authenticate()
         {
             var endpoint = TestEnvironment.Endpoint;
 
             #region Snippet:TemplateLLCAuthenticate
-            var serviceClient = new TemplateLLCClient(new DefaultAzureCredential(), new Uri(endpoint));
+            var serviceClient = new TemplateServiceClient(new DefaultAzureCredential(), new Uri(endpoint));
             #endregion
         }
 
