@@ -2,10 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Buffers;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Linq;
 
 namespace Azure.Core.Pipeline
 {
@@ -93,12 +94,22 @@ namespace Azure.Core.Pipeline
         /// <param name="message">The <see cref="HttpMessage"/> to send.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>The <see cref="ValueTask"/> representing the asynchronous operation.</returns>
-        public ValueTask SendAsync(HttpMessage message, CancellationToken cancellationToken)
+        public async ValueTask SendAsync(HttpMessage message, CancellationToken cancellationToken)
         {
             message.CancellationToken = cancellationToken;
             AddHttpMessageProperties(message);
-            var pipeline = message.Policies == null ? _pipeline : CreateRequestPipeline(message.Policies);
-            return pipeline.Span[0].ProcessAsync(message, pipeline.Slice(1));
+
+            if (message.Policies == null)
+            {
+                await _pipeline.Span[0].ProcessAsync(message, _pipeline.Slice(1)).ConfigureAwait(false);
+            }
+            else
+            {
+                var length = _pipeline.Length + message.Policies.Count;
+                var pool = MemoryPool<HttpPipelinePolicy>.Shared;
+                using var pipeline = pool.Rent(length);
+                await pipeline.Memory.Span[0].ProcessAsync(message, pipeline.Memory.Slice(1)).ConfigureAwait(false);
+            }
         }
 
         /// <summary>
