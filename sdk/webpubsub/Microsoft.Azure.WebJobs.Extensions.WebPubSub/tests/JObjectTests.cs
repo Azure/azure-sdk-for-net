@@ -36,7 +36,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 
             var input = @"{ ""actionName"":""{0}"",""userId"":""user"", ""group"":""group1"",""connectionId"":""connection"",""data"":""test"",""dataType"":""text"", ""reason"":""close"", ""excluded"":[""aa"",""bb""]}";
 
-            var replacedInput = input.Replace("{0}", actionName);
+            var replacedInput = input.Replace("{0}", actionName.Substring(0, actionName.IndexOf("Action")));
 
             var jObject = JObject.Parse(replacedInput);
 
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 
             var input = @"{ ""actionName"":""{0}"",""userId"":""user"", ""group"":""group1"",""connectionId"":""connection"",""data"": {""type"":""Buffer"", ""data"": [66, 105, 110, 97, 114, 121, 68, 97, 116, 97]} ,""dataType"":""binary"", ""reason"":""close"", ""excluded"":[""aa"",""bb""]}";
 
-            var replacedInput = input.Replace("{0}", actionName.Name);
+            var replacedInput = input.Replace("{0}", actionName.Name.Substring(0, actionName.Name.IndexOf("Action")));
 
             var jObject = JObject.Parse(replacedInput);
 

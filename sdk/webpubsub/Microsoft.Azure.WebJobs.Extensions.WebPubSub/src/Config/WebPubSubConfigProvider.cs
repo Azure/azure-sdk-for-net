@@ -172,7 +172,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 var opeartions = typeof(WebPubSubAction).Assembly.GetTypes().Where(t => t.BaseType == typeof(WebPubSubAction));
                 foreach (var item in opeartions)
                 {
-                    if (TryToWebPubSubOperation(input, kind.ToString(), item, out var operation))
+                    if (TryToWebPubSubOperation(input, kind.ToString() + "Action", item, out var operation))
                     {
                         return operation;
                     }
