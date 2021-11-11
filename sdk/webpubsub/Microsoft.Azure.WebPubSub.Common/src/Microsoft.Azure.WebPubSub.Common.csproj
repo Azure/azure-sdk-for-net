@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <PackageReference Include="System.Text.Json" />
+    <PackageReference Include="System.Text.Encodings.Web" VersionOverride="4.7.2"/>
     <PackageReference Include="System.Memory.Data" />
   </ItemGroup>
 
