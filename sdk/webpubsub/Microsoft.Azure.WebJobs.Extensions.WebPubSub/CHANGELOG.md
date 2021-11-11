@@ -2,8 +2,13 @@
 
 ## 1.0.0 (2021-11-09)
 
-### Features Added
-- Adds stable features and bug fixes from the preview releases.
+### Breaking Changes
+- Move output binding object to namespace `Microsoft.Azure.WebJobs.Extensions.WebPubSub`.
+- Add a few static create methods under `WebPubSubAction` to easily discover available actions.
+- Add dependency `Azure.Messageing.WebPubSub` for service calls.
+- Rename output binding from `WebPubSubOperation` to `WebPubSubAction`, and add `Action` as suffix for derived classes.
+- Rename `operationKind` to `actionName` in output binding for javascript to deserialize.
+- Rename and uniform type of uri properties in `WebPubSubConnection` for C# convension.
 
 ## 1.0.0-beta.4 (2021-11-09)
 

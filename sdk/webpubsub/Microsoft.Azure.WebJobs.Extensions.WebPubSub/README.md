@@ -15,7 +15,7 @@ This extension provides functionality for receiving Web PubSub webhook calls in 
 Install the Web PubSub extension with [NuGet][nuget]:
 
 ```dotnetcli
-dotnet add package Microsoft.Azure.WebJobs.Extensions.WebPubSub --prerelease
+dotnet add package Microsoft.Azure.WebJobs.Extensions.WebPubSub
 ```
 
 ### Prerequisites

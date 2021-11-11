@@ -2,8 +2,8 @@
 
 ## 1.0.0 (2021-11-09)
 
-### Features Added
-- Adds stable features and bug fixes from the preview releases.
+### Breaking Changes
+- Rename `MessageDataType` to `WebPubSubDataType`.
 
 ## 1.0.0-beta.1 (2021-11-09)
 
