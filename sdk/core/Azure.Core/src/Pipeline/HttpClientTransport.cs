@@ -9,7 +9,6 @@ using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Net.Security;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
@@ -20,7 +19,7 @@ namespace Azure.Core.Pipeline
     /// <summary>
     /// An <see cref="HttpPipelineTransport"/> implementation that uses <see cref="HttpClient"/> as the transport.
     /// </summary>
-    public class HttpClientTransport : HttpPipelineTransport
+    public class HttpClientTransport : HttpPipelineTransport, IDisposable
     {
         internal const string MessageForServerCertificateCallback = "MessageForServerCertificateCallback";
 

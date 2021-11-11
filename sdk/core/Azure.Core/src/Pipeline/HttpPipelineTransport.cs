@@ -59,7 +59,7 @@ namespace Azure.Core.Pipeline
         /// <summary>
         /// Disposes the underlying transport.
         /// </summary>
-        internal void Dispose()
+        public void Dispose()
         {
             // TODO: When transport disposal is needed for a nested client scenario, this method should implement reference counting to ensure proper disposal.
             DisposeInternal();
