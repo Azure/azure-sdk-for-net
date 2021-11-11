@@ -106,9 +106,10 @@ namespace Azure.Core.Pipeline
             else
             {
                 var length = _pipeline.Length + message.Policies.Count;
-                var pool = MemoryPool<HttpPipelinePolicy>.Shared;
-                using var pipeline = pool.Rent(length);
-                await pipeline.Memory.Span[0].ProcessAsync(message, pipeline.Memory.Slice(1)).ConfigureAwait(false);
+                var pipeline = ArrayPool<HttpPipelinePolicy>.Shared.Rent(length);
+                CreateRequestPipeline(pipeline, message.Policies);
+                await pipeline[0].ProcessAsync(message, new ReadOnlyMemory<HttpPipelinePolicy>(pipeline, 1, length - 1)).ConfigureAwait(false);
+                ArrayPool<HttpPipelinePolicy>.Shared.Return(pipeline);
             }
         }
 
@@ -185,53 +186,38 @@ namespace Azure.Core.Pipeline
             return CurrentHttpMessagePropertiesScope.Value;
         }
 
-        private ReadOnlyMemory<HttpPipelinePolicy> CreateRequestPipeline(List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)> customPolicies)
+        private ReadOnlyMemory<HttpPipelinePolicy> CreateRequestPipeline(HttpPipelinePolicy[] policies, List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)> customPolicies)
         {
-            var policies = new HttpPipelinePolicy[_pipeline.Length + customPolicies.Count];
-
-            //void AddRequestPolicies(HttpPipelinePosition position, int start)
-            //{
-            //    if (customPolicies != null)
-            //    {
-            //        int i = 0;
-            //        foreach (var policy in customPolicies)
-            //        {
-            //            if (policy.Position == position)
-            //            {
-            //                policies[start + i++] = policy.Policy;
-            //            }
-            //        }
-            //    }
-            //}
+            void AddRequestPolicies(HttpPipelinePosition position, int start)
+            {
+                if (customPolicies != null)
+                {
+                    int i = 0;
+                    foreach (var policy in customPolicies)
+                    {
+                        if (policy.Position == position)
+                        {
+                            policies[start + i++] = policy.Policy;
+                        }
+                    }
+                }
+            }
 
             _pipeline.Slice(0, _perCallIndex).CopyTo(policies);
 
-            //AddRequestPolicies(HttpPipelinePosition.PerCall, )
-            SetRequestPolicies(customPolicies, policies, HttpPipelinePosition.PerCall, policies.Length);
-            int sectionCount = _perRetryIndex - _perCallIndex;
-            _pipeline.Slice(_perCallIndex, sectionCount).CopyTo(new Memory<HttpPipelinePolicy>(policies, policies.Length, sectionCount));
+            AddRequestPolicies(HttpPipelinePosition.PerCall, _perCallIndex);
+            int count = _perRetryIndex - _perCallIndex;
+            _pipeline.Slice(_perCallIndex, count).CopyTo(new Memory<HttpPipelinePolicy>(policies, policies.Length, count));
 
-            SetRequestPolicies(customPolicies, policies, HttpPipelinePosition.PerRetry, policies.Length);
-            sectionCount = _transportIndex - _perRetryIndex;
-            _pipeline.Slice(_perRetryIndex, sectionCount).CopyTo(new Memory<HttpPipelinePolicy>(policies, policies.Length, sectionCount));
+            AddRequestPolicies(HttpPipelinePosition.PerRetry, _perRetryIndex);
+            count = _transportIndex - _perRetryIndex;
+            _pipeline.Slice(_perRetryIndex, count).CopyTo(new Memory<HttpPipelinePolicy>(policies, policies.Length, count));
 
-            SetRequestPolicies(customPolicies, policies, HttpPipelinePosition.BeforeTransport, policies.Length);
-            sectionCount = _pipeline.Length - _transportIndex;
-            _pipeline.Slice(_transportIndex, sectionCount).CopyTo(new Memory<HttpPipelinePolicy>(policies, policies.Length, sectionCount));
+            AddRequestPolicies(HttpPipelinePosition.BeforeTransport, _transportIndex);
+            count = _pipeline.Length - _transportIndex;
+            _pipeline.Slice(_transportIndex, count).CopyTo(new Memory<HttpPipelinePolicy>(policies, policies.Length, count));
 
             return new ReadOnlyMemory<HttpPipelinePolicy>(policies);
-        }
-
-        private static void SetRequestPolicies(List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)> source,
-            HttpPipelinePolicy[] target, HttpPipelinePosition position, int start)
-        {
-            var policies = source.Where(p => p.Position == position).Select(p => p.Policy);
-
-            int i = 0;
-            foreach (var policy in policies)
-            {
-                target[start + i++] = policy;
-            }
         }
 
         private static void AddHttpMessageProperties(HttpMessage message)
