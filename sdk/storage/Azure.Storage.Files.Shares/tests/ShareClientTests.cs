@@ -203,7 +203,7 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        //[ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
         public async Task CreateAsync_OAuth()
         {
             // Arrange
@@ -631,7 +631,7 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        //[ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
         public async Task GetPropertiesAsync_OAuth()
         {
             await using DisposingShare test = await GetTestShareAsync(SharesClientBuilder.GetServiceClient_OAuth());
@@ -807,7 +807,7 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        //[ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
         public async Task SetMetadataAsync_OAuth()
         {
             await using DisposingShare test = await GetTestShareAsync(SharesClientBuilder.GetServiceClient_OAuth());
@@ -921,7 +921,7 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        //[ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
         public async Task GetAccessPolicyAsync_OAuth()
         {
             await using DisposingShare test = await GetTestShareAsync(SharesClientBuilder.GetServiceClient_OAuth());
@@ -1023,7 +1023,7 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        //[ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
         public async Task SetAccessPolicyAsync_OAuth()
         {
             await using DisposingShare test = await GetTestShareAsync(SharesClientBuilder.GetServiceClient_OAuth());
@@ -1261,7 +1261,7 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        //[ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
         public async Task GetStatisticsAsync_OAuth()
         {
             // Arrange
@@ -1376,7 +1376,7 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        //[ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
         public async Task CreateSnapshotAsync_OAuth()
         {
             await using DisposingShare test = await GetTestShareAsync(SharesClientBuilder.GetServiceClient_OAuth());
@@ -1430,7 +1430,7 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        //[ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
         public async Task SetPropertiesAsync_OAuth()
         {
             // Arrange
@@ -1541,7 +1541,7 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        //[ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
         public async Task SetQuotaAsync_OAuth()
         {
             await using DisposingShare test = await GetTestShareAsync(SharesClientBuilder.GetServiceClient_OAuth());
@@ -1636,7 +1636,7 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        //[ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
         public async Task DeleteAsync_OAuth()
         {
             // Arrange
@@ -1907,7 +1907,7 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        //[ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
         public async Task AcquireLeaseAsync_OAuth()
         {
             // Arrange
@@ -2038,7 +2038,7 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        //[ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
         public async Task ReleaseLeaseAsync_OAuth()
         {
             // Arrange
@@ -2137,7 +2137,7 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        //[ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
         public async Task ChangeLeaseAsync_OAuth()
         {
             // Arrange
@@ -2243,7 +2243,7 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        //[ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
         public async Task BreakLeaseAsync_OAuth()
         {
             // Arrange
@@ -2350,7 +2350,7 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        //[ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
         public async Task RenewLeaseAsync_OAuth()
         {
             // Arrange

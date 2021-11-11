@@ -87,7 +87,7 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        //[ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
         public async Task GetPropertiesAsync_OAuth()
         {
             // Arrange
@@ -252,7 +252,7 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        //[ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
         public async Task ListSharesSegmentAsync_OAuth()
         {
             // Arrange

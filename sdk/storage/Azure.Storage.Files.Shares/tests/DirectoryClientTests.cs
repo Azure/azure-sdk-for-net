@@ -166,7 +166,7 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        //[ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
         public async Task CreateAsync_OAuth()
         {
             await using DisposingShare test = await GetTestShareAsync(SharesClientBuilder.GetServiceClient_OAuth());
@@ -548,7 +548,7 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        //[ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
         public async Task DeleteAsync_OAuth()
         {
             await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync(
@@ -597,7 +597,7 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        //[ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
         public async Task GetPropertiesAsync_OAuth()
         {
             await using DisposingShare test = await GetTestShareAsync(SharesClientBuilder.GetServiceClient_OAuth());
@@ -687,7 +687,7 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        //[ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
         public async Task SetHttpHeadersAsync_OAuth()
         {
             await using DisposingShare test = await GetTestShareAsync(SharesClientBuilder.GetServiceClient_OAuth());
@@ -815,7 +815,7 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        //[ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
         public async Task SetMetadataAsync_OAuth()
         {
             await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync(
@@ -902,7 +902,7 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        //[ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
         public async Task ListFilesAndDirectoriesSegmentAsync_OAuth()
         {
             // Arrange
@@ -1057,7 +1057,7 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        //[ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
         public async Task ListHandles_OAuth()
         {
             // Arrange
@@ -1103,7 +1103,7 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        //[ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
         public async Task ForceCloseHandles_OAuth()
         {
             // Arrange
