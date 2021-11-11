@@ -10,6 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Text.Encodings.Web" VersionOverride="4.7.2"/>
     <PackageReference Include="Microsoft.AspNetCore.Http" />
     <PackageReference Include="Microsoft.Azure.WebJobs" />
     <PackageReference Include="Azure.Core" />
