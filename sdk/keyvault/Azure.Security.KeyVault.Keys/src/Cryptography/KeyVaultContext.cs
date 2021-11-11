@@ -77,15 +77,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
         internal byte[] SignDigest(byte[] digest, HashAlgorithmName hashAlgorithm, KeyVaultSignatureAlgorithm signatureAlgorithm)
         {
-            var algorithm = SignatureAlgorithmTranslator.SignatureAlgorithmToJwsAlgId(signatureAlgorithm, hashAlgorithm);
-
-            if (hashAlgorithm == HashAlgorithmName.SHA1)
-            {
-                if (signatureAlgorithm != KeyVaultSignatureAlgorithm.RSAPkcs15)
-                    throw new InvalidOperationException("SHA1 algorithm is not supported for this signature algorithm.");
-
-                digest = Sha1Helper.CreateDigest(digest);
-            }
+            var algorithm = SignatureAlgorithm.FromHashAlgorithmName(hashAlgorithm, signatureAlgorithm);
 
             var sigResult = _cryptographyClient.Sign(algorithm, digest);
 
@@ -94,7 +86,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
         internal byte[] DecryptData(byte[] cipherText, RSAEncryptionPadding padding)
         {
-            var algorithm = EncryptionPaddingTranslator.EncryptionPaddingToJwsAlgId(padding);
+            var algorithm = EncryptionAlgorithm.FromRsaEncryptionPadding(padding);
 
             var dataResult = _cryptographyClient.Decrypt(algorithm, cipherText);
             return dataResult.Plaintext;

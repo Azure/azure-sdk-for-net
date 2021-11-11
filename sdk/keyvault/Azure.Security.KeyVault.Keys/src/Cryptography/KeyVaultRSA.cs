@@ -10,21 +10,24 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     /// <summary>
     /// RSA implementation that uses Azure Key Vault
     /// </summary>
-    public sealed class RSAKeyVault : RSA
+    public sealed class KeyVaultRSA : RSA
     {
-        private readonly KeyVaultContext _context;
         private RSA _publicKey;
+        /// <summary>
+        /// <see cref="KeyVaultContext"/> that this instance is tied to.
+        /// </summary>
+        public KeyVaultContext Context { get; }
 
         /// <summary>
         /// Creates a new RSAKeyVault instance
         /// </summary>
         /// <param name="context">Context with parameters</param>
-        public RSAKeyVault(KeyVaultContext context)
+        public KeyVaultRSA(KeyVaultContext context)
         {
             if (!context.IsValid)
                 throw new ArgumentException("Must not be the default", nameof(context));
 
-            _context = context;
+            Context = context;
             _publicKey = context.PublicKey.ToRSA();
             KeySizeValue = _publicKey.KeySize;
             LegalKeySizesValue = new[] { new KeySizes(_publicKey.KeySize, _publicKey.KeySize, 0) };
@@ -35,13 +38,18 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         {
             CheckDisposed();
 
-            // Key Vault only supports PKCSv1 padding
-            if (padding.Mode != RSASignaturePaddingMode.Pkcs1)
-                throw new CryptographicException("Unsupported padding mode");
-
             try
             {
-                return _context.SignDigest(hash, hashAlgorithm, KeyVaultSignatureAlgorithm.RSAPkcs15);
+                if (padding.Mode == RSASignaturePaddingMode.Pkcs1)
+                {
+                    return Context.SignDigest(hash, hashAlgorithm, KeyVaultSignatureAlgorithm.RSAPkcs15);
+                }
+                else if (padding.Mode == RSASignaturePaddingMode.Pss)
+                {
+                    return Context.SignDigest(hash, hashAlgorithm, KeyVaultSignatureAlgorithm.Pss);
+                }
+
+                throw new ArgumentOutOfRangeException(nameof(padding), "Only RSAPkcs15 and Pss are supported.");
             }
             catch (Exception e)
             {
@@ -87,7 +95,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
             try
             {
-                return _context.DecryptData(data, padding);
+                return Context.DecryptData(data, padding);
             }
             catch (Exception e)
             {
@@ -123,7 +131,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         private void CheckDisposed()
         {
             if (_publicKey == null)
-                throw new ObjectDisposedException($"{nameof(RSAKeyVault)} is disposed");
+                throw new ObjectDisposedException($"{nameof(KeyVaultRSA)} is disposed");
         }
 
         /// <inheritdoc/>
@@ -140,11 +148,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
         private static HashAlgorithm Create(HashAlgorithmName algorithm)
         {
-            if (algorithm == HashAlgorithmName.SHA1)
-#pragma warning disable CA5350 // Do Not Use Weak Cryptographic Algorithms
-                return SHA1.Create();
-#pragma warning restore CA5350 // Do Not Use Weak Cryptographic Algorithms
-
             if (algorithm == HashAlgorithmName.SHA256)
                 return SHA256.Create();
 

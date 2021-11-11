@@ -9,21 +9,25 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     /// <summary>
     /// ECDsa implementation that uses Azure Key Vault
     /// </summary>
-    public sealed class ECDsaKeyVault : ECDsa
+    public sealed class KeyVaultECDsa : ECDsa
     {
-        private readonly KeyVaultContext _context;
         private ECDsa _publicKey;
+
+        /// <summary>
+        /// <see cref="KeyVaultContext"/> that this instance is tied to.
+        /// </summary>
+        public KeyVaultContext Context {get;}
 
         /// <summary>
         /// Creates a new ECDsaKeyVault instance
         /// </summary>
         /// <param name="context">Context with parameters</param>
-        public ECDsaKeyVault(KeyVaultContext context)
+        public KeyVaultECDsa(KeyVaultContext context)
         {
             if (!context.IsValid)
                 throw new ArgumentException("Must not be the default", nameof(context));
 
-            _context = context;
+            Context = context;
             _publicKey = context.PublicKey.ToECDsa();
             KeySizeValue = _publicKey.KeySize;
             LegalKeySizesValue = new[] { new KeySizes(_publicKey.KeySize, _publicKey.KeySize, 0) };
@@ -32,7 +36,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         private void CheckDisposed()
         {
             if (_publicKey is null)
-                throw new ObjectDisposedException($"{nameof(ECDsaKeyVault)} is disposed.");
+                throw new ObjectDisposedException($"{nameof(KeyVaultECDsa)} is disposed.");
         }
 
         /// <inheritdoc/>
@@ -56,11 +60,11 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             // We know from ValidateKeyDigestCombination that the key size and hash size are matched up
             // according to RFC 7518 Sect. 3.1.
             if (KeySize == 256)
-                return _context.SignDigest(hash, HashAlgorithmName.SHA256, KeyVaultSignatureAlgorithm.ECDsa);
+                return Context.SignDigest(hash, HashAlgorithmName.SHA256, KeyVaultSignatureAlgorithm.ECDsa);
             if (KeySize == 384)
-                return _context.SignDigest(hash, HashAlgorithmName.SHA384, KeyVaultSignatureAlgorithm.ECDsa);
+                return Context.SignDigest(hash, HashAlgorithmName.SHA384, KeyVaultSignatureAlgorithm.ECDsa);
             if (KeySize == 521) //ES512 uses nistP521
-                return _context.SignDigest(hash, HashAlgorithmName.SHA512, KeyVaultSignatureAlgorithm.ECDsa);
+                return Context.SignDigest(hash, HashAlgorithmName.SHA512, KeyVaultSignatureAlgorithm.ECDsa);
 
             throw new ArgumentException("Digest length is not valid for the key size.", nameof(hash));
         }

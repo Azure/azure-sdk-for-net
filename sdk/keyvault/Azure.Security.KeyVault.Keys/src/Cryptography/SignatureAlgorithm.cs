@@ -209,5 +209,44 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                     return null;
             }
         }
+
+        internal static SignatureAlgorithm FromHashAlgorithmName(HashAlgorithmName hashAlgorithmName, KeyVaultSignatureAlgorithm signatureAlgorithm)
+        {
+            if (signatureAlgorithm == KeyVaultSignatureAlgorithm.RSAPkcs15)
+            {
+                if (hashAlgorithmName == HashAlgorithmName.SHA256)
+                    return RS256;
+
+                if (hashAlgorithmName == HashAlgorithmName.SHA384)
+                    return RS384;
+
+                if (hashAlgorithmName == HashAlgorithmName.SHA512)
+                    return RS512;
+            }
+            else if (signatureAlgorithm == KeyVaultSignatureAlgorithm.ECDsa)
+            {
+                if (hashAlgorithmName == HashAlgorithmName.SHA256)
+                    return ES256;
+
+                if (hashAlgorithmName == HashAlgorithmName.SHA384)
+                    return ES384;
+
+                if (hashAlgorithmName == HashAlgorithmName.SHA512)
+                    return ES512;
+            }
+            else if (signatureAlgorithm == KeyVaultSignatureAlgorithm.Pss)
+            {
+                if (hashAlgorithmName == HashAlgorithmName.SHA256)
+                    return PS256;
+
+                if (hashAlgorithmName == HashAlgorithmName.SHA384)
+                    return PS384;
+
+                if (hashAlgorithmName == HashAlgorithmName.SHA512)
+                    return PS512;
+            }
+
+            throw new NotSupportedException("The algorithm specified is not supported.");
+        }
     }
 }

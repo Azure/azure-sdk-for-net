@@ -140,6 +140,21 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             _ => null,
         };
 
+        internal static EncryptionAlgorithm FromRsaEncryptionPadding(RSAEncryptionPadding padding)
+        {
+            switch (padding.Mode)
+            {
+                case RSAEncryptionPaddingMode.Pkcs1:
+                    return EncryptionAlgorithm.Rsa15;
+                case RSAEncryptionPaddingMode.Oaep when padding.OaepHashAlgorithm == HashAlgorithmName.SHA1:
+                    return EncryptionAlgorithm.RsaOaep;
+                case RSAEncryptionPaddingMode.Oaep when padding.OaepHashAlgorithm == HashAlgorithmName.SHA256:
+                    return EncryptionAlgorithm.RsaOaep256;
+                default:
+                    throw new NotSupportedException("The padding specified is not supported.");
+            }
+        }
+
         internal AesCbc GetAesCbcEncryptionAlgorithm() => _value switch
         {
             A128CbcValue => AesCbc.Aes128Cbc,

@@ -1188,51 +1188,55 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         }
 
         /// <summary>
-        /// Creates an ECDsa object
+        /// Creates an <see cref="KeyVaultECDsa" /> object with the specified public key.
         /// </summary>
-        /// <param name="publicKey"></param>
-        /// <returns></returns>
-        public ECDsa ToECDsa(JsonWebKey publicKey)
+        /// <param name="publicKey">Public key to use.</param>
+        /// <returns>An implementation of <see cref="ECDsa" /> that uses Key Vault.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="publicKey"/> is null.</exception>
+        public KeyVaultECDsa ToECDsa(JsonWebKey publicKey)
         {
             Argument.AssertNotNull(publicKey, nameof(publicKey));
 
-            return new ECDsaKeyVault(new KeyVaultContext(this, publicKey));
+            return new KeyVaultECDsa(new KeyVaultContext(this, publicKey));
         }
 
         /// <summary>
-        /// Creates an ECDsa object
+        /// Creates an <see cref="KeyVaultECDsa" /> object with the specified certificate's public key.
         /// </summary>
-        /// <param name="publicCertificate"></param>
-        /// <returns></returns>
-        public ECDsa ToECDsa(X509Certificate2 publicCertificate)
+        /// <param name="publicCertificate">X.509 Certificate containing a public key.</param>
+        /// <returns>An implementation of <see cref="ECDsa" /> that uses Key Vault.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="publicCertificate"/> is null.</exception>
+        public KeyVaultECDsa ToECDsa(X509Certificate2 publicCertificate)
         {
             Argument.AssertNotNull(publicCertificate, nameof(publicCertificate));
 
-            return new ECDsaKeyVault(new KeyVaultContext(this, publicCertificate));
+            return new KeyVaultECDsa(new KeyVaultContext(this, publicCertificate));
         }
 
         /// <summary>
-        /// Creates an RSA object
+        /// Creates an <see cref="KeyVaultRSA" /> object with the specified public key.
         /// </summary>
-        /// <param name="publicKey"></param>
-        /// <returns></returns>
-        public RSA ToRSA( JsonWebKey publicKey)
+        /// <param name="publicKey">Public key to use.</param>
+        /// <returns>An implementation of <see cref="RSA" /> that uses Key Vault.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="publicKey"/> is null.</exception>
+        public KeyVaultRSA ToRSA(JsonWebKey publicKey)
         {
             Argument.AssertNotNull(publicKey, nameof(publicKey));
 
-            return new RSAKeyVault(new KeyVaultContext(this, publicKey));
+            return new KeyVaultRSA(new KeyVaultContext(this, publicKey));
         }
 
         /// <summary>
-        /// Creates an RSA object
+        /// Creates an <see cref="KeyVaultRSA" /> object with the specified certificate's public key.
         /// </summary>
-        /// <param name="publicCertificate"></param>
-        /// <returns></returns>
-        public RSA ToRSA(X509Certificate2 publicCertificate)
+        /// <param name="publicCertificate">X.509 Certificate containing a public key.</param>
+        /// <returns>An implementation of <see cref="RSA" /> that uses Key Vault.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="publicCertificate"/> is null.</exception>
+        public KeyVaultRSA ToRSA(X509Certificate2 publicCertificate)
         {
             Argument.AssertNotNull(publicCertificate, nameof(publicCertificate));
 
-            return new RSAKeyVault(new KeyVaultContext(this, publicCertificate));
+            return new KeyVaultRSA(new KeyVaultContext(this, publicCertificate));
         }
 
         /// <summary>

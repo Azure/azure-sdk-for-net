@@ -6,6 +6,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     internal enum KeyVaultSignatureAlgorithm
     {
         RSAPkcs15,
-        ECDsa
+        ECDsa,
+        Pss
     }
 }
