@@ -16,52 +16,47 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     {
         private readonly CryptographyClient _cryptographyClient;
 
+        private const string RSAAlgorithmId = "1.2.840.113549.1.1.1";
+        private const string ECDsaAlgorithmId = "1.2.840.10045.2.1";
+
         /// <summary>
         /// Creates a new Key Vault context.
         /// </summary>
-        public KeyVaultContext(TokenCredential credential, Uri keyId, JsonWebKey key)
+        public KeyVaultContext(CryptographyClient cryptographyClient, JsonWebKey publicKey)
         {
-            if (credential is null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
+            Argument.AssertNotNull(cryptographyClient, nameof(cryptographyClient));
+            Argument.AssertNotNull(publicKey, nameof(publicKey));
 
-            KeyIdentifier = keyId ?? throw new ArgumentNullException(nameof(keyId));
-            Key = key ?? throw new ArgumentNullException(nameof(key));
-
-            _cryptographyClient = new CryptographyClient(keyId, credential);
+            PublicKey = publicKey;
+            _cryptographyClient = cryptographyClient;
             Certificate = null;
         }
 
         /// <summary>
         /// Creates a new Key Vault context.
         /// </summary>
-        public KeyVaultContext(TokenCredential credential, Uri keyId, X509Certificate2 publicCertificate)
+        public KeyVaultContext(CryptographyClient cryptographyClient, X509Certificate2 publicCertificate)
         {
-            if (credential is null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
+            Argument.AssertNotNull(cryptographyClient, nameof(cryptographyClient));
+            Argument.AssertNotNull(publicCertificate, nameof(publicCertificate));
 
-            Certificate = publicCertificate ?? throw new ArgumentNullException(nameof(publicCertificate));
-            KeyIdentifier = keyId ?? throw new ArgumentNullException(nameof(keyId));
-
-            _cryptographyClient = new CryptographyClient(keyId, credential);
+            Certificate = publicCertificate;
+            _cryptographyClient = cryptographyClient;
 
             string algorithm = publicCertificate.GetKeyAlgorithm();
 
             switch (algorithm)
             {
-                case "1.2.840.113549.1.1.1": //rsa
+                case RSAAlgorithmId: //rsa
                     using (var rsa = publicCertificate.GetRSAPublicKey())
                     {
-                        Key = new JsonWebKey(rsa, includePrivateParameters: false);
+                        PublicKey = new JsonWebKey(rsa, includePrivateParameters: false);
                     }
                     break;
-                case "1.2.840.10045.2.1": //ec
+                case ECDsaAlgorithmId: //ec
                     using (var ecdsa = publicCertificate.GetECDsaPublicKey())
                     {
-                        Key = new JsonWebKey(ecdsa, includePrivateParameters: false);
+                        PublicKey = new JsonWebKey(ecdsa, includePrivateParameters: false);
                     }
                     break;
                 default:
@@ -76,14 +71,9 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         public X509Certificate2 Certificate { get; }
 
         /// <summary>
-        /// Identifyer of current key
-        /// </summary>
-        public Uri KeyIdentifier { get; }
-
-        /// <summary>
         /// Public key
         /// </summary>
-        public JsonWebKey Key { get; }
+        public JsonWebKey PublicKey { get; }
 
         internal byte[] SignDigest(byte[] digest, HashAlgorithmName hashAlgorithm, KeyVaultSignatureAlgorithm signatureAlgorithm)
         {

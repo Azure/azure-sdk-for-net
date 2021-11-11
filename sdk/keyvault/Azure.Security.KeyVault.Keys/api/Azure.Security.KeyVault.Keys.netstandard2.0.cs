@@ -412,6 +412,10 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         public virtual Azure.Security.KeyVault.Keys.Cryptography.SignResult SignData(Azure.Security.KeyVault.Keys.Cryptography.SignatureAlgorithm algorithm, System.IO.Stream data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Security.KeyVault.Keys.Cryptography.SignResult> SignDataAsync(Azure.Security.KeyVault.Keys.Cryptography.SignatureAlgorithm algorithm, byte[] data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Security.KeyVault.Keys.Cryptography.SignResult> SignDataAsync(Azure.Security.KeyVault.Keys.Cryptography.SignatureAlgorithm algorithm, System.IO.Stream data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Security.Cryptography.ECDsa ToECDsa(Azure.Security.KeyVault.Keys.JsonWebKey publicKey) { throw null; }
+        public System.Security.Cryptography.ECDsa ToECDsa(System.Security.Cryptography.X509Certificates.X509Certificate2 publicCertificate) { throw null; }
+        public System.Security.Cryptography.RSA ToRSA(Azure.Security.KeyVault.Keys.JsonWebKey publicKey) { throw null; }
+        public System.Security.Cryptography.RSA ToRSA(System.Security.Cryptography.X509Certificates.X509Certificate2 publicCertificate) { throw null; }
         public virtual Azure.Security.KeyVault.Keys.Cryptography.UnwrapResult UnwrapKey(Azure.Security.KeyVault.Keys.Cryptography.KeyWrapAlgorithm algorithm, byte[] encryptedKey, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Security.KeyVault.Keys.Cryptography.UnwrapResult> UnwrapKeyAsync(Azure.Security.KeyVault.Keys.Cryptography.KeyWrapAlgorithm algorithm, byte[] encryptedKey, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Security.KeyVault.Keys.Cryptography.VerifyResult Verify(Azure.Security.KeyVault.Keys.Cryptography.SignatureAlgorithm algorithm, byte[] digest, byte[] signature, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -462,11 +466,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         public Azure.Security.KeyVault.Keys.Cryptography.EncryptionAlgorithm Algorithm { get { throw null; } }
         public string KeyId { get { throw null; } }
         public byte[] Plaintext { get { throw null; } }
-    }
-    public static partial class ECDsaFactory
-    {
-        public static System.Security.Cryptography.ECDsa Create(Azure.Core.TokenCredential credential, System.Uri keyId, Azure.Security.KeyVault.Keys.JsonWebKey key) { throw null; }
-        public static System.Security.Cryptography.ECDsa Create(Azure.Core.TokenCredential credential, System.Uri keyId, System.Security.Cryptography.X509Certificates.X509Certificate2 publicCertificate) { throw null; }
     }
     public sealed partial class ECDsaKeyVault : System.Security.Cryptography.ECDsa
     {
@@ -555,12 +554,11 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     {
         private object _dummy;
         private int _dummyPrimitive;
-        public KeyVaultContext(Azure.Core.TokenCredential credential, System.Uri keyId, Azure.Security.KeyVault.Keys.JsonWebKey key) { throw null; }
-        public KeyVaultContext(Azure.Core.TokenCredential credential, System.Uri keyId, System.Security.Cryptography.X509Certificates.X509Certificate2 publicCertificate) { throw null; }
+        public KeyVaultContext(Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient cryptographyClient, Azure.Security.KeyVault.Keys.JsonWebKey publicKey) { throw null; }
+        public KeyVaultContext(Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient cryptographyClient, System.Security.Cryptography.X509Certificates.X509Certificate2 publicCertificate) { throw null; }
         public System.Security.Cryptography.X509Certificates.X509Certificate2 Certificate { get { throw null; } }
         public bool IsValid { get { throw null; } }
-        public Azure.Security.KeyVault.Keys.JsonWebKey Key { get { throw null; } }
-        public System.Uri KeyIdentifier { get { throw null; } }
+        public Azure.Security.KeyVault.Keys.JsonWebKey PublicKey { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct KeyWrapAlgorithm : System.IEquatable<Azure.Security.KeyVault.Keys.Cryptography.KeyWrapAlgorithm>
@@ -589,11 +587,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     public partial class LocalCryptographyClientOptions : Azure.Core.ClientOptions
     {
         public LocalCryptographyClientOptions() { }
-    }
-    public static partial class RSAFactory
-    {
-        public static System.Security.Cryptography.RSA Create(Azure.Core.TokenCredential credential, System.Uri keyId, Azure.Security.KeyVault.Keys.JsonWebKey key) { throw null; }
-        public static System.Security.Cryptography.RSA Create(Azure.Core.TokenCredential credential, System.Uri keyId, System.Security.Cryptography.X509Certificates.X509Certificate2 publicCertificate) { throw null; }
     }
     public sealed partial class RSAKeyVault : System.Security.Cryptography.RSA
     {

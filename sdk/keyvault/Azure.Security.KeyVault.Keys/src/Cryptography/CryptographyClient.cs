@@ -8,6 +8,7 @@ using System;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -1184,6 +1185,54 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Creates an ECDsa object
+        /// </summary>
+        /// <param name="publicKey"></param>
+        /// <returns></returns>
+        public ECDsa ToECDsa(JsonWebKey publicKey)
+        {
+            Argument.AssertNotNull(publicKey, nameof(publicKey));
+
+            return new ECDsaKeyVault(new KeyVaultContext(this, publicKey));
+        }
+
+        /// <summary>
+        /// Creates an ECDsa object
+        /// </summary>
+        /// <param name="publicCertificate"></param>
+        /// <returns></returns>
+        public ECDsa ToECDsa(X509Certificate2 publicCertificate)
+        {
+            Argument.AssertNotNull(publicCertificate, nameof(publicCertificate));
+
+            return new ECDsaKeyVault(new KeyVaultContext(this, publicCertificate));
+        }
+
+        /// <summary>
+        /// Creates an RSA object
+        /// </summary>
+        /// <param name="publicKey"></param>
+        /// <returns></returns>
+        public RSA ToRSA( JsonWebKey publicKey)
+        {
+            Argument.AssertNotNull(publicKey, nameof(publicKey));
+
+            return new RSAKeyVault(new KeyVaultContext(this, publicKey));
+        }
+
+        /// <summary>
+        /// Creates an RSA object
+        /// </summary>
+        /// <param name="publicCertificate"></param>
+        /// <returns></returns>
+        public RSA ToRSA(X509Certificate2 publicCertificate)
+        {
+            Argument.AssertNotNull(publicCertificate, nameof(publicCertificate));
+
+            return new RSAKeyVault(new KeyVaultContext(this, publicCertificate));
         }
 
         /// <summary>

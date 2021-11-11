@@ -24,7 +24,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 throw new ArgumentException("Must not be the default", nameof(context));
 
             _context = context;
-            _publicKey = context.Key.ToECDsa();
+            _publicKey = context.PublicKey.ToECDsa();
             KeySizeValue = _publicKey.KeySize;
             LegalKeySizesValue = new[] { new KeySizes(_publicKey.KeySize, _publicKey.KeySize, 0) };
         }
