@@ -3,4 +3,4 @@ trigger: none
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
-    ServiceDirectory: template-LLC
+    ServiceDirectory: template
