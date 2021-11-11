@@ -3,7 +3,11 @@
 ## 1.0.0 (2021-11-09)
 
 ### Features Added
-- Adds stable features and bug fixes from the preview releases.
+- Added extension method `AddWebPubSubServiceClient` for `TokenCredential`
+- Added `CloseGroupConnections`, `CloseAllConnections` and `CloseUserConnections`
+
+### Breaking Changes
+- Renamed `GenerateClientAccessUri` to `GetClientAccessUri`
 
 ## 1.0.0-beta.3 (2021-09-07)
 
