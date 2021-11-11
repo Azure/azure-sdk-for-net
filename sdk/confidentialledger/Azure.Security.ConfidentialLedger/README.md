@@ -60,7 +60,35 @@ X509Certificate2 ledgerTlsCert = ConfidentialLedgerIdentityServiceClient.ParseCe
 Now we can construct the `ConfidentialLedgerClient` with a transport configuration that trusts the `ledgerTlsCert`.
 
 ```C# Snippet:CreateClient
-var ledgerClient = new ConfidentialLedgerClient(TestEnvironment.ConfidentialLedgerUrl, new DefaultAzureCredential());
+// Create a certificate chain rooted with our TLS cert.
+X509Chain certificateChain = new();
+certificateChain.ChainPolicy.RevocationMode = X509RevocationMode.NoCheck;
+certificateChain.ChainPolicy.RevocationFlag = X509RevocationFlag.ExcludeRoot;
+certificateChain.ChainPolicy.VerificationFlags = X509VerificationFlags.AllowUnknownCertificateAuthority;
+certificateChain.ChainPolicy.VerificationTime = DateTime.Now;
+certificateChain.ChainPolicy.UrlRetrievalTimeout = new TimeSpan(0, 0, 0);
+certificateChain.ChainPolicy.ExtraStore.Add(ledgerTlsCert);
+
+var f = certificateChain.Build(ledgerTlsCert);
+
+// Define a validation function to ensure that the ledger certificate is trusted by the ledger identity TLS certificate.
+bool CertValidationCheck(HttpRequestMessage httpRequestMessage, X509Certificate2 cert, X509Chain x509Chain, SslPolicyErrors sslPolicyErrors)
+{
+    bool isChainValid = certificateChain.Build(cert);
+    if (!isChainValid) return false;
+
+    var isCertSignedByTheTlsCert = certificateChain.ChainElements.Cast<X509ChainElement>()
+        .Any(x => x.Certificate.Thumbprint == ledgerTlsCert.Thumbprint);
+    return isCertSignedByTheTlsCert;
+}
+
+// Create an HttpClientHandler to use our certValidationCheck function.
+var httpHandler = new HttpClientHandler();
+httpHandler.ServerCertificateCustomValidationCallback = CertValidationCheck;
+
+// Create the ledger client using a transport that uses our custom ServerCertificateCustomValidationCallback.
+var options = new ConfidentialLedgerClientOptions { Transport = new HttpClientTransport(httpHandler) };
+var ledgerClient = new ConfidentialLedgerClient(TestEnvironment.ConfidentialLedgerUrl, new DefaultAzureCredential(), options);
 ```
 
 ## Key concepts
