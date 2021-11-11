@@ -27,17 +27,18 @@ $genFailResourceProviders = @()
 $buildFailResourceProviders = @()
 
 dotnet new -i "$PSScriptRoot\..\templates\Azure.ResourceManager.Template"
-
+Start-Transcript -Path "$PSScriptRoot\test.log"
 foreach ($testResourceProvider in $testResourceProviders) {
     $shortenName = $testResourceProvider.substring(10)
     $captizeName = $shortenName.tolower()
     $projectFolder = "$PSScriptRoot\..\..\sdk\$captizeName\Azure.ResourceManager.$shortenName"
     $configurationFolder = "$projectFolder\src"
     $needRemoveFolder = $false
+    Write-Host "$testResourceProvider starts"
     if (Test-Path -Path $projectFolder) {
         Write-Host "The project folder of $testResourceProvider exists"
         Set-Location $configurationFolder
-        dotnet build /t:GenerateCode
+        dotnet build /t:GenerateCode | Out-Host
     }
     else {
         $needRemoveFolder = $true
@@ -45,13 +46,13 @@ foreach ($testResourceProvider in $testResourceProviders) {
         Set-Location $projectFolder
         dotnet new azuremgmt --provider $testResourceProvider --force
         Set-Location $configurationFolder
-        autorest autorest.md
+        autorest autorest.md | Out-Host
     }
     if (!$?){
         $genFailResourceProviders += $testResourceProvider
     }
     else {
-        dotnet build
+        dotnet build | Out-Host
         if (!$?){
             $buildFailResourceProviders += $testResourceProvider
         }
@@ -64,8 +65,11 @@ foreach ($testResourceProvider in $testResourceProviders) {
         Set-Location $PSScriptRoot
         Remove-Item $projectFolder -Recurse
     }
+    Write-Host "$testResourceProvider ends"
 }
 
+Stop-Transcript
+Set-Location $PSScriptRoot
 $successCount = $successResourceProviders.Count
 $genFailCount = $genFailResourceProviders.Count
 $buildFailCount = $buildFailResourceProviders.Count

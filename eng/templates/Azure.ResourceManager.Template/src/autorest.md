@@ -12,6 +12,8 @@ tagPrefix SwaggerVersionTag
 clear-output-folder: true
 skip-csproj: true
 output-folder: Generated/
+mgmt-debug:
+  suppress-list-exception: true
 modelerfour:
   lenient-model-deduplication: true
 
