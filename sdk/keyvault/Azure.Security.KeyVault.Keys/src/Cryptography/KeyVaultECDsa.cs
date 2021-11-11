@@ -72,12 +72,19 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <inheritdoc />
         protected override byte[] HashData(byte[] data, int offset, int count, HashAlgorithmName hashAlgorithm)
         {
-            ValidateKeyDigestCombination(KeySize, hashAlgorithm);
-
-            using (IncrementalHash hash = IncrementalHash.CreateHash(hashAlgorithm))
+            try
             {
-                hash.AppendData(data, offset, count);
-                return hash.GetHashAndReset();
+                ValidateKeyDigestCombination(KeySize, hashAlgorithm);
+
+                using (IncrementalHash hash = IncrementalHash.CreateHash(hashAlgorithm))
+                {
+                    hash.AppendData(data, offset, count);
+                    return hash.GetHashAndReset();
+                }
+            }
+            catch (Exception e)
+            {
+                throw new CryptographicException("Could not hash the data", e);
             }
         }
 
@@ -85,7 +92,15 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         public override bool VerifyHash(byte[] hash, byte[] signature)
         {
             CheckDisposed();
-            ValidateKeyDigestCombination(KeySize, hash.Length);
+
+            try
+            {
+                ValidateKeyDigestCombination(KeySize, hash.Length);
+            }
+            catch (Exception e)
+            {
+                throw new CryptographicException("Could not verify hash.", e);
+            }
 
             return _publicKey.VerifyHash(hash, signature);
         }
@@ -144,7 +159,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 return;
             }
 
-            throw new NotSupportedException($"The key size '{keySizeBits}' is not valid for digest of size '{digestSizeBytes}' bytes.");
+            throw new InvalidOperationException($"The key size '{keySizeBits}' is not valid for digest of size '{digestSizeBytes}' bytes.");
         }
 
         private static void ValidateKeyDigestCombination(int keySizeBits, HashAlgorithmName hashAlgorithmName)
