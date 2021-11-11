@@ -2,7 +2,7 @@
       "Name": "RemoteLoginSettings",
       "ProtocolName": "Models.ComputeNodeGetRemoteLoginSettingsResult",
       "SummaryComment": "Gets the settings required for remote login to a compute node.",
-      "IsConstructorPublic": false,
+      "ConstructorAccess": "internal",
       "Properties": [
         {
           "Key": {

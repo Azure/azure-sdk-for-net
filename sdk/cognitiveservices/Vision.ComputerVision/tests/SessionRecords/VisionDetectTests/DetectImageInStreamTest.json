@@ -10,10 +10,10 @@
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.8.4300.0",
+          "FxVersion/5.0.1121.47308",
           "OSName/Windows",
-          "OSVersion/10.0.19042.0",
-          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/7.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/7.1.0.0"
         ],
         "Content-Type": [
           "application/octet-stream"
@@ -27,19 +27,19 @@
           "CognitiveServices.ComputerVision.Objects=1,CognitiveServices.ComputerVision.Transaction=1"
         ],
         "x-envoy-upstream-service-time": [
-          "219"
+          "221"
         ],
         "apim-request-id": [
-          "3a2b639b-1d6b-458b-ba02-32e8f2ca6a39"
+          "540bdeca-d9e8-4911-a5eb-cd2b337ff9c8"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
         ],
-        "x-content-type-options": [
+        "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 24 Mar 2021 06:44:19 GMT"
+          "Thu, 04 Nov 2021 04:51:44 GMT"
         ],
         "Content-Length": [
           "564"
@@ -48,7 +48,7 @@
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"objects\": [\r\n    {\r\n      \"rectangle\": {\r\n        \"x\": 0,\r\n        \"y\": 46,\r\n        \"w\": 229,\r\n        \"h\": 698\r\n      },\r\n      \"object\": \"person\",\r\n      \"confidence\": 0.554\r\n    },\r\n    {\r\n      \"rectangle\": {\r\n        \"x\": 5,\r\n        \"y\": 71,\r\n        \"w\": 532,\r\n        \"h\": 671\r\n      },\r\n      \"object\": \"person\",\r\n      \"confidence\": 0.953\r\n    },\r\n    {\r\n      \"rectangle\": {\r\n        \"x\": 440,\r\n        \"y\": 72,\r\n        \"w\": 212,\r\n        \"h\": 658\r\n      },\r\n      \"object\": \"person\",\r\n      \"confidence\": 0.648\r\n    },\r\n    {\r\n      \"rectangle\": {\r\n        \"x\": 810,\r\n        \"y\": 60,\r\n        \"w\": 203,\r\n        \"h\": 681\r\n      },\r\n      \"object\": \"person\",\r\n      \"confidence\": 0.914\r\n    },\r\n    {\r\n      \"rectangle\": {\r\n        \"x\": 515,\r\n        \"y\": 151,\r\n        \"w\": 420,\r\n        \"h\": 594\r\n      },\r\n      \"object\": \"person\",\r\n      \"confidence\": 0.902\r\n    }\r\n  ],\r\n  \"requestId\": \"3a2b639b-1d6b-458b-ba02-32e8f2ca6a39\",\r\n  \"metadata\": {\r\n    \"height\": 750,\r\n    \"width\": 1024,\r\n    \"format\": \"Jpeg\"\r\n  },\r\n  \"modelVersion\": \"2021-04-01\"\r\n}",
+      "ResponseBody": "{\r\n  \"objects\": [\r\n    {\r\n      \"rectangle\": {\r\n        \"x\": 0,\r\n        \"y\": 46,\r\n        \"w\": 229,\r\n        \"h\": 698\r\n      },\r\n      \"object\": \"person\",\r\n      \"confidence\": 0.554\r\n    },\r\n    {\r\n      \"rectangle\": {\r\n        \"x\": 5,\r\n        \"y\": 71,\r\n        \"w\": 532,\r\n        \"h\": 671\r\n      },\r\n      \"object\": \"person\",\r\n      \"confidence\": 0.953\r\n    },\r\n    {\r\n      \"rectangle\": {\r\n        \"x\": 440,\r\n        \"y\": 72,\r\n        \"w\": 212,\r\n        \"h\": 658\r\n      },\r\n      \"object\": \"person\",\r\n      \"confidence\": 0.648\r\n    },\r\n    {\r\n      \"rectangle\": {\r\n        \"x\": 810,\r\n        \"y\": 60,\r\n        \"w\": 203,\r\n        \"h\": 681\r\n      },\r\n      \"object\": \"person\",\r\n      \"confidence\": 0.914\r\n    },\r\n    {\r\n      \"rectangle\": {\r\n        \"x\": 515,\r\n        \"y\": 151,\r\n        \"w\": 420,\r\n        \"h\": 594\r\n      },\r\n      \"object\": \"person\",\r\n      \"confidence\": 0.902\r\n    }\r\n  ],\r\n  \"requestId\": \"540bdeca-d9e8-4911-a5eb-cd2b337ff9c8\",\r\n  \"metadata\": {\r\n    \"height\": 750,\r\n    \"width\": 1024,\r\n    \"format\": \"Jpeg\"\r\n  },\r\n  \"modelVersion\": \"2021-04-01\"\r\n}",
       "StatusCode": 200
     }
   ],

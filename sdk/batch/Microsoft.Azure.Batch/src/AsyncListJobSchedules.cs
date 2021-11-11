@@ -3,79 +3,33 @@
 
 ﻿namespace Microsoft.Azure.Batch
 {
-    using System.Diagnostics;
-    using System.Linq;
+    using Microsoft.Rest.Azure;
     using System.Threading;
-    using Models = Microsoft.Azure.Batch.Protocol.Models;
+    using System.Threading.Tasks;
+    using Models = Protocol.Models;
 
-    internal class AsyncListJobSchedulesEnumerator : PagedEnumeratorBase<CloudJobSchedule>
+    internal class AsyncListJobSchedulesEnumerator : AsyncListEnumerator<CloudJobSchedule, Models.CloudJobSchedule, Models.JobScheduleListHeaders>
     {
         private readonly JobScheduleOperations _parentJobScheduleOperations;
-        private readonly BehaviorManager _behaviorMgr;
-        private readonly DetailLevel _detailLevel;
 
-#region // constructors
-
-        internal AsyncListJobSchedulesEnumerator(
-                JobScheduleOperations parentJobScheduleOperations,
-                BehaviorManager behaviorMgr,
-                DetailLevel detailLevel)
+        internal AsyncListJobSchedulesEnumerator(JobScheduleOperations parentJobScheduleOperations, BehaviorManager behaviorMgr, DetailLevel detailLevel)
+        : base(behaviorMgr, detailLevel)
         {
-            this._parentJobScheduleOperations = parentJobScheduleOperations;
-            this._behaviorMgr = behaviorMgr;
-            this._detailLevel = detailLevel;
+            _parentJobScheduleOperations = parentJobScheduleOperations;
         }
 
-#endregion // constructors
-
-        public override CloudJobSchedule Current  // for IPagedEnumerator<T> and IEnumerator<T>
+        internal override CloudJobSchedule Wrap(Models.CloudJobSchedule protocolObj)
         {
-            get
-            {
-                // start with the current object off of base
-                object curObj = base._currentBatch[base._currentIndex];
-
-                // it must be a protocol object from previous call
-                Models.CloudJobSchedule protocolObj = curObj as Models.CloudJobSchedule;
-
-                Debug.Assert(null != protocolObj);
-
-                // wrap protocol object
-                CloudJobSchedule wrapped = new CloudJobSchedule(this._parentJobScheduleOperations.ParentBatchClient, protocolObj, _behaviorMgr.BaseBehaviors);
-
-                return wrapped;
-            }
+            return new CloudJobSchedule(_parentJobScheduleOperations.ParentBatchClient, protocolObj, behaviorMgr.BaseBehaviors);
         }
 
-        /// <summary>
-        /// fetch another batch of objects from the server
-        /// </summary>
-        protected async override System.Threading.Tasks.Task GetNextBatchFromServerAsync(SkipTokenHandler skipHandler, CancellationToken cancellationToken)
+        internal override Task<AzureOperationResponse<IPage<Models.CloudJobSchedule>, Models.JobScheduleListHeaders>> GetTaskResult(SkipTokenHandler skipHandler, CancellationToken cancellationToken)
         {
-            do
-            {
-                // start the protocol layer call
-                var asyncTask = this._parentJobScheduleOperations.ParentBatchClient.ProtocolLayer.ListJobSchedules(
+            return _parentJobScheduleOperations.ParentBatchClient.ProtocolLayer.ListJobSchedules(
                     skipHandler.SkipToken,
-                    _behaviorMgr,
-                    _detailLevel,
+                    behaviorMgr,
+                    detailLevel,
                     cancellationToken);
-
-                var response = await asyncTask.ConfigureAwait(continueOnCapturedContext: false);
-
-                // remember any skiptoken returned.  This also sets the bool
-                skipHandler.SkipToken = response.Body.NextPageLink;
-
-                // remember the protocol tasks returned
-                base._currentBatch = null;
-
-                if (null != response.Body.GetEnumerator())
-                {
-                    base._currentBatch = response.Body.ToArray();
-                }
-            }
-            // it is possible for there to be no results so we keep trying
-            while (skipHandler.ThereIsMoreData && ((null == _currentBatch) || _currentBatch.Length <= 0));
         }
     }
 }

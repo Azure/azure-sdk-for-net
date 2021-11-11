@@ -13,15 +13,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <!-- TODO: Revert after TokenRequestContext changes ship in Azure.Core -->
-    <!-- <PackageReference Include="Azure.Core" /> -->
-    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
-    <!-- End TODO -->
+    <!-- TODO: uncomment when Azure.Core ships
+    <PackageReference Include="Azure.Core" />
+    end TODO -->
+    <!-- TODO: revert when Azure.Core ships -->
+    <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
+    <!--  end TODO-->
     <PackageReference Include="System.Text.Json" />
     <PackageReference Include="Azure.Core.Experimental" />
   </ItemGroup>
 
-  <!-- Shared source from Azure.Core -->
+<!-- Shared source from Azure.Core -->
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)AppContextSwitchHelper.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="Shared" />
@@ -33,9 +35,11 @@
     <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)ForwardsClientCallsAttribute.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)HttpMessageSanitizer.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)LightweightPkcs8Decoder.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)OperationHelpers.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)OperationInternal.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)PemReader.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)LightweightPkcs8Decoder.cs" LinkBase="Shared" />
   </ItemGroup>
 
 </Project>

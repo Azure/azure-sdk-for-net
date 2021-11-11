@@ -12,7 +12,7 @@ namespace Azure.Messaging.EventHubs.Producer
     ///   that it was published to.
     /// </summary>
     ///
-    internal class SendEventBatchSucceededEventArgs : EventArgs
+    public class SendEventBatchSucceededEventArgs : EventArgs
     {
         /// <summary>
         ///   The set of events in the batch that was published.

@@ -275,7 +275,7 @@
       "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/portalsettings/delegation?api-version=2020-12-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9wb3J0YWxzZXR0aW5ncy9kZWxlZ2F0aW9uP2FwaS12ZXJzaW9uPTIwMjAtMTItMDE=",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"url\": \"https://delegationserver8569/\",\r\n    \"validationKey\": \"13vmMTPdEMFn6TnyNli7XAc9FjH8H0aGMBbLbKWDJ/Pz3GBtNR49GTCATEldlodvrhJtw5uIlrc1XwEdEqQb4w==\",\r\n    \"subscriptions\": {\r\n      \"enabled\": true\r\n    },\r\n    \"userRegistration\": {\r\n      \"enabled\": true\r\n    }\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"url\": \"https://delegationserver8569/\",\r\n    \"validationKey\": \"Sanitized\",\r\n    \"subscriptions\": {\r\n      \"enabled\": true\r\n    },\r\n    \"userRegistration\": {\r\n      \"enabled\": true\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
           "04d1c5a9-37d6-49e8-a045-ad6f92cba774"
@@ -340,7 +340,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/portalsettings/delegation\",\r\n  \"type\": \"Microsoft.ApiManagement/service/portalsettings\",\r\n  \"name\": \"delegation\",\r\n  \"properties\": {\r\n    \"url\": \"https://delegationserver8569/\",\r\n    \"validationKey\": \"13vmMTPdEMFn6TnyNli7XAc9FjH8H0aGMBbLbKWDJ/Pz3GBtNR49GTCATEldlodvrhJtw5uIlrc1XwEdEqQb4w==\",\r\n    \"subscriptions\": {\r\n      \"enabled\": true\r\n    },\r\n    \"userRegistration\": {\r\n      \"enabled\": true\r\n    },\r\n    \"enabled\": false,\r\n    \"termsOfService\": null\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/portalsettings/delegation\",\r\n  \"type\": \"Microsoft.ApiManagement/service/portalsettings\",\r\n  \"name\": \"delegation\",\r\n  \"properties\": {\r\n    \"url\": \"https://delegationserver8569/\",\r\n    \"validationKey\": \"Sanitized\",\r\n    \"subscriptions\": {\r\n      \"enabled\": true\r\n    },\r\n    \"userRegistration\": {\r\n      \"enabled\": true\r\n    },\r\n    \"enabled\": false,\r\n    \"termsOfService\": null\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
@@ -410,7 +410,7 @@
       "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/portalsettings/delegation?api-version=2020-12-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9wb3J0YWxzZXR0aW5ncy9kZWxlZ2F0aW9uP2FwaS12ZXJzaW9uPTIwMjAtMTItMDE=",
       "RequestMethod": "PATCH",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"url\": \"https://delegationserver8569/\",\r\n    \"validationKey\": \"13vmMTPdEMFn6TnyNli7XAc9FjH8H0aGMBbLbKWDJ/Pz3GBtNR49GTCATEldlodvrhJtw5uIlrc1XwEdEqQb4w==\",\r\n    \"subscriptions\": {\r\n      \"enabled\": false\r\n    },\r\n    \"userRegistration\": {\r\n      \"enabled\": false\r\n    }\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"url\": \"https://delegationserver8569/\",\r\n    \"validationKey\": \"Sanitized\",\r\n    \"subscriptions\": {\r\n      \"enabled\": false\r\n    },\r\n    \"userRegistration\": {\r\n      \"enabled\": false\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
           "ab1de824-db91-49fa-b422-5af6138dc0f0"

@@ -2,7 +2,7 @@
       "Name": "JobSchedulingError",
       "ProtocolName": "Models.JobSchedulingError",
       "SummaryComment": "An error encountered by the Batch service when scheduling a job.",
-      "IsConstructorPublic": false,
+      "ConstructorAccess": "internal",
       "Properties": [
         {
           "Key": {

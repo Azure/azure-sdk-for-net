@@ -1349,9 +1349,29 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 Assert.IsNull(receivedMessage.To);
                 Assert.IsNull(receivedMessage.CorrelationId);
 
-                // verify default behavior for backcompat
+                // verify default null behavior
 
                 message = new ServiceBusMessage();
+
+                Assert.IsNull(message.ReplyTo);
+                Assert.IsNull(message.To);
+                Assert.IsNull(message.CorrelationId);
+
+                await sender.SendMessageAsync(message);
+
+                receivedMessage = await receiver.ReceiveMessageAsync();
+                Assert.IsNull(receivedMessage.ReplyTo);
+                Assert.IsNull(receivedMessage.To);
+                Assert.IsNull(receivedMessage.CorrelationId);
+
+                // verify empty string respected
+
+                message = new ServiceBusMessage
+                {
+                    ReplyTo = "",
+                    To = "",
+                    CorrelationId = ""
+                };
 
                 Assert.AreEqual("", message.ReplyTo);
                 Assert.AreEqual("", message.To);

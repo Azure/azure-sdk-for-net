@@ -33,9 +33,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
                     Assert.AreEqual(result, JObject.FromObject(triggerEvent.ConnectionContext));
                 }
             }
-            else if (parameter.Name == "message")
+            else if (parameter.Name == "data")
             {
-                Assert.AreEqual(result, triggerEvent.Message);
+                Assert.AreEqual(result, triggerEvent.Data);
             }
             else if (parameter.Name == "dataType")
             {
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             public static void Func1([WebPubSubTrigger("testchat", WebPubSubEventType.System, "connect")] WebPubSubConnectionContext connectionContext)
             { }
 
-            public static void Func2([WebPubSubTrigger("testchat", WebPubSubEventType.User, "message")] WebPubSubConnectionContext connectionContext, BinaryData message, MessageDataType dataType)
+            public static void Func2([WebPubSubTrigger("testchat", WebPubSubEventType.User, "message")] WebPubSubConnectionContext connectionContext, BinaryData data, WebPubSubDataType dataType)
             { }
 
             public static void Func3([WebPubSubTrigger("testchat", WebPubSubEventType.System, "connect")] JObject connectionContext)
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
                     new[] { GetParameterOrFirst(type, "Func1", "connectionContext") },
                     new[] { GetParameterOrFirst(type, "Func2", "connectionContext") },
                     new[] { GetParameterOrFirst(type, "Func3", "connectionContext") },
-                    new[] { GetParameterOrFirst(type, "Func2", "message") },
+                    new[] { GetParameterOrFirst(type, "Func2", "data") },
                     new[] { GetParameterOrFirst(type, "Func2", "dataType") }
                 };
             }
@@ -133,8 +133,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
                     UserId = "user1"
                 },
                 Reason = "reason",
-                Message = BinaryData.FromString("message"),
-                DataType = MessageDataType.Text
+                Data = BinaryData.FromString("message"),
+                DataType = WebPubSubDataType.Text
             };
         }
     }

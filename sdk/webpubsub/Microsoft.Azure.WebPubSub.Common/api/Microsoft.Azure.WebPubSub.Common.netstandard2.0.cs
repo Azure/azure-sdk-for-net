@@ -8,11 +8,11 @@ namespace Microsoft.Azure.WebPubSub.Common
     {
         internal ConnectEventRequest() : base (default(Microsoft.Azure.WebPubSub.Common.WebPubSubConnectionContext)) { }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("claims")]
-        public System.Collections.ObjectModel.ReadOnlyDictionary<string, string[]> Claims { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string[]> Claims { get { throw null; } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("clientCertificates")]
         public System.Collections.Generic.IReadOnlyList<Microsoft.Azure.WebPubSub.Common.WebPubSubClientCertificate> ClientCertificates { get { throw null; } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("query")]
-        public System.Collections.ObjectModel.ReadOnlyDictionary<string, string[]> Query { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string[]> Query { get { throw null; } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("subprotocols")]
         public System.Collections.Generic.IReadOnlyList<string> Subprotocols { get { throw null; } }
         public Microsoft.Azure.WebPubSub.Common.EventErrorResponse CreateErrorResponse(Microsoft.Azure.WebPubSub.Common.WebPubSubErrorCode code, string message) { throw null; }
@@ -49,12 +49,6 @@ namespace Microsoft.Azure.WebPubSub.Common
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("errorMessage")]
         public string ErrorMessage { get { throw null; } set { } }
     }
-    public enum MessageDataType
-    {
-        Binary = 0,
-        Json = 1,
-        Text = 2,
-    }
     public sealed partial class PreflightRequest : Microsoft.Azure.WebPubSub.Common.WebPubSubEventRequest
     {
         internal PreflightRequest() : base (default(Microsoft.Azure.WebPubSub.Common.WebPubSubConnectionContext)) { }
@@ -64,25 +58,25 @@ namespace Microsoft.Azure.WebPubSub.Common
     public sealed partial class UserEventRequest : Microsoft.Azure.WebPubSub.Common.WebPubSubEventRequest
     {
         internal UserEventRequest() : base (default(Microsoft.Azure.WebPubSub.Common.WebPubSubConnectionContext)) { }
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("data")]
+        public System.BinaryData Data { get { throw null; } }
         [System.Text.Json.Serialization.JsonConverterAttribute(typeof(System.Text.Json.Serialization.JsonStringEnumConverter))]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("dataType")]
-        public Microsoft.Azure.WebPubSub.Common.MessageDataType DataType { get { throw null; } }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("message")]
-        public System.BinaryData Message { get { throw null; } }
+        public Microsoft.Azure.WebPubSub.Common.WebPubSubDataType DataType { get { throw null; } }
         public Microsoft.Azure.WebPubSub.Common.EventErrorResponse CreateErrorResponse(Microsoft.Azure.WebPubSub.Common.WebPubSubErrorCode code, string message) { throw null; }
-        public Microsoft.Azure.WebPubSub.Common.UserEventResponse CreateResponse(System.BinaryData message, Microsoft.Azure.WebPubSub.Common.MessageDataType dataType) { throw null; }
-        public Microsoft.Azure.WebPubSub.Common.UserEventResponse CreateResponse(string message, Microsoft.Azure.WebPubSub.Common.MessageDataType dataType = Microsoft.Azure.WebPubSub.Common.MessageDataType.Text) { throw null; }
+        public Microsoft.Azure.WebPubSub.Common.UserEventResponse CreateResponse(System.BinaryData data, Microsoft.Azure.WebPubSub.Common.WebPubSubDataType dataType) { throw null; }
+        public Microsoft.Azure.WebPubSub.Common.UserEventResponse CreateResponse(string data, Microsoft.Azure.WebPubSub.Common.WebPubSubDataType dataType = Microsoft.Azure.WebPubSub.Common.WebPubSubDataType.Text) { throw null; }
     }
     public partial class UserEventResponse : Microsoft.Azure.WebPubSub.Common.WebPubSubEventResponse
     {
         public UserEventResponse() { }
-        public UserEventResponse(System.BinaryData message, Microsoft.Azure.WebPubSub.Common.MessageDataType dataType) { }
-        public UserEventResponse(string message, Microsoft.Azure.WebPubSub.Common.MessageDataType dataType = Microsoft.Azure.WebPubSub.Common.MessageDataType.Text) { }
+        public UserEventResponse(System.BinaryData data, Microsoft.Azure.WebPubSub.Common.WebPubSubDataType dataType) { }
+        public UserEventResponse(string data, Microsoft.Azure.WebPubSub.Common.WebPubSubDataType dataType = Microsoft.Azure.WebPubSub.Common.WebPubSubDataType.Text) { }
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("data")]
+        public System.BinaryData Data { get { throw null; } set { } }
         [System.Text.Json.Serialization.JsonConverterAttribute(typeof(System.Text.Json.Serialization.JsonStringEnumConverter))]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("dataType")]
-        public Microsoft.Azure.WebPubSub.Common.MessageDataType DataType { get { throw null; } set { } }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("message")]
-        public System.BinaryData Message { get { throw null; } set { } }
+        public Microsoft.Azure.WebPubSub.Common.WebPubSubDataType DataType { get { throw null; } set { } }
         public void ClearStates() { }
         public void SetState(string key, object value) { }
     }
@@ -102,7 +96,7 @@ namespace Microsoft.Azure.WebPubSub.Common
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("eventType")]
         public Microsoft.Azure.WebPubSub.Common.WebPubSubEventType EventType { get { throw null; } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("headers")]
-        public System.Collections.ObjectModel.ReadOnlyDictionary<string, string[]> Headers { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string[]> Headers { get { throw null; } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("hub")]
         public string Hub { get { throw null; } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("origin")]
@@ -110,9 +104,15 @@ namespace Microsoft.Azure.WebPubSub.Common
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("signature")]
         public string Signature { get { throw null; } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("states")]
-        public System.Collections.ObjectModel.ReadOnlyDictionary<string, object> States { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, object> States { get { throw null; } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("userId")]
         public string UserId { get { throw null; } }
+    }
+    public enum WebPubSubDataType
+    {
+        Binary = 0,
+        Json = 1,
+        Text = 2,
     }
     public enum WebPubSubErrorCode
     {

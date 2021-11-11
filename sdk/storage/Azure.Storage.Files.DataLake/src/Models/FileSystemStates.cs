@@ -22,5 +22,10 @@ namespace Azure.Storage.Files.DataLake.Models
         /// Flag specifying that deleted containers should be included.
         /// </summary>
         Deleted = 1,
+
+        /// <summary>
+        /// Flag specifying that system containers should be included.
+        /// </summary>
+        System = 2
     }
 }
