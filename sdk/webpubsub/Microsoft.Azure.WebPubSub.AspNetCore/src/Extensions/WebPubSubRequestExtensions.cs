@@ -170,7 +170,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
             return null;
         }
 
-        internal static Dictionary<string,object> UpdateStates(this WebPubSubConnectionContext connectionContext, Dictionary<string, object> newStates) 
+        internal static Dictionary<string,object> UpdateStates(this WebPubSubConnectionContext connectionContext, Dictionary<string, object> newStates)
         {
             // states cleared.
             if (newStates == null)
@@ -241,7 +241,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         {
             try
             {
-                connectionContext = new ();
+                connectionContext = new();
                 connectionContext.ConnectionId = request.Headers.GetFirstHeaderValueOrDefault(Constants.Headers.CloudEvents.ConnectionId);
                 connectionContext.Hub = request.Headers.GetFirstHeaderValueOrDefault(Constants.Headers.CloudEvents.Hub);
                 connectionContext.EventType = GetEventType(request.Headers.GetFirstHeaderValueOrDefault(Constants.Headers.CloudEvents.Type));

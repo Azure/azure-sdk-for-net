@@ -107,8 +107,8 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
                 {"query2", new string[]{"b1"} },
             };
             var certs = new List<WebPubSubClientCertificate>
-            { 
-                new WebPubSubClientCertificate("111"), 
+            {
+                new WebPubSubClientCertificate("111"),
                 new WebPubSubClientCertificate("222")
             };
             var request = new ConnectEventRequest(connectionContext, claims, query, new string[] { "protocol1", "protocol2" }, certs);

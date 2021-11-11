@@ -76,7 +76,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
 
             try
             {
-                var serviceRequest = await request.ReadWebPubSubEventAsync(_options.ValidationOptions, context.RequestAborted);
+                var serviceRequest = await request.ReadWebPubSubEventAsync(_options.ValidationOptions, context.RequestAborted).ConfigureAwait(false);
                 Log.StartToHandleRequest(_logger, serviceRequest.ConnectionContext);
 
                 switch (serviceRequest)
@@ -116,7 +116,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                             {
                                 context.Response.ContentType = ConvertToContentType(response.DataType);
                                 var payload = response.Data.ToArray();
-                                await context.Response.Body.WriteAsync(payload, 0, payload.Length).ConfigureAwait(false);
+                                await context.Response.Body.WriteAsync(payload).ConfigureAwait(false);
                             }
                             break;
                         }
