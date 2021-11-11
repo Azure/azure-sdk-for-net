@@ -17,16 +17,29 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
         {
         }
 
-        /*private async Task<SiteSlotConfigWebContainer> GetSiteSlotConfigWebContainerAsync()
+        private async Task<SiteSlotConfigWebContainer> GetSiteSlotConfigWebContainerAsync()
         {
             var resourceGroup = await CreateResourceGroupAsync();
-            Site site = resourceGroup.GetSites();
+            var SiteName = Recording.GenerateAssetName("testSite_");
+            var SiteSlotName = Recording.GenerateAssetName("testSiteSlot_");
+            var SiteInput = ResourceDataHelper.GetBasicSiteData(DefaultLocation);
+            var lro = await resourceGroup.GetSites().CreateOrUpdateAsync(SiteName, SiteInput);
+            var Site = lro.Value;
+            var lroSiteSlot = await Site.GetSiteSlots().CreateOrUpdateAsync(SiteSlotName,SiteInput);
+            var siteSlot = lroSiteSlot.Value;
+            return siteSlot.GetSiteSlotConfigWebs();
         }
 
         [TestCase]
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
-        }*/
+            var container = await GetSiteSlotConfigWebContainerAsync();
+            var name = Recording.GenerateAssetName("testSiteSlotConfigWeb_");
+            var Input = ResourceDataHelper.GetBasicSiteConfigResourceData(DefaultLocation);
+            var lro = await container.CreateOrUpdateAsync(Input);
+            SiteSlotConfigWeb siteSlotConfigWeb = lro.Value;
+            Assert.AreEqual(name, siteSlotConfigWeb.Data.Name);
+        }
     }
 }

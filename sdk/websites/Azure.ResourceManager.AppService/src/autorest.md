@@ -24,4 +24,7 @@ directive:
   - remove-operation: AppServiceEnvironments_Suspend
 # get array
   - remove-operation: AppServicePlans_GetRouteForVnet
+  - from: swagger-document
+    where: $.definitions.AppServicePlan.properties.hostingEnviromentProfile
+    transform: $["x-nullable"] = true
 ```

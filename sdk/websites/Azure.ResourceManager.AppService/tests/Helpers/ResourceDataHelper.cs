@@ -6,6 +6,7 @@ using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
+using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Tests.Helpers
 {
@@ -34,6 +35,31 @@ namespace Azure.ResourceManager.AppService.Tests.Helpers
             Assert.AreEqual(r1.Tags, r2.Tags);
         }
 
+        #region AppServicePlan
+        public static void AssertPlan(AppServicePlanData plan1, AppServicePlanData plan2)
+        {
+            AssertTrackedResource(plan1, plan2);
+            Assert.AreEqual(plan1.ExtendedLocation, plan2.ExtendedLocation);
+        }
+
+        public static AppServicePlanData GetBasicAppServicePlanData(Location location)
+        {
+            var data = new AppServicePlanData(location)
+            {
+                //Location = "AZURE_LOCATION",
+                Sku = new SkuDescription
+                {
+                Name = "S1",
+                Tier = "STANDARD",
+                Capacity =  1
+                },
+                PerSiteScaling = false,
+                IsXenon = false
+            };
+            return data;
+        }
+        #endregion
+
         #region Site
         public static void AssertSite(SiteData site1, SiteData site2)
         {
@@ -43,7 +69,70 @@ namespace Azure.ResourceManager.AppService.Tests.Helpers
 
         public static SiteData GetBasicSiteData(Location location, string description = null)
         {
-            var data = new SiteData(location)//HostNames = { "ServerCert" }
+            var data = new SiteData(location)
+            {
+                Reserved = false,
+                IsXenon = false,
+                HyperV = false,
+                SiteConfig =
+                {
+                    NetFrameworkVersion = "v4.6",
+                    AppSettings =
+                    {
+                       // new list
+                    }
+                }
+            }
+                ;//HostNames = { "ServerCert" }
+            return data;
+        }
+        #endregion
+
+        #region SiteSlotConfigWeb
+        public static SiteConfigResourceData GetBasicSiteConfigResourceData(Location location, string description = null)
+        {
+            /*IDictionary<string, IList<string>> header = new ChangeTrackingDictionary<string, IList<string>>();
+            IList<string> ipAddress = new List<string>();
+            ipAddress.Add("Any");
+            IList<string> action = new List<string>();
+            action.Add("Allow");
+            IList<string> priority = new List<string>();
+            priority.Add("1");
+            IList<string> name = new List<string>();
+            name.Add("Allow all");
+            IList<string> descriptionlist = new List<string>();
+            descriptionlist.Add("Allow all accesss");
+            header.Add("ip_adddress", ipAddress);
+            header.Add("action", action);
+            header.Add("priority", priority);
+            header.Add("name", name);
+            header.Add("description",descriptionlist);*/
+            var data = new SiteConfigResourceData()
+            {
+                DefaultDocuments =
+                {
+                    "Default.htm",
+                    "Default.html",
+                    "Default.asp",
+                    "index.htm",
+                    "index.html",
+                    "iisstart.htm",
+                    "default.aspx",
+                    "index.php",
+                    "hostingstart.html"
+                },
+                IpSecurityRestrictions =
+                {
+                    new IpSecurityRestriction
+                    {
+                    IpAddress = "Any",
+                    Action = "Allow",
+                    Priority = 1,
+                    Name =  "Allow all",
+                    Description = "Allow all access"
+                    }
+                }
+            };
             return data;
         }
         #endregion
