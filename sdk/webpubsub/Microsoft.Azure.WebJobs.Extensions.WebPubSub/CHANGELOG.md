@@ -8,7 +8,7 @@
 - Add dependency `Azure.Messageing.WebPubSub` for service calls.
 - Rename output binding from `WebPubSubOperation` to `WebPubSubAction`, and add `Action` as suffix for derived classes.
 - Rename `operationKind` to `actionName` in output binding for javascript to deserialize.
-- Rename and uniform type of uri properties in `WebPubSubConnection` for C# convension.
+- Changed the name and type of the `Uri` properties in `WebPubSubConnection` to match other libraries in the Azure SDK for .NET.
 
 ## 1.0.0-beta.4 (2021-11-09)
 
