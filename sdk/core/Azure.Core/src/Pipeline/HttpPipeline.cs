@@ -70,6 +70,19 @@ namespace Azure.Core.Pipeline
         }
 
         /// <summary>
+        /// Creates a new <see cref="HttpMessage"/> instance.
+        /// </summary>
+        /// <param name="context">Context specifying the message options.</param>
+        /// <returns>The message.</returns>
+        public HttpMessage CreateMessage(RequestContext context)
+        {
+            var message = CreateMessage();
+            message.CancellationToken = context.CancellationToken;
+            message.Policies = context.Policies;
+            return message;
+        }
+
+        /// <summary>
         /// The <see cref="ResponseClassifier"/> instance used in this pipeline invocations.
         /// </summary>
         public ResponseClassifier ResponseClassifier { get; }
@@ -84,7 +97,7 @@ namespace Azure.Core.Pipeline
         {
             message.CancellationToken = cancellationToken;
             AddHttpMessageProperties(message);
-            var pipeline = message.CustomizedPipeline ?? _pipeline;
+            var pipeline = message.Policies == null ? _pipeline : CreateRequestPipeline(message.Policies);
             return pipeline.Span[0].ProcessAsync(message, pipeline.Slice(1));
         }
 
@@ -97,36 +110,9 @@ namespace Azure.Core.Pipeline
         {
             message.CancellationToken = cancellationToken;
             AddHttpMessageProperties(message);
-            var pipeline = message.CustomizedPipeline ?? _pipeline;
+            var pipeline = message.Policies == null ? _pipeline : CreateRequestPipeline(message.Policies);
             pipeline.Span[0].Process(message, pipeline.Slice(1));
         }
-
-        ///// <summary>
-        ///// Invokes the pipeline asynchronously. After the task completes response would be set to the <see cref="HttpMessage.Response"/> property.
-        ///// </summary>
-        ///// <param name="message">The <see cref="HttpMessage"/> to send.</param>
-        ///// <param name="pipeline"></param>
-        ///// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
-        ///// <returns>The <see cref="ValueTask"/> representing the asynchronous operation.</returns>
-        //public static ValueTask SendAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, CancellationToken cancellationToken)
-        //{
-        //    message.CancellationToken = cancellationToken;
-        //    AddHttpMessageProperties(message);
-        //    return pipeline.Span[0].ProcessAsync(message, pipeline.Slice(1));
-        //}
-
-        ///// <summary>
-        ///// Invokes the pipeline synchronously. After the task completes response would be set to the <see cref="HttpMessage.Response"/> property.
-        ///// </summary>
-        ///// <param name="message">The <see cref="HttpMessage"/> to send.</param>
-        ///// <param name="pipeline"></param>
-        ///// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
-        //public static void Send(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, CancellationToken cancellationToken)
-        //{
-        //    message.CancellationToken = cancellationToken;
-        //    AddHttpMessageProperties(message);
-        //    pipeline.Span[0].Process(message, pipeline.Slice(1));
-        //}
 
         /// <summary>
         /// Invokes the pipeline asynchronously with the provided request.
@@ -188,27 +174,53 @@ namespace Azure.Core.Pipeline
             return CurrentHttpMessagePropertiesScope.Value;
         }
 
-        internal ReadOnlyMemory<HttpPipelinePolicy> GetCustomizedPipeline(RequestContext context)
+        private ReadOnlyMemory<HttpPipelinePolicy> CreateRequestPipeline(List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)> customPolicies)
         {
-            int length = _pipeline.Length + context.PolicyCount;
+            var policies = new HttpPipelinePolicy[_pipeline.Length + customPolicies.Count];
 
-            var policies = new HttpPipelinePolicy[length];
+            //void AddRequestPolicies(HttpPipelinePosition position, int start)
+            //{
+            //    if (customPolicies != null)
+            //    {
+            //        int i = 0;
+            //        foreach (var policy in customPolicies)
+            //        {
+            //            if (policy.Position == position)
+            //            {
+            //                policies[start + i++] = policy.Policy;
+            //            }
+            //        }
+            //    }
+            //}
 
             _pipeline.Slice(0, _perCallIndex).CopyTo(policies);
 
-            int customCount = context.AppendPolicies(policies, HttpPipelinePosition.PerCall, policies.Length);
+            //AddRequestPolicies(HttpPipelinePosition.PerCall, )
+            SetRequestPolicies(customPolicies, policies, HttpPipelinePosition.PerCall, policies.Length);
             int sectionCount = _perRetryIndex - _perCallIndex;
             _pipeline.Slice(_perCallIndex, sectionCount).CopyTo(new Memory<HttpPipelinePolicy>(policies, policies.Length, sectionCount));
 
-            customCount += context.AppendPolicies(policies, HttpPipelinePosition.PerRetry, policies.Length);
+            SetRequestPolicies(customPolicies, policies, HttpPipelinePosition.PerRetry, policies.Length);
             sectionCount = _transportIndex - _perRetryIndex;
             _pipeline.Slice(_perRetryIndex, sectionCount).CopyTo(new Memory<HttpPipelinePolicy>(policies, policies.Length, sectionCount));
 
-            customCount += context.AppendPolicies(policies, HttpPipelinePosition.BeforeTransport, policies.Length);
+            SetRequestPolicies(customPolicies, policies, HttpPipelinePosition.BeforeTransport, policies.Length);
             sectionCount = _pipeline.Length - _transportIndex;
             _pipeline.Slice(_transportIndex, sectionCount).CopyTo(new Memory<HttpPipelinePolicy>(policies, policies.Length, sectionCount));
 
             return new ReadOnlyMemory<HttpPipelinePolicy>(policies);
+        }
+
+        private static void SetRequestPolicies(List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)> source,
+            HttpPipelinePolicy[] target, HttpPipelinePosition position, int start)
+        {
+            var policies = source.Where(p => p.Position == position).Select(p => p.Policy);
+
+            int i = 0;
+            foreach (var policy in policies)
+            {
+                target[start + i++] = policy;
+            }
         }
 
         private static void AddHttpMessageProperties(HttpMessage message)

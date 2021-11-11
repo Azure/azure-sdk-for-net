@@ -81,6 +81,8 @@ namespace Azure.Core
         /// </summary>
         public TimeSpan? NetworkTimeout { get; set; }
 
+        internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; set; }
+
         /// <summary>
         /// Gets a property that modifies the pipeline behavior. Please refer to individual policies documentation on what properties it supports.
         /// </summary>
@@ -122,16 +124,6 @@ namespace Azure.Core
                     return null;
             }
         }
-
-        public void Apply(RequestContext context)
-        {
-            if (context.PolicyCount > 0)
-            {
-                CustomizedPipeline =  // Do we want this on this type?  It would be like ResponseClassifier
-            }
-        }
-
-        internal ReadOnlyMemory<HttpPipelinePolicy>? CustomizedPipeline { get; private set; }
 
         /// <summary>
         /// Disposes the request and response.
