@@ -747,7 +747,7 @@ namespace Azure.Core.Pipeline
         public DisposableHttpPipeline(Azure.Core.Pipeline.HttpPipelineTransport transport, Azure.Core.Pipeline.HttpPipelinePolicy[]? policies = null, Azure.Core.ResponseClassifier? responseClassifier = null) : base (default(Azure.Core.Pipeline.HttpPipelineTransport), default(Azure.Core.Pipeline.HttpPipelinePolicy[]), default(Azure.Core.ResponseClassifier)) { }
         public void Dispose() { }
     }
-    public partial class HttpClientTransport : Azure.Core.Pipeline.HttpPipelineTransport
+    public partial class HttpClientTransport : Azure.Core.Pipeline.HttpPipelineTransport, System.IDisposable
     {
         public static readonly Azure.Core.Pipeline.HttpClientTransport Shared;
         public HttpClientTransport() { }
@@ -796,6 +796,7 @@ namespace Azure.Core.Pipeline
     {
         protected HttpPipelineTransport() { }
         public abstract Azure.Core.Request CreateRequest();
+        public void Dispose() { }
         public abstract void Process(Azure.Core.HttpMessage message);
         public abstract System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message);
     }
