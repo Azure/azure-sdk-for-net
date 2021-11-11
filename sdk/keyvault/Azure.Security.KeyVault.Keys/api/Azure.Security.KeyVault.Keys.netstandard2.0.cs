@@ -412,10 +412,10 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         public virtual Azure.Security.KeyVault.Keys.Cryptography.SignResult SignData(Azure.Security.KeyVault.Keys.Cryptography.SignatureAlgorithm algorithm, System.IO.Stream data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Security.KeyVault.Keys.Cryptography.SignResult> SignDataAsync(Azure.Security.KeyVault.Keys.Cryptography.SignatureAlgorithm algorithm, byte[] data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Security.KeyVault.Keys.Cryptography.SignResult> SignDataAsync(Azure.Security.KeyVault.Keys.Cryptography.SignatureAlgorithm algorithm, System.IO.Stream data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public System.Security.Cryptography.ECDsa ToECDsa(Azure.Security.KeyVault.Keys.JsonWebKey publicKey) { throw null; }
-        public System.Security.Cryptography.ECDsa ToECDsa(System.Security.Cryptography.X509Certificates.X509Certificate2 publicCertificate) { throw null; }
-        public System.Security.Cryptography.RSA ToRSA(Azure.Security.KeyVault.Keys.JsonWebKey publicKey) { throw null; }
-        public System.Security.Cryptography.RSA ToRSA(System.Security.Cryptography.X509Certificates.X509Certificate2 publicCertificate) { throw null; }
+        public Azure.Security.KeyVault.Keys.Cryptography.KeyVaultECDsa ToECDsa(Azure.Security.KeyVault.Keys.JsonWebKey publicKey) { throw null; }
+        public Azure.Security.KeyVault.Keys.Cryptography.KeyVaultECDsa ToECDsa(System.Security.Cryptography.X509Certificates.X509Certificate2 publicCertificate) { throw null; }
+        public Azure.Security.KeyVault.Keys.Cryptography.KeyVaultRSA ToRSA(Azure.Security.KeyVault.Keys.JsonWebKey publicKey) { throw null; }
+        public Azure.Security.KeyVault.Keys.Cryptography.KeyVaultRSA ToRSA(System.Security.Cryptography.X509Certificates.X509Certificate2 publicCertificate) { throw null; }
         public virtual Azure.Security.KeyVault.Keys.Cryptography.UnwrapResult UnwrapKey(Azure.Security.KeyVault.Keys.Cryptography.KeyWrapAlgorithm algorithm, byte[] encryptedKey, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Security.KeyVault.Keys.Cryptography.UnwrapResult> UnwrapKeyAsync(Azure.Security.KeyVault.Keys.Cryptography.KeyWrapAlgorithm algorithm, byte[] encryptedKey, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Security.KeyVault.Keys.Cryptography.VerifyResult Verify(Azure.Security.KeyVault.Keys.Cryptography.SignatureAlgorithm algorithm, byte[] digest, byte[] signature, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -466,20 +466,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         public Azure.Security.KeyVault.Keys.Cryptography.EncryptionAlgorithm Algorithm { get { throw null; } }
         public string KeyId { get { throw null; } }
         public byte[] Plaintext { get { throw null; } }
-    }
-    public sealed partial class ECDsaKeyVault : System.Security.Cryptography.ECDsa
-    {
-        public ECDsaKeyVault(Azure.Security.KeyVault.Keys.Cryptography.KeyVaultContext context) { }
-        protected override void Dispose(bool disposing) { }
-        public override System.Security.Cryptography.ECParameters ExportExplicitParameters(bool includePrivateParameters) { throw null; }
-        public override System.Security.Cryptography.ECParameters ExportParameters(bool includePrivateParameters) { throw null; }
-        public override void FromXmlString(string xmlString) { }
-        public override void GenerateKey(System.Security.Cryptography.ECCurve curve) { }
-        protected override byte[] HashData(byte[] data, int offset, int count, System.Security.Cryptography.HashAlgorithmName hashAlgorithm) { throw null; }
-        public override void ImportParameters(System.Security.Cryptography.ECParameters parameters) { }
-        public override byte[] SignHash(byte[] hash) { throw null; }
-        public override string ToXmlString(bool includePrivateParameters) { throw null; }
-        public override bool VerifyHash(byte[] hash, byte[] signature) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EncryptionAlgorithm : System.IEquatable<Azure.Security.KeyVault.Keys.Cryptography.EncryptionAlgorithm>
@@ -560,6 +546,35 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         public bool IsValid { get { throw null; } }
         public Azure.Security.KeyVault.Keys.JsonWebKey PublicKey { get { throw null; } }
     }
+    public sealed partial class KeyVaultECDsa : System.Security.Cryptography.ECDsa
+    {
+        public KeyVaultECDsa(Azure.Security.KeyVault.Keys.Cryptography.KeyVaultContext context) { }
+        public Azure.Security.KeyVault.Keys.Cryptography.KeyVaultContext Context { get { throw null; } }
+        protected override void Dispose(bool disposing) { }
+        public override System.Security.Cryptography.ECParameters ExportExplicitParameters(bool includePrivateParameters) { throw null; }
+        public override System.Security.Cryptography.ECParameters ExportParameters(bool includePrivateParameters) { throw null; }
+        public override void FromXmlString(string xmlString) { }
+        public override void GenerateKey(System.Security.Cryptography.ECCurve curve) { }
+        protected override byte[] HashData(byte[] data, int offset, int count, System.Security.Cryptography.HashAlgorithmName hashAlgorithm) { throw null; }
+        public override void ImportParameters(System.Security.Cryptography.ECParameters parameters) { }
+        public override byte[] SignHash(byte[] hash) { throw null; }
+        public override string ToXmlString(bool includePrivateParameters) { throw null; }
+        public override bool VerifyHash(byte[] hash, byte[] signature) { throw null; }
+    }
+    public sealed partial class KeyVaultRSA : System.Security.Cryptography.RSA
+    {
+        public KeyVaultRSA(Azure.Security.KeyVault.Keys.Cryptography.KeyVaultContext context) { }
+        public Azure.Security.KeyVault.Keys.Cryptography.KeyVaultContext Context { get { throw null; } }
+        public override byte[] Decrypt(byte[] data, System.Security.Cryptography.RSAEncryptionPadding padding) { throw null; }
+        protected override void Dispose(bool disposing) { }
+        public override byte[] Encrypt(byte[] data, System.Security.Cryptography.RSAEncryptionPadding padding) { throw null; }
+        public override System.Security.Cryptography.RSAParameters ExportParameters(bool includePrivateParameters) { throw null; }
+        protected override byte[] HashData(byte[] data, int offset, int count, System.Security.Cryptography.HashAlgorithmName hashAlgorithm) { throw null; }
+        protected override byte[] HashData(System.IO.Stream data, System.Security.Cryptography.HashAlgorithmName hashAlgorithm) { throw null; }
+        public override void ImportParameters(System.Security.Cryptography.RSAParameters parameters) { }
+        public override byte[] SignHash(byte[] hash, System.Security.Cryptography.HashAlgorithmName hashAlgorithm, System.Security.Cryptography.RSASignaturePadding padding) { throw null; }
+        public override bool VerifyHash(byte[] hash, byte[] signature, System.Security.Cryptography.HashAlgorithmName hashAlgorithm, System.Security.Cryptography.RSASignaturePadding padding) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct KeyWrapAlgorithm : System.IEquatable<Azure.Security.KeyVault.Keys.Cryptography.KeyWrapAlgorithm>
     {
@@ -587,19 +602,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     public partial class LocalCryptographyClientOptions : Azure.Core.ClientOptions
     {
         public LocalCryptographyClientOptions() { }
-    }
-    public sealed partial class RSAKeyVault : System.Security.Cryptography.RSA
-    {
-        public RSAKeyVault(Azure.Security.KeyVault.Keys.Cryptography.KeyVaultContext context) { }
-        public override byte[] Decrypt(byte[] data, System.Security.Cryptography.RSAEncryptionPadding padding) { throw null; }
-        protected override void Dispose(bool disposing) { }
-        public override byte[] Encrypt(byte[] data, System.Security.Cryptography.RSAEncryptionPadding padding) { throw null; }
-        public override System.Security.Cryptography.RSAParameters ExportParameters(bool includePrivateParameters) { throw null; }
-        protected override byte[] HashData(byte[] data, int offset, int count, System.Security.Cryptography.HashAlgorithmName hashAlgorithm) { throw null; }
-        protected override byte[] HashData(System.IO.Stream data, System.Security.Cryptography.HashAlgorithmName hashAlgorithm) { throw null; }
-        public override void ImportParameters(System.Security.Cryptography.RSAParameters parameters) { }
-        public override byte[] SignHash(byte[] hash, System.Security.Cryptography.HashAlgorithmName hashAlgorithm, System.Security.Cryptography.RSASignaturePadding padding) { throw null; }
-        public override bool VerifyHash(byte[] hash, byte[] signature, System.Security.Cryptography.HashAlgorithmName hashAlgorithm, System.Security.Cryptography.RSASignaturePadding padding) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SignatureAlgorithm : System.IEquatable<Azure.Security.KeyVault.Keys.Cryptography.SignatureAlgorithm>
