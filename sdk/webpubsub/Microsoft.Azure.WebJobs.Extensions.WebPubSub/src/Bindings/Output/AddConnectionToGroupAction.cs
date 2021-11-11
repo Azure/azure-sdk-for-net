@@ -7,15 +7,15 @@ using Newtonsoft.Json.Serialization;
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
     /// <summary>
-    /// Operation to remove a user from group.
+    /// Operation to add connectionId to a group.
     /// </summary>
     [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
-    public class RemoveUserFromGroup : WebPubSubOperation
+    public class AddConnectionToGroupAction : WebPubSubAction
     {
         /// <summary>
-        /// Target userId.
+        /// Target connectionId.
         /// </summary>
-        public string UserId { get; set; }
+        public string ConnectionId { get; set; }
 
         /// <summary>
         /// Target group name.

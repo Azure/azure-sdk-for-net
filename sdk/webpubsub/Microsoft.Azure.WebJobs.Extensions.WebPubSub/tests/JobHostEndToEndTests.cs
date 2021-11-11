@@ -114,13 +114,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
                 [WebPubSubConnection(Hub = "chat", UserId = "aaa")] WebPubSubConnection connection)
             {
                 // Valid case use default url for verification.
-                Assert.AreEqual("wss://abc/client/hubs/chat", connection.BaseUrl);
+                Assert.AreEqual("wss://abc/client/hubs/chat", connection.BaseUri.AbsoluteUri);
             }
 
             public static async Task TestWebPubSubOutput(
-                [WebPubSub(Hub = "chat")] IAsyncCollector<WebPubSubOperation> operation)
+                [WebPubSub(Hub = "chat")] IAsyncCollector<WebPubSubAction> operation)
             {
-                await operation.AddAsync(new SendToAll
+                await operation.AddAsync(new SendToAllAction
                 {
                     Data = TestMessage,
                     DataType = WebPubSubDataType.Text
@@ -128,9 +128,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             }
 
             public static async Task TestWebPubSubOutputMissingHub(
-                [WebPubSub] IAsyncCollector<WebPubSubOperation> operation)
+                [WebPubSub] IAsyncCollector<WebPubSubAction> operation)
             {
-                await operation.AddAsync(new SendToAll
+                await operation.AddAsync(new SendToAllAction
                 {
                     Data = TestMessage,
                     DataType = WebPubSubDataType.Text

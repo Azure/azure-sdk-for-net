@@ -7,10 +7,10 @@ using Newtonsoft.Json.Serialization;
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
     /// <summary>
-    /// Operation to add connectionId to a group.
+    /// Operation to close a connection.
     /// </summary>
     [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
-    public class AddConnectionToGroup : WebPubSubOperation
+    public class CloseClientConnectionAction : WebPubSubAction
     {
         /// <summary>
         /// Target connectionId.
@@ -18,8 +18,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         public string ConnectionId { get; set; }
 
         /// <summary>
-        /// Target group name.
+        /// Reason to close the connection.
         /// </summary>
-        public string Group { get; set; }
+        public string Reason { get; set; }
     }
 }

@@ -1,16 +1,17 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Messaging.WebPubSub;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
     /// <summary>
-    /// Operation to close a connection.
+    /// Operation to grant permission.
     /// </summary>
     [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
-    public class CloseClientConnection : WebPubSubOperation
+    public class GrantPermissionAction : WebPubSubAction
     {
         /// <summary>
         /// Target connectionId.
@@ -18,8 +19,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         public string ConnectionId { get; set; }
 
         /// <summary>
-        /// Reason to close the connection.
+        /// Target permission.
         /// </summary>
-        public string Reason { get; set; }
+        public WebPubSubPermission Permission { get; set; }
+
+        /// <summary>
+        /// Target name.
+        /// </summary>
+        public string TargetName { get; set; }
     }
 }

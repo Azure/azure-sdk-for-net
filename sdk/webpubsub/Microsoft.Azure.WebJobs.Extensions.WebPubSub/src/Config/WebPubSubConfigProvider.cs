@@ -81,8 +81,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             context
                 .AddConverter<WebPubSubConnection, JObject>(JObject.FromObject)
                 .AddConverter<WebPubSubContext, JObject>(JObject.FromObject)
-                .AddConverter<JObject, WebPubSubOperation>(ConvertToWebPubSubOperation)
-                .AddConverter<JArray, WebPubSubOperation[]>(ConvertToWebPubSubOperationArray);
+                .AddConverter<JObject, WebPubSubAction>(ConvertToWebPubSubOperation)
+                .AddConverter<JArray, WebPubSubAction[]>(ConvertToWebPubSubOperationArray);
 
             // Trigger binding
             context.AddBindingRule<WebPubSubTriggerAttribute>()
@@ -130,7 +130,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             return new WebPubSubService(connectionString, hubName);
         }
 
-        private IAsyncCollector<WebPubSubOperation> CreateCollector(WebPubSubAttribute attribute)
+        private IAsyncCollector<WebPubSubAction> CreateCollector(WebPubSubAttribute attribute)
         {
             return new WebPubSubAsyncCollector(GetService(attribute));
         }
@@ -165,11 +165,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             };
         }
 
-        internal static WebPubSubOperation ConvertToWebPubSubOperation(JObject input)
+        internal static WebPubSubAction ConvertToWebPubSubOperation(JObject input)
         {
-            if (input.TryGetValue("operationKind", StringComparison.OrdinalIgnoreCase, out var kind))
+            if (input.TryGetValue("actionName", StringComparison.OrdinalIgnoreCase, out var kind))
             {
-                var opeartions = typeof(WebPubSubOperation).Assembly.GetTypes().Where(t => t.BaseType == typeof(WebPubSubOperation));
+                var opeartions = typeof(WebPubSubAction).Assembly.GetTypes().Where(t => t.BaseType == typeof(WebPubSubAction));
                 foreach (var item in opeartions)
                 {
                     if (TryToWebPubSubOperation(input, kind.ToString(), item, out var operation))
@@ -181,9 +181,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             throw new ArgumentException($"Not supported WebPubSubOperation: {kind}.");
         }
 
-        internal static WebPubSubOperation[] ConvertToWebPubSubOperationArray(JArray input)
+        internal static WebPubSubAction[] ConvertToWebPubSubOperationArray(JArray input)
         {
-            var result = new List<WebPubSubOperation>();
+            var result = new List<WebPubSubAction>();
             foreach (var item in input)
             {
                 result.Add(ConvertToWebPubSubOperation((JObject)item));
@@ -191,16 +191,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             return result.ToArray();
         }
 
-        private static bool TryToWebPubSubOperation(JObject input, string operationKind, Type operationType, out WebPubSubOperation operation)
+        private static bool TryToWebPubSubOperation(JObject input, string actionName, Type operationType, out WebPubSubAction operation)
         {
             // message events need check dataType.
-            if (operationKind.StartsWith("Send", StringComparison.OrdinalIgnoreCase))
+            if (actionName.StartsWith("Send", StringComparison.OrdinalIgnoreCase))
             {
                 CheckDataType(input);
             }
-            if (operationKind.Equals(operationType.Name, StringComparison.OrdinalIgnoreCase))
+            if (actionName.Equals(operationType.Name, StringComparison.OrdinalIgnoreCase))
             {
-                operation = input.ToObject(operationType) as WebPubSubOperation;
+                operation = input.ToObject(operationType) as WebPubSubAction;
                 return true;
             }
             operation = null;

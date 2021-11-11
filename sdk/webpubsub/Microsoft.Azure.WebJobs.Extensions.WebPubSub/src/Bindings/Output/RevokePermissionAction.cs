@@ -1,25 +1,31 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Messaging.WebPubSub;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
     /// <summary>
-    /// Operation to add a user to group.
+    /// Operation to remove permission.
     /// </summary>
     [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
-    public class AddUserToGroup : WebPubSubOperation
+    public class RevokePermissionAction : WebPubSubAction
     {
         /// <summary>
-        /// Target userId.
+        /// Targe connectionId.
         /// </summary>
-        public string UserId { get; set; }
+        public string ConnectionId { get; set; }
 
         /// <summary>
-        /// Target group name.
+        /// Target permission.
         /// </summary>
-        public string Group { get; set; }
+        public WebPubSubPermission Permission { get; set; }
+
+        /// <summary>
+        /// Target name.
+        /// </summary>
+        public string TargetName { get; set; }
     }
 }

@@ -16,63 +16,63 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 {
     public class JObjectTests
     {
-        [TestCase(nameof(SendToAll))]
-        [TestCase(nameof(SendToConnection))]
-        [TestCase(nameof(SendToGroup))]
-        [TestCase(nameof(SendToUser))]
-        [TestCase(nameof(AddConnectionToGroup))]
-        [TestCase(nameof(AddUserToGroup))]
-        [TestCase(nameof(RemoveConnectionFromGroup))]
-        [TestCase(nameof(RemoveUserFromAllGroups))]
-        [TestCase(nameof(RemoveUserFromGroup))]
-        [TestCase(nameof(CloseAllConnections))]
-        [TestCase(nameof(CloseClientConnection))]
-        [TestCase(nameof(CloseGroupConnections))]
-        [TestCase(nameof(GrantPermission))]
-        [TestCase(nameof(RevokePermission))]
-        public void TestOutputConvert(string operationKind)
+        [TestCase(nameof(SendToAllAction))]
+        [TestCase(nameof(SendToConnectionAction))]
+        [TestCase(nameof(SendToGroupAction))]
+        [TestCase(nameof(SendToUserAction))]
+        [TestCase(nameof(AddConnectionToGroupAction))]
+        [TestCase(nameof(AddUserToGroupAction))]
+        [TestCase(nameof(RemoveConnectionFromGroupAction))]
+        [TestCase(nameof(RemoveUserFromAllGroupsAction))]
+        [TestCase(nameof(RemoveUserFromGroupAction))]
+        [TestCase(nameof(CloseAllConnectionsAction))]
+        [TestCase(nameof(CloseClientConnectionAction))]
+        [TestCase(nameof(CloseGroupConnectionsAction))]
+        [TestCase(nameof(GrantPermissionAction))]
+        [TestCase(nameof(RevokePermissionAction))]
+        public void TestOutputConvert(string actionName)
         {
             WebPubSubConfigProvider.RegisterJsonConverter();
 
-            var input = @"{ ""operationKind"":""{0}"",""userId"":""user"", ""group"":""group1"",""connectionId"":""connection"",""data"":""test"",""dataType"":""text"", ""reason"":""close"", ""excluded"":[""aa"",""bb""]}";
+            var input = @"{ ""actionName"":""{0}"",""userId"":""user"", ""group"":""group1"",""connectionId"":""connection"",""data"":""test"",""dataType"":""text"", ""reason"":""close"", ""excluded"":[""aa"",""bb""]}";
 
-            var replacedInput = input.Replace("{0}", operationKind);
+            var replacedInput = input.Replace("{0}", actionName);
 
             var jObject = JObject.Parse(replacedInput);
 
             var converted = WebPubSubConfigProvider.ConvertToWebPubSubOperation(jObject);
 
-            Assert.AreEqual(operationKind, converted.OperationKind.ToString());
+            Assert.AreEqual(actionName, converted.ActionName.ToString());
         }
 
-        [TestCase(nameof(SendToAll))]
-        [TestCase(nameof(SendToConnection))]
-        [TestCase(nameof(SendToGroup))]
-        [TestCase(nameof(SendToUser))]
-        public void TestInvalidSendConvert(string operationKind)
+        [TestCase(nameof(SendToAllAction))]
+        [TestCase(nameof(SendToConnectionAction))]
+        [TestCase(nameof(SendToGroupAction))]
+        [TestCase(nameof(SendToUserAction))]
+        public void TestInvalidSendConvert(string actionName)
         {
             WebPubSubConfigProvider.RegisterJsonConverter();
 
-            var input = @"{ ""operationKind"":""{0}"",""userId"":""user"", ""group"":""group1"",""connectionId"":""connection"",""data"": {""type"":""binary"", ""data"": [66, 105, 110, 97, 114, 121, 68, 97, 116, 97]} ,""dataType"":""binary"", ""reason"":""close"", ""excluded"":[""aa"",""bb""]}";
+            var input = @"{ ""actionName"":""{0}"",""userId"":""user"", ""group"":""group1"",""connectionId"":""connection"",""data"": {""type"":""binary"", ""data"": [66, 105, 110, 97, 114, 121, 68, 97, 116, 97]} ,""dataType"":""binary"", ""reason"":""close"", ""excluded"":[""aa"",""bb""]}";
 
-            var replacedInput = input.Replace("{0}", operationKind);
+            var replacedInput = input.Replace("{0}", actionName);
 
             var jObject = JObject.Parse(replacedInput);
 
             Assert.Throws<ArgumentException>(() => WebPubSubConfigProvider.ConvertToWebPubSubOperation(jObject));
         }
 
-        [TestCase(typeof(SendToAll))]
-        [TestCase(typeof(SendToConnection))]
-        [TestCase(typeof(SendToGroup))]
-        [TestCase(typeof(SendToUser))]
-        public void TestValidSendBinaryConvert(Type operationKind)
+        [TestCase(typeof(SendToAllAction))]
+        [TestCase(typeof(SendToConnectionAction))]
+        [TestCase(typeof(SendToGroupAction))]
+        [TestCase(typeof(SendToUserAction))]
+        public void TestValidSendBinaryConvert(Type actionName)
         {
             WebPubSubConfigProvider.RegisterJsonConverter();
 
-            var input = @"{ ""operationKind"":""{0}"",""userId"":""user"", ""group"":""group1"",""connectionId"":""connection"",""data"": {""type"":""Buffer"", ""data"": [66, 105, 110, 97, 114, 121, 68, 97, 116, 97]} ,""dataType"":""binary"", ""reason"":""close"", ""excluded"":[""aa"",""bb""]}";
+            var input = @"{ ""actionName"":""{0}"",""userId"":""user"", ""group"":""group1"",""connectionId"":""connection"",""data"": {""type"":""Buffer"", ""data"": [66, 105, 110, 97, 114, 121, 68, 97, 116, 97]} ,""dataType"":""binary"", ""reason"":""close"", ""excluded"":[""aa"",""bb""]}";
 
-            var replacedInput = input.Replace("{0}", operationKind.Name);
+            var replacedInput = input.Replace("{0}", actionName.Name);
 
             var jObject = JObject.Parse(replacedInput);
 
@@ -84,19 +84,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 
         [TestCase("webpubsuboperation")]
         [TestCase("unknown")]
-        public void TestInvalidWebPubSubOperationConvert(string operationKind)
+        public void TestInvalidWebPubSubOperationConvert(string actionName)
         {
             WebPubSubConfigProvider.RegisterJsonConverter();
 
-            var input = @"{ ""operationKind"":""{0}"",""userId"":""user"", ""group"":""group1"",""connectionId"":""connection"",""data"":""test"",""dataType"":""text"", ""reason"":""close"", ""excluded"":[""aa"",""bb""]}";
+            var input = @"{ ""actionName"":""{0}"",""userId"":""user"", ""group"":""group1"",""connectionId"":""connection"",""data"":""test"",""dataType"":""text"", ""reason"":""close"", ""excluded"":[""aa"",""bb""]}";
 
-            var replacedInput = input.Replace("{0}", operationKind);
+            var replacedInput = input.Replace("{0}", actionName);
 
             var jObject = JObject.Parse(replacedInput);
 
             // Throws excpetion of not able to de-serialize to abstract class.
             var ex = Assert.Throws<ArgumentException>(() => WebPubSubConfigProvider.ConvertToWebPubSubOperation(jObject));
-            Assert.AreEqual($"Not supported WebPubSubOperation: {operationKind}.", ex.Message);
+            Assert.AreEqual($"Not supported WebPubSubOperation: {actionName}.", ex.Message);
         }
 
         [TestCase]
@@ -104,9 +104,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         {
             WebPubSubConfigProvider.RegisterJsonConverter();
 
-            var input = @"{ operationKind : ""sendToAll"", dataType: ""text"", data: ""2""}";
+            var input = @"{ actionName : ""sendToAll"", dataType: ""text"", data: ""2""}";
 
-            var converted = JObject.Parse(input).ToObject<SendToAll>();
+            var converted = JObject.Parse(input).ToObject<SendToAllAction>();
 
             Assert.AreEqual("2", converted.Data.ToString());
         }
@@ -116,9 +116,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         {
             WebPubSubConfigProvider.RegisterJsonConverter();
 
-            var input = @"{ operationKind : ""sendToAll"", dataType: ""text"", data: 2}";
+            var input = @"{ actionName : ""sendToAll"", dataType: ""text"", data: 2}";
 
-            Assert.Throws<ArgumentException>(() => JObject.Parse(input).ToObject<SendToAll>(), "Message data should be string, please stringify object.");
+            Assert.Throws<ArgumentException>(() => JObject.Parse(input).ToObject<SendToAllAction>(), "Message data should be string, please stringify object.");
         }
 
         [TestCase]
@@ -317,6 +317,21 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             Assert.AreEqual("Invalid Request", serialize["errorMessage"].ToString());
             Assert.AreEqual("True", serialize["hasError"].ToString());
             Assert.AreEqual("False", serialize["isPreflight"].ToString());
+        }
+
+        [TestCase]
+        public void TestWebPubSubConnectionJsonSerialize()
+        {
+            var baseUrl = "wss://webpubsub.azure.com/";
+            var accessToken = "test-token";
+            var url = $"{baseUrl}?access_token={accessToken}";
+            var connection = new WebPubSubConnection(new Uri(url));
+
+            var json = JObject.FromObject(connection);
+
+            Assert.AreEqual(baseUrl, json["baseUrl"].ToString());
+            Assert.AreEqual(accessToken, json["accessToken"].ToString());
+            Assert.AreEqual(url, json["url"].ToString());
         }
 
         private static HttpResponseMessage BuildResponse(string input, RequestType requestType)
