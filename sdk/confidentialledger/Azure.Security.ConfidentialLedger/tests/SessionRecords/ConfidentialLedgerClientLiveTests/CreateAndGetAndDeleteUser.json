@@ -1,18 +1,100 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://chriss-cl2.confidential-ledger.azure.com/app/users/21d7e887-fc5f-1342-117b-39e3636381cf?api-version=0.1-preview",
+      "RequestUri": "https://chriss-cl2.confidential-ledger.azure.com/app/transactions?api-version=0.1-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "23",
+        "Content-Type": "application/json",
+        "traceparent": "00-147148acca80da47b783650cff09ddd7-b83854ba22c7dd43-00",
+        "User-Agent": [
+          "azsdk-net-Security.ConfidentialLedger/1.0.0-alpha.20210702.1",
+          "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "5f21d7e842fc11137b39e3636381cf30",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "contents": "test8753"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "29",
+        "Content-Type": "application/json",
+        "x-ms-ccf-transaction-id": "2.3429"
+      },
+      "ResponseBody": {
+        "subLedgerId": "subledger:0"
+      }
+    },
+    {
+      "RequestUri": "https://chriss-cl2.confidential-ledger.azure.com/app/transactions/2.3429/status?api-version=0.1-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-ffc0ece373a3a848ae40a878e28dc713-ff16dcbf04290246-00",
+        "User-Agent": [
+          "azsdk-net-Security.ConfidentialLedger/1.0.0-alpha.20210702.1",
+          "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "75599915a890ee461b0c521aa5974804",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "44",
+        "Content-Type": "application/json",
+        "x-ms-ccf-transaction-id": "2.3429"
+      },
+      "ResponseBody": {
+        "state": "Pending",
+        "transactionId": "2.3429"
+      }
+    },
+    {
+      "RequestUri": "https://chriss-cl2.confidential-ledger.azure.com/app/transactions/2.3429/status?api-version=0.1-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-a0e00e1821c67b4ea19f0a7243a2376a-9b5ef2009d141b41-00",
+        "User-Agent": [
+          "azsdk-net-Security.ConfidentialLedger/1.0.0-alpha.20210702.1",
+          "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "679712e2244e00a41451b44b73ab8728",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "46",
+        "Content-Type": "application/json",
+        "x-ms-ccf-transaction-id": "2.3430"
+      },
+      "ResponseBody": {
+        "state": "Committed",
+        "transactionId": "2.3429"
+      }
+    },
+    {
+      "RequestUri": "https://chriss-cl2.confidential-ledger.azure.com/app/users/140fdad2-c270-40f6-9133-43f0f0f86ce4?api-version=0.1-preview",
       "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "25",
         "Content-Type": "application/json",
+        "traceparent": "00-b06a9cff6b86694aa60e6fcc2c9bec33-e124b4f706c1d648-00",
         "User-Agent": [
-          "azsdk-net-Storage.ConfidentialLedger/1.0.0-alpha.20210603.1",
-          "(.NET 5.0.6; Microsoft Windows 10.0.19043)"
+          "azsdk-net-Security.ConfidentialLedger/1.0.0-alpha.20210702.1",
+          "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
         ],
-        "x-ms-client-request-id": "59991530907546a8ee1b0c521aa59748",
+        "x-ms-client-request-id": "5180dff068e9f0e2f458613ff4fa7a70",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -22,24 +104,25 @@
       "ResponseHeaders": {
         "Content-Length": "73",
         "Content-Type": "application/json",
-        "x-ms-ccf-transaction-id": "2.115"
+        "x-ms-ccf-transaction-id": "2.3431"
       },
       "ResponseBody": {
         "assignedRole": "Reader",
-        "userId": "21d7e887-fc5f-1342-117b-39e3636381cf"
+        "userId": "140fdad2-c270-40f6-9133-43f0f0f86ce4"
       }
     },
     {
-      "RequestUri": "https://chriss-cl2.confidential-ledger.azure.com/app/users/21d7e887-fc5f-1342-117b-39e3636381cf?api-version=0.1-preview",
+      "RequestUri": "https://chriss-cl2.confidential-ledger.azure.com/app/users/140fdad2-c270-40f6-9133-43f0f0f86ce4?api-version=0.1-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
+        "traceparent": "00-fcf6d0c32d3a6b498123a7bde2901845-a047c4f3cdae9b46-00",
         "User-Agent": [
-          "azsdk-net-Storage.ConfidentialLedger/1.0.0-alpha.20210603.1",
-          "(.NET 5.0.6; Microsoft Windows 10.0.19043)"
+          "azsdk-net-Security.ConfidentialLedger/1.0.0-alpha.20210702.1",
+          "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
         ],
-        "x-ms-client-request-id": "9712e2044e67a424001451b44b73ab87",
+        "x-ms-client-request-id": "ca472984338720941b57d51be1b4101c",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -47,31 +130,32 @@
       "ResponseHeaders": {
         "Content-Length": "73",
         "Content-Type": "application/json",
-        "x-ms-ccf-transaction-id": "2.115"
+        "x-ms-ccf-transaction-id": "2.3431"
       },
       "ResponseBody": {
         "assignedRole": "Reader",
-        "userId": "21d7e887-fc5f-1342-117b-39e3636381cf"
+        "userId": "140fdad2-c270-40f6-9133-43f0f0f86ce4"
       }
     },
     {
-      "RequestUri": "https://chriss-cl2.confidential-ledger.azure.com/app/users/21d7e887-fc5f-1342-117b-39e3636381cf?api-version=0.1-preview",
+      "RequestUri": "https://chriss-cl2.confidential-ledger.azure.com/app/users/140fdad2-c270-40f6-9133-43f0f0f86ce4?api-version=0.1-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
+        "traceparent": "00-d344294713ee4643ba2c99d3fc4d6e08-159498930f20d04c-00",
         "User-Agent": [
-          "azsdk-net-Storage.ConfidentialLedger/1.0.0-alpha.20210603.1",
-          "(.NET 5.0.6; Microsoft Windows 10.0.19043)"
+          "azsdk-net-Security.ConfidentialLedger/1.0.0-alpha.20210702.1",
+          "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
         ],
-        "x-ms-client-request-id": "0fdad2287014f6c240913343f0f0f86c",
+        "x-ms-client-request-id": "945acfe5362a6a3ff81f201761b74b96",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "x-ms-ccf-transaction-id": "2.117"
+        "x-ms-ccf-transaction-id": "2.3433"
       },
       "ResponseBody": []
     }
