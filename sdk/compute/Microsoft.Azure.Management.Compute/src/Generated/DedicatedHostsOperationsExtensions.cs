@@ -271,6 +271,53 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
+            /// Reboot the dedicated host. The operation will complete successfully once
+            /// the dedicated host has booted and is running. For VM health after the
+            /// reboot, please check the Resource Health Center in the Azure Portal.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='hostGroupName'>
+            /// The name of the dedicated host group.
+            /// </param>
+            /// <param name='hostName'>
+            /// The name of the dedicated host.
+            /// </param>
+            public static void Reboot(this IDedicatedHostsOperations operations, string resourceGroupName, string hostGroupName, string hostName)
+            {
+                operations.RebootAsync(resourceGroupName, hostGroupName, hostName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Reboot the dedicated host. The operation will complete successfully once
+            /// the dedicated host has booted and is running. For VM health after the
+            /// reboot, please check the Resource Health Center in the Azure Portal.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='hostGroupName'>
+            /// The name of the dedicated host group.
+            /// </param>
+            /// <param name='hostName'>
+            /// The name of the dedicated host.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task RebootAsync(this IDedicatedHostsOperations operations, string resourceGroupName, string hostGroupName, string hostName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.RebootWithHttpMessagesAsync(resourceGroupName, hostGroupName, hostName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Create or update a dedicated host .
             /// </summary>
             /// <param name='operations'>

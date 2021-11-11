@@ -172,6 +172,34 @@ namespace Microsoft.Azure.Management.Compute
         /// </exception>
         Task<AzureOperationResponse<IPage<DedicatedHost>>> ListByHostGroupWithHttpMessagesAsync(string resourceGroupName, string hostGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Reboot the dedicated host. The operation will complete successfully
+        /// once the dedicated host has booted and is running. For VM health
+        /// after the reboot, please check the Resource Health Center in the
+        /// Azure Portal.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='hostGroupName'>
+        /// The name of the dedicated host group.
+        /// </param>
+        /// <param name='hostName'>
+        /// The name of the dedicated host.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> RebootWithHttpMessagesAsync(string resourceGroupName, string hostGroupName, string hostName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Create or update a dedicated host .
         /// </summary>
         /// <param name='resourceGroupName'>
