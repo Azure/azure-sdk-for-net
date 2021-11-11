@@ -7,13 +7,10 @@ steps:
     displayName: 'Language Specific Certificate Trust'
 
   - pwsh: |
-      Write-Host "##vso[task.setvariable variable=OriginalPath]$env:PATH"
-    displayName: 'Store Path Value'
-
-  - pwsh: |
       Write-Host "##vso[task.setvariable variable=ASPNETCORE_Kestrel__Certificates__Default__Path]$(Build.SourcesDirectory)/eng/common/testproxy/dotnet-devcert.pfx"
       Write-Host "##vso[task.setvariable variable=ASPNETCORE_Kestrel__Certificates__Default__Password]password"
-    displayName: 'Configure Kestrel Environment Variables'
+      Write-Host "##vso[task.setvariable variable=PROXY_MANUAL_START]true"
+    displayName: 'Configure Kestrel and PROXY_MANUAL_START Variables'
 
   - pwsh: |
       dotnet tool install azure.sdk.tools.testproxy `
