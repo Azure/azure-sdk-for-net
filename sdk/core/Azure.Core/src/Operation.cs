@@ -147,6 +147,11 @@ namespace Azure
         /// <returns></returns>
         internal static TimeSpan GetServerDelay(Response response, TimeSpan pollingInterval)
         {
+            if (pollingInterval == TimeSpan.Zero)
+            {
+                // Respect when zero is explicitly used (recorded tests use this, for example)
+                return pollingInterval;
+            }
             TimeSpan serverDelay = pollingInterval;
             if (response.Headers.TryGetValue(RetryAfterMsHeaderName, out string? retryAfterValue) ||
                 response.Headers.TryGetValue(XRetryAfterMsHeaderName, out retryAfterValue))
