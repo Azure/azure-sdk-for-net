@@ -1,5 +1,15 @@
 # Release History
 
+## 1.22.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.21.0 (2021-11-03)
 
 - Added `RequestContext` and `ErrorOptions` types to aid in configuring requests.
@@ -93,7 +103,7 @@
 
 ## Features Added
 
-- Added `CloudEvent` type based on the [CloudEvent spec](https://github.com/cloudevents/spec/blob/master/spec.md).
+- Added `CloudEvent` type based on the [CloudEvent spec](https://github.com/cloudevents/spec/).
 
 ## 1.9.0 (2021-02-09)
 

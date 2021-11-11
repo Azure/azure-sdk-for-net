@@ -12,8 +12,8 @@ namespace Microsoft.Azure.WebPubSub.Common
     /// </summary>
     public class WebPubSubConnectionContext
     {
-        private ReadOnlyDictionary<string, object> _states;
-        private ReadOnlyDictionary<string, string[]> _headers;
+        private IReadOnlyDictionary<string, object> _states;
+        private IReadOnlyDictionary<string, string[]> _headers;
         /// <summary>
         /// The type of the message.
         /// </summary>
@@ -60,13 +60,13 @@ namespace Microsoft.Azure.WebPubSub.Common
         /// The connection states.
         /// </summary>
         [JsonPropertyName("states")]
-        public ReadOnlyDictionary<string, object> States => _states;
+        public IReadOnlyDictionary<string, object> States => _states;
 
         /// <summary>
         /// The headers of request.
         /// </summary>
         [JsonPropertyName("headers")]
-        public ReadOnlyDictionary<string, string[]> Headers => _headers;
+        public IReadOnlyDictionary<string, string[]> Headers => _headers;
 
         internal void InitStates(Dictionary<string, object> states)
         {

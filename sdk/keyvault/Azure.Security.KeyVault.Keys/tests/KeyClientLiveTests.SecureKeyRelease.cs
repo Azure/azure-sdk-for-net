@@ -139,7 +139,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
     ""version"": ""1.0""
 }}";
 
-            byte[] releasePolicyData = Encoding.UTF8.GetBytes(releasePolicy);
+            BinaryData releasePolicyData = BinaryData.FromString(releasePolicy);
             return new(releasePolicyData);
         }
 

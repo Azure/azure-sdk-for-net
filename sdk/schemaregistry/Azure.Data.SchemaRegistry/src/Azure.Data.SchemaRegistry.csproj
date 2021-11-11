@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Description>Azure Schema Registry SDK</Description>
     <AssemblyTitle>Azure Schema Registry SDK</AssemblyTitle>
-    <Version>1.0.0-beta.5</Version>
+    <Version>1.0.0</Version>
     <PackageTags>Azure;Schema Registry;SchemaRegistry;.NET;Data;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
