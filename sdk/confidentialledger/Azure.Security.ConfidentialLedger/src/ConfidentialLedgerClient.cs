@@ -14,7 +14,7 @@ namespace Azure.Security.ConfidentialLedger
 {
     public partial class ConfidentialLedgerClient
     {
-        internal readonly ClientDiagnostics clientDiagnostics;
+        internal ClientDiagnostics clientDiagnostics => _clientDiagnostics;
 
         /// <summary> Initializes a new instance of ConfidentialLedgerClient. </summary>
         /// <param name="ledgerUri"> The Confidential Ledger URL, for example https://contoso.confidentialledger.azure.com. </param>
