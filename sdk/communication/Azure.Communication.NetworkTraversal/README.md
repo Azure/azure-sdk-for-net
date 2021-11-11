@@ -25,7 +25,7 @@ The networking client can be authenticated using a connection string acquired fr
 
 ```C# Snippet:CreateCommunicationRelayClient
 // Get a connection string to our Azure Communication resource.
-//@@var connectionString = "<connection_string>";
+var connectionString = "<connection_string>";
 var client = new CommunicationRelayClient(connectionString);
 ```
 
@@ -34,8 +34,6 @@ Or alternatively using the endpoint and access key acquired from an Azure Commun
 ```C# Snippet:CreateCommunicationRelayFromAccessKey
 var endpoint = new Uri("https://my-resource.communication.azure.com");
 var accessKey = "<access_key>";
-/*@@*/ endpoint = TestEnvironment.LiveTestDynamicEndpoint;
-/*@@*/ accessKey = TestEnvironment.LiveTestDynamicAccessKey;
 var client = new CommunicationRelayClient(endpoint, new AzureKeyCredential(accessKey));
 ```
 
@@ -43,7 +41,6 @@ Clients also have the option to authenticate using a valid Active Directory toke
 
 ```C# Snippet:CreateCommunicationRelayFromToken
 var endpoint = new Uri("https://my-resource.communication.azure.com");
-/*@@*/ endpoint = TestEnvironment.LiveTestDynamicEndpoint;
 TokenCredential tokenCredential = new DefaultAzureCredential();
 var client = new CommunicationRelayClient(endpoint, tokenCredential);
 ```
@@ -84,6 +81,24 @@ foreach (CommunicationIceServer iceServer in iceServers)
     Console.WriteLine($"ICE Server Username: {iceServer.Username}");
     Console.WriteLine($"ICE Server Credential: {iceServer.Credential}");
     Console.WriteLine($"Route type: {iceServer.RouteType}");
+}
+```
+
+## Getting a Relay Configuration for a user without identity async
+
+```C# Snippet:GetRelayConfigurationAsyncWithoutIdentity
+Response<CommunicationRelayConfiguration> relayConfiguration = await client.GetRelayConfigurationAsync();
+DateTimeOffset turnTokenExpiresOn = relayConfiguration.Value.ExpiresOn;
+IReadOnlyList<CommunicationIceServer> iceServers = relayConfiguration.Value.IceServers;
+Console.WriteLine($"Expires On: {turnTokenExpiresOn}");
+foreach (CommunicationIceServer iceServer in iceServers)
+{
+    foreach (string url in iceServer.Urls)
+    {
+        Console.WriteLine($"ICE Server Url: {url}");
+    }
+    Console.WriteLine($"ICE Server Username: {iceServer.Username}");
+    Console.WriteLine($"ICE Server Credential: {iceServer.Credential}");
 }
 ```
 

@@ -60,9 +60,9 @@ namespace Azure.Communication.NetworkTraversal.Tests
         }
 
         [Test]
-        [TestCase(AuthMethod.ConnectionString, TestName = "GettingTurnCredentialsWithConnectionString")]
-        [TestCase(AuthMethod.KeyCredential, TestName = "GettingTurnCredentialsWithKeyCredential")]
-        [TestCase(AuthMethod.TokenCredential, TestName = "GettingTurnCredentialsWithTokenCredential")]
+        [TestCase(AuthMethod.ConnectionString, TestName = "GettingTurnCredentialsWithConnectionStringRouteType")]
+        [TestCase(AuthMethod.KeyCredential, TestName = "GettingTurnCredentialsWithKeyCredentialRouteType")]
+        [TestCase(AuthMethod.TokenCredential, TestName = "GettingTurnCredentialsWithTokenCredentialRouteType")]
         public async Task GettingTurnCredentialsGeneratesTurnCredentialsWithNearestRouteType(AuthMethod authMethod, params string[] scopes)
         {
             CommunicationRelayClient client = authMethod switch

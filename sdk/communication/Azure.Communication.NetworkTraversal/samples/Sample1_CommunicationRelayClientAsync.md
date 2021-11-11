@@ -52,6 +52,7 @@ foreach (CommunicationIceServer iceServer in iceServers)
     }
     Console.WriteLine($"ICE Server Username: {iceServer.Username}");
     Console.WriteLine($"ICE Server Credential: {iceServer.Credential}");
+    Console.WriteLine($"Route type: {iceServer.RouteType}");
 }
 ```
 
