@@ -1,14 +1,10 @@
 # Release History
 
-## 5.1.0-beta.1 (Unreleased)
+## 5.1.0 (2021-11-10)
 
 ### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added `EnableCrossEntityTransactions` option
+- Added ability to bind to `ServiceBusClient`
 
 ## 5.0.0 (2021-10-21)
 
