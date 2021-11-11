@@ -122,8 +122,19 @@ namespace Azure.Core.Pipeline
         {
             message.CancellationToken = cancellationToken;
             AddHttpMessageProperties(message);
-            var pipeline = message.Policies == null ? _pipeline : CreateRequestPipeline(message.Policies);
-            pipeline.Span[0].Process(message, pipeline.Slice(1));
+
+            if (message.Policies == null)
+            {
+                _pipeline.Span[0].Process(message, _pipeline.Slice(1));
+            }
+            else
+            {
+                var length = _pipeline.Length + message.Policies.Count;
+                var pipeline = ArrayPool<HttpPipelinePolicy>.Shared.Rent(length);
+                CreateRequestPipeline(pipeline, message.Policies);
+                pipeline[0].Process(message, new ReadOnlyMemory<HttpPipelinePolicy>(pipeline, 1, length - 1));
+                ArrayPool<HttpPipelinePolicy>.Shared.Return(pipeline);
+            }
         }
 
         /// <summary>
