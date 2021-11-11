@@ -1,15 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-
+#region Snippet:Managing_ServiceBusNamespaces_Namespaces
 using System;
-using System.Threading.Tasks;
 using Azure.Identity;
 using Azure.ResourceManager.ServiceBus;
 using Azure.ResourceManager.ServiceBus.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
+#endregion
 using NUnit.Framework;
-
+using System.Threading.Tasks;
 namespace Azure.ResourceManager.ServiceBus.Tests.Samples
 {
     public class Readme_ManagingNamespaces
