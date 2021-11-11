@@ -30,11 +30,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         /// <summary>
         /// Base Uri of the websocket connection.
         /// </summary>
+        [JsonProperty("baseUrl")]
         public Uri BaseUri { get;}
 
         /// <summary>
         /// Uri with accessToken of the websocket connection.
         /// </summary>
+        [JsonProperty("url")]
         public Uri Uri { get;}
 
         /// <summary>

@@ -167,7 +167,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
         internal static WebPubSubAction ConvertToWebPubSubOperation(JObject input)
         {
-            if (input.TryGetValue("operationKind", StringComparison.OrdinalIgnoreCase, out var kind))
+            if (input.TryGetValue("actionName", StringComparison.OrdinalIgnoreCase, out var kind))
             {
                 var opeartions = typeof(WebPubSubAction).Assembly.GetTypes().Where(t => t.BaseType == typeof(WebPubSubAction));
                 foreach (var item in opeartions)
@@ -191,14 +191,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             return result.ToArray();
         }
 
-        private static bool TryToWebPubSubOperation(JObject input, string operationKind, Type operationType, out WebPubSubAction operation)
+        private static bool TryToWebPubSubOperation(JObject input, string actionName, Type operationType, out WebPubSubAction operation)
         {
             // message events need check dataType.
-            if (operationKind.StartsWith("Send", StringComparison.OrdinalIgnoreCase))
+            if (actionName.StartsWith("Send", StringComparison.OrdinalIgnoreCase))
             {
                 CheckDataType(input);
             }
-            if (operationKind.Equals(operationType.Name, StringComparison.OrdinalIgnoreCase))
+            if (actionName.Equals(operationType.Name, StringComparison.OrdinalIgnoreCase))
             {
                 operation = input.ToObject(operationType) as WebPubSubAction;
                 return true;

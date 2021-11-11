@@ -17,7 +17,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
     [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
     public abstract class WebPubSubAction
     {
-        internal string OperationKind
+        internal string ActionName
         {
             get
             {
