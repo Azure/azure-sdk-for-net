@@ -40,7 +40,12 @@ namespace Azure.Security.KeyVault.Keys
         {
             if (IsEnabled())
             {
-                string keyType = key?.KeyType.ToString() ?? "(null)";
+                string keyType = "(null)";
+                if (key != null)
+                {
+                    keyType = key.KeyType.ToString();
+                }
+
                 KeyTypeNotSupported(operation, keyType);
             }
         }

@@ -160,7 +160,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
             _pipeline = pipeline;
             _remoteProvider = remoteClient;
-            _provider = remoteClient;
+
+            // Allow _provider to be set upon first request to the service depending on whether the key can be retrieved.
         }
 
         internal ICryptographyProvider RemoteClient => _remoteProvider;
