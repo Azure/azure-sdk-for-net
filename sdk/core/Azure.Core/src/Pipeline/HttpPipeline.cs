@@ -15,7 +15,7 @@ namespace Azure.Core.Pipeline
     {
         private static readonly AsyncLocal<HttpMessagePropertiesScope?> CurrentHttpMessagePropertiesScope = new AsyncLocal<HttpMessagePropertiesScope?>();
 
-        internal readonly HttpPipelineTransport _transport;
+        private protected readonly HttpPipelineTransport _transport;
 
         private readonly ReadOnlyMemory<HttpPipelinePolicy> _pipeline;
 

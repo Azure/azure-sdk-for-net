@@ -73,9 +73,17 @@ namespace Azure.Core.Tests
         [Test]
         public void DisposeDisposesClient()
         {
-            var transport = (HttpClientTransport)GetTransport();
+            var transport = (HttpClientTransport)GetTransport(options:new HttpPipelineTransportOptions());
             transport.Dispose();
-            Assert.ThrowsAsync<ObjectDisposedException>(async () => await transport.Client.GetAsync("http://localhost"));
+            Assert.Throws<ObjectDisposedException>(() => transport.Client.CancelPendingRequests());
+        }
+
+        [Test]
+        public void DisposeDoesNotDisposesSharedPipeline()
+        {
+            var transport = HttpClientTransport.Shared;
+            transport.Dispose();
+            Assert.DoesNotThrow(() => transport.Client.CancelPendingRequests());
         }
 
         private static object GetHandler(HttpClient transportClient)

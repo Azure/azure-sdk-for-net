@@ -592,7 +592,10 @@ namespace Azure.Core.Pipeline
 
         internal override void DisposeInternal()
         {
-            Client.Dispose();
+            if (this != Shared)
+            {
+                Client.Dispose();
+            }
         }
 
         private static void SetPropertiesOrOptions<T>(HttpRequestMessage httpRequest, string name, T value)

@@ -219,9 +219,10 @@ namespace Azure.Core.Tests
                 new ResponseClassifier(),
                 new HttpPipelineTransportOptions());
 
+            HttpPipelineTransport transportField = pipeline.GetType().BaseType.GetField("_transport", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.GetField).GetValue(pipeline) as HttpPipelineTransport;
             if (isCustomTransportSet)
             {
-                Assert.That(pipeline._transport, Is.TypeOf<MockTransport>());
+                Assert.That(transportField, Is.TypeOf<MockTransport>());
                 events.Any(
                     e => e.EventId == 23 &&
                          e.EventName == "PipelineTransportOptionsNotApplied" &&
@@ -229,7 +230,7 @@ namespace Azure.Core.Tests
             }
             else
             {
-                Assert.That(pipeline._transport, Is.Not.TypeOf<MockTransport>());
+                Assert.That(transportField, Is.Not.TypeOf<MockTransport>());
             }
         }
 
