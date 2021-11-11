@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Sql.Tests
             return "HvVJ%paVC@%GBKmi";
         }
 
-        protected async Task<ManagedInstance> CreateDefaultManagedInstance(string managedInstanceName,ResourceGroup resourceGroup)
+        protected async Task<ManagedInstance> CreateDefaultManagedInstance(string managedInstanceName,Location location,ResourceGroup resourceGroup)
         {
             Random random = new Random();
             string suffix = random.Next(9999).ToString();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Sql.Tests
             string networkSecurityGroupName = $"networkSecurityGroup-{suffix}";
             NetworkSecurityGroupData networkSecurityGroupData = new NetworkSecurityGroupData()
             {
-                Location = Location.WestUS2,
+                Location = location,
             };
             var networkSecurityGroup = await resourceGroup.GetNetworkSecurityGroups().CreateOrUpdateAsync(networkSecurityGroupName, networkSecurityGroupData);
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Sql.Tests
             string routeTableName = $"routeTable-{suffix}";
             RouteTableData routeTableData = new RouteTableData()
             {
-                Location = Location.WestUS2,
+                Location = location,
             };
             var routeTable = await resourceGroup.GetRouteTables().CreateOrUpdateAsync(routeTableName, routeTableData);
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Sql.Tests
             string vnetName = $"vnet-{suffix}";
             var vnetData = new VirtualNetworkData()
             {
-                Location = "westus2",
+                Location = location,
                 AddressSpace = new AddressSpace()
                 {
                     AddressPrefixes = { "10.10.0.0/16", }
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Sql.Tests
             string subnetId = $"{vnet.Value.Data.Id}/subnets/ManagedInstance";
 
             //4. create ManagedInstance
-            ManagedInstanceData data = new ManagedInstanceData(Location.WestUS2)
+            ManagedInstanceData data = new ManagedInstanceData(location)
             {
                 AdministratorLogin = $"admin-{managedInstanceName}",
                 AdministratorLoginPassword = CreateGeneralPassword(),

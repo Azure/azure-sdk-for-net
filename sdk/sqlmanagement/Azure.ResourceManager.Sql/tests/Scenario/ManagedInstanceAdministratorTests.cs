@@ -17,12 +17,13 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Sql.Tests.Scenario
 {
-    public class InstancePoolTests : SqlManagementClientBase
+    public class ManagedInstanceAdministratorTests : SqlManagementClientBase
     {
         private ResourceGroup _resourceGroup;
         private ResourceIdentifier _resourceGroupIdentifier;
+        private string SubnetId;
 
-        public InstancePoolTests(bool isAsync)
+        public ManagedInstanceAdministratorTests(bool isAsync)
             : base(isAsync)
         {
         }
@@ -43,27 +44,32 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             _resourceGroup = await client.GetResourceGroup(_resourceGroupIdentifier).GetAsync();
         }
 
-        private async Task CreateInstancePool(string instancePoolName)
-        {
-            //-ResourceGroupName "Sql-RG-0001" `  -Name "mi-pool-name" `  -SubnetId $subnet.Id `  -LicenseType "LicenseIncluded" `
-            //-VCore 8 `  -Edition "GeneralPurpose" `  -ComputeGeneration "Gen5" `  -Location "westus2"
-            InstancePoolData data = new InstancePoolData(Location.WestUS2)
-            {
-                Sku = new Models.Sku("P3", "GeneralPurpose", "2", "Gen5", 8),
-                LicenseType = InstancePoolLicenseType.LicenseIncluded,
-                Location = Location.WestUS2,
-                //SubnetId = subnetId,
-            };
-            await _resourceGroup.GetInstancePools().CreateOrUpdateAsync(instancePoolName, data);
-        }
-
         [Test]
-        [Ignore("need to research parameters of SKU")]
         [RecordedTest]
-        public async Task CheckIfExiest()
+        public async Task ManagedInstanceAdministratorApiTests()
         {
-            string instancePoolName = Recording.GenerateAssetName("instance-pool-");
-            await CreateInstancePool(instancePoolName);
+            // Create Managed Instance
+            string managedInstanceName = Recording.GenerateAssetName("managed-instance-");
+            var managedInstance = await CreateDefaultManagedInstance(managedInstanceName, Location.WestUS2, _resourceGroup);
+            Assert.IsNotNull(managedInstance.Data);
+            var collection = managedInstance.GetManagedInstanceAdministrators();
+
+            // 1.CreateOrUpdata
+            string adminName = Recording.GenerateAssetName("admin-");
+            ManagedInstanceAdministratorData data = new ManagedInstanceAdministratorData()
+            {
+            };
+            await collection.CreateOrUpdateAsync(adminName, data);
+
+            // 2.CheckIfExist
+
+            // 3.Get
+
+            // 4.GetAll
+            var list = await collection.GetAllAsync().ToEnumerableAsync();
+            Assert.IsNotEmpty(list);
+
+            // 5.Delete
         }
     }
 }

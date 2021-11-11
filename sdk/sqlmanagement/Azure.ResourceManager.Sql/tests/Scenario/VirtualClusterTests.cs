@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             //Because MangedInstance deployment takes a lot of time(more than 4.5 hours), the test cases are not separated separately
             // Create Virtual Cluster
             string managedInstanceName = Recording.GenerateAssetName("managed-instance-");
-            var managedInstance = await CreateDefaultManagedInstance(managedInstanceName, _resourceGroup);
+            var managedInstance = await CreateDefaultManagedInstance(managedInstanceName, Location.WestUS2, _resourceGroup);
             Assert.IsNotNull(managedInstance.Data);
 
             // 1.CheckIfExist

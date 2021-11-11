@@ -54,37 +54,42 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             _resourceGroup = await client.GetResourceGroup(_resourceGroupIdentifier).GetAsync();
         }
 
-        [TearDown]
-        public async Task TearDown()
+        [Test]
+        [RecordedTest]
+        public async Task DatabaseApiTests()
         {
-            var serverList = await _resourceGroup.GetServers().GetAllAsync().ToEnumerableAsync();
-            foreach (var item in serverList)
-            {
-                await item.DeleteAsync();
-            }
+            // create Managed Instance
+            string managedInstanceName = Recording.GenerateAssetName("managed-instance-");
+            var managedInstance = await CreateDefaultManagedInstance(managedInstanceName, Location.WestUS2, _resourceGroup);
+            var collection = managedInstance.GetManagedDatabases();
+
+            // 1.CreateOrUpdata
+            string databaseName = Recording.GenerateAssetName("mi-database-");
+            ManagedDatabaseData data = new ManagedDatabaseData(Location.WestUS2) { };
+            var database = await collection.CreateOrUpdateAsync(databaseName, data);
+            Assert.IsNotNull(database.Value.Data);
+            Assert.AreEqual(databaseName, database.Value.Data.Name);
+
+            // 2.CheckIfExist
+            Assert.IsTrue(collection.CheckIfExists(databaseName));
+            Assert.IsFalse(collection.CheckIfExists(databaseName + "0"));
+
+            // 3.Get
+            var getDatabase =await collection.GetAsync(databaseName);
+            Assert.IsNotNull(getDatabase.Value.Data);
+            Assert.AreEqual(getDatabase, database.Value.Data.Name);
+
+            // 4.GetAll
+            var list = await collection.GetAllAsync().ToEnumerableAsync();
+            Assert.IsNotEmpty(list);
+            Assert.AreEqual(1,list.Count);
+            Assert.AreEqual(getDatabase, list.FirstOrDefault().Data.Name);
+
+            // 5.Delete
+            var deleteDatabase = await collection.GetAsync(databaseName);
+            await deleteDatabase.Value.DeleteAsync();
+            list = await collection.GetAllAsync().ToEnumerableAsync();
+            Assert.IsEmpty(list);
         }
-
-        //private async Task<Database> CreateOrUpdateDatabase(string databaseName)
-        //{
-        //    _resourceGroup.GetResourceGroupLocationLongTermRetentionServerLongTermRetentionDatabaseLongTermRetentionBackups();
-        //    throw new Exception();
-        //}
-
-        //[Test]
-        //[RecordedTest]
-        //public async Task CheckIfExist()
-        //{
-        //    string serverName = Recording.GenerateAssetName("server-");
-        //    await CreateOrUpdateServer(serverName);
-        //    Assert.AreEqual(true, _resourceGroup.GetServers().CheckIfExists(serverName).Value);
-        //}
-
-        //[Test]
-        //[RecordedTest]
-        //public async Task CreateOrUpdate()
-        //{
-        //    string databaseName = Recording.GenerateAssetName("database-");
-        //    var database =await CreateOrUpdateDatabase(databaseName);
-        //}
     }
 }

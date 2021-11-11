@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             string backupManagedInstanceName = Recording.GenerateAssetName("managed-instance-backup-");
             Task[] tasks = new Task[]
             {
-                CreateDefaultManagedInstance(primaryManagedInstanceName, _resourceGroup),
-                CreateDefaultManagedInstance(backupManagedInstanceName, _resourceGroup)
+                CreateDefaultManagedInstance(primaryManagedInstanceName,Location.WestUS2, _resourceGroup),
+                CreateDefaultManagedInstance(backupManagedInstanceName,Location.WestUS2, _resourceGroup)
             };
             Task.WaitAll(tasks);
             string primaryManagedInstanceId = (await _resourceGroup.GetManagedInstances().GetAsync(primaryManagedInstanceName)).Value.Data.Id.ToString();
@@ -65,6 +65,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
                     new ServerInfo(primaryManagedInstanceId),
                     new ServerInfo(backupManagedInstanceId),
                 },
+                TrustScopes = { ServerTrustGroupPropertiesTrustScopesItem.GlobalTransactions},
             };
             var serverTrustGroup = await _resourceGroup.GetServerTrustGroups().CreateOrUpdateAsync(locationName, serverTrustGroupName, data);
             return serverTrustGroup.Value;
@@ -102,5 +103,29 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             list = await container.GetAllAsync(locationName).ToEnumerableAsync();
             Assert.IsEmpty(list);
         }
+
+        //[Test]
+        //public async Task Create()
+        //{
+        //var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().GetAsync("Sql-RG-2000");
+        //    string locationName = Location.WestUS2;
+        //    string serverTrustGroupName = "serverTrustGroupName-2548115";
+        //    string primaryManagedInstanceName = "managed-instance-primary-2000";
+        //    string backupManagedInstanceName = "managed-instance-2000-partner";
+        //    string primaryManagedInstanceId = (await _resourceGroup.GetManagedInstances().GetAsync(primaryManagedInstanceName)).Value.Data.Id.ToString();
+        //    string backupManagedInstanceId = (await _resourceGroup.GetManagedInstances().GetAsync(backupManagedInstanceName)).Value.Data.Id.ToString();
+
+        //    // create ServerTrustGroup
+        //    ServerTrustGroupData data = new ServerTrustGroupData()
+        //    {
+        //        GroupMembers =
+        //        {
+        //            new ServerInfo(primaryManagedInstanceId),
+        //            new ServerInfo(backupManagedInstanceId),
+        //        },
+        //        TrustScopes = { ServerTrustGroupPropertiesTrustScopesItem.GlobalTransactions },
+        //    };
+        //    var serverTrustGroup = await _resourceGroup.GetServerTrustGroups().CreateOrUpdateAsync(locationName, serverTrustGroupName, data);
+        //}
     }
 }
