@@ -32,7 +32,7 @@ namespace Azure.Template.LLC.Tests.Samples
             var client = GetClient();
             var resource = new
             {
-                name = "TeamplateResource",
+                name = "TemplateResource",
                 id = "123",
             };
             Response response = await client.CreateAsync(RequestContent.Create(resource));
@@ -68,9 +68,12 @@ namespace Azure.Template.LLC.Tests.Samples
             AsyncPageable<BinaryData> pageable = client.GetResourcesAsync();
             await foreach (var page in pageable.AsPages())
             {
-                using JsonDocument resourceJson = JsonDocument.Parse(page.Values.First().ToMemory());
-                Console.WriteLine(resourceJson.RootElement.GetProperty("name").ToString());
-                Console.WriteLine(resourceJson.RootElement.GetProperty("id").ToString());
+                foreach (var resourceBinaryData in page.Values)
+                {
+                    using JsonDocument resourceJson = JsonDocument.Parse(resourceBinaryData.ToMemory());
+                    Console.WriteLine(resourceJson.RootElement.GetProperty("name").ToString());
+                    Console.WriteLine(resourceJson.RootElement.GetProperty("id").ToString());
+                }
             }
 
             #endregion

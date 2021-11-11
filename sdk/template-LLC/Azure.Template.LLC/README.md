@@ -85,7 +85,7 @@ Use the `Create` method to create a resource.
 var client = GetClient();
 var resource = new
 {
-    name = "TeamplateResource",
+    name = "TemplateResource",
     id = "123",
 };
 Response response = await client.CreateAsync(RequestContent.Create(resource));
@@ -97,7 +97,7 @@ Console.WriteLine($"Name: {resourceName} \n Id: {resourceId}.");
 
 ### Get resource
 
-The `Get` method retrieves a data from the service. The `id` parameter is the unique ID of the data.
+The `Get` method retrieves a data from the service. The `id` parameter is the unique ID of the resource.
 
 ```C# Snippet:RetrieveResource
 var client = GetClient();
@@ -117,15 +117,18 @@ var client = GetClient();
 AsyncPageable<BinaryData> pageable = client.GetResourcesAsync();
 await foreach (var page in pageable.AsPages())
 {
-    using JsonDocument resourceJson = JsonDocument.Parse(page.Values.First().ToMemory());
-    Console.WriteLine(resourceJson.RootElement.GetProperty("name").ToString());
-    Console.WriteLine(resourceJson.RootElement.GetProperty("id").ToString());
+    foreach (var resourceBinaryData in page.Values)
+    {
+        using JsonDocument resourceJson = JsonDocument.Parse(resourceBinaryData.ToMemory());
+        Console.WriteLine(resourceJson.RootElement.GetProperty("name").ToString());
+        Console.WriteLine(resourceJson.RootElement.GetProperty("id").ToString());
+    }
 }
 ```
 
 ### Delete resource
 
-The `Delete` method delete the resource from the service.
+The `Delete` method deletes the resource from the service.
 
 ```C# Snippet:DeleteResource
 var client = GetClient();

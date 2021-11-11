@@ -45,7 +45,7 @@ namespace Azure.Template.LLC.Tests
         {
             var mockResponse = new MockResponse(200);
 
-            Resource resource = new("TeamplateResource", "123");
+            Resource resource = new("TemplateResource", "123");
             mockResponse.SetContent(SerializationHelpers.Serialize(resource, SerializeResource));
 
             var mockTransport = new MockTransport(mockResponse);
@@ -56,7 +56,7 @@ namespace Azure.Template.LLC.Tests
             string resourceName = resourceJson.RootElement.GetProperty("name").ToString();
             string resourceId = resourceJson.RootElement.GetProperty("id").ToString();
 
-            Assert.AreEqual("TeamplateResource", resourceJson.RootElement.GetProperty("name").ToString());
+            Assert.AreEqual("TemplateResource", resourceJson.RootElement.GetProperty("name").ToString());
             Assert.AreEqual("123", resourceJson.RootElement.GetProperty("id").ToString());
         }
 
