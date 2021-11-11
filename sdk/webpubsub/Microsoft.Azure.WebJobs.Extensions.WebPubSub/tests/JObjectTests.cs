@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebPubSub.Common;
 using Newtonsoft.Json.Linq;
@@ -127,7 +129,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             var testData = @"{""type"":""Buffer"", ""data"": [66, 105, 110, 97, 114, 121, 68, 97, 116, 97]}";
 
             var options = new SystemJson.JsonSerializerOptions();
-            options.Converters.Add(new System.BinaryDataJsonConverter());
+            options.Converters.Add(new BinaryDataJsonConverter());
 
             var converted = SystemJson.JsonSerializer.Deserialize<BinaryData>(testData, options);
 
@@ -216,13 +218,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         [TestCase]
         public void TestWebPubSubContext_ConnectedEvent()
         {
-            var context = new WebPubSubConnectionContext()
-            {
-                ConnectionId = "connectionId",
-                UserId = "userA",
-                EventName = "connected",
-                EventType = WebPubSubEventType.System
-            };
+            var context = new WebPubSubConnectionContext(connectionId: "connectionId", userId: "userA", eventName: "connected", eventType: WebPubSubEventType.System, hub: null);
             var test = new WebPubSubContext(new ConnectedEventRequest(context));
 
             var serialize = JObject.FromObject(test);
@@ -237,13 +233,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         [TestCase]
         public void TestWebPubSubContext_ConnectEvent()
         {
-            var context = new WebPubSubConnectionContext()
-            {
-                ConnectionId = "connectionId",
-                UserId = "userA",
-                EventName = "connected",
-                EventType = WebPubSubEventType.System
-            };
+            var context = new WebPubSubConnectionContext(connectionId: "connectionId", userId: "userA", eventName: "connected", eventType: WebPubSubEventType.System, hub: null);
+
             var claims = new Dictionary<string, string[]>
             {
                 { "aa", new string[]{"aa1, aa2"} },
@@ -266,13 +257,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         [TestCase]
         public void TestWebPubSubContext_UserEvent()
         {
-            var context = new WebPubSubConnectionContext()
-            {
-                ConnectionId = "connectionId",
-                UserId = "userA",
-                EventName = "connected",
-                EventType = WebPubSubEventType.System
-            };
+            var context = new WebPubSubConnectionContext(connectionId: "connectionId", userId: "userA", eventName: "connected", eventType: WebPubSubEventType.System, hub: null);
             var test = new WebPubSubContext(new UserEventRequest(context, BinaryData.FromString("test"), WebPubSubDataType.Text));
 
             var serialize = JObject.FromObject(test);
@@ -289,7 +274,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         [TestCase]
         public void TestWebPubSubContext_DisconnectedEvent()
         {
-            var test = new WebPubSubContext(new DisconnectedEventRequest("dropped"));
+            var test = new WebPubSubContext(new DisconnectedEventRequest(null, "dropped"));
 
             var serialize = JObject.FromObject(test);
             var request = serialize["request"];
@@ -332,6 +317,43 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             Assert.AreEqual(baseUrl, json["baseUrl"].ToString());
             Assert.AreEqual(accessToken, json["accessToken"].ToString());
             Assert.AreEqual(url, json["url"].ToString());
+        }
+
+        private class BinaryDataJsonConverter : JsonConverter<BinaryData>
+        {
+            public override BinaryData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                if (reader.TokenType == JsonTokenType.String)
+                {
+                    return BinaryData.FromString(JsonSerializer.Deserialize<string>(ref reader));
+                }
+
+                if (TryLoadBinary(ref reader, out var bytes))
+                {
+                    return BinaryData.FromBytes(bytes);
+                }
+
+                // string object
+                return BinaryData.FromString(reader.GetString());
+            }
+
+            public override void Write(Utf8JsonWriter writer, BinaryData value, JsonSerializerOptions options)
+            {
+                writer.WriteStringValue(value.ToString());
+            }
+
+            private static bool TryLoadBinary(ref Utf8JsonReader input, out byte[] output)
+            {
+                var doc = JsonDocument.ParseValue(ref input);
+                if (doc.RootElement.TryGetProperty("type", out var value) && value.GetString().Equals("Buffer", StringComparison.OrdinalIgnoreCase)
+                    && doc.RootElement.TryGetProperty("data", out var data))
+                {
+                    output = JsonSerializer.Deserialize<List<byte>>(data.GetRawText()).ToArray();
+                    return true;
+                }
+                output = null;
+                return false;
+            }
         }
 
         private static HttpResponseMessage BuildResponse(string input, RequestType requestType)

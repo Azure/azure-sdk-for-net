@@ -150,7 +150,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
             }
         }
 
-        private static void SetConnectionState(ref HttpContext context, WebPubSubConnectionContext connectionContext, Dictionary<string, object> newStates)
+        private static void SetConnectionState(ref HttpContext context, WebPubSubConnectionContext connectionContext, IReadOnlyDictionary<string, object> newStates)
         {
             var updatedStates = connectionContext.UpdateStates(newStates);
             if (updatedStates != null)
