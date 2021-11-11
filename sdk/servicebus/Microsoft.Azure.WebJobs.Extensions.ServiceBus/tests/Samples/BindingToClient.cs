@@ -12,7 +12,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Tests.Samples
         #region Snippet:ServiceBusBindingToClient
         [FunctionName("BindingToClient")]
         public static async Task Run(
-            [ServiceBus("<queue_or_topic_name>", Connection = "<connection_name>")] 
+            [ServiceBus("<queue_or_topic_name>", Connection = "<connection_name>")]
             ServiceBusReceivedMessage message,
             ServiceBusClient client)
         {
