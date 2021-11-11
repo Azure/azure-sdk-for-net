@@ -180,7 +180,7 @@ namespace Microsoft.Azure.ServiceBus
             {
                 if (this.TimeToLive >= DateTime.MaxValue.Subtract(this.SystemProperties.EnqueuedTimeUtc))
                 {
-                    return DateTime.MaxValue;
+                    return DateTime.SpecifyKind(DateTime.MaxValue, DateTimeKind.Utc);
                 }
 
                 return this.SystemProperties.EnqueuedTimeUtc.Add(this.TimeToLive);
