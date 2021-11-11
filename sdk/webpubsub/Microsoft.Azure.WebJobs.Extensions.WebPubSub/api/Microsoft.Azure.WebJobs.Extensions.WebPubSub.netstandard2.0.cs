@@ -111,9 +111,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         protected WebPubSubAction() { }
         public static Microsoft.Azure.WebJobs.Extensions.WebPubSub.AddConnectionToGroupAction CreateAddConnectionToGroupAction(string connectionId, string group) { throw null; }
         public static Microsoft.Azure.WebJobs.Extensions.WebPubSub.AddUserToGroupAction CreateAddUserToGroupAction(string userId, string group) { throw null; }
-        public static Microsoft.Azure.WebJobs.Extensions.WebPubSub.CloseAllConnectionsAction CreateCloseAllConnectionsAction(System.Collections.Generic.IEnumerable<string> excluded, string reason) { throw null; }
-        public static Microsoft.Azure.WebJobs.Extensions.WebPubSub.CloseClientConnectionAction CreateCloseClientConnectionAction(string connectionId, string reason) { throw null; }
-        public static Microsoft.Azure.WebJobs.Extensions.WebPubSub.CloseGroupConnectionsAction CreateCloseGroupConnectionsAction(string group, System.Collections.Generic.IEnumerable<string> excluded, string reason) { throw null; }
+        public static Microsoft.Azure.WebJobs.Extensions.WebPubSub.CloseAllConnectionsAction CreateCloseAllConnectionsAction(System.Collections.Generic.IEnumerable<string> excluded = null, string reason = null) { throw null; }
+        public static Microsoft.Azure.WebJobs.Extensions.WebPubSub.CloseClientConnectionAction CreateCloseClientConnectionAction(string connectionId, string reason = null) { throw null; }
+        public static Microsoft.Azure.WebJobs.Extensions.WebPubSub.CloseGroupConnectionsAction CreateCloseGroupConnectionsAction(string group, System.Collections.Generic.IEnumerable<string> excluded = null, string reason = null) { throw null; }
         public static Microsoft.Azure.WebJobs.Extensions.WebPubSub.GrantPermissionAction CreateGrantPermissionAction(string connectionId, Azure.Messaging.WebPubSub.WebPubSubPermission permission, string targetName) { throw null; }
         public static Microsoft.Azure.WebJobs.Extensions.WebPubSub.RemoveConnectionFromGroupAction CreateRemoveConnectionFromGroupAction(string connectionId, string group) { throw null; }
         public static Microsoft.Azure.WebJobs.Extensions.WebPubSub.RemoveUserFromAllGroupsAction CreateRemoveUserFromAllGroupsAction(string userId) { throw null; }
@@ -124,7 +124,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         public static Microsoft.Azure.WebJobs.Extensions.WebPubSub.SendToConnectionAction CreateSendToConnectionAction(string connectionId, System.BinaryData data, Microsoft.Azure.WebPubSub.Common.WebPubSubDataType dataType) { throw null; }
         public static Microsoft.Azure.WebJobs.Extensions.WebPubSub.SendToConnectionAction CreateSendToConnectionAction(string connectionId, string data, Microsoft.Azure.WebPubSub.Common.WebPubSubDataType dataType = Microsoft.Azure.WebPubSub.Common.WebPubSubDataType.Text) { throw null; }
         public static Microsoft.Azure.WebJobs.Extensions.WebPubSub.SendToGroupAction CreateSendToGroupAction(string group, System.BinaryData data, Microsoft.Azure.WebPubSub.Common.WebPubSubDataType dataType, System.Collections.Generic.IEnumerable<string> excluded = null) { throw null; }
-        public static Microsoft.Azure.WebJobs.Extensions.WebPubSub.SendToGroupAction CreateSendToGroupAction(string group, string data, Microsoft.Azure.WebPubSub.Common.WebPubSubDataType dataType = Microsoft.Azure.WebPubSub.Common.WebPubSubDataType.Text, System.Collections.Generic.IList<string> excluded = null) { throw null; }
+        public static Microsoft.Azure.WebJobs.Extensions.WebPubSub.SendToGroupAction CreateSendToGroupAction(string group, string data, Microsoft.Azure.WebPubSub.Common.WebPubSubDataType dataType = Microsoft.Azure.WebPubSub.Common.WebPubSubDataType.Text, System.Collections.Generic.IEnumerable<string> excluded = null) { throw null; }
         public static Microsoft.Azure.WebJobs.Extensions.WebPubSub.SendToUserAction CreateSendToUserAction(string userId, System.BinaryData data, Microsoft.Azure.WebPubSub.Common.WebPubSubDataType dataType) { throw null; }
         public static Microsoft.Azure.WebJobs.Extensions.WebPubSub.SendToUserAction CreateSendToUserAction(string userId, string data, Microsoft.Azure.WebPubSub.Common.WebPubSubDataType dataType = Microsoft.Azure.WebPubSub.Common.WebPubSubDataType.Text) { throw null; }
     }
@@ -143,7 +143,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
     {
         public WebPubSubConnection(System.Uri uri) { }
         public string AccessToken { get { throw null; } }
+        [Newtonsoft.Json.JsonPropertyAttribute("baseUrl")]
         public System.Uri BaseUri { get { throw null; } }
+        [Newtonsoft.Json.JsonPropertyAttribute("url")]
         public System.Uri Uri { get { throw null; } }
     }
     [Microsoft.Azure.WebJobs.Description.BindingAttribute]

@@ -66,7 +66,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         /// <param name="excluded">ConnectionIds to exclude.</param>
         /// <param name="reason">Close reason.</param>
         /// <returns>An instance of <see cref="CloseAllConnectionsAction"></see>.</returns>
-        public static CloseAllConnectionsAction CreateCloseAllConnectionsAction(IEnumerable<string> excluded, string reason)
+        public static CloseAllConnectionsAction CreateCloseAllConnectionsAction(IEnumerable<string> excluded = null, string reason = null)
         {
             return new CloseAllConnectionsAction
             {
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         /// <param name="connectionId">Target connectionId.</param>
         /// <param name="reason">Close reason.</param>
         /// <returns>An instance of <see cref="CloseClientConnectionAction"></see>.</returns>
-        public static CloseClientConnectionAction CreateCloseClientConnectionAction(string connectionId, string reason)
+        public static CloseClientConnectionAction CreateCloseClientConnectionAction(string connectionId, string reason = null)
         {
             return new CloseClientConnectionAction
             {
@@ -97,7 +97,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         /// <param name="excluded">ConnectionIds to exclude.</param>
         /// <param name="reason">Close reason.</param>
         /// <returns>An instance of <see cref="CloseGroupConnectionsAction"></see>.</returns>
-        public static CloseGroupConnectionsAction CreateCloseGroupConnectionsAction(string group, IEnumerable<string> excluded, string reason)
+        public static CloseGroupConnectionsAction CreateCloseGroupConnectionsAction(string group, IEnumerable<string> excluded = null, string reason = null)
         {
             return new CloseGroupConnectionsAction
             {
@@ -279,7 +279,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         /// <param name="dataType">Message data type.</param>
         /// <param name="excluded">ConnectionIds to exclude.</param>
         /// <returns>An instance of <see cref="SendToGroupAction"></see>.</returns>
-        public static SendToGroupAction CreateSendToGroupAction(string group, string data, WebPubSubDataType dataType = WebPubSubDataType.Text, IList<string> excluded = null)
+        public static SendToGroupAction CreateSendToGroupAction(string group, string data, WebPubSubDataType dataType = WebPubSubDataType.Text, IEnumerable<string> excluded = null)
         {
             return new SendToGroupAction
             {
