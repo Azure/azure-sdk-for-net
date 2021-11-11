@@ -16,17 +16,18 @@
     "application/json"
   ],
   "paths": {
-    "/providers/Microsoft.Template/resource/{resourceId}": {
+    "/template/resources": {
       "put": {
         "operationId": "Create",
         "description": "Create or update resource.",
         "parameters": [
           {
-            "name": "resourceId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "The id of the resource."
+            "name": "resource",
+            "description": "Information about the resource",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/Resource"
+            }
           }
         ],
         "responses": {
@@ -38,6 +39,23 @@
           }
         }
       },
+      "get": {
+        "operationId": "ListResources",
+        "description": "Retrieves the list of resources.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResourceListResult"
+            }
+          }
+        },
+        "x-ms-pageable": {
+          "nextLinkName": "nextLink"
+        }
+      }
+    },
+    "/template/resources/{resourceId}": {
       "delete": {
         "operationId": "Delete",
         "description": "Delete resource.",
@@ -51,7 +69,7 @@
           }
         ],
         "responses": {
-          "200": {
+          "204": {
             "description": "OK"
           }
         }
@@ -73,20 +91,6 @@
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/Resource"
-            }
-          }
-        }
-      }
-    },
-    "/providers/Microsoft.Template/resource": {
-      "get": {
-        "operationId": "ListResources",
-        "description": "Retrieves the list of resources.",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/ResourceListResult"
             }
           }
         }
@@ -113,8 +117,15 @@
             "$ref": "#/definitions/Resource"
           },
           "description": "The list of resources"
+        },
+        "nextLink": {
+          "type": "string",
+          "description": "The URI to fetch the next page of Resource."
         }
       },
+      "required": [
+        "value"
+      ],
       "description": "The List resource operation response."
     }
   }

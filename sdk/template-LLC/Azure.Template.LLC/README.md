@@ -72,32 +72,64 @@ If possible, use the same example snippets that your in-code documentation uses.
 
 Each example in the *Examples* section starts with an H3 that describes the example. At the top of this section, just under the *Examples* H2, add a bulleted list linking to each example H3. Each example should deep-link to the types and/or members used in the example.
 
-* [Create the data](#create-the-data)
-* [Get the data](#get-the-data)
-* [List the data](#list-the-data)
+* [Create resource](#create-resource)
+* [Get resource](#get-resource)
+* [List resources](#list-resources)
+* [Delete resource](#delete-resource)
 
-### Create the data
+### Create resource
 
-Use the `CreateData` method to create a data reference.
+Use the `Create` method to create a resource.
 
-```C#
-var data = client.CreateData(id, name);
+```C# Snippet:CreateResource
+var client = GetClient();
+var resource = new
+{
+    name = "TeamplateResource",
+    id = "123",
+};
+Response response = await client.CreateAsync(RequestContent.Create(resource));
+using JsonDocument resourceJson = JsonDocument.Parse(response.Content.ToMemory());
+string resourceName = resourceJson.RootElement.GetProperty("name").ToString();
+string resourceId = resourceJson.RootElement.GetProperty("id").ToString();
+Console.WriteLine($"Name: {resourceName} \n Id: {resourceId}.");
 ```
 
-### Get the data
+### Get resource
 
-The `GetData` method retrieves a data from the service. The `id` parameter is the unique ID of the data.
+The `Get` method retrieves a data from the service. The `id` parameter is the unique ID of the data.
 
-```C#
-var data = client.GetData("TestSecret");
+```C# Snippet:RetrieveResource
+var client = GetClient();
+var response = await client.GetAsync("123");
+using JsonDocument resourceJson = JsonDocument.Parse(response.Content.ToMemory());
+string resourceName = resourceJson.RootElement.GetProperty("name").ToString();
+string resourceId = resourceJson.RootElement.GetProperty("id").ToString();
+Console.WriteLine($"Name: {resourceName} \n Id: {resourceId}.");
 ```
 
-### List the data
+### List resources
 
-The `ListData` method retrieves the list of data from the service.
+The `GetResources` method retrieves the list of resources from the service.
 
-```C#
-var list = client.ListData();
+```C# Snippet:ListResources
+var client = GetClient();
+AsyncPageable<BinaryData> pageable = client.GetResourcesAsync();
+await foreach (var page in pageable.AsPages())
+{
+    using JsonDocument resourceJson = JsonDocument.Parse(page.Values.First().ToMemory());
+    Console.WriteLine(resourceJson.RootElement.GetProperty("name").ToString());
+    Console.WriteLine(resourceJson.RootElement.GetProperty("id").ToString());
+}
+```
+
+### Delete resource
+
+The `Delete` method delete the resource from the service.
+
+```C# Snippet:DeleteResource
+var client = GetClient();
+await client.DeleteAsync("123");
 ```
 
 ## Troubleshooting

@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -53,10 +56,15 @@ namespace Azure.Template.LLC
         }
 
         /// <summary> Create or update resource. </summary>
-        /// <param name="resourceId"> The id of the resource. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <code>{
+        ///   name: string,
+        ///   id: string
+        /// }
+        /// </code>
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   name: string,
@@ -66,14 +74,14 @@ namespace Azure.Template.LLC
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> CreateAsync(string resourceId, RequestContext context = null)
+        public virtual async Task<Response> CreateAsync(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("TemplateServiceClient.Create");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateRequest(resourceId);
+                using HttpMessage message = CreateCreateRequest(content);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -84,10 +92,15 @@ namespace Azure.Template.LLC
         }
 
         /// <summary> Create or update resource. </summary>
-        /// <param name="resourceId"> The id of the resource. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <code>{
+        ///   name: string,
+        ///   id: string
+        /// }
+        /// </code>
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   name: string,
@@ -97,14 +110,14 @@ namespace Azure.Template.LLC
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response Create(string resourceId, RequestContext context = null)
+        public virtual Response Create(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("TemplateServiceClient.Create");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateRequest(resourceId);
+                using HttpMessage message = CreateCreateRequest(content);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -230,26 +243,28 @@ namespace Azure.Template.LLC
         ///       name: string,
         ///       id: string
         ///     }
-        ///   ]
+        ///   ],
+        ///   nextLink: string
         /// }
         /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetResourcesAsync(RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetResourcesAsync(RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("TemplateServiceClient.GetResources");
-            scope.Start();
-            try
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "TemplateServiceClient.GetResources");
+            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
-                using HttpMessage message = CreateGetResourcesRequest();
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
+                do
+                {
+                    var message = string.IsNullOrEmpty(nextLink)
+                        ? CreateGetResourcesRequest()
+                        : CreateGetResourcesNextPageRequest(nextLink);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    nextLink = page.ContinuationToken;
+                    yield return page;
+                } while (!string.IsNullOrEmpty(nextLink));
             }
         }
 
@@ -263,38 +278,55 @@ namespace Azure.Template.LLC
         ///       name: string,
         ///       id: string
         ///     }
-        ///   ]
+        ///   ],
+        ///   nextLink: string
         /// }
         /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetResources(RequestContext context = null)
+        public virtual Pageable<BinaryData> GetResources(RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("TemplateServiceClient.GetResources");
-            scope.Start();
-            try
+            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "TemplateServiceClient.GetResources");
+            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
-                using HttpMessage message = CreateGetResourcesRequest();
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
+                do
+                {
+                    var message = string.IsNullOrEmpty(nextLink)
+                        ? CreateGetResourcesRequest()
+                        : CreateGetResourcesNextPageRequest(nextLink);
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
+                    nextLink = page.ContinuationToken;
+                    yield return page;
+                } while (!string.IsNullOrEmpty(nextLink));
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string resourceId)
+        internal HttpMessage CreateCreateRequest(RequestContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Template/resource/", false);
-            uri.AppendPath(resourceId, true);
+            uri.AppendPath("/template/resources", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            message.ResponseClassifier = ResponseClassifier200.Instance;
+            return message;
+        }
+
+        internal HttpMessage CreateGetResourcesRequest()
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/template/resources", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.ResponseClassifier = ResponseClassifier200.Instance;
@@ -308,10 +340,10 @@ namespace Azure.Template.LLC
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Template/resource/", false);
+            uri.AppendPath("/template/resources/", false);
             uri.AppendPath(resourceId, true);
             request.Uri = uri;
-            message.ResponseClassifier = ResponseClassifier200.Instance;
+            message.ResponseClassifier = ResponseClassifier204.Instance;
             return message;
         }
 
@@ -322,7 +354,7 @@ namespace Azure.Template.LLC
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Template/resource/", false);
+            uri.AppendPath("/template/resources/", false);
             uri.AppendPath(resourceId, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -330,14 +362,14 @@ namespace Azure.Template.LLC
             return message;
         }
 
-        internal HttpMessage CreateGetResourcesRequest()
+        internal HttpMessage CreateGetResourcesNextPageRequest(string nextLink)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Template/resource", false);
+            uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.ResponseClassifier = ResponseClassifier200.Instance;
@@ -353,6 +385,19 @@ namespace Azure.Template.LLC
                 return message.Response.Status switch
                 {
                     200 => false,
+                    _ => true
+                };
+            }
+        }
+        private sealed class ResponseClassifier204 : ResponseClassifier
+        {
+            private static ResponseClassifier _instance;
+            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier204();
+            public override bool IsErrorResponse(HttpMessage message)
+            {
+                return message.Response.Status switch
+                {
+                    204 => false,
                     _ => true
                 };
             }
