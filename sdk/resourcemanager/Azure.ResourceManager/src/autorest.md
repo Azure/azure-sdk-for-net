@@ -3,6 +3,13 @@
 Run `dotnet build /t:GenerateCode` to generate code.
 
 ```yaml
+azure-arm: true
+arm-core: true
+clear-output-folder: true
+use: $(this-folder)/../../../../../autorest.csharp/artifacts/bin/AutoRest.CSharp/Debug/netcoreapp3.1/
+modelerfour:
+  lenient-model-deduplication: true
+skip-csproj: true
 batch:
   - tag: package-common-type
   - tag: package-resources
@@ -13,18 +20,12 @@ batch:
 These settings apply only when `--tag=package-common-type` is specified on the command line.
 
 ``` yaml $(tag) == 'package-common-type'
-azure-arm: true
-arm-core: true
+output-folder: $(this-folder)/Generated
 namespace: Azure.ResourceManager
 input-file:
 # temporarily using a local file to work around an autorest bug that loses extensions during deduplication of schemas: https://github.com/Azure/autorest/issues/4267
 #  - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/ac3be41ee22ada179ab7b970e98f1289188b3bae/specification/common-types/resource-management/v2/types.json
   - $(this-folder)/types.json
-
-modelerfour:
-  lenient-model-deduplication: true
-skip-csproj: true
-
 directive:
   - remove-model: "AzureEntityResource"
   - remove-model: "ProxyResource"
@@ -82,11 +83,8 @@ directive:
 These settings apply only when `--tag=package-resources` is specified on the command line.
 
 ``` yaml $(tag) == 'package-resources'
-azure-arm: true
-arm-core: true
-# clear-output-folder: true
-use: $(this-folder)/../../../../../autorest.csharp/artifacts/bin/AutoRest.CSharp/Debug/netcoreapp3.1/
 output-folder: $(this-folder)/Generated/Resources
+namespace: Azure.ResourceManager.Resources
 title: ResourceManagementClient
 input-file:
     # - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Resources/stable/2021-04-01/resources.json
@@ -99,13 +97,9 @@ input-file:
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Resources/stable/2016-09-01/links.json
     # - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Resources/stable/2021-01-01/subscriptions.json
     # - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Features/stable/2021-07-01/features.json
-namespace: Azure.ResourceManager.Resources
 model-namespace: false
 public-clients: false
 head-as-boolean: false
-modelerfour:
-    lenient-model-deduplication: true
-skip-csproj: true
 payload-flattening-threshold: 2
 operation-group-to-resource-type:
   ResourceLinks: Microsoft.Resources/links
