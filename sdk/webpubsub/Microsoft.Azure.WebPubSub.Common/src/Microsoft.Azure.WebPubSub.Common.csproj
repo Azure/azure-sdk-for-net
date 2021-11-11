@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Description>Azure SDK Common object library for the WebPubSub service</Description>
     <AssemblyTitle>Azure SDK Common for WebPubSub</AssemblyTitle>
-    <Version>1.0.0-beta.2</Version>
+    <Version>1.0.0</Version>
     <PackageTags>Azure, WebPubSub</PackageTags>
     <RequiredTargetFrameworks>netstandard2.0</RequiredTargetFrameworks>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <PackageReference Include="System.Text.Json" />
+    <PackageReference Include="System.Text.Encodings.Web" VersionOverride="4.7.2"/>
     <PackageReference Include="System.Memory.Data" />
   </ItemGroup>
 

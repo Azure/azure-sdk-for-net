@@ -23,13 +23,13 @@ namespace Microsoft.Azure.WebPubSub.Common
         /// User Claims.
         /// </summary>
         [JsonPropertyName(ClaimsProperty)]
-        public ReadOnlyDictionary<string, string[]> Claims { get; }
+        public IReadOnlyDictionary<string, string[]> Claims { get; }
 
         /// <summary>
         /// Request query.
         /// </summary>
         [JsonPropertyName(QueryProperty)]
-        public ReadOnlyDictionary<string, string[]> Query { get; }
+        public IReadOnlyDictionary<string, string[]> Query { get; }
 
         /// <summary>
         /// Supported subprotocols.

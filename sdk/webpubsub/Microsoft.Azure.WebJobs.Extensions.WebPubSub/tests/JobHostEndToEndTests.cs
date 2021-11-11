@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Azure.WebJobs.Extensions.WebPubSub.Operations;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Indexers;
 using Microsoft.Azure.WebPubSub.Common;
@@ -78,8 +77,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             return new WebPubSubTriggerEvent
             {
                 ConnectionContext = TestContext,
-                Message = TestMessage,
-                DataType = MessageDataType.Text,
+                Data = TestMessage,
+                DataType = WebPubSubDataType.Text,
                 TaskCompletionSource = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously)
             };
         }
@@ -115,26 +114,26 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
                 [WebPubSubConnection(Hub = "chat", UserId = "aaa")] WebPubSubConnection connection)
             {
                 // Valid case use default url for verification.
-                Assert.AreEqual("wss://abc/client/hubs/chat", connection.BaseUrl);
+                Assert.AreEqual("wss://abc/client/hubs/chat", connection.BaseUri.AbsoluteUri);
             }
 
             public static async Task TestWebPubSubOutput(
-                [WebPubSub(Hub = "chat")] IAsyncCollector<WebPubSubOperation> operation)
+                [WebPubSub(Hub = "chat")] IAsyncCollector<WebPubSubAction> operation)
             {
-                await operation.AddAsync(new SendToAll
+                await operation.AddAsync(new SendToAllAction
                 {
-                    Message = TestMessage,
-                    DataType = MessageDataType.Text
+                    Data = TestMessage,
+                    DataType = WebPubSubDataType.Text
                 });
             }
 
             public static async Task TestWebPubSubOutputMissingHub(
-                [WebPubSub] IAsyncCollector<WebPubSubOperation> operation)
+                [WebPubSub] IAsyncCollector<WebPubSubAction> operation)
             {
-                await operation.AddAsync(new SendToAll
+                await operation.AddAsync(new SendToAllAction
                 {
-                    Message = TestMessage,
-                    DataType = MessageDataType.Text
+                    Data = TestMessage,
+                    DataType = WebPubSubDataType.Text
                 });
             }
 

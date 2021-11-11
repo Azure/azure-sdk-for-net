@@ -15,23 +15,23 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
     internal static class Utilities
     {
-        public static MediaTypeHeaderValue GetMediaType(MessageDataType dataType) => new(GetContentType(dataType));
+        public static MediaTypeHeaderValue GetMediaType(WebPubSubDataType dataType) => new(GetContentType(dataType));
 
-        public static string GetContentType(MessageDataType dataType) =>
+        public static string GetContentType(WebPubSubDataType dataType) =>
             dataType switch
             {
-                MessageDataType.Text => Constants.ContentTypes.PlainTextContentType,
-                MessageDataType.Json => Constants.ContentTypes.JsonContentType,
+                WebPubSubDataType.Text => Constants.ContentTypes.PlainTextContentType,
+                WebPubSubDataType.Json => Constants.ContentTypes.JsonContentType,
                 // Default set binary type to align with service side logic
                 _ => Constants.ContentTypes.BinaryContentType
             };
 
-        public static MessageDataType GetDataType(string mediaType) =>
+        public static WebPubSubDataType GetDataType(string mediaType) =>
             mediaType.ToLowerInvariant() switch
             {
-                Constants.ContentTypes.BinaryContentType => MessageDataType.Binary,
-                Constants.ContentTypes.JsonContentType => MessageDataType.Json,
-                Constants.ContentTypes.PlainTextContentType => MessageDataType.Text,
+                Constants.ContentTypes.BinaryContentType => WebPubSubDataType.Binary,
+                Constants.ContentTypes.JsonContentType => WebPubSubDataType.Json,
+                Constants.ContentTypes.PlainTextContentType => WebPubSubDataType.Text,
                 _ => throw new ArgumentException($"{Constants.ErrorMessages.NotSupportedDataType}{mediaType}")
             };
 
@@ -46,9 +46,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         {
             HttpResponseMessage result = new();
 
-            if (response.Message != null)
+            if (response.Data != null)
             {
-                result.Content = new StreamContent(response.Message.ToStream());
+                result.Content = new StreamContent(response.Data.ToStream());
             }
             result.Content.Headers.ContentType = GetMediaType(response.DataType);
 
@@ -57,10 +57,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
         public static HttpResponseMessage BuildResponse(ConnectEventResponse response)
         {
-            return BuildResponse(JsonSerializer.Serialize(response), MessageDataType.Json);
+            return BuildResponse(JsonSerializer.Serialize(response), WebPubSubDataType.Json);
         }
 
-        public static HttpResponseMessage BuildResponse(string response, MessageDataType dataType = MessageDataType.Text)
+        public static HttpResponseMessage BuildResponse(string response, WebPubSubDataType dataType = WebPubSubDataType.Text)
         {
             HttpResponseMessage result = new();
 
@@ -179,7 +179,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             return RequestType.Ignored;
         }
 
-        public static bool ValidateMediaType(string mediaType, out MessageDataType dataType)
+        public static bool ValidateMediaType(string mediaType, out WebPubSubDataType dataType)
         {
             try
             {
@@ -188,7 +188,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             }
             catch (Exception)
             {
-                dataType = MessageDataType.Binary;
+                dataType = WebPubSubDataType.Binary;
                 return false;
             }
         }
