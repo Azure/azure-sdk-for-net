@@ -3,92 +3,42 @@
 
 ﻿namespace Microsoft.Azure.Batch
 {
-    using System.Diagnostics;
-    using System.Linq;
+    using Microsoft.Rest.Azure;
     using System.Threading;
-    using Models = Microsoft.Azure.Batch.Protocol.Models;
+    using System.Threading.Tasks;
+    using Models = Protocol.Models;
 
-    internal class AsyncListNodeFilesByTaskEnumerator : PagedEnumeratorBase<NodeFile>
+    internal class AsyncListNodeFilesByTaskEnumerator : AsyncListEnumerator<NodeFile, Models.NodeFile, Models.FileListFromTaskHeaders>
     {
         private readonly JobOperations _jobOperations;
         private readonly string _jobId;
         private readonly string _taskId;
         private readonly bool? _recursive;
-        private readonly BehaviorManager _behaviorMgr;
-        private readonly DetailLevel _detailLevel;
 
-#region // constructors
-
-        internal AsyncListNodeFilesByTaskEnumerator(
-                JobOperations jobOperations,
-                string jobId,
-                string taskId,
-                bool? recursive,
-                BehaviorManager behaviorMgr,
-                DetailLevel detailLevel)
+        internal AsyncListNodeFilesByTaskEnumerator(JobOperations jobOperations, string jobId, string taskId, bool? recursive, BehaviorManager behaviorMgr, DetailLevel detailLevel)
+        : base(behaviorMgr, detailLevel)
         {
-            this._jobOperations = jobOperations;
-            this._jobId = jobId;
-            this._taskId = taskId;
-            this._recursive = recursive;
-            this._behaviorMgr = behaviorMgr;
-            this._detailLevel = detailLevel;
+            _jobOperations = jobOperations;
+            _jobId = jobId;
+            _taskId = taskId;
+            _recursive = recursive;
         }
 
-#endregion // constructors
-
-        public override NodeFile Current  // for IPagedEnumerator<T> and IEnumerator<T>
+        internal override NodeFile Wrap(Models.NodeFile protocolObj)
         {
-            get
-            {
-                // start with the current object off of base
-                object curObj = base._currentBatch[base._currentIndex];
-
-                // it must be a protocol object from previous call
-                Models.NodeFile protoFile = curObj as Models.NodeFile;
-
-                Debug.Assert(null != protoFile);
-
-                // wrap protocol object
-                NodeFile wrapped = new TaskFile(this._jobOperations, this._jobId, this._taskId, protoFile, _behaviorMgr.BaseBehaviors);
-
-                return wrapped;
-            }
+            return new TaskFile(_jobOperations, _jobId, _taskId, protocolObj, behaviorMgr.BaseBehaviors);
         }
 
-        /// <summary>
-        /// fetch another batch of objects from the server
-        /// </summary>
-        protected async override System.Threading.Tasks.Task GetNextBatchFromServerAsync(SkipTokenHandler skipHandler, CancellationToken cancellationToken)
+        internal override Task<AzureOperationResponse<IPage<Models.NodeFile>, Models.FileListFromTaskHeaders>> GetTaskResult(SkipTokenHandler skipHandler, CancellationToken cancellationToken)
         {
-            do
-            {
-                // start the protocol layer call
-                var asyncTask = this._jobOperations.ParentBatchClient.ProtocolLayer.ListNodeFilesByTask(
-                    this._jobId,
-                    this._taskId,
+            return _jobOperations.ParentBatchClient.ProtocolLayer.ListNodeFilesByTask(
+                    _jobId,
+                    _taskId,
                     _recursive,
                     skipHandler.SkipToken,
-                    _behaviorMgr,
-                    _detailLevel,
+                    behaviorMgr,
+                    detailLevel,
                     cancellationToken);
-
-                // extract the response
-                var response = await asyncTask.ConfigureAwait(continueOnCapturedContext: false);
-
-                // remember any skiptoken returned.  This also sets the bool
-                skipHandler.SkipToken = response.Body.NextPageLink;
-
-                // remember the protocol tasks returned
-                base._currentBatch = null;
-
-                if (null != response.Body.GetEnumerator())
-                {
-                    base._currentBatch = response.Body.ToArray();
-                }
-            }
-            // it is possible for there to be no results so we keep trying
-            while (skipHandler.ThereIsMoreData && ((null == _currentBatch) || _currentBatch.Length <= 0));
         }
     }
 }

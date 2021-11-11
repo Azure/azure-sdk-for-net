@@ -76,42 +76,50 @@ The following examples show common scenarios using the `client` [created above](
 
 ### Analyze a conversation
 
-To analyze a conversation, we can then call the `client.AnalyzeConversation()` method which takes the project name, deployment name, and query as parameters.
+To analyze a conversation, we can then call the `client.AnalyzeConversation()` method which takes a Conversations project and an utterance as parameters.
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversation
+ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
+
 Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
-    "Menu",
-    "production",
-    "We'll have 2 plates of seared salmon nigiri.");
+    "We'll have 2 plates of seared salmon nigiri.",
+    conversationsProject);
 
 Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
 ```
 
-The specified parameters can also be used to initialize a `AnalyzeConversationOptions` instance. You can then call `AnalyzeConversation()` using the options object as a parameter as shown below.
+The specified parameters can also be used to initialize a `ConversationAnalysisOptions` instance. You can then call `AnalyzeConversation()` using the options object as a parameter as shown below.
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationWithOptions
-AnalyzeConversationOptions options = new AnalyzeConversationOptions(
-    "Menu",
-    "production",
-    "We'll have 2 plates of seared salmon nigiri.");
-Response<AnalyzeConversationResult> response = client.AnalyzeConversation(options);
+ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
+AnalyzeConversationOptions options = new AnalyzeConversationOptions()
+{
+    IsLoggingEnabled = true,
+    Verbose = true,
+};
+
+Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
+    "We'll have 2 plates of seared salmon nigiri.",
+    conversationsProject,
+    options);
 
 Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
 ```
 
 ### Analyze a conversation in a different language
 
-The language property in the `AnalyzeConversationOptions` can be used to specify the language of the conversation.
+The language property in the `ConversationAnalysisOptions` can be used to specify the language of the conversation.
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationWithLanguage
-AnalyzeConversationOptions options = new AnalyzeConversationOptions(
-    "Menu",
-    "production", 
-    "Tendremos 2 platos de nigiri de salmón braseado.")
+ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
+AnalyzeConversationOptions options = new AnalyzeConversationOptions()
 {
     Language = "es"
 };
-Response<AnalyzeConversationResult> response = client.AnalyzeConversation(options);
+Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
+    "Tendremos 2 platos de nigiri de salmón braseado.",
+    conversationsProject,
+    options);
 
 Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
 ```
@@ -124,15 +132,15 @@ Other optional properties can be set such as verbosity and whether service loggi
 
 When you interact with the Cognitive Language Services Conversations client library using the .NET SDK, errors returned by the service correspond to the same HTTP status codes returned for [REST API][conversationanalysis_rest_docs] requests.
 
-For example, if you submit a query to a non-existant project, a `400` error is returned indicating "Bad Request".
+For example, if you submit a utterance to a non-existant project, a `400` error is returned indicating "Bad Request".
 
 ```C# Snippet:ConversationAnalysisClient_BadRequest
 try
 {
+    ConversationsProject conversationsProject = new ConversationsProject("invalid-project", "production");
     Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
-        "invalid-project",
-        "production",
-        "We'll have 2 plates of seared salmon nigiri.");
+        "We'll have 2 plates of seared salmon nigiri.",
+        conversationsProject);
 }
 catch (RequestFailedException ex)
 {

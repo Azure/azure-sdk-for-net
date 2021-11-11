@@ -34,7 +34,8 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// values include: 'None', 'Increase', 'Decrease'</param>
         /// <param name="type">the type of action that should occur when the
         /// scale rule fires. Possible values include: 'ChangeCount',
-        /// 'PercentChangeCount', 'ExactCount'</param>
+        /// 'PercentChangeCount', 'ExactCount',
+        /// 'ServiceAllowedNextValue'</param>
         /// <param name="cooldown">the amount of time to wait since the last
         /// scaling action before this action occurs. It must be between 1 week
         /// and 1 minute in ISO 8601 format.</param>
@@ -66,7 +67,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// <summary>
         /// Gets or sets the type of action that should occur when the scale
         /// rule fires. Possible values include: 'ChangeCount',
-        /// 'PercentChangeCount', 'ExactCount'
+        /// 'PercentChangeCount', 'ExactCount', 'ServiceAllowedNextValue'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public ScaleType Type { get; set; }

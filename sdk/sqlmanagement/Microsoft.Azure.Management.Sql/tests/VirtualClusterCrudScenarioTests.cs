@@ -47,7 +47,7 @@ namespace Sql.Tests
                     Tags = tags,
                     Location = location,
                 });
-                SqlManagementTestUtilities.ValidateManagedInstance(managedInstance, managedInstanceName, login, tags, location);
+                SqlManagementTestUtilities.ValidateManagedInstance(managedInstance, tags: tags);
 
                 // Get and verify Virtual cluster
                 var virtualClusters = sqlClient.VirtualClusters.List();

@@ -29,6 +29,7 @@ namespace Azure.Data.Tables
         private string _accountName;
         private readonly Uri _endpoint;
         private readonly HttpPipeline _pipeline;
+        private readonly TableUriBuilder _tableUriBuilder;
 
         /// <summary>
         /// The <see cref="TableSharedKeyCredential"/> used to authenticate and generate SAS
@@ -204,8 +205,10 @@ namespace Azure.Data.Tables
 
             options ??= TableClientOptions.DefaultOptions;
             var endpointString = connString.TableStorageUri.PrimaryUri.AbsoluteUri;
+            _endpoint = new Uri(endpointString);
+            _tableUriBuilder = new TableUriBuilder(_endpoint);
             var secondaryEndpoint = connString.TableStorageUri.SecondaryUri?.AbsoluteUri;
-            _isCosmosEndpoint = TableServiceClient.IsPremiumEndpoint(connString.TableStorageUri.PrimaryUri);
+            _isCosmosEndpoint = IsPremiumEndpoint(connString.TableStorageUri.PrimaryUri);
             var perCallPolicies = _isCosmosEndpoint ? new[] { new CosmosPatchTransformPolicy() } : Array.Empty<HttpPipelinePolicy>();
 
             TableSharedKeyPipelinePolicy policy = null;
@@ -245,12 +248,13 @@ namespace Azure.Data.Tables
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(tokenCredential, nameof(tokenCredential));
 
+            _tableUriBuilder = new TableUriBuilder(endpoint);
             _endpoint = endpoint;
             options ??= TableClientOptions.DefaultOptions;
-            _isCosmosEndpoint = IsPremiumEndpoint(endpoint);
+            _isCosmosEndpoint = IsPremiumEndpoint(_endpoint);
             var perCallPolicies = _isCosmosEndpoint ? new[] { new CosmosPatchTransformPolicy() } : Array.Empty<HttpPipelinePolicy>();
-            var endpointString = endpoint.AbsoluteUri;
-            string secondaryEndpoint = TableConnectionString.GetSecondaryUriFromPrimary(endpoint)?.AbsoluteUri;
+            var endpointString = _endpoint.AbsoluteUri;
+            string secondaryEndpoint = TableConnectionString.GetSecondaryUriFromPrimary(_endpoint)?.AbsoluteUri;
 
             _pipeline = HttpPipelineBuilder.Build(
                 options,
@@ -269,12 +273,13 @@ namespace Azure.Data.Tables
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
 
+            _tableUriBuilder = new TableUriBuilder(endpoint);
             _endpoint = endpoint;
             options ??= TableClientOptions.DefaultOptions;
-            _isCosmosEndpoint = IsPremiumEndpoint(endpoint);
+            _isCosmosEndpoint = IsPremiumEndpoint(_endpoint);
             var perCallPolicies = _isCosmosEndpoint ? new[] { new CosmosPatchTransformPolicy() } : Array.Empty<HttpPipelinePolicy>();
-            var endpointString = endpoint.AbsoluteUri;
-            string secondaryEndpoint = TableConnectionString.GetSecondaryUriFromPrimary(endpoint)?.AbsoluteUri;
+            var endpointString = _endpoint.AbsoluteUri;
+            string secondaryEndpoint = TableConnectionString.GetSecondaryUriFromPrimary(_endpoint)?.AbsoluteUri;
 
             HttpPipelinePolicy authPolicy = policy switch
             {
@@ -381,6 +386,7 @@ namespace Azure.Data.Tables
                     catch (Exception ex)
                     {
                         scope.Failed(ex);
+                        ValidateServiceUriDoesNotContainTableName(ex);
                         throw;
                     }
                 },
@@ -437,6 +443,7 @@ namespace Azure.Data.Tables
                     catch (Exception ex)
                     {
                         scope.Failed(ex);
+                        ValidateServiceUriDoesNotContainTableName(ex);
                         throw;
                     }
                 },
@@ -487,6 +494,7 @@ namespace Azure.Data.Tables
             catch (Exception ex)
             {
                 scope.Failed(ex);
+                ValidateServiceUriDoesNotContainTableName(ex);
                 throw;
             }
         }
@@ -517,6 +525,7 @@ namespace Azure.Data.Tables
             catch (Exception ex)
             {
                 scope.Failed(ex);
+                ValidateServiceUriDoesNotContainTableName(ex);
                 throw;
             }
         }
@@ -549,6 +558,7 @@ namespace Azure.Data.Tables
             catch (Exception ex)
             {
                 scope.Failed(ex);
+                ValidateServiceUriDoesNotContainTableName(ex);
                 throw;
             }
         }
@@ -578,6 +588,7 @@ namespace Azure.Data.Tables
             catch (Exception ex)
             {
                 scope.Failed(ex);
+                ValidateServiceUriDoesNotContainTableName(ex);
                 throw;
             }
         }
@@ -605,6 +616,7 @@ namespace Azure.Data.Tables
             catch (Exception ex)
             {
                 scope.Failed(ex);
+                ValidateServiceUriDoesNotContainTableName(ex, tableName);
                 throw;
             }
         }
@@ -633,6 +645,7 @@ namespace Azure.Data.Tables
             catch (Exception ex)
             {
                 scope.Failed(ex);
+                ValidateServiceUriDoesNotContainTableName(ex, tableName);
                 throw;
             }
         }
@@ -664,6 +677,7 @@ namespace Azure.Data.Tables
             catch (Exception ex)
             {
                 scope.Failed(ex);
+                ValidateServiceUriDoesNotContainTableName(ex, tableName);
                 throw;
             }
         }
@@ -696,6 +710,7 @@ namespace Azure.Data.Tables
             catch (Exception ex)
             {
                 scope.Failed(ex);
+                ValidateServiceUriDoesNotContainTableName(ex, tableName);
                 throw;
             }
         }
@@ -728,6 +743,7 @@ namespace Azure.Data.Tables
             catch (Exception ex)
             {
                 scope.Failed(ex);
+                ValidateServiceUriDoesNotContainTableName(ex, tableName);
                 throw;
             }
         }
@@ -746,7 +762,7 @@ namespace Azure.Data.Tables
             try
             {
                 using var message = _tableOperations.CreateDeleteRequest(tableName);
-               await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
 
                 switch (message.Response.Status)
                 {
@@ -760,6 +776,7 @@ namespace Azure.Data.Tables
             catch (Exception ex)
             {
                 scope.Failed(ex);
+                ValidateServiceUriDoesNotContainTableName(ex, tableName);
                 throw;
             }
         }
@@ -779,6 +796,7 @@ namespace Azure.Data.Tables
             catch (Exception ex)
             {
                 scope.Failed(ex);
+                ValidateServiceUriDoesNotContainTableName(ex);
                 throw;
             }
         }
@@ -798,6 +816,7 @@ namespace Azure.Data.Tables
             catch (Exception ex)
             {
                 scope.Failed(ex);
+                ValidateServiceUriDoesNotContainTableName(ex);
                 throw;
             }
         }
@@ -817,6 +836,7 @@ namespace Azure.Data.Tables
             catch (Exception ex)
             {
                 scope.Failed(ex);
+                ValidateServiceUriDoesNotContainTableName(ex);
                 throw;
             }
         }
@@ -836,6 +856,7 @@ namespace Azure.Data.Tables
             catch (Exception ex)
             {
                 scope.Failed(ex);
+                ValidateServiceUriDoesNotContainTableName(ex);
                 throw;
             }
         }
@@ -854,6 +875,7 @@ namespace Azure.Data.Tables
             catch (Exception ex)
             {
                 scope.Failed(ex);
+                ValidateServiceUriDoesNotContainTableName(ex);
                 throw;
             }
         }
@@ -872,6 +894,7 @@ namespace Azure.Data.Tables
             catch (Exception ex)
             {
                 scope.Failed(ex);
+                ValidateServiceUriDoesNotContainTableName(ex);
                 throw;
             }
         }
@@ -945,5 +968,20 @@ namespace Azure.Data.Tables
         /// <param name="filter">An interpolated filter string.</param>
         /// <returns>A valid OData filter expression.</returns>
         public static string CreateQueryFilter(FormattableString filter) => TableOdataFilter.Create(filter);
+
+        private void ValidateServiceUriDoesNotContainTableName(Exception ex, string tableName = null)
+        {
+            tableName ??= _tableUriBuilder.Tablename;
+            var fixedUri = TableUriBuilder.GetEndpointWithoutTableName(_endpoint, tableName);
+            if (_endpoint.AbsolutePath != fixedUri.AbsolutePath)
+            {
+                var message =
+                    $"The configured endpoint Uri appears to contain the table name '{tableName}'. Please try re-creating the TableServiceClient with just the account Uri. For example: {fixedUri.AbsoluteUri}.";
+                if (ex is RequestFailedException rfe)
+                {
+                    throw new RequestFailedException(rfe.Status, message, rfe.ErrorCode, rfe);
+                }
+            }
+        }
     }
 }

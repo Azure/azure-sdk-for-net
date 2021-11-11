@@ -86,11 +86,7 @@ public static class WebPubSubOutputBindingFunction
         [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequest req,
         [WebPubSub(Hub = "hub", Connection = "<connection-string>")] IAsyncCollector<WebPubSubOperation> operation)
     {
-        await operation.AddAsync(new SendToAll
-        {
-            Message = BinaryData.FromString("Hello Web PubSub"),
-            DataType = MessageDataType.Text
-        });
+        await operation.AddAsync(WebPubSubOperation.SendToAll("Hello Web PubSub!", WebPubSubDataType.Text));
     }
 }
 ```
@@ -104,11 +100,11 @@ public static class WebPubSubTriggerFunction
     public static void Run(
         ILogger logger,
         [WebPubSubTrigger("hub", WebPubSubEventType.User, "message")] UserEventRequest request,
-        string message,
-        MessageDataType dataType)
+        string data,
+        WebPubSubDataType dataType)
     {
-        logger.LogInformation("Request from: {user}, message: {message}, dataType: {dataType}",
-            request.ConnectionContext.UserId, message, dataType);
+        logger.LogInformation("Request from: {user}, data: {data}, dataType: {dataType}",
+            request.ConnectionContext.UserId, data, dataType);
     }
 }
 ```
@@ -122,7 +118,7 @@ public static class WebPubSubTriggerReturnValueFunction
     public static UserEventResponse Run(
         [WebPubSubTrigger("hub", WebPubSubEventType.User, "message")] UserEventRequest request)
     {
-        return request.CreateResponse(BinaryData.FromString("ack"), MessageDataType.Text);
+        return request.CreateResponse(BinaryData.FromString("ack"), WebPubSubDataType.Text);
     }
 }
 ```

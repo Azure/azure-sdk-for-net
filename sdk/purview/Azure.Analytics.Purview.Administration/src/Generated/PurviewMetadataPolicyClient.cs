@@ -38,7 +38,7 @@ namespace Azure.Analytics.Purview.Administration
         /// <summary> Updates a metadata policy. </summary>
         /// <param name="policyId"> Unique policy id. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -114,7 +114,7 @@ namespace Azure.Analytics.Purview.Administration
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> UpdateMetadataPolicyAsync(string policyId, RequestContent content, RequestOptions options = null)
+        public virtual async Task<Response> UpdateMetadataPolicyAsync(string policyId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewMetadataPolicyClient.UpdateMetadataPolicy");
@@ -122,7 +122,7 @@ namespace Azure.Analytics.Purview.Administration
             try
             {
                 using HttpMessage message = CreateUpdateMetadataPolicyRequest(policyId, content);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -134,7 +134,7 @@ namespace Azure.Analytics.Purview.Administration
         /// <summary> Updates a metadata policy. </summary>
         /// <param name="policyId"> Unique policy id. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -210,7 +210,7 @@ namespace Azure.Analytics.Purview.Administration
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response UpdateMetadataPolicy(string policyId, RequestContent content, RequestOptions options = null)
+        public virtual Response UpdateMetadataPolicy(string policyId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewMetadataPolicyClient.UpdateMetadataPolicy");
@@ -218,7 +218,7 @@ namespace Azure.Analytics.Purview.Administration
             try
             {
                 using HttpMessage message = CreateUpdateMetadataPolicyRequest(policyId, content);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -229,7 +229,7 @@ namespace Azure.Analytics.Purview.Administration
 
         /// <summary> Gets a metadata policy. </summary>
         /// <param name="policyId"> Id of an existing policy that needs to be fetched. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -275,7 +275,7 @@ namespace Azure.Analytics.Purview.Administration
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetMetadataPolicyAsync(string policyId, RequestOptions options)
+        public virtual async Task<Response> GetMetadataPolicyAsync(string policyId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewMetadataPolicyClient.GetMetadataPolicy");
@@ -283,7 +283,7 @@ namespace Azure.Analytics.Purview.Administration
             try
             {
                 using HttpMessage message = CreateGetMetadataPolicyRequest(policyId);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -294,7 +294,7 @@ namespace Azure.Analytics.Purview.Administration
 
         /// <summary> Gets a metadata policy. </summary>
         /// <param name="policyId"> Id of an existing policy that needs to be fetched. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -340,7 +340,7 @@ namespace Azure.Analytics.Purview.Administration
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetMetadataPolicy(string policyId, RequestOptions options)
+        public virtual Response GetMetadataPolicy(string policyId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewMetadataPolicyClient.GetMetadataPolicy");
@@ -348,7 +348,7 @@ namespace Azure.Analytics.Purview.Administration
             try
             {
                 using HttpMessage message = CreateGetMetadataPolicyRequest(policyId);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -358,7 +358,7 @@ namespace Azure.Analytics.Purview.Administration
         }
 
         /// <summary> List or Get metadata policies. </summary>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -408,7 +408,7 @@ namespace Azure.Analytics.Purview.Administration
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual AsyncPageable<BinaryData> GetMetadataPoliciesAsync(RequestOptions options)
+        public virtual AsyncPageable<BinaryData> GetMetadataPoliciesAsync(RequestContext context = null)
 #pragma warning restore AZC0002
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "PurviewMetadataPolicyClient.GetMetadataPolicies");
@@ -419,7 +419,7 @@ namespace Azure.Analytics.Purview.Administration
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetMetadataPoliciesRequest()
                         : CreateGetMetadataPoliciesNextPageRequest(nextLink);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, options, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -427,7 +427,7 @@ namespace Azure.Analytics.Purview.Administration
         }
 
         /// <summary> List or Get metadata policies. </summary>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -477,7 +477,7 @@ namespace Azure.Analytics.Purview.Administration
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Pageable<BinaryData> GetMetadataPolicies(RequestOptions options)
+        public virtual Pageable<BinaryData> GetMetadataPolicies(RequestContext context = null)
 #pragma warning restore AZC0002
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "PurviewMetadataPolicyClient.GetMetadataPolicies");
@@ -488,7 +488,7 @@ namespace Azure.Analytics.Purview.Administration
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetMetadataPoliciesRequest()
                         : CreateGetMetadataPoliciesNextPageRequest(nextLink);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, options, "value", "nextLink");
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));

@@ -8,10 +8,10 @@ namespace Azure.Data.SchemaRegistry
     /// </summary>
     public class SchemaRegistrySchema
     {
-        internal SchemaRegistrySchema(SchemaProperties properties, string content)
+        internal SchemaRegistrySchema(SchemaProperties properties, string definition)
         {
             Properties = properties;
-            Content = content;
+            Definition = definition;
         }
 
         /// <summary>
@@ -20,8 +20,8 @@ namespace Azure.Data.SchemaRegistry
         public SchemaProperties Properties { get; }
 
         /// <summary>
-        /// The schema content of the SchemaRegistry schema.
+        /// The schema definition of the SchemaRegistry schema.
         /// </summary>
-        public string Content { get; }
+        public string Definition { get; }
     }
 }

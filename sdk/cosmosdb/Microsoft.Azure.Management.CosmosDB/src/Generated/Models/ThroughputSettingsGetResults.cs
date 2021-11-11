@@ -42,8 +42,8 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// <param name="type">The type of Azure resource.</param>
         /// <param name="location">The location of the resource group to which
         /// the resource belongs.</param>
-        public ThroughputSettingsGetResults(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ManagedServiceIdentity identity = default(ManagedServiceIdentity), ThroughputSettingsGetPropertiesResource resource = default(ThroughputSettingsGetPropertiesResource))
-            : base(id, name, type, location, tags, identity)
+        public ThroughputSettingsGetResults(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ThroughputSettingsGetPropertiesResource resource = default(ThroughputSettingsGetPropertiesResource))
+            : base(id, name, type, location, tags)
         {
             Resource = resource;
             CustomInit();

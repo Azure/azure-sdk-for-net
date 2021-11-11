@@ -9,6 +9,7 @@ namespace CustomerInsights.Tests.Tests
     using System.Text;
     using Microsoft.Azure.Management.CustomerInsights;
     using Microsoft.Azure.Management.CustomerInsights.Models;
+    using Microsoft.Azure.Test.HttpRecorder;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Xunit;
 
@@ -129,7 +130,9 @@ namespace CustomerInsights.Tests.Tests
                     ResourceGroupName,
                     HubName,
                     policyName);
-                Assert.NotEqual(resultPolicy.PrimaryKey, policyWithNewKey.PrimaryKey);
+                
+                if (HttpMockServer.Mode != HttpRecorderMode.Playback)
+                        Assert.NotEqual(resultPolicy.PrimaryKey, policyWithNewKey.PrimaryKey);
                 Assert.NotEmpty(policyWithNewKey.PrimaryKey);
             }
         }
@@ -155,7 +158,8 @@ namespace CustomerInsights.Tests.Tests
                     HubName,
                     policyName);
 
-                Assert.NotEqual(resultPolicy.SecondaryKey, policyWithNewKey.SecondaryKey);
+                if (HttpMockServer.Mode != HttpRecorderMode.Playback)
+                    Assert.NotEqual(resultPolicy.SecondaryKey, policyWithNewKey.SecondaryKey);
                 Assert.NotEmpty(policyWithNewKey.SecondaryKey);
             }
         }

@@ -42,6 +42,12 @@ namespace Azure
         public string Signature { get { throw null; } }
         public void Update(string signature) { }
     }
+    [System.FlagsAttribute]
+    public enum ErrorOptions
+    {
+        Default = 0,
+        NoThrow = 1,
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ETag : System.IEquatable<Azure.ETag>
     {
@@ -179,6 +185,13 @@ namespace Azure
         public System.DateTimeOffset? IfModifiedSince { get { throw null; } set { } }
         public System.DateTimeOffset? IfUnmodifiedSince { get { throw null; } set { } }
     }
+    public partial class RequestContext
+    {
+        public RequestContext() { }
+        public System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
+        public Azure.ErrorOptions ErrorOptions { get { throw null; } set { } }
+        public static implicit operator Azure.RequestContext (Azure.ErrorOptions options) { throw null; }
+    }
     public partial class RequestFailedException : System.Exception, System.Runtime.Serialization.ISerializable
     {
         public RequestFailedException(int status, string message) { }
@@ -261,6 +274,24 @@ namespace Azure.Core
         public override int GetHashCode() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string? ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ContentType : System.IEquatable<Azure.Core.ContentType>, System.IEquatable<string>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ContentType(string contentType) { throw null; }
+        public static Azure.Core.ContentType ApplicationJson { get { throw null; } }
+        public static Azure.Core.ContentType ApplicationOctetStream { get { throw null; } }
+        public static Azure.Core.ContentType TextPlain { get { throw null; } }
+        public bool Equals(Azure.Core.ContentType other) { throw null; }
+        public override bool Equals(object? obj) { throw null; }
+        public bool Equals(string? other) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Core.ContentType left, Azure.Core.ContentType right) { throw null; }
+        public static implicit operator Azure.Core.ContentType (string contentType) { throw null; }
+        public static bool operator !=(Azure.Core.ContentType left, Azure.Core.ContentType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public static partial class DelegatedTokenCredential
     {

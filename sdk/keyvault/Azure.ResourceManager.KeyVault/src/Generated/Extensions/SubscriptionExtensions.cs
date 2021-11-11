@@ -150,12 +150,12 @@ namespace Azure.ResourceManager.KeyVault
         #endregion
 
         #region DeletedVault
-        /// <summary> Gets an object representing a DeletedVaultContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a DeletedVaultCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="DeletedVaultContainer" /> object. </returns>
-        public static DeletedVaultContainer GetDeletedVaults(this Subscription subscription)
+        /// <returns> Returns a <see cref="DeletedVaultCollection" /> object. </returns>
+        public static DeletedVaultCollection GetDeletedVaults(this Subscription subscription)
         {
-            return new DeletedVaultContainer(subscription);
+            return new DeletedVaultCollection(subscription);
         }
         #endregion
 
