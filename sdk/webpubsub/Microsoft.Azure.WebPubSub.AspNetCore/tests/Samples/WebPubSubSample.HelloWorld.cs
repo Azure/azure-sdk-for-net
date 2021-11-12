@@ -1,9 +1,12 @@
-﻿#if NETCOREAPP3_0_OR_GREATER
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#if NETCOREAPP3_1_OR_GREATER
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Azure.WebPubSub.Common;
 using Microsoft.Extensions.DependencyInjection;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests.Samples
 {
@@ -32,20 +35,22 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests.Samples
         private sealed class SampleHub : WebPubSubHub
         {
             #region Snippet:WebPubSubConnectMethods
-            public override ValueTask<WebPubSubEventResponse> OnConnectAsync(ConnectEventRequest request, CancellationToken cancellationToken)
+            public override ValueTask<ConnectEventResponse> OnConnectAsync(ConnectEventRequest request, CancellationToken cancellationToken)
             {
                 var response = new ConnectEventResponse
                 {
                     UserId = request.ConnectionContext.UserId
                 };
-                return new ValueTask<WebPubSubEventResponse>(response);
+                return new ValueTask<ConnectEventResponse>(response);
             }
             #endregion
 
-            public override ValueTask<WebPubSubEventResponse> OnMessageReceivedAsync(UserEventRequest request, CancellationToken cancellationToken)
+            #region Snippet:WebPubSubDefaultMethods
+            public override ValueTask<UserEventResponse> OnMessageReceivedAsync(UserEventRequest request, CancellationToken cancellationToken)
             {
-                return new ValueTask<WebPubSubEventResponse>(request.CreateResponse("ack"));
+                return base.OnMessageReceivedAsync(request, cancellationToken);
             }
+            #endregion
         }
     }
 }

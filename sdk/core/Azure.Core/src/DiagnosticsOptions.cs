@@ -99,7 +99,7 @@ namespace Azure.Core
         public IList<string> LoggedQueryParameters { get; internal set; }
 
         /// <summary>
-        /// Gets or sets the value sent a the first part of "User-Agent" headers for all requests issues by this client. Defaults to <see cref="DefaultApplicationId"/>.
+        /// Gets or sets the value sent as the first part of "User-Agent" headers for all requests issues by this client. Defaults to <see cref="DefaultApplicationId"/>.
         /// </summary>
         public string? ApplicationId
         {

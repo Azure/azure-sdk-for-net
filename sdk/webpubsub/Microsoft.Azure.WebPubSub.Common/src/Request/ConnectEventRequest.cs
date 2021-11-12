@@ -23,13 +23,13 @@ namespace Microsoft.Azure.WebPubSub.Common
         /// User Claims.
         /// </summary>
         [JsonPropertyName(ClaimsProperty)]
-        public ReadOnlyDictionary<string, string[]> Claims { get; }
+        public IReadOnlyDictionary<string, string[]> Claims { get; }
 
         /// <summary>
         /// Request query.
         /// </summary>
         [JsonPropertyName(QueryProperty)]
-        public ReadOnlyDictionary<string, string[]> Query { get; }
+        public IReadOnlyDictionary<string, string[]> Query { get; }
 
         /// <summary>
         /// Supported subprotocols.
@@ -67,31 +67,31 @@ namespace Microsoft.Azure.WebPubSub.Common
             return new EventErrorResponse(code, message);
         }
 
-        internal ConnectEventRequest(
+        /// <summary>
+        /// The connect event request
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="claims"></param>
+        /// <param name="query"></param>
+        /// <param name="subprotocols"></param>
+        /// <param name="certificates"></param>
+        public ConnectEventRequest(
             WebPubSubConnectionContext context,
-            IDictionary<string, string[]> claims,
-            IDictionary<string, string[]> query,
+            IReadOnlyDictionary<string, string[]> claims,
+            IReadOnlyDictionary<string, string[]> query,
             IEnumerable<string> subprotocols,
             IEnumerable<WebPubSubClientCertificate> certificates) : base(context)
         {
             if (claims != null)
             {
-                Claims = new ReadOnlyDictionary<string, string[]>(claims);
+                Claims = claims;
             }
             if (query != null)
             {
-                Query = new ReadOnlyDictionary<string, string[]>(query);
+                Query = query;
             }
             Subprotocols = subprotocols?.ToArray();
             ClientCertificates = certificates?.ToArray();
-        }
-
-        internal ConnectEventRequest(
-            IDictionary<string, string[]> claims,
-            IDictionary<string, string[]> query,
-            IEnumerable<string> subprotocols,
-            IEnumerable<WebPubSubClientCertificate> certificates) : this(null, claims, query, subprotocols, certificates)
-        {
         }
     }
 }

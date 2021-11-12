@@ -2,11 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Data.SchemaRegistry.Models;
 
 namespace Azure.Data.SchemaRegistry
 {
@@ -113,17 +113,17 @@ namespace Azure.Data.SchemaRegistry
             scope.Start();
             try
             {
-                ResponseWithHeaders<SchemaId, SchemaRegisterHeaders> response;
+                ResponseWithHeaders<SchemaRegisterHeaders> response;
                 if (async)
                 {
-                    response = await RestClient.RegisterAsync(groupName, schemaName, format, schemaDefinition, cancellationToken).ConfigureAwait(false);
+                    response = await RestClient.RegisterAsync(groupName, schemaName, format.ContentType, new BinaryData(schemaDefinition).ToStream(), cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    response = RestClient.Register(groupName, schemaName, format, schemaDefinition, cancellationToken);
+                    response = RestClient.Register(groupName, schemaName,format.ContentType, new BinaryData(schemaDefinition).ToStream(), cancellationToken);
                 }
 
-                var properties = new SchemaProperties(response.Headers.SerializationType, response.Headers.SchemaId);
+                var properties = new SchemaProperties(format, response.Headers.SchemaId);
 
                 return Response.FromValue(properties, response);
             }
@@ -185,17 +185,17 @@ namespace Azure.Data.SchemaRegistry
             scope.Start();
             try
             {
-                ResponseWithHeaders<SchemaId, SchemaQueryIdByContentHeaders> response;
+                ResponseWithHeaders<SchemaQueryIdByContentHeaders> response;
                 if (async)
                 {
-                    response = await RestClient.QueryIdByContentAsync(groupName, schemaName, format, schemaDefinition, cancellationToken).ConfigureAwait(false);
+                    response = await RestClient.QueryIdByContentAsync(groupName, schemaName, format.ContentType, new BinaryData(schemaDefinition).ToStream(), cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    response = RestClient.QueryIdByContent(groupName, schemaName, format, schemaDefinition, cancellationToken);
+                    response = RestClient.QueryIdByContent(groupName, schemaName, format.ContentType, new BinaryData(schemaDefinition).ToStream(), cancellationToken);
                 }
 
-                var properties = new SchemaProperties(response.Headers.SerializationType, response.Headers.SchemaId);
+                var properties = new SchemaProperties(format, response.Headers.SchemaId);
 
                 return Response.FromValue(properties, response);
             }
@@ -234,7 +234,7 @@ namespace Azure.Data.SchemaRegistry
             scope.Start();
             try
             {
-                ResponseWithHeaders<string, SchemaGetByIdHeaders> response;
+                ResponseWithHeaders<Stream, SchemaGetByIdHeaders> response;
                 if (async)
                 {
                     response = await RestClient.GetByIdAsync(schemaId, cancellationToken).ConfigureAwait(false);
@@ -244,8 +244,9 @@ namespace Azure.Data.SchemaRegistry
                     response = RestClient.GetById(schemaId, cancellationToken);
                 }
 
-                var properties = new SchemaProperties(response.Headers.SerializationType, response.Headers.SchemaId);
-                var schema = new SchemaRegistrySchema(properties, response.Value);
+                SchemaFormat format = new SchemaFormat(response.Headers.ContentType.Split('=')[1]);
+                var properties = new SchemaProperties(format, response.Headers.SchemaId);
+                var schema = new SchemaRegistrySchema(properties, BinaryData.FromStream(response.Value).ToString());
 
                 return Response.FromValue(schema, response);
             }

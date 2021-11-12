@@ -16,10 +16,10 @@ Once you have created a client, you can call synchronous or asynchronous methods
 ## Synchronous
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPrediction
+ConversationsProject orchestrationProject = new ConversationsProject("DomainOrchestrator", "production");
 Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
-    "DomainOrchestrator",
-    "production",
-    "Where are the calories per recipe?");
+    "Where are the calories per recipe?",
+    orchestrationProject);
 
 OrchestratorPrediction orchestratorPrediction = response.Value.Prediction as OrchestratorPrediction;
 ```
@@ -27,10 +27,10 @@ OrchestratorPrediction orchestratorPrediction = response.Value.Prediction as Orc
 ## Asynchronous
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPredictionAsync
+ConversationsProject orchestrationProject = new ConversationsProject("DomainOrchestrator", "production");
 Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(
-    "DomainOrchestrator",
-    "production",
-    "Where are the calories per recipe?");
+    "Where are the calories per recipe?",
+    orchestrationProject);
 
 OrchestratorPrediction orchestratorPrediction = response.Value.Prediction as OrchestratorPrediction;
 ```

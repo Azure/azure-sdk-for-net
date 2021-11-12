@@ -82,9 +82,10 @@
     <PackageReference Update="Azure.Core" Version="1.21.0" />
     <PackageReference Update="Azure.Core.Amqp" Version="1.2.0" />
     <PackageReference Update="Azure.Core.Experimental" Version="0.1.0-preview.18" />
+    <PackageReference Update="Azure.Data.SchemaRegistry" Version="1.0.0" />  
     <PackageReference Update="Azure.Messaging.EventHubs" Version="5.6.2" />
     <PackageReference Update="Azure.Messaging.EventGrid" Version="4.7.0" />
-    <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.4.0" />
+    <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.5.0" />
     <PackageReference Update="Azure.Messaging.WebPubSub" Version="1.0.0-beta.2" />
     <PackageReference Update="Azure.Identity" Version="1.5.0" />
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.2.0" />
@@ -128,6 +129,7 @@
   <ItemGroup Condition="'$(IsExtensionClientLibrary)' == 'true'">
     <PackageReference Update="Microsoft.AspNetCore.DataProtection" Version="2.1.0" />
     <PackageReference Update="Microsoft.AspNetCore.Http" Version="2.1.22" />
+    <PackageReference Update="Microsoft.AspNetCore.Http.Connections" Version="1.0.15" />
     <PackageReference Update="Microsoft.Azure.Functions.Extensions" Version="1.0.0" />
     <PackageReference Update="Microsoft.Extensions.Azure" Version="1.1.1" />
     <PackageReference Update="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.1.0" />
