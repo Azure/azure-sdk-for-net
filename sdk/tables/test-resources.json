@@ -17,6 +17,13 @@
           "metadata": {
               "description": "The url suffix to use when accessing the cosmos data plane."
           }
+        },
+        "storageEndpointSuffix": {
+          "type": "string",
+          "defaultValue": "core.windows.net",
+          "metadata": {
+              "description": "The url suffix to use when accessing the storage data plane."
+          }
         }
     },
     "variables": {
@@ -117,6 +124,10 @@
         "COSMOS_TABLES_ENDPOINT_SUFFIX": {
             "type": "string",
             "value": "[parameters('cosmosEndpointSuffix')]"
+        },
+        "STORAGE_ENDPOINT_SUFFIX": {
+            "type": "string",
+            "value": "[parameters('storageEndpointSuffix')]"
         },
         "TABLES_STORAGE_ACCOUNT_NAME": {
             "type": "string",
