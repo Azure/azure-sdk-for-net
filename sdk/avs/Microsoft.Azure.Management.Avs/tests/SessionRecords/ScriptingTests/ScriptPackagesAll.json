@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "0ecf7bca-d8b5-4bc2-b32a-31d4f370b748"
+          "199710b4-bd74-4648-b2d9-dc7b80dd15e2"
         ],
         "Accept-Language": [
           "en-US"
@@ -16,7 +16,7 @@
           "FxVersion/5.0.1221.52207",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.22000",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
         ]
       },
       "ResponseHeaders": {
@@ -24,7 +24,7 @@
           "Rocket"
         ],
         "Date": [
-          "Thu, 11 Nov 2021 18:22:10 GMT"
+          "Fri, 12 Nov 2021 17:42:05 GMT"
         ],
         "Content-Type": [
           "application/json"
@@ -43,7 +43,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "defebe11-8e3c-450c-95a8-f6a62aa7d4fb"
+          "d6d1f799-ca29-432f-88ed-390da2ddf4b9"
         ],
         "Accept-Language": [
           "en-US"
@@ -52,7 +52,7 @@
           "FxVersion/5.0.1221.52207",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.22000",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
         ]
       },
       "ResponseHeaders": {
@@ -60,7 +60,7 @@
           "Rocket"
         ],
         "Date": [
-          "Thu, 11 Nov 2021 18:22:10 GMT"
+          "Fri, 12 Nov 2021 17:42:05 GMT"
         ],
         "Content-Type": [
           "application/json"

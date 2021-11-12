@@ -1,13 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/rg7936/providers/Microsoft.AVS/privateClouds?api-version=2021-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL3JnNzkzNi9wcm92aWRlcnMvTWljcm9zb2Z0LkFWUy9wcml2YXRlQ2xvdWRzP2FwaS12ZXJzaW9uPTIwMjEtMTItMDE=",
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/rg2012/providers/Microsoft.AVS/privateClouds?api-version=2021-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL3JnMjAxMi9wcm92aWRlcnMvTWljcm9zb2Z0LkFWUy9wcml2YXRlQ2xvdWRzP2FwaS12ZXJzaW9uPTIwMjEtMTItMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "818f2aec-6ff4-45d0-96e6-567db78ce957"
+          "32ca52ae-f218-4078-a5f5-8eb1da4c0b30"
         ],
         "Accept-Language": [
           "en-US"
@@ -16,7 +16,7 @@
           "FxVersion/5.0.1221.52207",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.22000",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
         ]
       },
       "ResponseHeaders": {
@@ -24,7 +24,7 @@
           "Rocket"
         ],
         "Date": [
-          "Thu, 11 Nov 2021 19:24:32 GMT"
+          "Fri, 12 Nov 2021 17:43:06 GMT"
         ],
         "Content-Type": [
           "application/json"
@@ -37,13 +37,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/rg7936/providers/Microsoft.AVS/privateClouds/cloud2525?api-version=2021-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL3JnNzkzNi9wcm92aWRlcnMvTWljcm9zb2Z0LkFWUy9wcml2YXRlQ2xvdWRzL2Nsb3VkMjUyNT9hcGktdmVyc2lvbj0yMDIxLTEyLTAx",
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/rg2012/providers/Microsoft.AVS/privateClouds/cloud2069?api-version=2021-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL3JnMjAxMi9wcm92aWRlcnMvTWljcm9zb2Z0LkFWUy9wcml2YXRlQ2xvdWRzL2Nsb3VkMjA2OT9hcGktdmVyc2lvbj0yMDIxLTEyLTAx",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"av20\"\r\n  },\r\n  \"properties\": {\r\n    \"managementCluster\": {\r\n      \"clusterSize\": 3\r\n    },\r\n    \"networkBlock\": \"192.168.48.0/22\"\r\n  },\r\n  \"location\": \"centralus\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "20a62cdb-146a-4d66-866a-dc6e69ece3c4"
+          "97362fd1-7688-4aa7-a306-66a33d5f915b"
         ],
         "Accept-Language": [
           "en-US"
@@ -52,7 +52,7 @@
           "FxVersion/5.0.1221.52207",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.22000",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -66,7 +66,7 @@
           "Rocket"
         ],
         "Date": [
-          "Thu, 11 Nov 2021 19:24:32 GMT"
+          "Fri, 12 Nov 2021 17:43:06 GMT"
         ],
         "Content-Type": [
           "application/json"
@@ -79,13 +79,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/rg7936/providers/Microsoft.AVS/privateClouds/cloud1/hcxEnterpriseSites?api-version=2021-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL3JnNzkzNi9wcm92aWRlcnMvTWljcm9zb2Z0LkFWUy9wcml2YXRlQ2xvdWRzL2Nsb3VkMS9oY3hFbnRlcnByaXNlU2l0ZXM/YXBpLXZlcnNpb249MjAyMS0xMi0wMQ==",
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/rg2012/providers/Microsoft.AVS/privateClouds/cloud1/hcxEnterpriseSites?api-version=2021-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL3JnMjAxMi9wcm92aWRlcnMvTWljcm9zb2Z0LkFWUy9wcml2YXRlQ2xvdWRzL2Nsb3VkMS9oY3hFbnRlcnByaXNlU2l0ZXM/YXBpLXZlcnNpb249MjAyMS0xMi0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "d9365c05-36f5-4c40-95f7-e497e1f911cb"
+          "5d033154-dcb5-4870-824a-8cefade8434b"
         ],
         "Accept-Language": [
           "en-US"
@@ -94,7 +94,7 @@
           "FxVersion/5.0.1221.52207",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.22000",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
         ]
       },
       "ResponseHeaders": {
@@ -102,7 +102,7 @@
           "Rocket"
         ],
         "Date": [
-          "Thu, 11 Nov 2021 19:24:32 GMT"
+          "Fri, 12 Nov 2021 17:43:06 GMT"
         ],
         "Content-Type": [
           "application/json"
@@ -115,13 +115,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/rg7936/providers/Microsoft.AVS/privateClouds/cloud1/hcxEnterpriseSites?api-version=2021-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL3JnNzkzNi9wcm92aWRlcnMvTWljcm9zb2Z0LkFWUy9wcml2YXRlQ2xvdWRzL2Nsb3VkMS9oY3hFbnRlcnByaXNlU2l0ZXM/YXBpLXZlcnNpb249MjAyMS0xMi0wMQ==",
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/rg2012/providers/Microsoft.AVS/privateClouds/cloud1/hcxEnterpriseSites?api-version=2021-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL3JnMjAxMi9wcm92aWRlcnMvTWljcm9zb2Z0LkFWUy9wcml2YXRlQ2xvdWRzL2Nsb3VkMS9oY3hFbnRlcnByaXNlU2l0ZXM/YXBpLXZlcnNpb249MjAyMS0xMi0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "ecb60b03-3b57-42be-96be-1ea095653e6b"
+          "6d09c1a1-caa4-4d68-8b54-7f3c5d933bb3"
         ],
         "Accept-Language": [
           "en-US"
@@ -130,7 +130,7 @@
           "FxVersion/5.0.1221.52207",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.22000",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
         ]
       },
       "ResponseHeaders": {
@@ -138,7 +138,7 @@
           "Rocket"
         ],
         "Date": [
-          "Thu, 11 Nov 2021 19:24:32 GMT"
+          "Fri, 12 Nov 2021 17:43:06 GMT"
         ],
         "Content-Type": [
           "application/json"
@@ -151,13 +151,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/rg7936/providers/Microsoft.AVS/privateClouds/cloud1/hcxEnterpriseSites/site7904?api-version=2021-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL3JnNzkzNi9wcm92aWRlcnMvTWljcm9zb2Z0LkFWUy9wcml2YXRlQ2xvdWRzL2Nsb3VkMS9oY3hFbnRlcnByaXNlU2l0ZXMvc2l0ZTc5MDQ/YXBpLXZlcnNpb249MjAyMS0xMi0wMQ==",
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/rg2012/providers/Microsoft.AVS/privateClouds/cloud1/hcxEnterpriseSites/site6241?api-version=2021-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL3JnMjAxMi9wcm92aWRlcnMvTWljcm9zb2Z0LkFWUy9wcml2YXRlQ2xvdWRzL2Nsb3VkMS9oY3hFbnRlcnByaXNlU2l0ZXMvc2l0ZTYyNDE/YXBpLXZlcnNpb249MjAyMS0xMi0wMQ==",
       "RequestMethod": "PUT",
       "RequestBody": "{}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "6d5c98d8-08dd-4722-8d77-1651e0c5918a"
+          "a4f0a7be-effc-448a-b5f1-a8bd52f14cc0"
         ],
         "Accept-Language": [
           "en-US"
@@ -166,7 +166,7 @@
           "FxVersion/5.0.1221.52207",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.22000",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -180,7 +180,7 @@
           "Rocket"
         ],
         "Date": [
-          "Thu, 11 Nov 2021 19:24:32 GMT"
+          "Fri, 12 Nov 2021 17:43:06 GMT"
         ],
         "Content-Type": [
           "application/json"
@@ -193,13 +193,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/rg7936/providers/Microsoft.AVS/privateClouds/cloud1/hcxEnterpriseSites/site1?api-version=2021-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL3JnNzkzNi9wcm92aWRlcnMvTWljcm9zb2Z0LkFWUy9wcml2YXRlQ2xvdWRzL2Nsb3VkMS9oY3hFbnRlcnByaXNlU2l0ZXMvc2l0ZTE/YXBpLXZlcnNpb249MjAyMS0xMi0wMQ==",
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/rg2012/providers/Microsoft.AVS/privateClouds/cloud1/hcxEnterpriseSites/site1?api-version=2021-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL3JnMjAxMi9wcm92aWRlcnMvTWljcm9zb2Z0LkFWUy9wcml2YXRlQ2xvdWRzL2Nsb3VkMS9oY3hFbnRlcnByaXNlU2l0ZXMvc2l0ZTE/YXBpLXZlcnNpb249MjAyMS0xMi0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "bbf792aa-42b2-47c0-88d9-8c58def28d7b"
+          "7efba2b5-0f7a-455e-b522-aed0f91921f7"
         ],
         "Accept-Language": [
           "en-US"
@@ -208,7 +208,7 @@
           "FxVersion/5.0.1221.52207",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.22000",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
         ]
       },
       "ResponseHeaders": {
@@ -216,7 +216,7 @@
           "Rocket"
         ],
         "Date": [
-          "Thu, 11 Nov 2021 19:24:32 GMT"
+          "Fri, 12 Nov 2021 17:43:06 GMT"
         ],
         "Content-Type": [
           "application/json"
@@ -229,13 +229,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/rg7936/providers/Microsoft.AVS/privateClouds/cloud1/hcxEnterpriseSites/site1?api-version=2021-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL3JnNzkzNi9wcm92aWRlcnMvTWljcm9zb2Z0LkFWUy9wcml2YXRlQ2xvdWRzL2Nsb3VkMS9oY3hFbnRlcnByaXNlU2l0ZXMvc2l0ZTE/YXBpLXZlcnNpb249MjAyMS0xMi0wMQ==",
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/rg2012/providers/Microsoft.AVS/privateClouds/cloud1/hcxEnterpriseSites/site1?api-version=2021-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL3JnMjAxMi9wcm92aWRlcnMvTWljcm9zb2Z0LkFWUy9wcml2YXRlQ2xvdWRzL2Nsb3VkMS9oY3hFbnRlcnByaXNlU2l0ZXMvc2l0ZTE/YXBpLXZlcnNpb249MjAyMS0xMi0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "f5027397-831e-4b8d-a369-b9ffdb5c02a3"
+          "f0263275-9caa-4dd7-8369-f7f9e97da5e5"
         ],
         "Accept-Language": [
           "en-US"
@@ -244,7 +244,7 @@
           "FxVersion/5.0.1221.52207",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.22000",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
         ]
       },
       "ResponseHeaders": {
@@ -252,7 +252,7 @@
           "Rocket"
         ],
         "Date": [
-          "Thu, 11 Nov 2021 19:24:32 GMT"
+          "Fri, 12 Nov 2021 17:43:06 GMT"
         ],
         "Content-Type": [
           "application/json"
@@ -265,13 +265,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/rg7936/providers/Microsoft.AVS/privateClouds/cloud1/hcxEnterpriseSites/site1?api-version=2021-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL3JnNzkzNi9wcm92aWRlcnMvTWljcm9zb2Z0LkFWUy9wcml2YXRlQ2xvdWRzL2Nsb3VkMS9oY3hFbnRlcnByaXNlU2l0ZXMvc2l0ZTE/YXBpLXZlcnNpb249MjAyMS0xMi0wMQ==",
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/rg2012/providers/Microsoft.AVS/privateClouds/cloud1/hcxEnterpriseSites/site1?api-version=2021-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL3JnMjAxMi9wcm92aWRlcnMvTWljcm9zb2Z0LkFWUy9wcml2YXRlQ2xvdWRzL2Nsb3VkMS9oY3hFbnRlcnByaXNlU2l0ZXMvc2l0ZTE/YXBpLXZlcnNpb249MjAyMS0xMi0wMQ==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "15036886-7a7a-4d98-a151-5f0f482be635"
+          "0f59951e-e1c3-4eb8-948d-443f0df99470"
         ],
         "Accept-Language": [
           "en-US"
@@ -280,7 +280,7 @@
           "FxVersion/5.0.1221.52207",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.22000",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
         ]
       },
       "ResponseHeaders": {
@@ -288,7 +288,7 @@
           "Rocket"
         ],
         "Date": [
-          "Thu, 11 Nov 2021 19:24:32 GMT"
+          "Fri, 12 Nov 2021 17:43:06 GMT"
         ],
         "Content-Length": [
           "0"
@@ -298,13 +298,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/rg7936/providers/Microsoft.AVS/privateClouds/cloud1/authorizations?api-version=2021-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL3JnNzkzNi9wcm92aWRlcnMvTWljcm9zb2Z0LkFWUy9wcml2YXRlQ2xvdWRzL2Nsb3VkMS9hdXRob3JpemF0aW9ucz9hcGktdmVyc2lvbj0yMDIxLTEyLTAx",
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/rg2012/providers/Microsoft.AVS/privateClouds/cloud1/authorizations?api-version=2021-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL3JnMjAxMi9wcm92aWRlcnMvTWljcm9zb2Z0LkFWUy9wcml2YXRlQ2xvdWRzL2Nsb3VkMS9hdXRob3JpemF0aW9ucz9hcGktdmVyc2lvbj0yMDIxLTEyLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "f3a7a6d4-0f09-4d02-a0e3-381b6a755a1a"
+          "0444f599-a236-4f5b-aeff-cd7264b9f3b4"
         ],
         "Accept-Language": [
           "en-US"
@@ -313,7 +313,7 @@
           "FxVersion/5.0.1221.52207",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.22000",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
         ]
       },
       "ResponseHeaders": {
@@ -321,7 +321,7 @@
           "Rocket"
         ],
         "Date": [
-          "Thu, 11 Nov 2021 19:24:32 GMT"
+          "Fri, 12 Nov 2021 17:43:06 GMT"
         ],
         "Content-Type": [
           "application/json"
@@ -334,13 +334,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/rg7936/providers/Microsoft.AVS/privateClouds/cloud2525/clusters?api-version=2021-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL3JnNzkzNi9wcm92aWRlcnMvTWljcm9zb2Z0LkFWUy9wcml2YXRlQ2xvdWRzL2Nsb3VkMjUyNS9jbHVzdGVycz9hcGktdmVyc2lvbj0yMDIxLTEyLTAx",
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/rg2012/providers/Microsoft.AVS/privateClouds/cloud2069/clusters?api-version=2021-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL3JnMjAxMi9wcm92aWRlcnMvTWljcm9zb2Z0LkFWUy9wcml2YXRlQ2xvdWRzL2Nsb3VkMjA2OS9jbHVzdGVycz9hcGktdmVyc2lvbj0yMDIxLTEyLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "d3059eec-cc5a-442a-bf48-725179897191"
+          "bd79c49c-e63c-497f-a491-c88b1afed49c"
         ],
         "Accept-Language": [
           "en-US"
@@ -349,7 +349,7 @@
           "FxVersion/5.0.1221.52207",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.22000",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
         ]
       },
       "ResponseHeaders": {
@@ -357,7 +357,7 @@
           "Rocket"
         ],
         "Date": [
-          "Thu, 11 Nov 2021 19:24:32 GMT"
+          "Fri, 12 Nov 2021 17:43:06 GMT"
         ],
         "Content-Type": [
           "application/json"
@@ -370,13 +370,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/rg7936/providers/Microsoft.AVS/privateClouds/cloud2525/clusters?api-version=2021-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL3JnNzkzNi9wcm92aWRlcnMvTWljcm9zb2Z0LkFWUy9wcml2YXRlQ2xvdWRzL2Nsb3VkMjUyNS9jbHVzdGVycz9hcGktdmVyc2lvbj0yMDIxLTEyLTAx",
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/rg2012/providers/Microsoft.AVS/privateClouds/cloud2069/clusters?api-version=2021-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL3JnMjAxMi9wcm92aWRlcnMvTWljcm9zb2Z0LkFWUy9wcml2YXRlQ2xvdWRzL2Nsb3VkMjA2OS9jbHVzdGVycz9hcGktdmVyc2lvbj0yMDIxLTEyLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "bdfd68c9-8343-4f1d-a8e6-9a10a66e9269"
+          "c0225208-468c-4a36-83eb-c0f908628fd2"
         ],
         "Accept-Language": [
           "en-US"
@@ -385,7 +385,7 @@
           "FxVersion/5.0.1221.52207",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.22000",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
         ]
       },
       "ResponseHeaders": {
@@ -393,7 +393,7 @@
           "Rocket"
         ],
         "Date": [
-          "Thu, 11 Nov 2021 19:24:32 GMT"
+          "Fri, 12 Nov 2021 17:43:06 GMT"
         ],
         "Content-Type": [
           "application/json"
@@ -406,13 +406,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/rg7936/providers/Microsoft.AVS/privateClouds/cloud2525/clusters/cluster9022?api-version=2021-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL3JnNzkzNi9wcm92aWRlcnMvTWljcm9zb2Z0LkFWUy9wcml2YXRlQ2xvdWRzL2Nsb3VkMjUyNS9jbHVzdGVycy9jbHVzdGVyOTAyMj9hcGktdmVyc2lvbj0yMDIxLTEyLTAx",
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/rg2012/providers/Microsoft.AVS/privateClouds/cloud2069/clusters/cluster4062?api-version=2021-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL3JnMjAxMi9wcm92aWRlcnMvTWljcm9zb2Z0LkFWUy9wcml2YXRlQ2xvdWRzL2Nsb3VkMjA2OS9jbHVzdGVycy9jbHVzdGVyNDA2Mj9hcGktdmVyc2lvbj0yMDIxLTEyLTAx",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"av20\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterSize\": 3\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "ad5ea644-1a37-4e75-be63-83c0b15db5e8"
+          "a1ceb6f8-28c6-404c-8ed3-5cf3ab72acd3"
         ],
         "Accept-Language": [
           "en-US"
@@ -421,7 +421,7 @@
           "FxVersion/5.0.1221.52207",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.22000",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -435,7 +435,7 @@
           "Rocket"
         ],
         "Date": [
-          "Thu, 11 Nov 2021 19:24:32 GMT"
+          "Fri, 12 Nov 2021 17:43:06 GMT"
         ],
         "Content-Type": [
           "application/json"
@@ -448,13 +448,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/rg7936/providers/Microsoft.AVS/privateClouds/cloud2525/clusters/cluster1?api-version=2021-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL3JnNzkzNi9wcm92aWRlcnMvTWljcm9zb2Z0LkFWUy9wcml2YXRlQ2xvdWRzL2Nsb3VkMjUyNS9jbHVzdGVycy9jbHVzdGVyMT9hcGktdmVyc2lvbj0yMDIxLTEyLTAx",
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/rg2012/providers/Microsoft.AVS/privateClouds/cloud2069/clusters/cluster1?api-version=2021-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL3JnMjAxMi9wcm92aWRlcnMvTWljcm9zb2Z0LkFWUy9wcml2YXRlQ2xvdWRzL2Nsb3VkMjA2OS9jbHVzdGVycy9jbHVzdGVyMT9hcGktdmVyc2lvbj0yMDIxLTEyLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "5db0e3db-80a2-482a-b95b-be15fc7b3fa5"
+          "b3618bdd-f7f0-4112-a2d2-b68291a45e12"
         ],
         "Accept-Language": [
           "en-US"
@@ -463,7 +463,7 @@
           "FxVersion/5.0.1221.52207",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.22000",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
         ]
       },
       "ResponseHeaders": {
@@ -471,7 +471,7 @@
           "Rocket"
         ],
         "Date": [
-          "Thu, 11 Nov 2021 19:24:32 GMT"
+          "Fri, 12 Nov 2021 17:43:06 GMT"
         ],
         "Content-Type": [
           "application/json"
@@ -484,13 +484,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/rg7936/providers/Microsoft.AVS/privateClouds/cloud2525/clusters/cluster1?api-version=2021-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL3JnNzkzNi9wcm92aWRlcnMvTWljcm9zb2Z0LkFWUy9wcml2YXRlQ2xvdWRzL2Nsb3VkMjUyNS9jbHVzdGVycy9jbHVzdGVyMT9hcGktdmVyc2lvbj0yMDIxLTEyLTAx",
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/rg2012/providers/Microsoft.AVS/privateClouds/cloud2069/clusters/cluster1?api-version=2021-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL3JnMjAxMi9wcm92aWRlcnMvTWljcm9zb2Z0LkFWUy9wcml2YXRlQ2xvdWRzL2Nsb3VkMjA2OS9jbHVzdGVycy9jbHVzdGVyMT9hcGktdmVyc2lvbj0yMDIxLTEyLTAx",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "7a476a5d-f0bd-4536-82ec-4ac29e381ef6"
+          "25339991-0d81-4d0c-b605-0705be506fa5"
         ],
         "Accept-Language": [
           "en-US"
@@ -499,7 +499,7 @@
           "FxVersion/5.0.1221.52207",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.22000",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
         ]
       },
       "ResponseHeaders": {
@@ -507,7 +507,7 @@
           "Rocket"
         ],
         "Date": [
-          "Thu, 11 Nov 2021 19:24:32 GMT"
+          "Fri, 12 Nov 2021 17:43:06 GMT"
         ],
         "Content-Length": [
           "0"
@@ -517,13 +517,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/rg7936/providers/Microsoft.AVS/privateClouds/cloud2525?api-version=2021-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL3JnNzkzNi9wcm92aWRlcnMvTWljcm9zb2Z0LkFWUy9wcml2YXRlQ2xvdWRzL2Nsb3VkMjUyNT9hcGktdmVyc2lvbj0yMDIxLTEyLTAx",
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/rg2012/providers/Microsoft.AVS/privateClouds/cloud2069?api-version=2021-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL3JnMjAxMi9wcm92aWRlcnMvTWljcm9zb2Z0LkFWUy9wcml2YXRlQ2xvdWRzL2Nsb3VkMjA2OT9hcGktdmVyc2lvbj0yMDIxLTEyLTAx",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e3749915-aefb-4276-bc62-d455a1783c0c"
+          "1d7b0325-50b5-4efb-ba04-cfe3252f0fd6"
         ],
         "Accept-Language": [
           "en-US"
@@ -532,7 +532,7 @@
           "FxVersion/5.0.1221.52207",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.22000",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
         ]
       },
       "ResponseHeaders": {
@@ -540,7 +540,7 @@
           "Rocket"
         ],
         "Date": [
-          "Thu, 11 Nov 2021 19:24:32 GMT"
+          "Fri, 12 Nov 2021 17:43:06 GMT"
         ],
         "Content-Length": [
           "0"
@@ -552,11 +552,11 @@
   ],
   "Names": {
     "AvsCrud": [
-      "rg7936",
-      "cloud2525",
-      "cluster9022",
-      "site7904",
-      "authorization1577"
+      "rg2012",
+      "cloud2069",
+      "cluster4062",
+      "site6241",
+      "authorization5702"
     ]
   },
   "Variables": {

@@ -7,7 +7,7 @@
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"defaultDnsZone\",\r\n    \"domain\": [],\r\n    \"dnsServerIps\": [\r\n      \"1.1.1.1\"\r\n    ]\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "bda17ede-ccec-422b-9e6b-1a78f8503172"
+          "c078041d-bc59-4fdc-b633-93f03293c7b7"
         ],
         "Accept-Language": [
           "en-US"
@@ -16,7 +16,7 @@
           "FxVersion/5.0.1221.52207",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.22000",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -30,7 +30,7 @@
           "Rocket"
         ],
         "Date": [
-          "Thu, 11 Nov 2021 18:21:58 GMT"
+          "Fri, 12 Nov 2021 17:41:52 GMT"
         ],
         "Content-Type": [
           "application/json"
@@ -49,7 +49,7 @@
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"fqdnDnsZone\",\r\n    \"domain\": [\r\n      \"fqdndnszone.com\"\r\n    ],\r\n    \"dnsServerIps\": [\r\n      \"1.1.1.1\"\r\n    ]\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "75bb7c8c-52b0-4ba0-b966-ee88108423f4"
+          "79d8ac50-e04b-45ab-85b7-9cdb5c9bb2ee"
         ],
         "Accept-Language": [
           "en-US"
@@ -58,7 +58,7 @@
           "FxVersion/5.0.1221.52207",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.22000",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -72,7 +72,7 @@
           "Rocket"
         ],
         "Date": [
-          "Thu, 11 Nov 2021 18:21:58 GMT"
+          "Fri, 12 Nov 2021 17:41:52 GMT"
         ],
         "Content-Type": [
           "application/json"
@@ -91,7 +91,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "66db3151-fc8a-4efc-836d-b7d9d797a591"
+          "fcd0feba-467a-4a55-84a6-239cd152c1bf"
         ],
         "Accept-Language": [
           "en-US"
@@ -100,7 +100,7 @@
           "FxVersion/5.0.1221.52207",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.22000",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
         ]
       },
       "ResponseHeaders": {
@@ -108,7 +108,7 @@
           "Rocket"
         ],
         "Date": [
-          "Thu, 11 Nov 2021 18:21:58 GMT"
+          "Fri, 12 Nov 2021 17:41:52 GMT"
         ],
         "Content-Type": [
           "application/json"
@@ -127,7 +127,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "6f47db21-e3a0-40f0-85ca-1c534a601aa4"
+          "6572e8f0-bf3c-4a68-8f25-f16b57fe8e3e"
         ],
         "Accept-Language": [
           "en-US"
@@ -136,7 +136,7 @@
           "FxVersion/5.0.1221.52207",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.22000",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
         ]
       },
       "ResponseHeaders": {
@@ -144,7 +144,7 @@
           "Rocket"
         ],
         "Date": [
-          "Thu, 11 Nov 2021 18:21:58 GMT"
+          "Fri, 12 Nov 2021 17:41:52 GMT"
         ],
         "Content-Type": [
           "application/json"
@@ -163,7 +163,7 @@
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"modifiedDnsZone\",\r\n    \"domain\": [],\r\n    \"dnsServerIps\": [\r\n      \"1.1.1.1\"\r\n    ]\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "4d37e24e-fcaa-4269-9d3d-af3b00ada3a4"
+          "7ee224c6-4e4e-4c68-a2d0-a1d15ae63257"
         ],
         "Accept-Language": [
           "en-US"
@@ -172,7 +172,7 @@
           "FxVersion/5.0.1221.52207",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.22000",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -186,7 +186,7 @@
           "Rocket"
         ],
         "Date": [
-          "Thu, 11 Nov 2021 18:21:58 GMT"
+          "Fri, 12 Nov 2021 17:41:52 GMT"
         ],
         "Content-Type": [
           "application/json"
@@ -205,7 +205,7 @@
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"dns-forwarder\",\r\n    \"dnsServiceIp\": \"5.5.5.5\",\r\n    \"defaultDnsZone\": \"dnsZone1\",\r\n    \"fqdnZones\": [\r\n      \"dnsZone1\"\r\n    ],\r\n    \"logLevel\": \"INFO\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "5898304f-0e6b-4eb8-94ef-6c42e7485856"
+          "d0c504b0-2770-4271-b705-6f5853a33697"
         ],
         "Accept-Language": [
           "en-US"
@@ -214,7 +214,7 @@
           "FxVersion/5.0.1221.52207",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.22000",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -228,7 +228,7 @@
           "Rocket"
         ],
         "Date": [
-          "Thu, 11 Nov 2021 18:21:58 GMT"
+          "Fri, 12 Nov 2021 17:41:52 GMT"
         ],
         "Content-Type": [
           "application/json"
@@ -247,7 +247,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "7e36eeef-f5ac-45b1-ae37-acf9886a9061"
+          "860d51f2-184c-44eb-9534-72c6a49503a5"
         ],
         "Accept-Language": [
           "en-US"
@@ -256,7 +256,7 @@
           "FxVersion/5.0.1221.52207",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.22000",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
         ]
       },
       "ResponseHeaders": {
@@ -264,7 +264,7 @@
           "Rocket"
         ],
         "Date": [
-          "Thu, 11 Nov 2021 18:21:58 GMT"
+          "Fri, 12 Nov 2021 17:41:52 GMT"
         ],
         "Content-Type": [
           "application/json"
@@ -283,7 +283,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "255cc721-f4d1-4cab-a271-a02722f2cc75"
+          "6d1e004d-de40-4989-82ef-8191d0a8f775"
         ],
         "Accept-Language": [
           "en-US"
@@ -292,7 +292,7 @@
           "FxVersion/5.0.1221.52207",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.22000",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
         ]
       },
       "ResponseHeaders": {
@@ -300,7 +300,7 @@
           "Rocket"
         ],
         "Date": [
-          "Thu, 11 Nov 2021 18:21:58 GMT"
+          "Fri, 12 Nov 2021 17:41:52 GMT"
         ],
         "Content-Type": [
           "application/json"
@@ -319,7 +319,7 @@
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"modifiedDnsService\",\r\n    \"dnsServiceIp\": \"5.5.5.5\",\r\n    \"defaultDnsZone\": \"dnsZone1\",\r\n    \"fqdnZones\": [\r\n      \"dnsZone1\"\r\n    ],\r\n    \"logLevel\": \"INFO\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "5ffe1701-7e4d-43ae-9023-8610805765ff"
+          "4aa71708-97c2-425d-9061-60d9d77a6900"
         ],
         "Accept-Language": [
           "en-US"
@@ -328,7 +328,7 @@
           "FxVersion/5.0.1221.52207",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.22000",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -342,7 +342,7 @@
           "Rocket"
         ],
         "Date": [
-          "Thu, 11 Nov 2021 18:21:58 GMT"
+          "Fri, 12 Nov 2021 17:41:52 GMT"
         ],
         "Content-Type": [
           "application/json"
@@ -361,7 +361,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "f26263c2-661f-42af-835c-660fdc372abe"
+          "792b7831-238a-4c3d-bfd7-c610fd7759a1"
         ],
         "Accept-Language": [
           "en-US"
@@ -370,7 +370,7 @@
           "FxVersion/5.0.1221.52207",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.22000",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
         ]
       },
       "ResponseHeaders": {
@@ -378,7 +378,7 @@
           "Rocket"
         ],
         "Date": [
-          "Thu, 11 Nov 2021 18:21:58 GMT"
+          "Fri, 12 Nov 2021 17:41:52 GMT"
         ],
         "Content-Length": [
           "0"
@@ -394,7 +394,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "4bd8a1ef-452a-4ccc-a80c-9b6ead1bd8b3"
+          "c91c4564-9077-46d3-845e-70f6ef7a3673"
         ],
         "Accept-Language": [
           "en-US"
@@ -403,7 +403,7 @@
           "FxVersion/5.0.1221.52207",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.22000",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
         ]
       },
       "ResponseHeaders": {
@@ -411,7 +411,7 @@
           "Rocket"
         ],
         "Date": [
-          "Thu, 11 Nov 2021 18:21:58 GMT"
+          "Fri, 12 Nov 2021 17:41:52 GMT"
         ],
         "Content-Length": [
           "0"
@@ -427,7 +427,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "3aca99dd-f8b2-4c79-bc7f-b767d8dba443"
+          "7d0adb42-3fa6-4b98-b360-4c7e2f7a531f"
         ],
         "Accept-Language": [
           "en-US"
@@ -436,7 +436,7 @@
           "FxVersion/5.0.1221.52207",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.22000",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
         ]
       },
       "ResponseHeaders": {
@@ -444,7 +444,7 @@
           "Rocket"
         ],
         "Date": [
-          "Thu, 11 Nov 2021 18:21:58 GMT"
+          "Fri, 12 Nov 2021 17:41:52 GMT"
         ],
         "Content-Length": [
           "0"
