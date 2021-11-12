@@ -51,7 +51,7 @@ namespace Azure.Core.Pipeline
         /// <param name="responseClassifier">The client provided response classifier.</param>
         /// <param name="defaultTransportOptions">The customer provided transport options which will be applied to the default transport.</param>
         /// <returns>A new instance of <see cref="HttpPipeline"/></returns>
-        public static DisposableHttpPipeline Build(ClientOptions options, HttpPipelinePolicy[] perCallPolicies, HttpPipelinePolicy[] perRetryPolicies, ResponseClassifier responseClassifier, HttpPipelineTransportOptions? defaultTransportOptions)
+        public static HttpPipeline Build(ClientOptions options, HttpPipelinePolicy[] perCallPolicies, HttpPipelinePolicy[] perRetryPolicies, ResponseClassifier responseClassifier, HttpPipelineTransportOptions? defaultTransportOptions)
         {
             if (perCallPolicies == null)
             {
@@ -140,10 +140,13 @@ namespace Azure.Core.Pipeline
                 else
                 {
                     transport = HttpPipelineTransport.Create(defaultTransportOptions);
+                    return new DisposableHttpPipeline(transport,
+                        policies.ToArray(),
+                        responseClassifier);
                 }
             }
 
-            return new DisposableHttpPipeline(transport,
+            return new HttpPipeline(transport,
                 policies.ToArray(),
                 responseClassifier);
         }
