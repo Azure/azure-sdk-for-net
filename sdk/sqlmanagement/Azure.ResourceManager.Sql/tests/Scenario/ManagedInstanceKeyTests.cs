@@ -50,6 +50,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             string managedInstanceName = Recording.GenerateAssetName("managed-instance-");
             var managedInstance = await CreateDefaultManagedInstance(managedInstanceName, Location.WestUS2, _resourceGroup);
             Assert.IsNotNull(managedInstance.Data);
+
             string keyName = "ServiceManaged";
             var collection = managedInstance.GetManagedInstanceKeys();
 
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             Assert.AreEqual(keyName,list.FirstOrDefault().Data.Name);
 
             // 5.Delete - Ignore("The operation could not be completed.")
-            var deleteKey =await collection.GetAsync(keyName);
-            await deleteKey.Value.DeleteAsync();
+            //var deleteKey =await collection.GetAsync(keyName);
+            //await deleteKey.Value.DeleteAsync();
         }
     }
 }

@@ -50,10 +50,11 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             string managedInstanceName = Recording.GenerateAssetName("managed-instance-");
             var managedInstance = await CreateDefaultManagedInstance(managedInstanceName, Location.WestUS2, _resourceGroup);
             Assert.IsNotNull(managedInstance.Data);
+
+            string encryptionProtectorName = "current";
             var collection = managedInstance.GetManagedInstanceEncryptionProtectors();
 
             // 1.CreateOrUpdata
-            string encryptionProtectorName = "current";
             ManagedInstanceEncryptionProtectorData data = new ManagedInstanceEncryptionProtectorData()
             {
                 ServerKeyName = "ServiceManaged",

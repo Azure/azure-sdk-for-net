@@ -52,10 +52,11 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             string managedInstanceName = Recording.GenerateAssetName("managed-instance-");
             var managedInstance = await CreateDefaultManagedInstance(managedInstanceName, Location.WestUS2, _resourceGroup);
             Assert.IsNotNull(managedInstance.Data);
+
+            string adminName = Recording.GenerateAssetName("admin-");
             var collection = managedInstance.GetManagedInstanceAdministrators();
 
             //1.CreateOrUpdata
-            string adminName = Recording.GenerateAssetName("admin-");
             ManagedInstanceAdministratorData data = new ManagedInstanceAdministratorData()
             {
                 AdministratorType = ManagedInstanceAdministratorType.ActiveDirectory,

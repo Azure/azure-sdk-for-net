@@ -50,8 +50,9 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             string managedInstanceName = Recording.GenerateAssetName("managed-instance-");
             var managedInstance = await CreateDefaultManagedInstance(managedInstanceName, Location.WestUS2, _resourceGroup);
             Assert.IsNotNull(managedInstance.Data);
-            var collection = managedInstance.GetManagedServerSecurityAlertPolicies();
+
             string securityAlertPoliciesName = "Default";
+            var collection = managedInstance.GetManagedServerSecurityAlertPolicies();
 
             // 1.CreateOrUpdate
             ManagedServerSecurityAlertPolicyData data = new ManagedServerSecurityAlertPolicyData()
@@ -62,18 +63,18 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
                 EmailAccountAdmins = false,
                 RetentionDays = 0,
             };
-            var key = await collection.CreateOrUpdateAsync(securityAlertPoliciesName, data);
-            Assert.IsNotNull(key.Value.Data);
-            Assert.AreEqual(securityAlertPoliciesName, key.Value.Data.Name);
-            Assert.AreEqual("Enabled", key.Value.Data.State.ToString());
+            var securityAlertPolicie = await collection.CreateOrUpdateAsync(securityAlertPoliciesName, data);
+            Assert.IsNotNull(securityAlertPolicie.Value.Data);
+            Assert.AreEqual(securityAlertPoliciesName, securityAlertPolicie.Value.Data.Name);
+            Assert.AreEqual("Enabled", securityAlertPolicie.Value.Data.State.ToString());
 
             // 2.CheckIfExist
             Assert.IsTrue(collection.CheckIfExists(securityAlertPoliciesName));
 
             // 3.Get
-            var getKey = await collection.GetAsync(securityAlertPoliciesName);
-            Assert.IsNotNull(getKey.Value.Data);
-            Assert.AreEqual(securityAlertPoliciesName, getKey.Value.Data.Name);
+            var getsecurityAlertPolicie = await collection.GetAsync(securityAlertPoliciesName);
+            Assert.IsNotNull(getsecurityAlertPolicie.Value.Data);
+            Assert.AreEqual(securityAlertPoliciesName, getsecurityAlertPolicie.Value.Data.Name);
 
             // 4.GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();

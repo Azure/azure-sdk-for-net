@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Identity;
+using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql.Models;
@@ -15,12 +17,11 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Sql.Tests.Scenario
 {
-    public class DatabaseTests : SqlManagementClientBase
+    public class ManagedInstanceOperationTests : SqlManagementClientBase
     {
         private ResourceGroup _resourceGroup;
         private ResourceIdentifier _resourceGroupIdentifier;
-
-        public DatabaseTests(bool isAsync)
+        public ManagedInstanceOperationTests(bool isAsync)
             : base(isAsync)
         {
         }
@@ -43,41 +44,30 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        public async Task DatabaseApiTests()
+        public async Task ManagedInstanceKeyApiTests()
         {
-            //// create Managed Instance
+            // Create Managed Instance
             string managedInstanceName = Recording.GenerateAssetName("managed-instance-");
             var managedInstance = await CreateDefaultManagedInstance(managedInstanceName, Location.WestUS2, _resourceGroup);
+            Assert.IsNotNull(managedInstance.Data);
 
-            string databaseName = Recording.GenerateAssetName("mi-database-");
-            var collection = managedInstance.GetManagedDatabases();
+            var collection = managedInstance.GetManagedInstanceOperations();
 
-            // 1.CreateOrUpdata
-            ManagedDatabaseData data = new ManagedDatabaseData(Location.WestUS2) { };
-            var database = await collection.CreateOrUpdateAsync(databaseName, data);
-            Assert.IsNotNull(database.Value.Data);
-            Assert.AreEqual(databaseName, database.Value.Data.Name);
-
-            // 2.CheckIfExist
-            Assert.IsTrue(collection.CheckIfExists(databaseName));
-            Assert.IsFalse(collection.CheckIfExists(databaseName + "0"));
-
-            // 3.Get
-            var getDatabase = await collection.GetAsync(databaseName);
-            Assert.IsNotNull(getDatabase.Value.Data);
-            Assert.AreEqual(databaseName, getDatabase.Value.Data.Name);
-
-            // 4.GetAll
+            // 1.GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
-            Assert.AreEqual(1, list.Count);
-            Assert.AreEqual(databaseName, list.FirstOrDefault().Data.Name);
+            Guid operationName = new Guid(list.FirstOrDefault().Data.Name);
 
-            // 5.Delete
-            var deleteDatabase = await collection.GetAsync(databaseName);
-            await deleteDatabase.Value.DeleteAsync();
-            list = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsEmpty(list);
+            // 2.CheckIfExist
+            Assert.IsTrue(collection.CheckIfExists(operationName));
+
+            // 3.Get
+            var getOperation = await collection.GetAsync(operationName);
+            Assert.AreEqual(operationName.ToString(), getOperation.Value.Data.Name);
+
+            // 4.GetIfExist
+            var GetIfExistoperation = await collection.GetIfExistsAsync(operationName);
+            Assert.AreEqual(operationName.ToString(), GetIfExistoperation.Value.Data.Name);
         }
     }
 }
