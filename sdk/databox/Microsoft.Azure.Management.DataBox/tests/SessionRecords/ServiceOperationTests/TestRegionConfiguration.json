@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/providers/Microsoft.DataBox/locations/westus/regionConfiguration?api-version=2020-11-01",
+      "RequestUri": "/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/providers/Microsoft.DataBox/locations/westus/regionConfiguration?api-version=2021-08-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmE2ODA4MmYtOGZmNy00YTI1LTk1YzctY2U5ZGE1NDEyNDJmL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveC9sb2NhdGlvbnMvd2VzdHVzL3JlZ2lvbkNvbmZpZ3VyYXRpb24/YXBpLXZlcnNpb249MjAyMC0xMS0wMQ==",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"transportAvailabilityRequest\": {\r\n    \"skuName\": \"DataBox\"\r\n  }\r\n}",
