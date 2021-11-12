@@ -194,37 +194,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             return null;
         }
 
-        internal static Dictionary<string, object> UpdateStates(this WebPubSubConnectionContext connectionContext, UserEventResponse response)
-        {
-            // states cleared.
-            if (response.States == null)
-            {
-                return null;
-            }
-
-            if (connectionContext.States?.Count > 0 || response.States.Count > 0)
-            {
-                var states = new Dictionary<string, object>();
-                if (connectionContext.States?.Count > 0)
-                {
-                    states = connectionContext.States.ToDictionary(x => x.Key, v => v.Value);
-                }
-
-                // response states keep empty is no change.
-                if (response.States.Count == 0)
-                {
-                    return states;
-                }
-                foreach (var item in response.States)
-                {
-                    states[item.Key] = item.Value;
-                }
-                return states;
-            }
-
-            return null;
-        }
-
         internal static string EncodeConnectionStates(this Dictionary<string, object> value)
         {
             return Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonSerializer.Serialize(value)));

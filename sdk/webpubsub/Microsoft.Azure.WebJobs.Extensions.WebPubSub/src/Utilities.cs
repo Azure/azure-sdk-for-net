@@ -9,6 +9,8 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Reflection;
 using System.Text.Json;
+using System.Text.Json.Serialization;
+
 using Microsoft.Azure.WebPubSub.Common;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
@@ -79,11 +81,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             return result;
         }
 
-        public static HttpResponseMessage BuildValidResponse(object response, RequestType requestType)
+        public static HttpResponseMessage BuildValidResponse(object response, RequestType requestType, out Dictionary<string, object> states)
         {
             JsonDocument converted = null;
             string originStr = null;
             bool needConvert = true;
+            states = null;
             if (response is WebPubSubEventResponse)
             {
                 needConvert = false;
@@ -112,6 +115,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 {
                     if (needConvert)
                     {
+                        states = GetStatesFromJson(converted, originStr);
                         return BuildResponse(originStr);
                     }
                     else if (response is ConnectEventResponse connectResponse)
@@ -123,6 +127,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 {
                     if (needConvert)
                     {
+                        states = GetStatesFromJson(converted, originStr);
                         return BuildResponse(JsonSerializer.Deserialize<UserEventResponse>(originStr));
                     }
                     else if (response is UserEventResponse messageResponse)
@@ -202,6 +207,25 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             }
             requestHosts = null;
             return false;
+        }
+
+        private static Dictionary<string, object> GetStatesFromJson(JsonDocument converted, string originStr)
+        {
+            if (converted.RootElement.TryGetProperty("states", out var val))
+            {
+                if (val.ValueKind == JsonValueKind.Object)
+                {
+                    return JsonSerializer.Deserialize<StatesEntity>(originStr).States;
+                }
+            }
+            // We don't support clear states for JS
+            return new Dictionary<string, object>();
+        }
+
+        private sealed class StatesEntity
+        {
+            [JsonPropertyName("states")]
+            public Dictionary<string, object> States { get; set; }
         }
     }
 }

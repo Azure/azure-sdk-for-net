@@ -59,11 +59,11 @@ namespace Microsoft.Azure.WebPubSub.Common
         /// <summary>
         /// The user event request
         /// </summary>
-        /// <param name="connectionContext"></param>
+        /// <param name="context"></param>
         /// <param name="data"></param>
         /// <param name="dataType"></param>
-        public UserEventRequest(WebPubSubConnectionContext connectionContext, BinaryData data, WebPubSubDataType dataType)
-            : base(connectionContext)
+        public UserEventRequest(WebPubSubConnectionContext context, BinaryData data, WebPubSubDataType dataType)
+            : base(context)
         {
             Data = data;
             DataType = dataType;

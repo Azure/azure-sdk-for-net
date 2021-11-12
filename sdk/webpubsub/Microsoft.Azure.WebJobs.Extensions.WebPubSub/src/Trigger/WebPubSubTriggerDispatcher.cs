@@ -146,18 +146,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                             // Skip no returns
                             if (response != null)
                             {
-                                var validResponse = Utilities.BuildValidResponse(response, requestType);
+                                var validResponse = Utilities.BuildValidResponse(response, requestType, out var states);
 
                                 if (validResponse != null)
                                 {
                                     // built-in support on set states only applies .NET WebPubSubTrigger.
                                     if (response is ConnectEventResponse connectResponse)
                                     {
-                                        AddStateHeader(ref validResponse, context, connectResponse.States);
+                                        // deserialize for states
+                                        AddStateHeader(ref validResponse, context, states);
                                     }
                                     if (response is UserEventResponse msgResponse)
                                     {
-                                        AddStateHeader(ref validResponse, context, msgResponse.States);
+                                        AddStateHeader(ref validResponse, context, states);
                                     }
                                     return validResponse;
                                 }

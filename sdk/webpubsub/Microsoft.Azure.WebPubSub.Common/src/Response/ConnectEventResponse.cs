@@ -13,6 +13,7 @@ namespace Microsoft.Azure.WebPubSub.Common
     public class ConnectEventResponse : WebPubSubEventResponse
     {
         private Dictionary<string, object> _states = new();
+
         /// <summary>
         /// The connection states
         /// </summary>

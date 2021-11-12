@@ -11,9 +11,9 @@ namespace Microsoft.Azure.WebPubSub.Common
         /// <summary>
         /// The connected event request
         /// </summary>
-        /// <param name="connectionContext"></param>
-        public ConnectedEventRequest(WebPubSubConnectionContext connectionContext)
-            : base(connectionContext)
+        /// <param name="context"></param>
+        public ConnectedEventRequest(WebPubSubConnectionContext context)
+            : base(context)
         { }
     }
 }
