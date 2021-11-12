@@ -52,7 +52,7 @@ namespace Azure.Communication.MediaComposition.Samples
             {
                 MediaInputId = "teamsMeeting",
                 SourceType = SourceType.Participant,
-                Participant = new CommunicationIdentifierModel
+                Participant = new CommunicationUserIdentifierModel
                 {
                     Id = _presenterParticipantId
                 }

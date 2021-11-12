@@ -23,7 +23,7 @@ namespace Azure.Communication.MediaComposition.Models
         /// <param name="participant"></param>
         /// <param name="location"></param>
         /// <param name="mediaInputId"></param>
-        internal MediaSource(string description, SourceType? sourceType, CommunicationIdentifierModel participant, string location, string mediaInputId)
+        internal MediaSource(string description, SourceType? sourceType, CommunicationUserIdentifierModel participant, string location, string mediaInputId)
         {
             Description = description;
             SourceType = sourceType;
@@ -37,7 +37,7 @@ namespace Azure.Communication.MediaComposition.Models
         /// <summary> Gets or sets the source type. </summary>
         public SourceType? SourceType { get; set; }
         /// <summary> Gets or sets the participant. </summary>
-        public CommunicationIdentifierModel Participant { get; set; }
+        public CommunicationUserIdentifierModel Participant { get; set; }
         /// <summary> Gets or sets the location. </summary>
         public string Location { get; set; }
         /// <summary> Gets or sets the media input id. </summary>

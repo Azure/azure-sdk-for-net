@@ -48,7 +48,7 @@ namespace Azure.Communication.MediaComposition.Models
         {
             Optional<string> description = default;
             Optional<SourceType> sourceType = default;
-            Optional<CommunicationIdentifierModel> participant = default;
+            Optional<CommunicationUserIdentifierModel> participant = default;
             Optional<string> location = default;
             Optional<string> mediaInputId = default;
             foreach (var property in element.EnumerateObject())
@@ -75,7 +75,7 @@ namespace Azure.Communication.MediaComposition.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    participant = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
+                    participant = CommunicationUserIdentifierModel.DeserializeCommunicationUserIdentifierModel(property.Value);
                     continue;
                 }
                 if (property.NameEquals("location"))

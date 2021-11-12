@@ -5,19 +5,19 @@
 
 #nullable disable
 
-namespace Azure.Communication.MediaComposition.Models
+namespace Azure.Communication.MediaComposition
 {
     /// <summary> The CommunicationUserIdentifierModel. </summary>
-    public partial class CommunicationIdentifierModel
+    public partial class CommunicationUserIdentifierModel
     {
-        /// <summary> Initializes a new instance of CommunicationIdentifierModel. </summary>
-        public CommunicationIdentifierModel()
+        /// <summary> Initializes a new instance of CommunicationUserIdentifierModel. </summary>
+        public CommunicationUserIdentifierModel()
         {
         }
 
-        /// <summary> Initializes a new instance of CommunicationIdentifierModel. </summary>
+        /// <summary> Initializes a new instance of CommunicationUserIdentifierModel. </summary>
         /// <param name="id"></param>
-        internal CommunicationIdentifierModel(string id)
+        internal CommunicationUserIdentifierModel(string id)
         {
             Id = id;
         }

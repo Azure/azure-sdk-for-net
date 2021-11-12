@@ -8,9 +8,9 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Communication.MediaComposition.Models
+namespace Azure.Communication.MediaComposition
 {
-    public partial class CommunicationIdentifierModel : IUtf8JsonSerializable
+    public partial class CommunicationUserIdentifierModel : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -23,7 +23,7 @@ namespace Azure.Communication.MediaComposition.Models
             writer.WriteEndObject();
         }
 
-        internal static CommunicationIdentifierModel DeserializeCommunicationIdentifierModel(JsonElement element)
+        internal static CommunicationUserIdentifierModel DeserializeCommunicationUserIdentifierModel(JsonElement element)
         {
             Optional<string> id = default;
             foreach (var property in element.EnumerateObject())
@@ -34,7 +34,7 @@ namespace Azure.Communication.MediaComposition.Models
                     continue;
                 }
             }
-            return new CommunicationIdentifierModel(id.Value);
+            return new CommunicationUserIdentifierModel(id.Value);
         }
     }
 }
