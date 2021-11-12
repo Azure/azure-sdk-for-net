@@ -6,7 +6,7 @@
     <PackageTags>Azure, WebPubSub</PackageTags>
     <RequiredTargetFrameworks>netcoreapp3.1</RequiredTargetFrameworks>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <NoWarn>$(NoWarn);419;AZC0001;AZC0011</NoWarn>
+    <NoWarn>$(NoWarn);419;AZC0001</NoWarn>
     <GenerateAPIListing>true</GenerateAPIListing>
   </PropertyGroup>
 
