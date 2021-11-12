@@ -146,20 +146,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                             // Skip no returns
                             if (response != null)
                             {
-                                var validResponse = Utilities.BuildValidResponse(response, requestType, out var states);
+                                var validResponse = Utilities.BuildValidResponse(response, requestType, context);
 
                                 if (validResponse != null)
                                 {
-                                    // built-in support on set states only applies .NET WebPubSubTrigger.
-                                    if (response is ConnectEventResponse connectResponse)
-                                    {
-                                        // deserialize for states
-                                        AddStateHeader(ref validResponse, context, states);
-                                    }
-                                    if (response is UserEventResponse msgResponse)
-                                    {
-                                        AddStateHeader(ref validResponse, context, states);
-                                    }
                                     return validResponse;
                                 }
                                 _logger.LogWarning($"Invalid response type {response.GetType()} regarding current request: {requestType}");
@@ -220,15 +210,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         private static string GetFunctionName(WebPubSubConnectionContext context)
         {
             return $"{context.Hub}.{context.EventType}.{context.EventName}";
-        }
-
-        public static void AddStateHeader(ref HttpResponseMessage response, WebPubSubConnectionContext context, IReadOnlyDictionary<string, object> newStates)
-        {
-            var updatedStates = context.UpdateStates(newStates);
-            if (updatedStates != null)
-            {
-                response.Headers.Add(Constants.Headers.CloudEvents.State, updatedStates.EncodeConnectionStates());
-            }
         }
 
         private static HttpResponseMessage RespondToServiceAbuseCheck(IList<string> requestHosts, WebPubSubValidationOptions options)

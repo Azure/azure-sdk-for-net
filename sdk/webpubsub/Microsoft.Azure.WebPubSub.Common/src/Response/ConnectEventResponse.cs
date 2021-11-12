@@ -15,7 +15,7 @@ namespace Microsoft.Azure.WebPubSub.Common
         private Dictionary<string, object> _states = new();
 
         /// <summary>
-        /// The connection states
+        /// The connection states.
         /// </summary>
         public IReadOnlyDictionary<string, object> States => _states;
 
