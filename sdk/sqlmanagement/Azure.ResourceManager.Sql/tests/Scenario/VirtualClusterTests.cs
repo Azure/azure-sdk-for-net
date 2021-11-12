@@ -78,11 +78,11 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             Assert.AreEqual(virtualClusterName, list.FirstOrDefault().Data.Name);
             Assert.AreEqual("westus2", list.FirstOrDefault().Data.Location.ToString());
 
-            // 4.Delete
-            var deleteVirtualCluster = (await _resourceGroup.GetVirtualClusters().GetAsync(virtualClusterName)).Value;
-            await deleteVirtualCluster.DeleteAsync();
-            list = await _resourceGroup.GetVirtualClusters().GetAllAsync().ToEnumerableAsync();
-            Assert.IsEmpty(list);
+            // 4.Delete - [Ignore("Virtual Cluster have active dependent resources, The parent class should be deleted directly")]
+            //var deleteVirtualCluster = (await _resourceGroup.GetVirtualClusters().GetAsync(virtualClusterName)).Value;
+            //await deleteVirtualCluster.DeleteAsync();
+            //list = await _resourceGroup.GetVirtualClusters().GetAllAsync().ToEnumerableAsync();
+            //Assert.IsEmpty(list);
         }
     }
 }

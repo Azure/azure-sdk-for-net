@@ -1,0 +1,372 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/Sql-RG-0000?api-version=2019-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-aea0cdd506879949b3a11a92b1be22c5-ed68803b9170924c-00",
+        "User-Agent": [
+          "azsdk-net-ResourceManager/1.0.0-beta.5",
+          "(.NET Core 3.1.21; Microsoft Windows 10.0.22000)"
+        ],
+        "x-ms-client-request-id": "0555b72ad358238432404251bec4d009",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "230",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 12 Nov 2021 03:23:40 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "e0dc0cad-f0e0-47f4-af01-8511d8912c89",
+        "x-ms-ratelimit-remaining-subscription-reads": "11993",
+        "x-ms-request-id": "e0dc0cad-f0e0-47f4-af01-8511d8912c89",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20211112T032341Z:e0dc0cad-f0e0-47f4-af01-8511d8912c89"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-0000",
+        "name": "Sql-RG-0000",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "westus2",
+        "tags": {},
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-0000/providers/Microsoft.Sql/managedInstances/managed-instance-0000?api-version=2020-11-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.Sql/1.0.0-alpha.20211112.1",
+          "(.NET Core 3.1.21; Microsoft Windows 10.0.22000)"
+        ],
+        "x-ms-client-request-id": "8d242ed8c0017aff37d4c9181594170f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1309",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 12 Nov 2021 03:23:41 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "4be3130f-478b-4e49-b584-c4e1c5516338",
+        "x-ms-ratelimit-remaining-subscription-reads": "11992",
+        "x-ms-request-id": "79797f3e-3192-449b-8837-5cc9762a4df3",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20211112T032342Z:4be3130f-478b-4e49-b584-c4e1c5516338"
+      },
+      "ResponseBody": {
+        "identity": {
+          "principalId": "2d1bff0f-a431-4e8e-9c57-fe5504be502b",
+          "type": "SystemAssigned",
+          "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47"
+        },
+        "sku": {
+          "name": "GP_Gen5",
+          "tier": "GeneralPurpose",
+          "family": "Gen5",
+          "capacity": 8
+        },
+        "properties": {
+          "provisioningState": "Succeeded",
+          "fullyQualifiedDomainName": "managed-instance-0000.a08551c3415e.database.windows.net",
+          "administratorLogin": "dvbb",
+          "subnetId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-0000/providers/Microsoft.Network/virtualNetworks/vnet-managed-instance-0000/subnets/ManagedInstance",
+          "state": "Ready",
+          "licenseType": "LicenseIncluded",
+          "vCores": 8,
+          "storageSizeInGB": 256,
+          "collation": "SQL_Latin1_General_CP1_CI_AS",
+          "dnsZone": "a08551c3415e",
+          "publicDataEndpointEnabled": false,
+          "proxyOverride": "Proxy",
+          "timezoneId": "UTC",
+          "maintenanceConfigurationId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default",
+          "privateEndpointConnections": [],
+          "minimalTlsVersion": "1.2",
+          "storageAccountType": "GRS",
+          "zoneRedundant": false
+        },
+        "location": "westus2",
+        "tags": {},
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-0000/providers/Microsoft.Sql/managedInstances/managed-instance-0000",
+        "name": "managed-instance-0000",
+        "type": "Microsoft.Sql/managedInstances"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-0000/providers/Microsoft.Sql/managedInstances/managed-instance-0000/encryptionProtector/current?api-version=2020-11-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "110",
+        "Content-Type": "application/json",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.Sql/1.0.0-alpha.20211112.1",
+          "(.NET Core 3.1.21; Microsoft Windows 10.0.22000)"
+        ],
+        "x-ms-client-request-id": "03d9fb1cf8d44cf5d76f7866a920cb8c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "serverKeyName": "ServiceManaged",
+          "serverKeyType": "ServiceManaged",
+          "autoRotationEnabled": false
+        }
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-0000/providers/Microsoft.Sql/locations/westus2/managedInstanceEncryptionProtectorAzureAsyncOperation/50d08ec5-3792-43a2-82fa-749000bb9d1a?api-version=2020-11-01-preview",
+        "Cache-Control": "no-cache",
+        "Content-Length": "92",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 12 Nov 2021 03:23:41 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-0000/providers/Microsoft.Sql/locations/westus2/managedInstanceEncryptionProtectorOperationResults/50d08ec5-3792-43a2-82fa-749000bb9d1a?api-version=2020-11-01-preview",
+        "Pragma": "no-cache",
+        "Retry-After": "1",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "e89ed1ab-f729-46cc-b382-6e521484f0d9",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "50d08ec5-3792-43a2-82fa-749000bb9d1a",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20211112T032342Z:e89ed1ab-f729-46cc-b382-6e521484f0d9"
+      },
+      "ResponseBody": {
+        "operation": "UpsertManagedServerEncryptionProtector",
+        "startTime": "2021-11-12T03:23:42.53Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-0000/providers/Microsoft.Sql/locations/westus2/managedInstanceEncryptionProtectorAzureAsyncOperation/50d08ec5-3792-43a2-82fa-749000bb9d1a?api-version=2020-11-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-ResourceManager/1.0.0-beta.5",
+          "(.NET Core 3.1.21; Microsoft Windows 10.0.22000)"
+        ],
+        "x-ms-client-request-id": "c3353228cceae03439d7b5924899d116",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "106",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 12 Nov 2021 03:23:41 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Retry-After": "1",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "510c777c-8d72-479b-98ea-f327cb19fb84",
+        "x-ms-ratelimit-remaining-subscription-reads": "11991",
+        "x-ms-request-id": "85cd129f-15e3-4fb6-814f-38ca1dc52ba8",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20211112T032342Z:510c777c-8d72-479b-98ea-f327cb19fb84"
+      },
+      "ResponseBody": {
+        "name": "50d08ec5-3792-43a2-82fa-749000bb9d1a",
+        "status": "Succeeded",
+        "startTime": "2021-11-12T03:23:42.53Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-0000/providers/Microsoft.Sql/managedInstances/managed-instance-0000/encryptionProtector/current?api-version=2020-11-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-ResourceManager/1.0.0-beta.5",
+          "(.NET Core 3.1.21; Microsoft Windows 10.0.22000)"
+        ],
+        "x-ms-client-request-id": "92693d0947cbaa1a606f4cfa2a71426c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "388",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 12 Nov 2021 03:23:42 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "658336fa-44aa-4b94-aafd-c5d70b2dfc7e",
+        "x-ms-ratelimit-remaining-subscription-reads": "11990",
+        "x-ms-request-id": "d25b727f-2067-43ae-8cf4-c2ba2203a3f3",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20211112T032343Z:658336fa-44aa-4b94-aafd-c5d70b2dfc7e"
+      },
+      "ResponseBody": {
+        "kind": "servicemanaged",
+        "properties": {
+          "serverKeyName": "ServiceManaged",
+          "serverKeyType": "ServiceManaged",
+          "autoRotationEnabled": false
+        },
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-0000/providers/Microsoft.Sql/managedInstances/managed-instance-0000/encryptionProtector/current",
+        "name": "current",
+        "type": "Microsoft.Sql/managedInstances/encryptionProtector"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-0000/providers/Microsoft.Sql/managedInstances/managed-instance-0000/encryptionProtector/current?api-version=2020-11-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.Sql/1.0.0-alpha.20211112.1",
+          "(.NET Core 3.1.21; Microsoft Windows 10.0.22000)"
+        ],
+        "x-ms-client-request-id": "763dd96207ebe2a14fe8971dbc08211d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "388",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 12 Nov 2021 03:23:42 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "14965bfa-dab9-434e-8b9a-a5921dbdf97a",
+        "x-ms-ratelimit-remaining-subscription-reads": "11989",
+        "x-ms-request-id": "3c3de8e8-e9b9-4e68-8af6-ee5c9282bd5b",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20211112T032343Z:14965bfa-dab9-434e-8b9a-a5921dbdf97a"
+      },
+      "ResponseBody": {
+        "kind": "servicemanaged",
+        "properties": {
+          "serverKeyName": "ServiceManaged",
+          "serverKeyType": "ServiceManaged",
+          "autoRotationEnabled": false
+        },
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-0000/providers/Microsoft.Sql/managedInstances/managed-instance-0000/encryptionProtector/current",
+        "name": "current",
+        "type": "Microsoft.Sql/managedInstances/encryptionProtector"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-0000/providers/Microsoft.Sql/managedInstances/managed-instance-0000/encryptionProtector/current?api-version=2020-11-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.Sql/1.0.0-alpha.20211112.1",
+          "(.NET Core 3.1.21; Microsoft Windows 10.0.22000)"
+        ],
+        "x-ms-client-request-id": "cc7ab7087b02e0d3178a627a7f3ab5c7",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "388",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 12 Nov 2021 03:23:42 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "a5f34df3-2c84-4347-8067-2c4e7e6a7084",
+        "x-ms-ratelimit-remaining-subscription-reads": "11988",
+        "x-ms-request-id": "d0c272d1-a9d0-43e0-8dc1-5ffb911158e5",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20211112T032343Z:a5f34df3-2c84-4347-8067-2c4e7e6a7084"
+      },
+      "ResponseBody": {
+        "kind": "servicemanaged",
+        "properties": {
+          "serverKeyName": "ServiceManaged",
+          "serverKeyType": "ServiceManaged",
+          "autoRotationEnabled": false
+        },
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-0000/providers/Microsoft.Sql/managedInstances/managed-instance-0000/encryptionProtector/current",
+        "name": "current",
+        "type": "Microsoft.Sql/managedInstances/encryptionProtector"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-0000/providers/Microsoft.Sql/managedInstances/managed-instance-0000/encryptionProtector?api-version=2020-11-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.Sql/1.0.0-alpha.20211112.1",
+          "(.NET Core 3.1.21; Microsoft Windows 10.0.22000)"
+        ],
+        "x-ms-client-request-id": "6e3049955b5b012b9b8643e2b0fdee58",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "400",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 12 Nov 2021 03:23:44 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "c68e9a7c-a861-4635-8a39-7bb0d9248719",
+        "x-ms-ratelimit-remaining-subscription-reads": "11987",
+        "x-ms-request-id": "e227bc44-709e-4ee5-ad08-b2e3b1cf50e7",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20211112T032344Z:c68e9a7c-a861-4635-8a39-7bb0d9248719"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "kind": "servicemanaged",
+            "properties": {
+              "serverKeyName": "ServiceManaged",
+              "serverKeyType": "ServiceManaged",
+              "autoRotationEnabled": false
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-0000/providers/Microsoft.Sql/managedInstances/managed-instance-0000/encryptionProtector/current",
+            "name": "current",
+            "type": "Microsoft.Sql/managedInstances/encryptionProtector"
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "705786756",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+  }
+}

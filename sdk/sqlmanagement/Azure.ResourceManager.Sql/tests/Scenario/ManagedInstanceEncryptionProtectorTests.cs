@@ -17,12 +17,11 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Sql.Tests.Scenario
 {
-    public class ManagedInstanceAdministratorTests : SqlManagementClientBase
+    public class ManagedInstanceEncryptionProtectorTests : SqlManagementClientBase
     {
         private ResourceGroup _resourceGroup;
         private ResourceIdentifier _resourceGroupIdentifier;
-
-        public ManagedInstanceAdministratorTests(bool isAsync)
+        public ManagedInstanceEncryptionProtectorTests(bool isAsync)
             : base(isAsync)
         {
         }
@@ -44,47 +43,46 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         }
 
         [Test]
-        [Ignore("Need Global Administrator privileges")]
         [RecordedTest]
-        public async Task ManagedInstanceAdministratorApiTests()
+        public async Task ManagedInstanceEncryptionProtectorApiTests()
         {
             // Create Managed Instance
             string managedInstanceName = Recording.GenerateAssetName("managed-instance-");
             var managedInstance = await CreateDefaultManagedInstance(managedInstanceName, Location.WestUS2, _resourceGroup);
             Assert.IsNotNull(managedInstance.Data);
-            var collection = managedInstance.GetManagedInstanceAdministrators();
+            var collection = managedInstance.GetManagedInstanceEncryptionProtectors();
 
-            //1.CreateOrUpdata
-            string adminName = Recording.GenerateAssetName("admin-");
-            ManagedInstanceAdministratorData data = new ManagedInstanceAdministratorData()
+            // 1.CreateOrUpdata
+            string encryptionProtectorName = "current";
+            ManagedInstanceEncryptionProtectorData data = new ManagedInstanceEncryptionProtectorData()
             {
-                AdministratorType = ManagedInstanceAdministratorType.ActiveDirectory,
-                Login = "admin-login-0000",
-                Sid = Guid.NewGuid(),
-                TenantId = Guid.NewGuid(),
+                ServerKeyName = "ServiceManaged",
+                ServerKeyType =  "ServiceManaged",
+                AutoRotationEnabled = false,
             };
-            var admin = await collection.CreateOrUpdateAsync(adminName, data);
-            Assert.NotNull(admin.Value.Data);
-            Assert.AreEqual(adminName, admin.Value.Data.Name);
+            var encryption = await collection.CreateOrUpdateAsync(encryptionProtectorName, data);
+            Assert.IsNotNull(encryption.Value.Data);
+            Assert.AreEqual(encryptionProtectorName, encryption.Value.Data.Name);
+            Assert.AreEqual("ServiceManaged", encryption.Value.Data.ServerKeyName);
+            Assert.AreEqual("ServiceManaged", encryption.Value.Data.ServerKeyType.ToString());
+            Assert.AreEqual(false, encryption.Value.Data.AutoRotationEnabled);
 
             // 2.CheckIfExist
-            Assert.IsTrue(collection.CheckIfExists(adminName));
-            Assert.IsFalse(collection.CheckIfExists(adminName + "0"));
+            Assert.IsTrue(collection.CheckIfExists(encryptionProtectorName));
 
             // 3.Get
-            var getAdmin = await collection.GetAsync(adminName);
-            Assert.NotNull(getAdmin.Value.Data);
-            Assert.AreEqual(getAdmin, admin.Value.Data.Name);
+            var getEncryption = await collection.GetAsync(encryptionProtectorName);
+            Assert.IsNotNull(encryption.Value.Data);
+            Assert.AreEqual(encryptionProtectorName, getEncryption.Value.Data.Name);
+            Assert.AreEqual("ServiceManaged", getEncryption.Value.Data.ServerKeyName);
+            Assert.AreEqual("ServiceManaged", getEncryption.Value.Data.ServerKeyType.ToString());
+            Assert.AreEqual(false, getEncryption.Value.Data.AutoRotationEnabled);
 
             // 4.GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
-
-            // 5.Delete
-            var deleteAdmin = await collection.GetAsync(adminName);
-            await   deleteAdmin.Value.DeleteAsync();
-            list = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsEmpty(list);
+            Assert.AreEqual(1, list.Count);
+            Assert.AreEqual(encryptionProtectorName, list.FirstOrDefault().Data.Name);
         }
     }
 }

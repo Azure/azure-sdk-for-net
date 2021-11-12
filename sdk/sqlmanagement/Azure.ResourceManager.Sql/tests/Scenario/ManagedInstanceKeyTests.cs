@@ -17,12 +17,11 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Sql.Tests.Scenario
 {
-    public class ManagedInstanceAdministratorTests : SqlManagementClientBase
+    public class ManagedInstanceKeyTests : SqlManagementClientBase
     {
         private ResourceGroup _resourceGroup;
         private ResourceIdentifier _resourceGroupIdentifier;
-
-        public ManagedInstanceAdministratorTests(bool isAsync)
+        public ManagedInstanceKeyTests(bool isAsync)
             : base(isAsync)
         {
         }
@@ -44,47 +43,44 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         }
 
         [Test]
-        [Ignore("Need Global Administrator privileges")]
         [RecordedTest]
-        public async Task ManagedInstanceAdministratorApiTests()
+        public async Task ManagedInstanceKeyApiTests()
         {
             // Create Managed Instance
             string managedInstanceName = Recording.GenerateAssetName("managed-instance-");
             var managedInstance = await CreateDefaultManagedInstance(managedInstanceName, Location.WestUS2, _resourceGroup);
             Assert.IsNotNull(managedInstance.Data);
-            var collection = managedInstance.GetManagedInstanceAdministrators();
+            string keyName = "ServiceManaged";
+            var collection = managedInstance.GetManagedInstanceKeys();
 
-            //1.CreateOrUpdata
-            string adminName = Recording.GenerateAssetName("admin-");
-            ManagedInstanceAdministratorData data = new ManagedInstanceAdministratorData()
-            {
-                AdministratorType = ManagedInstanceAdministratorType.ActiveDirectory,
-                Login = "admin-login-0000",
-                Sid = Guid.NewGuid(),
-                TenantId = Guid.NewGuid(),
-            };
-            var admin = await collection.CreateOrUpdateAsync(adminName, data);
-            Assert.NotNull(admin.Value.Data);
-            Assert.AreEqual(adminName, admin.Value.Data.Name);
+            // 1.CreateOrUpdate - Ignore["Service-managed TDE keys are managed by the service. Service-managed TDE keys don't support Create or Update by the user."]
+            //ManagedInstanceKeyData data = new ManagedInstanceKeyData()
+            //{
+            //    ServerKeyType = "ServiceManaged",
+            //};
+            //var key  = await collection.CreateOrUpdateAsync(keyName, data);
+            //Assert.IsNotNull(key.Value.Data);
+            //Assert.AreEqual(keyName,key.Value.Data.Name);
 
             // 2.CheckIfExist
-            Assert.IsTrue(collection.CheckIfExists(adminName));
-            Assert.IsFalse(collection.CheckIfExists(adminName + "0"));
+            Assert.IsTrue(collection.CheckIfExists(keyName));
 
             // 3.Get
-            var getAdmin = await collection.GetAsync(adminName);
-            Assert.NotNull(getAdmin.Value.Data);
-            Assert.AreEqual(getAdmin, admin.Value.Data.Name);
+            var getKey =await collection.GetAsync(keyName);
+            Assert.IsNotNull(getKey.Value.Data);
+            Assert.AreEqual(keyName, getKey.Value.Data.Name);
+            Assert.AreEqual("servicemanaged", getKey.Value.Data.Kind);
+            Assert.AreEqual("ServiceManaged", getKey.Value.Data.ServerKeyType.ToString());
 
             // 4.GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
+            Assert.AreEqual(1,list.Count);
+            Assert.AreEqual(keyName,list.FirstOrDefault().Data.Name);
 
-            // 5.Delete
-            var deleteAdmin = await collection.GetAsync(adminName);
-            await   deleteAdmin.Value.DeleteAsync();
-            list = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsEmpty(list);
+            // 5.Delete - Ignore("The operation could not be completed.")
+            var deleteKey =await collection.GetAsync(keyName);
+            await deleteKey.Value.DeleteAsync();
         }
     }
 }

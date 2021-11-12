@@ -6,12 +6,12 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-0d3ce1712920f84a92c418beb2c2617d-d2a97a14f006bd4f-00",
+        "traceparent": "00-ee60ce8c8ca28043bce9f79302d81969-1164e35587aea648-00",
         "User-Agent": [
           "azsdk-net-ResourceManager/1.0.0-beta.5",
           "(.NET Core 3.1.21; Microsoft Windows 10.0.22000)"
         ],
-        "x-ms-client-request-id": "f62ae3c7870e3fc38d25d26c8a792e92",
+        "x-ms-client-request-id": "d938e77c3342f339e576a45703f9a770",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -20,15 +20,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "468",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 12 Nov 2021 01:41:45 GMT",
+        "Date": "Fri, 12 Nov 2021 06:33:03 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "594c4632-c1f1-45d1-8fd9-5a22f88ff8b7",
+        "x-ms-correlation-request-id": "06e23298-1173-4da6-a2ff-1da1298a8890",
         "x-ms-ratelimit-remaining-subscription-reads": "11999",
-        "x-ms-request-id": "594c4632-c1f1-45d1-8fd9-5a22f88ff8b7",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20211112T014145Z:594c4632-c1f1-45d1-8fd9-5a22f88ff8b7"
+        "x-ms-request-id": "06e23298-1173-4da6-a2ff-1da1298a8890",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20211112T063304Z:06e23298-1173-4da6-a2ff-1da1298a8890"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
@@ -50,7 +50,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/Sql-RG-0000?api-version=2019-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/Sql-RG-1000?api-version=2019-10-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -59,7 +59,7 @@
           "azsdk-net-ResourceManager/1.0.0-beta.5",
           "(.NET Core 3.1.21; Microsoft Windows 10.0.22000)"
         ],
-        "x-ms-client-request-id": "960ead6e104c05ba1e6a5901edf2294a",
+        "x-ms-client-request-id": "5abe7f57b9e3b1a39e5e6ced76605f67",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -68,19 +68,19 @@
         "Cache-Control": "no-cache",
         "Content-Length": "230",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 12 Nov 2021 01:41:45 GMT",
+        "Date": "Fri, 12 Nov 2021 06:33:03 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "cb65846e-0f91-435d-a2d3-d850748bebba",
+        "x-ms-correlation-request-id": "f6a9c036-3001-439e-840b-74658aceaebb",
         "x-ms-ratelimit-remaining-subscription-reads": "11998",
-        "x-ms-request-id": "cb65846e-0f91-435d-a2d3-d850748bebba",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20211112T014145Z:cb65846e-0f91-435d-a2d3-d850748bebba"
+        "x-ms-request-id": "f6a9c036-3001-439e-840b-74658aceaebb",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20211112T063304Z:f6a9c036-3001-439e-840b-74658aceaebb"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-0000",
-        "name": "Sql-RG-0000",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-1000",
+        "name": "Sql-RG-1000",
         "type": "Microsoft.Resources/resourceGroups",
         "location": "westus2",
         "tags": {},
@@ -91,7 +91,7 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "368971524",
+    "RandomSeed": "237772675",
     "RESOURCE_MANAGER_URL": null,
     "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
   }
