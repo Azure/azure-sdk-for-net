@@ -83,12 +83,19 @@ namespace Azure.Storage.Files.DataLake.Tests
             return leaseId == Conditions.ReceivedLeaseId ? lease.LeaseId : leaseId;
         }
 
-        protected override async Task<Stream> OpenReadAsync(DataLakeFileClient client, int? bufferSize = null, long position = 0, DataLakeRequestConditions conditions = null, bool allowModifications = false)
+        protected override async Task<Stream> OpenReadAsync(
+            DataLakeFileClient client,
+            int? bufferSize = null,
+            long position = 0,
+            DataLakeRequestConditions conditions = null,
+            bool allowModifications = false,
+            bool fillReadBuffer = false)
             => await client.OpenReadAsync(new DataLakeOpenReadOptions(allowModifications)
             {
                 BufferSize = bufferSize,
                 Position = position,
-                Conditions = conditions
+                Conditions = conditions,
+                FillReadBuffer = fillReadBuffer
             });
 
         protected override async Task StageDataAsync(DataLakeFileClient client, Stream data)

@@ -101,7 +101,8 @@ namespace Azure.Storage.Test.Shared
             int? bufferSize = default,
             long position = default,
             TRequestConditions conditions = default,
-            bool allowModifications = false);
+            bool allowModifications = false,
+            bool fillReadBuffer = false);
 
         protected abstract Task<string> SetupLeaseAsync(TResourceClient client, string leaseId, string garbageLeaseId);
         protected abstract Task<string> GetMatchConditionAsync(TResourceClient client, string match);
@@ -561,6 +562,28 @@ namespace Azure.Storage.Test.Shared
         }
 
         [RecordedTest]
+        public async Task ReadAtEnd()
+        {
+            int size = Constants.KB;
+            await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
+
+            // Arrange
+            var data = GetRandomBuffer(size);
+            TResourceClient client = GetResourceClient(disposingContainer.Container);
+            await StageDataAsync(client, new MemoryStream(data));
+
+            Stream outputStream = await OpenReadAsync(client);
+            byte[] buffer = new byte[128];
+
+            // Act
+            outputStream.Seek(0, SeekOrigin.End);
+            int bytesRead = await outputStream.ReadAsync(buffer, 0, buffer.Length);
+
+            // Assert
+            Assert.AreEqual(0, bytesRead);
+        }
+
+        [RecordedTest]
         // lower position within _buffer
         [TestCase(-50)]
         // higher positiuon within _buffer
@@ -641,6 +664,35 @@ namespace Azure.Storage.Test.Shared
             // Assert
             Assert.AreEqual(expectedData.Length, outputStream.ToArray().Length);
             TestHelper.AssertSequenceEqual(expectedData, outputStream.ToArray());
+        }
+
+        [RecordedTest]
+        [Combinatorial]
+        public async Task ReadCountLargerThanBuffer(
+            [Values(true, false)] bool fillReadBuffer, // whether to force a read buffer fill
+            [Values(128, 100)] int streamBufferSize) // alligned vs unalligned buffers
+        {
+            const int size = Constants.KB;
+            const int readBufferSize = 512;
+            await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
+
+            // Arrange
+            byte[] data = GetRandomBuffer(size);
+            TResourceClient client = GetResourceClient(disposingContainer.Container);
+            await StageDataAsync(client, new MemoryStream(data));
+
+            // Act
+            Stream readStream = await OpenReadAsync(client, bufferSize: streamBufferSize, fillReadBuffer: fillReadBuffer);
+
+            // Assert
+            byte[] readBuffer = new byte[readBufferSize];
+            int expectedAmountRead = fillReadBuffer ? readBufferSize : streamBufferSize;
+            Assert.AreEqual(
+                expectedAmountRead,
+                await readStream.ReadAsync(readBuffer, 0, readBuffer.Length));
+            TestHelper.AssertSequenceEqual(
+                data.Take(expectedAmountRead),
+                readBuffer.Take(expectedAmountRead));
         }
     }
 }

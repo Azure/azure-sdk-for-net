@@ -77,12 +77,19 @@ namespace Azure.Storage.Blobs.Tests
             return leaseId == Conditions.ReceivedLeaseId ? lease.LeaseId : leaseId;
         }
 
-        protected override async Task<Stream> OpenReadAsync(TBlobClient client, int? bufferSize = null, long position = 0, BlobRequestConditions conditions = null, bool allowModifications = false)
+        protected override async Task<Stream> OpenReadAsync(
+            TBlobClient client,
+            int? bufferSize = null,
+            long position = 0,
+            BlobRequestConditions conditions = null,
+            bool allowModifications = false,
+            bool fillReadBuffer = false)
             => await client.OpenReadAsync(new BlobOpenReadOptions(allowModifications)
             {
                 BufferSize = bufferSize,
                 Position = position,
-                Conditions = conditions
+                Conditions = conditions,
+                FillReadBuffer = fillReadBuffer
             });
 
         public override async Task AssertExpectedExceptionOpenReadModifiedAsync(Task readTask)

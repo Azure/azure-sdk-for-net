@@ -88,12 +88,19 @@ namespace Azure.Storage.Files.Shares.Tests
             return leaseId == Conditions.ReceivedLeaseId ? lease.LeaseId : leaseId;
         }
 
-        protected override async Task<Stream> OpenReadAsync(ShareFileClient client, int? bufferSize = null, long position = 0, ShareFileRequestConditions conditions = null, bool allowModifications = false)
+        protected override async Task<Stream> OpenReadAsync(
+            ShareFileClient client,
+            int? bufferSize = null,
+            long position = 0,
+            ShareFileRequestConditions conditions = null,
+            bool allowModifications = false,
+            bool fillReadBuffer = false)
             => await client.OpenReadAsync(new ShareFileOpenReadOptions(allowModifications)
             {
                 BufferSize = bufferSize,
                 Position = position,
-                Conditions = conditions
+                Conditions = conditions,
+                FillReadBuffer = fillReadBuffer
             });
 
         protected override async Task StageDataAsync(ShareFileClient client, Stream data)

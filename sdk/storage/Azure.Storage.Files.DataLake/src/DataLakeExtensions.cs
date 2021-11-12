@@ -504,7 +504,8 @@ namespace Azure.Storage.Files.DataLake
                 BufferSize = options.BufferSize,
                 Conditions = options.Conditions.ToBlobRequestConditions(),
                 Position = options.Position,
-                TransactionalHashingOptions = options.TransactionalHashingOptions
+                TransactionalHashingOptions = options.TransactionalHashingOptions,
+                FillReadBuffer = options.FillReadBuffer
             };
         }
 

@@ -2473,6 +2473,7 @@ namespace Azure.Storage.Blobs.Specialized
             => OpenReadInternal(
                 options?.Position ?? 0,
                 options?.BufferSize,
+                options?.FillReadBuffer ?? false,
                 options?.Conditions,
                 allowModifications: options?.AllowModifications ?? false,
                 hashingOptions: options?.TransactionalHashingOptions,
@@ -2502,6 +2503,7 @@ namespace Azure.Storage.Blobs.Specialized
             => await OpenReadInternal(
                 options?.Position ?? 0,
                 options?.BufferSize,
+                options?.FillReadBuffer ?? false,
                 options?.Conditions,
                 allowModifications: options?.AllowModifications ?? false,
                 hashingOptions: options?.TransactionalHashingOptions,
@@ -2543,6 +2545,7 @@ namespace Azure.Storage.Blobs.Specialized
             => OpenReadInternal(
                 position,
                 bufferSize,
+                fillReadBuffer: false,
                 conditions,
                 allowModifications: false,
                 hashingOptions: default,
@@ -2621,6 +2624,7 @@ namespace Azure.Storage.Blobs.Specialized
             => await OpenReadInternal(
                 position,
                 bufferSize,
+                fillReadBuffer: false,
                 conditions,
                 allowModifications: false,
                 hashingOptions: default,
@@ -2677,6 +2681,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// The buffer size to use when the stream downloads parts
         /// of the blob.  Defaults to 1 MB.
         /// </param>
+        /// <param name="fillReadBuffer">
+        /// Whether to ignore buffer limitations on large reads.
+        /// </param>
         /// <param name="conditions">
         /// Optional <see cref="BlobRequestConditions"/> to add conditions on
         /// the download of the blob.
@@ -2703,6 +2710,7 @@ namespace Azure.Storage.Blobs.Specialized
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
             long position,
             int? bufferSize,
+            bool fillReadBuffer,
             BlobRequestConditions conditions,
             bool allowModifications,
             DownloadTransactionalHashingOptions hashingOptions,
@@ -2779,7 +2787,8 @@ namespace Azure.Storage.Blobs.Specialized
                         allowModifications,
                         blobProperties.Value.ContentLength,
                         position,
-                        bufferSize);
+                        bufferSize,
+                        fillReadBuffer);
                 }
                 catch (Exception ex)
                 {

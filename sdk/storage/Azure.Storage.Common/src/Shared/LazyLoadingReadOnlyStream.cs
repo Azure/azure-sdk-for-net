@@ -220,7 +220,7 @@ namespace Azure.Storage
                 _position += bytesToWrite;
                 _bufferPosition += bytesToWrite;
                 bytesRead += bytesToWrite;
-            } while (bytesRead < count);
+            } while (_fillReadBuffer && bytesRead < count);
 
             return bytesRead;
         }
@@ -244,7 +244,7 @@ namespace Azure.Storage
             // Bytes we have copied so far.
             int totalCopiedBytes = 0;
 
-            // Bytes remaining to copy.  It is save to truncate the long because we asked for a max of int _buffer size bytes.
+            // Bytes remaining to copy.  It is safe to truncate the long because we asked for a max of int _buffer size bytes.
             int remainingBytes = (int)downloadSize;
 
             do
