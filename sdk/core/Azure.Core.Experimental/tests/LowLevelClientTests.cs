@@ -365,7 +365,7 @@ namespace Azure.Core.Tests
             writer.WriteEndObject();
         }
 
-        public class AddHeaderPolicy : HttpPipelinePolicy
+        public class AddHeaderPolicy : HttpPipelineSynchronousPolicy
         {
             private string _headerName;
             private string _headerVaue;
@@ -376,16 +376,9 @@ namespace Azure.Core.Tests
                 _headerVaue = headerValue;
             }
 
-            public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+            public override void OnSendingRequest(HttpMessage message)
             {
                 message.Request.Headers.Add(_headerName, _headerVaue);
-                ProcessNext(message, pipeline);
-            }
-
-            public override ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
-            {
-                message.Request.Headers.Add(_headerName, _headerVaue);
-                return ProcessNextAsync(message, pipeline);
             }
         }
         #endregion

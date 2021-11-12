@@ -53,7 +53,6 @@ namespace Azure.Core.Pipeline
         /// <returns>A new instance of <see cref="HttpPipeline"/></returns>
         public static DisposableHttpPipeline Build(ClientOptions options, HttpPipelinePolicy[] perCallPolicies, HttpPipelinePolicy[] perRetryPolicies, ResponseClassifier responseClassifier, HttpPipelineTransportOptions? defaultTransportOptions)
         {
-        
             int perCallIndex;
             int perRetryIndex;
             if (perCallPolicies == null)
