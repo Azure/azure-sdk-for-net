@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations
 {
     /// <summary> This is the parameter set of either the Orchestration project itself or one of the target services. </summary>
     public partial class AnalysisParameters

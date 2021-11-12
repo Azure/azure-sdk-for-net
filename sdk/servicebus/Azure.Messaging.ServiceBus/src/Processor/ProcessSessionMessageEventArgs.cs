@@ -159,6 +159,6 @@ namespace Azure.Messaging.ServiceBus
         /// This depends on what other session messages may be in the queue or subscription).
         /// </summary>
         public virtual void ReleaseSession() =>
-            _receiverManager.ReleaseSession();
+            _receiverManager.CancelSession();
     }
 }

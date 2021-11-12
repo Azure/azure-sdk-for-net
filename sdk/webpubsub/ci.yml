@@ -30,5 +30,7 @@ extends:
       safeName: AzureMessagingWebPubSub
     - name: Microsoft.Azure.WebJobs.Extensions.WebPubSub
       safeName: MicrosoftAzureWebJobsExtensionsWebPubSub
+    - name: Microsoft.Azure.WebPubSub.AspNetCore
+      safeName: MicrosoftAzureWebPubSubAspNetCore
     - name: Microsoft.Azure.WebPubSub.Common
       safeName: MicrosoftAzureWebPubSubCommon

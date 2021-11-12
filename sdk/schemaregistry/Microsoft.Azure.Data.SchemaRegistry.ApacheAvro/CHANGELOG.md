@@ -1,14 +1,10 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
+## 1.0.0-beta.4 (2021-11-11)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Updated dependency on `Azure.Data.SchemaRegistry`.
 
 ## 1.0.0-beta.3 (2021-10-06)
 

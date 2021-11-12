@@ -31,24 +31,27 @@ namespace Azure.Data.SchemaRegistry
         public string FullyQualifiedNamespace { get { throw null; } }
         public virtual Azure.Response<Azure.Data.SchemaRegistry.SchemaRegistrySchema> GetSchema(string schemaId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.SchemaRegistry.SchemaRegistrySchema>> GetSchemaAsync(string schemaId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Data.SchemaRegistry.SchemaProperties> GetSchemaProperties(string groupName, string name, string schemaDefinition, Azure.Data.SchemaRegistry.SchemaFormat format, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.SchemaRegistry.SchemaProperties>> GetSchemaPropertiesAsync(string groupName, string name, string schemaDefinition, Azure.Data.SchemaRegistry.SchemaFormat format, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Data.SchemaRegistry.SchemaProperties> RegisterSchema(string groupName, string name, string schemaDefinition, Azure.Data.SchemaRegistry.SchemaFormat format, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.SchemaRegistry.SchemaProperties>> RegisterSchemaAsync(string groupName, string name, string schemaDefinition, Azure.Data.SchemaRegistry.SchemaFormat format, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Data.SchemaRegistry.SchemaProperties> GetSchemaProperties(string groupName, string schemaName, string schemaDefinition, Azure.Data.SchemaRegistry.SchemaFormat format, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.SchemaRegistry.SchemaProperties>> GetSchemaPropertiesAsync(string groupName, string schemaName, string schemaDefinition, Azure.Data.SchemaRegistry.SchemaFormat format, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Data.SchemaRegistry.SchemaProperties> RegisterSchema(string groupName, string schemaName, string schemaDefinition, Azure.Data.SchemaRegistry.SchemaFormat format, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.SchemaRegistry.SchemaProperties>> RegisterSchemaAsync(string groupName, string schemaName, string schemaDefinition, Azure.Data.SchemaRegistry.SchemaFormat format, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class SchemaRegistryClientOptions : Azure.Core.ClientOptions
     {
-        public SchemaRegistryClientOptions(Azure.Data.SchemaRegistry.SchemaRegistryClientOptions.ServiceVersion version = Azure.Data.SchemaRegistry.SchemaRegistryClientOptions.ServiceVersion.V2020_09_01_preview) { }
+        public SchemaRegistryClientOptions(Azure.Data.SchemaRegistry.SchemaRegistryClientOptions.ServiceVersion version = Azure.Data.SchemaRegistry.SchemaRegistryClientOptions.ServiceVersion.V2021_10) { }
         public enum ServiceVersion
         {
-            V2017_04 = 1,
-            V2020_09_01_preview = 2,
+            V2021_10 = 1,
         }
+    }
+    public static partial class SchemaRegistryModelFactory
+    {
+        public static Azure.Data.SchemaRegistry.SchemaProperties SchemaProperties(Azure.Data.SchemaRegistry.SchemaFormat format, string schemaId) { throw null; }
     }
     public partial class SchemaRegistrySchema
     {
         internal SchemaRegistrySchema() { }
-        public string Content { get { throw null; } }
+        public string Definition { get { throw null; } }
         public Azure.Data.SchemaRegistry.SchemaProperties Properties { get { throw null; } }
     }
 }

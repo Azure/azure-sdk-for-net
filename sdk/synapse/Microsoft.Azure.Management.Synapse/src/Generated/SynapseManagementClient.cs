@@ -395,11 +395,6 @@ namespace Microsoft.Azure.Management.Synapse
         public virtual IKustoOperations KustoOperations { get; private set; }
 
         /// <summary>
-        /// Gets the IKustoPoolOperations.
-        /// </summary>
-        public virtual IKustoPoolOperations KustoPool { get; private set; }
-
-        /// <summary>
         /// Gets the IKustoPoolsOperations.
         /// </summary>
         public virtual IKustoPoolsOperations KustoPools { get; private set; }
@@ -740,7 +735,6 @@ namespace Microsoft.Azure.Management.Synapse
             SparkConfiguration = new SparkConfigurationOperations(this);
             SparkConfigurations = new SparkConfigurationsOperations(this);
             KustoOperations = new KustoOperations(this);
-            KustoPool = new KustoPoolOperations(this);
             KustoPools = new KustoPoolsOperations(this);
             KustoPoolChildResource = new KustoPoolChildResourceOperations(this);
             KustoPoolAttachedDatabaseConfigurations = new KustoPoolAttachedDatabaseConfigurationsOperations(this);
