@@ -21,6 +21,9 @@ namespace PolicyInsights.Tests
     {
         #region Test
 
+        /// <summary>
+        /// Validates policy restrictions can be checked at subscription scope.
+        /// </summary>
         [Fact]
         public void PolicyRestrictions_SubscriptionScope()
         {
@@ -70,6 +73,9 @@ namespace PolicyInsights.Tests
             }
         }
 
+        /// <summary>
+        /// Validates policy restrictions can be checked at resource group scope.
+        /// </summary>
         [Fact]
         public void PolicyRestrictions_ResourceGroupScope()
         {
