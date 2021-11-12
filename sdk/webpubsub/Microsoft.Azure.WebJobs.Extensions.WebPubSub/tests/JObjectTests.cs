@@ -129,7 +129,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             var testData = @"{""type"":""Buffer"", ""data"": [66, 105, 110, 97, 114, 121, 68, 97, 116, 97]}";
 
             var options = new SystemJson.JsonSerializerOptions();
-            options.Converters.Add(new BinaryDataJsonConverter());
+            options.Converters.Add(new System.BinaryDataJsonConverter());
 
             var converted = SystemJson.JsonSerializer.Deserialize<BinaryData>(testData, options);
 
@@ -337,43 +337,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             Assert.AreEqual(baseUrl, json["baseUrl"].ToString());
             Assert.AreEqual(accessToken, json["accessToken"].ToString());
             Assert.AreEqual(url, json["url"].ToString());
-        }
-
-        private class BinaryDataJsonConverter : JsonConverter<BinaryData>
-        {
-            public override BinaryData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                if (reader.TokenType == JsonTokenType.String)
-                {
-                    return BinaryData.FromString(JsonSerializer.Deserialize<string>(ref reader));
-                }
-
-                if (TryLoadBinary(ref reader, out var bytes))
-                {
-                    return BinaryData.FromBytes(bytes);
-                }
-
-                // string object
-                return BinaryData.FromString(reader.GetString());
-            }
-
-            public override void Write(Utf8JsonWriter writer, BinaryData value, JsonSerializerOptions options)
-            {
-                writer.WriteStringValue(value.ToString());
-            }
-
-            private static bool TryLoadBinary(ref Utf8JsonReader input, out byte[] output)
-            {
-                var doc = JsonDocument.ParseValue(ref input);
-                if (doc.RootElement.TryGetProperty("type", out var value) && value.GetString().Equals("Buffer", StringComparison.OrdinalIgnoreCase)
-                    && doc.RootElement.TryGetProperty("data", out var data))
-                {
-                    output = JsonSerializer.Deserialize<List<byte>>(data.GetRawText()).ToArray();
-                    return true;
-                }
-                output = null;
-                return false;
-            }
         }
 
         private static HttpResponseMessage BuildResponse(string input, RequestType requestType, out Dictionary<string, object> states)
