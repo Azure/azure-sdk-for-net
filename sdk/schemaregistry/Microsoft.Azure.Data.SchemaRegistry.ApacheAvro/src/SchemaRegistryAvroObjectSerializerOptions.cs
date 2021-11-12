@@ -4,9 +4,9 @@
 namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
 {
     /// <summary>
-    /// Options for <see cref="SchemaRegistryAvroEncoder"/>.
+    /// Options for <see cref="SchemaRegistryAvroObjectSerializer"/>.
     /// </summary>
-    public class SchemaRegistryAvroObjectEncoderOptions
+    public class SchemaRegistryAvroObjectSerializerOptions
     {
         /// <summary>
         /// Gets or sets the automatic registration of schemas flag.
