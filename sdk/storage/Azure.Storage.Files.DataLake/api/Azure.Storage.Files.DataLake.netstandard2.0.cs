@@ -572,6 +572,7 @@ namespace Azure.Storage.Files.DataLake.Models
         public DataLakeOpenReadOptions(bool allowModifications) { }
         public int? BufferSize { get { throw null; } set { } }
         public Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions Conditions { get { throw null; } set { } }
+        public bool FillReadBuffer { get { throw null; } set { } }
         public long Position { get { throw null; } set { } }
         public Azure.Storage.DownloadTransactionalHashingOptions TransactionalHashingOptions { get { throw null; } set { } }
     }
