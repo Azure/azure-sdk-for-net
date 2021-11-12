@@ -12,7 +12,12 @@ namespace Microsoft.Azure.WebPubSub.Common
     /// </summary>
     public class ConnectEventResponse : WebPubSubEventResponse
     {
-        internal Dictionary<string, object> States = new();
+        private Dictionary<string, object> _states = new();
+
+        /// <summary>
+        /// The connection states
+        /// </summary>
+        public IReadOnlyDictionary<string, object> States => _states;
 
         /// <summary>
         /// UserId.
@@ -71,11 +76,11 @@ namespace Microsoft.Azure.WebPubSub.Common
         public void SetState(string key, object value)
         {
             // In case user cleared states.
-            if (States == null)
+            if (_states == null)
             {
-                States = new Dictionary<string, object>();
+                _states = new Dictionary<string, object>();
             }
-            States[key] = value;
+            _states[key] = value;
         }
 
         /// <summary>
@@ -83,7 +88,7 @@ namespace Microsoft.Azure.WebPubSub.Common
         /// </summary>
         public void ClearStates()
         {
-            States = null;
+            _states = null;
         }
     }
 }

@@ -56,8 +56,14 @@ namespace Microsoft.Azure.WebPubSub.Common
             return new EventErrorResponse(code, message);
         }
 
-        internal UserEventRequest(WebPubSubConnectionContext connectionContext, BinaryData data, WebPubSubDataType dataType)
-            : base(connectionContext)
+        /// <summary>
+        /// The user event request
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="data"></param>
+        /// <param name="dataType"></param>
+        public UserEventRequest(WebPubSubConnectionContext context, BinaryData data, WebPubSubDataType dataType)
+            : base(context)
         {
             Data = data;
             DataType = dataType;
