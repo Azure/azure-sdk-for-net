@@ -470,7 +470,7 @@ foreach ($pageLink in $badLinks.Keys) {
 $linksChecked = $checkedLinks.Count - $cachedLinksCount
 
 if ($badLinks.Count -gt 0) {
-  Write-Host "Checked $linksChecked links with $($badLinks.Count) broken links found."
+  Write-Host "Checked $linksChecked links with $($badLinks.Count) broken link(s) found."
 }
 else {
   Write-Host "Checked $linksChecked links. No broken links found."
