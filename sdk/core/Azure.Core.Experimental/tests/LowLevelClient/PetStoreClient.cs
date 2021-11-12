@@ -146,7 +146,7 @@ namespace Azure.Core.Experimental.Tests
         /// <param name="options"> The request options. </param>
         private HttpMessage CreateGetPetRequest(string id, RequestContext context = null)
         {
-            var message = Pipeline.CreateMessage();
+            var message = Pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();

@@ -24,7 +24,7 @@ namespace Azure.Core.Pipeline
 
         /// <summary>
         /// Creates a new transport specific instance of <see cref="Request"/>. This should not be called directly, <see cref="HttpPipeline.CreateRequest"/> or
-        /// <see cref="HttpPipeline.CreateMessage"/> should be used instead.
+        /// <see cref="HttpPipeline.CreateMessage()"/> should be used instead.
         /// </summary>
         /// <returns></returns>
         public abstract Request CreateRequest();

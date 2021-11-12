@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core.Experimental.Tests;
@@ -212,34 +213,125 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void CanAddPerCallPolicy()
+        public async Task CanAddPerCallPolicy()
         {
+            var petResponse = new MockResponse(200);
+
+            Pet pet = new("snoopy", "beagle");
+            petResponse.SetContent(SerializationHelpers.Serialize(pet, SerializePet));
+
+            var mockTransport = new MockTransport(petResponse);
+            PetStoreClient client = CreateClient(mockTransport);
+
+            var context = new RequestContext();
+            context.AddPolicy(new AddHeaderPolicy("PerCallHeader", "Value"), HttpPipelinePosition.PerCall);
+
+            Response response = await client.GetPetAsync("snoopy", context);
+
+            Request request = mockTransport.Requests[0];
+            Assert.IsTrue(request.Headers.TryGetValues("PerCallHeader", out var values));
+            Assert.AreEqual(1, values.Count());
+            Assert.AreEqual("Value", values.ElementAt(0));
         }
 
         [Test]
         public async Task CanAddPerRetryPolicy()
         {
-            var mockResponse = new MockResponse(200);
+            var retryResponse = new MockResponse(408); // Request Timeout
+            var petResponse = new MockResponse(200);
 
             Pet pet = new("snoopy", "beagle");
-            mockResponse.SetContent(SerializationHelpers.Serialize(pet, SerializePet));
+            petResponse.SetContent(SerializationHelpers.Serialize(pet, SerializePet));
 
-            var mockTransport = new MockTransport(mockResponse);
+            // retry twice -- this will add the header three times.
+            var mockTransport = new MockTransport(retryResponse, retryResponse, petResponse);
             PetStoreClient client = CreateClient(mockTransport);
 
             var context = new RequestContext();
-            context.AddPolicy(new AddHeaderPolicy("MyHeader", "MyValue"), HttpPipelinePosition.PerRetry);
+            context.AddPolicy(new AddHeaderPolicy("PerRetryHeader", "Value"), HttpPipelinePosition.PerRetry);
 
-            Response response = await client.GetPetAsync("snoopy", new RequestContext());
+            Response response = await client.GetPetAsync("snoopy", context);
 
             Request request = mockTransport.Requests[0];
-            Assert.IsTrue(request.Headers.TryGetValue("MyHeader", out string headerValue));
-            Assert.AreEqual("MyValue", headerValue);
+            Assert.IsTrue(request.Headers.TryGetValues("PerRetryHeader", out var values));
+            Assert.AreEqual(3, values.Count());
+            Assert.AreEqual("Value", values.ElementAt(0));
+            Assert.AreEqual("Value", values.ElementAt(1));
+            Assert.AreEqual("Value", values.ElementAt(2));
         }
 
         [Test]
-        public void CanAddBeforeTransportPolicy()
+        public async Task CanAddBeforeTransportPolicy()
         {
+            var retryResponse = new MockResponse(408); // Request Timeout
+            var petResponse = new MockResponse(200);
+
+            Pet pet = new("snoopy", "beagle");
+            petResponse.SetContent(SerializationHelpers.Serialize(pet, SerializePet));
+
+            // retry twice
+            var mockTransport = new MockTransport(retryResponse, retryResponse, petResponse);
+            PetStoreClient client = CreateClient(mockTransport);
+
+            var context = new RequestContext();
+            context.AddPolicy(new AddHeaderPolicy("BeforeTransportHeader", "Value"), HttpPipelinePosition.BeforeTransport);
+
+            Response response = await client.GetPetAsync("snoopy", context);
+
+            Request request = mockTransport.Requests[0];
+            Assert.IsTrue(request.Headers.TryGetValues("BeforeTransportHeader", out var values));
+            Assert.AreEqual(3, values.Count());
+            Assert.AreEqual("Value", values.ElementAt(0));
+            Assert.AreEqual("Value", values.ElementAt(1));
+            Assert.AreEqual("Value", values.ElementAt(2));
+        }
+
+        [Test]
+        public async Task CanAddPoliciesAllPositions()
+        {
+            var retryResponse = new MockResponse(408); // Request Timeout
+            var petResponse = new MockResponse(200);
+
+            Pet pet = new("snoopy", "beagle");
+            petResponse.SetContent(SerializationHelpers.Serialize(pet, SerializePet));
+
+            // retry twice -- this will add the header three times.
+            var mockTransport = new MockTransport(retryResponse, retryResponse, petResponse);
+            PetStoreClient client = CreateClient(mockTransport);
+
+            var context = new RequestContext();
+            context.AddPolicy(new AddHeaderPolicy("PerCallHeader1", "PerCall1"), HttpPipelinePosition.PerCall);
+            context.AddPolicy(new AddHeaderPolicy("PerCallHeader2", "PerCall2"), HttpPipelinePosition.PerCall);
+            context.AddPolicy(new AddHeaderPolicy("PerRetryHeader", "PerRetry"), HttpPipelinePosition.PerRetry);
+            context.AddPolicy(new AddHeaderPolicy("BeforeTransportHeader", "BeforeTransport"), HttpPipelinePosition.BeforeTransport);
+
+            Response response = await client.GetPetAsync("snoopy", context);
+
+            Request request = mockTransport.Requests[0];
+
+            Assert.IsTrue(request.Headers.TryGetValues("PerCallHeader1", out var perCall1Values));
+            Assert.AreEqual(1, perCall1Values.Count());
+            Assert.AreEqual("PerCall1", perCall1Values.ElementAt(0));
+
+            Assert.IsTrue(request.Headers.TryGetValues("PerCallHeader2", out var perCall2Values));
+            Assert.AreEqual(1, perCall2Values.Count());
+            Assert.AreEqual("PerCall2", perCall2Values.ElementAt(0));
+
+            Assert.IsTrue(request.Headers.TryGetValues("PerRetryHeader", out var perRetryValues));
+            Assert.AreEqual("PerRetry", perRetryValues.ElementAt(0));
+            Assert.AreEqual("PerRetry", perRetryValues.ElementAt(1));
+            Assert.AreEqual("PerRetry", perRetryValues.ElementAt(2));
+
+            Assert.IsTrue(request.Headers.TryGetValues("BeforeTransportHeader", out var beforeTransportValues));
+            Assert.AreEqual("BeforeTransport", beforeTransportValues.ElementAt(0));
+            Assert.AreEqual("BeforeTransport", beforeTransportValues.ElementAt(1));
+            Assert.AreEqual("BeforeTransport", beforeTransportValues.ElementAt(2));
+        }
+
+        [Test]
+        public void ThrowsIfUsePipelineConstructor()
+        {
+            // TODO: Add this test
         }
 
         #region Helpers

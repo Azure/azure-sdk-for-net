@@ -1,67 +1,66 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Threading;
-using System.Threading.Tasks;
-using Azure.Core.Pipeline;
+//using System.Threading;
+//using System.Threading.Tasks;
+//using Azure.Core.Pipeline;
 
-namespace Azure.Core.Experimental
-{
-    internal static class HttpPipelineExtensions
-    {
-        public static async ValueTask<Response> ProcessMessageAsync(this HttpPipeline pipeline, HttpMessage message, ClientDiagnostics clientDiagnostics, RequestContext? requestContext, CancellationToken cancellationToken = default)
-        {
-            // Note: this is thinking about how this could be refactored.
-            requestContext ??= new RequestContext();
-            CancellationToken operationCancellationToken = MergeCancellationTokens(requestContext, cancellationToken);
-            message.Apply(requestContext);
+//namespace Azure.Core.Experimental
+//{
+//    internal static class HttpPipelineExtensions
+//    {
+//        public static async ValueTask<Response> ProcessMessageAsync(this HttpPipeline pipeline, HttpMessage message, ClientDiagnostics clientDiagnostics, RequestContext? requestContext, CancellationToken cancellationToken = default)
+//        {
+//            // Note: this is thinking about how this could be refactored.
+//            requestContext ??= new RequestContext();
+//            CancellationToken operationCancellationToken = MergeCancellationTokens(requestContext, cancellationToken);
+//
+//            await pipeline.SendAsync(message, operationCancellationToken).ConfigureAwait(false);
 
-            await pipeline.SendAsync(message, operationCancellationToken).ConfigureAwait(false);
+//            if (requestContext.ErrorOptions == ErrorOptions.NoThrow || !message.ResponseClassifier.IsErrorResponse(message))
+//            {
+//                return message.Response;
+//            }
 
-            if (requestContext.ErrorOptions == ErrorOptions.NoThrow || !message.ResponseClassifier.IsErrorResponse(message))
-            {
-                return message.Response;
-            }
+//            throw await clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+//        }
 
-            throw await clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-        }
+//        public static Response ProcessMessage(this HttpPipeline pipeline, HttpMessage message, ClientDiagnostics clientDiagnostics, RequestContext? requestContext, CancellationToken cancellationToken = default)
+//        {
+//            ErrorOptions errorOptions = ErrorOptions.Default;
+//            CancellationToken operationCancellationToken = CancellationToken.None;
 
-        public static Response ProcessMessage(this HttpPipeline pipeline, HttpMessage message, ClientDiagnostics clientDiagnostics, RequestContext? requestContext, CancellationToken cancellationToken = default)
-        {
-            ErrorOptions errorOptions = ErrorOptions.Default;
-            CancellationToken operationCancellationToken = CancellationToken.None;
+//            if (requestContext != null)
+//            {
+//                errorOptions = requestContext.ErrorOptions;
+//                operationCancellationToken = MergeCancellationTokens(requestContext, cancellationToken);
+//            }
 
-            if (requestContext != null)
-            {
-                errorOptions = requestContext.ErrorOptions;
-                operationCancellationToken = MergeCancellationTokens(requestContext, cancellationToken);
-            }
+//            pipeline.Send(message, operationCancellationToken);
 
-            pipeline.Send(message, operationCancellationToken);
+//            if (errorOptions == ErrorOptions.NoThrow || !message.ResponseClassifier.IsErrorResponse(message))
+//            {
+//                return message.Response;
+//            }
 
-            if (errorOptions == ErrorOptions.NoThrow || !message.ResponseClassifier.IsErrorResponse(message))
-            {
-                return message.Response;
-            }
+//            throw clientDiagnostics.CreateRequestFailedException(message.Response);
+//        }
 
-            throw clientDiagnostics.CreateRequestFailedException(message.Response);
-        }
+//        private static CancellationToken MergeCancellationTokens(RequestContext context, CancellationToken cancellationToken)
+//        {
+//            if (context.CancellationToken.CanBeCanceled && cancellationToken.CanBeCanceled)
+//            {
+//                // TODO: This is disposed when the method returns -- solve this.
+//                using var cts = CancellationTokenSource.CreateLinkedTokenSource(context.CancellationToken, cancellationToken);
+//                return cts.Token;
+//            }
 
-        private static CancellationToken MergeCancellationTokens(RequestContext context, CancellationToken cancellationToken)
-        {
-            if (context.CancellationToken.CanBeCanceled && cancellationToken.CanBeCanceled)
-            {
-                // TODO: This is disposed when the method returns -- solve this.
-                using var cts = CancellationTokenSource.CreateLinkedTokenSource(context.CancellationToken, cancellationToken);
-                return cts.Token;
-            }
+//            if (cancellationToken.CanBeCanceled)
+//            {
+//                return cancellationToken;
+//            }
 
-            if (cancellationToken.CanBeCanceled)
-            {
-                return cancellationToken;
-            }
-
-            return context.CancellationToken;
-        }
-    }
-}
+//            return context.CancellationToken;
+//        }
+//    }
+//}
