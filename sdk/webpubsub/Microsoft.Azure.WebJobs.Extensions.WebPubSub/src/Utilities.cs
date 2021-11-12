@@ -44,7 +44,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 WebPubSubEventType.User;
         }
 
-        public static HttpResponseMessage BuildResponse(UserEventResponse response)
+        public static HttpResponseMessage BuildUserEventResponse(UserEventResponse response, Dictionary<string, object> mergedStates)
         {
             HttpResponseMessage result = new();
 
@@ -52,19 +52,23 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             {
                 result.Content = new StreamContent(response.Data.ToStream());
             }
+
+            if (mergedStates?.Count > 0)
+            {
+                result.Headers.Add(Constants.Headers.CloudEvents.State, mergedStates.EncodeConnectionStates());
+            }
             result.Content.Headers.ContentType = GetMediaType(response.DataType);
 
             return result;
         }
 
-        public static HttpResponseMessage BuildResponse(ConnectEventResponse response)
-        {
-            return BuildResponse(JsonSerializer.Serialize(response), WebPubSubDataType.Json);
-        }
-
-        public static HttpResponseMessage BuildResponse(string response, WebPubSubDataType dataType = WebPubSubDataType.Text)
+        public static HttpResponseMessage BuildConnectEventResponse(string response, Dictionary<string, object> mergedStates, WebPubSubDataType dataType = WebPubSubDataType.Json)
         {
             HttpResponseMessage result = new();
+            if (mergedStates?.Count > 0)
+            {
+                result.Headers.Add(Constants.Headers.CloudEvents.State, mergedStates.EncodeConnectionStates());
+            }
 
             result.Content = new StringContent(response);
             result.Content.Headers.ContentType = GetMediaType(dataType);
@@ -81,12 +85,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             return result;
         }
 
-        public static HttpResponseMessage BuildValidResponse(object response, RequestType requestType, out Dictionary<string, object> states)
+        public static HttpResponseMessage BuildValidResponse(
+            object response, RequestType requestType,
+            WebPubSubConnectionContext context)
         {
             JsonDocument converted = null;
             string originStr = null;
             bool needConvert = true;
-            states = null;
             if (response is WebPubSubEventResponse)
             {
                 needConvert = false;
@@ -115,24 +120,28 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 {
                     if (needConvert)
                     {
-                        states = GetStatesFromJson(converted, originStr);
-                        return BuildResponse(originStr);
+                        var states = GetStatesFromJson(converted, originStr);
+                        var mergedStates = context.UpdateStates(states);
+                        return BuildConnectEventResponse(originStr, mergedStates);
                     }
                     else if (response is ConnectEventResponse connectResponse)
                     {
-                        return BuildResponse(connectResponse);
+                        var mergedStates = context.UpdateStates(connectResponse.States);
+                        return BuildConnectEventResponse(JsonSerializer.Serialize(response), mergedStates);
                     }
                 }
                 if (requestType == RequestType.User)
                 {
                     if (needConvert)
                     {
-                        states = GetStatesFromJson(converted, originStr);
-                        return BuildResponse(JsonSerializer.Deserialize<UserEventResponse>(originStr));
+                        var states = GetStatesFromJson(converted, originStr);
+                        var mergedStates = context.UpdateStates(states);
+                        return BuildUserEventResponse(JsonSerializer.Deserialize<UserEventResponse>(originStr), mergedStates);
                     }
                     else if (response is UserEventResponse messageResponse)
                     {
-                        return BuildResponse(messageResponse);
+                        var mergedStates = context.UpdateStates(messageResponse.States);
+                        return BuildUserEventResponse(messageResponse, mergedStates);
                     }
                 }
             }

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text.Json;
@@ -152,27 +153,33 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         {
             var test = @"{""code"":""unauthorized"",""errorMessage"":""not valid user.""}";
 
-            var result = BuildResponse(test, RequestType.Connect, out var states);
+            var result = BuildResponse(test, RequestType.Connect);
             Assert.NotNull(result);
             Assert.AreEqual(HttpStatusCode.Unauthorized, result.StatusCode);
 
-            Assert.IsNull(states);
+            var stateExist = result.Headers.TryGetValues(Constants.Headers.CloudEvents.State, out var states);
+            Assert.False(stateExist);
             var message = await result.Content.ReadAsStringAsync();
             Assert.AreEqual("not valid user.", message);
         }
 
         [TestCase]
-        public async Task ParseConnectResponse()
+        public async Task ParseConnectResponse_JSInvalidStatesNotMerge()
         {
             var test = @"{""userId"":""aaa"", ""states"": ""a""}";
 
-            var result = BuildResponse(test, RequestType.Connect, out var states);
+            var result = BuildResponse(test, RequestType.Connect, true);
 
             Assert.NotNull(result);
             Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);
 
+            var stateExist = result.Headers.TryGetValues(Constants.Headers.CloudEvents.State, out var value);
+            Assert.True(stateExist);
+            var states = value.SingleOrDefault().DecodeConnectionStates();
             Assert.NotNull(states);
-            Assert.IsEmpty(states);
+            Assert.AreEqual(1, states.Count);
+            Assert.True(states.ContainsKey("testKey"));
+
             var response = await result.Content.ReadAsStringAsync();
             var message = (JObject.Parse(response)).ToObject<ConnectEventResponse>();
             Assert.AreEqual("aaa", message.UserId);
@@ -183,13 +190,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         {
             var test = @"{""userId"":""aaa"", ""states"": { ""a"": ""b"", ""a"": ""c"" }}";
 
-            var result = BuildResponse(test, RequestType.Connect, out var states);
+            var result = BuildResponse(test, RequestType.Connect, false);
 
             Assert.NotNull(result);
             Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);
 
-            Assert.NotNull(states);
+            var stateExist = result.Headers.TryGetValues(Constants.Headers.CloudEvents.State, out var value);
+            Assert.True(stateExist);
+            var states = value.SingleOrDefault().DecodeConnectionStates();
             Assert.True(states.ContainsKey("a"));
+
             var response = await result.Content.ReadAsStringAsync();
             var message = (JObject.Parse(response)).ToObject<ConnectEventResponse>();
             Assert.AreEqual("aaa", message.UserId);
@@ -200,7 +210,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         {
             var test = @"{""data"":""test"", ""dataType"":""text""}";
 
-            var result = BuildResponse(test, RequestType.User, out var states);
+            var result = BuildResponse(test, RequestType.User);
 
             Assert.NotNull(result);
             Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);
@@ -215,7 +225,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         {
             var test = @"{""message"":""test"", ""dataType"":""hello""}";
 
-            var result = BuildResponse(test, RequestType.User, out var states);
+            var result = BuildResponse(test, RequestType.User);
 
             Assert.Null(result);
         }
@@ -226,7 +236,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             var test = @"{""test"":""test"",""errorMessage"":""not valid user.""}";
             var expected = JObject.Parse(test);
 
-            var result = BuildResponse(test, RequestType.Connect, out var states);
+            var result = BuildResponse(test, RequestType.Connect);
             var content = await result.Content.ReadAsStringAsync();
             var actual = JObject.Parse(content);
 
@@ -338,9 +348,18 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             Assert.AreEqual(url, json["url"].ToString());
         }
 
-        private static HttpResponseMessage BuildResponse(string input, RequestType requestType, out Dictionary<string, object> states)
+        private static HttpResponseMessage BuildResponse(string input, RequestType requestType, bool hasTestStates = false)
         {
-            return Utilities.BuildValidResponse(input, requestType, out states);
+            Dictionary<string, object> states = null;
+            if (hasTestStates)
+            {
+                states = new Dictionary<string, object>
+                {
+                    { "testKey", "value1" },
+                };
+            }
+            var context = new WebPubSubConnectionContext(WebPubSubEventType.System, "connect", "testhub", "Connection-Id1", states: states);
+            return Utilities.BuildValidResponse(input, requestType, context);
         }
     }
 }
