@@ -156,8 +156,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             Assert.NotNull(result);
             Assert.AreEqual(HttpStatusCode.Unauthorized, result.StatusCode);
 
-            Assert.NotNull(states);
-            Assert.IsEmpty(states);
+            Assert.IsNull(states);
             var message = await result.Content.ReadAsStringAsync();
             Assert.AreEqual("not valid user.", message);
         }
