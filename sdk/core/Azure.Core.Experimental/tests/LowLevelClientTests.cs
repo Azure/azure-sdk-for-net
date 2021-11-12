@@ -329,9 +329,26 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void ThrowsIfUsePipelineConstructor()
+        public async Task ThrowsIfUsePipelineConstructor()
         {
-            // TODO: Add this test
+            HttpPipeline pipeline = new HttpPipeline(new MockTransport());
+
+            var context = new RequestContext();
+            context.AddPolicy(new AddHeaderPolicy("PerCallHeader", "Value"), HttpPipelinePosition.PerCall);
+
+            var message = pipeline.CreateMessage(context);
+
+            bool throws = false;
+            try
+            {
+                await pipeline.SendAsync(message, context.CancellationToken);
+            }
+            catch (InvalidOperationException)
+            {
+                throws = true;
+            }
+
+            Assert.IsTrue(throws);
         }
 
         #region Helpers

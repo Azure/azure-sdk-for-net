@@ -20,6 +20,7 @@ namespace Azure.Core.Pipeline
 
         private readonly ReadOnlyMemory<HttpPipelinePolicy> _pipeline;
 
+        private bool _internallyConstructed;
         private readonly int _perCallIndex;
         private readonly int _perRetryIndex;
         private readonly int _transportIndex;
@@ -49,7 +50,7 @@ namespace Azure.Core.Pipeline
         {
             _perCallIndex = perCallIndex;
             _perRetryIndex = perRetryIndex;
-            //_builderConstructed = true;
+            _internallyConstructed = true;
         }
 
         /// <summary>
@@ -200,6 +201,11 @@ namespace Azure.Core.Pipeline
 
         private ReadOnlyMemory<HttpPipelinePolicy> CreateRequestPipeline(HttpPipelinePolicy[] policies, List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)> customPolicies)
         {
+            if (!_internallyConstructed)
+            {
+                throw new InvalidOperationException("Cannot send messages with per-request policies if the pipeline wasn't constructed with HttpPipelineBuilder.");
+            }
+
             int AddCustomPolicies(HttpPipelinePosition position, int start)
             {
                 int i = 0;
