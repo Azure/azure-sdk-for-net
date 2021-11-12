@@ -13,24 +13,6 @@ namespace Azure.Core.Pipeline
     public static class ResponseExtensions
     {
         /// <summary>
-        /// This will be a property on the non-experimental Azure.Core.Response.
-        /// </summary>
-        /// <param name="response"></param>
-        /// <returns></returns>
-        public static bool IsError(this Response response)
-        {
-            var classifiedResponse = response as ClassifiedResponse;
-
-            if (classifiedResponse == null)
-            {
-                throw new InvalidOperationException("IsError was not set on the response. " +
-                    "Please ensure the pipeline includes ResponsePropertiesPolicy.");
-            }
-
-            return classifiedResponse.IsError;
-        }
-
-        /// <summary>
         /// </summary>
         /// <param name="response"></param>
         /// <returns></returns>

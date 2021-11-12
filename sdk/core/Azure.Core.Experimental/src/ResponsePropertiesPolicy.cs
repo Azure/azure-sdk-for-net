@@ -47,10 +47,7 @@ namespace Azure.Core
                 ProcessNext(message, pipeline);
             }
 
-            // In the non-experimental version of this policy, these lines reduce to:
-            // > message.Response.EvaluateError(message);
             ClassifiedResponse response = new ClassifiedResponse(message.Response);
-            response.EvaluateError(message);
             message.Response = response;
 
             // The non-experimental version of this functionality is roughly described in:

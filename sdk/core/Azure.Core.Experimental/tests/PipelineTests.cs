@@ -2,12 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Experimental;
-using Azure.Core.Experimental.Tests;
-using Azure.Core.Experimental.Tests.Models;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -26,14 +22,14 @@ namespace Azure.Core.Tests
             var mockTransport = new MockTransport(
                 new MockResponse(500));
 
-            var pipeline = new HttpPipeline(mockTransport, new[] { new ResponsePropertiesPolicy(ClientOptions.Default) });
+            var pipeline = new HttpPipeline(mockTransport);
 
             Request request = pipeline.CreateRequest();
             request.Method = RequestMethod.Get;
             request.Uri.Reset(new Uri("https://contoso.a.io"));
             Response response = await pipeline.SendRequestAsync(request, CancellationToken.None);
 
-            Assert.IsTrue(response.IsError());
+            Assert.IsTrue(response.IsError);
         }
 
         [Test]
@@ -42,14 +38,14 @@ namespace Azure.Core.Tests
             var mockTransport = new MockTransport(
                 new MockResponse(200));
 
-            var pipeline = new HttpPipeline(mockTransport, new[] { new ResponsePropertiesPolicy(ClientOptions.Default) });
+            var pipeline = new HttpPipeline(mockTransport);
 
             Request request = pipeline.CreateRequest();
             request.Method = RequestMethod.Get;
             request.Uri.Reset(new Uri("https://contoso.a.io"));
             Response response = await pipeline.SendRequestAsync(request, CancellationToken.None);
 
-            Assert.IsFalse(response.IsError());
+            Assert.IsFalse(response.IsError);
         }
 
         [Test]
@@ -58,16 +54,14 @@ namespace Azure.Core.Tests
             var mockTransport = new MockTransport(
                 new MockResponse(404));
 
-            var pipeline = new HttpPipeline(mockTransport,
-                new[] { new ResponsePropertiesPolicy(ClientOptions.Default) },
-                new CustomResponseClassifier());
+            var pipeline = new HttpPipeline(mockTransport, responseClassifier: new CustomResponseClassifier());
 
             Request request = pipeline.CreateRequest();
             request.Method = RequestMethod.Get;
             request.Uri.Reset(new Uri("https://contoso.a.io"));
             Response response = await pipeline.SendRequestAsync(request, CancellationToken.None);
 
-            Assert.IsFalse(response.IsError());
+            Assert.IsFalse(response.IsError);
         }
 
         private class CustomResponseClassifier : ResponseClassifier

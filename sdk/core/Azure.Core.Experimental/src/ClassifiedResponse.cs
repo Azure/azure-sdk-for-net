@@ -20,16 +20,16 @@ namespace Azure.Core
 
         private Response Response { get; }
 
-        /// <summary>
-        /// </summary>
-        public bool IsError { get; private set; }
+        ///// <summary>
+        ///// </summary>
+        //public bool IsError { get; private set; }
 
         internal ExceptionFormattingResponseClassifier? ResponseClassifier { get; set; }
 
-        internal void EvaluateError(HttpMessage message)
-        {
-            IsError = message.ResponseClassifier.IsErrorResponse(message);
-        }
+        //internal void EvaluateError(HttpMessage message)
+        //{
+        //    IsError = message.ResponseClassifier.IsErrorResponse(message);
+        //}
 
         /// <inheritdoc />
         public override int Status => Response.Status;

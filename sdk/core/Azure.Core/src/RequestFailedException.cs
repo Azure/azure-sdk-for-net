@@ -66,6 +66,11 @@ namespace Azure
             ErrorCode = errorCode;
         }
 
+        //public RequestFailedException(Response response)
+        //{
+        //    int status = response.Status;
+        //}
+
         /// <inheritdoc />
         protected RequestFailedException(SerializationInfo info, StreamingContext context)
             : base(info, context)
