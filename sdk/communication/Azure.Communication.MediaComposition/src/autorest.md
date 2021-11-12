@@ -10,6 +10,6 @@ title: Media Composition
 tag: package-2021-12-31-preview
 model-namespace: false
 require:
-    - ../swagger/readme.md
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/feature/mediaComposition/specification/communication/data-plane/MediaComposition/readme.md
 payload-flattening-threshold: 3
 ```
