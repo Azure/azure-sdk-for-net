@@ -17,3 +17,7 @@ steps:
   - pwsh: |
       docker container ls -a
     displayName: Check running container
+
+  - pwsh: |
+      Write-Host "##vso[task.setvariable variable=PROXY_MANUAL_START]true"
+    displayName: 'Set PROXY_MANUAL_START'

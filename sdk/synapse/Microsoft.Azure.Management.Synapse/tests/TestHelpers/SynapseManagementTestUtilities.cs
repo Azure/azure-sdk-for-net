@@ -246,13 +246,13 @@ namespace Microsoft.Azure.Management.Synapse.Tests
                 NodeCount = enableAutoScale ? (int?)null : commonData.NodeCount,
                 NodeSizeFamily = NodeSizeFamily.MemoryOptimized,
                 NodeSize = commonData.NodeSize,
-                AutoScale = !enableAutoScale ? null : new AutoScaleProperties
+                AutoScale = new AutoScaleProperties
                 {
                     Enabled = enableAutoScale,
                     MinNodeCount = commonData.AutoScaleMinNodeCount,
                     MaxNodeCount = commonData.AutoScaleMaxNodeCount
                 },
-                AutoPause = !enableAutoPause ? null : new AutoPauseProperties
+                AutoPause = new AutoPauseProperties
                 {
                     Enabled = enableAutoPause,
                     DelayInMinutes = commonData.AutoPauseDelayInMinute

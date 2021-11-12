@@ -14,10 +14,10 @@ namespace Azure.Messaging.EventHubs.Producer
     ///   to configure its behavior.
     /// </summary>
     ///
-    internal class EventHubBufferedProducerClientOptions
+    public class EventHubBufferedProducerClientOptions
     {
         /// <summary>The number of batches that may be sent concurrently across all partitions.</summary>
-        private int _maximumConcurrentSends = Environment.ProcessorCount * 2;
+        private int _maximumConcurrentSends = Environment.ProcessorCount;
 
         /// <summary>The number of batches that may be sent concurrently to each partition.</summary>
         private int _maximumConcurrentSendsPerPartition = 1;
@@ -35,9 +35,9 @@ namespace Azure.Messaging.EventHubs.Producer
         private EventHubsRetryOptions _retryOptions = new EventHubsRetryOptions();
 
         /// <summary>
-        ///    Indicates whether or not events should be published using idempotent semantics for retries. If enabled, retries during publishing
-        ///    will attempt to avoid duplication with a minor cost to throughput.  Duplicates are still possible but the chance of them occurring is
-        ///    much lower when idempotent retries are enabled.
+        ///   Indicates whether or not events should be published using idempotent semantics for retries. If enabled, retries during publishing
+        ///   will attempt to avoid duplication with a minor cost to throughput.  Duplicates are still possible but the chance of them occurring is
+        ///   much lower when idempotent retries are enabled.
         ///</summary>
         ///
         /// <value>
@@ -115,7 +115,7 @@ namespace Azure.Messaging.EventHubs.Producer
         /// </summary>
         ///
         /// <value>
-        ///   By default, this will be set to twice the number of processors available in the host environment.
+        ///   By default, this will be set to the number of processors available in the host environment.
         /// </value>
         ///
         /// <remarks>
