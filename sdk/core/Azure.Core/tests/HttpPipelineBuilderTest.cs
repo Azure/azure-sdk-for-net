@@ -219,7 +219,7 @@ namespace Azure.Core.Tests
                 new ResponseClassifier(),
                 new HttpPipelineTransportOptions());
 
-            HttpPipelineTransport transportField = pipeline.GetType().BaseType.GetField("_transport", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.GetField).GetValue(pipeline) as HttpPipelineTransport;
+            HttpPipelineTransport transportField = pipeline.GetType().GetField("_transport", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.GetField).GetValue(pipeline) as HttpPipelineTransport;
             if (isCustomTransportSet)
             {
                 Assert.That(transportField, Is.TypeOf<MockTransport>());
