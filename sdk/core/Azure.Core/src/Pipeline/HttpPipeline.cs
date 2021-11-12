@@ -76,8 +76,11 @@ namespace Azure.Core.Pipeline
         public HttpMessage CreateMessage(RequestContext context)
         {
             var message = CreateMessage();
-            message.CancellationToken = context.CancellationToken;
-            message.Policies = context.Policies;
+            if (context != null)
+            {
+                message.CancellationToken = context.CancellationToken;
+                message.Policies = context.Policies;
+            }
             return message;
         }
 
