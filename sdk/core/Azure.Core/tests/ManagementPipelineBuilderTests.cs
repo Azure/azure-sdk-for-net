@@ -32,7 +32,7 @@ namespace Azure.Core.Tests.Management
             options.AddPolicy(dummyPolicy, HttpPipelinePosition.PerCall);
             var pipeline = ManagementPipelineBuilder.Build(new MockCredential(), new Uri("http://foo.com"), options);
 
-            var perCallPolicyField = pipeline.GetType().GetField("_pipeline", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.GetField);
+            var perCallPolicyField = pipeline.GetType().BaseType.GetField("_pipeline", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.GetField);
             var policies = (ReadOnlyMemory<HttpPipelinePolicy>)perCallPolicyField.GetValue(pipeline);
             Assert.IsNotNull(policies.ToArray().FirstOrDefault(p => p.GetType() == typeof(DummyPolicy)));
         }
@@ -50,7 +50,7 @@ namespace Azure.Core.Tests.Management
             var pipelineProperty = client.GetType().GetProperty("Pipeline", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.GetProperty);
             var pipeline = pipelineProperty.GetValue(client) as HttpPipeline;
 
-            var perCallPolicyField = pipeline.GetType().GetField("_pipeline", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.GetField);
+            var perCallPolicyField = pipeline.GetType().BaseType.GetField("_pipeline", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.GetField);
             var policies = (ReadOnlyMemory<HttpPipelinePolicy>)perCallPolicyField.GetValue(pipeline);
             Assert.IsNotNull(policies.ToArray().FirstOrDefault(p => p.GetType() == typeof(DummyPolicy)));
         }

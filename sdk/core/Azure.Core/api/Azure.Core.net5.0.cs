@@ -742,7 +742,12 @@ namespace Azure.Core.Pipeline
         public override void Process(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { throw null; }
     }
-    public partial class HttpClientTransport : Azure.Core.Pipeline.HttpPipelineTransport
+    public sealed partial class DisposableHttpPipeline : Azure.Core.Pipeline.HttpPipeline, System.IDisposable
+    {
+        public DisposableHttpPipeline(Azure.Core.Pipeline.HttpPipelineTransport transport, Azure.Core.Pipeline.HttpPipelinePolicy[]? policies = null, Azure.Core.ResponseClassifier? responseClassifier = null) : base (default(Azure.Core.Pipeline.HttpPipelineTransport), default(Azure.Core.Pipeline.HttpPipelinePolicy[]), default(Azure.Core.ResponseClassifier)) { }
+        public void Dispose() { }
+    }
+    public partial class HttpClientTransport : Azure.Core.Pipeline.HttpPipelineTransport, System.IDisposable
     {
         public static readonly Azure.Core.Pipeline.HttpClientTransport Shared;
         public HttpClientTransport() { }
@@ -769,6 +774,7 @@ namespace Azure.Core.Pipeline
     {
         public static Azure.Core.Pipeline.HttpPipeline Build(Azure.Core.ClientOptions options, params Azure.Core.Pipeline.HttpPipelinePolicy[] perRetryPolicies) { throw null; }
         public static Azure.Core.Pipeline.HttpPipeline Build(Azure.Core.ClientOptions options, Azure.Core.Pipeline.HttpPipelinePolicy[] perCallPolicies, Azure.Core.Pipeline.HttpPipelinePolicy[] perRetryPolicies, Azure.Core.ResponseClassifier responseClassifier) { throw null; }
+        public static Azure.Core.Pipeline.DisposableHttpPipeline Build(Azure.Core.ClientOptions options, Azure.Core.Pipeline.HttpPipelinePolicy[] perCallPolicies, Azure.Core.Pipeline.HttpPipelinePolicy[] perRetryPolicies, Azure.Core.ResponseClassifier responseClassifier, Azure.Core.Pipeline.HttpPipelineTransportOptions? defaultTransportOptions) { throw null; }
     }
     public abstract partial class HttpPipelinePolicy
     {
@@ -790,8 +796,21 @@ namespace Azure.Core.Pipeline
     {
         protected HttpPipelineTransport() { }
         public abstract Azure.Core.Request CreateRequest();
+        public void Dispose() { }
         public abstract void Process(Azure.Core.HttpMessage message);
         public abstract System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message);
+    }
+    public partial class HttpPipelineTransportOptions
+    {
+        public HttpPipelineTransportOptions() { }
+        public System.Func<Azure.Core.Pipeline.ServerCertificateCustomValidationArgs, bool>? ServerCertificateCustomValidationCallback { get { throw null; } set { } }
+    }
+    public partial class ServerCertificateCustomValidationArgs
+    {
+        public ServerCertificateCustomValidationArgs(System.Security.Cryptography.X509Certificates.X509Certificate2? certificate, System.Security.Cryptography.X509Certificates.X509Chain? x509Chain, System.Net.Security.SslPolicyErrors sslPolicyErrors) { }
+        public System.Security.Cryptography.X509Certificates.X509Certificate2? Certificate { get { throw null; } }
+        public System.Net.Security.SslPolicyErrors SslPolicyErrors { get { throw null; } }
+        public System.Security.Cryptography.X509Certificates.X509Chain? X509Chain { get { throw null; } }
     }
 }
 namespace Azure.Core.Serialization
