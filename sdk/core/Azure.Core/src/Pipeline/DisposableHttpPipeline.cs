@@ -16,7 +16,7 @@ namespace Azure.Core.Pipeline
         /// <param name="transport">The <see cref="HttpPipelineTransport"/> to use for sending the requests.</param>
         /// <param name="policies">Policies to be invoked as part of the pipeline in order.</param>
         /// <param name="responseClassifier">The response classifier to be used in invocations.</param>
-        public DisposableHttpPipeline(HttpPipelineTransport transport, HttpPipelinePolicy[]? policies = null, ResponseClassifier? responseClassifier = null)
+        internal DisposableHttpPipeline(HttpPipelineTransport transport, HttpPipelinePolicy[]? policies = null, ResponseClassifier? responseClassifier = null)
             : base(transport, policies, responseClassifier)
         { }
 
