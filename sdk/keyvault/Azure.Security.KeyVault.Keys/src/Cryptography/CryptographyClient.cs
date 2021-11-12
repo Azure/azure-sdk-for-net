@@ -150,7 +150,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             _provider = LocalCryptographyProviderFactory.Create(key);
         }
 
-        internal CryptographyClient(Uri keyId, KeyVaultPipeline pipeline)
+        internal CryptographyClient(Uri keyId, KeyVaultPipeline pipeline, bool forceRemote)
         {
             Argument.AssertNotNull(keyId, nameof(keyId));
 
@@ -161,7 +161,10 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             _pipeline = pipeline;
             _remoteProvider = remoteClient;
 
-            // Allow _provider to be set upon first request to the service depending on whether the key can be retrieved.
+            if (forceRemote)
+            {
+                _provider = remoteClient;
+            }
         }
 
         internal ICryptographyProvider RemoteClient => _remoteProvider;
@@ -1525,10 +1528,9 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 _provider = LocalCryptographyProviderFactory.Create(key.Value);
                 if (_provider is null)
                 {
-                    KeysEventSource.Singleton.KeyTypeNotSupported(operation, key.Value);
-
                     _provider = _remoteProvider;
-                    return;
+
+                    KeysEventSource.Singleton.KeyTypeNotSupported(operation, key.Value);
                 }
             }
             catch (RequestFailedException e) when (e.Status == 403)
@@ -1536,6 +1538,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 scope.AddAttribute("status", e.Status);
 
                 _provider = _remoteProvider;
+
+                KeysEventSource.Singleton.GetPermissionDenied(operation, _keyId);
             }
             catch (Exception e)
             {
@@ -1562,10 +1566,9 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 _provider = LocalCryptographyProviderFactory.Create(key.Value);
                 if (_provider is null)
                 {
-                    KeysEventSource.Singleton.KeyTypeNotSupported(operation, key.Value);
-
                     _provider = _remoteProvider;
-                    return;
+
+                    KeysEventSource.Singleton.KeyTypeNotSupported(operation, key.Value);
                 }
             }
             catch (RequestFailedException e) when (e.Status == 403)
@@ -1573,6 +1576,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 scope.AddAttribute("status", e.Status);
 
                 _provider = _remoteProvider;
+
+                KeysEventSource.Singleton.GetPermissionDenied(operation, _keyId);
             }
             catch (Exception e)
             {
