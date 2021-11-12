@@ -293,16 +293,6 @@ namespace Microsoft.Azure.Management.Sql
         ICapabilitiesOperations Capabilities { get; }
 
         /// <summary>
-        /// Gets the ILongTermRetentionBackupsOperations.
-        /// </summary>
-        ILongTermRetentionBackupsOperations LongTermRetentionBackups { get; }
-
-        /// <summary>
-        /// Gets the ILongTermRetentionManagedInstanceBackupsOperations.
-        /// </summary>
-        ILongTermRetentionManagedInstanceBackupsOperations LongTermRetentionManagedInstanceBackups { get; }
-
-        /// <summary>
         /// Gets the ILongTermRetentionPoliciesOperations.
         /// </summary>
         ILongTermRetentionPoliciesOperations LongTermRetentionPolicies { get; }
@@ -431,11 +421,6 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IManagedInstancePrivateLinkResourcesOperations.
         /// </summary>
         IManagedInstancePrivateLinkResourcesOperations ManagedInstancePrivateLinkResources { get; }
-
-        /// <summary>
-        /// Gets the IManagedInstancesOperations.
-        /// </summary>
-        IManagedInstancesOperations ManagedInstances { get; }
 
         /// <summary>
         /// Gets the IManagedInstanceTdeCertificatesOperations.
@@ -643,16 +628,6 @@ namespace Microsoft.Azure.Management.Sql
         IOutboundFirewallRulesOperations OutboundFirewallRules { get; }
 
         /// <summary>
-        /// Gets the IRestorableDroppedDatabasesOperations.
-        /// </summary>
-        IRestorableDroppedDatabasesOperations RestorableDroppedDatabases { get; }
-
-        /// <summary>
-        /// Gets the IRestorableDroppedManagedDatabasesOperations.
-        /// </summary>
-        IRestorableDroppedManagedDatabasesOperations RestorableDroppedManagedDatabases { get; }
-
-        /// <summary>
         /// Gets the IServersOperations.
         /// </summary>
         IServersOperations Servers { get; }
@@ -661,6 +636,31 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IUsagesOperations.
         /// </summary>
         IUsagesOperations Usages { get; }
+
+        /// <summary>
+        /// Gets the ILongTermRetentionBackupsOperations.
+        /// </summary>
+        ILongTermRetentionBackupsOperations LongTermRetentionBackups { get; }
+
+        /// <summary>
+        /// Gets the ILongTermRetentionManagedInstanceBackupsOperations.
+        /// </summary>
+        ILongTermRetentionManagedInstanceBackupsOperations LongTermRetentionManagedInstanceBackups { get; }
+
+        /// <summary>
+        /// Gets the IManagedInstancesOperations.
+        /// </summary>
+        IManagedInstancesOperations ManagedInstances { get; }
+
+        /// <summary>
+        /// Gets the IRestorableDroppedDatabasesOperations.
+        /// </summary>
+        IRestorableDroppedDatabasesOperations RestorableDroppedDatabases { get; }
+
+        /// <summary>
+        /// Gets the IRestorableDroppedManagedDatabasesOperations.
+        /// </summary>
+        IRestorableDroppedManagedDatabasesOperations RestorableDroppedManagedDatabases { get; }
 
     }
 }
