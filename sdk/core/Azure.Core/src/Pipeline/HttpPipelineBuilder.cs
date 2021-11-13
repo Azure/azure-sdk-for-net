@@ -149,6 +149,8 @@ namespace Azure.Core.Pipeline
                 {
                     transport = HttpPipelineTransport.Create(defaultTransportOptions);
                     return new DisposableHttpPipeline(transport,
+                        perCallIndex,
+                        perRetryIndex,
                         policies.ToArray(),
                         responseClassifier);
                 }

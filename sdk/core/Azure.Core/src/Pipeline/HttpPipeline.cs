@@ -20,7 +20,7 @@ namespace Azure.Core.Pipeline
 
         private readonly ReadOnlyMemory<HttpPipelinePolicy> _pipeline;
 
-        private bool _internallyConstructed;
+        private readonly bool _internallyConstructed;
         private readonly int _perCallIndex;
         private readonly int _perRetryIndex;
         private readonly int _transportIndex;
@@ -46,6 +46,7 @@ namespace Azure.Core.Pipeline
 
             _pipeline = all;
         }
+
         internal HttpPipeline(HttpPipelineTransport transport, int perCallIndex, int perRetryIndex, HttpPipelinePolicy[]? policies = null, ResponseClassifier? responseClassifier = null) : this(transport, policies, responseClassifier)
         {
             _perCallIndex = perCallIndex;
@@ -109,9 +110,15 @@ namespace Azure.Core.Pipeline
             {
                 var length = _pipeline.Length + message.Policies.Count;
                 var policies = ArrayPool<HttpPipelinePolicy>.Shared.Rent(length);
-                var pipeline = CreateRequestPipeline(policies, message.Policies);
-                await pipeline.Span[0].ProcessAsync(message, pipeline.Slice(1)).ConfigureAwait(false);
-                ArrayPool<HttpPipelinePolicy>.Shared.Return(policies);
+                try
+                {
+                    var pipeline = CreateRequestPipeline(policies, message.Policies);
+                    await pipeline.Span[0].ProcessAsync(message, pipeline.Slice(1)).ConfigureAwait(false);
+                }
+                finally
+                {
+                    ArrayPool<HttpPipelinePolicy>.Shared.Return(policies);
+                }
             }
         }
 
@@ -133,9 +140,15 @@ namespace Azure.Core.Pipeline
             {
                 var length = _pipeline.Length + message.Policies.Count;
                 var policies = ArrayPool<HttpPipelinePolicy>.Shared.Rent(length);
-                var pipeline = CreateRequestPipeline(policies, message.Policies);
-                pipeline.Span[0].ProcessAsync(message, pipeline.Slice(1));
-                ArrayPool<HttpPipelinePolicy>.Shared.Return(policies);
+                try
+                {
+                    var pipeline = CreateRequestPipeline(policies, message.Policies);
+                    pipeline.Span[0].ProcessAsync(message, pipeline.Slice(1));
+                }
+                finally
+                {
+                    ArrayPool<HttpPipelinePolicy>.Shared.Return(policies);
+                }
             }
         }
 
