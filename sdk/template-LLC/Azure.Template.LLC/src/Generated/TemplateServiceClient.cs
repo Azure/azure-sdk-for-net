@@ -19,15 +19,14 @@ namespace Azure.Template.LLC
     /// <summary> The TemplateService service client. </summary>
     public partial class TemplateServiceClient
     {
-        private static readonly string[] AuthorizationScopes = { "https://dev.LLCtemplate.net/.default" };
+        private static readonly string[] AuthorizationScopes = new string[] { "https://dev.LLCtemplate.net/.default" };
         private readonly TokenCredential _tokenCredential;
-
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _endpoint;
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get => _pipeline; }
+        public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary> Initializes a new instance of TemplateServiceClient for mocking. </summary>
         protected TemplateServiceClient()
@@ -46,7 +45,6 @@ namespace Azure.Template.LLC
                 throw new ArgumentNullException(nameof(credential));
             }
             endpoint ??= new Uri("http://localhost:3000");
-
             options ??= new TemplateServiceClientOptions();
 
             _clientDiagnostics = new ClientDiagnostics(options);
@@ -185,14 +183,14 @@ namespace Azure.Template.LLC
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetAsync(string resourceId, RequestContext context = null)
+        public virtual async Task<Response> GetTemplateServiceAsync(string resourceId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("TemplateServiceClient.Get");
+            using var scope = _clientDiagnostics.CreateScope("TemplateServiceClient.GetTemplateService");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetRequest(resourceId);
+                using HttpMessage message = CreateGetTemplateServiceRequest(resourceId);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -216,14 +214,14 @@ namespace Azure.Template.LLC
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response Get(string resourceId, RequestContext context = null)
+        public virtual Response GetTemplateService(string resourceId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("TemplateServiceClient.Get");
+            using var scope = _clientDiagnostics.CreateScope("TemplateServiceClient.GetTemplateService");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetRequest(resourceId);
+                using HttpMessage message = CreateGetTemplateServiceRequest(resourceId);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -347,7 +345,7 @@ namespace Azure.Template.LLC
             return message;
         }
 
-        internal HttpMessage CreateGetRequest(string resourceId)
+        internal HttpMessage CreateGetTemplateServiceRequest(string resourceId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
