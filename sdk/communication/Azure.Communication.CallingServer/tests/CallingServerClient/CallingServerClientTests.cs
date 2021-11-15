@@ -862,19 +862,19 @@ namespace Azure.Communication.CallingServer.Tests
         [TestCaseSource(nameof(TestData_AnswerCall))]
         public async Task AnswerCallAsync_Return200OK(string incomingCallContext, IEnumerable<CallMediaType> requestedMediaTypes, IEnumerable<CallingEventSubscriptionType> requestedCallEvents, Uri callbackUri)
         {
-            CallingServerClient serverCallRestClient = CreateMockCallingServerClient(202, CreateOrJoinOrAnswerCallPayload);
+            CallingServerClient serverCallRestClient = CreateMockCallingServerClient(201, CreateOrJoinOrAnswerCallPayload);
 
             var response = await serverCallRestClient.AnswerCallAsync(incomingCallContext, requestedMediaTypes, requestedCallEvents, callbackUri);
-            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            Assert.AreEqual((int)HttpStatusCode.Created, response.GetRawResponse().Status);
         }
 
         [TestCaseSource(nameof(TestData_AnswerCall))]
         public void AnswerCall_Return202OK(string incomingCallContext, IEnumerable<CallMediaType> requestedMediaTypes, IEnumerable<CallingEventSubscriptionType> requestedCallEvents, Uri callbackUri)
         {
-            CallingServerClient serverCallRestClient = CreateMockCallingServerClient(202, CreateOrJoinOrAnswerCallPayload);
+            CallingServerClient serverCallRestClient = CreateMockCallingServerClient(201, CreateOrJoinOrAnswerCallPayload);
 
             var response = serverCallRestClient.AnswerCall(incomingCallContext, requestedMediaTypes, requestedCallEvents, callbackUri);
-            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            Assert.AreEqual((int)HttpStatusCode.Created, response.GetRawResponse().Status);
         }
 
         [TestCaseSource(nameof(TestData_RedirectCall))]
