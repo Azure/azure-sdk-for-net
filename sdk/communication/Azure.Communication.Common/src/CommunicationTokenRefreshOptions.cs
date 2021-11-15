@@ -13,8 +13,8 @@ namespace Azure.Communication
     /// </summary>
     public class CommunicationTokenRefreshOptions
     {
-        /// <summary>Default proactive refreshing interval in minutes.</summary>
-        public const int DefaultExpiringOffsetMinutes = 5;
+        /// <summary>Default time span in minutes before token expiry that `tokenRefresher` will be called.</summary>
+        internal const int DefaultExpiringOffsetMinutes = 10;
         /// <summary>The initial token.</summary>
         public string InitialToken { get; set; }
         /// <summary>The asynchronous token refresher.</summary>
@@ -25,7 +25,7 @@ namespace Azure.Communication
         }
 
         /// <summary>The proactive refreshing interval.</summary>
-        internal TimeSpan RefreshOffsetTime { get; }
+        internal TimeSpan RefreshTimeBeforeTokenExpiry { get; } = new TimeSpan(0, 0, DefaultExpiringOffsetMinutes, 0);
         /// <summary>Determines whether the token should be proactively renewed prior to expiry or renew on demand./// </summary>
         internal bool RefreshProactively { get; }
         /// <summary>The function that provides the token acquired from CommunicationIdentityClient. </summary>
@@ -46,7 +46,6 @@ namespace Azure.Communication
             Argument.AssertNotNull(tokenRefresher, nameof(tokenRefresher));
             RefreshProactively = refreshProactively;
             TokenRefresher = tokenRefresher;
-            RefreshOffsetTime = new TimeSpan(0, 0, DefaultExpiringOffsetMinutes, 0);
         }
 
         /// <summary>
@@ -54,13 +53,13 @@ namespace Azure.Communication
         /// </summary>
         /// <param name="refreshProactively">Indicates whether the token should be proactively renewed prior to expiry or renew on demand.</param>
         /// <param name="tokenRefresher">The function that provides the token acquired from CommunicationIdentityClient.</param>
-        /// <param name="refreshOffsetTime">The time span before token expiry that `tokenRefresher` will be called if `refreshProactively` is true. For example, setting it to 5min means that 5min before the cached token expires, proactive refresh will request a new token.</param>
+        /// <param name="refreshTimeBeforeTokenExpiry">The time span before token expiry that `tokenRefresher` will be called if `refreshProactively` is true. For example, setting it to 5min means that 5min before the cached token expires, proactive refresh will request a new token. The default value is 10min.</param>
         public CommunicationTokenRefreshOptions(
             bool refreshProactively,
-            TimeSpan refreshOffsetTime,
+            TimeSpan refreshTimeBeforeTokenExpiry,
             Func<CancellationToken, string> tokenRefresher) : this(refreshProactively, tokenRefresher)
         {
-            RefreshOffsetTime = refreshOffsetTime;
+            RefreshTimeBeforeTokenExpiry = refreshTimeBeforeTokenExpiry;
         }
     }
 }
