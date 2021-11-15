@@ -1015,6 +1015,52 @@ namespace Azure.Core.Tests
             }
         }
 
+        [Test]
+        public async Task No100ContinueSentByDefault()
+        {
+            using (TestServer testServer = new TestServer(
+                       async context =>
+                       {
+                           Console.WriteLine(context.Request.Headers["Expect"]);
+                           Assert.True(context.Request.Headers["Expect"] == "");
+                           await context.Response.WriteAsync("");
+                       }))
+            {
+                var transport = GetTransport();
+                Request request = transport.CreateRequest();
+                request.Method = RequestMethod.Post;
+                request.Uri.Reset(testServer.Address);
+                request.Content = RequestContent.Create("Hello");
+                Response response = await ExecuteRequest(request, transport);
+
+                Assert.AreEqual(200, response.Status);
+            }
+        }
+
+        [Test]
+        public async Task CanSendExpect100Continue()
+        {
+            using (TestServer testServer = new TestServer(
+                       async context =>
+                       {
+                           Assert.True(context.Request.Headers["Expect"] == "100-continue");
+                           context.Response.StatusCode = 444;
+
+                           await context.Response.WriteAsync("Too long");
+                       }))
+            {
+                var transport = GetTransport();
+                Request request = transport.CreateRequest();
+                request.Method = RequestMethod.Post;
+                request.Uri.Reset(testServer.Address);
+                request.Headers.Add("Expect", "100-continue");
+                request.Content = RequestContent.Create("Hello");
+                Response response = await ExecuteRequest(request, transport);
+
+                Assert.AreEqual(444, response.Status);
+            }
+        }
+
         private static Request CreateRequest(HttpPipelineTransport transport, TestServer server, byte[] bytes = null)
         {
             Request request = transport.CreateRequest();
