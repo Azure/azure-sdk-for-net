@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests
     public class InstanceCollectionTests : DeviceUpdateManagementTestBase
     {
         public InstanceCollectionTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 

@@ -36,6 +36,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests
 
         [TestCase]
         [RecordedTest]
+        [Ignore("TODO")]
         public async Task Update()
         {
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();
@@ -53,6 +54,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests
 
         [TestCase]
         [RecordedTest]
+        [Ignore("TODO")]
         public async Task Head()
         {
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();
