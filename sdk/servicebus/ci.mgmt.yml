@@ -9,6 +9,7 @@ trigger:
   paths:
     include:
     - sdk/servicebus/ci.mgmt.yml
+    - sdk/eventhub/service.projects
     - sdk/servicebus/Azure.ResourceManager.ServiceBus
 
 pr:
@@ -21,6 +22,7 @@ pr:
   paths:
     include:
     - sdk/servicebus/ci.mgmt.yml
+    - sdk/eventhub/service.projects
     - sdk/servicebus/Azure.ResourceManager.ServiceBus
 
 extends:
