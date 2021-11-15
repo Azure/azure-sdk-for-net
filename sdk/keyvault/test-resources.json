@@ -87,6 +87,7 @@
         "kvApiVersion": "2019-09-01",
         "kvName": "[parameters('baseName')]",
         "kvAdminDefinitionId": "00482a5a-887f-4fb3-b363-3b7fe8e74483",
+        "kvAdminAssignmentName": "[guid(resourceGroup().id, variables('kvAdminDefinitionId'), parameters('testApplicationOid'))]",
         "hsmApiVersion": "2021-04-01-preview",
         "hsmName": "[concat(parameters('baseName'), 'hsm')]",
         "mgmtApiVersion": "2019-04-01",
@@ -128,16 +129,13 @@
             }
         },
         {
-            "type": "Microsoft.KeyVault/vaults/providers/roleAssignments",
+            "type": "Microsoft.Authorization/roleAssignments",
             "apiVersion": "2020-04-01-preview",
-            "name": "[concat(variables('kvName'), '/Microsoft.Authorization/', guid(resourceGroup().id, variables('kvName'), variables('kvAdminDefinitionId'), parameters('testApplicationOid')))]",
-            "dependsOn": [
-                "[resourceId('Microsoft.KeyVault/vaults', variables('kvName'))]"
-            ],
+            "name": "[variables('kvAdminAssignmentName')]",
             "properties": {
                 "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', variables('kvAdminDefinitionId'))]",
                 "principalId": "[parameters('testApplicationOid')]",
-                "scope": "[resourceId('Microsoft.KeyVault/vaults', variables('kvName'))]"
+                "scope": "[resourceGroup().id]"
             }
         },
         {
