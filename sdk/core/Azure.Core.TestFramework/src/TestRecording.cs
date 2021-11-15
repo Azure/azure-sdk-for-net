@@ -26,7 +26,7 @@ namespace Azure.Core.TestFramework
         internal const string DateTimeOffsetNowVariableKey = "DateTimeOffsetNow";
         public SortedDictionary<string, string> Variables { get; } = new SortedDictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
-        internal TestRecording(RecordedTestMode mode, string sessionFile, RecordedTestSanitizer sanitizer, int proxyPortHttp = default, int proxyPortHttps = default, bool ignoreBody = false)
+        public TestRecording(RecordedTestMode mode, string sessionFile, RecordedTestSanitizer sanitizer, int proxyPortHttp = default, int proxyPortHttps = default, bool ignoreBody = false)
         {
             Mode = mode;
             _sessionFile = sessionFile;
