@@ -44,11 +44,6 @@ jobs:
           Write-Host "##vso[task.setvariable variable=ASPNETCORE_Kestrel__Certificates__Default__Path]$(Build.SourcesDirectory)/eng/common/testproxy/dotnet-devcert.pfx"
           Write-Host "##vso[task.setvariable variable=ASPNETCORE_Kestrel__Certificates__Default__Password]password"
         displayName: 'Configure Kestrel Environment Variables'
-      - pwsh: |
-          dotnet tool install azure.sdk.tools.testproxy --global --add-source https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json --version 1.0.0-dev.20211104.2
-          dotnet dev-certs https --clean --import $(Build.SourcesDirectory)/eng/common/testproxy/dotnet-devcert.pfx --password="password"
-          test-proxy
-        displayName: 'Start Test Proxy'
       - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
         parameters:
           AgentImage: $(OSVmImage)
