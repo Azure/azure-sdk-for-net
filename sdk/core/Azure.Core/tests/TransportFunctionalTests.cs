@@ -1021,8 +1021,7 @@ namespace Azure.Core.Tests
             using (TestServer testServer = new TestServer(
                        async context =>
                        {
-                           Console.WriteLine(context.Request.Headers["Expect"]);
-                           Assert.True(context.Request.Headers["Expect"] == "");
+                           Assert.Zero(context.Request.Headers["Expect"].Count);
                            await context.Response.WriteAsync("");
                        }))
             {
