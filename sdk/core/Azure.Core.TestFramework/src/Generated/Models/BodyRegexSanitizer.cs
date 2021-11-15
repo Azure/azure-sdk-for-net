@@ -10,27 +10,31 @@ using System;
 namespace Azure.Core.TestFramework.Models
 {
     /// <summary> Sanitizer for a request body. </summary>
-    public partial class BodyKeySanitizer
+    public partial class BodyRegexSanitizer
     {
-        /// <summary> Initializes a new instance of BodyKeySanitizer. </summary>
+        /// <summary> Initializes a new instance of BodyRegexSanitizer. </summary>
         /// <param name="value"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public BodyKeySanitizer(string value)
+        /// <param name="regex"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> or <paramref name="regex"/> is null. </exception>
+        public BodyRegexSanitizer(string value, string regex)
         {
             if (value == null)
             {
                 throw new ArgumentNullException(nameof(value));
             }
+            if (regex == null)
+            {
+                throw new ArgumentNullException(nameof(regex));
+            }
 
             Value = value;
+            Regex = regex;
         }
 
-        /// <summary> Gets or sets the json path. </summary>
-        public string JsonPath { get; set; }
         /// <summary> Gets the value. </summary>
         public string Value { get; }
-        /// <summary> Gets or sets the regex. </summary>
-        public string Regex { get; set; }
+        /// <summary> Gets the regex. </summary>
+        public string Regex { get; }
         /// <summary> Gets or sets the group for replace. </summary>
         public string GroupForReplace { get; set; }
     }

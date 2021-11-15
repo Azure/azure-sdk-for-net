@@ -31,20 +31,18 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             _serviceVersion = serviceVersion;
         }
 
-        // [SetUp]
-        // public async Task AddSanitizer()
-        // {
-        //     await Recording.ProxyClient.AddBodySanitizerAsync(
-        //         new BodyKeySanitizer(null, $"\u003CPrimaryKey\u003E{SanitizedKeyValue}\u003C/PrimaryKey\u003E")
-        //         {
-        //             Regex = "\\u003CPrimaryKey\\u003E.*\\u003C/PrimaryKey\\u003E"
-        //         });
-        //     await Recording.ProxyClient.AddBodySanitizerAsync(
-        //         new BodyKeySanitizer(null, $"\u003CSecondaryKey\u003E{SanitizedKeyValue}\u003C/SecondaryKey\u003E")
-        //         {
-        //             Regex = "\\u003CSecondaryKey\\u003E.*\\u003C/SecondaryKey\\u003E"
-        //         });
-        // }
+        [SetUp]
+        public void AddSanitizers()
+        {
+            Recording.AddBodySanitizer(
+                new BodyRegexSanitizer(
+                    $"\u003CPrimaryKey\u003E{SanitizedKeyValue}\u003C/PrimaryKey\u003E",
+                    "\\u003CPrimaryKey\\u003E.*\\u003C/PrimaryKey\\u003E"));
+            Recording.AddBodySanitizer(
+                new BodyRegexSanitizer(
+                    $"\u003CSecondaryKey\u003E{SanitizedKeyValue}\u003C/SecondaryKey\u003E",
+                    "\\u003CSecondaryKey\\u003E.*\\u003C/SecondaryKey\\u003E"));
+        }
 
         private string GetConnectionString(bool premium = false) => premium ? TestEnvironment.ServiceBusPremiumNamespaceConnectionString : TestEnvironment.ServiceBusConnectionString;
 

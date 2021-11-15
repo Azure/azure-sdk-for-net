@@ -179,7 +179,7 @@
       "post": {
         "summary": "Add a sanitizer.",
         "description": "Stop recording for a test.",
-        "operationId": "TestProxy_AddBodySanitizer",
+        "operationId": "TestProxy_AddBodyKeySanitizer",
         "consumes": [
           "application/json"
         ],
@@ -285,6 +285,61 @@
         }
       }
     },
+    "/admin/addsanitizer?overload=BodyRegexSanitizer": {
+      "post": {
+        "summary": "Add a sanitizer.",
+        "description": "Add a sanitizer.",
+        "operationId": "TestProxy_AddBodyRegexSanitizer",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "x-abstraction-identifier",
+            "in": "header",
+            "description": "The type of sanitizer.",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "BodyRegexSanitizer"
+            ],
+            "x-ms-enum": {
+              "name": "SanitizerType",
+              "modelAsString": false
+            }
+          },
+          {
+            "name": "x-recording-id",
+            "in": "header",
+            "description": "The recording ID to apply the sanitizer to.",
+            "type": "string"
+          },
+          {
+            "name": "sanitizer",
+            "in": "body",
+            "description": "The body for a body regex sanitizer.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/BodyRegexSanitizer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "default": {
+            "description": "An error response received from the Test Proxy.",
+            "headers": {
+              "x-ms-error-code": {
+                "type": "string",
+                "description": "Error code for specific error that occurred."
+              }
+            }
+          }
+        }
+      }
+    },
     "/admin/setmatcher?overload=BodilessMatcher": {
       "post": {
         "summary": "Add a bodiless matcher.",
@@ -369,8 +424,26 @@
         }
       },
       "required": [
-        "jsonPath",
         "value"
+      ]
+    },
+    "BodyRegexSanitizer": {
+      "type": "object",
+      "description": "Sanitizer for a request body",
+      "properties": {
+        "value": {
+          "type": "string"
+        },
+        "regex": {
+          "type": "string"
+        },
+        "groupForReplace": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "value",
+        "regex"
       ]
     },
     "HeaderRegexSanitizer": {

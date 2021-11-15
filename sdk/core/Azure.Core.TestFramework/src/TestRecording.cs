@@ -57,7 +57,7 @@ namespace Azure.Core.TestFramework
 
                     foreach (string jsonPath in _sanitizer.JsonPathSanitizers.Select(s => s.JsonPath))
                     {
-                        ProxyClient.AddBodySanitizer(new BodyKeySanitizer(jsonPath, Sanitized), RecordingId);
+                        ProxyClient.AddBodyKeySanitizer(new BodyKeySanitizer(Sanitized) { JsonPath = jsonPath}, RecordingId);
                     }
 
                     if (ignoreBody)
@@ -121,6 +121,11 @@ namespace Azure.Core.TestFramework
                 }
                 return _random;
             }
+        }
+
+        public void AddBodySanitizer(BodyRegexSanitizer sanitizer)
+        {
+            ProxyClient.AddBodyRegexSanitizer(sanitizer, RecordingId);
         }
 
         /// <summary>
