@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.True(ifExists);
 
             // NOT WORKING API
-            //ThroughputSettings throughtput = await database.GetMongoDBCollectionThroughputAsync();
+            //ThroughputSettingsData throughtput = await database.GetMongoDBCollectionThroughputAsync();
             SqlDatabase database2 = await SqlDatabaseContainer.GetAsync(_databaseName);
             Assert.AreEqual(_databaseName, database2.Data.Resource.Id);
             //Assert.AreEqual(TestThroughput1, database2.Data.Options.Throughput);
@@ -103,14 +103,14 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         public async Task SqlDatabaseThroughput()
         {
             var database = await CreateSqlDatabase(null);
-            ThroughputSettings throughput = await database.GetSqlDatabaseThroughputAsync();
+            DatabaseAccountSqlDatabaseThroughputSetting throughput = await database.GetDatabaseAccountSqlDatabaseThroughputSetting().GetAsync();
 
-            Assert.AreEqual(TestThroughput1, throughput.Resource.Throughput);
+            Assert.AreEqual(TestThroughput1, throughput.Data.Resource.Throughput);
 
-            ThroughputSettings throughput2 = await database.UpdateSqlDatabaseThroughput(new ThroughputSettingsUpdateParameters(Resources.Models.Location.WestUS2,
+            DatabaseAccountSqlDatabaseThroughputSetting throughput2 = await throughput.CreateOrUpdate(new ThroughputSettingsUpdateParameters(Resources.Models.Location.WestUS2,
                 new ThroughputSettingsResource(TestThroughput2, null, null, null))).WaitForCompletionAsync();
 
-            Assert.AreEqual(TestThroughput2, throughput2.Resource.Throughput);
+            Assert.AreEqual(TestThroughput2, throughput2.Data.Resource.Throughput);
         }
 
         [Test]
@@ -118,11 +118,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         public async Task SqlDatabaseMigrateToAutoscale()
         {
             var database = await CreateSqlDatabase(null);
-            ThroughputSettings throughput = await database.GetSqlDatabaseThroughputAsync();
-            AssertManualThroughput(throughput);
+            DatabaseAccountSqlDatabaseThroughputSetting throughput = await database.GetDatabaseAccountSqlDatabaseThroughputSetting().GetAsync();
+            AssertManualThroughput(throughput.Data);
 
-            throughput = await database.MigrateSqlDatabaseToAutoscale().WaitForCompletionAsync();
-            AssertAutoscale(throughput);
+            ThroughputSettingsData throughputData = await throughput.MigrateSqlDatabaseToAutoscale().WaitForCompletionAsync();
+            AssertAutoscale(throughputData);
         }
 
         [Test]
@@ -134,11 +134,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 MaxThroughput = DefaultMaxThroughput,
             });
 
-            ThroughputSettings throughput = await database.GetSqlDatabaseThroughputAsync();
-            AssertAutoscale(throughput);
+            DatabaseAccountSqlDatabaseThroughputSetting throughput = await database.GetDatabaseAccountSqlDatabaseThroughputSetting().GetAsync();
+            AssertAutoscale(throughput.Data);
 
-            throughput = await database.MigrateSqlDatabaseToManualThroughput().WaitForCompletionAsync();
-            AssertManualThroughput(throughput);
+            ThroughputSettingsData throughputData = await throughput.MigrateSqlDatabaseToManualThroughput().WaitForCompletionAsync();
+            AssertManualThroughput(throughputData);
         }
 
         [Test]

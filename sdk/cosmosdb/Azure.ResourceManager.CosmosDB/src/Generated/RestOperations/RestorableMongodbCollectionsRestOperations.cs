@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.CosmosDB
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateGetAllRequest(string location, string instanceId, string restorableMongodbDatabaseRid)
+        internal HttpMessage CreateListRequest(string location, string instanceId, string restorableMongodbDatabaseRid)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="restorableMongodbDatabaseRid"> The resource ID of the MongoDB database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="instanceId"/> is null. </exception>
-        public async Task<Response<RestorableMongodbCollectionsList>> GetAllAsync(string location, string instanceId, string restorableMongodbDatabaseRid = null, CancellationToken cancellationToken = default)
+        public async Task<Response<RestorableMongodbCollectionsList>> ListAsync(string location, string instanceId, string restorableMongodbDatabaseRid = null, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(instanceId));
             }
 
-            using var message = CreateGetAllRequest(location, instanceId, restorableMongodbDatabaseRid);
+            using var message = CreateListRequest(location, instanceId, restorableMongodbDatabaseRid);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="restorableMongodbDatabaseRid"> The resource ID of the MongoDB database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="instanceId"/> is null. </exception>
-        public Response<RestorableMongodbCollectionsList> GetAll(string location, string instanceId, string restorableMongodbDatabaseRid = null, CancellationToken cancellationToken = default)
+        public Response<RestorableMongodbCollectionsList> List(string location, string instanceId, string restorableMongodbDatabaseRid = null, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(instanceId));
             }
 
-            using var message = CreateGetAllRequest(location, instanceId, restorableMongodbDatabaseRid);
+            using var message = CreateListRequest(location, instanceId, restorableMongodbDatabaseRid);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

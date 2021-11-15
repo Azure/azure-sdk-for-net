@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                     new TableCreateUpdateParameters(new TableResource(tableName), new CreateUpdateOptions())));
             Assert.IsNotNull(table1);
             Assert.AreEqual(tableName, table1.Resource.Id);
-            ThroughputSettings throughputSettings1 =
+            ThroughputSettingsData throughputSettings1 =
                 await CosmosDBManagementClient.TableResources.GetTableThroughputAsync(resourceGroupName, databaseAccountName, tableName);
             Assert.IsNotNull(throughputSettings1);
             Assert.AreEqual(defaultThroughput, throughputSettings1.Resource.Throughput);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                     new TableCreateUpdateParameters(new TableResource(tableName), new CreateUpdateOptions(sampleThroughput, new AutoscaleSettings()))));
             Assert.IsNotNull(table3);
             Assert.AreEqual(tableName, table3.Resource.Id);
-            ThroughputSettings throughputSettings2 =
+            ThroughputSettingsData throughputSettings2 =
                 await CosmosDBManagementClient.TableResources.GetTableThroughputAsync(resourceGroupName, databaseAccountName, tableName);
             Assert.IsNotNull(throughputSettings2);
             Assert.AreEqual(sampleThroughput, throughputSettings2.Resource.Throughput);
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TestCase, Order(2)]
         public async Task TableMigrateToAutoscaleTest()
         {
-            ThroughputSettings throughputSettings = await WaitForCompletionAsync(
+            ThroughputSettingsData ThroughputSettingsData = await WaitForCompletionAsync(
                 await CosmosDBManagementClient.TableResources.StartMigrateTableToAutoscaleAsync(resourceGroupName, databaseAccountName, tableName));
             Assert.IsNotNull(throughputSettings);
             Assert.IsNotNull(throughputSettings.Resource.AutoscaleSettings);
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TestCase, Order(3)]
         public async Task TableMigrateToManualThroughputTest()
         {
-            ThroughputSettings throughputSettings = await WaitForCompletionAsync(
+            ThroughputSettingsData ThroughputSettingsData = await WaitForCompletionAsync(
                 await CosmosDBManagementClient.TableResources.StartMigrateTableToManualThroughputAsync(resourceGroupName, databaseAccountName, tableName));
             Assert.IsNotNull(throughputSettings);
             Assert.IsNull(throughputSettings.Resource.AutoscaleSettings);
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TestCase, Order(4)]
         public async Task TableUpdateThroughputTest()
         {
-            ThroughputSettings throughputSettings = await WaitForCompletionAsync(
+            ThroughputSettingsData ThroughputSettingsData = await WaitForCompletionAsync(
                await CosmosDBManagementClient.TableResources.StartUpdateTableThroughputAsync(
                    resourceGroupName,
                    databaseAccountName,

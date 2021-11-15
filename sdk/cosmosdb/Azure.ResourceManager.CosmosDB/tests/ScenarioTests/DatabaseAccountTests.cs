@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var metrics = await account.GetMetricsAsync(filter).ToEnumerableAsync();
             Assert.IsNotNull(metrics);
 
-            var regionMetrics = await _resourceGroup.GetRegionMetricsAsync(_databaseAccountName, Resources.Models.Location.WestUS2, filter).ToEnumerableAsync();
+            var regionMetrics = await account.GetMetricsDatabaseAccountRegionsAsync(Resources.Models.Location.WestUS2, filter).ToEnumerableAsync();
             Assert.IsNotNull(regionMetrics);
         }
 

@@ -12,29 +12,34 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Update RUs per second of an Azure Cosmos DB Cassandra Keyspace. </summary>
-    public partial class CassandraResourceUpdateCassandraKeyspaceThroughputOperation : Operation<ThroughputSettings>, IOperationSource<ThroughputSettings>
+    public partial class CassandraResourceUpdateCassandraKeyspaceThroughputOperation : Operation<DatabaseAccountCassandraKeyspaceThroughputSetting>, IOperationSource<DatabaseAccountCassandraKeyspaceThroughputSetting>
     {
-        private readonly OperationInternals<ThroughputSettings> _operation;
+        private readonly OperationInternals<DatabaseAccountCassandraKeyspaceThroughputSetting> _operation;
+
+        private readonly ArmResource _operationBase;
 
         /// <summary> Initializes a new instance of CassandraResourceUpdateCassandraKeyspaceThroughputOperation for mocking. </summary>
         protected CassandraResourceUpdateCassandraKeyspaceThroughputOperation()
         {
         }
 
-        internal CassandraResourceUpdateCassandraKeyspaceThroughputOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal CassandraResourceUpdateCassandraKeyspaceThroughputOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<ThroughputSettings>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "CassandraResourceUpdateCassandraKeyspaceThroughputOperation");
+            _operation = new OperationInternals<DatabaseAccountCassandraKeyspaceThroughputSetting>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "CassandraResourceUpdateCassandraKeyspaceThroughputOperation");
+            _operationBase = operationsBase;
         }
 
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override ThroughputSettings Value => _operation.Value;
+        public override DatabaseAccountCassandraKeyspaceThroughputSetting Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -52,21 +57,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<ThroughputSettings>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<DatabaseAccountCassandraKeyspaceThroughputSetting>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<ThroughputSettings>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<DatabaseAccountCassandraKeyspaceThroughputSetting>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        ThroughputSettings IOperationSource<ThroughputSettings>.CreateResult(Response response, CancellationToken cancellationToken)
+        DatabaseAccountCassandraKeyspaceThroughputSetting IOperationSource<DatabaseAccountCassandraKeyspaceThroughputSetting>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return ThroughputSettings.DeserializeThroughputSettings(document.RootElement);
+            return new DatabaseAccountCassandraKeyspaceThroughputSetting(_operationBase, ThroughputSettingsData.DeserializeThroughputSettingsData(document.RootElement));
         }
 
-        async ValueTask<ThroughputSettings> IOperationSource<ThroughputSettings>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DatabaseAccountCassandraKeyspaceThroughputSetting> IOperationSource<DatabaseAccountCassandraKeyspaceThroughputSetting>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return ThroughputSettings.DeserializeThroughputSettings(document.RootElement);
+            return new DatabaseAccountCassandraKeyspaceThroughputSetting(_operationBase, ThroughputSettingsData.DeserializeThroughputSettingsData(document.RootElement));
         }
     }
 }

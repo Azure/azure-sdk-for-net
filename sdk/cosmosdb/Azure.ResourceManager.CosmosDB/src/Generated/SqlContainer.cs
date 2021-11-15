@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.CosmosDB
     public partial class SqlContainer : ArmResource
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly SqlContainersRestOperations _restClient;
+        private readonly SqlResourcesRestOperations _sqlResourcesRestClient;
         private readonly SqlContainerData _data;
 
         /// <summary> Initializes a new instance of the <see cref="SqlContainer"/> class for mocking. </summary>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CosmosDB
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new SqlContainersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _sqlResourcesRestClient = new SqlResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="SqlContainer"/> class. </summary>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.CosmosDB
         internal SqlContainer(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new SqlContainersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _sqlResourcesRestClient = new SqlResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="SqlContainer"/> class. </summary>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.CosmosDB
         internal SqlContainer(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new SqlContainersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _sqlResourcesRestClient = new SqlResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = await _restClient.GetSqlContainerAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _sqlResourcesRestClient.GetSqlContainerAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new SqlContainer(this, response.Value), response.GetRawResponse());
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = _restClient.GetSqlContainer(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _sqlResourcesRestClient.GetSqlContainer(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SqlContainer(this, response.Value), response.GetRawResponse());
@@ -143,14 +143,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Deletes an existing Azure Cosmos DB SQL container. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<SqlContainerDeleteSqlContainerOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<SqlResourceDeleteSqlContainerOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SqlContainer.Delete");
             scope.Start();
             try
             {
-                var response = await _restClient.DeleteSqlContainerAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlContainerDeleteSqlContainerOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteSqlContainerRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
+                var response = await _sqlResourcesRestClient.DeleteSqlContainerAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlResourceDeleteSqlContainerOperation(_clientDiagnostics, Pipeline, _sqlResourcesRestClient.CreateDeleteSqlContainerRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -165,14 +165,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Deletes an existing Azure Cosmos DB SQL container. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual SqlContainerDeleteSqlContainerOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual SqlResourceDeleteSqlContainerOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SqlContainer.Delete");
             scope.Start();
             try
             {
-                var response = _restClient.DeleteSqlContainer(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SqlContainerDeleteSqlContainerOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteSqlContainerRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
+                var response = _sqlResourcesRestClient.DeleteSqlContainer(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new SqlResourceDeleteSqlContainerOperation(_clientDiagnostics, Pipeline, _sqlResourcesRestClient.CreateDeleteSqlContainerRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.CosmosDB
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
                 await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _restClient.GetSqlContainerAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _sqlResourcesRestClient.GetSqlContainerAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new SqlContainer(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.CosmosDB
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
                 TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _restClient.GetSqlContainer(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var originalResponse = _sqlResourcesRestClient.GetSqlContainer(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 return Response.FromValue(new SqlContainer(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.CosmosDB
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
                 await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _restClient.GetSqlContainerAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _sqlResourcesRestClient.GetSqlContainerAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new SqlContainer(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.CosmosDB
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
                 TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _restClient.GetSqlContainer(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var originalResponse = _sqlResourcesRestClient.GetSqlContainer(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 return Response.FromValue(new SqlContainer(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.CosmosDB
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
                 await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _restClient.GetSqlContainerAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _sqlResourcesRestClient.GetSqlContainerAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new SqlContainer(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.CosmosDB
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
                 TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _restClient.GetSqlContainer(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var originalResponse = _sqlResourcesRestClient.GetSqlContainer(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 return Response.FromValue(new SqlContainer(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -355,194 +355,13 @@ namespace Azure.ResourceManager.CosmosDB
                 throw;
             }
         }
-        /// <summary> Gets the RUs per second of the SQL container under an existing Azure Cosmos DB database account. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ThroughputSettings>> GetSqlContainerThroughputAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("SqlContainer.GetSqlContainerThroughput");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.GetSqlContainerThroughputAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets the RUs per second of the SQL container under an existing Azure Cosmos DB database account. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ThroughputSettings> GetSqlContainerThroughput(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("SqlContainer.GetSqlContainerThroughput");
-            scope.Start();
-            try
-            {
-                var response = _restClient.GetSqlContainerThroughput(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Update RUs per second of an Azure Cosmos DB SQL container. </summary>
-        /// <param name="updateThroughputParameters"> The parameters to provide for the RUs per second of the current SQL container. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="updateThroughputParameters"/> is null. </exception>
-        public async virtual Task<SqlContainerUpdateSqlContainerThroughputOperation> UpdateSqlContainerThroughputAsync(ThroughputSettingsUpdateParameters updateThroughputParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
-        {
-            if (updateThroughputParameters == null)
-            {
-                throw new ArgumentNullException(nameof(updateThroughputParameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("SqlContainer.UpdateSqlContainerThroughput");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.UpdateSqlContainerThroughputAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, updateThroughputParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlContainerUpdateSqlContainerThroughputOperation(_clientDiagnostics, Pipeline, _restClient.CreateUpdateSqlContainerThroughputRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, updateThroughputParameters).Request, response);
-                if (waitForCompletion)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Update RUs per second of an Azure Cosmos DB SQL container. </summary>
-        /// <param name="updateThroughputParameters"> The parameters to provide for the RUs per second of the current SQL container. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="updateThroughputParameters"/> is null. </exception>
-        public virtual SqlContainerUpdateSqlContainerThroughputOperation UpdateSqlContainerThroughput(ThroughputSettingsUpdateParameters updateThroughputParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
-        {
-            if (updateThroughputParameters == null)
-            {
-                throw new ArgumentNullException(nameof(updateThroughputParameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("SqlContainer.UpdateSqlContainerThroughput");
-            scope.Start();
-            try
-            {
-                var response = _restClient.UpdateSqlContainerThroughput(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, updateThroughputParameters, cancellationToken);
-                var operation = new SqlContainerUpdateSqlContainerThroughputOperation(_clientDiagnostics, Pipeline, _restClient.CreateUpdateSqlContainerThroughputRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, updateThroughputParameters).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Migrate an Azure Cosmos DB SQL container from manual throughput to autoscale. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<SqlContainerMigrateSqlContainerToAutoscaleOperation> MigrateSqlContainerToAutoscaleAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("SqlContainer.MigrateSqlContainerToAutoscale");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.MigrateSqlContainerToAutoscaleAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlContainerMigrateSqlContainerToAutoscaleOperation(_clientDiagnostics, Pipeline, _restClient.CreateMigrateSqlContainerToAutoscaleRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
-                if (waitForCompletion)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Migrate an Azure Cosmos DB SQL container from manual throughput to autoscale. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual SqlContainerMigrateSqlContainerToAutoscaleOperation MigrateSqlContainerToAutoscale(bool waitForCompletion = true, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("SqlContainer.MigrateSqlContainerToAutoscale");
-            scope.Start();
-            try
-            {
-                var response = _restClient.MigrateSqlContainerToAutoscale(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SqlContainerMigrateSqlContainerToAutoscaleOperation(_clientDiagnostics, Pipeline, _restClient.CreateMigrateSqlContainerToAutoscaleRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Migrate an Azure Cosmos DB SQL container from autoscale to manual throughput. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<SqlContainerMigrateSqlContainerToManualThroughputOperation> MigrateSqlContainerToManualThroughputAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("SqlContainer.MigrateSqlContainerToManualThroughput");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.MigrateSqlContainerToManualThroughputAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlContainerMigrateSqlContainerToManualThroughputOperation(_clientDiagnostics, Pipeline, _restClient.CreateMigrateSqlContainerToManualThroughputRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
-                if (waitForCompletion)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Migrate an Azure Cosmos DB SQL container from autoscale to manual throughput. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual SqlContainerMigrateSqlContainerToManualThroughputOperation MigrateSqlContainerToManualThroughput(bool waitForCompletion = true, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("SqlContainer.MigrateSqlContainerToManualThroughput");
-            scope.Start();
-            try
-            {
-                var response = _restClient.MigrateSqlContainerToManualThroughput(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SqlContainerMigrateSqlContainerToManualThroughputOperation(_clientDiagnostics, Pipeline, _restClient.CreateMigrateSqlContainerToManualThroughputRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
 
         /// <summary> Retrieves continuous backup information for a container resource. </summary>
         /// <param name="location"> The name of the continuous backup restore location. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public async virtual Task<SqlContainerRetrieveContinuousBackupInformationOperation> RetrieveContinuousBackupInformationAsync(ContinuousBackupRestoreLocation location, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<SqlResourceRetrieveContinuousBackupInformationOperation> RetrieveContinuousBackupInformationAsync(ContinuousBackupRestoreLocation location, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -553,8 +372,8 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = await _restClient.RetrieveContinuousBackupInformationAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, location, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlContainerRetrieveContinuousBackupInformationOperation(_clientDiagnostics, Pipeline, _restClient.CreateRetrieveContinuousBackupInformationRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, location).Request, response);
+                var response = await _sqlResourcesRestClient.RetrieveContinuousBackupInformationAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, location, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlResourceRetrieveContinuousBackupInformationOperation(_clientDiagnostics, Pipeline, _sqlResourcesRestClient.CreateRetrieveContinuousBackupInformationRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, location).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -571,7 +390,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public virtual SqlContainerRetrieveContinuousBackupInformationOperation RetrieveContinuousBackupInformation(ContinuousBackupRestoreLocation location, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual SqlResourceRetrieveContinuousBackupInformationOperation RetrieveContinuousBackupInformation(ContinuousBackupRestoreLocation location, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -582,8 +401,8 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = _restClient.RetrieveContinuousBackupInformation(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, location, cancellationToken);
-                var operation = new SqlContainerRetrieveContinuousBackupInformationOperation(_clientDiagnostics, Pipeline, _restClient.CreateRetrieveContinuousBackupInformationRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, location).Request, response);
+                var response = _sqlResourcesRestClient.RetrieveContinuousBackupInformation(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, location, cancellationToken);
+                var operation = new SqlResourceRetrieveContinuousBackupInformationOperation(_clientDiagnostics, Pipeline, _sqlResourcesRestClient.CreateRetrieveContinuousBackupInformationRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, location).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -595,25 +414,44 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Gets a list of SqlStoredProcedures in the SqlContainer. </summary>
+        #region DatabaseAccountSqlDatabaseContainerThroughputSetting
+
+        /// <summary> Gets an object representing a DatabaseAccountSqlDatabaseContainerThroughputSetting along with the instance operations that can be performed on it in the SqlContainer. </summary>
+        /// <returns> Returns a <see cref="DatabaseAccountSqlDatabaseContainerThroughputSetting" /> object. </returns>
+        public DatabaseAccountSqlDatabaseContainerThroughputSetting GetDatabaseAccountSqlDatabaseContainerThroughputSetting()
+        {
+            return new DatabaseAccountSqlDatabaseContainerThroughputSetting(this, Id + "/throughputSettings/default");
+        }
+        #endregion
+
+        #region SqlStoredProcedure
+
+        /// <summary> Gets a collection of SqlStoredProcedures in the SqlContainer. </summary>
         /// <returns> An object representing collection of SqlStoredProcedures and their operations over a SqlContainer. </returns>
         public SqlStoredProcedureCollection GetSqlStoredProcedures()
         {
             return new SqlStoredProcedureCollection(this);
         }
+        #endregion
 
-        /// <summary> Gets a list of SqlUserDefinedFunctions in the SqlContainer. </summary>
+        #region SqlUserDefinedFunction
+
+        /// <summary> Gets a collection of SqlUserDefinedFunctions in the SqlContainer. </summary>
         /// <returns> An object representing collection of SqlUserDefinedFunctions and their operations over a SqlContainer. </returns>
         public SqlUserDefinedFunctionCollection GetSqlUserDefinedFunctions()
         {
             return new SqlUserDefinedFunctionCollection(this);
         }
+        #endregion
 
-        /// <summary> Gets a list of SqlTriggers in the SqlContainer. </summary>
+        #region SqlTrigger
+
+        /// <summary> Gets a collection of SqlTriggers in the SqlContainer. </summary>
         /// <returns> An object representing collection of SqlTriggers and their operations over a SqlContainer. </returns>
         public SqlTriggerCollection GetSqlTriggers()
         {
             return new SqlTriggerCollection(this);
         }
+        #endregion
     }
 }

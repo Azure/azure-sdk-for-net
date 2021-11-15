@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.CosmosDB
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateGetAllRequest(string location, string instanceId)
+        internal HttpMessage CreateListRequest(string location, string instanceId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="instanceId"> The instanceId GUID of a restorable database account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="instanceId"/> is null. </exception>
-        public async Task<Response<RestorableSqlDatabasesList>> GetAllAsync(string location, string instanceId, CancellationToken cancellationToken = default)
+        public async Task<Response<RestorableSqlDatabasesList>> ListAsync(string location, string instanceId, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(instanceId));
             }
 
-            using var message = CreateGetAllRequest(location, instanceId);
+            using var message = CreateListRequest(location, instanceId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="instanceId"> The instanceId GUID of a restorable database account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="instanceId"/> is null. </exception>
-        public Response<RestorableSqlDatabasesList> GetAll(string location, string instanceId, CancellationToken cancellationToken = default)
+        public Response<RestorableSqlDatabasesList> List(string location, string instanceId, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(instanceId));
             }
 
-            using var message = CreateGetAllRequest(location, instanceId);
+            using var message = CreateListRequest(location, instanceId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

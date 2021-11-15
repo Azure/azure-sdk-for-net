@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             VerifyEqualCassandraDatabases(cassandraKeyspace1, cassandraKeyspace2);
 
             var throughputResponse = CosmosDBManagementClient.CassandraResources.GetCassandraKeyspaceThroughputAsync(resourceGroupName, databaseAccountName, keyspaceName);
-            ThroughputSettings throughputSettings = throughputResponse.ConfigureAwait(false).GetAwaiter().GetResult();
+            ThroughputSettingsData ThroughputSettingsData = throughputResponse.ConfigureAwait(false).GetAwaiter().GetResult();
             Assert.NotNull(throughputSettings);
             Assert.NotNull(throughputSettings.Name);
             Assert.AreEqual(throughputSettings.Resource.Throughput, sampleThroughput);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             VerifyEqualCassandraDatabases(cassandraKeyspace3, cassandraKeyspace4);
 
             var throughputResponse2 = CosmosDBManagementClient.CassandraResources.GetCassandraKeyspaceThroughputAsync(resourceGroupName, databaseAccountName, keyspaceName);
-            ThroughputSettings throughputSettings2 = throughputResponse2.ConfigureAwait(false).GetAwaiter().GetResult();
+            ThroughputSettingsData throughputSettings2 = throughputResponse2.ConfigureAwait(false).GetAwaiter().GetResult();
             Assert.NotNull(throughputSettings2);
             Assert.NotNull(throughputSettings2.Name);
             Assert.AreEqual(throughputSettings2.Resource.Throughput, sampleThroughput2);
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             ThroughputSettingsUpdateParameters throughputSettingsUpdateParameters = new ThroughputSettingsUpdateParameters(new ThroughputSettingsResource(maxThroughput, null, null, null));
             var throughputResponse = await WaitForCompletionAsync(await CosmosDBManagementClient.CassandraResources.StartUpdateCassandraKeyspaceThroughputAsync(resourceGroupName, databaseAccountName, keyspaceName, throughputSettingsUpdateParameters));
-            ThroughputSettings throughputSettings = throughputResponse.Value;
+            ThroughputSettingsData ThroughputSettingsData = throughputResponse.Value;
             Assert.NotNull(throughputSettings);
             Assert.NotNull(throughputSettings.Name);
             Assert.AreEqual(throughputSettings.Resource.Throughput, maxThroughput);
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TestCase, Order(4)]
         public async Task CassandraKeyspaceMigrateToAutoscaleTests()
         {
-            ThroughputSettings throughputSettings = await WaitForCompletionAsync(await CosmosDBManagementClient.CassandraResources.StartMigrateCassandraKeyspaceToAutoscaleAsync(resourceGroupName, databaseAccountName, keyspaceName));
+            ThroughputSettingsData ThroughputSettingsData = await WaitForCompletionAsync(await CosmosDBManagementClient.CassandraResources.StartMigrateCassandraKeyspaceToAutoscaleAsync(resourceGroupName, databaseAccountName, keyspaceName));
             Assert.IsNotNull(throughputSettings);
             Assert.IsNotNull(throughputSettings.Resource.AutoscaleSettings);
             Assert.AreEqual(maxThroughput, throughputSettings.Resource.AutoscaleSettings.MaxThroughput);
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TestCase, Order(5)]
         public async Task CassandraKeyspaceMigrateToManualTests()
         {
-            ThroughputSettings throughputSettings = await WaitForCompletionAsync(await CosmosDBManagementClient.CassandraResources.StartMigrateCassandraKeyspaceToManualThroughputAsync(resourceGroupName, databaseAccountName, keyspaceName));
+            ThroughputSettingsData ThroughputSettingsData = await WaitForCompletionAsync(await CosmosDBManagementClient.CassandraResources.StartMigrateCassandraKeyspaceToManualThroughputAsync(resourceGroupName, databaseAccountName, keyspaceName));
             Assert.IsNotNull(throughputSettings);
             Assert.IsNull(throughputSettings.Resource.AutoscaleSettings);
             Assert.AreEqual(maxThroughput, throughputSettings.Resource.Throughput);
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             VerifyCassandraTableCreation(cassandraTable, cassandraTableCreateUpdateParameters);
 
             var throughputResponse = CosmosDBManagementClient.CassandraResources.GetCassandraTableThroughputAsync(resourceGroupName, databaseAccountName, keyspaceName, tableName);
-            ThroughputSettings throughputSettings = throughputResponse.ConfigureAwait(false).GetAwaiter().GetResult();
+            ThroughputSettingsData ThroughputSettingsData = throughputResponse.ConfigureAwait(false).GetAwaiter().GetResult();
             Assert.NotNull(throughputSettings);
             Assert.NotNull(throughputSettings.Name);
             Assert.AreEqual(throughputSettings.Resource.Throughput, sampleThroughput);
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             VerifyCassandraTableCreation(cassandraTable2, cassandraTableCreateUpdateParameters2);
 
             var throughputResponse2 = CosmosDBManagementClient.CassandraResources.GetCassandraTableThroughputAsync(resourceGroupName, databaseAccountName, keyspaceName, tableName);
-            ThroughputSettings throughputSettings2 = throughputResponse2.ConfigureAwait(false).GetAwaiter().GetResult();
+            ThroughputSettingsData throughputSettings2 = throughputResponse2.ConfigureAwait(false).GetAwaiter().GetResult();
             Assert.NotNull(throughputSettings2);
             Assert.NotNull(throughputSettings2.Name);
             Assert.AreEqual(throughputSettings2.Resource.Throughput, sampleThroughput2);
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             ThroughputSettingsUpdateParameters throughputSettingsUpdateParameters = new ThroughputSettingsUpdateParameters(new ThroughputSettingsResource(maxThroughput, null, null, null));
             var throughputResponse = await WaitForCompletionAsync(await CosmosDBManagementClient.CassandraResources.StartUpdateCassandraTableThroughputAsync(resourceGroupName, databaseAccountName, keyspaceName, tableName, throughputSettingsUpdateParameters));
-            ThroughputSettings throughputSettings = throughputResponse.Value;
+            ThroughputSettingsData ThroughputSettingsData = throughputResponse.Value;
             Assert.NotNull(throughputSettings);
             Assert.NotNull(throughputSettings.Name);
             Assert.AreEqual(throughputSettings.Resource.Throughput, maxThroughput);
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TestCase, Order(8)]
         public async Task CassandraTableMigrateToAutoscaleTests()
         {
-            ThroughputSettings throughputSettings = await WaitForCompletionAsync(await CosmosDBManagementClient.CassandraResources.StartMigrateCassandraTableToAutoscaleAsync(resourceGroupName, databaseAccountName, keyspaceName, tableName));
+            ThroughputSettingsData ThroughputSettingsData = await WaitForCompletionAsync(await CosmosDBManagementClient.CassandraResources.StartMigrateCassandraTableToAutoscaleAsync(resourceGroupName, databaseAccountName, keyspaceName, tableName));
             Assert.IsNotNull(throughputSettings);
             Assert.IsNotNull(throughputSettings.Resource.AutoscaleSettings);
             Assert.AreEqual(maxThroughput, throughputSettings.Resource.AutoscaleSettings.MaxThroughput);
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TestCase, Order(9)]
         public async Task CassandraTableMigrateToManualTests()
         {
-            ThroughputSettings throughputSettings = await WaitForCompletionAsync(await CosmosDBManagementClient.CassandraResources.StartMigrateCassandraTableToManualThroughputAsync(resourceGroupName, databaseAccountName, keyspaceName, tableName));
+            ThroughputSettingsData ThroughputSettingsData = await WaitForCompletionAsync(await CosmosDBManagementClient.CassandraResources.StartMigrateCassandraTableToManualThroughputAsync(resourceGroupName, databaseAccountName, keyspaceName, tableName));
             Assert.IsNotNull(throughputSettings);
             Assert.IsNull(throughputSettings.Resource.AutoscaleSettings);
             Assert.AreEqual(maxThroughput, throughputSettings.Resource.Throughput);

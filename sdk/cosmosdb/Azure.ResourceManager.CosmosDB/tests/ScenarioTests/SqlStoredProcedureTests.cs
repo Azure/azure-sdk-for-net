@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.True(ifExists);
 
             // NOT WORKING API
-            //ThroughputSettings throughtput = await container.GetMongoDBCollectionThroughputAsync();
+            //ThroughputSettingsData throughtput = await container.GetMongoDBCollectionThroughputAsync();
             SqlStoredProcedure storedProcedure2 = await SqlStoredProcedureCollection.GetAsync(_storedProcedureName);
             Assert.AreEqual(_storedProcedureName, storedProcedure2.Data.Resource.Id);
             //Assert.AreEqual(TestThroughput1, container2.Data.Options.Throughput);

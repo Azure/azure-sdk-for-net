@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.CosmosDB
     public partial class CassandraKeyspace : ArmResource
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly CassandraResourcesRestOperations _restClient;
+        private readonly CassandraResourcesRestOperations _cassandraResourcesRestClient;
         private readonly CassandraKeyspaceData _data;
 
         /// <summary> Initializes a new instance of the <see cref="CassandraKeyspace"/> class for mocking. </summary>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CosmosDB
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new CassandraResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _cassandraResourcesRestClient = new CassandraResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="CassandraKeyspace"/> class. </summary>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.CosmosDB
         internal CassandraKeyspace(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new CassandraResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _cassandraResourcesRestClient = new CassandraResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="CassandraKeyspace"/> class. </summary>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.CosmosDB
         internal CassandraKeyspace(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new CassandraResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _cassandraResourcesRestClient = new CassandraResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = await _restClient.GetCassandraKeyspaceAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _cassandraResourcesRestClient.GetCassandraKeyspaceAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new CassandraKeyspace(this, response.Value), response.GetRawResponse());
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = _restClient.GetCassandraKeyspace(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _cassandraResourcesRestClient.GetCassandraKeyspace(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CassandraKeyspace(this, response.Value), response.GetRawResponse());
@@ -149,8 +149,8 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = await _restClient.DeleteCassandraKeyspaceAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CassandraResourceDeleteCassandraKeyspaceOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteCassandraKeyspaceRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = await _cassandraResourcesRestClient.DeleteCassandraKeyspaceAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new CassandraResourceDeleteCassandraKeyspaceOperation(_clientDiagnostics, Pipeline, _cassandraResourcesRestClient.CreateDeleteCassandraKeyspaceRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -171,8 +171,8 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = _restClient.DeleteCassandraKeyspace(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new CassandraResourceDeleteCassandraKeyspaceOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteCassandraKeyspaceRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = _cassandraResourcesRestClient.DeleteCassandraKeyspace(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new CassandraResourceDeleteCassandraKeyspaceOperation(_clientDiagnostics, Pipeline, _cassandraResourcesRestClient.CreateDeleteCassandraKeyspaceRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.CosmosDB
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
                 await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _restClient.GetCassandraKeyspaceAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _cassandraResourcesRestClient.GetCassandraKeyspaceAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new CassandraKeyspace(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.CosmosDB
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
                 TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _restClient.GetCassandraKeyspace(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var originalResponse = _cassandraResourcesRestClient.GetCassandraKeyspace(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return Response.FromValue(new CassandraKeyspace(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.CosmosDB
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
                 await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _restClient.GetCassandraKeyspaceAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _cassandraResourcesRestClient.GetCassandraKeyspaceAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new CassandraKeyspace(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.CosmosDB
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
                 TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _restClient.GetCassandraKeyspace(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var originalResponse = _cassandraResourcesRestClient.GetCassandraKeyspace(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return Response.FromValue(new CassandraKeyspace(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.CosmosDB
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
                 await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _restClient.GetCassandraKeyspaceAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _cassandraResourcesRestClient.GetCassandraKeyspaceAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new CassandraKeyspace(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.CosmosDB
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
                 TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _restClient.GetCassandraKeyspace(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var originalResponse = _cassandraResourcesRestClient.GetCassandraKeyspace(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return Response.FromValue(new CassandraKeyspace(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -355,193 +355,25 @@ namespace Azure.ResourceManager.CosmosDB
                 throw;
             }
         }
-        /// <summary> Gets the RUs per second of the Cassandra Keyspace under an existing Azure Cosmos DB database account with the provided name. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ThroughputSettings>> GetCassandraKeyspaceThroughputAsync(CancellationToken cancellationToken = default)
+
+        #region DatabaseAccountCassandraKeyspaceThroughputSetting
+
+        /// <summary> Gets an object representing a DatabaseAccountCassandraKeyspaceThroughputSetting along with the instance operations that can be performed on it in the CassandraKeyspace. </summary>
+        /// <returns> Returns a <see cref="DatabaseAccountCassandraKeyspaceThroughputSetting" /> object. </returns>
+        public DatabaseAccountCassandraKeyspaceThroughputSetting GetDatabaseAccountCassandraKeyspaceThroughputSetting()
         {
-            using var scope = _clientDiagnostics.CreateScope("CassandraKeyspace.GetCassandraKeyspaceThroughput");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.GetCassandraKeyspaceThroughputAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new DatabaseAccountCassandraKeyspaceThroughputSetting(this, Id + "/throughputSettings/default");
         }
+        #endregion
 
-        /// <summary> Gets the RUs per second of the Cassandra Keyspace under an existing Azure Cosmos DB database account with the provided name. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ThroughputSettings> GetCassandraKeyspaceThroughput(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("CassandraKeyspace.GetCassandraKeyspaceThroughput");
-            scope.Start();
-            try
-            {
-                var response = _restClient.GetCassandraKeyspaceThroughput(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        #region CassandraTable
 
-        /// <summary> Update RUs per second of an Azure Cosmos DB Cassandra Keyspace. </summary>
-        /// <param name="updateThroughputParameters"> The RUs per second of the parameters to provide for the current Cassandra Keyspace. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="updateThroughputParameters"/> is null. </exception>
-        public async virtual Task<CassandraResourceUpdateCassandraKeyspaceThroughputOperation> UpdateCassandraKeyspaceThroughputAsync(ThroughputSettingsUpdateParameters updateThroughputParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
-        {
-            if (updateThroughputParameters == null)
-            {
-                throw new ArgumentNullException(nameof(updateThroughputParameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("CassandraKeyspace.UpdateCassandraKeyspaceThroughput");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.UpdateCassandraKeyspaceThroughputAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, updateThroughputParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new CassandraResourceUpdateCassandraKeyspaceThroughputOperation(_clientDiagnostics, Pipeline, _restClient.CreateUpdateCassandraKeyspaceThroughputRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, updateThroughputParameters).Request, response);
-                if (waitForCompletion)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Update RUs per second of an Azure Cosmos DB Cassandra Keyspace. </summary>
-        /// <param name="updateThroughputParameters"> The RUs per second of the parameters to provide for the current Cassandra Keyspace. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="updateThroughputParameters"/> is null. </exception>
-        public virtual CassandraResourceUpdateCassandraKeyspaceThroughputOperation UpdateCassandraKeyspaceThroughput(ThroughputSettingsUpdateParameters updateThroughputParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
-        {
-            if (updateThroughputParameters == null)
-            {
-                throw new ArgumentNullException(nameof(updateThroughputParameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("CassandraKeyspace.UpdateCassandraKeyspaceThroughput");
-            scope.Start();
-            try
-            {
-                var response = _restClient.UpdateCassandraKeyspaceThroughput(Id.ResourceGroupName, Id.Parent.Name, Id.Name, updateThroughputParameters, cancellationToken);
-                var operation = new CassandraResourceUpdateCassandraKeyspaceThroughputOperation(_clientDiagnostics, Pipeline, _restClient.CreateUpdateCassandraKeyspaceThroughputRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, updateThroughputParameters).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Migrate an Azure Cosmos DB Cassandra Keyspace from manual throughput to autoscale. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<CassandraResourceMigrateCassandraKeyspaceToAutoscaleOperation> MigrateCassandraKeyspaceToAutoscaleAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("CassandraKeyspace.MigrateCassandraKeyspaceToAutoscale");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.MigrateCassandraKeyspaceToAutoscaleAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CassandraResourceMigrateCassandraKeyspaceToAutoscaleOperation(_clientDiagnostics, Pipeline, _restClient.CreateMigrateCassandraKeyspaceToAutoscaleRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
-                if (waitForCompletion)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Migrate an Azure Cosmos DB Cassandra Keyspace from manual throughput to autoscale. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual CassandraResourceMigrateCassandraKeyspaceToAutoscaleOperation MigrateCassandraKeyspaceToAutoscale(bool waitForCompletion = true, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("CassandraKeyspace.MigrateCassandraKeyspaceToAutoscale");
-            scope.Start();
-            try
-            {
-                var response = _restClient.MigrateCassandraKeyspaceToAutoscale(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new CassandraResourceMigrateCassandraKeyspaceToAutoscaleOperation(_clientDiagnostics, Pipeline, _restClient.CreateMigrateCassandraKeyspaceToAutoscaleRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Migrate an Azure Cosmos DB Cassandra Keyspace from autoscale to manual throughput. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<CassandraResourceMigrateCassandraKeyspaceToManualThroughputOperation> MigrateCassandraKeyspaceToManualThroughputAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("CassandraKeyspace.MigrateCassandraKeyspaceToManualThroughput");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.MigrateCassandraKeyspaceToManualThroughputAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CassandraResourceMigrateCassandraKeyspaceToManualThroughputOperation(_clientDiagnostics, Pipeline, _restClient.CreateMigrateCassandraKeyspaceToManualThroughputRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
-                if (waitForCompletion)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Migrate an Azure Cosmos DB Cassandra Keyspace from autoscale to manual throughput. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual CassandraResourceMigrateCassandraKeyspaceToManualThroughputOperation MigrateCassandraKeyspaceToManualThroughput(bool waitForCompletion = true, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("CassandraKeyspace.MigrateCassandraKeyspaceToManualThroughput");
-            scope.Start();
-            try
-            {
-                var response = _restClient.MigrateCassandraKeyspaceToManualThroughput(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new CassandraResourceMigrateCassandraKeyspaceToManualThroughputOperation(_clientDiagnostics, Pipeline, _restClient.CreateMigrateCassandraKeyspaceToManualThroughputRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets a list of CassandraTables in the CassandraKeyspace. </summary>
+        /// <summary> Gets a collection of CassandraTables in the CassandraKeyspace. </summary>
         /// <returns> An object representing collection of CassandraTables and their operations over a CassandraKeyspace. </returns>
         public CassandraTableCollection GetCassandraTables()
         {
             return new CassandraTableCollection(this);
         }
+        #endregion
     }
 }

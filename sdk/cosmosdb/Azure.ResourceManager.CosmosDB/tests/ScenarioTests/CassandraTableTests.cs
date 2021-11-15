@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.True(ifExists);
 
             // NOT WORKING API
-            //ThroughputSettings throughtput = await table.GetCassandraTableThroughputAsync();
+            //ThroughputSettingsData throughtput = await table.GetCassandraTableThroughputAsync();
             CassandraTable table2 = await CassandraTableCollection.GetAsync(_tableName);
             Assert.AreEqual(_tableName, table2.Data.Resource.Id);
             VerifyCassandraTableCreation(table2, parameters);
@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         public async Task CassandraTableThroughput()
         {
             var table = await CreateCassandraTable(null);
-            ThroughputSettings throughput = await table.GetThroughputAsync();
+            DatabaseAccountCassandraKeyspaceTableThroughputSetting throughput = await table.GetDatabaseAccountCassandraKeyspaceTableThroughputSetting().GetAsync();
 
-            Assert.AreEqual(TestThroughput1, throughput.Resource.Throughput);
+            Assert.AreEqual(TestThroughput1, throughput.Data.Resource.Throughput);
 
-            ThroughputSettings throughput2 = await (await table.UpdateThroughputAsync(new ThroughputSettingsUpdateParameters(Resources.Models.Location.WestUS2,
-                new ThroughputSettingsResource(TestThroughput2, null, null, null)))).WaitForCompletionAsync();
+            DatabaseAccountCassandraKeyspaceTableThroughputSetting throughput2 = await throughput.CreateOrUpdate(new ThroughputSettingsUpdateParameters(Resources.Models.Location.WestUS2,
+                new ThroughputSettingsResource(TestThroughput2, null, null, null))).WaitForCompletionAsync();
 
-            Assert.AreEqual(TestThroughput2, throughput2.Resource.Throughput);
+            Assert.AreEqual(TestThroughput2, throughput2.Data.Resource.Throughput);
         }
 
         [Test]
@@ -125,11 +125,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             var table = await CreateCassandraTable(null);
 
-            ThroughputSettings throughput = await table.GetThroughputAsync();
-            AssertManualThroughput(throughput);
+            DatabaseAccountCassandraKeyspaceTableThroughputSetting throughput = await table.GetDatabaseAccountCassandraKeyspaceTableThroughputSetting().GetAsync();
+            AssertManualThroughput(throughput.Data);
 
-            throughput = await table.MigrateToAutoscale().WaitForCompletionAsync();
-            AssertAutoscale(throughput);
+            ThroughputSettingsData throughputData = await throughput.MigrateCassandraTableToAutoscale().WaitForCompletionAsync();
+            AssertAutoscale(throughputData);
         }
 
         [Test]
@@ -142,11 +142,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             });
             var table = await CreateCassandraTable(parameters);
 
-            ThroughputSettings throughput = await table.GetThroughputAsync();
-            AssertAutoscale(throughput);
+            DatabaseAccountCassandraKeyspaceTableThroughputSetting throughput = await table.GetDatabaseAccountCassandraKeyspaceTableThroughputSetting().GetAsync();
+            AssertAutoscale(throughput.Data);
 
-            throughput = await table.MigrateToManualThroughput().WaitForCompletionAsync();
-            AssertManualThroughput(throughput);
+            ThroughputSettingsData throughputData = await throughput.MigrateCassandraTableToManualThroughput().WaitForCompletionAsync();
+            AssertManualThroughput(throughputData);
         }
 
         [Test]

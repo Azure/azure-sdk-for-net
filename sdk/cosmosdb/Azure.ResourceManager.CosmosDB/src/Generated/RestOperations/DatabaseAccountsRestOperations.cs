@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateGetAllRequest()
+        internal HttpMessage CreateListRequest()
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -492,9 +492,9 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> Lists all the Azure Cosmos DB database accounts available under the subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<DatabaseAccountsList>> GetAllAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<DatabaseAccountsList>> ListAsync(CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetAllRequest();
+            using var message = CreateListRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -512,9 +512,9 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> Lists all the Azure Cosmos DB database accounts available under the subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<DatabaseAccountsList> GetAll(CancellationToken cancellationToken = default)
+        public Response<DatabaseAccountsList> List(CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetAllRequest();
+            using var message = CreateListRequest();
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -530,7 +530,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateGetAllByResourceGroupRequest(string resourceGroupName)
+        internal HttpMessage CreateListByResourceGroupRequest(string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -553,14 +553,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<DatabaseAccountsList>> GetAllByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<DatabaseAccountsList>> ListByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateGetAllByResourceGroupRequest(resourceGroupName);
+            using var message = CreateListByResourceGroupRequest(resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -580,14 +580,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<DatabaseAccountsList> GetAllByResourceGroup(string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<DatabaseAccountsList> ListByResourceGroup(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateGetAllByResourceGroupRequest(resourceGroupName);
+            using var message = CreateListByResourceGroupRequest(resourceGroupName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -603,7 +603,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateGetKeysRequest(string resourceGroupName, string accountName)
+        internal HttpMessage CreateListKeysRequest(string resourceGroupName, string accountName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -629,7 +629,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
-        public async Task<Response<DatabaseAccountKeyList>> GetKeysAsync(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public async Task<Response<DatabaseAccountKeyList>> ListKeysAsync(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -640,7 +640,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(accountName));
             }
 
-            using var message = CreateGetKeysRequest(resourceGroupName, accountName);
+            using var message = CreateListKeysRequest(resourceGroupName, accountName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -661,7 +661,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
-        public Response<DatabaseAccountKeyList> GetKeys(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public Response<DatabaseAccountKeyList> ListKeys(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -672,7 +672,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(accountName));
             }
 
-            using var message = CreateGetKeysRequest(resourceGroupName, accountName);
+            using var message = CreateListKeysRequest(resourceGroupName, accountName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -688,7 +688,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateGetConnectionStringsRequest(string resourceGroupName, string accountName)
+        internal HttpMessage CreateListConnectionStringsRequest(string resourceGroupName, string accountName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -714,7 +714,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
-        public async Task<Response<DatabaseAccountConnectionStringList>> GetConnectionStringsAsync(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public async Task<Response<DatabaseAccountConnectionStringList>> ListConnectionStringsAsync(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -725,7 +725,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(accountName));
             }
 
-            using var message = CreateGetConnectionStringsRequest(resourceGroupName, accountName);
+            using var message = CreateListConnectionStringsRequest(resourceGroupName, accountName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -746,7 +746,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
-        public Response<DatabaseAccountConnectionStringList> GetConnectionStrings(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public Response<DatabaseAccountConnectionStringList> ListConnectionStrings(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -757,7 +757,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(accountName));
             }
 
-            using var message = CreateGetConnectionStringsRequest(resourceGroupName, accountName);
+            using var message = CreateListConnectionStringsRequest(resourceGroupName, accountName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -955,7 +955,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateGetReadOnlyKeysRequest(string resourceGroupName, string accountName)
+        internal HttpMessage CreateListReadOnlyKeysRequest(string resourceGroupName, string accountName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -981,7 +981,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
-        public async Task<Response<DatabaseAccountReadOnlyKeyList>> GetReadOnlyKeysAsync(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public async Task<Response<DatabaseAccountReadOnlyKeyList>> ListReadOnlyKeysAsync(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -992,7 +992,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(accountName));
             }
 
-            using var message = CreateGetReadOnlyKeysRequest(resourceGroupName, accountName);
+            using var message = CreateListReadOnlyKeysRequest(resourceGroupName, accountName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1013,7 +1013,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
-        public Response<DatabaseAccountReadOnlyKeyList> GetReadOnlyKeys(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public Response<DatabaseAccountReadOnlyKeyList> ListReadOnlyKeys(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -1024,7 +1024,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(accountName));
             }
 
-            using var message = CreateGetReadOnlyKeysRequest(resourceGroupName, accountName);
+            using var message = CreateListReadOnlyKeysRequest(resourceGroupName, accountName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1205,7 +1205,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateGetMetricsRequest(string resourceGroupName, string accountName, string filter)
+        internal HttpMessage CreateListMetricsRequest(string resourceGroupName, string accountName, string filter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1233,7 +1233,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="filter"/> is null. </exception>
-        public async Task<Response<MetricList>> GetMetricsAsync(string resourceGroupName, string accountName, string filter, CancellationToken cancellationToken = default)
+        public async Task<Response<MetricList>> ListMetricsAsync(string resourceGroupName, string accountName, string filter, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -1248,7 +1248,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(filter));
             }
 
-            using var message = CreateGetMetricsRequest(resourceGroupName, accountName, filter);
+            using var message = CreateListMetricsRequest(resourceGroupName, accountName, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1270,7 +1270,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="filter"/> is null. </exception>
-        public Response<MetricList> GetMetrics(string resourceGroupName, string accountName, string filter, CancellationToken cancellationToken = default)
+        public Response<MetricList> ListMetrics(string resourceGroupName, string accountName, string filter, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -1285,7 +1285,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(filter));
             }
 
-            using var message = CreateGetMetricsRequest(resourceGroupName, accountName, filter);
+            using var message = CreateListMetricsRequest(resourceGroupName, accountName, filter);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1301,7 +1301,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateGetUsagesRequest(string resourceGroupName, string accountName, string filter)
+        internal HttpMessage CreateListUsagesRequest(string resourceGroupName, string accountName, string filter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1332,7 +1332,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="filter"> An OData filter expression that describes a subset of usages to return. The supported parameter is name.value (name of the metric, can have an or of multiple names). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
-        public async Task<Response<Usages>> GetUsagesAsync(string resourceGroupName, string accountName, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<Usages>> ListUsagesAsync(string resourceGroupName, string accountName, string filter = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -1343,7 +1343,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(accountName));
             }
 
-            using var message = CreateGetUsagesRequest(resourceGroupName, accountName, filter);
+            using var message = CreateListUsagesRequest(resourceGroupName, accountName, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1365,7 +1365,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="filter"> An OData filter expression that describes a subset of usages to return. The supported parameter is name.value (name of the metric, can have an or of multiple names). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
-        public Response<Usages> GetUsages(string resourceGroupName, string accountName, string filter = null, CancellationToken cancellationToken = default)
+        public Response<Usages> ListUsages(string resourceGroupName, string accountName, string filter = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -1376,7 +1376,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(accountName));
             }
 
-            using var message = CreateGetUsagesRequest(resourceGroupName, accountName, filter);
+            using var message = CreateListUsagesRequest(resourceGroupName, accountName, filter);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1392,7 +1392,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateGetMetricDefinitionsRequest(string resourceGroupName, string accountName)
+        internal HttpMessage CreateListMetricDefinitionsRequest(string resourceGroupName, string accountName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1418,7 +1418,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
-        public async Task<Response<MetricDefinitionsList>> GetMetricDefinitionsAsync(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public async Task<Response<MetricDefinitionsList>> ListMetricDefinitionsAsync(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -1429,7 +1429,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(accountName));
             }
 
-            using var message = CreateGetMetricDefinitionsRequest(resourceGroupName, accountName);
+            using var message = CreateListMetricDefinitionsRequest(resourceGroupName, accountName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1450,7 +1450,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
-        public Response<MetricDefinitionsList> GetMetricDefinitions(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public Response<MetricDefinitionsList> ListMetricDefinitions(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -1461,7 +1461,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(accountName));
             }
 
-            using var message = CreateGetMetricDefinitionsRequest(resourceGroupName, accountName);
+            using var message = CreateListMetricDefinitionsRequest(resourceGroupName, accountName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
