@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Network;
@@ -42,7 +43,15 @@ namespace Azure.ResourceManager.Sql.Tests
             return "HvVJ%paVC@%GBKmi";
         }
 
-        protected async Task<ManagedInstance> CreateDefaultManagedInstance(string managedInstanceName,Location location,ResourceGroup resourceGroup)
+        /// <summary>
+        /// create a defaut managed instance.
+        /// defaut vnet AddressPrefixes = 10.10.0.0/16
+        /// </summary>
+        /// <param name="managedInstanceName"></param>
+        /// <param name="location"></param>
+        /// <param name="resourceGroup"></param>
+        /// <returns></returns>
+        protected async Task<ManagedInstance> CreateDefaultManagedInstance(string managedInstanceName, Location location, ResourceGroup resourceGroup)
         {
             Random random = new Random();
             string suffix = random.Next(9999).ToString();
@@ -107,6 +116,46 @@ namespace Azure.ResourceManager.Sql.Tests
             var managedInstanceLro = await resourceGroup.GetManagedInstances().CreateOrUpdateAsync(managedInstanceName, data);
             var managedInstance = managedInstanceLro.Value;
             return managedInstance;
+        }
+
+        /// <summary>
+        /// create a default private endpoint for managed instance.
+        /// please make sure your MI built using CreateDefaultManagedInstance() or vnet AddressPrefixes = 10.10.0.0/16
+        /// </summary>
+        /// <param name="managedInstance"></param>
+        /// <param name="location"></param>
+        /// <param name="resourceGroup"></param>
+        /// <param name=""></param>
+        /// <returns></returns>
+        protected async Task<PrivateEndpoint> CreateDefaultPrivateEndpoint(ManagedInstance managedInstance,VirtualNetwork vnet, Location location, ResourceGroup resourceGroup)
+        {
+            // Add new subnet
+            SubnetData subnetData = new SubnetData()
+            {
+                AddressPrefix = "10.10.5.0/24",
+                PrivateEndpointNetworkPolicies = "Disabled"
+            };
+            var privateEndpointSubnet = await vnet.GetSubnets().CreateOrUpdateAsync($"private-endpoint-subnet", subnetData);
+
+            // Create private endpoint
+            string privateEndpointName = $"{managedInstance.Data.Name}-private-endpoint";
+            var endpointCollection = resourceGroup.GetPrivateEndpoints();
+            PrivateEndpointData data = new PrivateEndpointData()
+            {
+                Subnet = new SubnetData() { Id = privateEndpointSubnet.Value.Data.Id },
+                Location = "eastus",
+                PrivateLinkServiceConnections =
+                {
+                    new PrivateLinkServiceConnection()
+                    {
+                        Name = privateEndpointName,
+                        PrivateLinkServiceId = managedInstance.Data.Id.ToString(),
+                        GroupIds = { "managedInstance" },
+                    }
+                },
+            };
+            var privateEndpoint = await resourceGroup.GetPrivateEndpoints().CreateOrUpdateAsync(privateEndpointName, data);
+            return privateEndpoint.Value;
         }
     }
 }
