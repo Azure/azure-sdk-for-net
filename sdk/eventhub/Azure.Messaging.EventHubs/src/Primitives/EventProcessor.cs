@@ -47,7 +47,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         private const bool InvalidateConsumerWhenPartitionIsStolen = true;
 
         /// <summary>The minimum duration to allow for a delay between load balancing cycles.</summary>
-        private readonly TimeSpan MinimumLoadBalancingDelay = TimeSpan.FromMilliseconds(100);
+        private readonly TimeSpan MinimumLoadBalancingDelay = TimeSpan.FromMilliseconds(15);
 
         /// <summary>Defines the warning threshold for the upper limit percentage of total ownership interval spent on load balancing.</summary>
         private readonly double LoadBalancingDurationWarnThreshold = 0.70;
@@ -1516,12 +1516,9 @@ namespace Azure.Messaging.EventHubs.Primitives
                         Logger.EventProcessorHighPartitionOwnershipWarning(Identifier, EventHubName, totalPartitions, LoadBalancer.OwnedPartitionCount, MaximumAdvisedOwnedPartitions);
                     }
 
-                    // Evaluate the time remaining before the next cycle and delay, if needed.
+                    // Evaluate the time remaining before the next cycle and delay.
 
-                    if (remainingTimeUntilNextCycle > TimeSpan.Zero)
-                    {
-                        await Task.Delay(remainingTimeUntilNextCycle, cancellationToken).ConfigureAwait(false);
-                    }
+                    await Task.Delay(remainingTimeUntilNextCycle, cancellationToken).ConfigureAwait(false);
                 }
 
                 // Cancellation has been requested; throw the corresponding exception to maintain consistent behavior.
@@ -1641,18 +1638,18 @@ namespace Azure.Messaging.EventHubs.Primitives
                 }))
                 .ConfigureAwait(false);
 
-            // If load balancing is greedy and there was a partition claimed, then signal that there should be no delay before
-            // invoking the next load balancing cycle.
+            // If load balancing is greedy and there was a partition claimed, then signal that there should be a very minimal delay before
+            // invoking the next load balancing cycle, to ensure a yield which allows the thread pool to manage its load.
 
             if ((Options.LoadBalancingStrategy == LoadBalancingStrategy.Greedy) && (!LoadBalancer.IsBalanced))
             {
-                return TimeSpan.Zero;
+                return MinimumLoadBalancingDelay;
             }
 
             // Wait the remaining time, if any, to start the next cycle.
 
             var nextCycle = LoadBalancer.LoadBalanceInterval.CalculateRemaining(cycleDuration.GetElapsedTime());
-            return (nextCycle >= MinimumLoadBalancingDelay) ? nextCycle : TimeSpan.Zero;
+            return (nextCycle >= MinimumLoadBalancingDelay) ? nextCycle : MinimumLoadBalancingDelay;
         }
 
         /// <summary>

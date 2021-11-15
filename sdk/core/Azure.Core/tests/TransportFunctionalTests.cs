@@ -3,10 +3,13 @@
 
 using System;
 using System.Buffers;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Security.Authentication;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -28,7 +31,7 @@ namespace Azure.Core.Tests
         {
         }
 
-        protected abstract HttpPipelineTransport GetTransport(bool https = false);
+        protected abstract HttpPipelineTransport GetTransport(bool https = false, HttpPipelineTransportOptions options = null);
 
         public static object[] ContentWithLength =>
             new object[]
@@ -801,6 +804,26 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public void TransportExceptionsAreWrappedAndInnerExceptionIsPopulated()
+        {
+            using (TestServer testServer = new TestServer(
+                context =>
+                {
+                    context.Abort();
+                    return Task.CompletedTask;
+                }))
+            {
+                var transport = GetTransport();
+                Request request = transport.CreateRequest();
+                request.Uri.Reset(testServer.Address);
+                RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => await ExecuteRequest(request, transport));
+                Assert.IsNotEmpty(exception.Message);
+                Assert.AreEqual(0, exception.Status);
+                Assert.IsNotEmpty(exception.InnerException.Message);
+            }
+        }
+
+        [Test]
         public Task ThrowsTaskCanceledExceptionWhenCancelled() => ThrowsTaskCanceledExceptionWhenCancelled(false);
 
         [Test]
@@ -914,6 +937,81 @@ namespace Azure.Core.Tests
                 tcs.SetResult(null);
 
                 Assert.ThrowsAsync<IOException>(async () => await response.ContentStream.CopyToAsync(new MemoryStream()));
+            }
+        }
+
+        [Test]
+        [RunOnlyOnPlatforms(Linux = true, Windows = true, OSX = false, Reason = "https://github.com/Azure/azure-sdk-for-net/issues/17986")]
+        public async Task ServerCertificateCustomValidationCallbackIsHonored([Values(true, false)] bool setCertCallback, [Values(true, false)] bool isValidCert)
+        {
+            // This test assumes ServicePointManager.ServerCertificateValidationCallback will be unset.
+            ServicePointManager.ServerCertificateValidationCallback = null;
+
+            using (TestServer testServer = new TestServer(
+                async context =>
+                {
+                    byte[] buffer = Encoding.UTF8.GetBytes("Hello");
+                    await context.Response.Body.WriteAsync(buffer, 0, buffer.Length);
+                },
+                true))
+            {
+                bool certValidationCalled = false;
+                X509Certificate2 cert = null;
+                X509Chain chain = null;
+                var options = new HttpPipelineTransportOptions();
+
+                if (setCertCallback)
+                {
+                    options.ServerCertificateCustomValidationCallback = args =>
+                    {
+                        certValidationCalled = true;
+                        cert = args.Certificate;
+                        chain = args.X509Chain;
+                        return isValidCert;
+                    };
+                }
+                var transport = GetTransport(true, options);
+                Request request = transport.CreateRequest();
+                request.Uri.Reset(testServer.Address);
+
+                try
+                {
+                    await ExecuteRequest(request, transport);
+                    Assert.Multiple(
+                        () =>
+                        {
+                            Assert.IsTrue(isValidCert);
+                            Assert.IsTrue(setCertCallback);
+                        });
+                }
+                catch (Exception ex) when (ex is not AssertionException)
+                {
+                    Assert.That(setCertCallback && !isValidCert || !setCertCallback);
+
+                    ex = ex.InnerException;
+                    while (ex is { } && ex is not AuthenticationException)
+                    {
+                        ex = ex.InnerException;
+                    }
+                    if (ex is not AuthenticationException)
+                    {
+                        throw;
+                    }
+                    TestContext.WriteLine(ex.Message);
+                }
+                finally
+                {
+                    Assert.AreEqual(setCertCallback, certValidationCalled);
+                    if (certValidationCalled)
+                    {
+                        Assert.Multiple(
+                            () =>
+                            {
+                                Assert.NotNull(cert, $"{nameof(ServerCertificateCustomValidationArgs)}.{nameof(ServerCertificateCustomValidationArgs.Certificate)} should not be null");
+                                Assert.NotNull(chain, $"{nameof(ServerCertificateCustomValidationArgs)}.{nameof(ServerCertificateCustomValidationArgs.X509Chain)} should not be null");
+                            });
+                    }
+                }
             }
         }
 

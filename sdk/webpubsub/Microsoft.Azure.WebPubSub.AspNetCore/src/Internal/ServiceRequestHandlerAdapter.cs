@@ -76,7 +76,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
 
             try
             {
-                var serviceRequest = await request.ReadWebPubSubEventAsync(_options.ValidationOptions, context.RequestAborted);
+                var serviceRequest = await request.ReadWebPubSubEventAsync(_options.ValidationOptions, context.RequestAborted).ConfigureAwait(false);
                 Log.StartToHandleRequest(_logger, serviceRequest.ConnectionContext);
 
                 switch (serviceRequest)
@@ -112,11 +112,11 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                             {
                                 SetConnectionState(ref context, messageRequest.ConnectionContext, response.States);
                             }
-                            if (response.Message != null)
+                            if (response.Data != null)
                             {
                                 context.Response.ContentType = ConvertToContentType(response.DataType);
-                                var payload = response.Message.ToArray();
-                                await context.Response.Body.WriteAsync(payload, 0, payload.Length).ConfigureAwait(false);
+                                var payload = response.Data.ToArray();
+                                await context.Response.Body.WriteAsync(payload).ConfigureAwait(false);
                             }
                             break;
                         }
@@ -150,7 +150,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
             }
         }
 
-        private static void SetConnectionState(ref HttpContext context, WebPubSubConnectionContext connectionContext, Dictionary<string, object> newStates)
+        private static void SetConnectionState(ref HttpContext context, WebPubSubConnectionContext connectionContext, IReadOnlyDictionary<string, object> newStates)
         {
             var updatedStates = connectionContext.UpdateStates(newStates);
             if (updatedStates != null)
@@ -159,11 +159,11 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
             }
         }
 
-        private static string ConvertToContentType(MessageDataType dataType) =>
+        private static string ConvertToContentType(WebPubSubDataType dataType) =>
             dataType switch
             {
-                MessageDataType.Text => $"{Constants.ContentTypes.PlainTextContentType}; {Constants.ContentTypes.CharsetUTF8}",
-                MessageDataType.Json => $"{Constants.ContentTypes.JsonContentType}; {Constants.ContentTypes.CharsetUTF8}",
+                WebPubSubDataType.Text => $"{Constants.ContentTypes.PlainTextContentType}; {Constants.ContentTypes.CharsetUTF8}",
+                WebPubSubDataType.Json => $"{Constants.ContentTypes.JsonContentType}; {Constants.ContentTypes.CharsetUTF8}",
                 _ => Constants.ContentTypes.BinaryContentType
             };
 
