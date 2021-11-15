@@ -39,6 +39,12 @@ namespace Azure.Core.TestFramework
             { }
             public override TestResult Execute(TestExecutionContext context)
             {
+                // Lift the global timeout setting if we are not in Playback mode
+                var recordedTest = context.TestObject as RecordedTestBase;
+                if (recordedTest?.Mode != RecordedTestMode.Playback)
+                {
+                    context.TestCaseTimeout = 0; // set the default timeout;
+                }
                 // Run the test
                 context.CurrentResult = innerCommand.Execute(context);
 
