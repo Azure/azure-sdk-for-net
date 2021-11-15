@@ -116,7 +116,8 @@ jobs:
         # ComponentGovernance is currently unable to run on pull requests of public projects.  Running on
         # scheduled builds should be good enough.
         condition: and(succeededOrFailed(), ne(variables['Build.Reason'],'PullRequest'))
-        ignoreDirectories: '.nuget'
+        inputs:
+          ignoreDirectories: '.nuget'
 
   - job: "Analyze"
     condition: and(succeededOrFailed(), ne(variables['Skip.Analyze'], true))
