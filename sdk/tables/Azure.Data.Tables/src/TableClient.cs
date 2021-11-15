@@ -622,32 +622,7 @@ namespace Azure.Data.Tables
         /// <exception cref="ArgumentNullException"><paramref name="partitionKey"/> or <paramref name="rowKey"/> is null.</exception>
         public virtual Response<T> GetEntity<T>(string partitionKey, string rowKey, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
             where T : class, ITableEntity, new()
-        {
-            Argument.AssertNotNull("message", nameof(partitionKey));
-            Argument.AssertNotNull("message", nameof(rowKey));
-
-            string selectArg = select == null ? null : string.Join(",", select);
-
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(GetEntity)}");
-            scope.Start();
-            try
-            {
-                var response = _tableOperations.QueryEntityWithPartitionAndRowKey(
-                    Name,
-                    partitionKey,
-                    rowKey,
-                    queryOptions: new QueryOptions { Format = _defaultQueryOptions.Format, Select = selectArg },
-                    cancellationToken: cancellationToken);
-
-                var result = ((Dictionary<string, object>)response.Value).ToTableEntity<T>();
-                return Response.FromValue(result, response.GetRawResponse());
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
+            => GetEntitiyInternalAsync<T>(false, partitionKey, rowKey, select, cancellationToken).EnsureCompleted();
 
         /// <summary>
         /// Gets the specified table entity of type <typeparamref name="T"/>.
@@ -665,9 +640,30 @@ namespace Azure.Data.Tables
             string rowKey,
             IEnumerable<string> select = null,
             CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
+            => await GetEntitiyInternalAsync<T>(true, partitionKey, rowKey, select, cancellationToken).ConfigureAwait(false);
+
+        internal virtual async Task<Response<T>> GetEntitiyInternalAsync<T>(
+            bool async,
+            string partitionKey,
+            string rowKey,
+            IEnumerable<string> select = null,
+            CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
         {
             Argument.AssertNotNull("message", nameof(partitionKey));
             Argument.AssertNotNull("message", nameof(rowKey));
+
+            if (!TablesCompatSwitches.DisableEscapeSingleQuotesOnGetEntity)
+            {
+                // Escape the values
+                if (partitionKey.Contains("'"))
+                {
+                    partitionKey = TableOdataFilter.EscapeStringValue(partitionKey);
+                }
+                if (rowKey.Contains("'"))
+                {
+                    rowKey = TableOdataFilter.EscapeStringValue(rowKey);
+                }
+            }
 
             string selectArg = select == null ? null : string.Join(",", select);
 
@@ -675,13 +671,19 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                var response = await _tableOperations.QueryEntityWithPartitionAndRowKeyAsync(
+                var response = async ?
+                    await _tableOperations.QueryEntityWithPartitionAndRowKeyAsync(
                         Name,
                         partitionKey,
                         rowKey,
                         queryOptions: new QueryOptions { Format = _defaultQueryOptions.Format, Select = selectArg },
-                        cancellationToken: cancellationToken)
-                    .ConfigureAwait(false);
+                        cancellationToken: cancellationToken).ConfigureAwait(false) :
+                    _tableOperations.QueryEntityWithPartitionAndRowKey(
+                        Name,
+                        partitionKey,
+                        rowKey,
+                        queryOptions: new QueryOptions { Format = _defaultQueryOptions.Format, Select = selectArg },
+                        cancellationToken: cancellationToken);
 
                 var result = ((Dictionary<string, object>)response.Value).ToTableEntity<T>();
                 return Response.FromValue(result, response.GetRawResponse());
