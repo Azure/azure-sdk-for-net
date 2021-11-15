@@ -17,12 +17,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 
         public IServiceManager ServiceManager { get; }
 
+        //Used for internal test
+        public IServiceProvider ServiceProvider { get; }
+
         public AccessKey[] AccessKeys => _endpointManager.Endpoints.Keys.Select(endpoint => endpoint.AccessKey).ToArray();
 
-        public ServiceHubContextStore(IServiceEndpointManager endpointManager, IServiceManager serviceManager)
+        public ServiceHubContextStore(IServiceEndpointManager endpointManager, IServiceManager serviceManager, IServiceProvider serviceProvider)
         {
             _endpointManager = endpointManager;
             ServiceManager = serviceManager;
+            ServiceProvider = serviceProvider;
         }
 
         public ValueTask<IServiceHubContext> GetAsync(string hubName)

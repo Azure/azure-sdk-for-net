@@ -7,26 +7,22 @@ using Microsoft.Azure.SignalR;
 using Microsoft.Azure.SignalR.Management;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Primitives;
 
 namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 {
-    internal class OptionsSetup : IConfigureOptions<ServiceManagerOptions>, IOptionsChangeTokenSource<ServiceManagerOptions>
+    /// <summary>
+    /// Sets up <see cref="ServiceManagerOptions"/> from <see cref="IConfiguration"/>.
+    /// </summary>
+    internal class OptionsSetupFromConfig : IConfigureOptions<ServiceManagerOptions>, IOptionsChangeTokenSource<ServiceManagerOptions>
     {
         private readonly IConfiguration _configuration;
         private readonly AzureComponentFactory _azureComponentFactory;
         private readonly string _connectionStringKey;
-        private readonly ILogger _logger;
 
-        public OptionsSetup(IConfiguration configuration, ILoggerFactory loggerFactory, AzureComponentFactory azureComponentFactory, string connectionStringKey)
+        public OptionsSetupFromConfig(IConfiguration configuration, AzureComponentFactory azureComponentFactory, string connectionStringKey)
         {
-            if (loggerFactory is null)
-            {
-                throw new ArgumentNullException(nameof(loggerFactory));
-            }
-
             if (string.IsNullOrWhiteSpace(connectionStringKey))
             {
                 throw new ArgumentException($"'{nameof(connectionStringKey)}' cannot be null or whitespace", nameof(connectionStringKey));
@@ -35,7 +31,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
             _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
             _azureComponentFactory = azureComponentFactory;
             _connectionStringKey = connectionStringKey;
-            _logger = loggerFactory.CreateLogger<OptionsSetup>();
         }
 
         public string Name => Options.DefaultName;
@@ -50,22 +45,18 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
                 endpoint.Name = string.Empty;
                 endpoints = endpoints.Append(endpoint);
             }
-            options.ServiceEndpoints = endpoints.ToArray();
-            var serviceTransportTypeStr = _configuration[Constants.ServiceTransportTypeName];
-            if (Enum.TryParse<ServiceTransportType>(serviceTransportTypeStr, out var transport))
+            var endpointArray = endpoints.ToArray();
+            if (endpointArray.Length > 0)
             {
-                options.ServiceTransportType = transport;
+                options.ServiceEndpoints = endpoints.ToArray();
             }
-            else if (string.IsNullOrWhiteSpace(serviceTransportTypeStr))
+            //otherwise don't override the value come from SignalROptions
+
+            if (_configuration[Constants.ServiceTransportTypeName] is not null)
             {
-                options.ServiceTransportType = ServiceTransportType.Transient;
-                _logger.LogInformation($"{Constants.ServiceTransportTypeName} not set, using default {ServiceTransportType.Transient} instead.");
+                options.ServiceTransportType = _configuration.GetValue<ServiceTransportType>(Constants.ServiceTransportTypeName);
             }
-            else
-            {
-                options.ServiceTransportType = ServiceTransportType.Transient;
-                _logger.LogWarning($"Unsupported service transport type: {serviceTransportTypeStr}. Use default {ServiceTransportType.Transient} instead.");
-            }
+
             //make connection more stable
             options.ConnectionCount = 3;
             options.ProductInfo = GetProductInfo();

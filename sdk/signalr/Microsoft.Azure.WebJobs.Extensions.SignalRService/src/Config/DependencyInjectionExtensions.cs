@@ -13,6 +13,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
     {
         private const string HubProtocolError = "It's invalid to configure hub protocol on Azure Functions runtime V2. Newtonsoft.Json protocol will be used.";
 
+        /// <summary>
+        /// Provides limited JSON serialization configuration. <see cref="SignalROptions"/> provides more configuration.
+        /// </summary>
         public static IServiceCollection SetHubProtocol(this IServiceCollection services, IConfiguration configuration)
         {
             var hubProtocolConfig = configuration[Constants.AzureSignalRHubProtocol];

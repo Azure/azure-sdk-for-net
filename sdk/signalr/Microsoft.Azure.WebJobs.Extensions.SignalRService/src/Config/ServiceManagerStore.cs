@@ -11,6 +11,7 @@ using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 {
@@ -18,16 +19,18 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
     {
         private readonly ILoggerFactory _loggerFactory;
         private readonly AzureComponentFactory _azureComponentFactory;
+        private readonly SignalROptions _signalROptions;
         private readonly IConfiguration _configuration;
         private readonly IEndpointRouter _router;
         private readonly ConcurrentDictionary<string, IInternalServiceHubContextStore> _store = new();
 
-        public ServiceManagerStore(IConfiguration configuration, ILoggerFactory loggerFactory, AzureComponentFactory azureComponentFactory, IEndpointRouter router = null)
+        public ServiceManagerStore(IConfiguration configuration, ILoggerFactory loggerFactory, AzureComponentFactory azureComponentFactory, IEndpointRouter router = null, IOptions<SignalROptions> signalROptions = null)
         {
             _loggerFactory = loggerFactory;
             _azureComponentFactory = azureComponentFactory;
             _configuration = configuration;
             _router = router;
+            _signalROptions = signalROptions?.Value ?? new();
         }
 
         public IInternalServiceHubContextStore GetOrAddByConnectionStringKey(string connectionStringKey)
@@ -48,7 +51,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         private IInternalServiceHubContextStore CreateHubContextStore(string connectionStringKey)
         {
             var services = new ServiceCollection()
-                .SetupOptions<ServiceManagerOptions, OptionsSetup>(new OptionsSetup(_configuration, _loggerFactory, _azureComponentFactory, connectionStringKey))
+                .SetupOptions<ServiceManagerOptions, OptionsSetupFromOptions>(new OptionsSetupFromOptions(_signalROptions))
+                //make sure config override SignalROptions
+                .SetupOptions<ServiceManagerOptions, OptionsSetupFromConfig>(new OptionsSetupFromConfig(_configuration, _azureComponentFactory, connectionStringKey))
                 .PostConfigure<ServiceManagerOptions>(o =>
                 {
                     if ((o.ServiceEndpoints == null || o.ServiceEndpoints.Length == 0) && string.IsNullOrWhiteSpace(o.ConnectionString))
@@ -59,11 +64,20 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
                 .AddSignalRServiceManager()
                 .AddSingleton(_loggerFactory)
                 .AddSingleton<IInternalServiceHubContextStore, ServiceHubContextStore>();
+
+            if (_signalROptions.NewtonsoftOptionsAction is not null)
+            {
+                services.AddNewtonsoftHubProtocol(_signalROptions.NewtonsoftOptionsAction);
+            }
+            // Settings in config should override settings in _signalROptions.
+            services.SetHubProtocol(_configuration);
+
             if (_router != null)
             {
                 services.AddSingleton(_router);
             }
-            services.SetHubProtocol(_configuration);
+
+            //This line must be the last step to configure services.
             services.AddSingleton(services.ToList() as IReadOnlyCollection<ServiceDescriptor>);
             return services.BuildServiceProvider()
                .GetRequiredService<IInternalServiceHubContextStore>();

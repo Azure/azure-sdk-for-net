@@ -44,7 +44,7 @@ namespace SignalRServiceExtension.Tests
             configuration[Constants.FunctionsWorkerRuntime] = Constants.DotnetWorker;
 
             var productInfo = new ServiceCollection()
-                .AddSignalRServiceManager(new OptionsSetup(configuration, NullLoggerFactory.Instance, SingletonAzureComponentFactory.Instance, connectionStringKey))
+                .AddSignalRServiceManager(new OptionsSetupFromConfig(configuration, SingletonAzureComponentFactory.Instance, connectionStringKey))
                 .BuildServiceProvider()
                 .GetRequiredService<IOptions<ServiceManagerOptions>>()
                 .Value.ProductInfo;
@@ -70,6 +70,27 @@ namespace SignalRServiceExtension.Tests
                 .ConfigureWebJobs(b => b.AddSignalR().Services.AddAzureClientsCore()).Build();
             var hubContext = await host.Services.GetRequiredService<IServiceManagerStore>().GetOrAddByConnectionStringKey("key").GetAsync("hubName") as ServiceHubContext;
             await Assert.ThrowsAsync<AzureSignalRNotConnectedException>(() => hubContext.NegotiateAsync().AsTask());
+        }
+
+        [Fact]
+        public void TestConfigureViaSignalROptions()
+        {
+            var endpoints = FakeEndpointUtils.GetFakeEndpoint(1).ToArray();
+            var signalROptions = new SignalROptions
+            {
+                ServiceEndpoints = endpoints,
+                ServiceTransportType = ServiceTransportType.Persistent
+            };
+            var serviceManagerStore = new ServiceManagerStore(
+                new ConfigurationBuilder().AddInMemoryCollection().Build(),
+                NullLoggerFactory.Instance,
+                SingletonAzureComponentFactory.Instance,
+                null,
+                Options.Create(signalROptions));
+            var serviceManagerOptions = (serviceManagerStore.GetOrAddByConnectionStringKey("_") as ServiceHubContextStore)
+                .ServiceProvider.GetRequiredService<IOptions<ServiceManagerOptions>>().Value;
+            Assert.Equal(ServiceTransportType.Persistent, serviceManagerOptions.ServiceTransportType);
+            Assert.Equal(endpoints, serviceManagerOptions.ServiceEndpoints);
         }
     }
 }
