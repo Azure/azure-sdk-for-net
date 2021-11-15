@@ -21,6 +21,8 @@ namespace Azure.Communication.CallingServer
         public CommunicationIdentifierModel TargetParticipant { get; set; }
         /// <summary> The call connection id to replace the current call with. This parameter should be used for consultative transfer. </summary>
         public string TargetCallConnectionId { get; set; }
+        /// <summary> The alternate identity of the transferor if transferring to a pstn number. </summary>
+        public PhoneNumberIdentifierModel AlternateCallerId { get; set; }
         /// <summary> The user to user information. </summary>
         public string UserToUserInformation { get; set; }
         /// <summary> The operation context. </summary>

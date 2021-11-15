@@ -25,6 +25,11 @@ namespace Azure.Communication.CallingServer
                 writer.WritePropertyName("targetCallConnectionId");
                 writer.WriteStringValue(TargetCallConnectionId);
             }
+            if (Optional.IsDefined(AlternateCallerId))
+            {
+                writer.WritePropertyName("alternateCallerId");
+                writer.WriteObjectValue(AlternateCallerId);
+            }
             if (Optional.IsDefined(UserToUserInformation))
             {
                 writer.WritePropertyName("userToUserInformation");
