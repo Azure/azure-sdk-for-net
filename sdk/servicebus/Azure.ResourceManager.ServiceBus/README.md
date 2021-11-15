@@ -38,7 +38,7 @@ Additional documentation for the `Azure.Identity.DefaultAzureCredential` class c
 
 ## Key concepts
 
-Key concepts of the Azure .NET SDK can be found [here](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/README.md#key-concepts)
+Key concepts of the Azure .NET SDK can be found [here](https://github.com/Azure/azure-sdk-for-net/blob/track2-servicebus/sdk/resourcemanager/Azure.ResourceManager/README.md#key-concepts)
 
 
 ## Documentation
