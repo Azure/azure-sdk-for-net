@@ -24,7 +24,7 @@ namespace Azure.Communication
             set => _asyncTokenRefresher = value;
         }
 
-        /// <summary>The proactive refreshing interval.</summary>
+        /// <summary>The time span before token expiry that causes the 'tokenRefresher' to be called if 'refreshProactively' is true.</summary>
         internal TimeSpan RefreshTimeBeforeTokenExpiry { get; } = new TimeSpan(0, 0, DefaultExpiringOffsetMinutes, 0);
         /// <summary>Determines whether the token should be proactively renewed prior to expiry or renew on demand./// </summary>
         internal bool RefreshProactively { get; }
