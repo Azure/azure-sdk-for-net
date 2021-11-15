@@ -8,10 +8,7 @@ trigger:
     - release/*
   paths:
     include:
-    - sdk/servicebus/ci.yml
-    - sdk/servicebus/service.projects
-    - sdk/servicebus/Azure.Messaging.ServiceBus
-    - sdk/servicebus/Microsoft.Azure.WebJobs.Extensions.ServiceBus
+    - sdk/servicebus/
 
 pr:
   branches:
@@ -22,10 +19,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/servicebus/ci.yml
-    - sdk/servicebus/service.projects
-    - sdk/servicebus/Azure.Messaging.ServiceBus
-    - sdk/servicebus/Microsoft.Azure.WebJobs.Extensions.ServiceBus
+    - sdk/servicebus/
 
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
@@ -38,3 +32,5 @@ extends:
       safeName: AzureMessagingServiceBus
     - name: Microsoft.Azure.WebJobs.Extensions.ServiceBus
       safeName: MicrosoftAzureWebJobsExtensionsServiceBus
+    - name: Azure.ResourceManager.ServiceBus
+      safeName: AzureResourceManagerServiceBus
