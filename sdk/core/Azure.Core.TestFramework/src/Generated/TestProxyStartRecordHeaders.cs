@@ -17,6 +17,7 @@ namespace Azure.Core.TestFramework
         {
             _response = response;
         }
+        /// <summary> The recording ID for the test recording. </summary>
         public string XRecordingId => _response.Headers.TryGetValue("x-recording-id", out string value) ? value : null;
     }
 }

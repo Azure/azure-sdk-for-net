@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 using Azure.Messaging.ServiceBus.Administration;
 using Azure.Messaging.ServiceBus.Authorization;
 using Azure.Messaging.ServiceBus.Tests.Infrastructure;
@@ -21,6 +22,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
     public class ServiceBusManagementClientLiveTests : RecordedTestBase<ServiceBusTestEnvironment>
     {
         private readonly ServiceBusAdministrationClientOptions.ServiceVersion _serviceVersion;
+        private const string SanitizedKeyValue = "SanitizedSanitizedSanitizedSanitizedSanitize";
 
         public ServiceBusManagementClientLiveTests(bool isAsync, ServiceBusAdministrationClientOptions.ServiceVersion serviceVersion) :
             base(isAsync: true)
@@ -28,6 +30,21 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             Sanitizer = new ServiceBusRecordedTestSanitizer();
             _serviceVersion = serviceVersion;
         }
+
+        // [SetUp]
+        // public async Task AddSanitizer()
+        // {
+        //     await Recording.ProxyClient.AddBodySanitizerAsync(
+        //         new BodyKeySanitizer(null, $"\u003CPrimaryKey\u003E{SanitizedKeyValue}\u003C/PrimaryKey\u003E")
+        //         {
+        //             Regex = "\\u003CPrimaryKey\\u003E.*\\u003C/PrimaryKey\\u003E"
+        //         });
+        //     await Recording.ProxyClient.AddBodySanitizerAsync(
+        //         new BodyKeySanitizer(null, $"\u003CSecondaryKey\u003E{SanitizedKeyValue}\u003C/SecondaryKey\u003E")
+        //         {
+        //             Regex = "\\u003CSecondaryKey\\u003E.*\\u003C/SecondaryKey\\u003E"
+        //         });
+        // }
 
         private string GetConnectionString(bool premium = false) => premium ? TestEnvironment.ServiceBusPremiumNamespaceConnectionString : TestEnvironment.ServiceBusConnectionString;
 

@@ -26,38 +26,45 @@ namespace Azure.Core.TestFramework
         internal const string DateTimeOffsetNowVariableKey = "DateTimeOffsetNow";
         public SortedDictionary<string, string> Variables { get; } = new SortedDictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
-        public TestRecording(RecordedTestMode mode, string sessionFile, RecordedTestSanitizer sanitizer)
+        internal TestRecording(RecordedTestMode mode, string sessionFile, RecordedTestSanitizer sanitizer, int proxyPortHttp = default, int proxyPortHttps = default, bool ignoreBody = false)
         {
             Mode = mode;
             _sessionFile = sessionFile;
             _sanitizer = sanitizer;
+            ProxyPortHttp = proxyPortHttp;
+            ProxyPortHttps = proxyPortHttps;
             var options = ClientOptions.Default;
             var handler = new HttpClientHandler
             {
                 ServerCertificateCustomValidationCallback = ((message, certificate2, arg3, arg4) => certificate2.Issuer == "CN=localhost")
             };
             options.Transport = new HttpClientTransport(handler);
-            _testProxyClient = new TestProxyRestClient(new ClientDiagnostics(options), HttpPipelineBuilder.Build(options), new Uri("https://localhost:5001"));
-
+            ProxyClient = new TestProxyRestClient(new ClientDiagnostics(options), HttpPipelineBuilder.Build(options), new Uri($"https://127.0.0.1:{proxyPortHttps}"));
             switch (Mode)
             {
                 case RecordedTestMode.Record:
-                    ResponseWithHeaders<TestProxyStartRecordHeaders> recordResponse = _testProxyClient.StartRecord(_sessionFile);
+                    ResponseWithHeaders<TestProxyStartRecordHeaders> recordResponse = ProxyClient.StartRecord(_sessionFile);
                     RecordingId = recordResponse.Headers.XRecordingId;
                     break;
                 case RecordedTestMode.Playback:
-                    ResponseWithHeaders<IReadOnlyDictionary<string, string>, TestProxyStartPlaybackHeaders> playbackResponse = _testProxyClient.StartPlayback(_sessionFile);
+                    ResponseWithHeaders<IReadOnlyDictionary<string, string>, TestProxyStartPlaybackHeaders> playbackResponse = ProxyClient.StartPlayback(_sessionFile);
                     Variables = new SortedDictionary<string, string>((Dictionary<string, string>) playbackResponse.Value);
                     RecordingId = playbackResponse.Headers.XRecordingId;
                     foreach (string header in _sanitizer.SanitizedHeaders)
                     {
-                        _testProxyClient.AddHeaderSanitizer(new HeaderRegexSanitizer(header, Sanitized));
+                        ProxyClient.AddHeaderSanitizer(new HeaderRegexSanitizer(header, Sanitized), RecordingId);
                     }
 
                     foreach (string jsonPath in _sanitizer.JsonPathSanitizers.Select(s => s.JsonPath))
                     {
-                        _testProxyClient.AddBodySanitizer(new BodyKeySanitizer(jsonPath, Sanitized));
+                        ProxyClient.AddBodySanitizer(new BodyKeySanitizer(jsonPath, Sanitized), RecordingId);
                     }
+
+                    if (ignoreBody)
+                    {
+                        ProxyClient.AddBodilessMatcher(RecordingId);
+                    }
+
                     break;
                 case RecordedTestMode.Live:
                     break;
@@ -65,6 +72,10 @@ namespace Azure.Core.TestFramework
                     throw new ArgumentOutOfRangeException();
             }
         }
+
+        public int ProxyPortHttp { get; set; }
+
+        public int ProxyPortHttps { get; set; }
 
         public RecordedTestMode Mode { get; }
 
@@ -117,7 +128,7 @@ namespace Azure.Core.TestFramework
         /// </summary>
         private DateTimeOffset? _now;
 
-        private readonly TestProxyRestClient _testProxyClient;
+        internal TestProxyRestClient ProxyClient { get; }
         public string RecordingId { get; }
 
         /// <summary>
@@ -170,7 +181,7 @@ namespace Azure.Core.TestFramework
         {
             if (Mode == RecordedTestMode.Record && save)
             {
-                _testProxyClient.StopRecord(RecordingId, Variables);
+                ProxyClient.StopRecord(RecordingId, Variables);
             }
         }
 

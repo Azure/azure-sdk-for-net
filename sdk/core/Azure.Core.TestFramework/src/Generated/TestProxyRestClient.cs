@@ -100,12 +100,20 @@ namespace Azure.Core.TestFramework
                 case 200:
                     {
                         IReadOnlyDictionary<string, string> value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
                         Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                        foreach (var property in document.RootElement.EnumerateObject())
+
+                        try
                         {
-                            dictionary.Add(property.Name, property.Value.GetString());
+                            using var document = JsonDocument.Parse(message.Response.ContentStream);
+                            foreach (var property in document.RootElement.EnumerateObject())
+                            {
+                                dictionary.Add(property.Name, property.Value.GetString());
+                            }
                         }
+                        catch
+                        {
+                        }
+
                         value = dictionary;
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
@@ -124,12 +132,11 @@ namespace Azure.Core.TestFramework
             uri.AppendPath("/playback/stop", false);
             request.Uri = uri;
             request.Headers.Add("x-recording-id", xRecordingId);
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Stop playback for a test. </summary>
-        /// <param name="xRecordingId"> References specific schema in registry namespace. </param>
+        /// <param name="xRecordingId"> The recording ID to stop playback for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="xRecordingId"/> is null. </exception>
         public async Task<Response> StopPlaybackAsync(string xRecordingId, CancellationToken cancellationToken = default)
@@ -151,7 +158,7 @@ namespace Azure.Core.TestFramework
         }
 
         /// <summary> Stop playback for a test. </summary>
-        /// <param name="xRecordingId"> References specific schema in registry namespace. </param>
+        /// <param name="xRecordingId"> The recording ID to stop playback for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="xRecordingId"/> is null. </exception>
         public Response StopPlayback(string xRecordingId, CancellationToken cancellationToken = default)
@@ -182,7 +189,6 @@ namespace Azure.Core.TestFramework
             uri.AppendPath("/record/start", false);
             request.Uri = uri;
             request.Headers.Add("x-recording-file", xRecordingFile);
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -242,7 +248,6 @@ namespace Azure.Core.TestFramework
             uri.AppendPath("/record/stop", false);
             request.Uri = uri;
             request.Headers.Add("x-recording-id", xRecordingId);
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteStartObject();
@@ -257,7 +262,7 @@ namespace Azure.Core.TestFramework
         }
 
         /// <summary> Stop recording for a test. </summary>
-        /// <param name="xRecordingId"> References specific schema in registry namespace. </param>
+        /// <param name="xRecordingId"> The recording ID. </param>
         /// <param name="variables"> Variables for the recording. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="xRecordingId"/> or <paramref name="variables"/> is null. </exception>
@@ -284,7 +289,7 @@ namespace Azure.Core.TestFramework
         }
 
         /// <summary> Stop recording for a test. </summary>
-        /// <param name="xRecordingId"> References specific schema in registry namespace. </param>
+        /// <param name="xRecordingId"> The recording ID. </param>
         /// <param name="variables"> Variables for the recording. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="xRecordingId"/> or <paramref name="variables"/> is null. </exception>
@@ -310,7 +315,7 @@ namespace Azure.Core.TestFramework
             }
         }
 
-        internal HttpMessage CreateAddBodySanitizerRequest(BodyKeySanitizer sanitizer)
+        internal HttpMessage CreateAddBodySanitizerRequest(BodyKeySanitizer sanitizer, string xRecordingId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -320,7 +325,10 @@ namespace Azure.Core.TestFramework
             uri.AppendPath("/admin/addsanitizer", false);
             request.Uri = uri;
             request.Headers.Add("x-abstraction-identifier", "BodyKeySanitizer");
-            request.Headers.Add("Accept", "application/json");
+            if (xRecordingId != null)
+            {
+                request.Headers.Add("x-recording-id", xRecordingId);
+            }
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(sanitizer);
@@ -330,16 +338,17 @@ namespace Azure.Core.TestFramework
 
         /// <summary> Stop recording for a test. </summary>
         /// <param name="sanitizer"> The body for a header regex sanitizer. </param>
+        /// <param name="xRecordingId"> The recording ID to apply the sanitizer to. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sanitizer"/> is null. </exception>
-        public async Task<Response> AddBodySanitizerAsync(BodyKeySanitizer sanitizer, CancellationToken cancellationToken = default)
+        public async Task<Response> AddBodySanitizerAsync(BodyKeySanitizer sanitizer, string xRecordingId = null, CancellationToken cancellationToken = default)
         {
             if (sanitizer == null)
             {
                 throw new ArgumentNullException(nameof(sanitizer));
             }
 
-            using var message = CreateAddBodySanitizerRequest(sanitizer);
+            using var message = CreateAddBodySanitizerRequest(sanitizer, xRecordingId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -352,16 +361,17 @@ namespace Azure.Core.TestFramework
 
         /// <summary> Stop recording for a test. </summary>
         /// <param name="sanitizer"> The body for a header regex sanitizer. </param>
+        /// <param name="xRecordingId"> The recording ID to apply the sanitizer to. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sanitizer"/> is null. </exception>
-        public Response AddBodySanitizer(BodyKeySanitizer sanitizer, CancellationToken cancellationToken = default)
+        public Response AddBodySanitizer(BodyKeySanitizer sanitizer, string xRecordingId = null, CancellationToken cancellationToken = default)
         {
             if (sanitizer == null)
             {
                 throw new ArgumentNullException(nameof(sanitizer));
             }
 
-            using var message = CreateAddBodySanitizerRequest(sanitizer);
+            using var message = CreateAddBodySanitizerRequest(sanitizer, xRecordingId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -372,7 +382,7 @@ namespace Azure.Core.TestFramework
             }
         }
 
-        internal HttpMessage CreateAddHeaderSanitizerRequest(HeaderRegexSanitizer sanitizer)
+        internal HttpMessage CreateAddHeaderSanitizerRequest(HeaderRegexSanitizer sanitizer, string xRecordingId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -382,7 +392,10 @@ namespace Azure.Core.TestFramework
             uri.AppendPath("/admin/addsanitizer", false);
             request.Uri = uri;
             request.Headers.Add("x-abstraction-identifier", "HeaderRegexSanitizer");
-            request.Headers.Add("Accept", "application/json");
+            if (xRecordingId != null)
+            {
+                request.Headers.Add("x-recording-id", xRecordingId);
+            }
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(sanitizer);
@@ -392,16 +405,17 @@ namespace Azure.Core.TestFramework
 
         /// <summary> Stop recording for a test. </summary>
         /// <param name="sanitizer"> The body for a header regex sanitizer. </param>
+        /// <param name="xRecordingId"> The recording ID to apply the sanitizer to. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sanitizer"/> is null. </exception>
-        public async Task<Response> AddHeaderSanitizerAsync(HeaderRegexSanitizer sanitizer, CancellationToken cancellationToken = default)
+        public async Task<Response> AddHeaderSanitizerAsync(HeaderRegexSanitizer sanitizer, string xRecordingId = null, CancellationToken cancellationToken = default)
         {
             if (sanitizer == null)
             {
                 throw new ArgumentNullException(nameof(sanitizer));
             }
 
-            using var message = CreateAddHeaderSanitizerRequest(sanitizer);
+            using var message = CreateAddHeaderSanitizerRequest(sanitizer, xRecordingId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -414,16 +428,66 @@ namespace Azure.Core.TestFramework
 
         /// <summary> Stop recording for a test. </summary>
         /// <param name="sanitizer"> The body for a header regex sanitizer. </param>
+        /// <param name="xRecordingId"> The recording ID to apply the sanitizer to. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sanitizer"/> is null. </exception>
-        public Response AddHeaderSanitizer(HeaderRegexSanitizer sanitizer, CancellationToken cancellationToken = default)
+        public Response AddHeaderSanitizer(HeaderRegexSanitizer sanitizer, string xRecordingId = null, CancellationToken cancellationToken = default)
         {
             if (sanitizer == null)
             {
                 throw new ArgumentNullException(nameof(sanitizer));
             }
 
-            using var message = CreateAddHeaderSanitizerRequest(sanitizer);
+            using var message = CreateAddHeaderSanitizerRequest(sanitizer, xRecordingId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateAddBodilessMatcherRequest(string xRecordingId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/admin/setmatcher", false);
+            request.Uri = uri;
+            request.Headers.Add("x-abstraction-identifier", "BodilessMatcher");
+            if (xRecordingId != null)
+            {
+                request.Headers.Add("x-recording-id", xRecordingId);
+            }
+            return message;
+        }
+
+        /// <summary> Add a bodiless matcher. </summary>
+        /// <param name="xRecordingId"> The recording ID to apply the matcher to. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response> AddBodilessMatcherAsync(string xRecordingId = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateAddBodilessMatcherRequest(xRecordingId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Add a bodiless matcher. </summary>
+        /// <param name="xRecordingId"> The recording ID to apply the matcher to. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response AddBodilessMatcher(string xRecordingId = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateAddBodilessMatcherRequest(xRecordingId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

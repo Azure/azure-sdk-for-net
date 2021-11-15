@@ -29,13 +29,13 @@ namespace Azure.Core.TestFramework
             }
 
             s_dotNetExe = Path.Combine(installDir, s_dotNetExeName);
-            ServicePointManager.Expect100Continue = false;
+            // ServicePointManager.Expect100Continue = false;
         }
         private static bool HasDotNetExe(string dotnetDir) => dotnetDir != null && File.Exists(Path.Combine(dotnetDir, s_dotNetExeName));
 
         protected RecordedTestSanitizer Sanitizer { get; set; }
 
-        protected RecordMatcher Matcher { get; set; }
+        protected internal RecordMatcher Matcher { get; set; }
 
         public TestRecording Recording { get; private set; }
 
@@ -76,6 +76,8 @@ namespace Azure.Core.TestFramework
         private bool _saveDebugRecordingsOnFailure;
         private Process _testProxyProcess;
         private static readonly string s_dotNetExe;
+        private int _proxyPortHttps;
+        private int _proxyPortHttp;
         protected bool ValidateClientInstrumentation { get; set; }
 
         protected RecordedTestBase(bool isAsync, RecordedTestMode? mode = null) : base(isAsync)
@@ -195,18 +197,45 @@ namespace Azure.Core.TestFramework
                 RedirectStandardError = true
             };
             var p = Process.Start(processInfo);
-            var output = p.StandardOutput.ReadToEnd();
-            var error = p.StandardError.ReadToEnd();
             p.WaitForExit();
-
-            var testProxyPath = GetType().Assembly.GetCustomAttributes<AssemblyMetadataAttribute>().Single(a => a.Key == "TestProxyPath").Value;
+            // Random random = new Random();
+            // _proxyPortHttp = random.Next(1, 65536);
+            // _proxyPortHttps = random.Next(1, 65536);
+            var testProxyPath = GetType().Assembly.GetCustomAttributes<AssemblyMetadataAttribute>().Single(a => a.Key == "TestProxyPath")
+                .Value;
             processInfo = new ProcessStartInfo(
                 s_dotNetExe,
                 testProxyPath)
             {
-                UseShellExecute = true
+                UseShellExecute = false,
+                EnvironmentVariables = { { "ASPNETCORE_URLS", "http://0.0.0.0:0;https://0.0.0.0:0" } },
+                RedirectStandardOutput = true,
+                RedirectStandardError = true
             };
             _testProxyProcess = Process.Start(processInfo);
+            // var error = _testProxyProcess.StandardError.ReadLine();
+
+            while (true)
+            {
+                string outputLine = _testProxyProcess.StandardOutput.ReadLine();
+                var index = outputLine.IndexOf("Now listening on: http:");
+                if (index > -1)
+                {
+                    var start = index + "Now listening on: ".Length;
+                    var uri = outputLine.Substring(start, outputLine.Length - start).Trim();
+                    _proxyPortHttp = new Uri(uri).Port;
+                    continue;
+                }
+                index = outputLine.IndexOf("Now listening on: https:");
+                if (index > -1)
+                {
+                    var start = index + "Now listening on: ".Length;
+                    var uri = outputLine.Substring(start, outputLine.Length - start).Trim();
+                    _proxyPortHttps = new Uri(uri).Port;
+                    _testProxyProcess.StandardOutput.Close();
+                    break;
+                }
+            }
         }
 
         /// <summary>
@@ -238,7 +267,7 @@ namespace Azure.Core.TestFramework
                 throw new IgnoreException((string) test.Properties.Get("_SkipLive"));
             }
 
-            Recording = new TestRecording(Mode, GetSessionFilePath(), Sanitizer);
+            Recording = new TestRecording(Mode, GetSessionFilePath(), Sanitizer, _proxyPortHttp, _proxyPortHttps, !Matcher.CompareBodies);
             // ValidateClientInstrumentation = Recording.HasRequests;
         }
 

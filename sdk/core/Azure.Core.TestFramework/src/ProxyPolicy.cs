@@ -57,7 +57,6 @@ namespace Azure.Core.TestFramework
             var request = message.Request;
             request.Headers.SetValue("x-recording-id", _recordingId);
             request.Headers.SetValue("x-recording-mode", _mode.ToString().ToLower());
-            request.Headers.SetValue("x-recording-remove", bool.FalseString);
 
             // Ensure x-recording-upstream-base-uri header is only set once, since the same HttpMessage will be reused on retries
             if (!request.Headers.Contains("x-recording-upstream-base-uri"))
@@ -71,8 +70,13 @@ namespace Azure.Core.TestFramework
                 request.Headers.SetValue("x-recording-upstream-base-uri", baseUri.ToString());
             }
 
-            request.Uri.Host = "localHost";
-            request.Uri.Port = request.Uri.Scheme == "https" ? 5001 : 5000;
+            request.Uri.Host = "127.0.0.1";
+            request.Uri.Port = request.Uri.Scheme == "https" ? _recording.ProxyPortHttps : _recording.ProxyPortHttp;
+
+            lock (_recording.Random)
+            {
+                request.ClientRequestId = _recording.Random.NewGuid().ToString("N");
+            }
         }
     }
 }

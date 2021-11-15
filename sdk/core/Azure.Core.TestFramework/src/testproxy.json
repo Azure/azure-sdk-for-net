@@ -3,7 +3,7 @@
   "info": {
     "title": "Test Proxy",
     "version": "2021-10",
-    "description": "Azure Schema Registry is as a central schema repository, with support for versioning, management, compatibility checking, and RBAC."
+    "description": "The Test Proxy is used to record and playback live tests."
   },
   "schemes": [
     "https"
@@ -42,15 +42,12 @@
             }
           },
           "default": {
-            "description": "An error response received from the Azure Schema Registry service.",
+            "description": "An error response received from the Test Proxy.",
             "headers": {
               "x-ms-error-code": {
                 "type": "string",
                 "description": "Error code for specific error that occurred."
               }
-            },
-            "schema": {
-              "$ref": "#/definitions/Error"
             }
           }
         }
@@ -68,7 +65,7 @@
           {
             "name": "x-recording-id",
             "in": "header",
-            "description": "References specific schema in registry namespace.",
+            "description": "The recording ID to stop playback for.",
             "required": true,
             "type": "string"
           }
@@ -78,15 +75,12 @@
             "description": "OK"
           },
           "default": {
-            "description": "An error response received from the Azure Schema Registry service.",
+            "description": "An error response received from the Test Proxy.",
             "headers": {
               "x-ms-error-code": {
                 "type": "string",
                 "description": "Error code for specific error that occurred."
               }
-            },
-            "schema": {
-              "$ref": "#/definitions/Error"
             }
           }
         }
@@ -114,20 +108,18 @@
             "description": "OK",
             "headers": {
               "x-recording-id": {
-                "type": "string"
+                "type": "string",
+                "description": "The recording ID for the test recording."
               }
             }
           },
           "default": {
-            "description": "An error response received from the Azure Schema Registry service.",
+            "description": "An error response received from the Test Proxy.",
             "headers": {
               "x-ms-error-code": {
                 "type": "string",
                 "description": "Error code for specific error that occurred."
               }
-            },
-            "schema": {
-              "$ref": "#/definitions/Error"
             }
           }
         }
@@ -148,7 +140,7 @@
           {
             "name": "x-recording-id",
             "in": "header",
-            "description": "References specific schema in registry namespace.",
+            "description": "The recording ID.",
             "required": true,
             "type": "string"
           },
@@ -170,15 +162,12 @@
             "description": "OK"
           },
           "default": {
-            "description": "An error response received from the Azure Schema Registry service.",
+            "description": "An error response received from the Test Proxy.",
             "headers": {
               "x-ms-error-code": {
                 "type": "string",
                 "description": "Error code for specific error that occurred."
               }
-            },
-            "schema": {
-              "$ref": "#/definitions/Error"
             }
           }
         }
@@ -192,9 +181,6 @@
         "description": "Stop recording for a test.",
         "operationId": "TestProxy_AddBodySanitizer",
         "consumes": [
-          "application/json"
-        ],
-        "produces": [
           "application/json"
         ],
         "parameters": [
@@ -213,6 +199,12 @@
             }
           },
           {
+            "name": "x-recording-id",
+            "in": "header",
+            "description": "The recording ID to apply the sanitizer to.",
+            "type": "string"
+          },
+          {
             "name": "sanitizer",
             "in": "body",
             "description": "The body for a header regex sanitizer.",
@@ -227,15 +219,12 @@
             "description": "OK"
           },
           "default": {
-            "description": "An error response received from the Azure Schema Registry service.",
+            "description": "An error response received from the Test Proxy.",
             "headers": {
               "x-ms-error-code": {
                 "type": "string",
                 "description": "Error code for specific error that occurred."
               }
-            },
-            "schema": {
-              "$ref": "#/definitions/Error"
             }
           }
         }
@@ -247,9 +236,6 @@
         "description": "Stop recording for a test.",
         "operationId": "TestProxy_AddHeaderSanitizer",
         "consumes": [
-          "application/json"
-        ],
-        "produces": [
           "application/json"
         ],
         "parameters": [
@@ -268,6 +254,12 @@
             }
           },
           {
+            "name": "x-recording-id",
+            "in": "header",
+            "description": "The recording ID to apply the sanitizer to.",
+            "type": "string"
+          },
+          {
             "name": "sanitizer",
             "in": "body",
             "description": "The body for a header regex sanitizer.",
@@ -282,15 +274,55 @@
             "description": "OK"
           },
           "default": {
-            "description": "An error response received from the Azure Schema Registry service.",
+            "description": "An error response received from the Test Proxy.",
             "headers": {
               "x-ms-error-code": {
                 "type": "string",
                 "description": "Error code for specific error that occurred."
               }
-            },
-            "schema": {
-              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/admin/setmatcher?overload=BodilessMatcher": {
+      "post": {
+        "summary": "Add a bodiless matcher.",
+        "description": "Add a bodiless matcher.",
+        "operationId": "TestProxy_AddBodilessMatcher",
+        "parameters": [
+          {
+            "name": "x-abstraction-identifier",
+            "in": "header",
+            "description": "The type of matcher.",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "BodilessMatcher"
+            ],
+            "x-ms-enum": {
+              "name": "MatcherType",
+              "modelAsString": false
+            }
+          },
+          {
+            "name": "x-recording-id",
+            "in": "header",
+            "description": "The recording ID to apply the matcher to.",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "default": {
+            "description": "An error response received from the Test Proxy.",
+            "headers": {
+              "x-ms-error-code": {
+                "type": "string",
+                "description": "Error code for specific error that occurred."
+              }
             }
           }
         }
@@ -306,6 +338,16 @@
       ],
       "x-ms-enum": {
         "name": "SanitizerType",
+        "modelAsString": false
+      }
+    },
+    "MatcherType": {
+      "type": "string",
+      "enum": [
+        "BodilessMatcher"
+      ],
+      "x-ms-enum": {
+        "name": "MatcherType",
         "modelAsString": false
       }
     },
@@ -351,42 +393,6 @@
       "required": [
         "key",
         "value"
-      ]
-    },
-    "Error": {
-      "type": "object",
-      "description": "An error response returned from Azure Schema Registry service.",
-      "properties": {
-        "error": {
-          "$ref": "#/definitions/ErrorDetail"
-        }
-      },
-      "required": [
-        "error"
-      ]
-    },
-    "ErrorDetail": {
-      "description": "Error response returned from Azure Schema Registry service.",
-      "properties": {
-        "code": {
-          "type": "string",
-          "description": "Type of error."
-        },
-        "message": {
-          "type": "string",
-          "description": "Brief description of error."
-        },
-        "details": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/ErrorDetail"
-          },
-          "description": "Error message details to help user understand/debug failure."
-        }
-      },
-      "required": [
-        "code",
-        "message"
       ]
     }
   }
