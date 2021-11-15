@@ -88,13 +88,13 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             };
         }
 
-        protected static void AssertAutoscale(ThroughputSettings throughput)
+        protected static void AssertAutoscale(ThroughputSettingsData throughput)
         {
             Assert.NotNull(throughput.Resource.AutoscaleSettings);
             Assert.That(throughput.Resource.AutoscaleSettings.MaxThroughput, Is.GreaterThan(0));
         }
 
-        protected static void AssertManualThroughput(ThroughputSettings throughput)
+        protected static void AssertManualThroughput(ThroughputSettingsData throughput)
         {
             Assert.That(throughput.Resource.Throughput, Is.GreaterThan(0));
             Assert.IsNull(throughput.Resource.AutoscaleSettings);

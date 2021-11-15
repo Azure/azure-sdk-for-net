@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             VerifyEqualGremlinDatabases(gremlinDatabase1, gremlinDatabase2);
 
             var throughputResponse = CosmosDBManagementClient.GremlinResources.GetGremlinDatabaseThroughputAsync(resourceGroupName, databaseAccountName, databaseName);
-            ThroughputSettings throughputSettings = throughputResponse.ConfigureAwait(false).GetAwaiter().GetResult();
+            ThroughputSettingsData ThroughputSettingsData = throughputResponse.ConfigureAwait(false).GetAwaiter().GetResult();
             Assert.NotNull(throughputSettings);
             Assert.NotNull(throughputSettings.Name);
             Assert.AreEqual(throughputSettings.Resource.Throughput, sampleThroughput);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             VerifyEqualGremlinDatabases(gremlinDatabase3, gremlinDatabase4);
 
             var throughputResponse2 = CosmosDBManagementClient.GremlinResources.GetGremlinDatabaseThroughputAsync(resourceGroupName, databaseAccountName, databaseName);
-            ThroughputSettings throughputSettings2 = throughputResponse2.ConfigureAwait(false).GetAwaiter().GetResult();
+            ThroughputSettingsData throughputSettings2 = throughputResponse2.ConfigureAwait(false).GetAwaiter().GetResult();
             Assert.NotNull(throughputSettings2);
             Assert.NotNull(throughputSettings2.Name);
             Assert.AreEqual(throughputSettings2.Resource.Throughput, sampleThroughput2);
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             ThroughputSettingsUpdateParameters throughputSettingsUpdateParameters = new ThroughputSettingsUpdateParameters(new ThroughputSettingsResource(maxThroughput, null, null, null));
             Response<ThroughputSettings> throughputResponse = await WaitForCompletionAsync(await CosmosDBManagementClient.GremlinResources.StartUpdateGremlinDatabaseThroughputAsync(resourceGroupName, databaseAccountName, databaseName, throughputSettingsUpdateParameters));
-            ThroughputSettings throughputSettings = throughputResponse.Value;
+            ThroughputSettingsData ThroughputSettingsData = throughputResponse.Value;
             Assert.NotNull(throughputSettings);
             Assert.NotNull(throughputSettings.Name);
             Assert.AreEqual(throughputSettings.Resource.Throughput, maxThroughput);
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TestCase, Order(4)]
         public async Task GremlinDatabaseMigrateToAutoscaleTests()
         {
-            ThroughputSettings throughputSettings = await WaitForCompletionAsync(await CosmosDBManagementClient.GremlinResources.StartMigrateGremlinDatabaseToAutoscaleAsync(resourceGroupName, databaseAccountName, databaseName));
+            ThroughputSettingsData ThroughputSettingsData = await WaitForCompletionAsync(await CosmosDBManagementClient.GremlinResources.StartMigrateGremlinDatabaseToAutoscaleAsync(resourceGroupName, databaseAccountName, databaseName));
             Assert.IsNotNull(throughputSettings);
             Assert.IsNotNull(throughputSettings.Resource.AutoscaleSettings);
             Assert.AreEqual(maxThroughput, throughputSettings.Resource.AutoscaleSettings.MaxThroughput);
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TestCase, Order(5)]
         public async Task GremlinDatabaseMigrateToManualTests()
         {
-            ThroughputSettings throughputSettings = await WaitForCompletionAsync(await CosmosDBManagementClient.GremlinResources.StartMigrateGremlinDatabaseToManualThroughputAsync(resourceGroupName, databaseAccountName, databaseName));
+            ThroughputSettingsData ThroughputSettingsData = await WaitForCompletionAsync(await CosmosDBManagementClient.GremlinResources.StartMigrateGremlinDatabaseToManualThroughputAsync(resourceGroupName, databaseAccountName, databaseName));
             Assert.IsNotNull(throughputSettings);
             Assert.IsNull(throughputSettings.Resource.AutoscaleSettings);
             Assert.AreEqual(maxThroughput, throughputSettings.Resource.Throughput);
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             VerifyGremlinGraphCreation(gremlinGraph, gremlinGraphCreateUpdateParameters);
 
             var throughputResponse = CosmosDBManagementClient.GremlinResources.GetGremlinGraphThroughputAsync(resourceGroupName, databaseAccountName, databaseName, gremlinGraphName);
-            ThroughputSettings throughputSettings = throughputResponse.ConfigureAwait(false).GetAwaiter().GetResult();
+            ThroughputSettingsData ThroughputSettingsData = throughputResponse.ConfigureAwait(false).GetAwaiter().GetResult();
             Assert.NotNull(throughputSettings);
             Assert.NotNull(throughputSettings.Name);
             Assert.AreEqual(throughputSettings.Resource.Throughput, sampleThroughput);
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             VerifyGremlinGraphCreation(gremlinGraph2, gremlinGraphCreateUpdateParameters2);
 
             var throughputResponse2 = CosmosDBManagementClient.GremlinResources.GetGremlinGraphThroughputAsync(resourceGroupName, databaseAccountName, databaseName, gremlinGraphName);
-            ThroughputSettings throughputSettings2 = throughputResponse2.ConfigureAwait(false).GetAwaiter().GetResult();
+            ThroughputSettingsData throughputSettings2 = throughputResponse2.ConfigureAwait(false).GetAwaiter().GetResult();
             Assert.NotNull(throughputSettings2);
             Assert.NotNull(throughputSettings2.Name);
             Assert.AreEqual(throughputSettings2.Resource.Throughput, sampleThroughput2);
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             ThroughputSettingsUpdateParameters throughputSettingsUpdateParameters = new ThroughputSettingsUpdateParameters(new ThroughputSettingsResource(maxThroughput, null, null, null));
             var throughputResponse = await WaitForCompletionAsync(await CosmosDBManagementClient.GremlinResources.StartUpdateGremlinGraphThroughputAsync(resourceGroupName, databaseAccountName, databaseName, gremlinGraphName, throughputSettingsUpdateParameters));
-            ThroughputSettings throughputSettings = throughputResponse.Value;
+            ThroughputSettingsData ThroughputSettingsData = throughputResponse.Value;
             Assert.NotNull(throughputSettings);
             Assert.NotNull(throughputSettings.Name);
             Assert.AreEqual(throughputSettings.Resource.Throughput, maxThroughput);
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TestCase, Order(8)]
         public async Task GremlinGraphMigrateToAutoscaleTests()
         {
-            ThroughputSettings throughputSettings = await WaitForCompletionAsync(await CosmosDBManagementClient.GremlinResources.StartMigrateGremlinGraphToAutoscaleAsync(resourceGroupName, databaseAccountName, databaseName, gremlinGraphName));
+            ThroughputSettingsData ThroughputSettingsData = await WaitForCompletionAsync(await CosmosDBManagementClient.GremlinResources.StartMigrateGremlinGraphToAutoscaleAsync(resourceGroupName, databaseAccountName, databaseName, gremlinGraphName));
             Assert.IsNotNull(throughputSettings);
             Assert.IsNotNull(throughputSettings.Resource.AutoscaleSettings);
             Assert.AreEqual(maxThroughput, throughputSettings.Resource.AutoscaleSettings.MaxThroughput);
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TestCase, Order(9)]
         public async Task GremlinGraphMigrateToManualTests()
         {
-            ThroughputSettings throughputSettings = await WaitForCompletionAsync(await CosmosDBManagementClient.GremlinResources.StartMigrateGremlinGraphToManualThroughputAsync(resourceGroupName, databaseAccountName, databaseName, gremlinGraphName));
+            ThroughputSettingsData ThroughputSettingsData = await WaitForCompletionAsync(await CosmosDBManagementClient.GremlinResources.StartMigrateGremlinGraphToManualThroughputAsync(resourceGroupName, databaseAccountName, databaseName, gremlinGraphName));
             Assert.IsNotNull(throughputSettings);
             Assert.IsNull(throughputSettings.Resource.AutoscaleSettings);
             Assert.AreEqual(maxThroughput, throughputSettings.Resource.Throughput);

@@ -20,11 +20,12 @@ using Azure.ResourceManager.CosmosDB.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    /// <summary> A class representing collection of MongoDBDatabase and their operations over a DatabaseAccount. </summary>
+    /// <summary> A class representing collection of MongoDBDatabase and their operations over its parent. </summary>
     public partial class MongoDBDatabaseCollection : ArmCollection, IEnumerable<MongoDBDatabase>, IAsyncEnumerable<MongoDBDatabase>
+
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly MongoDBResourcesRestOperations _restClient;
+        private readonly MongoDBResourcesRestOperations _mongoDBResourcesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MongoDBDatabaseCollection"/> class for mocking. </summary>
         protected MongoDBDatabaseCollection()
@@ -36,22 +37,7 @@ namespace Azure.ResourceManager.CosmosDB
         internal MongoDBDatabaseCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new MongoDBResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-        }
-
-        IEnumerator<MongoDBDatabase> IEnumerable<MongoDBDatabase>.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IAsyncEnumerator<MongoDBDatabase> IAsyncEnumerable<MongoDBDatabase>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            _mongoDBResourcesRestClient = new MongoDBResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -80,8 +66,8 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = _restClient.CreateUpdateMongoDBDatabase(Id.ResourceGroupName, Id.Name, databaseName, createUpdateMongoDBDatabaseParameters, cancellationToken);
-                var operation = new MongoDBResourceCreateUpdateMongoDBDatabaseOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateUpdateMongoDBDatabaseRequest(Id.ResourceGroupName, Id.Name, databaseName, createUpdateMongoDBDatabaseParameters).Request, response);
+                var response = _mongoDBResourcesRestClient.CreateUpdateMongoDBDatabase(Id.ResourceGroupName, Id.Name, databaseName, createUpdateMongoDBDatabaseParameters, cancellationToken);
+                var operation = new MongoDBResourceCreateUpdateMongoDBDatabaseOperation(Parent, _clientDiagnostics, Pipeline, _mongoDBResourcesRestClient.CreateCreateUpdateMongoDBDatabaseRequest(Id.ResourceGroupName, Id.Name, databaseName, createUpdateMongoDBDatabaseParameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -114,8 +100,8 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = await _restClient.CreateUpdateMongoDBDatabaseAsync(Id.ResourceGroupName, Id.Name, databaseName, createUpdateMongoDBDatabaseParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new MongoDBResourceCreateUpdateMongoDBDatabaseOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateUpdateMongoDBDatabaseRequest(Id.ResourceGroupName, Id.Name, databaseName, createUpdateMongoDBDatabaseParameters).Request, response);
+                var response = await _mongoDBResourcesRestClient.CreateUpdateMongoDBDatabaseAsync(Id.ResourceGroupName, Id.Name, databaseName, createUpdateMongoDBDatabaseParameters, cancellationToken).ConfigureAwait(false);
+                var operation = new MongoDBResourceCreateUpdateMongoDBDatabaseOperation(Parent, _clientDiagnostics, Pipeline, _mongoDBResourcesRestClient.CreateCreateUpdateMongoDBDatabaseRequest(Id.ResourceGroupName, Id.Name, databaseName, createUpdateMongoDBDatabaseParameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -127,21 +113,22 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Gets the MongoDB databases under an existing Azure Cosmos DB database account with the provided name. </summary>
         /// <param name="databaseName"> Cosmos DB database name. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
         public virtual Response<MongoDBDatabase> Get(string databaseName, CancellationToken cancellationToken = default)
         {
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("MongoDBDatabaseCollection.Get");
             scope.Start();
             try
             {
-                if (databaseName == null)
-                {
-                    throw new ArgumentNullException(nameof(databaseName));
-                }
-
-                var response = _restClient.GetMongoDBDatabase(Id.ResourceGroupName, Id.Name, databaseName, cancellationToken: cancellationToken);
+                var response = _mongoDBResourcesRestClient.GetMongoDBDatabase(Id.ResourceGroupName, Id.Name, databaseName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new MongoDBDatabase(Parent, response.Value), response.GetRawResponse());
@@ -153,21 +140,22 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Gets the MongoDB databases under an existing Azure Cosmos DB database account with the provided name. </summary>
         /// <param name="databaseName"> Cosmos DB database name. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
         public async virtual Task<Response<MongoDBDatabase>> GetAsync(string databaseName, CancellationToken cancellationToken = default)
         {
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("MongoDBDatabaseCollection.Get");
             scope.Start();
             try
             {
-                if (databaseName == null)
-                {
-                    throw new ArgumentNullException(nameof(databaseName));
-                }
-
-                var response = await _restClient.GetMongoDBDatabaseAsync(Id.ResourceGroupName, Id.Name, databaseName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _mongoDBResourcesRestClient.GetMongoDBDatabaseAsync(Id.ResourceGroupName, Id.Name, databaseName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new MongoDBDatabase(Parent, response.Value), response.GetRawResponse());
@@ -181,19 +169,20 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="databaseName"> Cosmos DB database name. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
         public virtual Response<MongoDBDatabase> GetIfExists(string databaseName, CancellationToken cancellationToken = default)
         {
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("MongoDBDatabaseCollection.GetIfExists");
             scope.Start();
             try
             {
-                if (databaseName == null)
-                {
-                    throw new ArgumentNullException(nameof(databaseName));
-                }
-
-                var response = _restClient.GetMongoDBDatabase(Id.ResourceGroupName, Id.Name, databaseName, cancellationToken: cancellationToken);
+                var response = _mongoDBResourcesRestClient.GetMongoDBDatabase(Id.ResourceGroupName, Id.Name, databaseName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<MongoDBDatabase>(null, response.GetRawResponse())
                     : Response.FromValue(new MongoDBDatabase(this, response.Value), response.GetRawResponse());
@@ -207,19 +196,20 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="databaseName"> Cosmos DB database name. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
         public async virtual Task<Response<MongoDBDatabase>> GetIfExistsAsync(string databaseName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("MongoDBDatabaseCollection.GetIfExists");
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("MongoDBDatabaseCollection.GetIfExistsAsync");
             scope.Start();
             try
             {
-                if (databaseName == null)
-                {
-                    throw new ArgumentNullException(nameof(databaseName));
-                }
-
-                var response = await _restClient.GetMongoDBDatabaseAsync(Id.ResourceGroupName, Id.Name, databaseName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _mongoDBResourcesRestClient.GetMongoDBDatabaseAsync(Id.ResourceGroupName, Id.Name, databaseName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<MongoDBDatabase>(null, response.GetRawResponse())
                     : Response.FromValue(new MongoDBDatabase(this, response.Value), response.GetRawResponse());
@@ -233,18 +223,19 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="databaseName"> Cosmos DB database name. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
         public virtual Response<bool> CheckIfExists(string databaseName, CancellationToken cancellationToken = default)
         {
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("MongoDBDatabaseCollection.CheckIfExists");
             scope.Start();
             try
             {
-                if (databaseName == null)
-                {
-                    throw new ArgumentNullException(nameof(databaseName));
-                }
-
                 var response = GetIfExists(databaseName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -257,18 +248,19 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="databaseName"> Cosmos DB database name. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(string databaseName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("MongoDBDatabaseCollection.CheckIfExists");
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("MongoDBDatabaseCollection.CheckIfExistsAsync");
             scope.Start();
             try
             {
-                if (databaseName == null)
-                {
-                    throw new ArgumentNullException(nameof(databaseName));
-                }
-
                 var response = await GetIfExistsAsync(databaseName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -290,7 +282,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetMongoDBDatabases(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _mongoDBResourcesRestClient.ListMongoDBDatabases(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new MongoDBDatabase(Parent, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -313,7 +305,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetMongoDBDatabasesAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _mongoDBResourcesRestClient.ListMongoDBDatabasesAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new MongoDBDatabase(Parent, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -325,7 +317,22 @@ namespace Azure.ResourceManager.CosmosDB
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
+        IEnumerator<MongoDBDatabase> IEnumerable<MongoDBDatabase>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<MongoDBDatabase> IAsyncEnumerable<MongoDBDatabase>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
+
         // Builders.
-        // public ArmBuilder<ResourceIdentifier, MongoDBDatabase, MongoDBDatabaseData> Construct() { }
+        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, MongoDBDatabase, MongoDBDatabaseData> Construct() { }
     }
 }

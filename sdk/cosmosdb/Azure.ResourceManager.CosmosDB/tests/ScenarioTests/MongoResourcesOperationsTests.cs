@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                         new MongoDBDatabaseResource(databaseName), new CreateUpdateOptions(sampleThroughput1, new AutoscaleSettings()))));
             Assert.IsNotNull(mongoDBDatabase1);
             Assert.AreEqual(databaseName, mongoDBDatabase1.Resource.Id);
-            ThroughputSettings throughputSettings1 =
+            ThroughputSettingsData throughputSettings1 =
                 await CosmosDBManagementClient.MongoDBResources.GetMongoDBDatabaseThroughputAsync(resourceGroupName, databaseAccountName, databaseName);
             Assert.IsNotNull(throughputSettings1);
             Assert.AreEqual(sampleThroughput1, throughputSettings1.Resource.Throughput);
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                         new MongoDBDatabaseResource(databaseName), new CreateUpdateOptions(sampleThroughput2, new AutoscaleSettings()))));
             Assert.IsNotNull(mongoDBDatabase2);
             Assert.AreEqual(databaseName, mongoDBDatabase2.Resource.Id);
-            ThroughputSettings throughputSettings2 =
+            ThroughputSettingsData throughputSettings2 =
                 await CosmosDBManagementClient.MongoDBResources.GetMongoDBDatabaseThroughputAsync(resourceGroupName, databaseAccountName, databaseName);
             Assert.IsNotNull(throughputSettings2);
             Assert.AreEqual(sampleThroughput2, throughputSettings2.Resource.Throughput);
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TestCase, Order(2)]
         public async Task MongoDBDatabaseUpdateThroughputTest()
         {
-            ThroughputSettings throughputSettings = (await WaitForCompletionAsync(
+            ThroughputSettingsData ThroughputSettingsData = (await WaitForCompletionAsync(
                 await CosmosDBManagementClient.MongoDBResources.StartUpdateMongoDBDatabaseThroughputAsync(
                     resourceGroupName,
                     databaseAccountName,
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TestCase, Order(3)]
         public async Task MongoDBDatabaseMigrateToAutoscaleTest()
         {
-            ThroughputSettings throughputSettings = await WaitForCompletionAsync(
+            ThroughputSettingsData ThroughputSettingsData = await WaitForCompletionAsync(
                 await CosmosDBManagementClient.MongoDBResources.StartMigrateMongoDBDatabaseToAutoscaleAsync(resourceGroupName, databaseAccountName, databaseName));
             Assert.IsNotNull(throughputSettings);
             Assert.IsNotNull(throughputSettings.Resource.AutoscaleSettings);
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TestCase, Order(4)]
         public async Task MongoDBDatabaseMigrateToManualThroughputTest()
         {
-            ThroughputSettings throughputSettings = await WaitForCompletionAsync(
+            ThroughputSettingsData ThroughputSettingsData = await WaitForCompletionAsync(
                 await CosmosDBManagementClient.MongoDBResources.StartMigrateMongoDBDatabaseToManualThroughputAsync(resourceGroupName, databaseAccountName, databaseName));
             Assert.IsNotNull(throughputSettings);
             Assert.IsNull(throughputSettings.Resource.AutoscaleSettings);
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                         new MongoDBCollectionResource(collectionName), new CreateUpdateOptions(sampleThroughput1, new AutoscaleSettings()))));
             Assert.IsNotNull(mongoDBCollection1);
             Assert.AreEqual(collectionName, mongoDBCollection1.Resource.Id);
-            ThroughputSettings throughputSettings1 =
+            ThroughputSettingsData throughputSettings1 =
                 await CosmosDBManagementClient.MongoDBResources.GetMongoDBCollectionThroughputAsync(resourceGroupName, databaseAccountName, databaseName, collectionName);
             Assert.IsNotNull(throughputSettings1);
             Assert.AreEqual(sampleThroughput1, throughputSettings1.Resource.Throughput);
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                         new MongoDBCollectionResource(collectionName), new CreateUpdateOptions(sampleThroughput2, new AutoscaleSettings()))));
             Assert.IsNotNull(mongoDBCollection2);
             Assert.AreEqual(collectionName, mongoDBCollection2.Resource.Id);
-            ThroughputSettings throughputSettings2 =
+            ThroughputSettingsData throughputSettings2 =
                 await CosmosDBManagementClient.MongoDBResources.GetMongoDBCollectionThroughputAsync(resourceGroupName, databaseAccountName, databaseName, collectionName);
             Assert.IsNotNull(throughputSettings2);
             Assert.AreEqual(sampleThroughput2, throughputSettings2.Resource.Throughput);
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TestCase, Order(6)]
         public async Task MongoDBCollectionUpdateThroughputTest()
         {
-            ThroughputSettings throughputSettings = (
+            ThroughputSettingsData ThroughputSettingsData = (
                 await WaitForCompletionAsync(
                     await CosmosDBManagementClient.MongoDBResources.StartUpdateMongoDBCollectionThroughputAsync(
                         resourceGroupName,
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TestCase, Order(7)]
         public async Task MongoDBCollectionMigrateToAutoscaleTest()
         {
-            ThroughputSettings throughputSettings = await WaitForCompletionAsync(
+            ThroughputSettingsData ThroughputSettingsData = await WaitForCompletionAsync(
                 await CosmosDBManagementClient.MongoDBResources.StartMigrateMongoDBCollectionToAutoscaleAsync(
                     resourceGroupName, databaseAccountName, databaseName, collectionName));
             Assert.IsNotNull(throughputSettings);
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TestCase, Order(8)]
         public async Task MongoDBCollectionMigrateToManualThroughputTest()
         {
-            ThroughputSettings throughputSettings = await WaitForCompletionAsync(
+            ThroughputSettingsData ThroughputSettingsData = await WaitForCompletionAsync(
                 await CosmosDBManagementClient.MongoDBResources.StartMigrateMongoDBCollectionToManualThroughputAsync(
                     resourceGroupName, databaseAccountName, databaseName, collectionName));
             Assert.IsNotNull(throughputSettings);

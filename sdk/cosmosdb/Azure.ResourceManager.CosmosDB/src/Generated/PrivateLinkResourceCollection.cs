@@ -19,11 +19,12 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    /// <summary> A class representing collection of PrivateLinkResource and their operations over a DatabaseAccount. </summary>
+    /// <summary> A class representing collection of PrivateLinkResource and their operations over its parent. </summary>
     public partial class PrivateLinkResourceCollection : ArmCollection, IEnumerable<PrivateLinkResource>, IAsyncEnumerable<PrivateLinkResource>
+
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly PrivateLinkResourcesRestOperations _restClient;
+        private readonly PrivateLinkResourcesRestOperations _privateLinkResourcesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="PrivateLinkResourceCollection"/> class for mocking. </summary>
         protected PrivateLinkResourceCollection()
@@ -35,22 +36,7 @@ namespace Azure.ResourceManager.CosmosDB
         internal PrivateLinkResourceCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new PrivateLinkResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-        }
-
-        IEnumerator<PrivateLinkResource> IEnumerable<PrivateLinkResource>.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IAsyncEnumerator<PrivateLinkResource> IAsyncEnumerable<PrivateLinkResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            _privateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -58,21 +44,22 @@ namespace Azure.ResourceManager.CosmosDB
 
         // Collection level operations.
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Gets the private link resources that need to be created for a Cosmos DB account. </summary>
         /// <param name="groupName"> The name of the private link resource. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
         public virtual Response<PrivateLinkResource> Get(string groupName, CancellationToken cancellationToken = default)
         {
+            if (groupName == null)
+            {
+                throw new ArgumentNullException(nameof(groupName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("PrivateLinkResourceCollection.Get");
             scope.Start();
             try
             {
-                if (groupName == null)
-                {
-                    throw new ArgumentNullException(nameof(groupName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, groupName, cancellationToken: cancellationToken);
+                var response = _privateLinkResourcesRestClient.Get(Id.ResourceGroupName, Id.Name, groupName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new PrivateLinkResource(Parent, response.Value), response.GetRawResponse());
@@ -84,21 +71,22 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Gets the private link resources that need to be created for a Cosmos DB account. </summary>
         /// <param name="groupName"> The name of the private link resource. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
         public async virtual Task<Response<PrivateLinkResource>> GetAsync(string groupName, CancellationToken cancellationToken = default)
         {
+            if (groupName == null)
+            {
+                throw new ArgumentNullException(nameof(groupName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("PrivateLinkResourceCollection.Get");
             scope.Start();
             try
             {
-                if (groupName == null)
-                {
-                    throw new ArgumentNullException(nameof(groupName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, groupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _privateLinkResourcesRestClient.GetAsync(Id.ResourceGroupName, Id.Name, groupName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new PrivateLinkResource(Parent, response.Value), response.GetRawResponse());
@@ -112,19 +100,20 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="groupName"> The name of the private link resource. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
         public virtual Response<PrivateLinkResource> GetIfExists(string groupName, CancellationToken cancellationToken = default)
         {
+            if (groupName == null)
+            {
+                throw new ArgumentNullException(nameof(groupName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("PrivateLinkResourceCollection.GetIfExists");
             scope.Start();
             try
             {
-                if (groupName == null)
-                {
-                    throw new ArgumentNullException(nameof(groupName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, groupName, cancellationToken: cancellationToken);
+                var response = _privateLinkResourcesRestClient.Get(Id.ResourceGroupName, Id.Name, groupName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<PrivateLinkResource>(null, response.GetRawResponse())
                     : Response.FromValue(new PrivateLinkResource(this, response.Value), response.GetRawResponse());
@@ -138,19 +127,20 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="groupName"> The name of the private link resource. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
         public async virtual Task<Response<PrivateLinkResource>> GetIfExistsAsync(string groupName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PrivateLinkResourceCollection.GetIfExists");
+            if (groupName == null)
+            {
+                throw new ArgumentNullException(nameof(groupName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("PrivateLinkResourceCollection.GetIfExistsAsync");
             scope.Start();
             try
             {
-                if (groupName == null)
-                {
-                    throw new ArgumentNullException(nameof(groupName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, groupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _privateLinkResourcesRestClient.GetAsync(Id.ResourceGroupName, Id.Name, groupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<PrivateLinkResource>(null, response.GetRawResponse())
                     : Response.FromValue(new PrivateLinkResource(this, response.Value), response.GetRawResponse());
@@ -164,18 +154,19 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="groupName"> The name of the private link resource. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
         public virtual Response<bool> CheckIfExists(string groupName, CancellationToken cancellationToken = default)
         {
+            if (groupName == null)
+            {
+                throw new ArgumentNullException(nameof(groupName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("PrivateLinkResourceCollection.CheckIfExists");
             scope.Start();
             try
             {
-                if (groupName == null)
-                {
-                    throw new ArgumentNullException(nameof(groupName));
-                }
-
                 var response = GetIfExists(groupName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -188,18 +179,19 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="groupName"> The name of the private link resource. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(string groupName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PrivateLinkResourceCollection.CheckIfExists");
+            if (groupName == null)
+            {
+                throw new ArgumentNullException(nameof(groupName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("PrivateLinkResourceCollection.CheckIfExistsAsync");
             scope.Start();
             try
             {
-                if (groupName == null)
-                {
-                    throw new ArgumentNullException(nameof(groupName));
-                }
-
                 var response = await GetIfExistsAsync(groupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -221,7 +213,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAllByDatabaseAccount(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _privateLinkResourcesRestClient.ListByDatabaseAccount(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new PrivateLinkResource(Parent, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -244,7 +236,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllByDatabaseAccountAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _privateLinkResourcesRestClient.ListByDatabaseAccountAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new PrivateLinkResource(Parent, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -256,7 +248,22 @@ namespace Azure.ResourceManager.CosmosDB
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
+        IEnumerator<PrivateLinkResource> IEnumerable<PrivateLinkResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<PrivateLinkResource> IAsyncEnumerable<PrivateLinkResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
+
         // Builders.
-        // public ArmBuilder<ResourceIdentifier, PrivateLinkResource, PrivateLinkResourceData> Construct() { }
+        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, PrivateLinkResource, PrivateLinkResourceData> Construct() { }
     }
 }

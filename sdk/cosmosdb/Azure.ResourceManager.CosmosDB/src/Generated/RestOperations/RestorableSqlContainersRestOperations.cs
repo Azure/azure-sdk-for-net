@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.CosmosDB
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateGetAllRequest(string location, string instanceId, string restorableSqlDatabaseRid, string startTime, string endTime)
+        internal HttpMessage CreateListRequest(string location, string instanceId, string restorableSqlDatabaseRid, string startTime, string endTime)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="endTime"> The snapshot create timestamp before which snapshots need to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="instanceId"/> is null. </exception>
-        public async Task<Response<RestorableSqlContainersList>> GetAllAsync(string location, string instanceId, string restorableSqlDatabaseRid = null, string startTime = null, string endTime = null, CancellationToken cancellationToken = default)
+        public async Task<Response<RestorableSqlContainersList>> ListAsync(string location, string instanceId, string restorableSqlDatabaseRid = null, string startTime = null, string endTime = null, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(instanceId));
             }
 
-            using var message = CreateGetAllRequest(location, instanceId, restorableSqlDatabaseRid, startTime, endTime);
+            using var message = CreateListRequest(location, instanceId, restorableSqlDatabaseRid, startTime, endTime);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="endTime"> The snapshot create timestamp before which snapshots need to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="instanceId"/> is null. </exception>
-        public Response<RestorableSqlContainersList> GetAll(string location, string instanceId, string restorableSqlDatabaseRid = null, string startTime = null, string endTime = null, CancellationToken cancellationToken = default)
+        public Response<RestorableSqlContainersList> List(string location, string instanceId, string restorableSqlDatabaseRid = null, string startTime = null, string endTime = null, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(instanceId));
             }
 
-            using var message = CreateGetAllRequest(location, instanceId, restorableSqlDatabaseRid, startTime, endTime);
+            using var message = CreateListRequest(location, instanceId, restorableSqlDatabaseRid, startTime, endTime);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

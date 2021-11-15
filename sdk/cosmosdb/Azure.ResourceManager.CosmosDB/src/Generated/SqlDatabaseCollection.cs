@@ -20,11 +20,12 @@ using Azure.ResourceManager.CosmosDB.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    /// <summary> A class representing collection of SqlDatabase and their operations over a DatabaseAccount. </summary>
+    /// <summary> A class representing collection of SqlDatabase and their operations over its parent. </summary>
     public partial class SqlDatabaseCollection : ArmCollection, IEnumerable<SqlDatabase>, IAsyncEnumerable<SqlDatabase>
+
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly SqlDatabasesRestOperations _restClient;
+        private readonly SqlResourcesRestOperations _sqlResourcesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SqlDatabaseCollection"/> class for mocking. </summary>
         protected SqlDatabaseCollection()
@@ -36,22 +37,7 @@ namespace Azure.ResourceManager.CosmosDB
         internal SqlDatabaseCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new SqlDatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-        }
-
-        IEnumerator<SqlDatabase> IEnumerable<SqlDatabase>.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IAsyncEnumerator<SqlDatabase> IAsyncEnumerable<SqlDatabase>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            _sqlResourcesRestClient = new SqlResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -65,7 +51,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> or <paramref name="createUpdateSqlDatabaseParameters"/> is null. </exception>
-        public virtual SqlDatabaseCreateUpdateSqlDatabaseOperation CreateOrUpdate(string databaseName, SqlDatabaseCreateUpdateParameters createUpdateSqlDatabaseParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual SqlResourceCreateUpdateSqlDatabaseOperation CreateOrUpdate(string databaseName, SqlDatabaseCreateUpdateParameters createUpdateSqlDatabaseParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (databaseName == null)
             {
@@ -80,8 +66,8 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = _restClient.CreateUpdateSqlDatabase(Id.ResourceGroupName, Id.Name, databaseName, createUpdateSqlDatabaseParameters, cancellationToken);
-                var operation = new SqlDatabaseCreateUpdateSqlDatabaseOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateUpdateSqlDatabaseRequest(Id.ResourceGroupName, Id.Name, databaseName, createUpdateSqlDatabaseParameters).Request, response);
+                var response = _sqlResourcesRestClient.CreateUpdateSqlDatabase(Id.ResourceGroupName, Id.Name, databaseName, createUpdateSqlDatabaseParameters, cancellationToken);
+                var operation = new SqlResourceCreateUpdateSqlDatabaseOperation(Parent, _clientDiagnostics, Pipeline, _sqlResourcesRestClient.CreateCreateUpdateSqlDatabaseRequest(Id.ResourceGroupName, Id.Name, databaseName, createUpdateSqlDatabaseParameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -99,7 +85,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> or <paramref name="createUpdateSqlDatabaseParameters"/> is null. </exception>
-        public async virtual Task<SqlDatabaseCreateUpdateSqlDatabaseOperation> CreateOrUpdateAsync(string databaseName, SqlDatabaseCreateUpdateParameters createUpdateSqlDatabaseParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<SqlResourceCreateUpdateSqlDatabaseOperation> CreateOrUpdateAsync(string databaseName, SqlDatabaseCreateUpdateParameters createUpdateSqlDatabaseParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (databaseName == null)
             {
@@ -114,8 +100,8 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = await _restClient.CreateUpdateSqlDatabaseAsync(Id.ResourceGroupName, Id.Name, databaseName, createUpdateSqlDatabaseParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlDatabaseCreateUpdateSqlDatabaseOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateUpdateSqlDatabaseRequest(Id.ResourceGroupName, Id.Name, databaseName, createUpdateSqlDatabaseParameters).Request, response);
+                var response = await _sqlResourcesRestClient.CreateUpdateSqlDatabaseAsync(Id.ResourceGroupName, Id.Name, databaseName, createUpdateSqlDatabaseParameters, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlResourceCreateUpdateSqlDatabaseOperation(Parent, _clientDiagnostics, Pipeline, _sqlResourcesRestClient.CreateCreateUpdateSqlDatabaseRequest(Id.ResourceGroupName, Id.Name, databaseName, createUpdateSqlDatabaseParameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -127,21 +113,22 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Gets the SQL database under an existing Azure Cosmos DB database account with the provided name. </summary>
         /// <param name="databaseName"> Cosmos DB database name. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
         public virtual Response<SqlDatabase> Get(string databaseName, CancellationToken cancellationToken = default)
         {
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("SqlDatabaseCollection.Get");
             scope.Start();
             try
             {
-                if (databaseName == null)
-                {
-                    throw new ArgumentNullException(nameof(databaseName));
-                }
-
-                var response = _restClient.GetSqlDatabase(Id.ResourceGroupName, Id.Name, databaseName, cancellationToken: cancellationToken);
+                var response = _sqlResourcesRestClient.GetSqlDatabase(Id.ResourceGroupName, Id.Name, databaseName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SqlDatabase(Parent, response.Value), response.GetRawResponse());
@@ -153,21 +140,22 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Gets the SQL database under an existing Azure Cosmos DB database account with the provided name. </summary>
         /// <param name="databaseName"> Cosmos DB database name. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
         public async virtual Task<Response<SqlDatabase>> GetAsync(string databaseName, CancellationToken cancellationToken = default)
         {
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("SqlDatabaseCollection.Get");
             scope.Start();
             try
             {
-                if (databaseName == null)
-                {
-                    throw new ArgumentNullException(nameof(databaseName));
-                }
-
-                var response = await _restClient.GetSqlDatabaseAsync(Id.ResourceGroupName, Id.Name, databaseName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _sqlResourcesRestClient.GetSqlDatabaseAsync(Id.ResourceGroupName, Id.Name, databaseName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new SqlDatabase(Parent, response.Value), response.GetRawResponse());
@@ -181,19 +169,20 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="databaseName"> Cosmos DB database name. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
         public virtual Response<SqlDatabase> GetIfExists(string databaseName, CancellationToken cancellationToken = default)
         {
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("SqlDatabaseCollection.GetIfExists");
             scope.Start();
             try
             {
-                if (databaseName == null)
-                {
-                    throw new ArgumentNullException(nameof(databaseName));
-                }
-
-                var response = _restClient.GetSqlDatabase(Id.ResourceGroupName, Id.Name, databaseName, cancellationToken: cancellationToken);
+                var response = _sqlResourcesRestClient.GetSqlDatabase(Id.ResourceGroupName, Id.Name, databaseName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<SqlDatabase>(null, response.GetRawResponse())
                     : Response.FromValue(new SqlDatabase(this, response.Value), response.GetRawResponse());
@@ -207,19 +196,20 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="databaseName"> Cosmos DB database name. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
         public async virtual Task<Response<SqlDatabase>> GetIfExistsAsync(string databaseName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SqlDatabaseCollection.GetIfExists");
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("SqlDatabaseCollection.GetIfExistsAsync");
             scope.Start();
             try
             {
-                if (databaseName == null)
-                {
-                    throw new ArgumentNullException(nameof(databaseName));
-                }
-
-                var response = await _restClient.GetSqlDatabaseAsync(Id.ResourceGroupName, Id.Name, databaseName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _sqlResourcesRestClient.GetSqlDatabaseAsync(Id.ResourceGroupName, Id.Name, databaseName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<SqlDatabase>(null, response.GetRawResponse())
                     : Response.FromValue(new SqlDatabase(this, response.Value), response.GetRawResponse());
@@ -233,18 +223,19 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="databaseName"> Cosmos DB database name. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
         public virtual Response<bool> CheckIfExists(string databaseName, CancellationToken cancellationToken = default)
         {
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("SqlDatabaseCollection.CheckIfExists");
             scope.Start();
             try
             {
-                if (databaseName == null)
-                {
-                    throw new ArgumentNullException(nameof(databaseName));
-                }
-
                 var response = GetIfExists(databaseName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -257,18 +248,19 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="databaseName"> Cosmos DB database name. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(string databaseName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SqlDatabaseCollection.CheckIfExists");
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("SqlDatabaseCollection.CheckIfExistsAsync");
             scope.Start();
             try
             {
-                if (databaseName == null)
-                {
-                    throw new ArgumentNullException(nameof(databaseName));
-                }
-
                 var response = await GetIfExistsAsync(databaseName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -290,7 +282,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetSqlDatabases(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _sqlResourcesRestClient.ListSqlDatabases(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new SqlDatabase(Parent, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -313,7 +305,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetSqlDatabasesAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _sqlResourcesRestClient.ListSqlDatabasesAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new SqlDatabase(Parent, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -325,7 +317,22 @@ namespace Azure.ResourceManager.CosmosDB
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
+        IEnumerator<SqlDatabase> IEnumerable<SqlDatabase>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<SqlDatabase> IAsyncEnumerable<SqlDatabase>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
+
         // Builders.
-        // public ArmBuilder<ResourceIdentifier, SqlDatabase, SqlDatabaseData> Construct() { }
+        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, SqlDatabase, SqlDatabaseData> Construct() { }
     }
 }

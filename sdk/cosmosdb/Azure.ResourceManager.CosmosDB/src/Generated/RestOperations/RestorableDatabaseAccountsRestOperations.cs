@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.CosmosDB
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateGetAllByLocationRequest(string location)
+        internal HttpMessage CreateListByLocationRequest(string location)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -67,14 +67,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="location"> Cosmos DB region, with spaces between words and each word capitalized. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public async Task<Response<RestorableDatabaseAccountsList>> GetAllByLocationAsync(string location, CancellationToken cancellationToken = default)
+        public async Task<Response<RestorableDatabaseAccountsList>> ListByLocationAsync(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
             }
 
-            using var message = CreateGetAllByLocationRequest(location);
+            using var message = CreateListByLocationRequest(location);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -94,14 +94,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="location"> Cosmos DB region, with spaces between words and each word capitalized. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public Response<RestorableDatabaseAccountsList> GetAllByLocation(string location, CancellationToken cancellationToken = default)
+        public Response<RestorableDatabaseAccountsList> ListByLocation(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
             }
 
-            using var message = CreateGetAllByLocationRequest(location);
+            using var message = CreateListByLocationRequest(location);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateGetAllRequest()
+        internal HttpMessage CreateListRequest()
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -136,9 +136,9 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> Lists all the restorable Azure Cosmos DB database accounts available under the subscription. This call requires &apos;Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read&apos; permission. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<RestorableDatabaseAccountsList>> GetAllAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<RestorableDatabaseAccountsList>> ListAsync(CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetAllRequest();
+            using var message = CreateListRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -156,9 +156,9 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> Lists all the restorable Azure Cosmos DB database accounts available under the subscription. This call requires &apos;Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read&apos; permission. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<RestorableDatabaseAccountsList> GetAll(CancellationToken cancellationToken = default)
+        public Response<RestorableDatabaseAccountsList> List(CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetAllRequest();
+            using var message = CreateListRequest();
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

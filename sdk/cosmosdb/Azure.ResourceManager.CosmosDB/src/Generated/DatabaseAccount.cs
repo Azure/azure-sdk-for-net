@@ -23,7 +23,18 @@ namespace Azure.ResourceManager.CosmosDB
     public partial class DatabaseAccount : ArmResource
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly DatabaseAccountsRestOperations _restClient;
+        private readonly DatabaseAccountsRestOperations _databaseAccountsRestClient;
+        private readonly DatabaseRestOperations _databaseRestClient;
+        private readonly CollectionRestOperations _collectionRestClient;
+        private readonly CollectionRegionRestOperations _collectionRegionRestClient;
+        private readonly DatabaseAccountRegionRestOperations _databaseAccountRegionRestClient;
+        private readonly PercentileSourceTargetRestOperations _percentileSourceTargetRestClient;
+        private readonly PercentileTargetRestOperations _percentileTargetRestClient;
+        private readonly PercentileRestOperations _percentileRestClient;
+        private readonly CollectionPartitionRegionRestOperations _collectionPartitionRegionRestClient;
+        private readonly CollectionPartitionRestOperations _collectionPartitionRestClient;
+        private readonly PartitionKeyRangeIdRestOperations _partitionKeyRangeIdRestClient;
+        private readonly PartitionKeyRangeIdRegionRestOperations _partitionKeyRangeIdRegionRestClient;
         private readonly DatabaseAccountData _data;
 
         /// <summary> Initializes a new instance of the <see cref="DatabaseAccount"/> class for mocking. </summary>
@@ -39,7 +50,18 @@ namespace Azure.ResourceManager.CosmosDB
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new DatabaseAccountsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _databaseAccountsRestClient = new DatabaseAccountsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _databaseRestClient = new DatabaseRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _collectionRestClient = new CollectionRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _collectionRegionRestClient = new CollectionRegionRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _databaseAccountRegionRestClient = new DatabaseAccountRegionRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _percentileSourceTargetRestClient = new PercentileSourceTargetRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _percentileTargetRestClient = new PercentileTargetRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _percentileRestClient = new PercentileRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _collectionPartitionRegionRestClient = new CollectionPartitionRegionRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _collectionPartitionRestClient = new CollectionPartitionRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _partitionKeyRangeIdRestClient = new PartitionKeyRangeIdRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _partitionKeyRangeIdRegionRestClient = new PartitionKeyRangeIdRegionRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="DatabaseAccount"/> class. </summary>
@@ -48,7 +70,18 @@ namespace Azure.ResourceManager.CosmosDB
         internal DatabaseAccount(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new DatabaseAccountsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _databaseAccountsRestClient = new DatabaseAccountsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _databaseRestClient = new DatabaseRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _collectionRestClient = new CollectionRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _collectionRegionRestClient = new CollectionRegionRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _databaseAccountRegionRestClient = new DatabaseAccountRegionRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _percentileSourceTargetRestClient = new PercentileSourceTargetRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _percentileTargetRestClient = new PercentileTargetRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _percentileRestClient = new PercentileRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _collectionPartitionRegionRestClient = new CollectionPartitionRegionRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _collectionPartitionRestClient = new CollectionPartitionRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _partitionKeyRangeIdRestClient = new PartitionKeyRangeIdRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _partitionKeyRangeIdRegionRestClient = new PartitionKeyRangeIdRegionRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="DatabaseAccount"/> class. </summary>
@@ -60,7 +93,18 @@ namespace Azure.ResourceManager.CosmosDB
         internal DatabaseAccount(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new DatabaseAccountsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _databaseAccountsRestClient = new DatabaseAccountsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _databaseRestClient = new DatabaseRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _collectionRestClient = new CollectionRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _collectionRegionRestClient = new CollectionRegionRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _databaseAccountRegionRestClient = new DatabaseAccountRegionRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _percentileSourceTargetRestClient = new PercentileSourceTargetRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _percentileTargetRestClient = new PercentileTargetRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _percentileRestClient = new PercentileRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _collectionPartitionRegionRestClient = new CollectionPartitionRegionRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _collectionPartitionRestClient = new CollectionPartitionRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _partitionKeyRangeIdRestClient = new PartitionKeyRangeIdRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _partitionKeyRangeIdRegionRestClient = new PartitionKeyRangeIdRegionRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -92,7 +136,7 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _databaseAccountsRestClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new DatabaseAccount(this, response.Value), response.GetRawResponse());
@@ -112,7 +156,7 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _databaseAccountsRestClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DatabaseAccount(this, response.Value), response.GetRawResponse());
@@ -149,8 +193,8 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DatabaseAccountDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = await _databaseAccountsRestClient.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new DatabaseAccountDeleteOperation(_clientDiagnostics, Pipeline, _databaseAccountsRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -171,8 +215,8 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = _restClient.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new DatabaseAccountDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = _databaseAccountsRestClient.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new DatabaseAccountDeleteOperation(_clientDiagnostics, Pipeline, _databaseAccountsRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -203,7 +247,7 @@ namespace Azure.ResourceManager.CosmosDB
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
                 await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _databaseAccountsRestClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new DatabaseAccount(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -232,7 +276,7 @@ namespace Azure.ResourceManager.CosmosDB
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
                 TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _restClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var originalResponse = _databaseAccountsRestClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new DatabaseAccount(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -261,7 +305,7 @@ namespace Azure.ResourceManager.CosmosDB
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
                 await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _databaseAccountsRestClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new DatabaseAccount(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -290,7 +334,7 @@ namespace Azure.ResourceManager.CosmosDB
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
                 TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _restClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var originalResponse = _databaseAccountsRestClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new DatabaseAccount(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -318,7 +362,7 @@ namespace Azure.ResourceManager.CosmosDB
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
                 await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _databaseAccountsRestClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new DatabaseAccount(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -346,7 +390,7 @@ namespace Azure.ResourceManager.CosmosDB
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
                 TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _restClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var originalResponse = _databaseAccountsRestClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new DatabaseAccount(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -354,291 +398,6 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Failed(e);
                 throw;
             }
-        }
-        /// <summary> Lists the access keys for the specified Azure Cosmos DB database account. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DatabaseAccountKeyList>> GetKeysAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.GetKeys");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.GetKeysAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists the access keys for the specified Azure Cosmos DB database account. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DatabaseAccountKeyList> GetKeys(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.GetKeys");
-            scope.Start();
-            try
-            {
-                var response = _restClient.GetKeys(Id.ResourceGroupName, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists the connection strings for the specified Azure Cosmos DB database account. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DatabaseAccountConnectionStringList>> GetConnectionStringsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.GetConnectionStrings");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.GetConnectionStringsAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists the connection strings for the specified Azure Cosmos DB database account. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DatabaseAccountConnectionStringList> GetConnectionStrings(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.GetConnectionStrings");
-            scope.Start();
-            try
-            {
-                var response = _restClient.GetConnectionStrings(Id.ResourceGroupName, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists the read-only access keys for the specified Azure Cosmos DB database account. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DatabaseAccountReadOnlyKeyList>> GetReadOnlyKeysAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.GetReadOnlyKeys");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.GetReadOnlyKeysAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists the read-only access keys for the specified Azure Cosmos DB database account. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DatabaseAccountReadOnlyKeyList> GetReadOnlyKeys(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.GetReadOnlyKeys");
-            scope.Start();
-            try
-            {
-                var response = _restClient.GetReadOnlyKeys(Id.ResourceGroupName, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Checks that the Azure Cosmos DB account name already exists. A valid account name may contain only lowercase letters, numbers, and the &apos;-&apos; character, and must be between 3 and 50 characters. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<bool>> CheckNameExistsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.CheckNameExists");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.CheckNameExistsAsync(Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Checks that the Azure Cosmos DB account name already exists. A valid account name may contain only lowercase letters, numbers, and the &apos;-&apos; character, and must be between 3 and 50 characters. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> CheckNameExists(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.CheckNameExists");
-            scope.Start();
-            try
-            {
-                var response = _restClient.CheckNameExists(Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Retrieves the metrics determined by the given filter for the given database account. </summary>
-        /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Metric" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Metric> GetMetrics(string filter, CancellationToken cancellationToken = default)
-        {
-            Page<Metric> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.GetMetrics");
-                scope.Start();
-                try
-                {
-                    var response = _restClient.GetMetrics(Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
-        }
-
-        /// <summary> Retrieves the metrics determined by the given filter for the given database account. </summary>
-        /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Metric" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Metric> GetMetricsAsync(string filter, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<Metric>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.GetMetrics");
-                scope.Start();
-                try
-                {
-                    var response = await _restClient.GetMetricsAsync(Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
-        }
-
-        /// <summary> Retrieves the usages (most recent data) for the given database account. </summary>
-        /// <param name="filter"> An OData filter expression that describes a subset of usages to return. The supported parameter is name.value (name of the metric, can have an or of multiple names). </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Usage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Usage> GetUsages(string filter = null, CancellationToken cancellationToken = default)
-        {
-            Page<Usage> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.GetUsages");
-                scope.Start();
-                try
-                {
-                    var response = _restClient.GetUsages(Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
-        }
-
-        /// <summary> Retrieves the usages (most recent data) for the given database account. </summary>
-        /// <param name="filter"> An OData filter expression that describes a subset of usages to return. The supported parameter is name.value (name of the metric, can have an or of multiple names). </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Usage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Usage> GetUsagesAsync(string filter = null, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<Usage>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.GetUsages");
-                scope.Start();
-                try
-                {
-                    var response = await _restClient.GetUsagesAsync(Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
-        }
-
-        /// <summary> Retrieves metric definitions for the given database account. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MetricDefinition" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MetricDefinition> GetMetricDefinitions(CancellationToken cancellationToken = default)
-        {
-            Page<MetricDefinition> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.GetMetricDefinitions");
-                scope.Start();
-                try
-                {
-                    var response = _restClient.GetMetricDefinitions(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
-        }
-
-        /// <summary> Retrieves metric definitions for the given database account. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MetricDefinition" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MetricDefinition> GetMetricDefinitionsAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<MetricDefinition>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.GetMetricDefinitions");
-                scope.Start();
-                try
-                {
-                    var response = await _restClient.GetMetricDefinitionsAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
         /// <summary> Updates the properties of an existing Azure Cosmos DB database account. </summary>
@@ -657,8 +416,8 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = await _restClient.UpdateAsync(Id.ResourceGroupName, Id.Name, updateParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new DatabaseAccountUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, updateParameters).Request, response);
+                var response = await _databaseAccountsRestClient.UpdateAsync(Id.ResourceGroupName, Id.Name, updateParameters, cancellationToken).ConfigureAwait(false);
+                var operation = new DatabaseAccountUpdateOperation(this, _clientDiagnostics, Pipeline, _databaseAccountsRestClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, updateParameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -686,8 +445,8 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = _restClient.Update(Id.ResourceGroupName, Id.Name, updateParameters, cancellationToken);
-                var operation = new DatabaseAccountUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, updateParameters).Request, response);
+                var response = _databaseAccountsRestClient.Update(Id.ResourceGroupName, Id.Name, updateParameters, cancellationToken);
+                var operation = new DatabaseAccountUpdateOperation(this, _clientDiagnostics, Pipeline, _databaseAccountsRestClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, updateParameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -715,8 +474,8 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = await _restClient.FailoverPriorityChangeAsync(Id.ResourceGroupName, Id.Name, failoverParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new DatabaseAccountFailoverPriorityChangeOperation(_clientDiagnostics, Pipeline, _restClient.CreateFailoverPriorityChangeRequest(Id.ResourceGroupName, Id.Name, failoverParameters).Request, response);
+                var response = await _databaseAccountsRestClient.FailoverPriorityChangeAsync(Id.ResourceGroupName, Id.Name, failoverParameters, cancellationToken).ConfigureAwait(false);
+                var operation = new DatabaseAccountFailoverPriorityChangeOperation(_clientDiagnostics, Pipeline, _databaseAccountsRestClient.CreateFailoverPriorityChangeRequest(Id.ResourceGroupName, Id.Name, failoverParameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -744,11 +503,83 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = _restClient.FailoverPriorityChange(Id.ResourceGroupName, Id.Name, failoverParameters, cancellationToken);
-                var operation = new DatabaseAccountFailoverPriorityChangeOperation(_clientDiagnostics, Pipeline, _restClient.CreateFailoverPriorityChangeRequest(Id.ResourceGroupName, Id.Name, failoverParameters).Request, response);
+                var response = _databaseAccountsRestClient.FailoverPriorityChange(Id.ResourceGroupName, Id.Name, failoverParameters, cancellationToken);
+                var operation = new DatabaseAccountFailoverPriorityChangeOperation(_clientDiagnostics, Pipeline, _databaseAccountsRestClient.CreateFailoverPriorityChangeRequest(Id.ResourceGroupName, Id.Name, failoverParameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Lists the access keys for the specified Azure Cosmos DB database account. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response<DatabaseAccountKeyList>> GetKeysAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.GetKeys");
+            scope.Start();
+            try
+            {
+                var response = await _databaseAccountsRestClient.ListKeysAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Lists the access keys for the specified Azure Cosmos DB database account. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<DatabaseAccountKeyList> GetKeys(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.GetKeys");
+            scope.Start();
+            try
+            {
+                var response = _databaseAccountsRestClient.ListKeys(Id.ResourceGroupName, Id.Name, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Lists the connection strings for the specified Azure Cosmos DB database account. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response<DatabaseAccountConnectionStringList>> GetConnectionStringsAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.GetConnectionStrings");
+            scope.Start();
+            try
+            {
+                var response = await _databaseAccountsRestClient.ListConnectionStringsAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Lists the connection strings for the specified Azure Cosmos DB database account. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<DatabaseAccountConnectionStringList> GetConnectionStrings(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.GetConnectionStrings");
+            scope.Start();
+            try
+            {
+                var response = _databaseAccountsRestClient.ListConnectionStrings(Id.ResourceGroupName, Id.Name, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {
@@ -773,8 +604,8 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = await _restClient.OfflineRegionAsync(Id.ResourceGroupName, Id.Name, regionParameterForOffline, cancellationToken).ConfigureAwait(false);
-                var operation = new DatabaseAccountOfflineRegionOperation(_clientDiagnostics, Pipeline, _restClient.CreateOfflineRegionRequest(Id.ResourceGroupName, Id.Name, regionParameterForOffline).Request, response);
+                var response = await _databaseAccountsRestClient.OfflineRegionAsync(Id.ResourceGroupName, Id.Name, regionParameterForOffline, cancellationToken).ConfigureAwait(false);
+                var operation = new DatabaseAccountOfflineRegionOperation(_clientDiagnostics, Pipeline, _databaseAccountsRestClient.CreateOfflineRegionRequest(Id.ResourceGroupName, Id.Name, regionParameterForOffline).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -802,8 +633,8 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = _restClient.OfflineRegion(Id.ResourceGroupName, Id.Name, regionParameterForOffline, cancellationToken);
-                var operation = new DatabaseAccountOfflineRegionOperation(_clientDiagnostics, Pipeline, _restClient.CreateOfflineRegionRequest(Id.ResourceGroupName, Id.Name, regionParameterForOffline).Request, response);
+                var response = _databaseAccountsRestClient.OfflineRegion(Id.ResourceGroupName, Id.Name, regionParameterForOffline, cancellationToken);
+                var operation = new DatabaseAccountOfflineRegionOperation(_clientDiagnostics, Pipeline, _databaseAccountsRestClient.CreateOfflineRegionRequest(Id.ResourceGroupName, Id.Name, regionParameterForOffline).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -831,8 +662,8 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = await _restClient.OnlineRegionAsync(Id.ResourceGroupName, Id.Name, regionParameterForOnline, cancellationToken).ConfigureAwait(false);
-                var operation = new DatabaseAccountOnlineRegionOperation(_clientDiagnostics, Pipeline, _restClient.CreateOnlineRegionRequest(Id.ResourceGroupName, Id.Name, regionParameterForOnline).Request, response);
+                var response = await _databaseAccountsRestClient.OnlineRegionAsync(Id.ResourceGroupName, Id.Name, regionParameterForOnline, cancellationToken).ConfigureAwait(false);
+                var operation = new DatabaseAccountOnlineRegionOperation(_clientDiagnostics, Pipeline, _databaseAccountsRestClient.CreateOnlineRegionRequest(Id.ResourceGroupName, Id.Name, regionParameterForOnline).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -860,11 +691,47 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = _restClient.OnlineRegion(Id.ResourceGroupName, Id.Name, regionParameterForOnline, cancellationToken);
-                var operation = new DatabaseAccountOnlineRegionOperation(_clientDiagnostics, Pipeline, _restClient.CreateOnlineRegionRequest(Id.ResourceGroupName, Id.Name, regionParameterForOnline).Request, response);
+                var response = _databaseAccountsRestClient.OnlineRegion(Id.ResourceGroupName, Id.Name, regionParameterForOnline, cancellationToken);
+                var operation = new DatabaseAccountOnlineRegionOperation(_clientDiagnostics, Pipeline, _databaseAccountsRestClient.CreateOnlineRegionRequest(Id.ResourceGroupName, Id.Name, regionParameterForOnline).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Lists the read-only access keys for the specified Azure Cosmos DB database account. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response<DatabaseAccountReadOnlyKeyList>> GetReadOnlyKeysAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.GetReadOnlyKeys");
+            scope.Start();
+            try
+            {
+                var response = await _databaseAccountsRestClient.ListReadOnlyKeysAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Lists the read-only access keys for the specified Azure Cosmos DB database account. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<DatabaseAccountReadOnlyKeyList> GetReadOnlyKeys(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.GetReadOnlyKeys");
+            scope.Start();
+            try
+            {
+                var response = _databaseAccountsRestClient.ListReadOnlyKeys(Id.ResourceGroupName, Id.Name, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {
@@ -889,8 +756,8 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = await _restClient.RegenerateKeyAsync(Id.ResourceGroupName, Id.Name, keyToRegenerate, cancellationToken).ConfigureAwait(false);
-                var operation = new DatabaseAccountRegenerateKeyOperation(_clientDiagnostics, Pipeline, _restClient.CreateRegenerateKeyRequest(Id.ResourceGroupName, Id.Name, keyToRegenerate).Request, response);
+                var response = await _databaseAccountsRestClient.RegenerateKeyAsync(Id.ResourceGroupName, Id.Name, keyToRegenerate, cancellationToken).ConfigureAwait(false);
+                var operation = new DatabaseAccountRegenerateKeyOperation(_clientDiagnostics, Pipeline, _databaseAccountsRestClient.CreateRegenerateKeyRequest(Id.ResourceGroupName, Id.Name, keyToRegenerate).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -918,8 +785,8 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = _restClient.RegenerateKey(Id.ResourceGroupName, Id.Name, keyToRegenerate, cancellationToken);
-                var operation = new DatabaseAccountRegenerateKeyOperation(_clientDiagnostics, Pipeline, _restClient.CreateRegenerateKeyRequest(Id.ResourceGroupName, Id.Name, keyToRegenerate).Request, response);
+                var response = _databaseAccountsRestClient.RegenerateKey(Id.ResourceGroupName, Id.Name, keyToRegenerate, cancellationToken);
+                var operation = new DatabaseAccountRegenerateKeyOperation(_clientDiagnostics, Pipeline, _databaseAccountsRestClient.CreateRegenerateKeyRequest(Id.ResourceGroupName, Id.Name, keyToRegenerate).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -931,53 +798,1410 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Gets a list of SqlDatabases in the DatabaseAccount. </summary>
+        /// <summary> Retrieves the metrics determined by the given filter for the given database account. </summary>
+        /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="Metric" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<Metric> GetMetricsAsync(string filter, CancellationToken cancellationToken = default)
+        {
+            if (filter == null)
+            {
+                throw new ArgumentNullException(nameof(filter));
+            }
+
+            async Task<Page<Metric>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.GetMetrics");
+                scope.Start();
+                try
+                {
+                    var response = await _databaseAccountsRestClient.ListMetricsAsync(Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary> Retrieves the metrics determined by the given filter for the given database account. </summary>
+        /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="Metric" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<Metric> GetMetrics(string filter, CancellationToken cancellationToken = default)
+        {
+            if (filter == null)
+            {
+                throw new ArgumentNullException(nameof(filter));
+            }
+
+            Page<Metric> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.GetMetrics");
+                scope.Start();
+                try
+                {
+                    var response = _databaseAccountsRestClient.ListMetrics(Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary> Retrieves the usages (most recent data) for the given database account. </summary>
+        /// <param name="filter"> An OData filter expression that describes a subset of usages to return. The supported parameter is name.value (name of the metric, can have an or of multiple names). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="Usage" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<Usage> GetUsagesAsync(string filter = null, CancellationToken cancellationToken = default)
+        {
+            async Task<Page<Usage>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.GetUsages");
+                scope.Start();
+                try
+                {
+                    var response = await _databaseAccountsRestClient.ListUsagesAsync(Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary> Retrieves the usages (most recent data) for the given database account. </summary>
+        /// <param name="filter"> An OData filter expression that describes a subset of usages to return. The supported parameter is name.value (name of the metric, can have an or of multiple names). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="Usage" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<Usage> GetUsages(string filter = null, CancellationToken cancellationToken = default)
+        {
+            Page<Usage> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.GetUsages");
+                scope.Start();
+                try
+                {
+                    var response = _databaseAccountsRestClient.ListUsages(Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary> Retrieves metric definitions for the given database account. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="MetricDefinition" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MetricDefinition> GetMetricDefinitionsAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<MetricDefinition>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.GetMetricDefinitions");
+                scope.Start();
+                try
+                {
+                    var response = await _databaseAccountsRestClient.ListMetricDefinitionsAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary> Retrieves metric definitions for the given database account. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="MetricDefinition" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MetricDefinition> GetMetricDefinitions(CancellationToken cancellationToken = default)
+        {
+            Page<MetricDefinition> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.GetMetricDefinitions");
+                scope.Start();
+                try
+                {
+                    var response = _databaseAccountsRestClient.ListMetricDefinitions(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary> Retrieves the metrics determined by the given filter for the given database account and database. </summary>
+        /// <param name="databaseRid"> Cosmos DB database rid. </param>
+        /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="Metric" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<Metric> GetMetricsDatabasesAsync(string databaseRid, string filter, CancellationToken cancellationToken = default)
+        {
+            if (databaseRid == null)
+            {
+                throw new ArgumentNullException(nameof(databaseRid));
+            }
+            if (filter == null)
+            {
+                throw new ArgumentNullException(nameof(filter));
+            }
+
+            async Task<Page<Metric>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.GetMetricsDatabases");
+                scope.Start();
+                try
+                {
+                    var response = await _databaseRestClient.ListMetricsAsync(Id.ResourceGroupName, Id.Name, databaseRid, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary> Retrieves the metrics determined by the given filter for the given database account and database. </summary>
+        /// <param name="databaseRid"> Cosmos DB database rid. </param>
+        /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="Metric" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<Metric> GetMetricsDatabases(string databaseRid, string filter, CancellationToken cancellationToken = default)
+        {
+            if (databaseRid == null)
+            {
+                throw new ArgumentNullException(nameof(databaseRid));
+            }
+            if (filter == null)
+            {
+                throw new ArgumentNullException(nameof(filter));
+            }
+
+            Page<Metric> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.GetMetricsDatabases");
+                scope.Start();
+                try
+                {
+                    var response = _databaseRestClient.ListMetrics(Id.ResourceGroupName, Id.Name, databaseRid, filter, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary> Retrieves the usages (most recent data) for the given database. </summary>
+        /// <param name="databaseRid"> Cosmos DB database rid. </param>
+        /// <param name="filter"> An OData filter expression that describes a subset of usages to return. The supported parameter is name.value (name of the metric, can have an or of multiple names). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="Usage" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<Usage> GetUsagesDatabasesAsync(string databaseRid, string filter = null, CancellationToken cancellationToken = default)
+        {
+            if (databaseRid == null)
+            {
+                throw new ArgumentNullException(nameof(databaseRid));
+            }
+
+            async Task<Page<Usage>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.GetUsagesDatabases");
+                scope.Start();
+                try
+                {
+                    var response = await _databaseRestClient.ListUsagesAsync(Id.ResourceGroupName, Id.Name, databaseRid, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary> Retrieves the usages (most recent data) for the given database. </summary>
+        /// <param name="databaseRid"> Cosmos DB database rid. </param>
+        /// <param name="filter"> An OData filter expression that describes a subset of usages to return. The supported parameter is name.value (name of the metric, can have an or of multiple names). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="Usage" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<Usage> GetUsagesDatabases(string databaseRid, string filter = null, CancellationToken cancellationToken = default)
+        {
+            if (databaseRid == null)
+            {
+                throw new ArgumentNullException(nameof(databaseRid));
+            }
+
+            Page<Usage> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.GetUsagesDatabases");
+                scope.Start();
+                try
+                {
+                    var response = _databaseRestClient.ListUsages(Id.ResourceGroupName, Id.Name, databaseRid, filter, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary> Retrieves metric definitions for the given database. </summary>
+        /// <param name="databaseRid"> Cosmos DB database rid. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="MetricDefinition" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MetricDefinition> GetMetricDefinitionsDatabasesAsync(string databaseRid, CancellationToken cancellationToken = default)
+        {
+            if (databaseRid == null)
+            {
+                throw new ArgumentNullException(nameof(databaseRid));
+            }
+
+            async Task<Page<MetricDefinition>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.GetMetricDefinitionsDatabases");
+                scope.Start();
+                try
+                {
+                    var response = await _databaseRestClient.ListMetricDefinitionsAsync(Id.ResourceGroupName, Id.Name, databaseRid, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary> Retrieves metric definitions for the given database. </summary>
+        /// <param name="databaseRid"> Cosmos DB database rid. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="MetricDefinition" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MetricDefinition> GetMetricDefinitionsDatabases(string databaseRid, CancellationToken cancellationToken = default)
+        {
+            if (databaseRid == null)
+            {
+                throw new ArgumentNullException(nameof(databaseRid));
+            }
+
+            Page<MetricDefinition> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.GetMetricDefinitionsDatabases");
+                scope.Start();
+                try
+                {
+                    var response = _databaseRestClient.ListMetricDefinitions(Id.ResourceGroupName, Id.Name, databaseRid, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary> Retrieves the metrics determined by the given filter for the given database account and collection. </summary>
+        /// <param name="databaseRid"> Cosmos DB database rid. </param>
+        /// <param name="collectionRid"> Cosmos DB collection rid. </param>
+        /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="Metric" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<Metric> GetMetricsCollectionsAsync(string databaseRid, string collectionRid, string filter, CancellationToken cancellationToken = default)
+        {
+            if (databaseRid == null)
+            {
+                throw new ArgumentNullException(nameof(databaseRid));
+            }
+            if (collectionRid == null)
+            {
+                throw new ArgumentNullException(nameof(collectionRid));
+            }
+            if (filter == null)
+            {
+                throw new ArgumentNullException(nameof(filter));
+            }
+
+            async Task<Page<Metric>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.GetMetricsCollections");
+                scope.Start();
+                try
+                {
+                    var response = await _collectionRestClient.ListMetricsAsync(Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary> Retrieves the metrics determined by the given filter for the given database account and collection. </summary>
+        /// <param name="databaseRid"> Cosmos DB database rid. </param>
+        /// <param name="collectionRid"> Cosmos DB collection rid. </param>
+        /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="Metric" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<Metric> GetMetricsCollections(string databaseRid, string collectionRid, string filter, CancellationToken cancellationToken = default)
+        {
+            if (databaseRid == null)
+            {
+                throw new ArgumentNullException(nameof(databaseRid));
+            }
+            if (collectionRid == null)
+            {
+                throw new ArgumentNullException(nameof(collectionRid));
+            }
+            if (filter == null)
+            {
+                throw new ArgumentNullException(nameof(filter));
+            }
+
+            Page<Metric> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.GetMetricsCollections");
+                scope.Start();
+                try
+                {
+                    var response = _collectionRestClient.ListMetrics(Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, filter, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary> Retrieves the usages (most recent storage data) for the given collection. </summary>
+        /// <param name="databaseRid"> Cosmos DB database rid. </param>
+        /// <param name="collectionRid"> Cosmos DB collection rid. </param>
+        /// <param name="filter"> An OData filter expression that describes a subset of usages to return. The supported parameter is name.value (name of the metric, can have an or of multiple names). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="Usage" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<Usage> GetUsagesCollectionsAsync(string databaseRid, string collectionRid, string filter = null, CancellationToken cancellationToken = default)
+        {
+            if (databaseRid == null)
+            {
+                throw new ArgumentNullException(nameof(databaseRid));
+            }
+            if (collectionRid == null)
+            {
+                throw new ArgumentNullException(nameof(collectionRid));
+            }
+
+            async Task<Page<Usage>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.GetUsagesCollections");
+                scope.Start();
+                try
+                {
+                    var response = await _collectionRestClient.ListUsagesAsync(Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary> Retrieves the usages (most recent storage data) for the given collection. </summary>
+        /// <param name="databaseRid"> Cosmos DB database rid. </param>
+        /// <param name="collectionRid"> Cosmos DB collection rid. </param>
+        /// <param name="filter"> An OData filter expression that describes a subset of usages to return. The supported parameter is name.value (name of the metric, can have an or of multiple names). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="Usage" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<Usage> GetUsagesCollections(string databaseRid, string collectionRid, string filter = null, CancellationToken cancellationToken = default)
+        {
+            if (databaseRid == null)
+            {
+                throw new ArgumentNullException(nameof(databaseRid));
+            }
+            if (collectionRid == null)
+            {
+                throw new ArgumentNullException(nameof(collectionRid));
+            }
+
+            Page<Usage> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.GetUsagesCollections");
+                scope.Start();
+                try
+                {
+                    var response = _collectionRestClient.ListUsages(Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, filter, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary> Retrieves metric definitions for the given collection. </summary>
+        /// <param name="databaseRid"> Cosmos DB database rid. </param>
+        /// <param name="collectionRid"> Cosmos DB collection rid. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="MetricDefinition" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MetricDefinition> GetMetricDefinitionsCollectionsAsync(string databaseRid, string collectionRid, CancellationToken cancellationToken = default)
+        {
+            if (databaseRid == null)
+            {
+                throw new ArgumentNullException(nameof(databaseRid));
+            }
+            if (collectionRid == null)
+            {
+                throw new ArgumentNullException(nameof(collectionRid));
+            }
+
+            async Task<Page<MetricDefinition>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.GetMetricDefinitionsCollections");
+                scope.Start();
+                try
+                {
+                    var response = await _collectionRestClient.ListMetricDefinitionsAsync(Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary> Retrieves metric definitions for the given collection. </summary>
+        /// <param name="databaseRid"> Cosmos DB database rid. </param>
+        /// <param name="collectionRid"> Cosmos DB collection rid. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="MetricDefinition" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MetricDefinition> GetMetricDefinitionsCollections(string databaseRid, string collectionRid, CancellationToken cancellationToken = default)
+        {
+            if (databaseRid == null)
+            {
+                throw new ArgumentNullException(nameof(databaseRid));
+            }
+            if (collectionRid == null)
+            {
+                throw new ArgumentNullException(nameof(collectionRid));
+            }
+
+            Page<MetricDefinition> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.GetMetricDefinitionsCollections");
+                scope.Start();
+                try
+                {
+                    var response = _collectionRestClient.ListMetricDefinitions(Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary> Retrieves the metrics determined by the given filter for the given database account, collection and region. </summary>
+        /// <param name="region"> Cosmos DB region, with spaces between words and each word capitalized. </param>
+        /// <param name="databaseRid"> Cosmos DB database rid. </param>
+        /// <param name="collectionRid"> Cosmos DB collection rid. </param>
+        /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="Metric" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<Metric> GetMetricsCollectionRegionsAsync(string region, string databaseRid, string collectionRid, string filter, CancellationToken cancellationToken = default)
+        {
+            if (region == null)
+            {
+                throw new ArgumentNullException(nameof(region));
+            }
+            if (databaseRid == null)
+            {
+                throw new ArgumentNullException(nameof(databaseRid));
+            }
+            if (collectionRid == null)
+            {
+                throw new ArgumentNullException(nameof(collectionRid));
+            }
+            if (filter == null)
+            {
+                throw new ArgumentNullException(nameof(filter));
+            }
+
+            async Task<Page<Metric>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.GetMetricsCollectionRegions");
+                scope.Start();
+                try
+                {
+                    var response = await _collectionRegionRestClient.ListMetricsAsync(Id.ResourceGroupName, Id.Name, region, databaseRid, collectionRid, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary> Retrieves the metrics determined by the given filter for the given database account, collection and region. </summary>
+        /// <param name="region"> Cosmos DB region, with spaces between words and each word capitalized. </param>
+        /// <param name="databaseRid"> Cosmos DB database rid. </param>
+        /// <param name="collectionRid"> Cosmos DB collection rid. </param>
+        /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="Metric" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<Metric> GetMetricsCollectionRegions(string region, string databaseRid, string collectionRid, string filter, CancellationToken cancellationToken = default)
+        {
+            if (region == null)
+            {
+                throw new ArgumentNullException(nameof(region));
+            }
+            if (databaseRid == null)
+            {
+                throw new ArgumentNullException(nameof(databaseRid));
+            }
+            if (collectionRid == null)
+            {
+                throw new ArgumentNullException(nameof(collectionRid));
+            }
+            if (filter == null)
+            {
+                throw new ArgumentNullException(nameof(filter));
+            }
+
+            Page<Metric> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.GetMetricsCollectionRegions");
+                scope.Start();
+                try
+                {
+                    var response = _collectionRegionRestClient.ListMetrics(Id.ResourceGroupName, Id.Name, region, databaseRid, collectionRid, filter, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary> Retrieves the metrics determined by the given filter for the given database account and region. </summary>
+        /// <param name="region"> Cosmos DB region, with spaces between words and each word capitalized. </param>
+        /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="Metric" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<Metric> GetMetricsDatabaseAccountRegionsAsync(string region, string filter, CancellationToken cancellationToken = default)
+        {
+            if (region == null)
+            {
+                throw new ArgumentNullException(nameof(region));
+            }
+            if (filter == null)
+            {
+                throw new ArgumentNullException(nameof(filter));
+            }
+
+            async Task<Page<Metric>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.GetMetricsDatabaseAccountRegions");
+                scope.Start();
+                try
+                {
+                    var response = await _databaseAccountRegionRestClient.ListMetricsAsync(Id.ResourceGroupName, Id.Name, region, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary> Retrieves the metrics determined by the given filter for the given database account and region. </summary>
+        /// <param name="region"> Cosmos DB region, with spaces between words and each word capitalized. </param>
+        /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="Metric" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<Metric> GetMetricsDatabaseAccountRegions(string region, string filter, CancellationToken cancellationToken = default)
+        {
+            if (region == null)
+            {
+                throw new ArgumentNullException(nameof(region));
+            }
+            if (filter == null)
+            {
+                throw new ArgumentNullException(nameof(filter));
+            }
+
+            Page<Metric> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.GetMetricsDatabaseAccountRegions");
+                scope.Start();
+                try
+                {
+                    var response = _databaseAccountRegionRestClient.ListMetrics(Id.ResourceGroupName, Id.Name, region, filter, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary> Retrieves the metrics determined by the given filter for the given account, source and target region. This url is only for PBS and Replication Latency data. </summary>
+        /// <param name="sourceRegion"> Source region from which data is written. Cosmos DB region, with spaces between words and each word capitalized. </param>
+        /// <param name="targetRegion"> Target region to which data is written. Cosmos DB region, with spaces between words and each word capitalized. </param>
+        /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="PercentileMetric" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PercentileMetric> GetMetricsPercentileSourceTargetsAsync(string sourceRegion, string targetRegion, string filter, CancellationToken cancellationToken = default)
+        {
+            if (sourceRegion == null)
+            {
+                throw new ArgumentNullException(nameof(sourceRegion));
+            }
+            if (targetRegion == null)
+            {
+                throw new ArgumentNullException(nameof(targetRegion));
+            }
+            if (filter == null)
+            {
+                throw new ArgumentNullException(nameof(filter));
+            }
+
+            async Task<Page<PercentileMetric>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.GetMetricsPercentileSourceTargets");
+                scope.Start();
+                try
+                {
+                    var response = await _percentileSourceTargetRestClient.ListMetricsAsync(Id.ResourceGroupName, Id.Name, sourceRegion, targetRegion, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary> Retrieves the metrics determined by the given filter for the given account, source and target region. This url is only for PBS and Replication Latency data. </summary>
+        /// <param name="sourceRegion"> Source region from which data is written. Cosmos DB region, with spaces between words and each word capitalized. </param>
+        /// <param name="targetRegion"> Target region to which data is written. Cosmos DB region, with spaces between words and each word capitalized. </param>
+        /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PercentileMetric" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PercentileMetric> GetMetricsPercentileSourceTargets(string sourceRegion, string targetRegion, string filter, CancellationToken cancellationToken = default)
+        {
+            if (sourceRegion == null)
+            {
+                throw new ArgumentNullException(nameof(sourceRegion));
+            }
+            if (targetRegion == null)
+            {
+                throw new ArgumentNullException(nameof(targetRegion));
+            }
+            if (filter == null)
+            {
+                throw new ArgumentNullException(nameof(filter));
+            }
+
+            Page<PercentileMetric> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.GetMetricsPercentileSourceTargets");
+                scope.Start();
+                try
+                {
+                    var response = _percentileSourceTargetRestClient.ListMetrics(Id.ResourceGroupName, Id.Name, sourceRegion, targetRegion, filter, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary> Retrieves the metrics determined by the given filter for the given account target region. This url is only for PBS and Replication Latency data. </summary>
+        /// <param name="targetRegion"> Target region to which data is written. Cosmos DB region, with spaces between words and each word capitalized. </param>
+        /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="PercentileMetric" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PercentileMetric> GetMetricsPercentileTargetsAsync(string targetRegion, string filter, CancellationToken cancellationToken = default)
+        {
+            if (targetRegion == null)
+            {
+                throw new ArgumentNullException(nameof(targetRegion));
+            }
+            if (filter == null)
+            {
+                throw new ArgumentNullException(nameof(filter));
+            }
+
+            async Task<Page<PercentileMetric>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.GetMetricsPercentileTargets");
+                scope.Start();
+                try
+                {
+                    var response = await _percentileTargetRestClient.ListMetricsAsync(Id.ResourceGroupName, Id.Name, targetRegion, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary> Retrieves the metrics determined by the given filter for the given account target region. This url is only for PBS and Replication Latency data. </summary>
+        /// <param name="targetRegion"> Target region to which data is written. Cosmos DB region, with spaces between words and each word capitalized. </param>
+        /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PercentileMetric" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PercentileMetric> GetMetricsPercentileTargets(string targetRegion, string filter, CancellationToken cancellationToken = default)
+        {
+            if (targetRegion == null)
+            {
+                throw new ArgumentNullException(nameof(targetRegion));
+            }
+            if (filter == null)
+            {
+                throw new ArgumentNullException(nameof(filter));
+            }
+
+            Page<PercentileMetric> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.GetMetricsPercentileTargets");
+                scope.Start();
+                try
+                {
+                    var response = _percentileTargetRestClient.ListMetrics(Id.ResourceGroupName, Id.Name, targetRegion, filter, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary> Retrieves the metrics determined by the given filter for the given database account. This url is only for PBS and Replication Latency data. </summary>
+        /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="PercentileMetric" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PercentileMetric> GetMetricsPercentilesAsync(string filter, CancellationToken cancellationToken = default)
+        {
+            if (filter == null)
+            {
+                throw new ArgumentNullException(nameof(filter));
+            }
+
+            async Task<Page<PercentileMetric>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.GetMetricsPercentiles");
+                scope.Start();
+                try
+                {
+                    var response = await _percentileRestClient.ListMetricsAsync(Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary> Retrieves the metrics determined by the given filter for the given database account. This url is only for PBS and Replication Latency data. </summary>
+        /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PercentileMetric" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PercentileMetric> GetMetricsPercentiles(string filter, CancellationToken cancellationToken = default)
+        {
+            if (filter == null)
+            {
+                throw new ArgumentNullException(nameof(filter));
+            }
+
+            Page<PercentileMetric> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.GetMetricsPercentiles");
+                scope.Start();
+                try
+                {
+                    var response = _percentileRestClient.ListMetrics(Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary> Retrieves the metrics determined by the given filter for the given collection and region, split by partition. </summary>
+        /// <param name="region"> Cosmos DB region, with spaces between words and each word capitalized. </param>
+        /// <param name="databaseRid"> Cosmos DB database rid. </param>
+        /// <param name="collectionRid"> Cosmos DB collection rid. </param>
+        /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="PartitionMetric" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PartitionMetric> GetMetricsCollectionPartitionRegionsAsync(string region, string databaseRid, string collectionRid, string filter, CancellationToken cancellationToken = default)
+        {
+            if (region == null)
+            {
+                throw new ArgumentNullException(nameof(region));
+            }
+            if (databaseRid == null)
+            {
+                throw new ArgumentNullException(nameof(databaseRid));
+            }
+            if (collectionRid == null)
+            {
+                throw new ArgumentNullException(nameof(collectionRid));
+            }
+            if (filter == null)
+            {
+                throw new ArgumentNullException(nameof(filter));
+            }
+
+            async Task<Page<PartitionMetric>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.GetMetricsCollectionPartitionRegions");
+                scope.Start();
+                try
+                {
+                    var response = await _collectionPartitionRegionRestClient.ListMetricsAsync(Id.ResourceGroupName, Id.Name, region, databaseRid, collectionRid, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary> Retrieves the metrics determined by the given filter for the given collection and region, split by partition. </summary>
+        /// <param name="region"> Cosmos DB region, with spaces between words and each word capitalized. </param>
+        /// <param name="databaseRid"> Cosmos DB database rid. </param>
+        /// <param name="collectionRid"> Cosmos DB collection rid. </param>
+        /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PartitionMetric" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PartitionMetric> GetMetricsCollectionPartitionRegions(string region, string databaseRid, string collectionRid, string filter, CancellationToken cancellationToken = default)
+        {
+            if (region == null)
+            {
+                throw new ArgumentNullException(nameof(region));
+            }
+            if (databaseRid == null)
+            {
+                throw new ArgumentNullException(nameof(databaseRid));
+            }
+            if (collectionRid == null)
+            {
+                throw new ArgumentNullException(nameof(collectionRid));
+            }
+            if (filter == null)
+            {
+                throw new ArgumentNullException(nameof(filter));
+            }
+
+            Page<PartitionMetric> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.GetMetricsCollectionPartitionRegions");
+                scope.Start();
+                try
+                {
+                    var response = _collectionPartitionRegionRestClient.ListMetrics(Id.ResourceGroupName, Id.Name, region, databaseRid, collectionRid, filter, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary> Retrieves the metrics determined by the given filter for the given collection, split by partition. </summary>
+        /// <param name="databaseRid"> Cosmos DB database rid. </param>
+        /// <param name="collectionRid"> Cosmos DB collection rid. </param>
+        /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="PartitionMetric" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PartitionMetric> GetMetricsCollectionPartitionsAsync(string databaseRid, string collectionRid, string filter, CancellationToken cancellationToken = default)
+        {
+            if (databaseRid == null)
+            {
+                throw new ArgumentNullException(nameof(databaseRid));
+            }
+            if (collectionRid == null)
+            {
+                throw new ArgumentNullException(nameof(collectionRid));
+            }
+            if (filter == null)
+            {
+                throw new ArgumentNullException(nameof(filter));
+            }
+
+            async Task<Page<PartitionMetric>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.GetMetricsCollectionPartitions");
+                scope.Start();
+                try
+                {
+                    var response = await _collectionPartitionRestClient.ListMetricsAsync(Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary> Retrieves the metrics determined by the given filter for the given collection, split by partition. </summary>
+        /// <param name="databaseRid"> Cosmos DB database rid. </param>
+        /// <param name="collectionRid"> Cosmos DB collection rid. </param>
+        /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PartitionMetric" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PartitionMetric> GetMetricsCollectionPartitions(string databaseRid, string collectionRid, string filter, CancellationToken cancellationToken = default)
+        {
+            if (databaseRid == null)
+            {
+                throw new ArgumentNullException(nameof(databaseRid));
+            }
+            if (collectionRid == null)
+            {
+                throw new ArgumentNullException(nameof(collectionRid));
+            }
+            if (filter == null)
+            {
+                throw new ArgumentNullException(nameof(filter));
+            }
+
+            Page<PartitionMetric> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.GetMetricsCollectionPartitions");
+                scope.Start();
+                try
+                {
+                    var response = _collectionPartitionRestClient.ListMetrics(Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, filter, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary> Retrieves the usages (most recent storage data) for the given collection, split by partition. </summary>
+        /// <param name="databaseRid"> Cosmos DB database rid. </param>
+        /// <param name="collectionRid"> Cosmos DB collection rid. </param>
+        /// <param name="filter"> An OData filter expression that describes a subset of usages to return. The supported parameter is name.value (name of the metric, can have an or of multiple names). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="PartitionUsage" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PartitionUsage> GetUsagesCollectionPartitionsAsync(string databaseRid, string collectionRid, string filter = null, CancellationToken cancellationToken = default)
+        {
+            if (databaseRid == null)
+            {
+                throw new ArgumentNullException(nameof(databaseRid));
+            }
+            if (collectionRid == null)
+            {
+                throw new ArgumentNullException(nameof(collectionRid));
+            }
+
+            async Task<Page<PartitionUsage>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.GetUsagesCollectionPartitions");
+                scope.Start();
+                try
+                {
+                    var response = await _collectionPartitionRestClient.ListUsagesAsync(Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary> Retrieves the usages (most recent storage data) for the given collection, split by partition. </summary>
+        /// <param name="databaseRid"> Cosmos DB database rid. </param>
+        /// <param name="collectionRid"> Cosmos DB collection rid. </param>
+        /// <param name="filter"> An OData filter expression that describes a subset of usages to return. The supported parameter is name.value (name of the metric, can have an or of multiple names). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PartitionUsage" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PartitionUsage> GetUsagesCollectionPartitions(string databaseRid, string collectionRid, string filter = null, CancellationToken cancellationToken = default)
+        {
+            if (databaseRid == null)
+            {
+                throw new ArgumentNullException(nameof(databaseRid));
+            }
+            if (collectionRid == null)
+            {
+                throw new ArgumentNullException(nameof(collectionRid));
+            }
+
+            Page<PartitionUsage> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.GetUsagesCollectionPartitions");
+                scope.Start();
+                try
+                {
+                    var response = _collectionPartitionRestClient.ListUsages(Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, filter, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary> Retrieves the metrics determined by the given filter for the given partition key range id. </summary>
+        /// <param name="databaseRid"> Cosmos DB database rid. </param>
+        /// <param name="collectionRid"> Cosmos DB collection rid. </param>
+        /// <param name="partitionKeyRangeId"> Partition Key Range Id for which to get data. </param>
+        /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="PartitionMetric" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PartitionMetric> GetMetricsPartitionKeyRangeIdsAsync(string databaseRid, string collectionRid, string partitionKeyRangeId, string filter, CancellationToken cancellationToken = default)
+        {
+            if (databaseRid == null)
+            {
+                throw new ArgumentNullException(nameof(databaseRid));
+            }
+            if (collectionRid == null)
+            {
+                throw new ArgumentNullException(nameof(collectionRid));
+            }
+            if (partitionKeyRangeId == null)
+            {
+                throw new ArgumentNullException(nameof(partitionKeyRangeId));
+            }
+            if (filter == null)
+            {
+                throw new ArgumentNullException(nameof(filter));
+            }
+
+            async Task<Page<PartitionMetric>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.GetMetricsPartitionKeyRangeIds");
+                scope.Start();
+                try
+                {
+                    var response = await _partitionKeyRangeIdRestClient.ListMetricsAsync(Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, partitionKeyRangeId, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary> Retrieves the metrics determined by the given filter for the given partition key range id. </summary>
+        /// <param name="databaseRid"> Cosmos DB database rid. </param>
+        /// <param name="collectionRid"> Cosmos DB collection rid. </param>
+        /// <param name="partitionKeyRangeId"> Partition Key Range Id for which to get data. </param>
+        /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PartitionMetric" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PartitionMetric> GetMetricsPartitionKeyRangeIds(string databaseRid, string collectionRid, string partitionKeyRangeId, string filter, CancellationToken cancellationToken = default)
+        {
+            if (databaseRid == null)
+            {
+                throw new ArgumentNullException(nameof(databaseRid));
+            }
+            if (collectionRid == null)
+            {
+                throw new ArgumentNullException(nameof(collectionRid));
+            }
+            if (partitionKeyRangeId == null)
+            {
+                throw new ArgumentNullException(nameof(partitionKeyRangeId));
+            }
+            if (filter == null)
+            {
+                throw new ArgumentNullException(nameof(filter));
+            }
+
+            Page<PartitionMetric> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.GetMetricsPartitionKeyRangeIds");
+                scope.Start();
+                try
+                {
+                    var response = _partitionKeyRangeIdRestClient.ListMetrics(Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, partitionKeyRangeId, filter, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary> Retrieves the metrics determined by the given filter for the given partition key range id and region. </summary>
+        /// <param name="region"> Cosmos DB region, with spaces between words and each word capitalized. </param>
+        /// <param name="databaseRid"> Cosmos DB database rid. </param>
+        /// <param name="collectionRid"> Cosmos DB collection rid. </param>
+        /// <param name="partitionKeyRangeId"> Partition Key Range Id for which to get data. </param>
+        /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="PartitionMetric" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PartitionMetric> GetMetricsPartitionKeyRangeIdRegionsAsync(string region, string databaseRid, string collectionRid, string partitionKeyRangeId, string filter, CancellationToken cancellationToken = default)
+        {
+            if (region == null)
+            {
+                throw new ArgumentNullException(nameof(region));
+            }
+            if (databaseRid == null)
+            {
+                throw new ArgumentNullException(nameof(databaseRid));
+            }
+            if (collectionRid == null)
+            {
+                throw new ArgumentNullException(nameof(collectionRid));
+            }
+            if (partitionKeyRangeId == null)
+            {
+                throw new ArgumentNullException(nameof(partitionKeyRangeId));
+            }
+            if (filter == null)
+            {
+                throw new ArgumentNullException(nameof(filter));
+            }
+
+            async Task<Page<PartitionMetric>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.GetMetricsPartitionKeyRangeIdRegions");
+                scope.Start();
+                try
+                {
+                    var response = await _partitionKeyRangeIdRegionRestClient.ListMetricsAsync(Id.ResourceGroupName, Id.Name, region, databaseRid, collectionRid, partitionKeyRangeId, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary> Retrieves the metrics determined by the given filter for the given partition key range id and region. </summary>
+        /// <param name="region"> Cosmos DB region, with spaces between words and each word capitalized. </param>
+        /// <param name="databaseRid"> Cosmos DB database rid. </param>
+        /// <param name="collectionRid"> Cosmos DB collection rid. </param>
+        /// <param name="partitionKeyRangeId"> Partition Key Range Id for which to get data. </param>
+        /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PartitionMetric" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PartitionMetric> GetMetricsPartitionKeyRangeIdRegions(string region, string databaseRid, string collectionRid, string partitionKeyRangeId, string filter, CancellationToken cancellationToken = default)
+        {
+            if (region == null)
+            {
+                throw new ArgumentNullException(nameof(region));
+            }
+            if (databaseRid == null)
+            {
+                throw new ArgumentNullException(nameof(databaseRid));
+            }
+            if (collectionRid == null)
+            {
+                throw new ArgumentNullException(nameof(collectionRid));
+            }
+            if (partitionKeyRangeId == null)
+            {
+                throw new ArgumentNullException(nameof(partitionKeyRangeId));
+            }
+            if (filter == null)
+            {
+                throw new ArgumentNullException(nameof(filter));
+            }
+
+            Page<PartitionMetric> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.GetMetricsPartitionKeyRangeIdRegions");
+                scope.Start();
+                try
+                {
+                    var response = _partitionKeyRangeIdRegionRestClient.ListMetrics(Id.ResourceGroupName, Id.Name, region, databaseRid, collectionRid, partitionKeyRangeId, filter, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+        }
+
+        #region SqlDatabase
+
+        /// <summary> Gets a collection of SqlDatabases in the DatabaseAccount. </summary>
         /// <returns> An object representing collection of SqlDatabases and their operations over a DatabaseAccount. </returns>
         public SqlDatabaseCollection GetSqlDatabases()
         {
             return new SqlDatabaseCollection(this);
         }
+        #endregion
 
-        /// <summary> Gets a list of MongoDBDatabases in the DatabaseAccount. </summary>
+        #region MongoDBDatabase
+
+        /// <summary> Gets a collection of MongoDBDatabases in the DatabaseAccount. </summary>
         /// <returns> An object representing collection of MongoDBDatabases and their operations over a DatabaseAccount. </returns>
         public MongoDBDatabaseCollection GetMongoDBDatabases()
         {
             return new MongoDBDatabaseCollection(this);
         }
+        #endregion
 
-        /// <summary> Gets a list of Tables in the DatabaseAccount. </summary>
+        #region Table
+
+        /// <summary> Gets a collection of Tables in the DatabaseAccount. </summary>
         /// <returns> An object representing collection of Tables and their operations over a DatabaseAccount. </returns>
         public TableCollection GetTables()
         {
             return new TableCollection(this);
         }
+        #endregion
 
-        /// <summary> Gets a list of CassandraKeyspaces in the DatabaseAccount. </summary>
+        #region CassandraKeyspace
+
+        /// <summary> Gets a collection of CassandraKeyspaces in the DatabaseAccount. </summary>
         /// <returns> An object representing collection of CassandraKeyspaces and their operations over a DatabaseAccount. </returns>
         public CassandraKeyspaceCollection GetCassandraKeyspaces()
         {
             return new CassandraKeyspaceCollection(this);
         }
+        #endregion
 
-        /// <summary> Gets a list of GremlinDatabases in the DatabaseAccount. </summary>
+        #region GremlinDatabase
+
+        /// <summary> Gets a collection of GremlinDatabases in the DatabaseAccount. </summary>
         /// <returns> An object representing collection of GremlinDatabases and their operations over a DatabaseAccount. </returns>
         public GremlinDatabaseCollection GetGremlinDatabases()
         {
             return new GremlinDatabaseCollection(this);
         }
+        #endregion
 
-        /// <summary> Gets a list of PrivateEndpointConnections in the DatabaseAccount. </summary>
+        #region PrivateEndpointConnection
+
+        /// <summary> Gets a collection of PrivateEndpointConnections in the DatabaseAccount. </summary>
         /// <returns> An object representing collection of PrivateEndpointConnections and their operations over a DatabaseAccount. </returns>
         public PrivateEndpointConnectionCollection GetPrivateEndpointConnections()
         {
             return new PrivateEndpointConnectionCollection(this);
         }
+        #endregion
 
-        /// <summary> Gets a list of PrivateLinkResources in the DatabaseAccount. </summary>
+        #region PrivateLinkResource
+
+        /// <summary> Gets a collection of PrivateLinkResources in the DatabaseAccount. </summary>
         /// <returns> An object representing collection of PrivateLinkResources and their operations over a DatabaseAccount. </returns>
         public PrivateLinkResourceCollection GetPrivateLinkResources()
         {
             return new PrivateLinkResourceCollection(this);
         }
+        #endregion
     }
 }

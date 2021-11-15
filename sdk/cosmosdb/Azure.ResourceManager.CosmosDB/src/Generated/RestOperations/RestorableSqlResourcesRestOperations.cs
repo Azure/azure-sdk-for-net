@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.CosmosDB
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateGetAllRequest(string location, string instanceId, string restoreLocation, string restoreTimestampInUtc)
+        internal HttpMessage CreateListRequest(string location, string instanceId, string restoreLocation, string restoreTimestampInUtc)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="restoreTimestampInUtc"> The timestamp when the restorable resources existed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="instanceId"/> is null. </exception>
-        public async Task<Response<RestorableSqlResourcesList>> GetAllAsync(string location, string instanceId, string restoreLocation = null, string restoreTimestampInUtc = null, CancellationToken cancellationToken = default)
+        public async Task<Response<RestorableSqlResourcesList>> ListAsync(string location, string instanceId, string restoreLocation = null, string restoreTimestampInUtc = null, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(instanceId));
             }
 
-            using var message = CreateGetAllRequest(location, instanceId, restoreLocation, restoreTimestampInUtc);
+            using var message = CreateListRequest(location, instanceId, restoreLocation, restoreTimestampInUtc);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="restoreTimestampInUtc"> The timestamp when the restorable resources existed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="instanceId"/> is null. </exception>
-        public Response<RestorableSqlResourcesList> GetAll(string location, string instanceId, string restoreLocation = null, string restoreTimestampInUtc = null, CancellationToken cancellationToken = default)
+        public Response<RestorableSqlResourcesList> List(string location, string instanceId, string restoreLocation = null, string restoreTimestampInUtc = null, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(instanceId));
             }
 
-            using var message = CreateGetAllRequest(location, instanceId, restoreLocation, restoreTimestampInUtc);
+            using var message = CreateListRequest(location, instanceId, restoreLocation, restoreTimestampInUtc);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

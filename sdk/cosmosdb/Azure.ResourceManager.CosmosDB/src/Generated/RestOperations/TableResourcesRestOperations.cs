@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.CosmosDB
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateGetTablesRequest(string resourceGroupName, string accountName)
+        internal HttpMessage CreateListTablesRequest(string resourceGroupName, string accountName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
-        public async Task<Response<TableList>> GetTablesAsync(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public async Task<Response<TableList>> ListTablesAsync(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(accountName));
             }
 
-            using var message = CreateGetTablesRequest(resourceGroupName, accountName);
+            using var message = CreateListTablesRequest(resourceGroupName, accountName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
-        public Response<TableList> GetTables(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public Response<TableList> ListTables(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(accountName));
             }
 
-            using var message = CreateGetTablesRequest(resourceGroupName, accountName);
+            using var message = CreateListTablesRequest(resourceGroupName, accountName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="tableName"> Cosmos DB table name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="tableName"/> is null. </exception>
-        public async Task<Response<ThroughputSettings>> GetTableThroughputAsync(string resourceGroupName, string accountName, string tableName, CancellationToken cancellationToken = default)
+        public async Task<Response<ThroughputSettingsData>> GetTableThroughputAsync(string resourceGroupName, string accountName, string tableName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -468,11 +468,13 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        ThroughputSettings value = default;
+                        ThroughputSettingsData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ThroughputSettings.DeserializeThroughputSettings(document.RootElement);
+                        value = ThroughputSettingsData.DeserializeThroughputSettingsData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((ThroughputSettingsData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -484,7 +486,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="tableName"> Cosmos DB table name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="tableName"/> is null. </exception>
-        public Response<ThroughputSettings> GetTableThroughput(string resourceGroupName, string accountName, string tableName, CancellationToken cancellationToken = default)
+        public Response<ThroughputSettingsData> GetTableThroughput(string resourceGroupName, string accountName, string tableName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -505,11 +507,13 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        ThroughputSettings value = default;
+                        ThroughputSettingsData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ThroughputSettings.DeserializeThroughputSettings(document.RootElement);
+                        value = ThroughputSettingsData.DeserializeThroughputSettingsData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((ThroughputSettingsData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
