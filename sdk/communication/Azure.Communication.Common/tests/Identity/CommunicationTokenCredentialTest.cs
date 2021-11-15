@@ -52,6 +52,7 @@ namespace Azure.Communication.Identity
             using var tokenCredential = new CommunicationTokenCredential(
                 new CommunicationTokenRefreshOptions(
                     refreshProactively: true, // Indicates if the token should be proactively refreshed in the background or only on-demand
+                    refreshTimeBeforeTokenExpiry: new TimeSpan(0, 0, 5, 0),
                     tokenRefresher: cancellationToken => FetchTokenForUserFromMyServer("bob@contoso.com", cancellationToken))
                 {
                     AsyncTokenRefresher = cancellationToken => FetchTokenForUserFromMyServerAsync("bob@contoso.com", cancellationToken)
