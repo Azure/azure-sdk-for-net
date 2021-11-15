@@ -697,7 +697,7 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
-        internal HttpMessage CreateRenameRequest(string renameSource, int? timeout, bool? replaceIfExists, bool? ignoreReadOnly, string sourceLeaseId, string destinationLeaseId, string filePermission, string filePermissionKey, CopyFileSmbInfo copyFileSmbInfo, FileHttpHeaders fileHttpHeaders)
+        internal HttpMessage CreateRenameRequest(string renameSource, int? timeout, bool? replaceIfExists, bool? ignoreReadOnly, string sourceLeaseId, string destinationLeaseId, string filePermission, string filePermissionKey, CopyFileSmbInfo copyFileSmbInfo)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -749,10 +749,6 @@ namespace Azure.Storage.Files.Shares
             {
                 request.Headers.Add("x-ms-file-permission-key", filePermissionKey);
             }
-            if (fileHttpHeaders?.FileContentType != null)
-            {
-                request.Headers.Add("x-ms-content-type", fileHttpHeaders.FileContentType);
-            }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -767,17 +763,16 @@ namespace Azure.Storage.Files.Shares
         /// <param name="filePermission"> If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
         /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
         /// <param name="copyFileSmbInfo"> Parameter group. </param>
-        /// <param name="fileHttpHeaders"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="renameSource"/> is null. </exception>
-        public async Task<ResponseWithHeaders<DirectoryRenameHeaders>> RenameAsync(string renameSource, int? timeout = null, bool? replaceIfExists = null, bool? ignoreReadOnly = null, string sourceLeaseId = null, string destinationLeaseId = null, string filePermission = null, string filePermissionKey = null, CopyFileSmbInfo copyFileSmbInfo = null, FileHttpHeaders fileHttpHeaders = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<DirectoryRenameHeaders>> RenameAsync(string renameSource, int? timeout = null, bool? replaceIfExists = null, bool? ignoreReadOnly = null, string sourceLeaseId = null, string destinationLeaseId = null, string filePermission = null, string filePermissionKey = null, CopyFileSmbInfo copyFileSmbInfo = null, CancellationToken cancellationToken = default)
         {
             if (renameSource == null)
             {
                 throw new ArgumentNullException(nameof(renameSource));
             }
 
-            using var message = CreateRenameRequest(renameSource, timeout, replaceIfExists, ignoreReadOnly, sourceLeaseId, destinationLeaseId, filePermission, filePermissionKey, copyFileSmbInfo, fileHttpHeaders);
+            using var message = CreateRenameRequest(renameSource, timeout, replaceIfExists, ignoreReadOnly, sourceLeaseId, destinationLeaseId, filePermission, filePermissionKey, copyFileSmbInfo);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new DirectoryRenameHeaders(message.Response);
             switch (message.Response.Status)
@@ -799,17 +794,16 @@ namespace Azure.Storage.Files.Shares
         /// <param name="filePermission"> If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
         /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
         /// <param name="copyFileSmbInfo"> Parameter group. </param>
-        /// <param name="fileHttpHeaders"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="renameSource"/> is null. </exception>
-        public ResponseWithHeaders<DirectoryRenameHeaders> Rename(string renameSource, int? timeout = null, bool? replaceIfExists = null, bool? ignoreReadOnly = null, string sourceLeaseId = null, string destinationLeaseId = null, string filePermission = null, string filePermissionKey = null, CopyFileSmbInfo copyFileSmbInfo = null, FileHttpHeaders fileHttpHeaders = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<DirectoryRenameHeaders> Rename(string renameSource, int? timeout = null, bool? replaceIfExists = null, bool? ignoreReadOnly = null, string sourceLeaseId = null, string destinationLeaseId = null, string filePermission = null, string filePermissionKey = null, CopyFileSmbInfo copyFileSmbInfo = null, CancellationToken cancellationToken = default)
         {
             if (renameSource == null)
             {
                 throw new ArgumentNullException(nameof(renameSource));
             }
 
-            using var message = CreateRenameRequest(renameSource, timeout, replaceIfExists, ignoreReadOnly, sourceLeaseId, destinationLeaseId, filePermission, filePermissionKey, copyFileSmbInfo, fileHttpHeaders);
+            using var message = CreateRenameRequest(renameSource, timeout, replaceIfExists, ignoreReadOnly, sourceLeaseId, destinationLeaseId, filePermission, filePermissionKey, copyFileSmbInfo);
             _pipeline.Send(message, cancellationToken);
             var headers = new DirectoryRenameHeaders(message.Response);
             switch (message.Response.Status)
