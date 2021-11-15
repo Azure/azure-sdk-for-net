@@ -11,5 +11,5 @@ description: Samples for the Azure.ResourceManager.ServiceBus client library
 
 # Azure.ResourceManager.ServiceBus Samples
 
-- [Managing Topics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.ResourceManager.Storage/samples/Sample1_ManagingBlobContainers.md)
-- [Managing Queues](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.ResourceManager.Storage/samples/Sample2_ManagingFileShares.md)
+- [Managing Topics](https://github.com/yukun-dong/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.ResourceManager.ServiceBus/samples/Sample1_ManagingTopics.md)
+- [Managing Queues](https://github.com/yukun-dong/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.ResourceManager.ServiceBus/samples/Sample2_ManagingQueues.md)

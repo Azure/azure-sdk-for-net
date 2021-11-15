@@ -117,7 +117,7 @@ await serviceBusNamespace.DeleteAsync();
 ```
 
 
-For more detailed examples, take a look at [samples](https://github.com/yukun-dong/azure-sdk-for-net/tree/eventhub-2018-01-preview/sdk/eventhub/Azure.ResourceManager.EventHubs/samples) we have available.
+For more detailed examples, take a look at [samples](https://github.com/yukun-dong/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.ResourceManager.ServiceBus/samples) we have available.
 
 ## Troubleshooting
 

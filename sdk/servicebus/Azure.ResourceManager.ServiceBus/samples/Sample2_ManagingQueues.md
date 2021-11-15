@@ -85,4 +85,4 @@ await serviceBusQueue.DeleteAsync();
 
 ## Next steps
 
-Take a look at the [Managing Topics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.ResourceManager.Storage/samples/Sample2_ManagingFileShares.md) samples.
+Take a look at the [Managing Topics](https://github.com/yukun-dong/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.ResourceManager.ServiceBus/samples/Sample1_ManagingTopics.md) samples.
