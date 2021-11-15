@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.AI.Language.QuestionAnswering.Models;
 using Azure.Core;
 
 namespace Azure.AI.Language.QuestionAnswering
@@ -12,7 +11,7 @@ namespace Azure.AI.Language.QuestionAnswering
     /// </summary>
     public partial class QuestionAnsweringClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2021_07_15_Preview;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2021_10_01;
 
         /// <summary>
         /// The version of the service to use.
@@ -21,16 +20,9 @@ namespace Azure.AI.Language.QuestionAnswering
         {
 #pragma warning disable CA1707 // Identifiers should not contain underscores
             /// <summary>
-            /// Service version "2021-05-01-preview".
+            /// Service version "2021-10-01".
             /// </summary>
-#pragma warning disable AZC0016 // Invalid ServiceVersion member name.
-            V2021_05_01_preview = 1,
-#pragma warning restore AZC0016 // Invalid ServiceVersion member name.
-
-            /// <summary>
-            /// Service version "2021-07-15-preview".
-            /// </summary>
-            V2021_07_15_Preview = 2,
+            V2021_10_01 = 1,
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -41,8 +33,9 @@ namespace Azure.AI.Language.QuestionAnswering
 
         /// <summary>
         /// Gets or sets the default language to use in some client methods.
-        /// This is the BCP-47 representation of a language. For example, use "en" for English, "es" for Spanish, etc.
+        /// This is the <see href="https://tools.ietf.org/rfc/bcp/bcp47.txt">BCP-47</see> representation of a language. For example, use "en" for English, "es" for Spanish, etc.
         /// If not set, the service default, "en" for English, is used.
+        /// See <see href="https://docs.microsoft.com/azure/cognitive-services/qnamaker/overview/language-support"/> for list of currently supported languages.
         /// </summary>
         public string DefaultLanguage { get; set; } = "en";
 
@@ -55,8 +48,7 @@ namespace Azure.AI.Language.QuestionAnswering
         {
             Version = version switch
             {
-                ServiceVersion.V2021_05_01_preview => "2021-05-01-preview",
-                ServiceVersion.V2021_07_15_Preview => "2021-07-15-preview",
+                ServiceVersion.V2021_10_01 => "2021-10-01",
                 _ => throw new NotSupportedException()
             };
 

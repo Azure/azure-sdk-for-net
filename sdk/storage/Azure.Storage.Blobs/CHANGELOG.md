@@ -1,6 +1,12 @@
 # Release History
 
-## 12.11.0-beta.1 (Unreleased)
+## 12.11.0-beta.2 (Unreleased)
+- Added support for service vesrion 2021-02-12
+- Added support for listing system containers with BlobServiceClient.GetBlobContainers() and .GetBlobContainersAsync().
+- Added support for blob names container invalid XML characters.
+- Fixed a bug where BlobClient.Upload() and UploadAsync() when using client-side encryption would modify the Dictionary instance passed by the caller for blob metadata.
+
+## 12.11.0-beta.1 (2021-11-03)
 - Added support for service version 2020-12-06.
 - Added support for Encryption Scope SAS.
 - Added support for Encryption Scopes with BlobBaseClient.SyncCopyFromUriAsync().

@@ -2,11 +2,12 @@ namespace Azure.Analytics.Synapse.Artifacts
 {
     public partial class ArtifactsClientOptions : Azure.Core.ClientOptions
     {
-        public ArtifactsClientOptions(Azure.Analytics.Synapse.Artifacts.ArtifactsClientOptions.ServiceVersion version = Azure.Analytics.Synapse.Artifacts.ArtifactsClientOptions.ServiceVersion.V2021_06_01_preview) { }
+        public ArtifactsClientOptions(Azure.Analytics.Synapse.Artifacts.ArtifactsClientOptions.ServiceVersion version = Azure.Analytics.Synapse.Artifacts.ArtifactsClientOptions.ServiceVersion.V2021_11_01_preview) { }
         public enum ServiceVersion
         {
             V2020_12_01 = 1,
             V2021_06_01_preview = 2,
+            V2021_11_01_preview = 3,
         }
     }
     public partial class BigDataPoolsClient
@@ -2116,6 +2117,26 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal CreateDataFlowDebugSessionResponse() { }
         public string SessionId { get { throw null; } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CreateMode : System.IEquatable<Azure.Analytics.Synapse.Artifacts.Models.CreateMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CreateMode(string value) { throw null; }
+        public static Azure.Analytics.Synapse.Artifacts.Models.CreateMode Default { get { throw null; } }
+        public static Azure.Analytics.Synapse.Artifacts.Models.CreateMode PointInTimeRestore { get { throw null; } }
+        public static Azure.Analytics.Synapse.Artifacts.Models.CreateMode Recovery { get { throw null; } }
+        public static Azure.Analytics.Synapse.Artifacts.Models.CreateMode Restore { get { throw null; } }
+        public bool Equals(Azure.Analytics.Synapse.Artifacts.Models.CreateMode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Analytics.Synapse.Artifacts.Models.CreateMode left, Azure.Analytics.Synapse.Artifacts.Models.CreateMode right) { throw null; }
+        public static implicit operator Azure.Analytics.Synapse.Artifacts.Models.CreateMode (string value) { throw null; }
+        public static bool operator !=(Azure.Analytics.Synapse.Artifacts.Models.CreateMode left, Azure.Analytics.Synapse.Artifacts.Models.CreateMode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class CreateRunResponse
     {
         internal CreateRunResponse() { }
@@ -2258,6 +2279,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public DataFlowDebugPackage() { }
         public System.Collections.Generic.IDictionary<string, object> AdditionalProperties { get { throw null; } }
         public Azure.Analytics.Synapse.Artifacts.Models.DataFlowDebugResource DataFlow { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Analytics.Synapse.Artifacts.Models.DataFlowDebugResource> DataFlows { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Analytics.Synapse.Artifacts.Models.DatasetDebugResource> Datasets { get { throw null; } }
         public Azure.Analytics.Synapse.Artifacts.Models.DataFlowDebugPackageDebugSettings DebugSettings { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Analytics.Synapse.Artifacts.Models.LinkedServiceDebugResource> LinkedServices { get { throw null; } }
@@ -2327,6 +2349,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public DataFlowReference(Azure.Analytics.Synapse.Artifacts.Models.DataFlowReferenceType type, string referenceName) { }
         public System.Collections.Generic.IDictionary<string, object> AdditionalProperties { get { throw null; } }
         public object DatasetParameters { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, object> Parameters { get { throw null; } }
         public string ReferenceName { get { throw null; } set { } }
         public Azure.Analytics.Synapse.Artifacts.Models.DataFlowReferenceType Type { get { throw null; } set { } }
     }
@@ -2355,15 +2378,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     public partial class DataFlowSink : Azure.Analytics.Synapse.Artifacts.Models.Transformation
     {
         public DataFlowSink(string name) : base (default(string)) { }
-        public Azure.Analytics.Synapse.Artifacts.Models.DatasetReference Dataset { get { throw null; } set { } }
-        public Azure.Analytics.Synapse.Artifacts.Models.LinkedServiceReference LinkedService { get { throw null; } set { } }
         public Azure.Analytics.Synapse.Artifacts.Models.LinkedServiceReference SchemaLinkedService { get { throw null; } set { } }
     }
     public partial class DataFlowSource : Azure.Analytics.Synapse.Artifacts.Models.Transformation
     {
         public DataFlowSource(string name) : base (default(string)) { }
-        public Azure.Analytics.Synapse.Artifacts.Models.DatasetReference Dataset { get { throw null; } set { } }
-        public Azure.Analytics.Synapse.Artifacts.Models.LinkedServiceReference LinkedService { get { throw null; } set { } }
         public Azure.Analytics.Synapse.Artifacts.Models.LinkedServiceReference SchemaLinkedService { get { throw null; } set { } }
     }
     public partial class DataFlowSourceSetting
@@ -2408,14 +2427,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object Schema { get { throw null; } set { } }
         public object Structure { get { throw null; } set { } }
     }
-    public partial class DatasetBZip2Compression : Azure.Analytics.Synapse.Artifacts.Models.DatasetCompression
-    {
-        public DatasetBZip2Compression() { }
-    }
     public partial class DatasetCompression
     {
-        public DatasetCompression() { }
+        public DatasetCompression(object type) { }
         public System.Collections.Generic.IDictionary<string, object> AdditionalProperties { get { throw null; } }
+        public object Level { get { throw null; } set { } }
+        public object Type { get { throw null; } set { } }
     }
     public partial class DatasetDataElement
     {
@@ -2428,20 +2445,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public DatasetDebugResource(Azure.Analytics.Synapse.Artifacts.Models.Dataset properties) { }
         public Azure.Analytics.Synapse.Artifacts.Models.Dataset Properties { get { throw null; } set { } }
     }
-    public partial class DatasetDeflateCompression : Azure.Analytics.Synapse.Artifacts.Models.DatasetCompression
-    {
-        public DatasetDeflateCompression() { }
-        public object Level { get { throw null; } set { } }
-    }
     public partial class DatasetFolder
     {
         public DatasetFolder() { }
         public string Name { get { throw null; } set { } }
-    }
-    public partial class DatasetGZipCompression : Azure.Analytics.Synapse.Artifacts.Models.DatasetCompression
-    {
-        public DatasetGZipCompression() { }
-        public object Level { get { throw null; } set { } }
     }
     public partial class DatasetLocation
     {
@@ -2492,20 +2499,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public System.Collections.Generic.IDictionary<string, object> AdditionalProperties { get { throw null; } }
         public object Deserializer { get { throw null; } set { } }
         public object Serializer { get { throw null; } set { } }
-    }
-    public partial class DatasetTarCompression : Azure.Analytics.Synapse.Artifacts.Models.DatasetCompression
-    {
-        public DatasetTarCompression() { }
-    }
-    public partial class DatasetTarGZipCompression : Azure.Analytics.Synapse.Artifacts.Models.DatasetCompression
-    {
-        public DatasetTarGZipCompression() { }
-        public object Level { get { throw null; } set { } }
-    }
-    public partial class DatasetZipDeflateCompression : Azure.Analytics.Synapse.Artifacts.Models.DatasetCompression
-    {
-        public DatasetZipDeflateCompression() { }
-        public object Level { get { throw null; } set { } }
     }
     public enum DayOfWeek
     {
@@ -3030,6 +3023,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public FilterActivity(string name, Azure.Analytics.Synapse.Artifacts.Models.Expression items, Azure.Analytics.Synapse.Artifacts.Models.Expression condition) : base (default(string)) { }
         public Azure.Analytics.Synapse.Artifacts.Models.Expression Condition { get { throw null; } set { } }
         public Azure.Analytics.Synapse.Artifacts.Models.Expression Items { get { throw null; } set { } }
+    }
+    public partial class Flowlet : Azure.Analytics.Synapse.Artifacts.Models.DataFlow
+    {
+        public Flowlet() { }
+        public string Script { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> ScriptLines { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Analytics.Synapse.Artifacts.Models.DataFlowSink> Sinks { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Analytics.Synapse.Artifacts.Models.DataFlowSource> Sources { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Analytics.Synapse.Artifacts.Models.Transformation> Transformations { get { throw null; } }
     }
     public partial class ForEachActivity : Azure.Analytics.Synapse.Artifacts.Models.ControlActivity
     {
@@ -4028,7 +4030,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     public partial class KqlScriptContentCurrentConnection
     {
         public KqlScriptContentCurrentConnection() { }
+        public string DatabaseName { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
+        public string PoolName { get { throw null; } set { } }
         public string Type { get { throw null; } set { } }
     }
     public partial class KqlScriptContentMetadata
@@ -4239,6 +4243,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         public MappingDataFlow() { }
         public string Script { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> ScriptLines { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Analytics.Synapse.Artifacts.Models.DataFlowSink> Sinks { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Analytics.Synapse.Artifacts.Models.DataFlowSource> Sources { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Analytics.Synapse.Artifacts.Models.Transformation> Transformations { get { throw null; } }
@@ -6489,7 +6494,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         public SqlPool(string location) : base (default(string)) { }
         public string Collation { get { throw null; } set { } }
-        public string CreateMode { get { throw null; } set { } }
+        public Azure.Analytics.Synapse.Artifacts.Models.CreateMode? CreateMode { get { throw null; } set { } }
         public System.DateTimeOffset? CreationDate { get { throw null; } set { } }
         public long? MaxSizeBytes { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } set { } }
@@ -6786,6 +6791,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         public StartDataFlowDebugSessionRequest() { }
         public Azure.Analytics.Synapse.Artifacts.Models.DataFlowResource DataFlow { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Analytics.Synapse.Artifacts.Models.DataFlowResource> DataFlows { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Analytics.Synapse.Artifacts.Models.DatasetResource> Datasets { get { throw null; } }
         public object DebugSettings { get { throw null; } set { } }
         public bool? IncrementalDebug { get { throw null; } set { } }
@@ -7041,7 +7047,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     public partial class Transformation
     {
         public Transformation(string name) { }
+        public Azure.Analytics.Synapse.Artifacts.Models.DatasetReference Dataset { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
+        public Azure.Analytics.Synapse.Artifacts.Models.DataFlowReference Flowlet { get { throw null; } set { } }
+        public Azure.Analytics.Synapse.Artifacts.Models.LinkedServiceReference LinkedService { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
     }
     public partial class Trigger

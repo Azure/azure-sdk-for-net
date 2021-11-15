@@ -28,7 +28,9 @@ namespace Microsoft.Azure.Management.Monitor.Models
         [EnumMember(Value = "Max")]
         Max,
         [EnumMember(Value = "Sum")]
-        Sum
+        Sum,
+        [EnumMember(Value = "Count")]
+        Count
     }
     internal static class MetricStatisticTypeEnumExtension
     {
@@ -49,6 +51,8 @@ namespace Microsoft.Azure.Management.Monitor.Models
                     return "Max";
                 case MetricStatisticType.Sum:
                     return "Sum";
+                case MetricStatisticType.Count:
+                    return "Count";
             }
             return null;
         }
@@ -65,6 +69,8 @@ namespace Microsoft.Azure.Management.Monitor.Models
                     return MetricStatisticType.Max;
                 case "Sum":
                     return MetricStatisticType.Sum;
+                case "Count":
+                    return MetricStatisticType.Count;
             }
             return null;
         }

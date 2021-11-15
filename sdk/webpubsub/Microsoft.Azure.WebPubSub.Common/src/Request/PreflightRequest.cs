@@ -17,7 +17,11 @@ namespace Microsoft.Azure.WebPubSub.Common
         [JsonPropertyName("isValid")]
         public bool IsValid { get; }
 
-        internal PreflightRequest(bool isValid)
+        /// <summary>
+        /// Preflight request
+        /// </summary>
+        /// <param name="isValid"></param>
+        public PreflightRequest(bool isValid)
             :base(null)
         {
             IsValid = isValid;
