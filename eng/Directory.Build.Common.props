@@ -244,7 +244,7 @@
   </PropertyGroup>
 
   <!-- Set global test timeout of 5 seconds -->
-  <ItemGroup Condition="'$(IsTestProject)' == 'true' and '$(IsClientLibrary)' == 'true'">
+  <ItemGroup Condition="'$(IsTestProject)' == 'true' and $(MSBuildProjectName.StartsWith('Azure.')) == 'true'">
     <AssemblyAttribute Include="NUnit.Framework.Timeout">
       <_Parameter1>500</_Parameter1>
       <_Parameter1_TypeName>System.Int32</_Parameter1_TypeName>
