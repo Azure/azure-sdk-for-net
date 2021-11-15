@@ -156,37 +156,13 @@ namespace Azure.Core.TestFramework
         [OneTimeSetUp]
         public void StartLoggingEvents()
         {
+            TestContext.Progress.WriteLine($"starting up {GetType().FullName}");
+
             if (Mode == RecordedTestMode.Live || Debugger.IsAttached)
             {
                 Logger = new TestLogger();
             }
 
-            // var processInfo = new ProcessStartInfo(
-            //     s_dotNetExe,
-            //     "tool list -g")
-            // {
-            //     UseShellExecute = false,
-            //     RedirectStandardOutput = true
-            // };
-            // Process toolProcess = Process.Start(processInfo);
-            // string installedTools = toolProcess.StandardOutput.ReadToEnd();
-            // toolProcess.WaitForExit();
-            //
-            // // TODO how to check for latest version
-            // if (!installedTools.Contains("azure.sdk.tools.testproxy"))
-            // {
-            //     processInfo = new ProcessStartInfo(
-            //         s_dotNetExe,
-            //         "tool install azure.sdk.tools.testproxy " +
-            //         "--global " +
-            //         "--add-source https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json " +
-            //         "--version 1.0.0-dev.20211104.2")
-            //     {
-            //         UseShellExecute = false
-            //     };
-            //     Process installProcess = Process.Start(processInfo);
-            //     installProcess.WaitForExit();
-            // }
             var certPath = Path.Combine(TestEnvironment.RepositoryRoot, "eng", "common", "testproxy", "dotnet-devcert.pfx");
             var processInfo = new ProcessStartInfo(
                 s_dotNetExe,
@@ -196,11 +172,8 @@ namespace Azure.Core.TestFramework
                 RedirectStandardOutput = true,
                 RedirectStandardError = true
             };
-            var p = Process.Start(processInfo);
-            p.WaitForExit();
-            // Random random = new Random();
-            // _proxyPortHttp = random.Next(1, 65536);
-            // _proxyPortHttps = random.Next(1, 65536);
+            Process.Start(processInfo).WaitForExit();
+
             var testProxyPath = GetType().Assembly.GetCustomAttributes<AssemblyMetadataAttribute>().Single(a => a.Key == "TestProxyPath")
                 .Value;
             processInfo = new ProcessStartInfo(
@@ -208,13 +181,11 @@ namespace Azure.Core.TestFramework
                 testProxyPath)
             {
                 UseShellExecute = false,
-                EnvironmentVariables = { { "ASPNETCORE_URLS", "http://0.0.0.0:0;https://0.0.0.0:0" } },
+                EnvironmentVariables = { {"ASPNETCORE_URLS", "http://0.0.0.0:0;https://0.0.0.0:0"},  {"Logging__LogLevel__Microsoft", "Information"} },
                 RedirectStandardOutput = true,
-                RedirectStandardError = true
+                RedirectStandardError = true,
             };
             _testProxyProcess = Process.Start(processInfo);
-            // var error = _testProxyProcess.StandardError.ReadLine();
-
             while (true)
             {
                 string outputLine = _testProxyProcess.StandardOutput.ReadLine();
@@ -247,6 +218,7 @@ namespace Azure.Core.TestFramework
         {
             Logger?.Dispose();
             Logger = null;
+            TestContext.Progress.WriteLine($"tearing down {GetType().FullName}");
             _testProxyProcess?.Kill();
         }
 
