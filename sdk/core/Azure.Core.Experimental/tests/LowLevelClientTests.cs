@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core.Experimental.Tests;
@@ -224,23 +223,6 @@ namespace Azure.Core.Tests
             writer.WriteStringValue(pet.Species);
 
             writer.WriteEndObject();
-        }
-
-        public class AddHeaderPolicy : HttpPipelineSynchronousPolicy
-        {
-            private string _headerName;
-            private string _headerVaue;
-
-            public AddHeaderPolicy(string headerName, string headerValue) : base()
-            {
-                _headerName = headerName;
-                _headerVaue = headerValue;
-            }
-
-            public override void OnSendingRequest(HttpMessage message)
-            {
-                message.Request.Headers.Add(_headerName, _headerVaue);
-            }
         }
         #endregion
     }
