@@ -1,0 +1,161 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/rg5073/providers/Microsoft.AVS/privateClouds/cloud4801/clusters/cluster6398/placementPolicies/placementpolicy-pc?api-version=2021-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL3JnNTA3My9wcm92aWRlcnMvTWljcm9zb2Z0LkFWUy9wcml2YXRlQ2xvdWRzL2Nsb3VkNDgwMS9jbHVzdGVycy9jbHVzdGVyNjM5OC9wbGFjZW1lbnRQb2xpY2llcy9wbGFjZW1lbnRwb2xpY3ktcGM/YXBpLXZlcnNpb249MjAyMS0xMi0wMQ==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "404d37a0-2fd6-4cce-b138-8d0fd55b948d"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/5.0.1221.52207",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Server": [
+          "Rocket"
+        ],
+        "Date": [
+          "Tue, 16 Nov 2021 13:57:17 GMT"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/rg5073/providers/Microsoft.AVS/privateClouds/cloud4801/clusters/cluster6398/placementPolicies/placementpolicy-pc?api-version=2021-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL3JnNTA3My9wcm92aWRlcnMvTWljcm9zb2Z0LkFWUy9wcml2YXRlQ2xvdWRzL2Nsb3VkNDgwMS9jbHVzdGVycy9jbHVzdGVyNjM5OC9wbGFjZW1lbnRQb2xpY2llcy9wbGFjZW1lbnRwb2xpY3ktcGM/YXBpLXZlcnNpb249MjAyMS0xMi0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "993b9085-cf69-4817-8b27-ce7e2952a4fe"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/5.0.1221.52207",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Server": [
+          "Rocket"
+        ],
+        "Date": [
+          "Tue, 16 Nov 2021 13:57:17 GMT"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Content-Length": [
+          "338"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/{subscription-id}/resourceGroups/group1/providers/Microsoft.AVS/privateClouds/cloud1/clusters/cluster1/placementPolicies/policy1\",\r\n  \"name\": \"policy1\",\r\n  \"type\": \"Microsoft.AVS/privateClouds/clusters/placementPolicies\",\r\n  \"properties\": {\r\n    \"type\": \"VmHost\",\r\n    \"state\": \"Enabled\",\r\n    \"displayName\": \"policy1\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/rg5073/providers/Microsoft.AVS/privateClouds/cloud4801/clusters/cluster6398/placementPolicies?api-version=2021-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL3JnNTA3My9wcm92aWRlcnMvTWljcm9zb2Z0LkFWUy9wcml2YXRlQ2xvdWRzL2Nsb3VkNDgwMS9jbHVzdGVycy9jbHVzdGVyNjM5OC9wbGFjZW1lbnRQb2xpY2llcz9hcGktdmVyc2lvbj0yMDIxLTEyLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "a6c85b82-57aa-441f-8636-70b5037e8161"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/5.0.1221.52207",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Server": [
+          "Rocket"
+        ],
+        "Date": [
+          "Tue, 16 Nov 2021 13:57:17 GMT"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Content-Length": [
+          "687"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/{subscription-id}/resourceGroups/group1/providers/Microsoft.AVS/privateClouds/cloud1/clusters/cluster1/placementPolicies/policy1\",\r\n      \"name\": \"policy1\",\r\n      \"type\": \"Microsoft.AVS/privateClouds/clusters/placementPolicies\",\r\n      \"properties\": {\r\n        \"type\": \"VmHost\",\r\n        \"state\": \"Enabled\",\r\n        \"displayName\": \"policy1\",\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/{subscription-id}/resourceGroups/group1/providers/Microsoft.AVS/privateClouds/cloud1/clusters/cluster1/placementPolicies/policy2\",\r\n      \"name\": \"policy2\",\r\n      \"type\": \"Microsoft.AVS/privateClouds/clusters/placementPolicies\",\r\n      \"properties\": {\r\n        \"type\": \"VmVm\",\r\n        \"state\": \"Enabled\",\r\n        \"displayName\": \"policy2\",\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/rg5073/providers/Microsoft.AVS/privateClouds/cloud4801/clusters/cluster6398/placementPolicies/placementpolicy-pc?api-version=2021-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL3JnNTA3My9wcm92aWRlcnMvTWljcm9zb2Z0LkFWUy9wcml2YXRlQ2xvdWRzL2Nsb3VkNDgwMS9jbHVzdGVycy9jbHVzdGVyNjM5OC9wbGFjZW1lbnRQb2xpY2llcy9wbGFjZW1lbnRwb2xpY3ktcGM/YXBpLXZlcnNpb249MjAyMS0xMi0wMQ==",
+      "RequestMethod": "PATCH",
+      "RequestBody": "{}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "2da5eef9-4301-4100-85da-ed0bec65eb47"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/5.0.1221.52207",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "2"
+        ]
+      },
+      "ResponseHeaders": {
+        "Server": [
+          "Rocket"
+        ],
+        "Date": [
+          "Tue, 16 Nov 2021 13:57:17 GMT"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Content-Length": [
+          "339"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/{subscription-id}/resourceGroups/group1/providers/Microsoft.AVS/privateClouds/cloud1/clusters/cluster1/placementPolicies/policy1\",\r\n  \"name\": \"policy1\",\r\n  \"type\": \"Microsoft.AVS/privateClouds/clusters/placementPolicies\",\r\n  \"properties\": {\r\n    \"type\": \"VmHost\",\r\n    \"state\": \"Disabled\",\r\n    \"displayName\": \"policy1\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {
+    "PlacementPolicy": [
+      "rg5073",
+      "cloud4801",
+      "cluster6398"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5"
+  }
+}

@@ -86,9 +86,14 @@ namespace Avs.Tests
 
             // delete a cluster
             avsClient.Clusters.Delete(rgName, cloudName, cluster.Name);
+            // Update a cluster
+            avsClient.Clusters.Update(rgName, cloudName, cluster.Name,new ClusterUpdate());
 
             //delete a private cloud
             avsClient.PrivateClouds.Delete(rgName, cloudName);
+
+            //Update a private cloud
+            avsClient.PrivateClouds.Update(rgName, cloudName,new PrivateCloudUpdate());
         }
 
         [Fact]
@@ -101,9 +106,53 @@ namespace Avs.Tests
             using var avsClient = context.GetServiceClient<AvsClient>();
 
             avsClient.PrivateClouds.ListAdminCredentials(rgName, cloudName);
-            // TODO replace LRO responses in test server
-            //avsClient.PrivateClouds.RotateNsxtPassword(rgName, cloudName);
-            //avsClient.PrivateClouds.RotateVcenterPassword(rgName, cloudName);
+         
+            avsClient.PrivateClouds.RotateNsxtPassword(rgName, cloudName);
+            avsClient.PrivateClouds.RotateVcenterPassword(rgName, cloudName);
+
+        }
+
+        [Fact]
+        public void PlacementPolicy()
+        {
+            using var context = MockContext.Start(this.GetType());
+            string rgName = TestUtilities.GenerateName("rg");
+            string cloudName = TestUtilities.GenerateName("cloud");
+            string clusterName = TestUtilities.GenerateName("cluster");
+            string placemenPolicyName = "placementpolicy-pc";
+            //creating avsclient object
+            using var avsClient = context.GetServiceClient<AvsClient>();
+
+            // Delete placement policices
+            avsClient.PlacementPolicies.Delete(rgName, cloudName, clusterName, placemenPolicyName);
+            // Get placement policies
+            avsClient.PlacementPolicies.Get(rgName, cloudName, clusterName, placemenPolicyName);
+            // list placement policies 
+            avsClient.PlacementPolicies.List(rgName, cloudName, clusterName);
+            // update placement policies
+            avsClient.PlacementPolicies.Update(rgName, cloudName, clusterName, placemenPolicyName,new PlacementPolicyUpdate());
+
+
+        }
+
+        [Fact]
+        public void VirtualMachine()
+        {
+            using var context = MockContext.Start(this.GetType());
+            string rgName = TestUtilities.GenerateName("rg");
+            string cloudName = TestUtilities.GenerateName("cloud");
+            string clusterName = TestUtilities.GenerateName("cluster");
+            string virtualId = "Vr-Id";
+
+            using var avsClient = context.GetServiceClient<AvsClient>();
+            // get virtual machine 
+            avsClient.VirtualMachines.Get(rgName,cloudName,clusterName, virtualId);
+            // list virtual machine
+            avsClient.VirtualMachines.List(rgName, cloudName, clusterName);
+
+           // avsClient.VirtualMachines.RestrictMovement(rgName, cloudName, clusterName, virtualId, new VirtualMachineRestrictMovement(VirtualMachineRestrictMovementState.Enabled));
+
+
         }
     }
 }
