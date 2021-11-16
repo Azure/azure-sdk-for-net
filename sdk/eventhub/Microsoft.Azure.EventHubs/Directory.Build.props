@@ -9,7 +9,6 @@
   <PropertyGroup>
     <!-- Do not inherit implicit dependencies from the engineering system during build or packaging -->
     <ImportDefaultReferences>false</ImportDefaultReferences>
-    <IsOptOutOfGlobalTestTimeout>true</IsOptOutOfGlobalTestTimeout>
   </PropertyGroup>
   <!--
     For Track 1, override the engineering system signing key and use the existing key for

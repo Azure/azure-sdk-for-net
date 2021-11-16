@@ -10,6 +10,7 @@
   <PropertyGroup Condition="$(MSBuildProjectName.StartsWith('Azure.')) and $(MSBuildProjectName.Contains('.Samples'))">
     <IsSamplesProject>true</IsSamplesProject>
     <IsTestSupportProject>true</IsTestSupportProject>
+    <IsOptOutOfGlobalTestTimeout>true</IsOptOutOfGlobalTestTimeout>
   </PropertyGroup>
 
   <!-- Import the common SDK build properties. -->
