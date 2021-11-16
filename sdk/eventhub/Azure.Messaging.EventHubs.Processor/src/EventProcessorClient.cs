@@ -41,7 +41,7 @@ namespace Azure.Messaging.EventHubs
     public class EventProcessorClient : EventProcessor<EventProcessorPartition>
     {
         /// <summary>The delegate to invoke when attempting to update a checkpoint using an empty event.</summary>
-        private static readonly Func<CancellationToken, Task> EmptyEventUpdateCheckpoint = cancellationToken => throw new InvalidOperationException(Resources.CannotCreateCheckpointForEmptyEvent);
+        protected static readonly Func<CancellationToken, Task> EmptyEventUpdateCheckpoint = cancellationToken => throw new InvalidOperationException(Resources.CannotCreateCheckpointForEmptyEvent);
 
         /// <summary>The set of default options for the processor.</summary>
         private static readonly EventProcessorClientOptions DefaultClientOptions = new EventProcessorClientOptions();
@@ -298,7 +298,7 @@ namespace Azure.Messaging.EventHubs
         ///   The instance of <see cref="EventProcessorClientEventSource" /> which can be mocked for testing.
         /// </summary>
         ///
-        internal EventProcessorClientEventSource Logger { get; set; } = EventProcessorClientEventSource.Log;
+        protected EventProcessorClientEventSource Logger { get; set; } = EventProcessorClientEventSource.Log;
 
         /// <summary>
         ///   Responsible for creation of checkpoints and for ownership claim.
@@ -718,7 +718,7 @@ namespace Azure.Messaging.EventHubs
         /// <param name="context">The context of the partition the checkpoint is associated with.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
         ///
-        internal Task UpdateCheckpointAsync(EventData eventData,
+        protected Task UpdateCheckpointAsync(EventData eventData,
                                             PartitionContext context,
                                             CancellationToken cancellationToken)
         {
@@ -1357,7 +1357,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <seealso cref="Azure.Messaging.EventHubs.Consumer.PartitionContext" />
         ///
-        private class ProcessorPartitionContext : PartitionContext
+        protected class ProcessorPartitionContext : PartitionContext
         {
             /// <summary>A function that can be used to read the last enqueued event properties for the partition.</summary>
             private Func<LastEnqueuedEventProperties> _readLastEnqueuedEventProperties;
@@ -1392,7 +1392,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <seealso cref="Azure.Messaging.EventHubs.Consumer.PartitionContext" />
         ///
-        private class EmptyPartitionContext : PartitionContext
+        protected class EmptyPartitionContext : PartitionContext
         {
             /// <summary>
             ///   Initializes a new instance of the <see cref="EmptyPartitionContext" /> class.
