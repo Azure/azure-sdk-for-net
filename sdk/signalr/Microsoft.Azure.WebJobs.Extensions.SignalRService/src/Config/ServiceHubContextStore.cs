@@ -32,7 +32,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
             // The GetAsync for strongly typed hub is more simple than that for weak typed hub, as it removes codes to handle transient errors. The creation of service hub context should not contain transient errors.
             var lazy = _stronglyTypedStore.GetOrAdd(hubName, new Lazy<Task<object>>(async () => await _serviceManager.CreateHubContextAsync<T>(hubName, default).ConfigureAwait(false)));
             var hubContext = await lazy.Value.ConfigureAwait(false);
-            return hubContext as ServiceHubContext<T>;
+            return (ServiceHubContext<T>)hubContext;
         }
 
         public ValueTask<IServiceHubContext> GetAsync(string hubName)

@@ -13,7 +13,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService.Tests
         public TestStronglyTypedHub(ServiceHubContext<IChatClient> serviceHubContext) : base(serviceHubContext) { }
 
         [FunctionName("negotiate")]
-        public ValueTask<SignalRConnectionInfo> Negotiate(string userId)
+        public Task<SignalRConnectionInfo> Negotiate(string userId)
         {
             return NegotiateAsync(new() { UserId = userId });
         }
@@ -21,7 +21,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService.Tests
         [FunctionName(nameof(Broadcast))]
         public async Task Broadcast([SignalRTrigger] InvocationContext invocationContext, string message)
         {
-            await HubContext.Clients.All.ReceiveMessage(message);
+            await Clients.All.ReceiveMessage(message);
         }
 
         internal void TestFunction([SignalRTrigger] InvocationContext context, string arg0, int arg1)

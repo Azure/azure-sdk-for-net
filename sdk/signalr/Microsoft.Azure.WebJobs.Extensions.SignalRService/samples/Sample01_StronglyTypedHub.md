@@ -25,7 +25,7 @@ public class StronglyTypedHub : ServerlessHub<IChatClient>
     [FunctionName(nameof(Broadcast))]
     public async Task Broadcast([HttpTrigger(AuthorizationLevel.Anonymous)] HttpRequest _, string message)
     {
-        await HubContext.Clients.All.ReceiveMessage(message);
+        await Clients.All.ReceiveMessage(message);
     }
 }
 ```

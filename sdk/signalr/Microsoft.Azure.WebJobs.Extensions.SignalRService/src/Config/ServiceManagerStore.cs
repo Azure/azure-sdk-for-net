@@ -57,7 +57,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
                     }
                 })
                 .AddSignalRServiceManager()
-                .AddSingleton(sp => sp.GetService<IServiceManager>() as ServiceManager)
+                .AddSingleton(sp => (ServiceManager)sp.GetService<IServiceManager>())
                 .AddSingleton(_loggerFactory)
                 .AddSingleton<IInternalServiceHubContextStore, ServiceHubContextStore>();
             if (_router != null)

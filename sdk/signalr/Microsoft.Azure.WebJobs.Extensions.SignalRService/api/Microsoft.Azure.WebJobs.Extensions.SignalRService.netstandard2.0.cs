@@ -114,10 +114,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
     }
     public abstract partial class ServerlessHub<T> where T : class
     {
-        internal ServerlessHub() { }
-        protected Microsoft.Azure.SignalR.Management.ServiceHubContext<T> HubContext { get { throw null; } }
+        protected ServerlessHub(Microsoft.Azure.SignalR.Management.ServiceHubContext<T> serviceHubContext = null) { }
+        public Microsoft.Azure.SignalR.Management.ClientManager ClientManager { get { throw null; } }
+        public Microsoft.AspNetCore.SignalR.IHubClients<T> Clients { get { throw null; } }
+        public Microsoft.Azure.SignalR.Management.GroupManager Groups { get { throw null; } }
+        public Microsoft.Azure.SignalR.Management.UserGroupManager UserGroups { get { throw null; } }
         protected static System.Collections.Generic.IList<System.Security.Claims.Claim> GetClaims(string jwt) { throw null; }
-        protected System.Threading.Tasks.ValueTask<Microsoft.Azure.WebJobs.Extensions.SignalRService.SignalRConnectionInfo> NegotiateAsync(Microsoft.Azure.SignalR.Management.NegotiationOptions options) { throw null; }
+        protected System.Threading.Tasks.Task<Microsoft.Azure.WebJobs.Extensions.SignalRService.SignalRConnectionInfo> NegotiateAsync(Microsoft.Azure.SignalR.Management.NegotiationOptions options) { throw null; }
     }
     public partial class SignalRAsyncCollector<T> : Microsoft.Azure.WebJobs.IAsyncCollector<T>
     {
