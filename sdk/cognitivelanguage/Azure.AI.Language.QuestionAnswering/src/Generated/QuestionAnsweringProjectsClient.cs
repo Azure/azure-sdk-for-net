@@ -11,6 +11,7 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.AI.Language.QuestionAnswering;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -39,7 +40,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public QuestionAnsweringProjectsClient(Uri endpoint, AzureKeyCredential credential, QuestionAnsweringProjectsClientOptions options = null)
+        public QuestionAnsweringProjectsClient(Uri endpoint, AzureKeyCredential credential, QuestionAnsweringClientOptions options = null)
         {
             if (endpoint == null)
             {
@@ -49,7 +50,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             {
                 throw new ArgumentNullException(nameof(credential));
             }
-            options ??= new QuestionAnsweringProjectsClientOptions();
+            options ??= new QuestionAnsweringClientOptions();
 
             _clientDiagnostics = new ClientDiagnostics(options);
             _keyCredential = credential;
