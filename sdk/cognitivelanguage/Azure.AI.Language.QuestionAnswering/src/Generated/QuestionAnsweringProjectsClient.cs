@@ -125,11 +125,8 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         ///   projectName: string,
         ///   description: string,
         ///   language: string,
-        ///   multilingualResource: boolean,
         ///   settings: {
-        ///     defaultAnswer: string
         ///   },
-        ///   createdDateTime: string (ISO 8601 Format),
         ///   lastModifiedDateTime: string (ISO 8601 Format),
         ///   lastDeployedDateTime: string (ISO 8601 Format)
         /// }
