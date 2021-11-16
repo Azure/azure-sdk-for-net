@@ -1,10 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Threading.Tasks;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.DeviceUpdate.Models;
 using Azure.ResourceManager.DeviceUpdate.Tests.Helper;
 using Azure.Core.TestFramework;
@@ -34,7 +32,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests
 
         [TestCase]
         [RecordedTest]
-        [Ignore("ResourcePatchValidateFailed")]
+        [Ignore("ResourcePatchValidateFailed, Need more investigation")]
         public async Task Update()
         {
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();
@@ -57,7 +55,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests
             ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string accountName = Recording.GenerateAssetName("Account-");
             Account account = await CreateAccount(rg, accountName);
-            Assert.IsFalse(await account.HeadAsync());
+            Assert.IsTrue(await account.HeadAsync());
         }
     }
 }

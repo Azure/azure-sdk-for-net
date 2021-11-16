@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.DeviceUpdate.csproj" />
+    <PackageReference Include="Azure.Identity" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SessionRecords\" />
