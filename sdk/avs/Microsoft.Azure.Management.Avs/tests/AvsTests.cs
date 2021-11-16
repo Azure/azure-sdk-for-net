@@ -123,14 +123,18 @@ namespace Avs.Tests
             //creating avsclient object
             using var avsClient = context.GetServiceClient<AvsClient>();
 
-            // Delete placement policices
-            avsClient.PlacementPolicies.Delete(rgName, cloudName, clusterName, placemenPolicyName);
+
+            avsClient.PlacementPolicies.CreateOrUpdate(rgName, cloudName, clusterName, placemenPolicyName, new PlacementPolicy());
+
+           
             // Get placement policies
             avsClient.PlacementPolicies.Get(rgName, cloudName, clusterName, placemenPolicyName);
             // list placement policies 
             avsClient.PlacementPolicies.List(rgName, cloudName, clusterName);
             // update placement policies
             avsClient.PlacementPolicies.Update(rgName, cloudName, clusterName, placemenPolicyName,new PlacementPolicyUpdate());
+            // Delete placement policices
+            avsClient.PlacementPolicies.Delete(rgName, cloudName, clusterName, placemenPolicyName);
 
 
         }
