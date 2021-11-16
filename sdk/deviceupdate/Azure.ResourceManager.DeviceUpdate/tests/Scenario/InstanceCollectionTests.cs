@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests
             string instanceName = Recording.GenerateAssetName("Instance-");
             _ = await CreateInstance(account, instanceName);
             int count = 0;
-            await foreach (var tempAccount in account.GetInstances().GetAllAsync())
+            await foreach (var tempInstance in account.GetInstances().GetAllAsync())
             {
                 count++;
             }
