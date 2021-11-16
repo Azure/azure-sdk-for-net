@@ -13,9 +13,11 @@ batch:
   model-namespace: false
 
 # TODO: Uncomment when we ship authoring support and remove ./QuestionAnsweringClientOptions.cs.
-# - input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/34a2c0723155d134311419fd997925ce96b85bec/specification/cognitiveservices/data-plane/Language/stable/2021-10-01/questionanswering-authoring.json
-#   add-credentials: true
-#   data-plane: true
+- input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/34a2c0723155d134311419fd997925ce96b85bec/specification/cognitiveservices/data-plane/Language/stable/2021-10-01/questionanswering-authoring.json
+  title: Question Answering Projects
+# namespace: Azure.AI.Language.QuestionAnswering.Projects
+  add-credentials: true
+  data-plane: true
 
 modelerfour:
   lenient-model-deduplication: true
