@@ -104,6 +104,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             _pipeline = remoteClient.Pipeline;
             _remoteProvider = remoteClient;
 
+            // Always use the remote client if requested; otherwise, attempt to cache and use the key locally or fall back to the remote client in Initialize().
             if (forceRemote)
             {
                 _provider = remoteClient;
@@ -161,6 +162,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             _pipeline = pipeline;
             _remoteProvider = remoteClient;
 
+            // Always use the remote client if requested; otherwise, attempt to cache and use the key locally or fall back to the remote client in Initialize().
             if (forceRemote)
             {
                 _provider = remoteClient;

@@ -1,14 +1,10 @@
 # Release History
 
-## 4.3.0-beta.4 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 4.3.0-beta.4 (2021-11-16)
 
 ### Bugs Fixed
 
-### Other Changes
+- Attempt to cache key locally from `KeyClient.GetCryptographyClient`. ([#25254](https://github.com/Azure/azure-sdk-for-net/issues/25254))
 
 ## 4.3.0-beta.3 (2021-11-09)
 
