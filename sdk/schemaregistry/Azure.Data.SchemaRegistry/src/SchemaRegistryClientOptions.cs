@@ -31,7 +31,7 @@ namespace Azure.Data.SchemaRegistry
         public enum ServiceVersion
         {
             /// <summary>
-            /// Version 2020-09-01-preview of the Schema Registry service.
+            /// Version 2021-10 of the Schema Registry service.
             /// </summary>
 #pragma warning disable CA1707
             V2021_10 = 1

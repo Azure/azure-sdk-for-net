@@ -35,31 +35,6 @@ namespace Azure.Security.ConfidentialLedger
         {
         }
 
-        /// <summary> Initializes a new instance of ConfidentialLedgerClient. </summary>
-        /// <param name="ledgerUri"> The Confidential Ledger URL, for example https://contoso.confidentialledger.azure.com. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ledgerUri"/> or <paramref name="credential"/> is null. </exception>
-        public ConfidentialLedgerClient(Uri ledgerUri, TokenCredential credential, ConfidentialLedgerClientOptions options = null)
-        {
-            if (ledgerUri == null)
-            {
-                throw new ArgumentNullException(nameof(ledgerUri));
-            }
-            if (credential == null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
-
-            options ??= new ConfidentialLedgerClientOptions();
-
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _tokenCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
-            _ledgerUri = ledgerUri;
-            _apiVersion = options.Version;
-        }
-
         /// <summary> The constitution is a script that assesses and applies proposals from consortium members. </summary>
         /// <param name="context"> The request context. </param>
         /// <remarks>
