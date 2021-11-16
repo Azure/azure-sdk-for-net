@@ -76,14 +76,12 @@ namespace Azure.Core.Pipeline
                 {
                     foreach (var policy in options.Policies)
                     {
-                        if (policy.Position == position)
+                        if (policy.Position == position && policy.Policy != null)
                         {
                             policies.Add(policy.Policy);
                         }
                     }
                 }
-
-                policies.RemoveAll(static policy => policy == null);
             }
 
             DiagnosticsOptions diagnostics = options.Diagnostics;

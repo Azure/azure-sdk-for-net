@@ -98,7 +98,7 @@ namespace Azure.Core.Pipeline
             message.CancellationToken = cancellationToken;
             AddHttpMessageProperties(message);
 
-            if (message.Policies == null)
+            if (message.Policies == null || message.Policies.Count == 0)
             {
                 await _pipeline.Span[0].ProcessAsync(message, _pipeline.Slice(1)).ConfigureAwait(false);
             }
@@ -128,7 +128,7 @@ namespace Azure.Core.Pipeline
             message.CancellationToken = cancellationToken;
             AddHttpMessageProperties(message);
 
-            if (message.Policies == null)
+            if (message.Policies == null || message.Policies.Count == 0)
             {
                 _pipeline.Span[0].Process(message, _pipeline.Slice(1));
             }
