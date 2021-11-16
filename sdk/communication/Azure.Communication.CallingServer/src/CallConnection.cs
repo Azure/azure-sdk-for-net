@@ -137,8 +137,6 @@ namespace Azure.Communication.CallingServer
             scope.Start();
             try
             {
-                Argument.AssertNotNull(audioFileUri, nameof(audioFileUri));
-
                 return await RestClient.PlayAudioAsync(
                     callConnectionId: CallConnectionId,
                     audioFileUri: audioFileUri.AbsoluteUri,
@@ -168,8 +166,6 @@ namespace Azure.Communication.CallingServer
             scope.Start();
             try
             {
-                Argument.AssertNotNull(audioFileUri, nameof(audioFileUri));
-
                 return RestClient.PlayAudio(
                     callConnectionId: CallConnectionId,
                     audioFileUri: audioFileUri.AbsoluteUri,
@@ -200,8 +196,6 @@ namespace Azure.Communication.CallingServer
             scope.Start();
             try
             {
-                Argument.AssertNotNull(participant, nameof(participant));
-
                 return await RestClient.AddParticipantAsync(
                     callConnectionId: CallConnectionId,
                     participant: CommunicationIdentifierSerializer.Serialize(participant),
@@ -231,8 +225,6 @@ namespace Azure.Communication.CallingServer
             scope.Start();
             try
             {
-                Argument.AssertNotNull(participant, nameof(participant));
-
                 return RestClient.AddParticipant(
                     callConnectionId: CallConnectionId,
                     participant: CommunicationIdentifierSerializer.Serialize(participant),
@@ -259,8 +251,6 @@ namespace Azure.Communication.CallingServer
             scope.Start();
             try
             {
-                Argument.AssertNotNull(participant, nameof(participant));
-
                 return await RestClient.RemoveParticipantAsync(
                     callConnectionId: CallConnectionId,
                     identifier: CommunicationIdentifierSerializer.Serialize(participant),
@@ -284,8 +274,6 @@ namespace Azure.Communication.CallingServer
             scope.Start();
             try
             {
-                Argument.AssertNotNull(participant, nameof(participant));
-
                 return RestClient.RemoveParticipant(
                     callConnectionId: CallConnectionId,
                     identifier: CommunicationIdentifierSerializer.Serialize(participant),
@@ -311,8 +299,6 @@ namespace Azure.Communication.CallingServer
             scope.Start();
             try
             {
-                Argument.AssertNotNull(targetParticipant, nameof(targetParticipant));
-
                 return await RestClient.TransferAsync(
                     callConnectionId: CallConnectionId,
                     targetParticipant: CommunicationIdentifierSerializer.Serialize(targetParticipant),
@@ -340,8 +326,6 @@ namespace Azure.Communication.CallingServer
             scope.Start();
             try
             {
-                Argument.AssertNotNull(targetParticipant, nameof(targetParticipant));
-
                 return RestClient.Transfer(
                     callConnectionId: CallConnectionId,
                     targetParticipant: CommunicationIdentifierSerializer.Serialize(targetParticipant),
@@ -463,8 +447,6 @@ namespace Azure.Communication.CallingServer
             scope.Start();
             try
             {
-                Argument.AssertNotNull(participant, nameof(participant));
-
                 Response<IReadOnlyList<CallParticipantInternal>> callParticipantsInternal = await RestClient.GetParticipantAsync(
                                         callConnectionId: CallConnectionId,
                                         identifier: CommunicationIdentifierSerializer.Serialize(participant),
@@ -491,8 +473,6 @@ namespace Azure.Communication.CallingServer
             scope.Start();
             try
             {
-                Argument.AssertNotNull(participant, nameof(participant));
-
                 Response<IReadOnlyList<CallParticipantInternal>> callParticipantsInternal = RestClient.GetParticipant(
                                         callConnectionId: CallConnectionId,
                                         identifier: CommunicationIdentifierSerializer.Serialize(participant),
@@ -561,9 +541,6 @@ namespace Azure.Communication.CallingServer
             scope.Start();
             try
             {
-                Argument.AssertNotNull(participant, nameof(participant));
-                Argument.AssertNotNull(audioFileUri, nameof(audioFileUri));
-
                 return await RestClient.ParticipantPlayAudioAsync(
                                         callConnectionId: CallConnectionId,
                                         identifier: CommunicationIdentifierSerializer.Serialize(participant),
@@ -590,14 +567,10 @@ namespace Azure.Communication.CallingServer
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<PlayAudioResult> PlayAudioToParticipant(CommunicationIdentifier participant, Uri audioFileUri, PlayAudioOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(audioFileUri, nameof(audioFileUri));
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(PlayAudioToParticipant)}");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(participant, nameof(participant));
-                Argument.AssertNotNull(audioFileUri, nameof(audioFileUri));
-
                 return RestClient.ParticipantPlayAudio(
                                         callConnectionId: CallConnectionId,
                                         identifier: CommunicationIdentifierSerializer.Serialize(participant),
@@ -626,9 +599,6 @@ namespace Azure.Communication.CallingServer
             scope.Start();
             try
             {
-                Argument.AssertNotNull(participant, nameof(participant));
-                Argument.AssertNotNull(mediaOperationId, nameof(mediaOperationId));
-
                 return await RestClient.CancelParticipantMediaOperationAsync(
                                         callConnectionId: CallConnectionId,
                                         identifier: CommunicationIdentifierSerializer.Serialize(participant),
@@ -654,9 +624,6 @@ namespace Azure.Communication.CallingServer
             scope.Start();
             try
             {
-                Argument.AssertNotNull(participant, nameof(participant));
-                Argument.AssertNotNull(mediaOperationId, nameof(mediaOperationId));
-
                 return RestClient.CancelParticipantMediaOperation(
                                         callConnectionId: CallConnectionId,
                                         identifier: CommunicationIdentifierSerializer.Serialize(participant),
@@ -680,8 +647,6 @@ namespace Azure.Communication.CallingServer
             scope.Start();
             try
             {
-                Argument.AssertNotNull(participant, nameof(participant));
-
                 return await RestClient.MuteParticipantAsync(
                                         callConnectionId: CallConnectionId,
                                         identifier: CommunicationIdentifierSerializer.Serialize(participant),
@@ -705,8 +670,6 @@ namespace Azure.Communication.CallingServer
             scope.Start();
             try
             {
-                Argument.AssertNotNull(participant, nameof(participant));
-
                 return RestClient.MuteParticipant(
                                         callConnectionId: CallConnectionId,
                                         identifier: CommunicationIdentifierSerializer.Serialize(participant),
@@ -729,8 +692,6 @@ namespace Azure.Communication.CallingServer
             scope.Start();
             try
             {
-                Argument.AssertNotNull(participant, nameof(participant));
-
                 return await RestClient.UnmuteParticipantAsync(
                                         callConnectionId: CallConnectionId,
                                         identifier: CommunicationIdentifierSerializer.Serialize(participant),
@@ -754,8 +715,6 @@ namespace Azure.Communication.CallingServer
             scope.Start();
             try
             {
-                Argument.AssertNotNull(participant, nameof(participant));
-
                 return RestClient.UnmuteParticipant(
                                         callConnectionId: CallConnectionId,
                                         identifier: CommunicationIdentifierSerializer.Serialize(participant),
@@ -778,8 +737,6 @@ namespace Azure.Communication.CallingServer
             scope.Start();
             try
             {
-                Argument.AssertNotNull(participant, nameof(participant));
-
                 return await RestClient.HoldParticipantMeetingAudioAsync(
                                         callConnectionId: CallConnectionId,
                                         identifier: CommunicationIdentifierSerializer.Serialize(participant),
@@ -803,8 +760,6 @@ namespace Azure.Communication.CallingServer
             scope.Start();
             try
             {
-                Argument.AssertNotNull(participant, nameof(participant));
-
                 return RestClient.HoldParticipantMeetingAudio(
                                         callConnectionId: CallConnectionId,
                                         identifier: CommunicationIdentifierSerializer.Serialize(participant),
@@ -827,8 +782,6 @@ namespace Azure.Communication.CallingServer
             scope.Start();
             try
             {
-                Argument.AssertNotNull(participant, nameof(participant));
-
                 return await RestClient.ResumeParticipantMeetingAudioAsync(
                                         callConnectionId: CallConnectionId,
                                         identifier: CommunicationIdentifierSerializer.Serialize(participant),
@@ -852,8 +805,6 @@ namespace Azure.Communication.CallingServer
             scope.Start();
             try
             {
-                Argument.AssertNotNull(participant, nameof(participant));
-
                 return RestClient.ResumeParticipantMeetingAudio(
                                         callConnectionId: CallConnectionId,
                                         identifier: CommunicationIdentifierSerializer.Serialize(participant),
@@ -877,7 +828,6 @@ namespace Azure.Communication.CallingServer
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(targets, nameof(targets));
                 var count = targets.Count();
                 if (audioRoutingMode == AudioRoutingMode.OneToOne)
                 {
@@ -912,7 +862,6 @@ namespace Azure.Communication.CallingServer
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(targets, nameof(targets));
                 var count = targets.Count();
                 if (audioRoutingMode == AudioRoutingMode.OneToOne)
                 {
@@ -947,9 +896,6 @@ namespace Azure.Communication.CallingServer
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(audioRoutingGroupId, nameof(audioRoutingGroupId));
-                Argument.AssertNotNullOrEmpty(targets, nameof(targets));
-
                 return await RestClient.UpdateAudioRoutingGroupAsync(
                                         callConnectionId: CallConnectionId,
                                         audioRoutingGroupId: audioRoutingGroupId,
@@ -975,9 +921,6 @@ namespace Azure.Communication.CallingServer
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(audioRoutingGroupId, nameof(audioRoutingGroupId));
-                Argument.AssertNotNullOrEmpty(targets, nameof(targets));
-
                 return RestClient.UpdateAudioRoutingGroup(
                                         callConnectionId: CallConnectionId,
                                         audioRoutingGroupId: audioRoutingGroupId,
@@ -1002,8 +945,6 @@ namespace Azure.Communication.CallingServer
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(audioRoutingGroupId, nameof(audioRoutingGroupId));
-
                 return await RestClient.DeleteAudioRoutingGroupAsync(
                                         callConnectionId: CallConnectionId,
                                         audioRoutingGroupId: audioRoutingGroupId,
@@ -1027,8 +968,6 @@ namespace Azure.Communication.CallingServer
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(audioRoutingGroupId, nameof(audioRoutingGroupId));
-
                 return RestClient.DeleteAudioRoutingGroup(
                                         callConnectionId: CallConnectionId,
                                         audioRoutingGroupId: audioRoutingGroupId,

@@ -21,8 +21,6 @@ namespace Azure.Communication.CallingServer
 
         internal async Task<Response<Stream>> DownloadStreamingInternal(Uri sourceEndpoint, HttpRange range, bool async, CancellationToken cancellationToken)
         {
-            Argument.AssertNotNull(sourceEndpoint, nameof(sourceEndpoint));
-
             Response<Stream> response;
             if (async)
             {

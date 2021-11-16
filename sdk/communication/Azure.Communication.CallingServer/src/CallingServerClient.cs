@@ -114,10 +114,6 @@ namespace Azure.Communication.CallingServer
             scope.Start();
             try
             {
-                Argument.AssertNotNull(source, nameof(source));
-                Argument.AssertNotNullOrEmpty(targets, nameof(targets));
-                Argument.AssertNotNull(options, nameof(options));
-
                 var createCallResponse = await CallConnectionRestClient.CreateCallAsync(
                     source: CommunicationIdentifierSerializer.Serialize(source),
                     targets: targets.Select(t => CommunicationIdentifierSerializer.Serialize(t)),
@@ -155,10 +151,6 @@ namespace Azure.Communication.CallingServer
             scope.Start();
             try
             {
-                Argument.AssertNotNull(source, nameof(source));
-                Argument.AssertNotNullOrEmpty(targets, nameof(targets));
-                Argument.AssertNotNull(options, nameof(options));
-
                 var createCallResponse = CallConnectionRestClient.CreateCall(
                     source: CommunicationIdentifierSerializer.Serialize(source),
                     targets: targets.Select(t => CommunicationIdentifierSerializer.Serialize(t)),
@@ -196,10 +188,6 @@ namespace Azure.Communication.CallingServer
             scope.Start();
             try
             {
-                Argument.AssertNotNull(callLocator, nameof(callLocator));
-                Argument.AssertNotNull(source, nameof(source));
-                Argument.AssertNotNull(callOptions, nameof(callOptions));
-
                 var joinCallResponse = await ServerCallRestClient.JoinCallAsync(
                     callLocator: CallLocatorModelSerializer.Serialize(callLocator),
                     source: CommunicationIdentifierSerializer.Serialize(source),
@@ -236,10 +224,6 @@ namespace Azure.Communication.CallingServer
             scope.Start();
             try
             {
-                Argument.AssertNotNull(callLocator, nameof(callLocator));
-                Argument.AssertNotNull(source, nameof(source));
-                Argument.AssertNotNull(callOptions, nameof(callOptions));
-
                 var joinCallResponse = ServerCallRestClient.JoinCall(
                     callLocator: CallLocatorModelSerializer.Serialize(callLocator),
                     source: CommunicationIdentifierSerializer.Serialize(source),
@@ -269,8 +253,6 @@ namespace Azure.Communication.CallingServer
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(callConnectionId, nameof(callConnectionId));
-
                 return new CallConnection(callConnectionId, CallConnectionRestClient, _clientDiagnostics);
             }
             catch (Exception ex)
@@ -735,8 +717,6 @@ namespace Azure.Communication.CallingServer
             scope.Start();
             try
             {
-                Argument.AssertNotNull(audioFileUri, nameof(audioFileUri));
-
                 return ServerCallRestClient.PlayAudio(
                     callLocator: CallLocatorModelSerializer.Serialize(callLocator),
                     loop: options?.Loop ?? false,
@@ -766,8 +746,6 @@ namespace Azure.Communication.CallingServer
             scope.Start();
             try
             {
-                Argument.AssertNotNull(audioFileUri, nameof(audioFileUri));
-
                 return await ServerCallRestClient.PlayAudioAsync(
                     callLocator: CallLocatorModelSerializer.Serialize(callLocator),
                     loop: options?.Loop ?? false,
@@ -800,8 +778,6 @@ namespace Azure.Communication.CallingServer
             scope.Start();
             try
             {
-                Argument.AssertNotNull(participant, nameof(participant));
-
                 return ServerCallRestClient.AddParticipant(
                     callLocator: CallLocatorModelSerializer.Serialize(callLocator),
                     participant: CommunicationIdentifierSerializer.Serialize(participant),
@@ -833,8 +809,6 @@ namespace Azure.Communication.CallingServer
             scope.Start();
             try
             {
-                Argument.AssertNotNull(participant, nameof(participant));
-
                 return await ServerCallRestClient.AddParticipantAsync(
                     callLocator: CallLocatorModelSerializer.Serialize(callLocator),
                     participant: CommunicationIdentifierSerializer.Serialize(participant),
@@ -863,8 +837,6 @@ namespace Azure.Communication.CallingServer
             scope.Start();
             try
             {
-                Argument.AssertNotNull(participant, nameof(participant));
-
                 return ServerCallRestClient.RemoveParticipant(
                     callLocator: CallLocatorModelSerializer.Serialize(callLocator),
                     identifier: CommunicationIdentifierSerializer.Serialize(participant),
@@ -890,8 +862,6 @@ namespace Azure.Communication.CallingServer
             scope.Start();
             try
             {
-                Argument.AssertNotNull(participant, nameof(participant));
-
                 return await ServerCallRestClient.RemoveParticipantAsync(
                     callLocator: CallLocatorModelSerializer.Serialize(callLocator),
                     identifier: CommunicationIdentifierSerializer.Serialize(participant),
@@ -1020,9 +990,6 @@ namespace Azure.Communication.CallingServer
             scope.Start();
             try
             {
-                Argument.AssertNotNull(participant, nameof(participant));
-                Argument.AssertNotNull(audioFileUri, nameof(audioFileUri));
-
                 return ServerCallRestClient.ParticipantPlayAudio(
                                     callLocator: CallLocatorModelSerializer.Serialize(callLocator),
                                     identifier: CommunicationIdentifierSerializer.Serialize(participant),
@@ -1052,9 +1019,6 @@ namespace Azure.Communication.CallingServer
             scope.Start();
             try
             {
-                Argument.AssertNotNull(participant, nameof(participant));
-                Argument.AssertNotNull(audioFileUri, nameof(audioFileUri));
-
                 return await ServerCallRestClient.ParticipantPlayAudioAsync(
                                     callLocator: CallLocatorModelSerializer.Serialize(callLocator),
                                     identifier: CommunicationIdentifierSerializer.Serialize(participant),
@@ -1085,9 +1049,6 @@ namespace Azure.Communication.CallingServer
             scope.Start();
             try
             {
-                Argument.AssertNotNull(participant, nameof(participant));
-                Argument.AssertNotNull(mediaOperationId, nameof(mediaOperationId));
-
                 return ServerCallRestClient.CancelParticipantMediaOperation(
                                     callLocator: CallLocatorModelSerializer.Serialize(callLocator),
                                     identifier: CommunicationIdentifierSerializer.Serialize(participant),
@@ -1113,9 +1074,6 @@ namespace Azure.Communication.CallingServer
             scope.Start();
             try
             {
-                Argument.AssertNotNull(participant, nameof(participant));
-                Argument.AssertNotNull(mediaOperationId, nameof(mediaOperationId));
-
                 return await ServerCallRestClient.CancelParticipantMediaOperationAsync(
                                     callLocator: CallLocatorModelSerializer.Serialize(callLocator),
                                     identifier: CommunicationIdentifierSerializer.Serialize(participant),
@@ -1141,8 +1099,6 @@ namespace Azure.Communication.CallingServer
             scope.Start();
             try
             {
-                Argument.AssertNotNull(mediaOperationId, nameof(mediaOperationId));
-
                 return ServerCallRestClient.CancelMediaOperation(
                                     callLocator: CallLocatorModelSerializer.Serialize(callLocator),
                                     mediaOperationId: mediaOperationId,
@@ -1167,8 +1123,6 @@ namespace Azure.Communication.CallingServer
             scope.Start();
             try
             {
-                Argument.AssertNotNull(mediaOperationId, nameof(mediaOperationId));
-
                 return await ServerCallRestClient.CancelMediaOperationAsync(
                                     callLocator: CallLocatorModelSerializer.Serialize(callLocator),
                                     mediaOperationId: mediaOperationId,
@@ -1197,9 +1151,6 @@ namespace Azure.Communication.CallingServer
             scope.Start();
             try
             {
-                Argument.AssertNotNull(incomingCallContext, nameof(incomingCallContext));
-                Argument.AssertNotNullOrEmpty(targets, nameof(targets));
-
                 return ServerCallRestClient.RedirectCall(
                     incomingCallContext: incomingCallContext,
                     targets: targets.Select(t => CommunicationIdentifierSerializer.Serialize(t)),
@@ -1230,9 +1181,6 @@ namespace Azure.Communication.CallingServer
             scope.Start();
             try
             {
-                Argument.AssertNotNull(incomingCallContext, nameof(incomingCallContext));
-                Argument.AssertNotNullOrEmpty(targets, nameof(targets));
-
                 return await ServerCallRestClient.RedirectCallAsync(
                     incomingCallContext: incomingCallContext,
                     targets: targets.Select(t => CommunicationIdentifierSerializer.Serialize(t)),
@@ -1262,8 +1210,6 @@ namespace Azure.Communication.CallingServer
             scope.Start();
             try
             {
-                Argument.AssertNotNull(incomingCallContext, nameof(incomingCallContext));
-
                 var answerResponse = ServerCallRestClient.AnswerCall(
                     incomingCallContext: incomingCallContext,
                     requestedMediaTypes: requestedMediaTypes,
@@ -1296,8 +1242,6 @@ namespace Azure.Communication.CallingServer
             scope.Start();
             try
             {
-                Argument.AssertNotNull(incomingCallContext, nameof(incomingCallContext));
-
                 var answerResponse = await ServerCallRestClient.AnswerCallAsync(
                     incomingCallContext: incomingCallContext,
                     requestedMediaTypes: requestedMediaTypes,
@@ -1330,8 +1274,6 @@ namespace Azure.Communication.CallingServer
             scope.Start();
             try
             {
-                Argument.AssertNotNull(incomingCallContext, nameof(incomingCallContext));
-
                 return ServerCallRestClient.RejectCall(
                     incomingCallContext: incomingCallContext,
                     callRejectReason: callRejectReason,
@@ -1359,8 +1301,6 @@ namespace Azure.Communication.CallingServer
             scope.Start();
             try
             {
-                Argument.AssertNotNull(incomingCallContext, nameof(incomingCallContext));
-
                 return await ServerCallRestClient.RejectCallAsync(
                     incomingCallContext: incomingCallContext,
                     callRejectReason: callRejectReason,
