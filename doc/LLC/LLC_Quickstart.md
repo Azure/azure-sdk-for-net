@@ -33,9 +33,9 @@
 
 For this tutorial, we'll create a getting started project in a branch of your fork of `azure-sdk-for-net` repo. To create the project, we'll copy the [Azure.Template.LLC](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/template-LLC) project for .NET.
 
-The `Azure.Template.LLC` project is a great place to get started with Azure SDK .NET library development in general, as it shows a number of common patterns we use for tests, samples, documentation, generating API listings, and an example of a generated library already in place.
+The `Azure.Template.LLC` project is a great place to get started with Azure SDK .NET library development in general, as it contains a number of common patterns we use for tests, samples, documentation, generating API listings. It also has an example of a generated library for demonstrating LLC APIs.
 
-**Learn more**: see other patterns `Azure.Template.LLC` illustrates in the [Azure.Template.LLC README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template-LLC/Azure.Template.LLC/README.md).
+**Learn more**: see other features listed in the [Azure.Template.LLC README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template-LLC/Azure.Template.LLC/README.md).
 
 ### Create the project
 
@@ -63,13 +63,13 @@ You'll notice that the `Azure.Template.LLC` project already has generated code i
 
 In Visual Studio:
 
-- Rename the `Azure.Template.LLC` project `Azure.<your-sdk-name>`.
-- Rename the `Azure.Template.LLC` solution `Azure.<your-sdk-name>`.
+- Rename the `Azure.Template.LLC` project to `Azure.<your-sdk-name>`.
+- Rename the `Azure.Template.LLC` solution to `Azure.<your-sdk-name>`.
 - Remove the `Azure.Template.LLC.Tests` project from the solution.
 
 **Learn more:** see the [.NET Guidelines on Namespace Naming](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-namespace-naming) for more information on naming Azure SDK packages. This name diverges from approved Azure SDK namespaces, since it is intended to be used just for this tutorial.
 
-#### 4. Save and commit your changes to your tutorial branch
+#### 4. Save and commit your changes to your branch
 
 This will make it easier to see the changes you make when you generate code in the clean solution.
 
@@ -86,7 +86,7 @@ In this section, we'll create a generated API layer built on Azure Core. We'll u
 
 #### 1. Set the Swagger File
 
-Open autorest.md in your `Azure.<your-sdk-name>` project. In the input-file definition, replace the file path with your swagger link, for example: [WebPubSub swagger link](https://github.com/Azure/azure-rest-api-specs/blob/39c7d63c21b9a29efe3907d9b949d1c77b021907/specification/webpubsub/data-plane/WebPubSub/stable/2021-10-01/webpubsub.json). Update a namespace definition to set the namespace the generator will use when creating your types. Update the AAD token credential(For AAD token refer [this](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template-LLC/Azure.Template.LLC/src/autorest.md#autorest-configuration) example) or Azure key credential(For Azure Key credential refer [this](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/webpubsub/Azure.Messaging.WebPubSub/src/autorest.md#swagger-sources) example). Save your changes.
+Open autorest.md in your `Azure.<your-sdk-name>` project. In the input-file definition, replace the file path with your swagger link, for example: [WebPubSub swagger link](https://github.com/Azure/azure-rest-api-specs/blob/39c7d63c21b9a29efe3907d9b949d1c77b021907/specification/webpubsub/data-plane/WebPubSub/stable/2021-10-01/webpubsub.json). Update a namespace definition to set the namespace C# generator will use when creating your types. Update the AAD token credential(for AAD token refer [this](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template-LLC/Azure.Template.LLC/src/autorest.md#autorest-configuration) example) or Azure key credential (for Azure Key credential refer [this](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/webpubsub/Azure.Messaging.WebPubSub/src/autorest.md#swagger-sources) example). Save your changes.
 
 Your `autorest.md` file should now look like:
 
@@ -109,7 +109,7 @@ security-scopes: <AAD-token-scope>
 ```
 ````
 
-**Note:** see the [.NET Guidelines for Namespaces](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-namespace-naming) learn more about namespaces in the Azure SDK.
+**Learn more:** see the [.NET Guidelines for Namespaces](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-namespace-naming) to learn more about namespaces in the Azure SDK.
 
 #### 2. Run the Generate Command
 
@@ -127,28 +127,28 @@ If you're interested, you can look through the swagger file to see how the autor
 
 **Learn more**: see the [OpenAPI Swagger Documentation](https://swagger.io/docs/) to learn more about swagger file formats.
 
-#### 4. Save and commit your changes to your tutorial branch
+#### 4. Save and commit your changes to your branch
 
 This will make it easier to see the changes you make when you re-generate the code later.
 
-Congratulations, you've generated your first Azure SDK library! Next, we'll discuss how we can Add tests, samples and documents.
+Congratulations, you've generated your first Azure SDK library! Next, we'll discuss how we can add tests, samples and documents.
 
 ## Tests
 
 In this section, we will talk about adding unit tests and live tests and how to run them.
 
-- Add back `Azure.Template.LLC.Tests` in your `Azure.<your-sdk-name>.sln`.
-- Rename the `Azure.Template.LLC.Tests` project `Azure.<your-sdk-name>.Tests`.
-- Rename the `TemplateServiceTestEnvironment.cs` file `<client-name>TestEnvironment.cs` and update the test environment. Before running live tests you need to create live test resources, please refer [this](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/common/TestResources/README.md) to learn more about how to manager resources. 
-- Rename the `TemplateServiceLiveTests.cs` file `<client-name>LiveTests.cs` and remove all the template project tests. Please refer [this](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md#live-testing) to add live tests.
-- Rename the `TemplateServiceTests.cs` file `<client-name>Tests.cs` and remove all the template project tests and add all the unit tests in this file.
+- Add back `Azure.Template.LLC.Tests` csproj in your `Azure.<your-sdk-name>.sln`.
+- Rename the `Azure.Template.LLC.Tests` project to `Azure.<your-sdk-name>.Tests`.
+- Rename the `TemplateServiceTestEnvironment.cs` file to `<client-name>TestEnvironment.cs` and update the test environment. Before running live tests you will need to create live test resources, please refer [this](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/common/TestResources/README.md) to learn more about how to manager resources and update test environment.
+- Rename the `TemplateServiceLiveTests.cs` file to `<client-name>LiveTests.cs` and remove all the template project tests. Please refer [this](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md#live-testing) to add live tests.
+- Rename the `TemplateServiceTests.cs` file to `<client-name>Tests.cs` and remove all the template project tests and add all the unit tests in this file.
 - Remove the `SerializationHelpers.cs` file.
 
 **Learn more:** see the [docs](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md#to-test-1) to learn more about tests.
 
 ## Samples
 
-In this section, we will talk about how to add samples. As you can see we already have samples folder under `Azure.<your-sdk-name>/tests` directory. We run the samples as a part of tests. First, rename the `TemplateServiceSamples.HelloWorld.cs` file `<client-name>Samples.HelloWorld.cs` and remove the existing sample tests. You will add the basic sample tests for your SDK in this file. Create more test files and add tests as per your scenarios.
+In this section, we will talk about how to add samples. As you can see, we already have a `Samples` folder under `Azure.<your-sdk-name>/tests` directory. We run the samples as a part of tests. First, rename the `TemplateServiceSamples.HelloWorld.cs` file to `<client-name>Samples.HelloWorld.cs` and remove the existing sample tests. You will add the basic sample tests for your SDK in this file. Create more test files and add tests as per your scenarios.
 
 **Learn more:** For general information about samples, see the [Samples Guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-samples).
 
@@ -167,7 +167,7 @@ eng\scripts\Export-API.ps1 webpubsub
 
 ## Readme
 
-README.md file instrauctions are listed in `Azure.<your-sdk-name>/README.md` file. Please Add/update the README.md file as per your library.
+README.md file instructions are listed in `Azure.<your-sdk-name>/README.md` file. Please add/update the README.md file as per your library.
 
 ## Changelog
 
