@@ -98,17 +98,17 @@ namespace Azure.Core.Pipeline
             message.CancellationToken = cancellationToken;
             AddHttpMessageProperties(message);
 
-            if (message.PolicyCount == 0)
+            if (message.Policies == null)
             {
                 await _pipeline.Span[0].ProcessAsync(message, _pipeline.Slice(1)).ConfigureAwait(false);
             }
             else
             {
-                var length = _pipeline.Length + message.PolicyCount;
+                var length = _pipeline.Length + message.Policies.Count;
                 var policies = ArrayPool<HttpPipelinePolicy>.Shared.Rent(length);
                 try
                 {
-                    var pipeline = CreateRequestPipeline(policies, message);
+                    var pipeline = CreateRequestPipeline(policies, message.Policies);
                     await pipeline.Span[0].ProcessAsync(message, pipeline.Slice(1)).ConfigureAwait(false);
                 }
                 finally
@@ -128,17 +128,17 @@ namespace Azure.Core.Pipeline
             message.CancellationToken = cancellationToken;
             AddHttpMessageProperties(message);
 
-            if (message.PolicyCount == 0)
+            if (message.Policies == null)
             {
                 _pipeline.Span[0].Process(message, _pipeline.Slice(1));
             }
             else
             {
-                var length = _pipeline.Length + message.PolicyCount;
+                var length = _pipeline.Length + message.Policies.Count;
                 var policies = ArrayPool<HttpPipelinePolicy>.Shared.Rent(length);
                 try
                 {
-                    var pipeline = CreateRequestPipeline(policies, message);
+                    var pipeline = CreateRequestPipeline(policies, message.Policies);
                     pipeline.Span[0].ProcessAsync(message, pipeline.Slice(1));
                 }
                 finally
@@ -208,7 +208,7 @@ namespace Azure.Core.Pipeline
             return CurrentHttpMessagePropertiesScope.Value;
         }
 
-        private ReadOnlyMemory<HttpPipelinePolicy> CreateRequestPipeline(HttpPipelinePolicy[] policies, HttpMessage message)
+        private ReadOnlyMemory<HttpPipelinePolicy> CreateRequestPipeline(HttpPipelinePolicy[] policies, List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)> customPolicies)
         {
             if (!_internallyConstructed)
             {
@@ -219,29 +219,44 @@ namespace Azure.Core.Pipeline
             _pipeline.Slice(0, _perCallIndex).CopyTo(policies);
 
             int index = _perCallIndex;
-            int count = message.PerCallPolicies.Length;
-            message.PerCallPolicies.CopyTo(new Memory<HttpPipelinePolicy>(policies, index, count));
+            int count = AddCustomPolicies(customPolicies, policies, HttpPipelinePosition.PerCall, index);
 
             index += count;
             count = _perRetryIndex - _perCallIndex;
             _pipeline.Slice(_perCallIndex, count).CopyTo(new Memory<HttpPipelinePolicy>(policies, index, count));
 
             index += count;
-            count = message.PerRetryPolicies.Length;
-            message.PerRetryPolicies.CopyTo(new Memory<HttpPipelinePolicy>(policies, index, count));
+            count = AddCustomPolicies(customPolicies, policies, HttpPipelinePosition.PerRetry, index);
 
             index += count;
             count = _transportIndex - _perRetryIndex;
             _pipeline.Slice(_perRetryIndex, count).CopyTo(new Memory<HttpPipelinePolicy>(policies, index, count));
 
             index += count;
-            count = message.BeforeTransportPolicies.Length;
-            message.BeforeTransportPolicies.CopyTo(new Memory<HttpPipelinePolicy>(policies, index, count));
+            count = AddCustomPolicies(customPolicies, policies, HttpPipelinePosition.BeforeTransport, index);
 
             index += count;
             policies[index] = _pipeline.Span[_transportIndex];
 
             return new ReadOnlyMemory<HttpPipelinePolicy>(policies, 0, index + 1);
+        }
+
+        private static int AddCustomPolicies(List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)> source, HttpPipelinePolicy[] target, HttpPipelinePosition position, int start)
+        {
+            int count = 0;
+            if (source != null)
+            {
+                foreach (var policy in source)
+                {
+                    if (policy.Position == position)
+                    {
+                        target[start + count] = policy.Policy;
+                        count++;
+                    }
+                }
+            }
+
+            return count;
         }
 
         private static void AddHttpMessageProperties(HttpMessage message)

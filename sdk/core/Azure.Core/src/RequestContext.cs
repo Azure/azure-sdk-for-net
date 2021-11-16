@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -13,17 +14,7 @@ namespace Azure
     /// </summary>
     public class RequestContext
     {
-        internal Memory<HttpPipelinePolicy>? Policies { get; private set; }
-        private const int PolicySections = 3;
-        private const int SectionSize = 4;
-
-        internal static int PerCallOffset => 0 * SectionSize;
-        internal static int PerRetryOffset => 1 * SectionSize;
-        internal static int BeforeTransportOffset => 2 * SectionSize;
-
-        internal int PerCallPolicies { get; private set; }
-        internal int PerRetryPolicies { get; private set; }
-        internal int BeforeTransportPolicies { get; private set; }
+        internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RequestContext"/> class.
@@ -54,36 +45,8 @@ namespace Azure
         /// <param name="position"></param>
         public void AddPolicy(HttpPipelinePolicy policy, HttpPipelinePosition position)
         {
-            Policies ??= new Memory<HttpPipelinePolicy>(new HttpPipelinePolicy[PolicySections * SectionSize]);
-
-            switch (position)
-            {
-                case HttpPipelinePosition.PerCall:
-                    CheckPolicyCounter(PerCallPolicies);
-                    Policies.Value.Span[PerCallPolicies++] = policy;
-                    break;
-
-                case HttpPipelinePosition.PerRetry:
-                    CheckPolicyCounter(PerRetryPolicies);
-                    Policies.Value.Span[SectionSize + PerRetryPolicies++] = policy;
-                    break;
-
-                case HttpPipelinePosition.BeforeTransport:
-                    CheckPolicyCounter(BeforeTransportPolicies);
-                    Policies.Value.Span[2 * SectionSize + BeforeTransportPolicies++] = policy;
-                    break;
-
-                default:
-                    break;
-            }
-        }
-
-        private static void CheckPolicyCounter(int length)
-        {
-            if (length >= SectionSize)
-            {
-                throw new InvalidOperationException($"Cannot add more than {SectionSize} policies at a pipeline position.");
-            }
+            Policies ??= new();
+            Policies.Add((position, policy));
         }
     }
 }
