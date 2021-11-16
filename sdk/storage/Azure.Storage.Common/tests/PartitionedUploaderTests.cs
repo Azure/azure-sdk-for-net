@@ -134,7 +134,7 @@ namespace Azure.Storage.Tests
                 s_hashingOptions,
                 operationName: s_operationName);
 
-            Response<object> result = await partitionedUploader.UploadInternal(stream.Object, s_objectArgs, s_progress, IsAsync, s_cancellation).ConfigureAwait(false);
+            Response<object> result = await partitionedUploader.UploadInternal(stream.Object, default, s_objectArgs, s_progress, IsAsync, s_cancellation).ConfigureAwait(false);
 
             // assert streams were actually sent to delegates; the delegates themselves threw if conditions weren't met
             Assert.Greater(singleUpload.Invocations.Count + uploadPartition.Invocations.Count, 0);

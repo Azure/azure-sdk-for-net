@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs.Models;
+using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Test.Shared;
 using BlobsClientBuilder = Azure.Storage.Test.Shared.ClientBuilder<
     Azure.Storage.Blobs.BlobServiceClient,
@@ -87,5 +88,10 @@ namespace Azure.Storage.Blobs.Tests
             await container.CreateIfNotExistsAsync(metadata: metadata, publicAccessType: publicAccessType.Value);
             return new DisposingContainer(container);
         }
+
+        public static BlockBlobClient ToBlockBlobClient(
+            this BlobsClientBuilder clientBuilder,
+            BlobBaseClient client)
+            => clientBuilder.AzureCoreRecordedTestBase.InstrumentClient(new BlockBlobClient(client.Uri, client.ClientConfiguration));
     }
 }
