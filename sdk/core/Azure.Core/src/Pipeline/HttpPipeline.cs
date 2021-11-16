@@ -20,10 +20,24 @@ namespace Azure.Core.Pipeline
 
         private readonly ReadOnlyMemory<HttpPipelinePolicy> _pipeline;
 
+        /// <summary>
+        /// Indicates whether or not the pipeline was created using its internal constructor.
+        /// If it was, we know the indices where we can add per-request policies at positions
+        /// <see cref="HttpPipelinePosition.PerCall"/> and <see cref="HttpPipelinePosition.PerRetry"/>.
+        /// </summary>
         private readonly bool _internallyConstructed;
+
+        /// <summary>
+        /// The pipeline index where <see cref="HttpPipelinePosition.PerCall"/> policies will be added,
+        /// if any are specified using <see cref="RequestContext.AddPolicy(HttpPipelinePolicy, HttpPipelinePosition)"/>.
+        /// </summary>
         private readonly int _perCallIndex;
+
+        /// <summary>
+        /// The pipeline index where <see cref="HttpPipelinePosition.PerRetry"/> policies will be added,
+        /// if any are specified using <see cref="RequestContext.AddPolicy(HttpPipelinePolicy, HttpPipelinePosition)"/>.
+        /// </summary>
         private readonly int _perRetryIndex;
-        private readonly int _transportIndex;
 
         /// <summary>
         /// Creates a new instance of <see cref="HttpPipeline"/> with the provided transport, policies and response classifier.
@@ -41,8 +55,6 @@ namespace Azure.Core.Pipeline
             var all = new HttpPipelinePolicy[policies.Length + 1];
             all[policies.Length] = new HttpPipelineTransportPolicy(_transport);
             policies.CopyTo(all, 0);
-
-            _transportIndex = policies.Length;
 
             _pipeline = all;
         }
@@ -229,14 +241,14 @@ namespace Azure.Core.Pipeline
             count = AddCustomPolicies(customPolicies, policies, HttpPipelinePosition.PerRetry, index);
 
             index += count;
-            count = _transportIndex - _perRetryIndex;
+            count = _pipeline.Length - _perRetryIndex;
             _pipeline.Slice(_perRetryIndex, count).CopyTo(new Memory<HttpPipelinePolicy>(policies, index, count));
 
             index += count;
             count = AddCustomPolicies(customPolicies, policies, HttpPipelinePosition.BeforeTransport, index);
 
             index += count;
-            policies[index] = _pipeline.Span[_transportIndex];
+            policies[index] = _pipeline.Span[_pipeline.Length];
 
             return new ReadOnlyMemory<HttpPipelinePolicy>(policies, 0, index + 1);
         }
