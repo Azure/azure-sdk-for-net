@@ -12,7 +12,6 @@ skip-csproj: true
 output-folder: Generated/
 no-property-type-replacement:
   - CheckNameAvailabilityRequest
-use: D:/Autorest-Branch/autorest.csharp/artifacts/bin/AutoRest.CSharp/Debug/netcoreapp3.1/
 directive:
   from: swagger-document
   where: $.definitions.GroupInformation
