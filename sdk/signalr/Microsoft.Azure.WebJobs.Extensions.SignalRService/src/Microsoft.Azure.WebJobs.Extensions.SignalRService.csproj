@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Azure" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Connections" />
     <PackageReference Include="Microsoft.Azure.Functions.Extensions" />
     <PackageReference Include="Microsoft.Azure.SignalR.Management" />
     <PackageReference Include="Microsoft.Azure.SignalR" />
@@ -20,9 +21,5 @@
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Protocols.NewtonsoftJson" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="C:\Users\zityang\source\repos\azure-sdk-for-net\eng/images/pkgicon.png" />
   </ItemGroup>
 </Project>

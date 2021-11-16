@@ -2,7 +2,7 @@
   "Name": "UserAccount",
   "ProtocolName": "Models.UserAccount",
   "SummaryComment": "A user account to create on an Azure Batch node. Tasks may be configured to execute in the security context of the user account.",
-  "IsConstructorPublic": true,
+  "ConstructorAccess": "public",
   "IsUsedInCollections": true,
   "Properties": [
     {

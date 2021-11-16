@@ -18,9 +18,9 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The operation to update the extension. </summary>
-    public partial class VirtualMachineExtensionUpdateOperation : Operation<VirtualMachineExtensionVirtualMachine>, IOperationSource<VirtualMachineExtensionVirtualMachine>
+    public partial class VirtualMachineExtensionUpdateOperation : Operation<VirtualMachineVirtualMachineExtension>, IOperationSource<VirtualMachineVirtualMachineExtension>
     {
-        private readonly OperationInternals<VirtualMachineExtensionVirtualMachine> _operation;
+        private readonly OperationInternals<VirtualMachineVirtualMachineExtension> _operation;
 
         private readonly ArmResource _operationBase;
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal VirtualMachineExtensionUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<VirtualMachineExtensionVirtualMachine>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualMachineExtensionUpdateOperation");
+            _operation = new OperationInternals<VirtualMachineVirtualMachineExtension>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualMachineExtensionUpdateOperation");
             _operationBase = operationsBase;
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Compute.Models
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override VirtualMachineExtensionVirtualMachine Value => _operation.Value;
+        public override VirtualMachineVirtualMachineExtension Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -57,21 +57,21 @@ namespace Azure.ResourceManager.Compute.Models
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<VirtualMachineExtensionVirtualMachine>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<VirtualMachineVirtualMachineExtension>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<VirtualMachineExtensionVirtualMachine>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<VirtualMachineVirtualMachineExtension>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        VirtualMachineExtensionVirtualMachine IOperationSource<VirtualMachineExtensionVirtualMachine>.CreateResult(Response response, CancellationToken cancellationToken)
+        VirtualMachineVirtualMachineExtension IOperationSource<VirtualMachineVirtualMachineExtension>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new VirtualMachineExtensionVirtualMachine(_operationBase, VirtualMachineExtensionData.DeserializeVirtualMachineExtensionData(document.RootElement));
+            return new VirtualMachineVirtualMachineExtension(_operationBase, VirtualMachineExtensionData.DeserializeVirtualMachineExtensionData(document.RootElement));
         }
 
-        async ValueTask<VirtualMachineExtensionVirtualMachine> IOperationSource<VirtualMachineExtensionVirtualMachine>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<VirtualMachineVirtualMachineExtension> IOperationSource<VirtualMachineVirtualMachineExtension>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new VirtualMachineExtensionVirtualMachine(_operationBase, VirtualMachineExtensionData.DeserializeVirtualMachineExtensionData(document.RootElement));
+            return new VirtualMachineVirtualMachineExtension(_operationBase, VirtualMachineExtensionData.DeserializeVirtualMachineExtensionData(document.RootElement));
         }
     }
 }

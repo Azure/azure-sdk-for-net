@@ -95,7 +95,7 @@ namespace Azure.Storage.Files.Shares
     }
     public partial class ShareClientOptions : Azure.Core.ClientOptions
     {
-        public ShareClientOptions(Azure.Storage.Files.Shares.ShareClientOptions.ServiceVersion version = Azure.Storage.Files.Shares.ShareClientOptions.ServiceVersion.V2020_10_02) { }
+        public ShareClientOptions(Azure.Storage.Files.Shares.ShareClientOptions.ServiceVersion version = Azure.Storage.Files.Shares.ShareClientOptions.ServiceVersion.V2020_12_06) { }
         public Azure.Storage.Files.Shares.ShareClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
         {
@@ -108,6 +108,7 @@ namespace Azure.Storage.Files.Shares
             V2020_08_04 = 7,
             V2020_10_02 = 8,
             V2020_12_06 = 9,
+            V2021_02_12 = 10,
         }
     }
     public partial class ShareDirectoryClient
@@ -917,7 +918,10 @@ namespace Azure.Storage.Files.Shares.Models
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
         public System.DateTimeOffset? NextAllowedQuotaDowngradeTime { get { throw null; } }
         public Azure.Storage.Files.Shares.Models.ShareProtocols? Protocols { get { throw null; } }
+        public int? ProvisionedBandwidthMiBps { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public int? ProvisionedEgressMBps { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public int? ProvisionedIngressMBps { get { throw null; } }
         public int? ProvisionedIops { get { throw null; } }
         public int? QuotaInGB { get { throw null; } }

@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.IotCentral
         public IotCentralClient Client { get; private set; }
 
         /// <summary>
-        /// Lists all of the available IoT Central application REST API operations.
+        /// Lists all of the available IoT Central Resource Provider operations.
         /// </summary>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -224,7 +224,7 @@ namespace Microsoft.Azure.Management.IotCentral
         }
 
         /// <summary>
-        /// Lists all of the available IoT Central application REST API operations.
+        /// Lists all of the available IoT Central Resource Provider operations.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

@@ -299,8 +299,8 @@ namespace Azure.AI.Translation.Document
                     }
                     else if (update.Value.Status == DocumentTranslationStatus.ValidationFailed)
                     {
-                        DocumentTranslationError error = (DocumentTranslationError)update.Value.Error;
-                        _requestFailedException = _diagnostics.CreateRequestFailedException(_response, error.Message, error.ErrorCode.ToString(), CreateAdditionalInformation(error));
+                        ResponseError error = update.Value.Error;
+                        _requestFailedException = _diagnostics.CreateRequestFailedException(_response, error.Message, error.Code, CreateAdditionalInformation(error));
                         _hasCompleted = true;
                         throw _requestFailedException;
                     }
@@ -545,11 +545,11 @@ namespace Azure.AI.Translation.Document
                 throw _requestFailedException;
         }
 
-        private static IDictionary<string, string> CreateAdditionalInformation(DocumentTranslationError error)
+        private static IDictionary<string, string> CreateAdditionalInformation(ResponseError error)
         {
-            if (string.IsNullOrEmpty(error.Target))
+            if (string.IsNullOrEmpty(error.ToString()))
                 return null;
-            return new Dictionary<string, string> { { "Target", error.Target } };
+            return new Dictionary<string, string>(1) { { "AdditionalInformation", error.ToString() } };
         }
     }
 }

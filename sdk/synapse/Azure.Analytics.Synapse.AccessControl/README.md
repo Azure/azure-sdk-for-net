@@ -149,7 +149,7 @@ Console.WriteLine($"Role {roleAssignmentRoleDefinitionId} is assigned to {roleAs
 To enumerate all role assignments in the Synapse workspace you can call `ListRoleAssignments`.
 
 ```C# Snippet:ListRoleAssignments
-Response roleAssignmentsResponse = roleAssignmentsClient.GetRoleAssignments(new());
+Response roleAssignmentsResponse = roleAssignmentsClient.GetRoleAssignments();
 BinaryData roleAssignmentsContent = roleAssignmentsResponse.Content;
 JsonDocument roleAssignmentsJson = JsonDocument.Parse(roleAssignmentsContent.ToMemory());
 

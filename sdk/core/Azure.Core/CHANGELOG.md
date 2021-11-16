@@ -1,14 +1,26 @@
 # Release History
 
-## 1.21.0-beta.1 (Unreleased)
+## 1.22.0-beta.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
+- Added logging of `api-version` query parameter by default. In order to redact this, you can do the following:
+```c#
+options.Diagnostics.LoggedQueryParameters.Remove("api-version");
+```
+
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.21.0 (2021-11-03)
+
+### Features Added
+
+- Added `RequestContext` and `ErrorOptions` types to aid in configuring requests.
+- Added `ContentType` strongly-typed string to allow operation callers to specify the content type of a request.
 
 ## 1.20.0 (2021-10-01)
 
@@ -24,10 +36,11 @@
 
 ## 1.19.0 (2021-09-07)
 
+### Features Added
+
 - Added `HttpAuthorization` to represent authentication information in Authorization, ProxyAuthorization, WWW-Authenticate, and Proxy-Authenticate header values.
 
 ## 1.18.0 (2021-08-18)
-
 
 ### Bugs Fixed
 
@@ -98,7 +111,7 @@
 
 ## Features Added
 
-- Added `CloudEvent` type based on the [CloudEvent spec](https://github.com/cloudevents/spec/blob/master/spec.md).
+- Added `CloudEvent` type based on the [CloudEvent spec](https://github.com/cloudevents/spec/).
 
 ## 1.9.0 (2021-02-09)
 

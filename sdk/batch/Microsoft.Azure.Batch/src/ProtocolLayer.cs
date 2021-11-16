@@ -1351,13 +1351,21 @@
             return asyncTask;
         }
 
-        public Task<AzureOperationResponse<IPage<Models.NodeVMExtension>, Models.ComputeNodeExtensionListHeaders>> ListComputeNodeExtensions(string poolId, string computeNodeId, string skipToken, BehaviorManager bhMgr, CancellationToken cancellationToken)
+        public Task<AzureOperationResponse<IPage<Models.NodeVMExtension>, Models.ComputeNodeExtensionListHeaders>> ListComputeNodeExtensions(
+            string poolId,
+            string computeNodeId,
+            string skipToken,
+            BehaviorManager bhMgr,
+            DetailLevel detailLevel,
+            CancellationToken cancellationToken)
         {
             Task<AzureOperationResponse<IPage<Models.NodeVMExtension>, Models.ComputeNodeExtensionListHeaders>> asyncTask;
 
             if (string.IsNullOrEmpty(skipToken))
             {
                 var request = new ComputeNodeExtensionListBatchRequest(this._client, cancellationToken);
+
+                bhMgr = bhMgr.CreateBehaviorManagerWithDetailLevel(detailLevel);
 
                 request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.ComputeNodeExtension.ListWithHttpMessagesAsync(
                     poolId,

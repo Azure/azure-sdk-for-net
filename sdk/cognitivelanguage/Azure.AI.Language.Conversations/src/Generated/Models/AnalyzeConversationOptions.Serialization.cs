@@ -16,7 +16,7 @@ namespace Azure.AI.Language.Conversations
         {
             writer.WriteStartObject();
             writer.WritePropertyName("query");
-            writer.WriteStringValue(Query);
+            writer.WriteStringValue(Utterance);
             if (Optional.IsDefined(DirectTarget))
             {
                 writer.WritePropertyName("directTarget");
