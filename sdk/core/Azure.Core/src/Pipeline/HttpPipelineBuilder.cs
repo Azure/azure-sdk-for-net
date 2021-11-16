@@ -82,6 +82,8 @@ namespace Azure.Core.Pipeline
                         }
                     }
                 }
+
+                policies.RemoveAll(static policy => policy == null);
             }
 
             DiagnosticsOptions diagnostics = options.Diagnostics;
@@ -95,8 +97,6 @@ namespace Azure.Core.Pipeline
             policies.AddRange(perCallPolicies);
 
             AddCustomerPolicies(HttpPipelinePosition.PerCall);
-
-            policies.RemoveAll(static policy => policy == null);
             perCallIndex = policies.Count;
 
             policies.Add(ClientRequestIdPolicy.Shared);
@@ -114,8 +114,6 @@ namespace Azure.Core.Pipeline
             policies.AddRange(perRetryPolicies);
 
             AddCustomerPolicies(HttpPipelinePosition.PerRetry);
-
-            policies.RemoveAll(static policy => policy == null);
             perRetryIndex = policies.Count;
 
             if (diagnostics.IsLoggingEnabled)
@@ -130,8 +128,6 @@ namespace Azure.Core.Pipeline
             policies.Add(new RequestActivityPolicy(isDistributedTracingEnabled, ClientDiagnostics.GetResourceProviderNamespace(options.GetType().Assembly), sanitizer));
 
             AddCustomerPolicies(HttpPipelinePosition.BeforeTransport);
-
-            policies.RemoveAll(static policy => policy == null);
 
             // Override the provided Transport with the provided transport options if the transport has not been set after default construction and options are not null.
             HttpPipelineTransport transport = options.Transport;

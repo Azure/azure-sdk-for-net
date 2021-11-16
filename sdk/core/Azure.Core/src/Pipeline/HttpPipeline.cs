@@ -78,11 +78,7 @@ namespace Azure.Core.Pipeline
         public HttpMessage CreateMessage(RequestContext context)
         {
             var message = CreateMessage();
-            if (context != null)
-            {
-                message.CancellationToken = context.CancellationToken;
-                message.Policies = context.Policies;
-            }
+            message.AddPolicies(context);
             return message;
         }
 
@@ -102,17 +98,17 @@ namespace Azure.Core.Pipeline
             message.CancellationToken = cancellationToken;
             AddHttpMessageProperties(message);
 
-            if (message.Policies == null)
+            if (message.PolicyCount == 0)
             {
                 await _pipeline.Span[0].ProcessAsync(message, _pipeline.Slice(1)).ConfigureAwait(false);
             }
             else
             {
-                var length = _pipeline.Length + message.Policies.Count;
+                var length = _pipeline.Length + message.PolicyCount;
                 var policies = ArrayPool<HttpPipelinePolicy>.Shared.Rent(length);
                 try
                 {
-                    var pipeline = CreateRequestPipeline(policies, message.Policies);
+                    var pipeline = CreateRequestPipeline(policies, message);
                     await pipeline.Span[0].ProcessAsync(message, pipeline.Slice(1)).ConfigureAwait(false);
                 }
                 finally
@@ -132,17 +128,17 @@ namespace Azure.Core.Pipeline
             message.CancellationToken = cancellationToken;
             AddHttpMessageProperties(message);
 
-            if (message.Policies == null)
+            if (message.PolicyCount == 0)
             {
                 _pipeline.Span[0].Process(message, _pipeline.Slice(1));
             }
             else
             {
-                var length = _pipeline.Length + message.Policies.Count;
+                var length = _pipeline.Length + message.PolicyCount;
                 var policies = ArrayPool<HttpPipelinePolicy>.Shared.Rent(length);
                 try
                 {
-                    var pipeline = CreateRequestPipeline(policies, message.Policies);
+                    var pipeline = CreateRequestPipeline(policies, message);
                     pipeline.Span[0].ProcessAsync(message, pipeline.Slice(1));
                 }
                 finally
@@ -212,49 +208,40 @@ namespace Azure.Core.Pipeline
             return CurrentHttpMessagePropertiesScope.Value;
         }
 
-        private ReadOnlyMemory<HttpPipelinePolicy> CreateRequestPipeline(HttpPipelinePolicy[] policies, List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)> customPolicies)
+        private ReadOnlyMemory<HttpPipelinePolicy> CreateRequestPipeline(HttpPipelinePolicy[] policies, HttpMessage message)
         {
             if (!_internallyConstructed)
             {
                 throw new InvalidOperationException("Cannot send messages with per-request policies if the pipeline wasn't constructed with HttpPipelineBuilder.");
             }
 
-            int AddCustomPolicies(HttpPipelinePosition position, int start)
-            {
-                int i = 0;
-                if (customPolicies != null)
-                {
-                    foreach (var policy in customPolicies)
-                    {
-                        if (policy.Position == position)
-                        {
-                            policies[start + i++] = policy.Policy;
-                        }
-                    }
-                }
-
-                return i;
-            }
-
             // Copy over client policies and splice in custom policies at designated indices
             _pipeline.Slice(0, _perCallIndex).CopyTo(policies);
 
-            int custom = AddCustomPolicies(HttpPipelinePosition.PerCall, _perCallIndex);
+            int index = _perCallIndex;
+            int count = message.PerCallPolicies.Length;
+            message.PerCallPolicies.CopyTo(new Memory<HttpPipelinePolicy>(policies, index, count));
 
-            int count = _perRetryIndex - _perCallIndex;
-            _pipeline.Slice(_perCallIndex, count).CopyTo(new Memory<HttpPipelinePolicy>(policies, _perCallIndex + custom, count));
+            index += count;
+            count = _perRetryIndex - _perCallIndex;
+            _pipeline.Slice(_perCallIndex, count).CopyTo(new Memory<HttpPipelinePolicy>(policies, index, count));
 
-            custom += AddCustomPolicies(HttpPipelinePosition.PerRetry, _perRetryIndex + custom);
+            index += count;
+            count = message.PerRetryPolicies.Length;
+            message.PerRetryPolicies.CopyTo(new Memory<HttpPipelinePolicy>(policies, index, count));
 
+            index += count;
             count = _transportIndex - _perRetryIndex;
-            _pipeline.Slice(_perRetryIndex, count).CopyTo(new Memory<HttpPipelinePolicy>(policies, _perRetryIndex + custom, count));
+            _pipeline.Slice(_perRetryIndex, count).CopyTo(new Memory<HttpPipelinePolicy>(policies, index, count));
 
-            custom += AddCustomPolicies(HttpPipelinePosition.BeforeTransport, _transportIndex + custom);
+            index += count;
+            count = message.BeforeTransportPolicies.Length;
+            message.BeforeTransportPolicies.CopyTo(new Memory<HttpPipelinePolicy>(policies, index, count));
 
-            count = _pipeline.Length - _transportIndex;
-            _pipeline.Slice(_transportIndex, count).CopyTo(new Memory<HttpPipelinePolicy>(policies, _transportIndex + custom, count));
+            index += count;
+            policies[index] = _pipeline.Span[_transportIndex];
 
-            return new ReadOnlyMemory<HttpPipelinePolicy>(policies, 0, _pipeline.Length + custom);
+            return new ReadOnlyMemory<HttpPipelinePolicy>(policies, 0, index + 1);
         }
 
         private static void AddHttpMessageProperties(HttpMessage message)

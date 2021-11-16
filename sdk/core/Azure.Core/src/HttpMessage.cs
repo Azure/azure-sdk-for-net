@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Net.Http;
 using System.Threading;
 using Azure.Core.Pipeline;
 
@@ -13,7 +12,7 @@ namespace Azure.Core
     /// <summary>
     /// Represents a context flowing through the <see cref="HttpPipeline"/>.
     /// </summary>
-    public sealed class HttpMessage: IDisposable
+    public sealed class HttpMessage : IDisposable
     {
         private Dictionary<string, object>? _properties;
 
@@ -81,7 +80,30 @@ namespace Azure.Core
         /// </summary>
         public TimeSpan? NetworkTimeout { get; set; }
 
-        internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; set; }
+        internal void AddPolicies(RequestContext context)
+        {
+            if (context == null || context.Policies == null)
+            {
+                return;
+            }
+
+            var policies = new Memory<HttpPipelinePolicy>(new HttpPipelinePolicy[context.Policies.Value.Length]);
+            context.Policies?.CopyTo(policies);
+
+            PerCallPolicies = policies.Slice(RequestContext.PerCallOffset, context.PerCallPolicies);
+            PerRetryPolicies = policies.Slice(RequestContext.PerRetryOffset, context.PerRetryPolicies);
+            BeforeTransportPolicies = policies.Slice(RequestContext.BeforeTransportOffset, context.BeforeTransportPolicies);
+
+            PolicyCount = context.PerCallPolicies + context.PerRetryPolicies + context.BeforeTransportPolicies;
+
+            _policies = policies;
+        }
+
+        private ReadOnlyMemory<HttpPipelinePolicy>? _policies;
+        internal int PolicyCount { get; private set; }
+        internal ReadOnlyMemory<HttpPipelinePolicy> PerCallPolicies { get; private set; }
+        internal ReadOnlyMemory<HttpPipelinePolicy> PerRetryPolicies { get; private set; }
+        internal ReadOnlyMemory<HttpPipelinePolicy> BeforeTransportPolicies { get; private set; }
 
         /// <summary>
         /// Gets a property that modifies the pipeline behavior. Please refer to individual policies documentation on what properties it supports.
@@ -117,7 +139,7 @@ namespace Azure.Core
             {
                 case ResponseShouldNotBeUsedStream responseContent:
                     return responseContent.Original;
-                case Stream stream :
+                case Stream stream:
                     _response.ContentStream = new ResponseShouldNotBeUsedStream(_response.ContentStream);
                     return stream;
                 default:
@@ -134,7 +156,7 @@ namespace Azure.Core
             _response?.Dispose();
         }
 
-        private class ResponseShouldNotBeUsedStream: Stream
+        private class ResponseShouldNotBeUsedStream : Stream
         {
             public Stream Original { get; }
 
