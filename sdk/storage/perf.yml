@@ -1,0 +1,61 @@
+variables:
+  NugetSecurityAnalysisWarningLevel: 'none'
+  skipComponentGovernanceDetection: 'true'
+  System.Debug: 'true'
+
+pool:
+  name: "azsdk-pool-mms-ubuntu-2004-perf"
+  vmImage: "MMSUbuntu20.04"
+
+resources:
+  repositories:
+  - repository: azure-sdk-tools
+    type: github
+    endpoint: Azure
+    name: Azure/azure-sdk-tools
+    ref: perf-automation
+
+steps:
+  - checkout: self
+    path: s
+
+  - checkout: azure-sdk-tools
+    path: s/azure-sdk-tools
+
+  - template: ../../eng/common/TestResources/deploy-test-resources.yml
+    parameters:
+      ServiceDirectory: storage
+      ResourceType: perf
+
+  - pwsh: |
+      set-content -path config.yml -value "WorkingDirectories:"
+      add-content -path config.yml -value "  Net: $(Agent.BuildDirectory)/s"
+    workingDirectory: azure-sdk-tools/tools/perf-automation/Azure.Sdk.Tools.PerfAutomation
+    displayName: Create config.yml
+
+  - script: >-
+      dotnet run -- run
+      --no-sync
+      -l net
+      -s "^storage-blob$"
+      -t "^download$"
+      -p "12"
+      -a "warmup 0"
+    workingDirectory: azure-sdk-tools/tools/perf-automation/Azure.Sdk.Tools.PerfAutomation
+    env:
+      AZURE_STORAGE_ACCOUNT_KEY: $(azure-storage-account-key)
+      AZURE_STORAGE_ACCOUNT_NAME: $(azure-storage-account-name)
+      AZURE_STORAGE_CONNECTION_STRING: $(azure-storage-connection-string)
+      STANDARD_STORAGE_CONNECTION_STRING: $(standard-storage-connection-string)
+      STORAGE_CONNECTION_STRING: $(storage-connection-string)
+    displayName: Run perf tests
+
+  - template: ../../eng/common/TestResources/remove-test-resources.yml
+    parameters:
+      ServiceDirectory: storage
+      ResourceType: perf
+
+  - task: PublishPipelineArtifact@1
+    inputs:
+      targetPath: azure-sdk-tools/tools/perf-automation/Azure.Sdk.Tools.PerfAutomation/results
+      artifactName: results
