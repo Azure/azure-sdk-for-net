@@ -113,7 +113,7 @@ security-scopes: <AAD-token-scope>
 
 #### 2. Run the Generate Command
 
-From a PowerShell command prompt, navigate to the directory holding `Azure.<your-sdk-name>.sln`.Run the following commands:
+From a PowerShell command prompt, navigate to the directory holding `Azure.<your-sdk-name>.sln`. Run the following commands:
 
 ```
 sdk\<your-service-name>\Azure.<your-sdk-name>\src> dotnet msbuild /t:GenerateCode
