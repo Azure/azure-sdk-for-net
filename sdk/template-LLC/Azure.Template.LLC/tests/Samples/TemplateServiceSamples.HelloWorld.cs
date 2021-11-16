@@ -50,7 +50,7 @@ namespace Azure.Template.LLC.Tests.Samples
             #region Snippet:RetrieveResource
 
             var client = GetClient();
-            var response = await client.GetTemplateServiceAsync("123");
+            var response = await client.GetResourceAsync("123");
             using JsonDocument resourceJson = JsonDocument.Parse(response.Content.ToMemory());
             string resourceName = resourceJson.RootElement.GetProperty("name").ToString();
             string resourceId = resourceJson.RootElement.GetProperty("id").ToString();

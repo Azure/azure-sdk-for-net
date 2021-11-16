@@ -183,14 +183,14 @@ namespace Azure.Template.LLC
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetTemplateServiceAsync(string resourceId, RequestContext context = null)
+        public virtual async Task<Response> GetResourceAsync(string resourceId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("TemplateServiceClient.GetTemplateService");
+            using var scope = _clientDiagnostics.CreateScope("TemplateServiceClient.GetResource");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTemplateServiceRequest(resourceId);
+                using HttpMessage message = CreateGetResourceRequest(resourceId);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -214,14 +214,14 @@ namespace Azure.Template.LLC
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetTemplateService(string resourceId, RequestContext context = null)
+        public virtual Response GetResource(string resourceId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("TemplateServiceClient.GetTemplateService");
+            using var scope = _clientDiagnostics.CreateScope("TemplateServiceClient.GetResource");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTemplateServiceRequest(resourceId);
+                using HttpMessage message = CreateGetResourceRequest(resourceId);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -345,7 +345,7 @@ namespace Azure.Template.LLC
             return message;
         }
 
-        internal HttpMessage CreateGetTemplateServiceRequest(string resourceId)
+        internal HttpMessage CreateGetResourceRequest(string resourceId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;

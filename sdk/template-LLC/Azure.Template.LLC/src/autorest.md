@@ -13,4 +13,8 @@ public-clients: true
 low-level-client: true
 security: AADToken
 security-scopes: https://dev.LLCtemplate.net/.default
+directive:
+  - rename-operation:
+      from: Get
+      to: GetResource
 ```
