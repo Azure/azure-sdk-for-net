@@ -6,7 +6,7 @@ extends:
     ServiceDirectory: formrecognizer
     TimeoutInMinutes: 180
     CloudConfig:
-      Public:
+      Canary:
         SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
         Location: 'centraluseuap'
-    SupportedClouds: 'Public'
+    SupportedClouds: 'Canary'
