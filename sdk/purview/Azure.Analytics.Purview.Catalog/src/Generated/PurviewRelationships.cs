@@ -16,15 +16,14 @@ namespace Azure.Analytics.Purview.Catalog
     /// <summary> The PurviewRelationships service client. </summary>
     public partial class PurviewRelationships
     {
-        private static readonly string[] AuthorizationScopes = { "https://purview.azure.net/.default" };
+        private static readonly string[] AuthorizationScopes = new string[] { "https://purview.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
-
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _endpoint;
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get => _pipeline; }
+        public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary> Initializes a new instance of PurviewRelationships for mocking. </summary>
         protected PurviewRelationships()
@@ -385,14 +384,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetAsync(string guid, bool? extendedInfo = null, RequestContext context = null)
+        public virtual async Task<Response> GetPurviewRelationshipAsync(string guid, bool? extendedInfo = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.Get");
+            using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.GetPurviewRelationship");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetRequest(guid, extendedInfo);
+                using HttpMessage message = CreateGetPurviewRelationshipRequest(guid, extendedInfo);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -444,14 +443,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response Get(string guid, bool? extendedInfo = null, RequestContext context = null)
+        public virtual Response GetPurviewRelationship(string guid, bool? extendedInfo = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.Get");
+            using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.GetPurviewRelationship");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetRequest(guid, extendedInfo);
+                using HttpMessage message = CreateGetPurviewRelationshipRequest(guid, extendedInfo);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -559,7 +558,7 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
-        internal HttpMessage CreateGetRequest(string guid, bool? extendedInfo)
+        internal HttpMessage CreateGetPurviewRelationshipRequest(string guid, bool? extendedInfo)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
