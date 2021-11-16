@@ -19,16 +19,15 @@ namespace Azure.Verticals.AgriFood.Farming
     /// <summary> The Seasons service client. </summary>
     public partial class SeasonsClient
     {
-        private static readonly string[] AuthorizationScopes = { "https://farmbeats.azure.net/.default" };
+        private static readonly string[] AuthorizationScopes = new string[] { "https://farmbeats.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
-
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get => _pipeline; }
+        public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary> Initializes a new instance of SeasonsClient for mocking. </summary>
         protected SeasonsClient()
@@ -50,7 +49,6 @@ namespace Azure.Verticals.AgriFood.Farming
             {
                 throw new ArgumentNullException(nameof(credential));
             }
-
             options ??= new FarmBeatsClientOptions();
 
             _clientDiagnostics = new ClientDiagnostics(options);
@@ -98,14 +96,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetAsync(string seasonId, RequestContext context = null)
+        public virtual async Task<Response> GetSeasonAsync(string seasonId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("SeasonsClient.Get");
+            using var scope = _clientDiagnostics.CreateScope("SeasonsClient.GetSeason");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetRequest(seasonId);
+                using HttpMessage message = CreateGetSeasonRequest(seasonId);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -153,14 +151,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response Get(string seasonId, RequestContext context = null)
+        public virtual Response GetSeason(string seasonId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("SeasonsClient.Get");
+            using var scope = _clientDiagnostics.CreateScope("SeasonsClient.GetSeason");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetRequest(seasonId);
+                using HttpMessage message = CreateGetSeasonRequest(seasonId);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -644,7 +642,7 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
-        internal HttpMessage CreateGetRequest(string seasonId)
+        internal HttpMessage CreateGetSeasonRequest(string seasonId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
