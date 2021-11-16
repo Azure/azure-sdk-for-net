@@ -68,7 +68,7 @@ namespace Azure.Core.Tests
         public async Task SettingHeaderOverridesDefaultContentLength()
         {
             long contentLength = 0;
-            using TestServer testServer = new TestServer(
+            TestServer testServer = new TestServer(
                 context => contentLength = context.Request.ContentLength.Value);
 
             var transport = GetTransport();
@@ -94,7 +94,7 @@ namespace Azure.Core.Tests
         public async Task CanSetContentLengthOverMaxInt()
         {
             long contentLength = 0;
-            using TestServer testServer = new TestServer(
+            TestServer testServer = new TestServer(
                 context =>
                 {
                     contentLength = context.Request.ContentLength.Value;

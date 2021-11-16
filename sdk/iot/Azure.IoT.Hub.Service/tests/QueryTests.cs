@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using Azure.IoT.Hub.Service.Models;
 using FluentAssertions;
 using NUnit.Framework;
@@ -63,8 +64,11 @@ namespace Azure.IoT.Hub.Service.Tests
 
                     tryCount++;
 
-                    // Adding a delay to account for query cache sync.
-                    await Task.Delay(TimeSpan.FromSeconds(5)).ConfigureAwait(false);
+                    if (Mode != RecordedTestMode.Playback)
+                    {
+                        // Adding a delay to account for query cache sync.
+                        await Task.Delay(TimeSpan.FromSeconds(5)).ConfigureAwait(false);
+                    }
                 }
 
                 twinsFound.Count.Should().Be(1);
@@ -127,8 +131,11 @@ namespace Azure.IoT.Hub.Service.Tests
 
                     tryCount++;
 
-                    // Adding a delay to account for query cache sync.
-                    await Task.Delay(TimeSpan.FromSeconds(5)).ConfigureAwait(false);
+                    if (Mode != RecordedTestMode.Playback)
+                    {
+                        // Adding a delay to account for query cache sync.
+                        await Task.Delay(TimeSpan.FromSeconds(5)).ConfigureAwait(false);
+                    }
                 }
 
                 twinsFound.Count.Should().Be(1);

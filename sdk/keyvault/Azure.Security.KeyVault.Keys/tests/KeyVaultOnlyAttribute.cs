@@ -23,10 +23,14 @@ namespace Azure.Security.KeyVault.Keys.Tests
             {
                 t.RunState = RunState.Skipped;
                 test.Properties.Set(PropertyNames.SkipReason, $"This test can only run on Key Vault.");
+                // Timeout cannot be set on SkipCommands
+                foreach (ITest testInstance in test.Tests)
+                {
+                    testInstance.Properties.Set(PropertyNames.Timeout, 0);
+                }
 
                 return new SkipCommand(t);
             }
-
             return new CheckSupportedCommand(command);
         }
 

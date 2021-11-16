@@ -20,6 +20,7 @@
     <IsTestSupportProject Condition="'$(IsTestSupportProject)' == '' and '$(IsTestProject)' != 'true' and ($(MSBuildProjectDirectory.Contains('/tests/')) or $(MSBuildProjectDirectory.Contains('\tests\')))">true</IsTestSupportProject>
     <IsShippingLibrary Condition="'$(IsShippingLibrary)' == '' and '$(IsTestProject)' != 'true' and '$(IsTestSupportProject)' != 'true' and '$(IsPerfProject)' != 'true' and '$(IsSamplesProject)' != 'true' and '$(IsStressProject)' != 'true'">true</IsShippingLibrary>
     <IsShippingClientLibrary Condition="'$(IsClientLibrary)' == 'true' and '$(IsShippingLibrary)' == 'true'">true</IsShippingClientLibrary>
+    <IsOptOutOfGlobalTestTimeout Condition="'$(IsOptOutOfGlobalTestTimeout)' == ''">false</IsOptOutOfGlobalTestTimeout>
   </PropertyGroup>
 
   <!-- Setup default project properties -->
@@ -244,7 +245,7 @@
   </PropertyGroup>
 
   <!-- Set global test timeout of 5 seconds -->
-  <ItemGroup Condition="'$(IsTestProject)' == 'true' and $(MSBuildProjectName.StartsWith('Azure.')) == 'true'">
+  <ItemGroup Condition="'$(IsTestProject)' == 'true' and '$(IsOptOutOfGlobalTestTimeout)' == 'false'">
     <AssemblyAttribute Include="NUnit.Framework.Timeout">
       <_Parameter1>5000</_Parameter1>
       <_Parameter1_TypeName>System.Int32</_Parameter1_TypeName>

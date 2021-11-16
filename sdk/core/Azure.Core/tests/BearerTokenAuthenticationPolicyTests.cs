@@ -331,7 +331,7 @@ namespace Azure.Core.Tests
             await SendGetRequest(transport, policy, uri: new Uri("https://example.com/0"));
             Assert.True(transport.Requests[0].Headers.TryGetValue("Authorization", out string authValue));
 
-            await Task.Delay(3_000);
+            await Task.Delay(2_000);
 
             requestMre.Reset();
             responseMre.Reset();
@@ -356,7 +356,7 @@ namespace Azure.Core.Tests
         {
             var credential = new TokenCredentialStub((r, c) =>
                 {
-                    Thread.Sleep(100);
+                    Thread.Sleep(10);
                     throw new InvalidOperationException("Error");
                 },
                 IsAsync);
@@ -445,7 +445,7 @@ namespace Azure.Core.Tests
             await SendGetRequest(transport, policy, uri: new Uri("https://example.com/0"));
             Assert.True(transport.Requests[0].Headers.TryGetValue("Authorization", out string _));
 
-            await Task.Delay(3_000);
+            await Task.Delay(2_000);
 
             requestMre.Reset();
             responseMre.Reset();
