@@ -16,7 +16,6 @@ using Parms = Azure.Data.Tables.TableConstants.Sas.Parameters;
 
 namespace Azure.Data.Tables.Tests
 {
-    // [Timeout(5000)]
     public class TableClientTests : ClientTestBase
     {
         public TableClientTests(bool isAsync) : base(isAsync)
@@ -56,7 +55,6 @@ namespace Azure.Data.Tables.Tests
         [Test]
         public void ConstructorValidatesArguments()
         {
-            Thread.Sleep(4000);
             Assert.Catch<ArgumentException>(
                 () => new TableClient(_url, null, new TableSharedKeyCredential(AccountName, string.Empty)),
                 "The constructor should validate the tableName.");
