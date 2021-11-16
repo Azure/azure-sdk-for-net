@@ -36,8 +36,10 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='restorePointName'>
         /// The name of the restore point.
         /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to the Create restore point operation.
+        /// <param name='excludeDisks'>
+        /// List of disk resource ids that the customer wishes to exclude from
+        /// the restore point. If no disks are specified, all disks will be
+        /// included.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -54,7 +56,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<RestorePoint>> CreateWithHttpMessagesAsync(string resourceGroupName, string restorePointCollectionName, string restorePointName, RestorePoint parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<RestorePoint>> CreateWithHttpMessagesAsync(string resourceGroupName, string restorePointCollectionName, string restorePointName, IList<ApiEntityReference> excludeDisks = default(IList<ApiEntityReference>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The operation to delete the restore point.
         /// </summary>
@@ -121,8 +123,10 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='restorePointName'>
         /// The name of the restore point.
         /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to the Create restore point operation.
+        /// <param name='excludeDisks'>
+        /// List of disk resource ids that the customer wishes to exclude from
+        /// the restore point. If no disks are specified, all disks will be
+        /// included.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -139,7 +143,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<RestorePoint>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string restorePointCollectionName, string restorePointName, RestorePoint parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<RestorePoint>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string restorePointCollectionName, string restorePointName, IList<ApiEntityReference> excludeDisks = default(IList<ApiEntityReference>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The operation to delete the restore point.
         /// </summary>

@@ -237,7 +237,7 @@ namespace Compute.Tests
             ApiEntityReference diskToExcludeEntityRef = new ApiEntityReference() { Id = diskToExclude };
             List<ApiEntityReference> disksToExclude = new List<ApiEntityReference> { diskToExcludeEntityRef };
             RestorePoint inputRestorePoint = new RestorePoint() { ExcludeDisks = disksToExclude };
-            return m_CrpClient.RestorePoints.Create(rgName, rpcName, rpName, inputRestorePoint);
+            return m_CrpClient.RestorePoints.Create(rgName, rpcName, rpName, disksToExclude);
         }
 
         // Verify restore point properties.
