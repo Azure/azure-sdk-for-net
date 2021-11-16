@@ -18,10 +18,6 @@
     <PackageReference Include="Microsoft.Azure.SignalR.Protocols" />
     <PackageReference Include="Microsoft.Azure.SignalR.Serverless.Protocols" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="SharedCore" />
-  </ItemGroup>
   
   <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Protocols.NewtonsoftJson" />

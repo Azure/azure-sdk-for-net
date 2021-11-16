@@ -44,7 +44,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         {
             if (serviceHubContext is null)
             {
-                serviceHubContext = ((IInternalServiceHubContextStore)StaticServiceHubContextStore.Get()).GetAsync<T>(GetType().Name).EnsureCompleted();
+                serviceHubContext = ((IInternalServiceHubContextStore)StaticServiceHubContextStore.Get()).GetAsync<T>(GetType().Name).Result;
             }
             _hubContext = serviceHubContext;
         }
