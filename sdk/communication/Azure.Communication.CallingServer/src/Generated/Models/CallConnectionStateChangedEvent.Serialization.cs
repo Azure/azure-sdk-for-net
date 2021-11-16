@@ -14,14 +14,19 @@ namespace Azure.Communication.CallingServer
     {
         internal static CallConnectionStateChangedEvent DeserializeCallConnectionStateChangedEvent(JsonElement element)
         {
-            Optional<string> serverCallId = default;
+            Optional<CallLocatorModel> callLocator = default;
             Optional<string> callConnectionId = default;
             CallConnectionState callConnectionState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("serverCallId"))
+                if (property.NameEquals("callLocator"))
                 {
-                    serverCallId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    callLocator = CallLocatorModel.DeserializeCallLocatorModel(property.Value);
                     continue;
                 }
                 if (property.NameEquals("callConnectionId"))
@@ -35,7 +40,7 @@ namespace Azure.Communication.CallingServer
                     continue;
                 }
             }
-            return new CallConnectionStateChangedEvent(serverCallId.Value, callConnectionId.Value, callConnectionState);
+            return new CallConnectionStateChangedEvent(callLocator.Value, callConnectionId.Value, callConnectionState);
         }
     }
 }

@@ -37,22 +37,17 @@ namespace Azure.Communication.CallingServer.Tests
                 Assert.Ignore("Skip callingserver interaction live tests flag is on.");
 
             CallingServerClient client = CreateInstrumentedCallingServerClientWithConnectionString();
+
+            // Establish a Call
+            var callConnection = await CreateCallConnectionOperation(client).ConfigureAwait(false);
+
             try
             {
-                // Establish a Call
-                var callConnection = await CreateCallConnectionOperation(client).ConfigureAwait(false);
-
                 // Play Prompt Audio
-                await SleepIfNotInPlaybackModeAsync().ConfigureAwait(false);
                 await PlayAudioOperation(callConnection).ConfigureAwait(false);
 
                 // Cancel Prompt Audio
-                await SleepIfNotInPlaybackModeAsync().ConfigureAwait(false);
                 await CancelAllMediaOperationsOperation(callConnection).ConfigureAwait(false);
-
-                // Hang up the Call, there is one call leg in this test case, hangup the call will also delete the call as the result.
-                await SleepIfNotInPlaybackModeAsync().ConfigureAwait(false);
-                await HangupOperation(callConnection).ConfigureAwait(false);
             }
             catch (RequestFailedException ex)
             {
@@ -61,7 +56,13 @@ namespace Azure.Communication.CallingServer.Tests
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.Message);
                 Assert.Fail($"Unexpected error: {ex}");
+            }
+            finally
+            {
+                // Hang up the Call, there is one call leg in this test case, hangup the call will also delete the call as the result.
+                await HangupOperation(callConnection).ConfigureAwait(false);
             }
         }
 
@@ -72,22 +73,20 @@ namespace Azure.Communication.CallingServer.Tests
                 Assert.Ignore("Skip callingserver interaction live tests flag is on.");
 
             CallingServerClient client = CreateInstrumentedCallingServerClientWithConnectionString();
+
+            // Establish a call
+            var callConnection = await CreateCallConnectionOperation(client).ConfigureAwait(false);
+
             try
             {
-                // Establish a call
-                var callConnection = await CreateCallConnectionOperation(client).ConfigureAwait(false);
+                string userId = GetFixedUserId("0000000d-5a5f-2db9-ccd7-44482200049a");
 
                 // Add Participant
-                await SleepIfNotInPlaybackModeAsync().ConfigureAwait(false);
-                var participantId = await AddParticipantOperation(callConnection).ConfigureAwait(false);
+                AddParticipantResult addParticipantResult = await AddParticipantOperation(callConnection, userId).ConfigureAwait(false);
+                Assert.NotNull(addParticipantResult);
 
                 // Remove Participant
-                await SleepIfNotInPlaybackModeAsync().ConfigureAwait(false);
-                await RemoveParticipantOperation(callConnection, participantId).ConfigureAwait(false);
-
-                // Hang up the Call, there is one call leg in this test case, hangup the call will also delete the call as the result.
-                await SleepIfNotInPlaybackModeAsync().ConfigureAwait(false);
-                await HangupOperation(callConnection).ConfigureAwait(false);
+                await RemoveParticipantOperation(callConnection, userId).ConfigureAwait(false);
             }
             catch (RequestFailedException ex)
             {
@@ -96,7 +95,13 @@ namespace Azure.Communication.CallingServer.Tests
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.Message);
                 Assert.Fail($"Unexpected error: {ex}");
+            }
+            finally
+            {
+                // Hang up the Call, there is one call leg in this test case, hangup the call will also delete the call as the result.
+                await HangupOperation(callConnection).ConfigureAwait(false);
             }
         }
     }

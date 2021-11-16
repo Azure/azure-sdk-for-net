@@ -11,24 +11,36 @@ namespace Azure.Communication.CallingServer.Tests.Events
         [Test]
         public void CallRecordingStateChangeEventTest()
         {
-            var json = "{\"recordingId\":\"id\",\"state\":\"active\",\"startDateTime\":\"2021-06-18T18:59:23.5718812-07:00\",\"serverCallId\":\"callServerId\"}";
+            var json = "{\"recordingId\":\"id\",\"callRecordingState\":\"active\",\"startDateTime\":\"2021-06-18T18:59:23.5718812-07:00\", \"callLocator\": {\"serverCallId\" : \"serverCallId\",\"kind\" : \"serverCallLocator\"}}";
 
             var c = CallRecordingStateChangeEvent.Deserialize(json);
 
             Assert.AreEqual("id", c.RecordingId);
-            Assert.AreEqual(CallRecordingState.Active, c.State);
-            Assert.AreEqual("callServerId", c.ServerCallId);
+            Assert.AreEqual(CallRecordingState.Active, c.CallRecordingState);
+            Assert.AreEqual("serverCallId", c.CallLocator.ServerCallId);
             Assert.AreEqual("2021-06-18", c.StartDateTime.ToString("yyyy-MM-dd"));
         }
 
         [Test]
-        public void CallConnectionStateChangedEventTest()
+        public void CallConnectionStateChangedEventTestWithServerCallLocator()
         {
-            var json = "{\"serverCallId\":\"serverCallId\",\"callConnectionId\":\"callConnectionId\",\"callConnectionState\":\"connected\"}";
+            var json = "{\"callLocator\": {\"serverCallId\" : \"serverCallId\",\"kind\" : \"serverCallLocator\"},\"callConnectionId\":\"callConnectionId\",\"callConnectionState\":\"connected\"}";
 
             var c = CallConnectionStateChangedEvent.Deserialize(json);
 
-            Assert.AreEqual("serverCallId", c.ServerCallId);
+            Assert.AreEqual("serverCallId", c.CallLocator.ServerCallId);
+            Assert.AreEqual("callConnectionId", c.CallConnectionId);
+            Assert.AreEqual(CallConnectionState.Connected, c.CallConnectionState);
+        }
+
+        [Test]
+        public void CallConnectionStateChangedEventTestWithGroupCallLocator()
+        {
+            var json = "{\"callLocator\": {\"groupCallId\" : \"groupCallId\",\"kind\" : \"groupCallLocator\"},\"callConnectionId\":\"callConnectionId\",\"callConnectionState\":\"connected\"}";
+
+            var c = CallConnectionStateChangedEvent.Deserialize(json);
+
+            Assert.AreEqual("groupCallId", c.CallLocator.GroupCallId);
             Assert.AreEqual("callConnectionId", c.CallConnectionId);
             Assert.AreEqual(CallConnectionState.Connected, c.CallConnectionState);
         }
@@ -41,7 +53,7 @@ namespace Azure.Communication.CallingServer.Tests.Events
             var c = AddParticipantResultEvent.Deserialize(json);
 
             Assert.AreEqual("operatingContext", c.OperationContext);
-            Assert.AreEqual(OperationStatus.Failed, c.Status);
+            Assert.AreEqual(CallingOperationStatus.Failed, c.Status);
             Assert.IsNotNull(c.ResultInfo);
             Assert.AreEqual(400, c.ResultInfo.Code);
             Assert.AreEqual(415, c.ResultInfo.Subcode);
@@ -51,7 +63,7 @@ namespace Azure.Communication.CallingServer.Tests.Events
             c = AddParticipantResultEvent.Deserialize(json);
 
             Assert.AreEqual("operatingContext", c.OperationContext);
-            Assert.AreEqual(OperationStatus.Running, c.Status);
+            Assert.AreEqual(CallingOperationStatus.Running, c.Status);
             Assert.IsNull(c.ResultInfo);
         }
 
@@ -63,7 +75,7 @@ namespace Azure.Communication.CallingServer.Tests.Events
             var c = PlayAudioResultEvent.Deserialize(json);
 
             Assert.AreEqual("operatingContext", c.OperationContext);
-            Assert.AreEqual(OperationStatus.Failed, c.Status);
+            Assert.AreEqual(CallingOperationStatus.Failed, c.Status);
             Assert.IsNotNull(c.ResultInfo);
             Assert.AreEqual(500, c.ResultInfo.Code);
             Assert.AreEqual(505, c.ResultInfo.Subcode);
@@ -73,7 +85,7 @@ namespace Azure.Communication.CallingServer.Tests.Events
             c = PlayAudioResultEvent.Deserialize(json);
 
             Assert.AreEqual("operatingContext", c.OperationContext);
-            Assert.AreEqual(OperationStatus.Completed, c.Status);
+            Assert.AreEqual(CallingOperationStatus.Completed, c.Status);
             Assert.IsNull(c.ResultInfo);
         }
 

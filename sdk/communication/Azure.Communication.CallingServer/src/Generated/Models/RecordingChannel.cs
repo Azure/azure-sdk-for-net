@@ -7,7 +7,7 @@
 
 namespace Azure.Communication.CallingServer
 {
-    /// <summary> The channel type of a call recording. </summary>
+    /// <summary> The channel type of call recording. </summary>
     public enum RecordingChannel
     {
         /// <summary> mixed. </summary>

@@ -7,7 +7,7 @@
 
 namespace Azure.Communication.CallingServer
 {
-    /// <summary> The content type of a call recording. </summary>
+    /// <summary> The content type of call recording. </summary>
     public enum RecordingContent
     {
         /// <summary> audio. </summary>

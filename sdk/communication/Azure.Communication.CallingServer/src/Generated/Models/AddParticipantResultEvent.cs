@@ -7,12 +7,12 @@
 
 namespace Azure.Communication.CallingServer
 {
-    /// <summary> The AddParticipantResultEvent. </summary>
+    /// <summary> The add participant result event. </summary>
     public partial class AddParticipantResultEvent
     {
         /// <summary> Initializes a new instance of AddParticipantResultEvent. </summary>
         /// <param name="status"> The status of the operation. </param>
-        internal AddParticipantResultEvent(OperationStatus status)
+        internal AddParticipantResultEvent(CallingOperationStatus status)
         {
             Status = status;
         }
@@ -21,7 +21,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="resultInfo"> The result details. </param>
         /// <param name="operationContext"> The operation context. </param>
         /// <param name="status"> The status of the operation. </param>
-        internal AddParticipantResultEvent(ResultInfo resultInfo, string operationContext, OperationStatus status)
+        internal AddParticipantResultEvent(CallingOperationResultDetails resultInfo, string operationContext, CallingOperationStatus status)
         {
             ResultInfo = resultInfo;
             OperationContext = operationContext;
@@ -29,10 +29,10 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> The result details. </summary>
-        public ResultInfo ResultInfo { get; }
+        public CallingOperationResultDetails ResultInfo { get; }
         /// <summary> The operation context. </summary>
         public string OperationContext { get; }
         /// <summary> The status of the operation. </summary>
-        public OperationStatus Status { get; }
+        public CallingOperationStatus Status { get; }
     }
 }

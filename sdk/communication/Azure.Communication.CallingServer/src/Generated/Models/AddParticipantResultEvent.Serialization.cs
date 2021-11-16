@@ -14,9 +14,9 @@ namespace Azure.Communication.CallingServer
     {
         internal static AddParticipantResultEvent DeserializeAddParticipantResultEvent(JsonElement element)
         {
-            Optional<ResultInfo> resultInfo = default;
+            Optional<CallingOperationResultDetails> resultInfo = default;
             Optional<string> operationContext = default;
-            OperationStatus status = default;
+            CallingOperationStatus status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resultInfo"))
@@ -26,7 +26,7 @@ namespace Azure.Communication.CallingServer
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    resultInfo = ResultInfo.DeserializeResultInfo(property.Value);
+                    resultInfo = CallingOperationResultDetails.DeserializeCallingOperationResultDetails(property.Value);
                     continue;
                 }
                 if (property.NameEquals("operationContext"))
@@ -36,7 +36,7 @@ namespace Azure.Communication.CallingServer
                 }
                 if (property.NameEquals("status"))
                 {
-                    status = new OperationStatus(property.Value.GetString());
+                    status = new CallingOperationStatus(property.Value.GetString());
                     continue;
                 }
             }

@@ -18,30 +18,38 @@ namespace Azure.Communication.CallingServer
         /// <param name="operationContext"> The operation context provided by client. </param>
         /// <param name="resultInfo"> The result info for the operation. </param>
         /// <returns> A new <see cref="CallingServer.PlayAudioResult"/> instance for mocking. </returns>
-        public static PlayAudioResult PlayAudioResult(string operationId = null, OperationStatus status = default, string operationContext = null, ResultInfo resultInfo = null)
+        public static PlayAudioResult PlayAudioResult(string operationId = null, CallingOperationStatus status = default, string operationContext = null, CallingOperationResultDetails resultInfo = null)
         {
             return new PlayAudioResult(operationId, status, operationContext, resultInfo);
         }
 
-        /// <summary> Initializes a new instance of ResultInfo. </summary>
+        /// <summary> Initializes a new instance of CallingOperationResultDetails. </summary>
         /// <param name="code"> The result code associated with the operation. </param>
         /// <param name="subcode"> The subcode that further classifies the result. </param>
         /// <param name="message"> The message is a detail explanation of subcode. </param>
-        /// <returns> A new <see cref="CallingServer.ResultInfo"/> instance for mocking. </returns>
-        public static ResultInfo ResultInfo(int code = default, int subcode = default, string message = null)
+        /// <returns> A new <see cref="CallingServer.CallingOperationResultDetails"/> instance for mocking. </returns>
+        public static CallingOperationResultDetails CallingOperationResultDetails(int code = default, int subcode = default, string message = null)
         {
-            return new ResultInfo(code, subcode, message);
+            return new CallingOperationResultDetails(code, subcode, message);
         }
 
-        /// <summary> Initializes a new instance of CancelAllMediaOperationsResult. </summary>
+        /// <summary> Initializes a new instance of TransferCallResult. </summary>
         /// <param name="operationId"> The operation id. </param>
         /// <param name="status"> The status of the operation. </param>
         /// <param name="operationContext"> The operation context provided by client. </param>
         /// <param name="resultInfo"> The result info for the operation. </param>
-        /// <returns> A new <see cref="CallingServer.CancelAllMediaOperationsResult"/> instance for mocking. </returns>
-        public static CancelAllMediaOperationsResult CancelAllMediaOperationsResult(string operationId = null, OperationStatus status = default, string operationContext = null, ResultInfo resultInfo = null)
+        /// <returns> A new <see cref="CallingServer.TransferCallResult"/> instance for mocking. </returns>
+        public static TransferCallResult TransferCallResult(string operationId = null, CallingOperationStatus status = default, string operationContext = null, CallingOperationResultDetails resultInfo = null)
         {
-            return new CancelAllMediaOperationsResult(operationId, status, operationContext, resultInfo);
+            return new TransferCallResult(operationId, status, operationContext, resultInfo);
+        }
+
+        /// <summary> Initializes a new instance of CreateAudioRoutingGroupResult. </summary>
+        /// <param name="audioRoutingGroupId"> The audio routing group id. </param>
+        /// <returns> A new <see cref="CallingServer.CreateAudioRoutingGroupResult"/> instance for mocking. </returns>
+        public static CreateAudioRoutingGroupResult CreateAudioRoutingGroupResult(string audioRoutingGroupId = null)
+        {
+            return new CreateAudioRoutingGroupResult(audioRoutingGroupId);
         }
 
         /// <summary> Initializes a new instance of AddParticipantResult. </summary>
@@ -52,12 +60,12 @@ namespace Azure.Communication.CallingServer
             return new AddParticipantResult(participantId);
         }
 
-        /// <summary> Initializes a new instance of StartRecordingResult. </summary>
+        /// <summary> Initializes a new instance of StartCallRecordingResult. </summary>
         /// <param name="recordingId"> The recording id of the started recording. </param>
-        /// <returns> A new <see cref="CallingServer.StartRecordingResult"/> instance for mocking. </returns>
-        public static StartRecordingResult StartRecordingResult(string recordingId = null)
+        /// <returns> A new <see cref="CallingServer.StartCallRecordingResult"/> instance for mocking. </returns>
+        public static StartCallRecordingResult StartCallRecordingResult(string recordingId = null)
         {
-            return new StartRecordingResult(recordingId);
+            return new StartCallRecordingResult(recordingId);
         }
 
         /// <summary> Initializes a new instance of CallRecordingProperties. </summary>
@@ -68,25 +76,33 @@ namespace Azure.Communication.CallingServer
             return new CallRecordingProperties(recordingState);
         }
 
-        /// <summary> Initializes a new instance of CallConnectionStateChangedEvent. </summary>
-        /// <param name="serverCallId"> The server call.id. </param>
+        /// <summary> Initializes a new instance of AnswerCallResult. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="callConnectionState"> The call connection state. </param>
-        /// <returns> A new <see cref="CallingServer.CallConnectionStateChangedEvent"/> instance for mocking. </returns>
-        public static CallConnectionStateChangedEvent CallConnectionStateChangedEvent(string serverCallId = null, string callConnectionId = null, CallConnectionState callConnectionState = default)
+        /// <returns> A new <see cref="CallingServer.AnswerCallResult"/> instance for mocking. </returns>
+        public static AnswerCallResult AnswerCallResult(string callConnectionId = null)
         {
-            return new CallConnectionStateChangedEvent(serverCallId, callConnectionId, callConnectionState);
+            return new AnswerCallResult(callConnectionId);
+        }
+
+        /// <summary> Initializes a new instance of CallConnectionStateChangedEvent. </summary>
+        /// <param name="callLocator"> The server call locator. </param>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="callConnectionState"> The state of the call connection. </param>
+        /// <returns> A new <see cref="CallingServer.CallConnectionStateChangedEvent"/> instance for mocking. </returns>
+        public static CallConnectionStateChangedEvent CallConnectionStateChangedEvent(CallLocatorModel callLocator = null, string callConnectionId = null, CallConnectionState callConnectionState = default)
+        {
+            return new CallConnectionStateChangedEvent(callLocator, callConnectionId, callConnectionState);
         }
 
         /// <summary> Initializes a new instance of CallRecordingStateChangeEvent. </summary>
         /// <param name="recordingId"> The call recording id. </param>
-        /// <param name="state"> The state of the recording. </param>
+        /// <param name="callRecordingState"> The state of the recording. </param>
         /// <param name="startDateTime"> The time of the recording started. </param>
-        /// <param name="serverCallId"> The server call.id. </param>
+        /// <param name="callLocator"> The server call locator. </param>
         /// <returns> A new <see cref="CallingServer.CallRecordingStateChangeEvent"/> instance for mocking. </returns>
-        public static CallRecordingStateChangeEvent CallRecordingStateChangeEvent(string recordingId = null, CallRecordingState state = default, DateTimeOffset startDateTime = default, string serverCallId = null)
+        public static CallRecordingStateChangeEvent CallRecordingStateChangeEvent(string recordingId = null, CallRecordingState callRecordingState = default, DateTimeOffset startDateTime = default, CallLocatorModel callLocator = null)
         {
-            return new CallRecordingStateChangeEvent(recordingId, state, startDateTime, serverCallId);
+            return new CallRecordingStateChangeEvent(recordingId, callRecordingState, startDateTime, callLocator);
         }
 
         /// <summary> Initializes a new instance of AddParticipantResultEvent. </summary>
@@ -94,7 +110,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="operationContext"> The operation context. </param>
         /// <param name="status"> The status of the operation. </param>
         /// <returns> A new <see cref="CallingServer.AddParticipantResultEvent"/> instance for mocking. </returns>
-        public static AddParticipantResultEvent AddParticipantResultEvent(ResultInfo resultInfo = null, string operationContext = null, OperationStatus status = default)
+        public static AddParticipantResultEvent AddParticipantResultEvent(CallingOperationResultDetails resultInfo = null, string operationContext = null, CallingOperationStatus status = default)
         {
             return new AddParticipantResultEvent(resultInfo, operationContext, status);
         }
@@ -104,7 +120,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="operationContext"> The operation context. </param>
         /// <param name="status"> The status of the operation. </param>
         /// <returns> A new <see cref="CallingServer.PlayAudioResultEvent"/> instance for mocking. </returns>
-        public static PlayAudioResultEvent PlayAudioResultEvent(ResultInfo resultInfo = null, string operationContext = null, OperationStatus status = default)
+        public static PlayAudioResultEvent PlayAudioResultEvent(CallingOperationResultDetails resultInfo = null, string operationContext = null, CallingOperationStatus status = default)
         {
             return new PlayAudioResultEvent(resultInfo, operationContext, status);
         }

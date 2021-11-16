@@ -23,7 +23,7 @@ namespace Azure.Communication.CallingServer
         }
 
         internal const string CallConnectionStateChangedEventValue = "Microsoft.Communication.CallConnectionStateChanged";
-        internal const string ToneReceivedEventValue = "Microsoft.Communication.DtmfReceived";
+        internal const string ToneReceivedEventValue = "Microsoft.Communication.ToneReceived";
         internal const string PlayAudioResultEventValue = "Microsoft.Communication.PlayAudioResult";
         internal const string CallRecordingStateChangeEventValue = "Microsoft.Communication.CallRecordingStateChanged";
         internal const string AddParticipantResultEventValue = "Microsoft.Communication.AddParticipantResult";

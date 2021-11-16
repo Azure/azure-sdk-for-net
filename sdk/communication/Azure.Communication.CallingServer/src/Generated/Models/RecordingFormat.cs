@@ -7,7 +7,7 @@
 
 namespace Azure.Communication.CallingServer
 {
-    /// <summary> The media container format type of a call recording. </summary>
+    /// <summary> The format type of call recording. </summary>
     public enum RecordingFormat
     {
         /// <summary> wav. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Communication;
 
 namespace Azure.Communication.CallingServer
@@ -13,9 +14,17 @@ namespace Azure.Communication.CallingServer
     internal partial class CallParticipantInternal
     {
         /// <summary> Initializes a new instance of CallParticipantInternal. </summary>
+        /// <param name="identifier"> Communication identifier of the participant. </param>
         /// <param name="isMuted"> Is participant muted. </param>
-        internal CallParticipantInternal(bool isMuted)
+        /// <exception cref="ArgumentNullException"> <paramref name="identifier"/> is null. </exception>
+        internal CallParticipantInternal(CommunicationIdentifierModel identifier, bool isMuted)
         {
+            if (identifier == null)
+            {
+                throw new ArgumentNullException(nameof(identifier));
+            }
+
+            Identifier = identifier;
             IsMuted = isMuted;
         }
 

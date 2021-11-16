@@ -3,6 +3,7 @@
 ## 1.0.0-beta.4 (Unreleased)
 
 ### Features Added
+- Delete recording apis.
 
 ### Breaking Changes
 

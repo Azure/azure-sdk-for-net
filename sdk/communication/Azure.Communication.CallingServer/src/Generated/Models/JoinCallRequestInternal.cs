@@ -16,11 +16,16 @@ namespace Azure.Communication.CallingServer
     internal partial class JoinCallRequestInternal
     {
         /// <summary> Initializes a new instance of JoinCallRequestInternal. </summary>
+        /// <param name="callLocator"> The call locator. </param>
         /// <param name="source"> The source of the call. </param>
         /// <param name="callbackUri"> The callback URI. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="source"/> or <paramref name="callbackUri"/> is null. </exception>
-        public JoinCallRequestInternal(CommunicationIdentifierModel source, string callbackUri)
+        /// <exception cref="ArgumentNullException"> <paramref name="callLocator"/>, <paramref name="source"/>, or <paramref name="callbackUri"/> is null. </exception>
+        public JoinCallRequestInternal(CallLocatorModel callLocator, CommunicationIdentifierModel source, string callbackUri)
         {
+            if (callLocator == null)
+            {
+                throw new ArgumentNullException(nameof(callLocator));
+            }
             if (source == null)
             {
                 throw new ArgumentNullException(nameof(source));
@@ -30,12 +35,15 @@ namespace Azure.Communication.CallingServer
                 throw new ArgumentNullException(nameof(callbackUri));
             }
 
+            CallLocator = callLocator;
             Source = source;
             CallbackUri = callbackUri;
-            RequestedMediaTypes = new ChangeTrackingList<MediaType>();
-            RequestedCallEvents = new ChangeTrackingList<EventSubscriptionType>();
+            RequestedMediaTypes = new ChangeTrackingList<CallMediaType>();
+            RequestedCallEvents = new ChangeTrackingList<CallingEventSubscriptionType>();
         }
 
+        /// <summary> The call locator. </summary>
+        public CallLocatorModel CallLocator { get; }
         /// <summary> The source of the call. </summary>
         public CommunicationIdentifierModel Source { get; }
         /// <summary> The subject. </summary>
@@ -43,8 +51,8 @@ namespace Azure.Communication.CallingServer
         /// <summary> The callback URI. </summary>
         public string CallbackUri { get; }
         /// <summary> The requested modalities. </summary>
-        public IList<MediaType> RequestedMediaTypes { get; }
+        public IList<CallMediaType> RequestedMediaTypes { get; }
         /// <summary> The requested call events to subscribe to. </summary>
-        public IList<EventSubscriptionType> RequestedCallEvents { get; }
+        public IList<CallingEventSubscriptionType> RequestedCallEvents { get; }
     }
 }

@@ -15,9 +15,9 @@ namespace Azure.Communication.CallingServer
         internal static PlayAudioResult DeserializePlayAudioResult(JsonElement element)
         {
             Optional<string> operationId = default;
-            OperationStatus status = default;
+            CallingOperationStatus status = default;
             Optional<string> operationContext = default;
-            Optional<ResultInfo> resultInfo = default;
+            Optional<CallingOperationResultDetails> resultInfo = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("operationId"))
@@ -27,7 +27,7 @@ namespace Azure.Communication.CallingServer
                 }
                 if (property.NameEquals("status"))
                 {
-                    status = new OperationStatus(property.Value.GetString());
+                    status = new CallingOperationStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("operationContext"))
@@ -42,7 +42,7 @@ namespace Azure.Communication.CallingServer
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    resultInfo = ResultInfo.DeserializeResultInfo(property.Value);
+                    resultInfo = CallingOperationResultDetails.DeserializeCallingOperationResultDetails(property.Value);
                     continue;
                 }
             }

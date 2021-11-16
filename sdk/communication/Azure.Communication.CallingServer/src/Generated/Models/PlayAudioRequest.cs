@@ -5,14 +5,31 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Communication.CallingServer
 {
     /// <summary> The request payload for playing audio. </summary>
     internal partial class PlayAudioRequest
     {
         /// <summary> Initializes a new instance of PlayAudioRequest. </summary>
-        public PlayAudioRequest()
+        /// <param name="audioFileUri">
+        /// The media resource uri of the play audio request. 
+        /// Currently only Wave file (.wav) format audio prompts are supported.
+        /// More specifically, the audio content in the wave file must be mono (single-channel),
+        /// 16-bit samples with a 16,000 (16KHz) sampling rate.
+        /// </param>
+        /// <param name="loop"> The flag indicating whether audio file needs to be played in loop or not. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="audioFileUri"/> is null. </exception>
+        public PlayAudioRequest(string audioFileUri, bool loop)
         {
+            if (audioFileUri == null)
+            {
+                throw new ArgumentNullException(nameof(audioFileUri));
+            }
+
+            AudioFileUri = audioFileUri;
+            Loop = loop;
         }
 
         /// <summary>
@@ -21,9 +38,9 @@ namespace Azure.Communication.CallingServer
         /// More specifically, the audio content in the wave file must be mono (single-channel),
         /// 16-bit samples with a 16,000 (16KHz) sampling rate.
         /// </summary>
-        public string AudioFileUri { get; set; }
+        public string AudioFileUri { get; }
         /// <summary> The flag indicating whether audio file needs to be played in loop or not. </summary>
-        public bool? Loop { get; set; }
+        public bool Loop { get; }
         /// <summary> The value to identify context of the operation. </summary>
         public string OperationContext { get; set; }
         /// <summary> An id for the media in the AudioFileUri, using which we cache the media resource. </summary>

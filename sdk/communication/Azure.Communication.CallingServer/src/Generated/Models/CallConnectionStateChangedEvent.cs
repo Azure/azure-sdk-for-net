@@ -11,28 +11,28 @@ namespace Azure.Communication.CallingServer
     public partial class CallConnectionStateChangedEvent
     {
         /// <summary> Initializes a new instance of CallConnectionStateChangedEvent. </summary>
-        /// <param name="callConnectionState"> The call connection state. </param>
+        /// <param name="callConnectionState"> The state of the call connection. </param>
         internal CallConnectionStateChangedEvent(CallConnectionState callConnectionState)
         {
             CallConnectionState = callConnectionState;
         }
 
         /// <summary> Initializes a new instance of CallConnectionStateChangedEvent. </summary>
-        /// <param name="serverCallId"> The server call.id. </param>
+        /// <param name="callLocator"> The server call locator. </param>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="callConnectionState"> The call connection state. </param>
-        internal CallConnectionStateChangedEvent(string serverCallId, string callConnectionId, CallConnectionState callConnectionState)
+        /// <param name="callConnectionState"> The state of the call connection. </param>
+        internal CallConnectionStateChangedEvent(CallLocatorModel callLocator, string callConnectionId, CallConnectionState callConnectionState)
         {
-            ServerCallId = serverCallId;
+            CallLocator = callLocator;
             CallConnectionId = callConnectionId;
             CallConnectionState = callConnectionState;
         }
 
-        /// <summary> The server call.id. </summary>
-        public string ServerCallId { get; }
+        /// <summary> The server call locator. </summary>
+        public CallLocatorModel CallLocator { get; }
         /// <summary> The call connection id. </summary>
         public string CallConnectionId { get; }
-        /// <summary> The call connection state. </summary>
+        /// <summary> The state of the call connection. </summary>
         public CallConnectionState CallConnectionState { get; }
     }
 }
