@@ -4,5 +4,7 @@
   </PropertyGroup>
 
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory)..\, Directory.Build.props))\Directory.Build.props" />
-
+  <PropertyGroup>
+    <IsOptOutOfGlobalTestTimeout>true</IsOptOutOfGlobalTestTimeout>
+  </PropertyGroup>
 </Project>
