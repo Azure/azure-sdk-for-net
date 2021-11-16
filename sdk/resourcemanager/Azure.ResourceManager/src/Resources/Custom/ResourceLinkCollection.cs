@@ -12,6 +12,8 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.ResourceManager.Core;
 
+[assembly:CodeGenSuppressType("Azure.ResourceManager.Resources.Models.CreatedByType")]
+
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing collection of ResourceLink and their operations over a Tenant. </summary>

@@ -9,8 +9,6 @@ using System.Text;
 using System.Text.RegularExpressions;
 using Azure.Core;
 
-[assembly:CodeGenSuppressType("Azure.ResourceManager.Resources.Models.CreatedByType")]
-
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary>
