@@ -1,4 +1,9 @@
 # LLC Quickstart Tutorial
+In this tutorial, we will walk through creating a new Low Level Client SDK based on [Azure SDK Design guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html).
+
+We will use [LLC template](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/template-LLC) project as a reference. We have a template [swagger file](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/template-LLC/Azure.Template.LLC/src/swagger) containing a REST API definition based on [Azure REST API Guidelines](https://github.com/microsoft/api-guidelines/blob/vNext/azure/Guidelines.md). We will use the swagger to generate LLC SDK using [autorest.csharp](https://github.com/Azure/autorest.csharp)
+
+This tutorial has following sections:
 
 - [Prerequisites](#prerequisites)
 - [Setup your repo](#setup-your-repo)
