@@ -35,7 +35,7 @@ After we have the resource group created, we can create a namespace
 string namespaceName = "myNamespace";
 ServiceBusNamespaceCollection namespaceCollection = resourceGroup.GetServiceBusNamespaces();
 ServiceBusNamespace serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(namespaceName, new ServiceBusNamespaceData(location))).Value;
-ServiceBusQueueCollection queueCollection = serviceBusNamespace.GetServiceBusQueues();
+ServiceBusQueueCollection serviceBusQueueCollection = serviceBusNamespace.GetServiceBusQueues();
 ```
 
 Now that we have a namespace, we can manage the queues inside this namespace.

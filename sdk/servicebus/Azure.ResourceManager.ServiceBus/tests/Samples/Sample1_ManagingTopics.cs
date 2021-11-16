@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.ServiceBus.Tests.Samples
             string namespaceName = "myNamespace";
             ServiceBusNamespaceCollection namespaceCollection = resourceGroup.GetServiceBusNamespaces();
             ServiceBusNamespace serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(namespaceName, new ServiceBusNamespaceData(location))).Value;
-            ServiceBusTopicCollection topicCollection = serviceBusNamespace.GetServiceBusTopics();
+            ServiceBusTopicCollection serviceBusTopicCollection = serviceBusNamespace.GetServiceBusTopics();
             #endregion
-            this.serviceBusTopicCollection = topicCollection;
+            this.serviceBusTopicCollection = serviceBusTopicCollection;
         }
 
         [Test]
