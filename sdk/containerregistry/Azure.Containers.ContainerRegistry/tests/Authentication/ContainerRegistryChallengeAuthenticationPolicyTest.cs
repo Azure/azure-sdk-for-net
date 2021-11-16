@@ -322,7 +322,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             service => new AcrRefreshToken("TestAcrRefreshToken"),
             (service, scope) =>
             {
-                Thread.Sleep(100);
+                Thread.Sleep(10);
                 return new AcrAccessToken("TestAcrAccessToken");
             });
 
@@ -351,7 +351,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             MockAuthenticationClient mockAuthClient = new MockAuthenticationClient(
             service =>
             {
-                Thread.Sleep(100);
+                Thread.Sleep(10);
                 throw new InvalidOperationException("Error");
             },
             (service, scope) =>
