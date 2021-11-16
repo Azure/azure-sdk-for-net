@@ -596,40 +596,40 @@ namespace Azure.Communication.CallingServer.Tests
             Assert.AreEqual(ex?.Status, 404);
         }
 
-        [TestCaseSource(nameof(TestData_TransferCall))]
-        public async Task TransferCallAsync_Passes(CommunicationIdentifier participant, string targetCallConnectionId, string userToUserInformation)
+        [TestCaseSource(nameof(TestData_Transfer))]
+        public async Task TransferAsync_Passes(CommunicationIdentifier participant, string targetCallConnectionId, string userToUserInformation)
         {
             var callConnection = CreateMockCallConnection(202, TransferCallResultPayload);
 
-            var result = await callConnection.TransferCallAsync(participant, targetCallConnectionId, userToUserInformation).ConfigureAwait(false);
+            var result = await callConnection.TransferAsync(participant, targetCallConnectionId, userToUserInformation).ConfigureAwait(false);
             VerifyTransferCallResult(result);
         }
 
-        [TestCaseSource(nameof(TestData_TransferCall))]
-        public void TransferCall_Passes(CommunicationIdentifier participant, string targetCallConnectionId, string userToUserInformation)
+        [TestCaseSource(nameof(TestData_Transfer))]
+        public void Transfer_Passes(CommunicationIdentifier participant, string targetCallConnectionId, string userToUserInformation)
         {
             var callConnection = CreateMockCallConnection(202, TransferCallResultPayload);
 
-            var result = callConnection.TransferCall(participant, targetCallConnectionId, userToUserInformation);
+            var result = callConnection.Transfer(participant, targetCallConnectionId, userToUserInformation);
             VerifyTransferCallResult(result);
         }
 
-        [TestCaseSource(nameof(TestData_TransferCall))]
-        public void TransferCallAsync_Failed(CommunicationIdentifier participant, string targetCallConnectionId, string userToUserInformation)
+        [TestCaseSource(nameof(TestData_Transfer))]
+        public void TransferAsync_Failed(CommunicationIdentifier participant, string targetCallConnectionId, string userToUserInformation)
         {
             var callConnection = CreateMockCallConnection(404);
 
-            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.TransferCallAsync(participant, targetCallConnectionId, userToUserInformation).ConfigureAwait(false));
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.TransferAsync(participant, targetCallConnectionId, userToUserInformation).ConfigureAwait(false));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
         }
 
-        [TestCaseSource(nameof(TestData_TransferCall))]
-        public void TransferCall_Failed(CommunicationIdentifier participant, string targetCallConnectionId, string userToUserInformation)
+        [TestCaseSource(nameof(TestData_Transfer))]
+        public void Transfer_Failed(CommunicationIdentifier participant, string targetCallConnectionId, string userToUserInformation)
         {
             var callConnection = CreateMockCallConnection(404);
 
-            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.TransferCall(participant, targetCallConnectionId, userToUserInformation));
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.Transfer(participant, targetCallConnectionId, userToUserInformation));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
         }
@@ -1171,7 +1171,7 @@ namespace Azure.Communication.CallingServer.Tests
             };
         }
 
-        private static IEnumerable<object?[]> TestData_TransferCall()
+        private static IEnumerable<object?[]> TestData_Transfer()
         {
             return new[]
             {
