@@ -54,12 +54,6 @@ namespace Azure.ResourceManager.Resources
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
 
-        /// <summary> Verify that the input resource Id is a valid collection for this type. </summary>
-        /// <param name="identifier"> The input resource Id to check. </param>
-        protected override void ValidateResourceType(ResourceIdentifier identifier)
-        {
-        }
-
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => ResourceIdentifier.RootResourceIdentifier.ResourceType;
 
@@ -275,82 +269,6 @@ namespace Azure.ResourceManager.Resources
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Gets a list of resource links at and below the specified source scope. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceLink" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResourceLink> GetAll(CancellationToken cancellationToken = default)
-        {
-            Page<ResourceLink> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("ResourceLinkCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _restClient.GetAtSourceScope(Id, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceLink(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ResourceLink> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("ResourceLinkCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _restClient.GetAtSourceScopeNextPage(nextLink, Id, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceLink(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Gets a list of resource links at and below the specified source scope. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourceLink" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ResourceLink> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<ResourceLink>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("ResourceLinkCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _restClient.GetAtSourceScopeAsync(Id, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceLink(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ResourceLink>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("ResourceLinkCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _restClient.GetAtSourceScopeNextPageAsync(nextLink, Id, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceLink(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         // Builders.

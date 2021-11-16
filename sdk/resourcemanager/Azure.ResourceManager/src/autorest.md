@@ -83,7 +83,7 @@ directive:
 These settings apply only when `--tag=package-resources` is specified on the command line.
 
 ``` yaml $(tag) == 'package-resources'
-output-folder: $(this-folder)/Generated/Resources
+output-folder: $(this-folder)/Resources/Generated
 namespace: Azure.ResourceManager.Resources
 title: ResourceManagementClient
 input-file:
