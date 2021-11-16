@@ -462,27 +462,35 @@ namespace Compute.Tests
                         Assert.Equal("PT35M", getResponse.AutomaticRepairsPolicy.GracePeriod, ignoreCase: true);
                         Assert.Equal("replace", getResponse.AutomaticRepairsPolicy.RepairAction, ignoreCase: true);
 
-                        // Change Automatic Repairs RepairAction to reimage
-                        inputVMScaleSet.AutomaticRepairsPolicy.RepairAction = "reimage";
-                        UpdateVMScaleSet(rgName, vmssName, inputVMScaleSet);
+                        // Test other repair actions. Must disable before changing repair action
+                        foreach (string repairAction in new List<string> { "restart", "reimage" })
+                        {
+                            // Disable auto repairs so we can update repair Action
+                            inputVMScaleSet.AutomaticRepairsPolicy = new AutomaticRepairsPolicy()
+                            {
+                                Enabled = false,
+                            };
+                            UpdateVMScaleSet(rgName, vmssName, inputVMScaleSet);
+                            getResponse = m_CrpClient.VirtualMachineScaleSets.Get(rgName, vmssName);
+                            Assert.NotNull(getResponse.AutomaticRepairsPolicy);
+                            Assert.True(getResponse.AutomaticRepairsPolicy.Enabled == false);
 
-                        getResponse = m_CrpClient.VirtualMachineScaleSets.Get(rgName, vmssName);
-                        ValidateVMScaleSet(inputVMScaleSet, getResponse, hasManagedDisks: true);
-                        Assert.NotNull(getResponse.AutomaticRepairsPolicy);
-                        Assert.True(getResponse.AutomaticRepairsPolicy.Enabled == true);
-                        Assert.Equal("PT35M", getResponse.AutomaticRepairsPolicy.GracePeriod, ignoreCase: true);
-                        Assert.Equal("reimage", getResponse.AutomaticRepairsPolicy.RepairAction, ignoreCase: true);
+                            // Now we can update repairAction
+                            inputVMScaleSet.AutomaticRepairsPolicy = new AutomaticRepairsPolicy()
+                            {
+                                Enabled = true,
+                                GracePeriod = "PT35M",
+                                RepairAction = repairAction
+                            };
+                            UpdateVMScaleSet(rgName, vmssName, inputVMScaleSet);
 
-                        // Change Automatic Repairs RepairAction to restart
-                        inputVMScaleSet.AutomaticRepairsPolicy.RepairAction = "restart";
-                        UpdateVMScaleSet(rgName, vmssName, inputVMScaleSet);
-
-                        getResponse = m_CrpClient.VirtualMachineScaleSets.Get(rgName, vmssName);
-                        ValidateVMScaleSet(inputVMScaleSet, getResponse, hasManagedDisks: true);
-                        Assert.NotNull(getResponse.AutomaticRepairsPolicy);
-                        Assert.True(getResponse.AutomaticRepairsPolicy.Enabled == true);
-                        Assert.Equal("PT35M", getResponse.AutomaticRepairsPolicy.GracePeriod, ignoreCase: true);
-                        Assert.Equal("restart", getResponse.AutomaticRepairsPolicy.RepairAction, ignoreCase: true);
+                            getResponse = m_CrpClient.VirtualMachineScaleSets.Get(rgName, vmssName);
+                            ValidateVMScaleSet(inputVMScaleSet, getResponse, hasManagedDisks: true);
+                            Assert.NotNull(getResponse.AutomaticRepairsPolicy);
+                            Assert.True(getResponse.AutomaticRepairsPolicy.Enabled == true);
+                            Assert.Equal("PT35M", getResponse.AutomaticRepairsPolicy.GracePeriod, ignoreCase: true);
+                            Assert.Equal(repairAction, getResponse.AutomaticRepairsPolicy.RepairAction, ignoreCase: true);
+                        }
 
                         // Disable Automatic Repairs
                         inputVMScaleSet.AutomaticRepairsPolicy = new AutomaticRepairsPolicy()
