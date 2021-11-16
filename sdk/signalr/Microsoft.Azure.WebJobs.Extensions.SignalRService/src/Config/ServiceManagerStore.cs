@@ -14,7 +14,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 {
-    internal class ServiceManagerStore : IServiceManagerStore
+    internal sealed class ServiceManagerStore : IServiceManagerStore
     {
         private readonly ILoggerFactory _loggerFactory;
         private readonly AzureComponentFactory _azureComponentFactory;
@@ -68,6 +68,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
             services.AddSingleton(services.ToList() as IReadOnlyCollection<ServiceDescriptor>);
             return services.BuildServiceProvider()
                .GetRequiredService<IInternalServiceHubContextStore>();
+        }
+
+        public void Dispose()
+        {
+            foreach (var hubContextStore in _store.Values)
+            {
+                hubContextStore.Dispose();
+            }
         }
     }
 }

@@ -10,7 +10,7 @@ using Microsoft.Azure.SignalR.Management;
 
 namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 {
-    internal class ServiceHubContextStore : IInternalServiceHubContextStore
+    internal sealed class ServiceHubContextStore : IInternalServiceHubContextStore
     {
         private readonly ConcurrentDictionary<string, (Lazy<Task<IServiceHubContext>> Lazy, IServiceHubContext Value)> _store = new(StringComparer.OrdinalIgnoreCase);
         private readonly ConcurrentDictionary<string, Lazy<Task<object>>> _stronglyTypedStore = new(StringComparer.OrdinalIgnoreCase);
@@ -68,6 +68,26 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
                 // Allow to retry for transient errors.
                 _store.TryRemove(hubName, out _);
                 throw;
+            }
+        }
+
+        public void Dispose()
+        {
+            _serviceManager.Dispose();
+            foreach (var tuple in _store.Values)
+            {
+                tuple.Value?.DisposeAsync().Wait();
+                if (tuple.Lazy is not null && tuple.Lazy.IsValueCreated)
+                {
+                    tuple.Lazy.Value.Result.DisposeAsync().Wait();
+                }
+            }
+            foreach (var lazy in _stronglyTypedStore.Values)
+            {
+                if (lazy.IsValueCreated)
+                {
+                    ((IDisposable)lazy.Value.Result).Dispose();
+                }
             }
         }
     }
