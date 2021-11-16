@@ -39,11 +39,12 @@ namespace Azure.Monitor.Query.Models
 
         /// <summary> Initializes a new instance of LogsTable. </summary>
         /// <param name="name"> The name of the table. </param>
-        /// <param name="columns"> The list of columns in this table. </param>
+        /// <param name="rows"> The list of rows in this table. </param>
         /// <param name="internalRows"> The resulting rows from this query. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="columns"/> is null. </exception>
-        public static LogsTable LogsTable(string name, IEnumerable<LogsTableColumn> columns, JsonElement internalRows)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="rows"/> is null. </exception>
+        public static LogsTable LogsTable(string name, IEnumerable<LogsTableRow> rows, JsonElement internalRows)
         {
+            IEnumerable<LogsTableColumn> columns = new List<LogsTableColumn>(rows.);
             return new LogsTable(name, columns, internalRows);
         }
     }
