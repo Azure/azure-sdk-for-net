@@ -38,9 +38,9 @@ steps:
       --no-sync
       -l net
       -s "^storage-blob$"
-      -t "^download$"
-      -p "12"
-      -a "warmup 0"
+      -t "^(download|upload|list-blobs)$"
+      -a "(10240)|(10485760)|(5 )|(500 )"
+      -i 5
     workingDirectory: azure-sdk-tools/tools/perf-automation/Azure.Sdk.Tools.PerfAutomation
     env:
       AZURE_STORAGE_ACCOUNT_KEY: $(azure-storage-account-key)
