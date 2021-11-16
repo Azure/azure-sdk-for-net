@@ -72,7 +72,7 @@ namespace Azure.Communication.NetworkTraversal.Samples
             //@@var connectionString = "<connection_string>";
             var client = new CommunicationRelayClient(connectionString);
             client = CreateClientWithConnectionString();
-
+            #region Snippet:GetRelayConfigurationAsyncWithNearestRouteType
             Response<CommunicationRelayConfiguration> relayConfiguration = await client.GetRelayConfigurationAsync(user, RouteType.Nearest);
             DateTimeOffset turnTokenExpiresOn = relayConfiguration.Value.ExpiresOn;
             IReadOnlyList<CommunicationIceServer> iceServers = relayConfiguration.Value.IceServers;
@@ -87,10 +87,10 @@ namespace Azure.Communication.NetworkTraversal.Samples
                 Console.WriteLine($"ICE Server Credential: {iceServer.Credential}");
                 Console.WriteLine($"ICE Server Route Type: {iceServer.RouteType}");
             }
+            #endregion Snippet:GetRelayConfigurationAsyncWithNearestRouteType
         }
 
         [Test]
-        [Ignore("Non-identity work was rolled back. Enabling once it is roll out again.")]
         [AsyncOnly]
         public async Task GetRelayConfigurationAsyncWithoutIdentity()
         {
@@ -185,7 +185,6 @@ namespace Azure.Communication.NetworkTraversal.Samples
 
         [Test]
         [SyncOnly]
-        [Ignore("Non-identity work was rolled back. Enabling once it is roll out again.")]
         public void GetRelayConfigurationWithoutIdentity()
         {
             var connectionString = TestEnvironment.LiveTestDynamicConnectionString;
@@ -262,7 +261,6 @@ namespace Azure.Communication.NetworkTraversal.Samples
         }
 
         [Test]
-        [Ignore("Non-identity work was rolled back. Enabling once it is roll out again.")]
         public async Task CreateCommunicationRelayWithAccessKeyWithoutIdentity()
         {
             var endpoint = new Uri("https://my-resource.communication.azure.com");

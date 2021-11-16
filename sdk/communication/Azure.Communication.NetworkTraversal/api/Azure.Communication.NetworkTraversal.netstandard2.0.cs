@@ -20,10 +20,11 @@ namespace Azure.Communication.NetworkTraversal
     }
     public partial class CommunicationRelayClientOptions : Azure.Core.ClientOptions
     {
-        public CommunicationRelayClientOptions(Azure.Communication.NetworkTraversal.CommunicationRelayClientOptions.ServiceVersion version = Azure.Communication.NetworkTraversal.CommunicationRelayClientOptions.ServiceVersion.V2021_06_21_preview) { }
+        public CommunicationRelayClientOptions(Azure.Communication.NetworkTraversal.CommunicationRelayClientOptions.ServiceVersion version = Azure.Communication.NetworkTraversal.CommunicationRelayClientOptions.ServiceVersion.V2021_10_08_preview) { }
         public enum ServiceVersion
         {
             V2021_06_21_preview = 1,
+            V2021_10_08_preview = 2,
         }
     }
     public partial class CommunicationRelayConfiguration

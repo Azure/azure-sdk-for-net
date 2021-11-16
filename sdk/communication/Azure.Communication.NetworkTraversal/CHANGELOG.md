@@ -1,9 +1,10 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.0.0-beta.3 (2021-11-18)
 
 ### Features Added
 - Making user identity an optional argument when calling GetRelayConfiguration and GetRelayConfigurationAsync
+- Adding Route Type as an optional argument when calling GetRelayConfiguration and GetRelayConfigurationAsync
 
 ### Breaking Changes
 
