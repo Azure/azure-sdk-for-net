@@ -48,10 +48,13 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         [RecordedTest]
         public async Task ManagedInstancePrivateLinkApiTests()
         {
-            // Create Managed Instance
-            //string managedInstanceName = Recording.GenerateAssetName("managed-instance-");
-            //var managedInstance = await CreateDefaultManagedInstance(managedInstanceName, Location.WestUS2, _resourceGroup);
-            //Assert.IsNotNull(managedInstance.Data);
+            //Create Managed Instance
+            string managedInstanceName = Recording.GenerateAssetName("managed-instance-");
+            string networkSecurityGroupName = Recording.GenerateAssetName("network-security-group-");
+            string routeTableName = Recording.GenerateAssetName("route-table-");
+            string vnetName = Recording.GenerateAssetName("vnet-");
+            var managedInstance = await CreateDefaultManagedInstance(managedInstanceName, networkSecurityGroupName, routeTableName, vnetName, Location.WestUS2, _resourceGroup);
+            Assert.IsNotNull(managedInstance.Data);
 
             //var collection = managedInstance.GetManagedInstancePrivateLinks();
             var collection = _resourceGroup.GetManagedInstances().GetAsync("managed-instance-1100").Result.Value.GetManagedInstancePrivateLinks();

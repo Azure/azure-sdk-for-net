@@ -49,7 +49,10 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         {
             // Create Managed Instance
             string managedInstanceName = Recording.GenerateAssetName("managed-instance-");
-            var managedInstance = await CreateDefaultManagedInstance(managedInstanceName, Location.WestUS2, _resourceGroup);
+            string networkSecurityGroupName = Recording.GenerateAssetName("network-security-group-");
+            string routeTableName = Recording.GenerateAssetName("route-table-");
+            string vnetName = Recording.GenerateAssetName("vnet-");
+            var managedInstance = await CreateDefaultManagedInstance(managedInstanceName, networkSecurityGroupName, routeTableName, vnetName, Location.WestUS2, _resourceGroup);
             Assert.IsNotNull(managedInstance.Data);
 
             string adoAuthName = AuthenticationName.Default.ToString();

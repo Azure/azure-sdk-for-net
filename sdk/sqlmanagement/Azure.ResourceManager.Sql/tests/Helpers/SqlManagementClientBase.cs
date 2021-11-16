@@ -51,13 +51,9 @@ namespace Azure.ResourceManager.Sql.Tests
         /// <param name="location"></param>
         /// <param name="resourceGroup"></param>
         /// <returns></returns>
-        protected async Task<ManagedInstance> CreateDefaultManagedInstance(string managedInstanceName, Location location, ResourceGroup resourceGroup)
+        protected async Task<ManagedInstance> CreateDefaultManagedInstance(string managedInstanceName,string networkSecurityGroupName, string routeTableName , string vnetName , Location location, ResourceGroup resourceGroup)
         {
-            Random random = new Random();
-            string suffix = random.Next(9999).ToString();
-
             //1. create NetworkSecurityGroup
-            string networkSecurityGroupName = $"networkSecurityGroup-{suffix}";
             NetworkSecurityGroupData networkSecurityGroupData = new NetworkSecurityGroupData()
             {
                 Location = location,
@@ -65,7 +61,6 @@ namespace Azure.ResourceManager.Sql.Tests
             var networkSecurityGroup = await resourceGroup.GetNetworkSecurityGroups().CreateOrUpdateAsync(networkSecurityGroupName, networkSecurityGroupData);
 
             //2. create Route table
-            string routeTableName = $"routeTable-{suffix}";
             RouteTableData routeTableData = new RouteTableData()
             {
                 Location = location,
@@ -73,7 +68,6 @@ namespace Azure.ResourceManager.Sql.Tests
             var routeTable = await resourceGroup.GetRouteTables().CreateOrUpdateAsync(routeTableName, routeTableData);
 
             //3. create vnet(subnet bind NetworkSecurityGroup and RouteTable)
-            string vnetName = $"vnet-{suffix}";
             var vnetData = new VirtualNetworkData()
             {
                 Location = location,
@@ -143,7 +137,7 @@ namespace Azure.ResourceManager.Sql.Tests
             PrivateEndpointData data = new PrivateEndpointData()
             {
                 Subnet = new SubnetData() { Id = privateEndpointSubnet.Value.Data.Id },
-                Location = "eastus",
+                Location = location,
                 PrivateLinkServiceConnections =
                 {
                     new PrivateLinkServiceConnection()

@@ -45,10 +45,18 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             // create PrimaryManagedInstance(WestUS2) and PartnerManagedInstance(NorthEurope)
             string primaryManagedInstanceName = Recording.GenerateAssetName("managed-instance-primary-");
             string partnerManagedInstanceName = Recording.GenerateAssetName("managed-instance-partner-");
+            string managedInstanceName1 = Recording.GenerateAssetName("managed-instance-");
+            string managedInstanceName2 = Recording.GenerateAssetName("managed-instance-");
+            string networkSecurityGroupName1 = Recording.GenerateAssetName("network-security-group-");
+            string networkSecurityGroupName2 = Recording.GenerateAssetName("network-security-group-");
+            string routeTableName1 = Recording.GenerateAssetName("route-table-");
+            string routeTableName2 = Recording.GenerateAssetName("route-table-");
+            string vnetName1 = Recording.GenerateAssetName("vnet-");
+            string vnetName2 = Recording.GenerateAssetName("vnet-");
             Task[] tasks = new Task[]
             {
-                CreateDefaultManagedInstance(primaryManagedInstanceName,Location.WestUS2, _resourceGroup),
-                CreateDefaultManagedInstance(partnerManagedInstanceName,Location.NorthEurope, _resourceGroup)
+                CreateDefaultManagedInstance(managedInstanceName1, networkSecurityGroupName1, routeTableName1, vnetName1, Location.WestUS2, _resourceGroup),
+                CreateDefaultManagedInstance(managedInstanceName2, networkSecurityGroupName2, routeTableName2, vnetName2, Location.WestUS2, _resourceGroup),
             };
             Task.WaitAll(tasks);
             string primaryManagedInstanceId = (await _resourceGroup.GetManagedInstances().GetAsync(primaryManagedInstanceName)).Value.Data.Id.ToString();

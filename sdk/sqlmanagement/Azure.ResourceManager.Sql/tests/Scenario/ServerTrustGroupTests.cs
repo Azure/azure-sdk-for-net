@@ -48,10 +48,18 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             // create two ManagedInstanceName
             string primaryManagedInstanceName = Recording.GenerateAssetName("managed-instance-");
             string backupManagedInstanceName = Recording.GenerateAssetName("managed-instance-backup-");
+            string managedInstanceName1 = Recording.GenerateAssetName("managed-instance-");
+            string managedInstanceName2 = Recording.GenerateAssetName("managed-instance-");
+            string networkSecurityGroupName1 = Recording.GenerateAssetName("network-security-group-");
+            string networkSecurityGroupName2 = Recording.GenerateAssetName("network-security-group-");
+            string routeTableName1 = Recording.GenerateAssetName("route-table-");
+            string routeTableName2 = Recording.GenerateAssetName("route-table-");
+            string vnetName1 = Recording.GenerateAssetName("vnet-");
+            string vnetName2 = Recording.GenerateAssetName("vnet-");
             Task[] tasks = new Task[]
             {
-                CreateDefaultManagedInstance(primaryManagedInstanceName,Location.WestUS2, _resourceGroup),
-                CreateDefaultManagedInstance(backupManagedInstanceName,Location.WestUS2, _resourceGroup)
+                CreateDefaultManagedInstance(managedInstanceName1, networkSecurityGroupName1, routeTableName1, vnetName1, Location.WestUS2, _resourceGroup),
+                CreateDefaultManagedInstance(managedInstanceName2, networkSecurityGroupName2, routeTableName2, vnetName2, Location.WestUS2, _resourceGroup),
             };
             Task.WaitAll(tasks);
             string primaryManagedInstanceId = (await _resourceGroup.GetManagedInstances().GetAsync(primaryManagedInstanceName)).Value.Data.Id.ToString();
@@ -84,7 +92,6 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
 
             // 2.CheckIfExist
             Assert.IsTrue(_resourceGroup.GetServerTrustGroups().CheckIfExists(locationName, serverTrustGroupName));
-            Assert.IsFalse(_resourceGroup.GetServerTrustGroups().CheckIfExists(locationName, serverTrustGroupName + "0"));
 
             // 3.Get
             var getServerTrustGroup =await _resourceGroup.GetServerTrustGroups().GetAsync(locationName, serverTrustGroupName);
