@@ -19,16 +19,15 @@ namespace Azure.Verticals.AgriFood.Farming
     /// <summary> The CropVarieties service client. </summary>
     public partial class CropVarietiesClient
     {
-        private static readonly string[] AuthorizationScopes = { "https://farmbeats.azure.net/.default" };
+        private static readonly string[] AuthorizationScopes = new string[] { "https://farmbeats.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
-
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get => _pipeline; }
+        public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary> Initializes a new instance of CropVarietiesClient for mocking. </summary>
         protected CropVarietiesClient()
@@ -50,7 +49,6 @@ namespace Azure.Verticals.AgriFood.Farming
             {
                 throw new ArgumentNullException(nameof(credential));
             }
-
             options ??= new FarmBeatsClientOptions();
 
             _clientDiagnostics = new ClientDiagnostics(options);
@@ -99,14 +97,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetAsync(string cropId, string cropVarietyId, RequestContext context = null)
+        public virtual async Task<Response> GetCropVarietyAsync(string cropId, string cropVarietyId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("CropVarietiesClient.Get");
+            using var scope = _clientDiagnostics.CreateScope("CropVarietiesClient.GetCropVariety");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetRequest(cropId, cropVarietyId);
+                using HttpMessage message = CreateGetCropVarietyRequest(cropId, cropVarietyId);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -155,14 +153,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response Get(string cropId, string cropVarietyId, RequestContext context = null)
+        public virtual Response GetCropVariety(string cropId, string cropVarietyId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("CropVarietiesClient.Get");
+            using var scope = _clientDiagnostics.CreateScope("CropVarietiesClient.GetCropVariety");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetRequest(cropId, cropVarietyId);
+                using HttpMessage message = CreateGetCropVarietyRequest(cropId, cropVarietyId);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -906,7 +904,7 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
-        internal HttpMessage CreateGetRequest(string cropId, string cropVarietyId)
+        internal HttpMessage CreateGetCropVarietyRequest(string cropId, string cropVarietyId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;

@@ -19,16 +19,15 @@ namespace Azure.Verticals.AgriFood.Farming
     /// <summary> The Fields service client. </summary>
     public partial class FieldsClient
     {
-        private static readonly string[] AuthorizationScopes = { "https://farmbeats.azure.net/.default" };
+        private static readonly string[] AuthorizationScopes = new string[] { "https://farmbeats.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
-
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get => _pipeline; }
+        public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary> Initializes a new instance of FieldsClient for mocking. </summary>
         protected FieldsClient()
@@ -50,7 +49,6 @@ namespace Azure.Verticals.AgriFood.Farming
             {
                 throw new ArgumentNullException(nameof(credential));
             }
-
             options ??= new FarmBeatsClientOptions();
 
             _clientDiagnostics = new ClientDiagnostics(options);
@@ -100,14 +98,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetAsync(string farmerId, string fieldId, RequestContext context = null)
+        public virtual async Task<Response> GetFieldAsync(string farmerId, string fieldId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("FieldsClient.Get");
+            using var scope = _clientDiagnostics.CreateScope("FieldsClient.GetField");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetRequest(farmerId, fieldId);
+                using HttpMessage message = CreateGetFieldRequest(farmerId, fieldId);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -157,14 +155,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response Get(string farmerId, string fieldId, RequestContext context = null)
+        public virtual Response GetField(string farmerId, string fieldId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("FieldsClient.Get");
+            using var scope = _clientDiagnostics.CreateScope("FieldsClient.GetField");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetRequest(farmerId, fieldId);
+                using HttpMessage message = CreateGetFieldRequest(farmerId, fieldId);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -1116,7 +1114,7 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
-        internal HttpMessage CreateGetRequest(string farmerId, string fieldId)
+        internal HttpMessage CreateGetFieldRequest(string farmerId, string fieldId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
