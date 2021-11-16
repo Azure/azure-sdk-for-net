@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        public async Task ManagedInstanceKeyApiTests()
+        public async Task ManagedInstanceOperationApiTests()
         {
             // Create Managed Instance
             string managedInstanceName = Recording.GenerateAssetName("managed-instance-");
