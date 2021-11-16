@@ -227,6 +227,7 @@ namespace Azure.Core.Pipeline
                 throw new InvalidOperationException("Cannot send messages with per-request policies if the pipeline wasn't constructed with HttpPipelineBuilder.");
             }
 
+            int transportIndex = _pipeline.Length - 1;
             // Copy over client policies and splice in custom policies at designated indices
             _pipeline.Slice(0, _perCallIndex).CopyTo(policies);
 
@@ -241,14 +242,14 @@ namespace Azure.Core.Pipeline
             count = AddCustomPolicies(customPolicies, policies, HttpPipelinePosition.PerRetry, index);
 
             index += count;
-            count = _pipeline.Length - _perRetryIndex;
+            count = transportIndex - _perRetryIndex;
             _pipeline.Slice(_perRetryIndex, count).CopyTo(new Memory<HttpPipelinePolicy>(policies, index, count));
 
             index += count;
             count = AddCustomPolicies(customPolicies, policies, HttpPipelinePosition.BeforeTransport, index);
 
             index += count;
-            policies[index] = _pipeline.Span[_pipeline.Length];
+            policies[index] = _pipeline.Span[transportIndex];
 
             return new ReadOnlyMemory<HttpPipelinePolicy>(policies, 0, index + 1);
         }
