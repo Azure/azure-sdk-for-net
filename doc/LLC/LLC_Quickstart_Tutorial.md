@@ -74,6 +74,8 @@ In Visual Studio:
 - Rename the `Azure.Template.LLC` solution to `Azure.<your-sdk-name>`.
 - Remove the `Azure.Template.LLC.Tests` project from the solution.
 
+**Note** `Azure.<your-sdk-name>` is a Azure SDK package name.
+
 **Learn more:** see the [.NET Guidelines on Namespace Naming](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-namespace-naming) for more information on naming Azure SDK packages. This name diverges from approved Azure SDK namespaces, since it is intended to be used just for this tutorial.
 
 #### 4. Save and commit your changes to your branch
@@ -150,6 +152,8 @@ In this section, we will talk about adding unit tests and live tests and how to 
 - Rename the `TemplateServiceLiveTests.cs` file to `<client-name>LiveTests.cs` and remove all the template project tests. Please refer [this](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md#live-testing) to add live tests.
 - Rename the `TemplateServiceTests.cs` file to `<client-name>Tests.cs` and remove all the template project tests and add all the unit tests in this file.
 - Remove the `SerializationHelpers.cs` file.
+
+**Note** `Azure.<your-sdk-name>` is a Azure SDK package name and <client-name> is a client name, C# generator will generate a client which you can find in `Azure.<your-sdk-name>/Generated` directory.
 
 **Learn more:** see the [docs](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md#to-test-1) to learn more about tests.
 
