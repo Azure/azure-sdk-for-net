@@ -11,11 +11,11 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.AppConfiguration.Tests
 {
-    public class ConfigurationStoreContainerTests : AppConfigurationClientBase
+    public class ConfigurationStoreCollectionTests : AppConfigurationClientBase
     {
         private ResourceGroup ResGroup { get; set; }
 
-        public ConfigurationStoreContainerTests(bool isAsync)
+        public ConfigurationStoreCollectionTests(bool isAsync)
             : base(isAsync)
         {
         }
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             {
                 Initialize();
                 string groupName = Recording.GenerateAssetName(ResourceGroupPrefix);
-                ResGroup = await (await ArmClient.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(groupName, new ResourceGroupData(Location))).WaitForCompletionAsync();
+                ResGroup = await (await ArmClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(groupName, new ResourceGroupData(Location))).WaitForCompletionAsync();
             }
         }
 

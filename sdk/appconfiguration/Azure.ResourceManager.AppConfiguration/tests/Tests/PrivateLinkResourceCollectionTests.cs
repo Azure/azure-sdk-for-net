@@ -15,12 +15,12 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.AppConfiguration.Tests
 {
-    public class PrivateLinkResourceContainerTests : AppConfigurationClientBase
+    public class PrivateLinkResourceCollectionTests : AppConfigurationClientBase
     {
         private ResourceGroup ResGroup { get; set; }
         private ConfigurationStore ConfigStore { get; set; }
 
-        public PrivateLinkResourceContainerTests(bool isAsync)
+        public PrivateLinkResourceCollectionTests(bool isAsync)
             : base(isAsync)
         {
         }
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             {
                 Initialize();
                 string groupName = Recording.GenerateAssetName(ResourceGroupPrefix);
-                ResGroup = await (await ArmClient.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(groupName, new ResourceGroupData(Location))).WaitForCompletionAsync();
+                ResGroup = await (await ArmClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(groupName, new ResourceGroupData(Location))).WaitForCompletionAsync();
                 string configurationStoreName = Recording.GenerateAssetName("testapp-");
                 ConfigurationStoreData configurationStoreData = new ConfigurationStoreData(Location, new Models.Sku("Standard"))
                 {

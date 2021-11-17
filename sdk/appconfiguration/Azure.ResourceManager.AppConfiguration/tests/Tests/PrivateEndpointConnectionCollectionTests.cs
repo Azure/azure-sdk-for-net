@@ -16,13 +16,13 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.AppConfiguration.Tests
 {
-    public class PrivateEndpointConnectionContainerTests : AppConfigurationClientBase
+    public class PrivateEndpointConnectionCollectionTests : AppConfigurationClientBase
     {
         private ResourceGroup ResGroup { get; set; }
         private ConfigurationStore ConfigStore { get; set; }
         private Network.PrivateEndpoint PrivateEndpoint { get; set; }
 
-        public PrivateEndpointConnectionContainerTests(bool isAsync)
+        public PrivateEndpointConnectionCollectionTests(bool isAsync)
             : base(isAsync)
         {
         }
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
                 string VnetName = Recording.GenerateAssetName("vnetname");
                 string SubnetName = Recording.GenerateAssetName("subnetname");
                 string EndpointName = Recording.GenerateAssetName("endpointxyz");
-                ResGroup = await (await ArmClient.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(groupName, new ResourceGroupData(Location))).WaitForCompletionAsync();
+                ResGroup = await (await ArmClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(groupName, new ResourceGroupData(Location))).WaitForCompletionAsync();
                 string configurationStoreName = Recording.GenerateAssetName("testapp-");
                 ConfigurationStoreData configurationStoreData = new ConfigurationStoreData(Location, new Models.Sku("Standard"))
                 {

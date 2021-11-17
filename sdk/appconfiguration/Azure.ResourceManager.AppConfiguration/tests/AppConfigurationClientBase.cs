@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         {
         }
 
-        protected async Task Initialize()
+        protected void Initialize()
         {
             Location = "eastus";
             KeyUuId = "test_key_a6af8952-54a6-11e9-b600-2816a84d0309";

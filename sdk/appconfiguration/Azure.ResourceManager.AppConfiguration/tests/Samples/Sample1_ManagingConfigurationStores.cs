@@ -62,15 +62,15 @@ namespace Azure.ResourceManager.KeyVault.Tests.Samples
         public async Task GetIfExists()
         {
             #region Snippet:Managing_ConfigurationStores_GetAConfigurationStoreIfExists
-            ConfigurationStoreContainer configurationStoreContainer = resourceGroup.GetConfigurationStores();
+            ConfigurationStoreCollection configurationStoreCollection = resourceGroup.GetConfigurationStores();
 
-            ConfigurationStore configurationStore = await configurationStoreContainer.GetIfExistsAsync("foo");
+            ConfigurationStore configurationStore = await configurationStoreCollection.GetIfExistsAsync("foo");
             if (configurationStore != null)
             {
                 Console.WriteLine(configurationStore.Data.Name);
             }
 
-            if (await configurationStoreContainer.CheckIfExistsAsync("myApp"))
+            if (await configurationStoreCollection.CheckIfExistsAsync("myApp"))
             {
                 Console.WriteLine("ConfigurationStore 'myApp' exists.");
             }
@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.KeyVault.Tests.Samples
         public async Task Delete()
         {
             #region Snippet:Managing_ConfigurationStores_DeleteAConfigurationStore
-            ConfigurationStoreContainer configurationStoreContainer = resourceGroup.GetConfigurationStores();
+            ConfigurationStoreCollection configurationStoreCollection = resourceGroup.GetConfigurationStores();
 
-            ConfigurationStore configStore = await configurationStoreContainer.GetAsync("myApp");
+            ConfigurationStore configStore = await configurationStoreCollection.GetAsync("myApp");
             await (await configStore.DeleteAsync()).WaitForCompletionResponseAsync();
             #endregion
         }
@@ -94,15 +94,15 @@ namespace Azure.ResourceManager.KeyVault.Tests.Samples
         {
             #region Snippet:Readme_DefaultSubscription
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = armClient.DefaultSubscription;
+            Subscription subscription = armClient.GetDefaultSubscriptionAsync().Result;
             #endregion
 
-            #region Snippet:Readme_GetResourceGroupContainer
-            ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
-            // With the container, we can create a new resource group with an specific name
+            #region Snippet:Readme_GetResourceGroupCollection
+            ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
+            // With the Collection, we can create a new resource group with an specific name
             string rgName = "myRgName";
             Location location = Location.WestUS2;
-            ResourceGroup resourceGroup = await rgContainer.CreateOrUpdate(rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
+            ResourceGroup resourceGroup = await rgCollection.CreateOrUpdate(rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
             #endregion
 
             this.resourceGroup = resourceGroup;

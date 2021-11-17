@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppConfiguration
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateGetAllRequest(string skipToken)
+        internal HttpMessage CreateListRequest(string skipToken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -68,9 +68,9 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <summary> Lists the configuration stores for a given subscription. </summary>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<ConfigurationStoreListResult>> GetAllAsync(string skipToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ConfigurationStoreListResult>> ListAsync(string skipToken = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetAllRequest(skipToken);
+            using var message = CreateListRequest(skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <summary> Lists the configuration stores for a given subscription. </summary>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<ConfigurationStoreListResult> GetAll(string skipToken = null, CancellationToken cancellationToken = default)
+        public Response<ConfigurationStoreListResult> List(string skipToken = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetAllRequest(skipToken);
+            using var message = CreateListRequest(skipToken);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.AppConfiguration
             }
         }
 
-        internal HttpMessage CreateGetAllByResourceGroupRequest(string resourceGroupName, string skipToken)
+        internal HttpMessage CreateListByResourceGroupRequest(string resourceGroupName, string skipToken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -135,14 +135,14 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<ConfigurationStoreListResult>> GetAllByResourceGroupAsync(string resourceGroupName, string skipToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ConfigurationStoreListResult>> ListByResourceGroupAsync(string resourceGroupName, string skipToken = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateGetAllByResourceGroupRequest(resourceGroupName, skipToken);
+            using var message = CreateListByResourceGroupRequest(resourceGroupName, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -163,14 +163,14 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<ConfigurationStoreListResult> GetAllByResourceGroup(string resourceGroupName, string skipToken = null, CancellationToken cancellationToken = default)
+        public Response<ConfigurationStoreListResult> ListByResourceGroup(string resourceGroupName, string skipToken = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateGetAllByResourceGroupRequest(resourceGroupName, skipToken);
+            using var message = CreateListByResourceGroupRequest(resourceGroupName, skipToken);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.AppConfiguration
             }
         }
 
-        internal HttpMessage CreateGetKeysRequest(string resourceGroupName, string configStoreName, string skipToken)
+        internal HttpMessage CreateListKeysRequest(string resourceGroupName, string configStoreName, string skipToken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="configStoreName"/> is null. </exception>
-        public async Task<Response<ApiKeyListResult>> GetKeysAsync(string resourceGroupName, string configStoreName, string skipToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ApiKeyListResult>> ListKeysAsync(string resourceGroupName, string configStoreName, string skipToken = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -574,7 +574,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 throw new ArgumentNullException(nameof(configStoreName));
             }
 
-            using var message = CreateGetKeysRequest(resourceGroupName, configStoreName, skipToken);
+            using var message = CreateListKeysRequest(resourceGroupName, configStoreName, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -596,7 +596,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="configStoreName"/> is null. </exception>
-        public Response<ApiKeyListResult> GetKeys(string resourceGroupName, string configStoreName, string skipToken = null, CancellationToken cancellationToken = default)
+        public Response<ApiKeyListResult> ListKeys(string resourceGroupName, string configStoreName, string skipToken = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -607,7 +607,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 throw new ArgumentNullException(nameof(configStoreName));
             }
 
-            using var message = CreateGetKeysRequest(resourceGroupName, configStoreName, skipToken);
+            using var message = CreateListKeysRequest(resourceGroupName, configStoreName, skipToken);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -722,7 +722,7 @@ namespace Azure.ResourceManager.AppConfiguration
             }
         }
 
-        internal HttpMessage CreateGetKeyValueRequest(string resourceGroupName, string configStoreName, ListKeyValueParameters listKeyValueParameters)
+        internal HttpMessage CreateListKeyValueRequest(string resourceGroupName, string configStoreName, ListKeyValueParameters listKeyValueParameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -753,7 +753,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="listKeyValueParameters"> The parameters for retrieving a key-value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/>, or <paramref name="listKeyValueParameters"/> is null. </exception>
-        public async Task<Response<KeyValue>> GetKeyValueAsync(string resourceGroupName, string configStoreName, ListKeyValueParameters listKeyValueParameters, CancellationToken cancellationToken = default)
+        public async Task<Response<KeyValue>> ListKeyValueAsync(string resourceGroupName, string configStoreName, ListKeyValueParameters listKeyValueParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -768,7 +768,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 throw new ArgumentNullException(nameof(listKeyValueParameters));
             }
 
-            using var message = CreateGetKeyValueRequest(resourceGroupName, configStoreName, listKeyValueParameters);
+            using var message = CreateListKeyValueRequest(resourceGroupName, configStoreName, listKeyValueParameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -790,7 +790,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="listKeyValueParameters"> The parameters for retrieving a key-value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/>, or <paramref name="listKeyValueParameters"/> is null. </exception>
-        public Response<KeyValue> GetKeyValue(string resourceGroupName, string configStoreName, ListKeyValueParameters listKeyValueParameters, CancellationToken cancellationToken = default)
+        public Response<KeyValue> ListKeyValue(string resourceGroupName, string configStoreName, ListKeyValueParameters listKeyValueParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -805,7 +805,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 throw new ArgumentNullException(nameof(listKeyValueParameters));
             }
 
-            using var message = CreateGetKeyValueRequest(resourceGroupName, configStoreName, listKeyValueParameters);
+            using var message = CreateListKeyValueRequest(resourceGroupName, configStoreName, listKeyValueParameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -821,7 +821,7 @@ namespace Azure.ResourceManager.AppConfiguration
             }
         }
 
-        internal HttpMessage CreateGetAllNextPageRequest(string nextLink, string skipToken)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string skipToken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -840,14 +840,14 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<ConfigurationStoreListResult>> GetAllNextPageAsync(string nextLink, string skipToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ConfigurationStoreListResult>> ListNextPageAsync(string nextLink, string skipToken = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, skipToken);
+            using var message = CreateListNextPageRequest(nextLink, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -868,14 +868,14 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<ConfigurationStoreListResult> GetAllNextPage(string nextLink, string skipToken = null, CancellationToken cancellationToken = default)
+        public Response<ConfigurationStoreListResult> ListNextPage(string nextLink, string skipToken = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, skipToken);
+            using var message = CreateListNextPageRequest(nextLink, skipToken);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -891,7 +891,7 @@ namespace Azure.ResourceManager.AppConfiguration
             }
         }
 
-        internal HttpMessage CreateGetAllByResourceGroupNextPageRequest(string nextLink, string resourceGroupName, string skipToken)
+        internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string resourceGroupName, string skipToken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -911,7 +911,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<ConfigurationStoreListResult>> GetAllByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, string skipToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ConfigurationStoreListResult>> ListByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, string skipToken = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -922,7 +922,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateGetAllByResourceGroupNextPageRequest(nextLink, resourceGroupName, skipToken);
+            using var message = CreateListByResourceGroupNextPageRequest(nextLink, resourceGroupName, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -944,7 +944,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<ConfigurationStoreListResult> GetAllByResourceGroupNextPage(string nextLink, string resourceGroupName, string skipToken = null, CancellationToken cancellationToken = default)
+        public Response<ConfigurationStoreListResult> ListByResourceGroupNextPage(string nextLink, string resourceGroupName, string skipToken = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -955,7 +955,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateGetAllByResourceGroupNextPageRequest(nextLink, resourceGroupName, skipToken);
+            using var message = CreateListByResourceGroupNextPageRequest(nextLink, resourceGroupName, skipToken);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -971,7 +971,7 @@ namespace Azure.ResourceManager.AppConfiguration
             }
         }
 
-        internal HttpMessage CreateGetKeysNextPageRequest(string nextLink, string resourceGroupName, string configStoreName, string skipToken)
+        internal HttpMessage CreateListKeysNextPageRequest(string nextLink, string resourceGroupName, string configStoreName, string skipToken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -992,7 +992,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="configStoreName"/> is null. </exception>
-        public async Task<Response<ApiKeyListResult>> GetKeysNextPageAsync(string nextLink, string resourceGroupName, string configStoreName, string skipToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ApiKeyListResult>> ListKeysNextPageAsync(string nextLink, string resourceGroupName, string configStoreName, string skipToken = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1007,7 +1007,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 throw new ArgumentNullException(nameof(configStoreName));
             }
 
-            using var message = CreateGetKeysNextPageRequest(nextLink, resourceGroupName, configStoreName, skipToken);
+            using var message = CreateListKeysNextPageRequest(nextLink, resourceGroupName, configStoreName, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1030,7 +1030,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="configStoreName"/> is null. </exception>
-        public Response<ApiKeyListResult> GetKeysNextPage(string nextLink, string resourceGroupName, string configStoreName, string skipToken = null, CancellationToken cancellationToken = default)
+        public Response<ApiKeyListResult> ListKeysNextPage(string nextLink, string resourceGroupName, string configStoreName, string skipToken = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1045,7 +1045,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 throw new ArgumentNullException(nameof(configStoreName));
             }
 
-            using var message = CreateGetKeysNextPageRequest(nextLink, resourceGroupName, configStoreName, skipToken);
+            using var message = CreateListKeysNextPageRequest(nextLink, resourceGroupName, configStoreName, skipToken);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

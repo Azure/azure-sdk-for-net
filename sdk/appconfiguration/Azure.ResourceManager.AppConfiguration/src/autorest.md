@@ -12,10 +12,10 @@ skip-csproj: true
 modelerfour:
   lenient-model-deduplication: true
 no-property-type-replacement: RegenerateKeyParameters
-operation-group-to-resource-type:
- PrivateLinkResources: Microsoft.AppConfiguration/configurationStores/privateLinkResources
-operation-group-to-resource:
-  PrivateLinkResources: PrivateLinkResource
+# operation-group-to-resource-type:
+#  PrivateLinkResources: Microsoft.AppConfiguration/configurationStores/privateLinkResources
+# operation-group-to-resource:
+#   PrivateLinkResources: PrivateLinkResource
 directive:
   - from: swagger-document
     where: $.definitions.EncryptionProperties

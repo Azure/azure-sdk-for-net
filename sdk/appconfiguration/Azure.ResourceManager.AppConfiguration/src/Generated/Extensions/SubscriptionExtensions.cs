@@ -21,7 +21,6 @@ namespace Azure.ResourceManager.AppConfiguration
     /// <summary> A class to add extension methods to Subscription. </summary>
     public static partial class SubscriptionExtensions
     {
-        #region ConfigurationStore
         private static ConfigurationStoresRestOperations GetConfigurationStoresRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             return new ConfigurationStoresRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
@@ -44,7 +43,7 @@ namespace Azure.ResourceManager.AppConfiguration
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetAllAsync(skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListAsync(skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new ConfigurationStore(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -59,7 +58,7 @@ namespace Azure.ResourceManager.AppConfiguration
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetAllNextPageAsync(nextLink, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListNextPageAsync(nextLink, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new ConfigurationStore(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -90,7 +89,7 @@ namespace Azure.ResourceManager.AppConfiguration
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetAll(skipToken, cancellationToken: cancellationToken);
+                        var response = restOperations.List(skipToken, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new ConfigurationStore(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -105,7 +104,7 @@ namespace Azure.ResourceManager.AppConfiguration
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetAllNextPage(nextLink, skipToken, cancellationToken: cancellationToken);
+                        var response = restOperations.ListNextPage(nextLink, skipToken, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new ConfigurationStore(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -146,6 +145,5 @@ namespace Azure.ResourceManager.AppConfiguration
             filters.SubstringFilter = filter;
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
-        #endregion
     }
 }

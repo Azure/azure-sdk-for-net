@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,29 +21,30 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppConfiguration
 {
-    /// <summary> A class representing collection of ConfigurationStore and their operations over a ResourceGroup. </summary>
-    public partial class ConfigurationStoreContainer : ArmContainer
+    /// <summary> A class representing collection of ConfigurationStore and their operations over its parent. </summary>
+    public partial class ConfigurationStoreCollection : ArmCollection, IEnumerable<ConfigurationStore>, IAsyncEnumerable<ConfigurationStore>
+
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly ConfigurationStoresRestOperations _restClient;
+        private readonly ConfigurationStoresRestOperations _configurationStoresRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ConfigurationStoreContainer"/> class for mocking. </summary>
-        protected ConfigurationStoreContainer()
+        /// <summary> Initializes a new instance of the <see cref="ConfigurationStoreCollection"/> class for mocking. </summary>
+        protected ConfigurationStoreCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of ConfigurationStoreContainer class. </summary>
+        /// <summary> Initializes a new instance of ConfigurationStoreCollection class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal ConfigurationStoreContainer(ArmResource parent) : base(parent)
+        internal ConfigurationStoreCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new ConfigurationStoresRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _configurationStoresRestClient = new ConfigurationStoresRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => ResourceGroup.ResourceType;
 
-        // Container level operations.
+        // Collection level operations.
 
         /// <summary> Creates a configuration store with the specified parameters. </summary>
         /// <param name="configStoreName"> The name of the configuration store. </param>
@@ -60,12 +63,12 @@ namespace Azure.ResourceManager.AppConfiguration
                 throw new ArgumentNullException(nameof(configStoreCreationParameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ConfigurationStoreContainer.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("ConfigurationStoreCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _restClient.Create(Id.ResourceGroupName, configStoreName, configStoreCreationParameters, cancellationToken);
-                var operation = new ConfigurationStoreCreateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateRequest(Id.ResourceGroupName, configStoreName, configStoreCreationParameters).Request, response);
+                var response = _configurationStoresRestClient.Create(Id.ResourceGroupName, configStoreName, configStoreCreationParameters, cancellationToken);
+                var operation = new ConfigurationStoreCreateOperation(Parent, _clientDiagnostics, Pipeline, _configurationStoresRestClient.CreateCreateRequest(Id.ResourceGroupName, configStoreName, configStoreCreationParameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -94,12 +97,12 @@ namespace Azure.ResourceManager.AppConfiguration
                 throw new ArgumentNullException(nameof(configStoreCreationParameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ConfigurationStoreContainer.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("ConfigurationStoreCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _restClient.CreateAsync(Id.ResourceGroupName, configStoreName, configStoreCreationParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ConfigurationStoreCreateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateRequest(Id.ResourceGroupName, configStoreName, configStoreCreationParameters).Request, response);
+                var response = await _configurationStoresRestClient.CreateAsync(Id.ResourceGroupName, configStoreName, configStoreCreationParameters, cancellationToken).ConfigureAwait(false);
+                var operation = new ConfigurationStoreCreateOperation(Parent, _clientDiagnostics, Pipeline, _configurationStoresRestClient.CreateCreateRequest(Id.ResourceGroupName, configStoreName, configStoreCreationParameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -111,21 +114,22 @@ namespace Azure.ResourceManager.AppConfiguration
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Gets the properties of the specified configuration store. </summary>
         /// <param name="configStoreName"> The name of the configuration store. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> is null. </exception>
         public virtual Response<ConfigurationStore> Get(string configStoreName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ConfigurationStoreContainer.Get");
+            if (configStoreName == null)
+            {
+                throw new ArgumentNullException(nameof(configStoreName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ConfigurationStoreCollection.Get");
             scope.Start();
             try
             {
-                if (configStoreName == null)
-                {
-                    throw new ArgumentNullException(nameof(configStoreName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, configStoreName, cancellationToken: cancellationToken);
+                var response = _configurationStoresRestClient.Get(Id.ResourceGroupName, configStoreName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ConfigurationStore(Parent, response.Value), response.GetRawResponse());
@@ -137,21 +141,22 @@ namespace Azure.ResourceManager.AppConfiguration
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Gets the properties of the specified configuration store. </summary>
         /// <param name="configStoreName"> The name of the configuration store. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> is null. </exception>
         public async virtual Task<Response<ConfigurationStore>> GetAsync(string configStoreName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ConfigurationStoreContainer.Get");
+            if (configStoreName == null)
+            {
+                throw new ArgumentNullException(nameof(configStoreName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ConfigurationStoreCollection.Get");
             scope.Start();
             try
             {
-                if (configStoreName == null)
-                {
-                    throw new ArgumentNullException(nameof(configStoreName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, configStoreName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _configurationStoresRestClient.GetAsync(Id.ResourceGroupName, configStoreName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new ConfigurationStore(Parent, response.Value), response.GetRawResponse());
@@ -165,19 +170,20 @@ namespace Azure.ResourceManager.AppConfiguration
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="configStoreName"> The name of the configuration store. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> is null. </exception>
         public virtual Response<ConfigurationStore> GetIfExists(string configStoreName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ConfigurationStoreContainer.GetIfExists");
+            if (configStoreName == null)
+            {
+                throw new ArgumentNullException(nameof(configStoreName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ConfigurationStoreCollection.GetIfExists");
             scope.Start();
             try
             {
-                if (configStoreName == null)
-                {
-                    throw new ArgumentNullException(nameof(configStoreName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, configStoreName, cancellationToken: cancellationToken);
+                var response = _configurationStoresRestClient.Get(Id.ResourceGroupName, configStoreName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<ConfigurationStore>(null, response.GetRawResponse())
                     : Response.FromValue(new ConfigurationStore(this, response.Value), response.GetRawResponse());
@@ -191,19 +197,20 @@ namespace Azure.ResourceManager.AppConfiguration
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="configStoreName"> The name of the configuration store. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> is null. </exception>
         public async virtual Task<Response<ConfigurationStore>> GetIfExistsAsync(string configStoreName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ConfigurationStoreContainer.GetIfExists");
+            if (configStoreName == null)
+            {
+                throw new ArgumentNullException(nameof(configStoreName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ConfigurationStoreCollection.GetIfExistsAsync");
             scope.Start();
             try
             {
-                if (configStoreName == null)
-                {
-                    throw new ArgumentNullException(nameof(configStoreName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, configStoreName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _configurationStoresRestClient.GetAsync(Id.ResourceGroupName, configStoreName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<ConfigurationStore>(null, response.GetRawResponse())
                     : Response.FromValue(new ConfigurationStore(this, response.Value), response.GetRawResponse());
@@ -217,18 +224,19 @@ namespace Azure.ResourceManager.AppConfiguration
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="configStoreName"> The name of the configuration store. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> is null. </exception>
         public virtual Response<bool> CheckIfExists(string configStoreName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ConfigurationStoreContainer.CheckIfExists");
+            if (configStoreName == null)
+            {
+                throw new ArgumentNullException(nameof(configStoreName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ConfigurationStoreCollection.CheckIfExists");
             scope.Start();
             try
             {
-                if (configStoreName == null)
-                {
-                    throw new ArgumentNullException(nameof(configStoreName));
-                }
-
                 var response = GetIfExists(configStoreName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -241,18 +249,19 @@ namespace Azure.ResourceManager.AppConfiguration
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="configStoreName"> The name of the configuration store. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> is null. </exception>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(string configStoreName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ConfigurationStoreContainer.CheckIfExists");
+            if (configStoreName == null)
+            {
+                throw new ArgumentNullException(nameof(configStoreName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ConfigurationStoreCollection.CheckIfExistsAsync");
             scope.Start();
             try
             {
-                if (configStoreName == null)
-                {
-                    throw new ArgumentNullException(nameof(configStoreName));
-                }
-
                 var response = await GetIfExistsAsync(configStoreName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -271,11 +280,11 @@ namespace Azure.ResourceManager.AppConfiguration
         {
             Page<ConfigurationStore> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ConfigurationStoreContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("ConfigurationStoreCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAllByResourceGroup(Id.ResourceGroupName, skipToken, cancellationToken: cancellationToken);
+                    var response = _configurationStoresRestClient.ListByResourceGroup(Id.ResourceGroupName, skipToken, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ConfigurationStore(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -286,11 +295,11 @@ namespace Azure.ResourceManager.AppConfiguration
             }
             Page<ConfigurationStore> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ConfigurationStoreContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("ConfigurationStoreCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAllByResourceGroupNextPage(nextLink, Id.ResourceGroupName, skipToken, cancellationToken: cancellationToken);
+                    var response = _configurationStoresRestClient.ListByResourceGroupNextPage(nextLink, Id.ResourceGroupName, skipToken, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ConfigurationStore(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -310,11 +319,11 @@ namespace Azure.ResourceManager.AppConfiguration
         {
             async Task<Page<ConfigurationStore>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ConfigurationStoreContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("ConfigurationStoreCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllByResourceGroupAsync(Id.ResourceGroupName, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _configurationStoresRestClient.ListByResourceGroupAsync(Id.ResourceGroupName, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ConfigurationStore(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -325,11 +334,11 @@ namespace Azure.ResourceManager.AppConfiguration
             }
             async Task<Page<ConfigurationStore>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ConfigurationStoreContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("ConfigurationStoreCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllByResourceGroupNextPageAsync(nextLink, Id.ResourceGroupName, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _configurationStoresRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.ResourceGroupName, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ConfigurationStore(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -349,7 +358,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ConfigurationStoreContainer.GetAllAsGenericResources");
+            using var scope = _clientDiagnostics.CreateScope("ConfigurationStoreCollection.GetAllAsGenericResources");
             scope.Start();
             try
             {
@@ -372,7 +381,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ConfigurationStoreContainer.GetAllAsGenericResources");
+            using var scope = _clientDiagnostics.CreateScope("ConfigurationStoreCollection.GetAllAsGenericResources");
             scope.Start();
             try
             {
@@ -387,7 +396,22 @@ namespace Azure.ResourceManager.AppConfiguration
             }
         }
 
+        IEnumerator<ConfigurationStore> IEnumerable<ConfigurationStore>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<ConfigurationStore> IAsyncEnumerable<ConfigurationStore>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
+
         // Builders.
-        // public ArmBuilder<ResourceIdentifier, ConfigurationStore, ConfigurationStoreData> Construct() { }
+        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, ConfigurationStore, ConfigurationStoreData> Construct() { }
     }
 }

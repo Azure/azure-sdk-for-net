@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.AppConfiguration
     public static partial class ResourceGroupExtensions
     {
         #region ConfigurationStore
-        /// <summary> Gets an object representing a ConfigurationStoreContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a ConfigurationStoreCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="ConfigurationStoreContainer" /> object. </returns>
-        public static ConfigurationStoreContainer GetConfigurationStores(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="ConfigurationStoreCollection" /> object. </returns>
+        public static ConfigurationStoreCollection GetConfigurationStores(this ResourceGroup resourceGroup)
         {
-            return new ConfigurationStoreContainer(resourceGroup);
+            return new ConfigurationStoreCollection(resourceGroup);
         }
         #endregion
     }

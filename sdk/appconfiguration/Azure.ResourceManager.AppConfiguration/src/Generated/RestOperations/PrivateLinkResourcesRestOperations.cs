@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppConfiguration
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateGetAllByConfigurationStoreRequest(string resourceGroupName, string configStoreName)
+        internal HttpMessage CreateListByConfigurationStoreRequest(string resourceGroupName, string configStoreName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="configStoreName"/> is null. </exception>
-        public async Task<Response<PrivateLinkResourceListResult>> GetAllByConfigurationStoreAsync(string resourceGroupName, string configStoreName, CancellationToken cancellationToken = default)
+        public async Task<Response<PrivateLinkResourceListResult>> ListByConfigurationStoreAsync(string resourceGroupName, string configStoreName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 throw new ArgumentNullException(nameof(configStoreName));
             }
 
-            using var message = CreateGetAllByConfigurationStoreRequest(resourceGroupName, configStoreName);
+            using var message = CreateListByConfigurationStoreRequest(resourceGroupName, configStoreName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="configStoreName"/> is null. </exception>
-        public Response<PrivateLinkResourceListResult> GetAllByConfigurationStore(string resourceGroupName, string configStoreName, CancellationToken cancellationToken = default)
+        public Response<PrivateLinkResourceListResult> ListByConfigurationStore(string resourceGroupName, string configStoreName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 throw new ArgumentNullException(nameof(configStoreName));
             }
 
-            using var message = CreateGetAllByConfigurationStoreRequest(resourceGroupName, configStoreName);
+            using var message = CreateListByConfigurationStoreRequest(resourceGroupName, configStoreName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.AppConfiguration
             }
         }
 
-        internal HttpMessage CreateGetAllByConfigurationStoreNextPageRequest(string nextLink, string resourceGroupName, string configStoreName)
+        internal HttpMessage CreateListByConfigurationStoreNextPageRequest(string nextLink, string resourceGroupName, string configStoreName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="configStoreName"/> is null. </exception>
-        public async Task<Response<PrivateLinkResourceListResult>> GetAllByConfigurationStoreNextPageAsync(string nextLink, string resourceGroupName, string configStoreName, CancellationToken cancellationToken = default)
+        public async Task<Response<PrivateLinkResourceListResult>> ListByConfigurationStoreNextPageAsync(string nextLink, string resourceGroupName, string configStoreName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 throw new ArgumentNullException(nameof(configStoreName));
             }
 
-            using var message = CreateGetAllByConfigurationStoreNextPageRequest(nextLink, resourceGroupName, configStoreName);
+            using var message = CreateListByConfigurationStoreNextPageRequest(nextLink, resourceGroupName, configStoreName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="configStoreName"/> is null. </exception>
-        public Response<PrivateLinkResourceListResult> GetAllByConfigurationStoreNextPage(string nextLink, string resourceGroupName, string configStoreName, CancellationToken cancellationToken = default)
+        public Response<PrivateLinkResourceListResult> ListByConfigurationStoreNextPage(string nextLink, string resourceGroupName, string configStoreName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 throw new ArgumentNullException(nameof(configStoreName));
             }
 
-            using var message = CreateGetAllByConfigurationStoreNextPageRequest(nextLink, resourceGroupName, configStoreName);
+            using var message = CreateListByConfigurationStoreNextPageRequest(nextLink, resourceGroupName, configStoreName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

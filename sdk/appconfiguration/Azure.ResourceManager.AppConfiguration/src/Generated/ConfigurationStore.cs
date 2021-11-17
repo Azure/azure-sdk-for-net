@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppConfiguration
     public partial class ConfigurationStore : ArmResource
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly ConfigurationStoresRestOperations _restClient;
+        private readonly ConfigurationStoresRestOperations _configurationStoresRestClient;
         private readonly ConfigurationStoreData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ConfigurationStore"/> class for mocking. </summary>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppConfiguration
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new ConfigurationStoresRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _configurationStoresRestClient = new ConfigurationStoresRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="ConfigurationStore"/> class. </summary>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppConfiguration
         internal ConfigurationStore(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new ConfigurationStoresRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _configurationStoresRestClient = new ConfigurationStoresRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="ConfigurationStore"/> class. </summary>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AppConfiguration
         internal ConfigurationStore(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new ConfigurationStoresRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _configurationStoresRestClient = new ConfigurationStoresRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.AppConfiguration
             scope.Start();
             try
             {
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _configurationStoresRestClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new ConfigurationStore(this, response.Value), response.GetRawResponse());
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.AppConfiguration
             scope.Start();
             try
             {
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _configurationStoresRestClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ConfigurationStore(this, response.Value), response.GetRawResponse());
@@ -149,8 +149,8 @@ namespace Azure.ResourceManager.AppConfiguration
             scope.Start();
             try
             {
-                var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ConfigurationStoreDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = await _configurationStoresRestClient.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new ConfigurationStoreDeleteOperation(_clientDiagnostics, Pipeline, _configurationStoresRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -171,8 +171,8 @@ namespace Azure.ResourceManager.AppConfiguration
             scope.Start();
             try
             {
-                var response = _restClient.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ConfigurationStoreDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = _configurationStoresRestClient.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new ConfigurationStoreDeleteOperation(_clientDiagnostics, Pipeline, _configurationStoresRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -202,8 +202,8 @@ namespace Azure.ResourceManager.AppConfiguration
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
-                await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _configurationStoresRestClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ConfigurationStore(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -231,8 +231,8 @@ namespace Azure.ResourceManager.AppConfiguration
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
-                TagContainer.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _restClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
+                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _configurationStoresRestClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new ConfigurationStore(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -260,8 +260,8 @@ namespace Azure.ResourceManager.AppConfiguration
                 await TagResource.DeleteAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _configurationStoresRestClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ConfigurationStore(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -289,8 +289,8 @@ namespace Azure.ResourceManager.AppConfiguration
                 TagResource.Delete(cancellationToken: cancellationToken);
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                TagContainer.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _restClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
+                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _configurationStoresRestClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new ConfigurationStore(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -317,8 +317,8 @@ namespace Azure.ResourceManager.AppConfiguration
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _configurationStoresRestClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ConfigurationStore(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -345,8 +345,8 @@ namespace Azure.ResourceManager.AppConfiguration
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                TagContainer.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _restClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
+                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _configurationStoresRestClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new ConfigurationStore(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -354,183 +354,6 @@ namespace Azure.ResourceManager.AppConfiguration
                 scope.Failed(e);
                 throw;
             }
-        }
-        /// <summary> Regenerates an access key for the specified configuration store. </summary>
-        /// <param name="regenerateKeyParameters"> The parameters for regenerating an access key. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="regenerateKeyParameters"/> is null. </exception>
-        public virtual async Task<Response<ApiKey>> RegenerateKeyAsync(RegenerateKeyParameters regenerateKeyParameters, CancellationToken cancellationToken = default)
-        {
-            if (regenerateKeyParameters == null)
-            {
-                throw new ArgumentNullException(nameof(regenerateKeyParameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("ConfigurationStore.RegenerateKey");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.RegenerateKeyAsync(Id.ResourceGroupName, Id.Name, regenerateKeyParameters, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Regenerates an access key for the specified configuration store. </summary>
-        /// <param name="regenerateKeyParameters"> The parameters for regenerating an access key. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="regenerateKeyParameters"/> is null. </exception>
-        public virtual Response<ApiKey> RegenerateKey(RegenerateKeyParameters regenerateKeyParameters, CancellationToken cancellationToken = default)
-        {
-            if (regenerateKeyParameters == null)
-            {
-                throw new ArgumentNullException(nameof(regenerateKeyParameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("ConfigurationStore.RegenerateKey");
-            scope.Start();
-            try
-            {
-                var response = _restClient.RegenerateKey(Id.ResourceGroupName, Id.Name, regenerateKeyParameters, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists a configuration store key-value. </summary>
-        /// <param name="listKeyValueParameters"> The parameters for retrieving a key-value. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="listKeyValueParameters"/> is null. </exception>
-        public virtual async Task<Response<KeyValue>> GetKeyValueAsync(ListKeyValueParameters listKeyValueParameters, CancellationToken cancellationToken = default)
-        {
-            if (listKeyValueParameters == null)
-            {
-                throw new ArgumentNullException(nameof(listKeyValueParameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("ConfigurationStore.GetKeyValue");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.GetKeyValueAsync(Id.ResourceGroupName, Id.Name, listKeyValueParameters, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists a configuration store key-value. </summary>
-        /// <param name="listKeyValueParameters"> The parameters for retrieving a key-value. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="listKeyValueParameters"/> is null. </exception>
-        public virtual Response<KeyValue> GetKeyValue(ListKeyValueParameters listKeyValueParameters, CancellationToken cancellationToken = default)
-        {
-            if (listKeyValueParameters == null)
-            {
-                throw new ArgumentNullException(nameof(listKeyValueParameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("ConfigurationStore.GetKeyValue");
-            scope.Start();
-            try
-            {
-                var response = _restClient.GetKeyValue(Id.ResourceGroupName, Id.Name, listKeyValueParameters, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists the access key for the specified configuration store. </summary>
-        /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApiKey" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApiKey> GetKeys(string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            Page<ApiKey> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("ConfigurationStore.GetKeys");
-                scope.Start();
-                try
-                {
-                    var response = _restClient.GetKeys(Id.ResourceGroupName, Id.Name, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ApiKey> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("ConfigurationStore.GetKeys");
-                scope.Start();
-                try
-                {
-                    var response = _restClient.GetKeysNextPage(nextLink, Id.ResourceGroupName, Id.Name, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Lists the access key for the specified configuration store. </summary>
-        /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApiKey" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApiKey> GetKeysAsync(string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<ApiKey>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("ConfigurationStore.GetKeys");
-                scope.Start();
-                try
-                {
-                    var response = await _restClient.GetKeysAsync(Id.ResourceGroupName, Id.Name, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ApiKey>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("ConfigurationStore.GetKeys");
-                scope.Start();
-                try
-                {
-                    var response = await _restClient.GetKeysNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary> Updates a configuration store with the specified parameters. </summary>
@@ -549,8 +372,8 @@ namespace Azure.ResourceManager.AppConfiguration
             scope.Start();
             try
             {
-                var response = await _restClient.UpdateAsync(Id.ResourceGroupName, Id.Name, configStoreUpdateParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ConfigurationStoreUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, configStoreUpdateParameters).Request, response);
+                var response = await _configurationStoresRestClient.UpdateAsync(Id.ResourceGroupName, Id.Name, configStoreUpdateParameters, cancellationToken).ConfigureAwait(false);
+                var operation = new ConfigurationStoreUpdateOperation(this, _clientDiagnostics, Pipeline, _configurationStoresRestClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, configStoreUpdateParameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -578,8 +401,8 @@ namespace Azure.ResourceManager.AppConfiguration
             scope.Start();
             try
             {
-                var response = _restClient.Update(Id.ResourceGroupName, Id.Name, configStoreUpdateParameters, cancellationToken);
-                var operation = new ConfigurationStoreUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, configStoreUpdateParameters).Request, response);
+                var response = _configurationStoresRestClient.Update(Id.ResourceGroupName, Id.Name, configStoreUpdateParameters, cancellationToken);
+                var operation = new ConfigurationStoreUpdateOperation(this, _clientDiagnostics, Pipeline, _configurationStoresRestClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, configStoreUpdateParameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -591,18 +414,202 @@ namespace Azure.ResourceManager.AppConfiguration
             }
         }
 
-        /// <summary> Gets a list of PrivateEndpointConnections in the ConfigurationStore. </summary>
-        /// <returns> An object representing collection of PrivateEndpointConnections and their operations over a ConfigurationStore. </returns>
-        public PrivateEndpointConnectionContainer GetPrivateEndpointConnections()
+        /// <summary> Lists the access key for the specified configuration store. </summary>
+        /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ApiKey" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApiKey> GetKeysAsync(string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return new PrivateEndpointConnectionContainer(this);
+            async Task<Page<ApiKey>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("ConfigurationStore.GetKeys");
+                scope.Start();
+                try
+                {
+                    var response = await _configurationStoresRestClient.ListKeysAsync(Id.ResourceGroupName, Id.Name, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<ApiKey>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("ConfigurationStore.GetKeys");
+                scope.Start();
+                try
+                {
+                    var response = await _configurationStoresRestClient.ListKeysNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets a list of PrivateLinkResources in the ConfigurationStore. </summary>
-        /// <returns> An object representing collection of PrivateLinkResources and their operations over a ConfigurationStore. </returns>
-        public PrivateLinkResourceContainer GetPrivateLinkResources()
+        /// <summary> Lists the access key for the specified configuration store. </summary>
+        /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ApiKey" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApiKey> GetKeys(string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return new PrivateLinkResourceContainer(this);
+            Page<ApiKey> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("ConfigurationStore.GetKeys");
+                scope.Start();
+                try
+                {
+                    var response = _configurationStoresRestClient.ListKeys(Id.ResourceGroupName, Id.Name, skipToken, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<ApiKey> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("ConfigurationStore.GetKeys");
+                scope.Start();
+                try
+                {
+                    var response = _configurationStoresRestClient.ListKeysNextPage(nextLink, Id.ResourceGroupName, Id.Name, skipToken, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
+
+        /// <summary> Regenerates an access key for the specified configuration store. </summary>
+        /// <param name="regenerateKeyParameters"> The parameters for regenerating an access key. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="regenerateKeyParameters"/> is null. </exception>
+        public async virtual Task<Response<ApiKey>> RegenerateKeyAsync(RegenerateKeyParameters regenerateKeyParameters, CancellationToken cancellationToken = default)
+        {
+            if (regenerateKeyParameters == null)
+            {
+                throw new ArgumentNullException(nameof(regenerateKeyParameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ConfigurationStore.RegenerateKey");
+            scope.Start();
+            try
+            {
+                var response = await _configurationStoresRestClient.RegenerateKeyAsync(Id.ResourceGroupName, Id.Name, regenerateKeyParameters, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Regenerates an access key for the specified configuration store. </summary>
+        /// <param name="regenerateKeyParameters"> The parameters for regenerating an access key. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="regenerateKeyParameters"/> is null. </exception>
+        public virtual Response<ApiKey> RegenerateKey(RegenerateKeyParameters regenerateKeyParameters, CancellationToken cancellationToken = default)
+        {
+            if (regenerateKeyParameters == null)
+            {
+                throw new ArgumentNullException(nameof(regenerateKeyParameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ConfigurationStore.RegenerateKey");
+            scope.Start();
+            try
+            {
+                var response = _configurationStoresRestClient.RegenerateKey(Id.ResourceGroupName, Id.Name, regenerateKeyParameters, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Lists a configuration store key-value. </summary>
+        /// <param name="listKeyValueParameters"> The parameters for retrieving a key-value. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="listKeyValueParameters"/> is null. </exception>
+        public async virtual Task<Response<KeyValue>> GetKeyValueAsync(ListKeyValueParameters listKeyValueParameters, CancellationToken cancellationToken = default)
+        {
+            if (listKeyValueParameters == null)
+            {
+                throw new ArgumentNullException(nameof(listKeyValueParameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ConfigurationStore.GetKeyValue");
+            scope.Start();
+            try
+            {
+                var response = await _configurationStoresRestClient.ListKeyValueAsync(Id.ResourceGroupName, Id.Name, listKeyValueParameters, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Lists a configuration store key-value. </summary>
+        /// <param name="listKeyValueParameters"> The parameters for retrieving a key-value. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="listKeyValueParameters"/> is null. </exception>
+        public virtual Response<KeyValue> GetKeyValue(ListKeyValueParameters listKeyValueParameters, CancellationToken cancellationToken = default)
+        {
+            if (listKeyValueParameters == null)
+            {
+                throw new ArgumentNullException(nameof(listKeyValueParameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ConfigurationStore.GetKeyValue");
+            scope.Start();
+            try
+            {
+                var response = _configurationStoresRestClient.ListKeyValue(Id.ResourceGroupName, Id.Name, listKeyValueParameters, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        #region PrivateEndpointConnection
+
+        /// <summary> Gets a collection of PrivateEndpointConnections in the ConfigurationStore. </summary>
+        /// <returns> An object representing collection of PrivateEndpointConnections and their operations over a ConfigurationStore. </returns>
+        public PrivateEndpointConnectionCollection GetPrivateEndpointConnections()
+        {
+            return new PrivateEndpointConnectionCollection(this);
+        }
+        #endregion
+
+        #region PrivateLinkResource
+
+        /// <summary> Gets a collection of PrivateLinkResources in the ConfigurationStore. </summary>
+        /// <returns> An object representing collection of PrivateLinkResources and their operations over a ConfigurationStore. </returns>
+        public PrivateLinkResourceCollection GetPrivateLinkResources()
+        {
+            return new PrivateLinkResourceCollection(this);
+        }
+        #endregion
     }
 }
