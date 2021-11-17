@@ -5,6 +5,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.Azure.SignalR;
 using Microsoft.Azure.SignalR.Management;
 using Microsoft.Extensions.Azure;
@@ -70,11 +71,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
                .GetRequiredService<IInternalServiceHubContextStore>();
         }
 
-        public void Dispose()
+        public async ValueTask DisposeAsync()
         {
             foreach (var hubContextStore in _store.Values)
             {
-                hubContextStore.Dispose();
+                await hubContextStore.DisposeAsync().ConfigureAwait(false);
             }
         }
     }

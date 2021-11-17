@@ -71,22 +71,26 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
             }
         }
 
-        public void Dispose()
+        public async ValueTask DisposeAsync()
         {
             _serviceManager.Dispose();
             foreach (var tuple in _store.Values)
             {
-                tuple.Value?.DisposeAsync().Wait();
+                if (tuple.Value is not null)
+                {
+                    await tuple.Value.DisposeAsync().ConfigureAwait(false);
+                }
                 if (tuple.Lazy is not null && tuple.Lazy.IsValueCreated)
                 {
-                    tuple.Lazy.Value.Result.DisposeAsync().Wait();
+                    await (await tuple.Lazy.Value.ConfigureAwait(false)).DisposeAsync().ConfigureAwait(false);
                 }
             }
             foreach (var lazy in _stronglyTypedStore.Values)
             {
                 if (lazy.IsValueCreated)
                 {
-                    ((IDisposable)lazy.Value.Result).Dispose();
+                    // The IAsyncDisposable interface doesn't apply to ServiceHubContext<T> on netstandard2.0 yet.
+                    ((IDisposable)(await lazy.Value.ConfigureAwait(false))).Dispose();
                 }
             }
         }

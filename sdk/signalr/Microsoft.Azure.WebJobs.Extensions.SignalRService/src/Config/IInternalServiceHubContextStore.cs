@@ -8,7 +8,7 @@ using Microsoft.Azure.SignalR.Management;
 
 namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 {
-    internal interface IInternalServiceHubContextStore : IServiceHubContextStore, IDisposable
+    internal interface IInternalServiceHubContextStore : IServiceHubContextStore, IAsyncDisposable
     {
         AccessKey[] AccessKeys { get; }
 
