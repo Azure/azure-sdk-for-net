@@ -153,7 +153,7 @@ In this section, we will talk about adding unit tests and live tests and how to 
 - Rename the `TemplateServiceTests.cs` file to `<client-name>Tests.cs` and remove all the template project tests and add all the unit tests in this file.
 - Remove the `SerializationHelpers.cs` file.
 
-**Note**: `Azure.<your-sdk-name>` is the Azure SDK package name and <client-name> is a client name, C# generator will generate a client which you can find in `Azure.<your-sdk-name>/Generated` directory.
+**Note**: `Azure.<your-sdk-name>` is the Azure SDK package name and `<client-name>` is a client name, C# generator will generate a client which you can find in `Azure.<your-sdk-name>/Generated` directory.
 
 **Learn more:** see the [docs](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md#to-test-1) to learn more about tests.
 
