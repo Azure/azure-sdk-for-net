@@ -124,15 +124,15 @@ namespace Azure.AI.TextAnalytics
         {
             try
             {
-                string plainOperationId = ClientCommon.DecodeOperationId(operationId);
-                OperationIdInformation idInformation = JsonSerializer.Deserialize<OperationIdInformation>(plainOperationId);
+                OperationIdInformation idInformation = OperationIdInformation.Decode(operationId);
+
                 _jobId = idInformation.JobId;
                 _showStats = idInformation.ShowStats;
                 _idToIndexMap = idInformation.InputDocumentOrder;
             }
             catch
             {
-                throw new ArgumentException($"Invalid value. Please use the {nameof(Id)} property value.", nameof(operationId));
+                throw new ArgumentException($"Invalid value. Please use the {nameof(AnalyzeHealthcareEntitiesOperation)}.{nameof(Id)} property value.", nameof(operationId));
             }
 
             Id = operationId;
@@ -161,8 +161,7 @@ namespace Azure.AI.TextAnalytics
             // https://github.com/Azure/azure-sdk-for-net/issues/11505
             _jobId = operationLocation.Split('/').Last();
 
-            string plainId = JsonSerializer.Serialize(new OperationIdInformation(_jobId, idToIndexMap, showStats));
-            Id = ClientCommon.EncodeOperationId(plainId);
+            Id = OperationIdInformation.Encode(_jobId, idToIndexMap, showStats);
         }
 
         /// <summary>

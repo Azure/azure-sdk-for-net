@@ -56,7 +56,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(documents, batchActions);
 
-            OperationIdInformation idInformation = JsonSerializer.Deserialize<OperationIdInformation>(ClientCommon.DecodeOperationId(operation.Id));
+            OperationIdInformation idInformation = OperationIdInformation.Decode(operation.Id);
 
             Assert.IsNull(idInformation.ShowStats);
             Assert.AreEqual("2a96a91f-7edf-4931-a880-3fdee1d56f15", idInformation.JobId);
@@ -94,7 +94,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(documents, batchActions);
 
-            OperationIdInformation idInformation = JsonSerializer.Deserialize<OperationIdInformation>(ClientCommon.DecodeOperationId(operation.Id));
+            OperationIdInformation idInformation = OperationIdInformation.Decode(operation.Id);
 
             Assert.IsNull(idInformation.ShowStats);
             Assert.AreEqual("2a96a91f-7edf-4931-a880-3fdee1d56f15", idInformation.JobId);
@@ -114,8 +114,7 @@ namespace Azure.AI.TextAnalytics.Tests
             var client = CreateTestClient(mockTransport);
 
             var inputOrder = new Dictionary<string, int>(1) { { "0", 0 } };
-            var operationdIdInfo = new OperationIdInformation(jobId, inputOrder, true);
-            string operationId = ClientCommon.EncodeOperationId(JsonSerializer.Serialize(operationdIdInfo));
+            string operationId = OperationIdInformation.Encode(jobId, inputOrder, true);
 
             var operation = new AnalyzeActionsOperation(operationId, client);
             Assert.AreEqual(operationId, operation.Id);
@@ -149,7 +148,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(documents);
 
-            OperationIdInformation idInformation = JsonSerializer.Deserialize<OperationIdInformation>(ClientCommon.DecodeOperationId(operation.Id));
+            OperationIdInformation idInformation = OperationIdInformation.Decode(operation.Id);
 
             Assert.IsFalse(idInformation.ShowStats);
             Assert.AreEqual("2a96a91f-7edf-4931-a880-3fdee1d56f15", idInformation.JobId);
@@ -181,7 +180,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(documents);
 
-            OperationIdInformation idInformation = JsonSerializer.Deserialize<OperationIdInformation>(ClientCommon.DecodeOperationId(operation.Id));
+            OperationIdInformation idInformation = OperationIdInformation.Decode(operation.Id);
 
             Assert.IsFalse(idInformation.ShowStats);
             Assert.AreEqual("2a96a91f-7edf-4931-a880-3fdee1d56f15", idInformation.JobId);
@@ -201,8 +200,7 @@ namespace Azure.AI.TextAnalytics.Tests
             var client = CreateTestClient(mockTransport);
 
             var inputOrder = new Dictionary<string, int>(1) { { "0", 0 } };
-            var operationdIdInfo = new OperationIdInformation(jobId, inputOrder, true);
-            string operationId = ClientCommon.EncodeOperationId(JsonSerializer.Serialize(operationdIdInfo));
+            string operationId = OperationIdInformation.Encode(jobId, inputOrder, true);
 
             var operation = new AnalyzeHealthcareEntitiesOperation(operationId, client);
             Assert.AreEqual(operationId, operation.Id);

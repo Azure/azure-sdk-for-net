@@ -34,17 +34,5 @@ namespace Azure.AI.TextAnalytics
                 ? await diagnostics.CreateRequestFailedExceptionAsync(response, errorMessage, errorCode, errorInfo).ConfigureAwait(false)
                 : diagnostics.CreateRequestFailedException(response, errorMessage, errorCode, errorInfo);
         }
-
-        public static string DecodeOperationId(string encodedOperationId)
-        {
-            var base64EncodedBytes = Convert.FromBase64String(encodedOperationId);
-            return Encoding.UTF8.GetString(base64EncodedBytes);
-        }
-
-        public static string EncodeOperationId(string plainOperationId)
-        {
-            var plainTextBytes = Encoding.UTF8.GetBytes(plainOperationId);
-            return Convert.ToBase64String(plainTextBytes);
-        }
     }
 }
