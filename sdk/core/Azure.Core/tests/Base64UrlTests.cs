@@ -42,6 +42,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        [Timeout(8000)]
         public void ValidateEncodeDecodeRandom()
         {
             var seed = new Random().Next();

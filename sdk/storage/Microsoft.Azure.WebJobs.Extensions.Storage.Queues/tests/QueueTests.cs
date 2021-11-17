@@ -17,6 +17,7 @@ using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
 {
+    [NUnit.Framework.Timeout(8000)]
     public class QueueTests
     {
         private const string TriggerQueueName = "input-queuetests";
