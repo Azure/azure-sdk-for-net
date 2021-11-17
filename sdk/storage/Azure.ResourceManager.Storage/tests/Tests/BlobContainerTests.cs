@@ -8,7 +8,7 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.Storage.Models;
 using Azure.ResourceManager.Storage.Tests.Helpers;
 
-namespace Azure.ResourceManager.Storage.Tests.Tests
+namespace Azure.ResourceManager.Storage.Tests
 {
     public class BlobContainerTests : StorageTestBase
     {
@@ -324,6 +324,159 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
 
             //delete policy
             await objectReplicationPolicy.DeleteAsync();
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task BlobServiceCors()
+        {
+            BlobServiceData properties1 = _blobService.Data;
+            BlobServiceData properties2 = new BlobServiceData();
+            properties2.DeleteRetentionPolicy = new DeleteRetentionPolicy();
+            properties2.DeleteRetentionPolicy.Enabled = true;
+            properties2.DeleteRetentionPolicy.Days = 300;
+            properties2.DefaultServiceVersion = "2017-04-17";
+            properties2.Cors = new CorsRules();
+            properties2.Cors.CorsRulesValue.Add(new CorsRule(new string[] { "http://www.contoso.com", "http://www.fabrikam.com" },
+                new CorsRuleAllowedMethodsItem[] { CorsRuleAllowedMethodsItem.GET, CorsRuleAllowedMethodsItem.PUT },
+                100, new string[] { "x-ms-meta-*" },
+                new string[] { "x-ms-meta-abc", "x-ms-meta-data*", "x-ms-meta-target*" }
+                ));
+            properties2.Cors.CorsRulesValue.Add(new CorsRule(new string[] { "*" },
+                new CorsRuleAllowedMethodsItem[] { CorsRuleAllowedMethodsItem.GET },
+                2, new string[] { "*" },
+                new string[] { "*" }
+                ));
+            properties2.Cors.CorsRulesValue.Add(new CorsRule(new string[] { "http://www.abc23.com", "https://www.fabrikam.com/*" },
+                new CorsRuleAllowedMethodsItem[] { CorsRuleAllowedMethodsItem.GET, CorsRuleAllowedMethodsItem.PUT, CorsRuleAllowedMethodsItem.Post },
+                2000, new string[] { "x-ms-meta-12345675754564*" },
+                new string[] { "x-ms-meta-abc", "x-ms-meta-data*", "x-ms-meta-target*" }
+                ));
+
+            _blobService = await _blobService.SetServicePropertiesAsync(properties2);
+            BlobServiceData properties3 = _blobService.Data;
+            Assert.IsTrue(properties3.DeleteRetentionPolicy.Enabled);
+            Assert.AreEqual(300, properties3.DeleteRetentionPolicy.Days);
+            Assert.AreEqual("2017-04-17", properties3.DefaultServiceVersion);
+
+            //validate CORS rules
+            Assert.AreEqual(properties2.Cors.CorsRulesValue.Count, properties3.Cors.CorsRulesValue.Count);
+            for (int i = 0; i < properties2.Cors.CorsRulesValue.Count; i++)
+            {
+                CorsRule putRule = properties2.Cors.CorsRulesValue[i];
+                CorsRule getRule = properties3.Cors.CorsRulesValue[i];
+
+                Assert.AreEqual(putRule.AllowedHeaders, getRule.AllowedHeaders);
+                Assert.AreEqual(putRule.AllowedMethods, getRule.AllowedMethods);
+                Assert.AreEqual(putRule.AllowedOrigins, getRule.AllowedOrigins);
+                Assert.AreEqual(putRule.ExposedHeaders, getRule.ExposedHeaders);
+                Assert.AreEqual(putRule.MaxAgeInSeconds, getRule.MaxAgeInSeconds);
+            }
+
+            _blobService = await _blobService.GetAsync();
+
+            BlobServiceData properties4 = _blobService.Data;
+            Assert.IsTrue(properties4.DeleteRetentionPolicy.Enabled);
+            Assert.AreEqual(300, properties4.DeleteRetentionPolicy.Days);
+            Assert.AreEqual("2017-04-17", properties4.DefaultServiceVersion);
+
+            //validate CORS rules
+            Assert.AreEqual(properties2.Cors.CorsRulesValue.Count, properties4.Cors.CorsRulesValue.Count);
+            for (int i = 0; i < properties2.Cors.CorsRulesValue.Count; i++)
+            {
+                CorsRule putRule = properties2.Cors.CorsRulesValue[i];
+                CorsRule getRule = properties4.Cors.CorsRulesValue[i];
+
+                Assert.AreEqual(putRule.AllowedHeaders, getRule.AllowedHeaders);
+                Assert.AreEqual(putRule.AllowedMethods, getRule.AllowedMethods);
+                Assert.AreEqual(putRule.AllowedOrigins, getRule.AllowedOrigins);
+                Assert.AreEqual(putRule.ExposedHeaders, getRule.ExposedHeaders);
+                Assert.AreEqual(putRule.MaxAgeInSeconds, getRule.MaxAgeInSeconds);
+            }
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task BlobContainerSoftDelete()
+        {
+            //update storage account to v2
+            StorageAccountUpdateParameters updateParameters = new StorageAccountUpdateParameters()
+            {
+                Kind = Kind.StorageV2
+            };
+            await _storageAccount.UpdateAsync(updateParameters);
+            _blobService = await _blobService.GetAsync();
+            BlobServiceData properties = _blobService.Data;
+
+            //enable container softdelete
+            properties.ContainerDeleteRetentionPolicy = new DeleteRetentionPolicy();
+            properties.ContainerDeleteRetentionPolicy.Enabled = true;
+            properties.ContainerDeleteRetentionPolicy.Days = 30;
+            _blobService = await _blobService.SetServicePropertiesAsync(properties);
+
+            //create two blob containers and delete 1
+            string containerName1 = Recording.GenerateAssetName("testblob1");
+            string containerName2 = Recording.GenerateAssetName("testblob2");
+            BlobContainer container1 = (await _blobContainerCollection.CreateOrUpdateAsync(containerName1, new BlobContainerData())).Value;
+            BlobContainer container2 = (await _blobContainerCollection.CreateOrUpdateAsync(containerName2, new BlobContainerData())).Value;
+            await container2.DeleteAsync();
+
+            //list delete included
+            List<BlobContainer> blobContainers = await _blobContainerCollection.GetAllAsync(include: ListContainersInclude.Deleted).ToEnumerableAsync();
+            Assert.AreEqual(2, blobContainers.Count);
+            foreach (BlobContainer con in blobContainers)
+            {
+                if (con.Data.Name == containerName1)
+                {
+                    Assert.IsFalse(con.Data.Deleted);
+                }
+                else
+                {
+                    Assert.IsTrue(con.Data.Deleted);
+                    Assert.NotNull(con.Data.RemainingRetentionDays);
+                }
+            }
+            //list without delete included
+            blobContainers = await _blobContainerCollection.GetAllAsync().ToEnumerableAsync();
+            Assert.AreEqual(1, blobContainers.Count);
+
+            //disable container softdelete
+            properties = _blobService.Data;
+            properties.ContainerDeleteRetentionPolicy = new DeleteRetentionPolicy();
+            properties.DeleteRetentionPolicy.Enabled = false;
+            _blobService = await _blobService.SetServicePropertiesAsync(properties);
+            properties = _blobService.Data;
+            Assert.IsFalse(properties.ContainerDeleteRetentionPolicy.Enabled);
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task PITR()
+        {
+            //update storage account to v2
+            StorageAccountUpdateParameters updateParameters = new StorageAccountUpdateParameters()
+            {
+                Kind = Kind.StorageV2
+            };
+            await _storageAccount.UpdateAsync(updateParameters);
+            _blobService = await _blobService.GetAsync();
+
+            BlobServiceData properties = _blobService.Data;
+            properties.DeleteRetentionPolicy = new DeleteRetentionPolicy();
+            properties.DeleteRetentionPolicy.Enabled = true;
+            properties.DeleteRetentionPolicy.Days = 30;
+            properties.ChangeFeed = new ChangeFeed();
+            properties.ChangeFeed.Enabled = true;
+            properties.IsVersioningEnabled = true;
+            properties.RestorePolicy = new RestorePolicyProperties(true) { Days = 5 };
+
+            _blobService = await _blobService.SetServicePropertiesAsync(properties);
+
+            if (Mode != RecordedTestMode.Playback)
+            {
+                await Task.Delay(10000);
+            }
+
         }
     }
 }

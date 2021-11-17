@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+using System;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Azure.Core.TestFramework;
@@ -8,7 +9,7 @@ using Azure.ResourceManager.Storage.Tests.Helpers;
 using Azure.ResourceManager.Storage.Models;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.Storage.Tests.Tests
+namespace Azure.ResourceManager.Storage.Tests
 {
     public class FileShareTests : StorageTestBase
     {
@@ -73,6 +74,56 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             FileShare fileShare3 = await _fileShareCollection.GetIfExistsAsync(fileShareName);
             Assert.IsNull(fileShare3);
             Assert.IsFalse(await _fileShareCollection.CheckIfExistsAsync(fileShareName));
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task CreateDeleteListFileShareSnapshot()
+        {
+            //update storage account to v2
+            StorageAccountUpdateParameters updateParameters = new StorageAccountUpdateParameters()
+            {
+                Kind = Kind.StorageV2
+            };
+            await _storageAccount.UpdateAsync(updateParameters);
+
+            // Enable share soft delete in service properties
+            _fileService = await _fileService.GetAsync();
+            FileServiceData properties = new FileServiceData()
+            {
+                ShareDeleteRetentionPolicy = new DeleteRetentionPolicy()
+                {
+                    Enabled = true,
+                    Days = 5
+                }
+            };
+            _fileService = await _fileService.SetServicePropertiesAsync(properties);
+
+            //create 2 file share and delete 1
+            string fileShareName1 = Recording.GenerateAssetName("testfileshare1");
+            string fileShareName2 = Recording.GenerateAssetName("testfileshare2");
+            FileShare share1 = (await _fileShareCollection.CreateOrUpdateAsync(fileShareName1, new FileShareData())).Value;
+            FileShare share2 = (await _fileShareCollection.CreateOrUpdateAsync(fileShareName2, new FileShareData())).Value;
+            await share2.DeleteAsync();
+
+            //create 2 share snapshots
+            FileShare shareSnapshot1 = (await _fileShareCollection.CreateOrUpdateAsync(fileShareName1, new FileShareData(), expand: "snapshots")).Value;
+            FileShare shareSnapshot2 = (await _fileShareCollection.CreateOrUpdateAsync(fileShareName1, new FileShareData(), expand: "snapshots")).Value;
+
+            //get single share snapshot
+            FileShare shareSnapshot = await _fileShareCollection.GetAsync(fileShareName1, "stats", shareSnapshot1.Data.SnapshotTime.Value.UtcDateTime.ToString("o"));
+            Assert.AreEqual(shareSnapshot.Data.SnapshotTime, shareSnapshot1.Data.SnapshotTime);
+
+            //list share with snapshot
+            List<FileShare> fileShares = await _fileShareCollection.GetAllAsync(expand: "snapshots").ToEnumerableAsync();
+            Assert.AreEqual(3, fileShares.Count);
+
+            //delete share snapshot
+            await shareSnapshot.DeleteAsync();
+
+            // List share with deleted
+            fileShares = await _fileShareCollection.GetAllAsync(expand: "deleted").ToEnumerableAsync();
+            Assert.AreEqual(2, fileShares.Count);
         }
 
         [Test]
@@ -188,6 +239,47 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             //validate
             fileShares = await _fileShareCollection.GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(fileShares.Count, 1);
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task FileShareAccessPolicy()
+        {
+            //update storage account to v2
+            StorageAccountUpdateParameters updateParameters = new StorageAccountUpdateParameters()
+            {
+                Kind = Kind.StorageV2
+            };
+            await _storageAccount.UpdateAsync(updateParameters);
+
+            //create share
+            string fileShareName = Recording.GenerateAssetName("testfileshare");
+            FileShare share = (await _fileShareCollection.CreateOrUpdateAsync(fileShareName, new FileShareData())).Value;
+
+            // Prepare signedIdentifiers to set
+            List<SignedIdentifier> sigs = new List<SignedIdentifier>();
+            DateTimeOffset datenow = DateTimeOffset.Now;
+            DateTimeOffset start1 = datenow.ToUniversalTime();
+            DateTimeOffset end1 = datenow.AddHours(2).ToUniversalTime();
+            DateTimeOffset start2 = datenow.AddMinutes(1).ToUniversalTime();
+            DateTimeOffset end2 = datenow.AddMinutes(40).ToUniversalTime();
+            var updateParameters2 = new FileShareData();
+            SignedIdentifier sig1 = new SignedIdentifier("testSig1",
+                new AccessPolicy(startTime: start1,
+                    expiryTime: end1,
+                    permission: "rw"));
+            SignedIdentifier sig2 = new SignedIdentifier("testSig2",
+                new AccessPolicy(startTime: start2,
+                    expiryTime: end2,
+                    permission: "rwdl"));
+            updateParameters2.SignedIdentifiers.Add(sig1);
+            updateParameters2.SignedIdentifiers.Add(sig2);
+
+            // Update share
+            share = await share.UpdateAsync(updateParameters2);
+            Assert.AreEqual(2, share.Data.SignedIdentifiers.Count);
+            Assert.AreEqual("testSig1", share.Data.SignedIdentifiers[0].Id);
+            Assert.AreEqual("rw", share.Data.SignedIdentifiers[0].AccessPolicy.Permission);
         }
     }
 }
