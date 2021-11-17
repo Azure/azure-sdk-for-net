@@ -1380,7 +1380,8 @@ namespace Azure.Security.KeyVault.Keys
             Uri keyUri = CreateKeyUri(VaultUri, keyName, keyVersion);
             KeyVaultPipeline pipeline = new(keyUri, _pipeline.ApiVersion, _pipeline.HttpPipeline, _pipeline.Diagnostics);
 
-            return new(keyUri, pipeline);
+            // Allow the CryptographyClient to try to download and cache the key for public key operations.
+            return new(keyUri, pipeline, forceRemote: false);
         }
 
         /// <summary>

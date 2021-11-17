@@ -30,7 +30,7 @@ namespace Azure.Template.LLC.Tests
         public void GetResourceMethodTest()
         {
             var client = typeof(TemplateServiceClient);
-            var method = client.GetMethod("Get");
+            var method = client.GetMethod(nameof(TemplateServiceClient.GetTemplateService));
             var parameters = method.GetParameters();
 
             Assert.AreEqual(2, parameters.Length);
@@ -51,7 +51,7 @@ namespace Azure.Template.LLC.Tests
             var mockTransport = new MockTransport(mockResponse);
             TemplateServiceClient client = CreateClient(mockTransport);
 
-            Response response = await client.GetAsync("123");
+            Response response = await client.GetTemplateServiceAsync("123");
             using JsonDocument resourceJson = JsonDocument.Parse(response.Content.ToMemory());
             string resourceName = resourceJson.RootElement.GetProperty("name").ToString();
             string resourceId = resourceJson.RootElement.GetProperty("id").ToString();

@@ -9,10 +9,10 @@ namespace Azure.Template.LLC
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response Delete(string resourceId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(string resourceId, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response Get(string resourceId, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetAsync(string resourceId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Pageable<System.BinaryData> GetResources(Azure.RequestContext context = null) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetResourcesAsync(Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response GetTemplateService(string resourceId, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetTemplateServiceAsync(string resourceId, Azure.RequestContext context = null) { throw null; }
     }
     public partial class TemplateServiceClientOptions : Azure.Core.ClientOptions
     {

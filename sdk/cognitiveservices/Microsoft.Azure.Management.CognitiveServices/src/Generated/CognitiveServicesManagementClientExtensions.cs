@@ -87,9 +87,12 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// <param name='type'>
             /// The Type of the resource.
             /// </param>
-            public static DomainAvailability CheckDomainAvailability(this ICognitiveServicesManagementClient operations, string subdomainName, string type)
+            /// <param name='kind'>
+            /// The Kind of the resource.
+            /// </param>
+            public static DomainAvailability CheckDomainAvailability(this ICognitiveServicesManagementClient operations, string subdomainName, string type, string kind = default(string))
             {
-                return operations.CheckDomainAvailabilityAsync(subdomainName, type).GetAwaiter().GetResult();
+                return operations.CheckDomainAvailabilityAsync(subdomainName, type, kind).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -104,12 +107,15 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// <param name='type'>
             /// The Type of the resource.
             /// </param>
+            /// <param name='kind'>
+            /// The Kind of the resource.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DomainAvailability> CheckDomainAvailabilityAsync(this ICognitiveServicesManagementClient operations, string subdomainName, string type, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DomainAvailability> CheckDomainAvailabilityAsync(this ICognitiveServicesManagementClient operations, string subdomainName, string type, string kind = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CheckDomainAvailabilityWithHttpMessagesAsync(subdomainName, type, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CheckDomainAvailabilityWithHttpMessagesAsync(subdomainName, type, kind, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
