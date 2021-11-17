@@ -20,7 +20,8 @@ namespace Azure.Management.EventHub.Tests
         {
             var location = await GetLocation();
             var resourceGroupName = Recording.GenerateAssetName(Helper.ResourceGroupPrefix);
-            await ArmClient.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(resourceGroupName, new ResourceGroupData(location));
+            Subscription sub = await ArmClient.GetDefaultSubscriptionAsync();
+            await sub.GetResourceGroups().CreateOrUpdateAsync(resourceGroupName, new ResourceGroupData(location));
             var namespaceName = Recording.GenerateAssetName(Helper.NamespacePrefix);
             var operationsResponse = Operations.ListAsync();
             var checkNameAvailable = NamespacesOperations.CheckNameAvailabilityAsync(new CheckNameAvailabilityParameter(namespaceName));

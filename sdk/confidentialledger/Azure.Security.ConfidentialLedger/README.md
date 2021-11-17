@@ -53,7 +53,7 @@ var identityClient = new ConfidentialLedgerIdentityServiceClient(identityService
 
 // Get the ledger's  TLS certificate for our ledger.
 string ledgerId = "<the ledger id>"; // ex. "my-ledger" from "https://my-ledger.eastus.cloudapp.azure.com"
-Response response = identityClient.GetLedgerIdentity(ledgerId, new());
+Response response = identityClient.GetLedgerIdentity(ledgerId);
 X509Certificate2 ledgerTlsCert = ConfidentialLedgerIdentityServiceClient.ParseCertificate(response);
 ```
 
@@ -70,6 +70,7 @@ certificateChain.ChainPolicy.UrlRetrievalTimeout = new TimeSpan(0, 0, 0);
 certificateChain.ChainPolicy.ExtraStore.Add(ledgerTlsCert);
 
 var f = certificateChain.Build(ledgerTlsCert);
+
 // Define a validation function to ensure that the ledger certificate is trusted by the ledger identity TLS certificate.
 bool CertValidationCheck(HttpRequestMessage httpRequestMessage, X509Certificate2 cert, X509Chain x509Chain, SslPolicyErrors sslPolicyErrors)
 {
@@ -87,8 +88,7 @@ httpHandler.ServerCertificateCustomValidationCallback = CertValidationCheck;
 
 // Create the ledger client using a transport that uses our custom ServerCertificateCustomValidationCallback.
 var options = new ConfidentialLedgerClientOptions { Transport = new HttpClientTransport(httpHandler) };
-
-var ledgerClient = new ConfidentialLedgerClient(new Uri($"https://{ledgerId}.confidential-ledger.azure.com"), new DefaultAzureCredential(), options);
+var ledgerClient = new ConfidentialLedgerClient(TestEnvironment.ConfidentialLedgerUrl, new DefaultAzureCredential(), options);
 ```
 
 ## Key concepts
@@ -98,18 +98,19 @@ var ledgerClient = new ConfidentialLedgerClient(new Uri($"https://{ledgerId}.con
 Every write to Confidential Ledger generates an immutable ledger entry in the service. Writes are uniquely identified by transaction ids that increment with each write.
 
 ```C# Snippet:AppendToLedger
-Response postResponse = ledgerClient.PostLedgerEntry(
+PostLedgerEntryOperation postOperation = ledgerClient.PostLedgerEntry(
     RequestContent.Create(
-        new { contents = "Hello world!" }));
+        new { contents = "Hello world!" }),
+    waitForCompletion: true);
 
-postResponse.Headers.TryGetValue(ConfidentialLedgerConstants.TransactionIdHeaderName, out string transactionId);
+string transactionId = postOperation.Id;
 Console.WriteLine($"Appended transaction with Id: {transactionId}");
 ```
 
-Since Confidential Ledger is a distributed system, rare transient failures may cause writes to be lost. For entries that must be preserved, it is advisable to verify that the write became durable. Note: It may be necessary to call `GetTransactionStatus` multiple times until it returns a "Committed" status.
+Since Confidential Ledger is a distributed system, rare transient failures may cause writes to be lost. For entries that must be preserved, it is advisable to verify that the write became durable. Note: It may be necessary to call `GetTransactionStatus` multiple times until it returns a "Committed" status. However, when calling `PostLedgerEntry`, a successful result indicates that the status is "Committed".
 
 ```C# Snippet:GetStatus
-Response statusResponse = ledgerClient.GetTransactionStatus(transactionId, new());
+Response statusResponse = ledgerClient.GetTransactionStatus(transactionId);
 
 string status = JsonDocument.Parse(statusResponse.Content)
     .RootElement
@@ -121,7 +122,7 @@ Console.WriteLine($"Transaction status: {status}");
 // Wait for the entry to be committed
 while (status == "Pending")
 {
-    statusResponse = ledgerClient.GetTransactionStatus(transactionId, new());
+    statusResponse = ledgerClient.GetTransactionStatus(transactionId);
     status = JsonDocument.Parse(statusResponse.Content)
         .RootElement
         .GetProperty("state")
@@ -136,7 +137,7 @@ Console.WriteLine($"Transaction status: {status}");
 State changes to the Confidential Ledger are saved in a data structure called a Merkle tree. To cryptographically verify that writes were correctly saved, a Merkle proof, or receipt, can be retrieved for any transaction id.
 
 ```C# Snippet:GetReceipt
-Response receiptResponse = ledgerClient.GetReceipt(transactionId, new());
+Response receiptResponse = ledgerClient.GetReceipt(transactionId);
 string receiptJson = new StreamReader(receiptResponse.ContentStream).ReadToEnd();
 
 Console.WriteLine(receiptJson);
@@ -149,11 +150,13 @@ While most use cases will involve one ledger, we provide the sub-ledger feature 
 ```C# Snippet:SubLedger
 ledgerClient.PostLedgerEntry(
     RequestContent.Create(
-        new { contents = "Hello from Chris!", subLedgerId = "Chris' messages" }));
+        new { contents = "Hello from Chris!", subLedgerId = "Chris' messages" }),
+    waitForCompletion: true);
 
 ledgerClient.PostLedgerEntry(
     RequestContent.Create(
-        new { contents = "Hello from Allison!", subLedgerId = "Allison's messages" }));
+        new { contents = "Hello from Allison!", subLedgerId = "Allison's messages" }),
+    waitForCompletion: true);
 ```
 
 When no sub-ledger id is specified on method calls, the Confidential Ledger service will assume a constant, service-determined sub-ledger id.
@@ -161,28 +164,13 @@ When no sub-ledger id is specified on method calls, the Confidential Ledger serv
 ```C# Snippet:NoSubLedgerId
 Response postResponse = ledgerClient.PostLedgerEntry(
     RequestContent.Create(
-        new { contents = "Hello world!" }));
-postResponse.Headers.TryGetValue(ConfidentialLedgerConstants.Headers.TransactionId, out string transactionId);
-string subLedgerId = JsonDocument.Parse(postResponse.Content)
-    .RootElement
-    .GetProperty("subLedgerId")
-    .GetString();
-
-// Wait for the entry to be available.
-status = "Pending";
-while (status == "Pending")
-{
-    statusResponse = ledgerClient.GetTransactionStatus(transactionId, new());
-    status = JsonDocument.Parse(statusResponse.Content)
-        .RootElement
-        .GetProperty("state")
-        .GetString();
-}
-
-Console.WriteLine($"Transaction status: {status}");
+        new { contents = "Hello world!" }),
+    waitForCompletion: true);
+string transactionId = postOperation.Id;
+string subLedgerId = "subledger:0";
 
 // Provide both the transactionId and subLedgerId.
-Response getBySubledgerResponse = ledgerClient.GetLedgerEntry(transactionId, new(), subLedgerId);
+Response getBySubledgerResponse = ledgerClient.GetLedgerEntry(transactionId,  subLedgerId);
 
 // Try until the entry is available.
 bool loaded = false;
@@ -199,14 +187,14 @@ while (!loaded)
     }
     else
     {
-        getBySubledgerResponse = ledgerClient.GetLedgerEntry(transactionId, new(), subLedgerId);
+        getBySubledgerResponse = ledgerClient.GetLedgerEntry(transactionId, subLedgerId);
     }
 }
 
 Console.WriteLine(contents); // "Hello world!"
 
 // Now just provide the transactionId.
-getBySubledgerResponse = ledgerClient.GetLedgerEntry(transactionId, new());
+getBySubledgerResponse = ledgerClient.GetLedgerEntry(transactionId);
 
 string subLedgerId2 = JsonDocument.Parse(getBySubledgerResponse.Content)
     .RootElement
@@ -220,24 +208,28 @@ Console.WriteLine($"{subLedgerId} == {subLedgerId2}");
 Ledger entries are retrieved from sub-ledgers. When a transaction id is specified, the returned value is the value contained in the specified sub-ledger at the point in time identified by the transaction id. If no transaction id is specified, the latest available value is returned.
 
 ```C# Snippet:GetEnteryWithNoTransactionId
-Response firstPostResponse = ledgerClient.PostLedgerEntry(
-    RequestContent.Create(new { contents = "Hello world 0" }));
+PostLedgerEntryOperation firstPostOperation = ledgerClient.PostLedgerEntry(
+    RequestContent.Create(new { contents = "Hello world 0" }),
+    waitForCompletion: true);
 ledgerClient.PostLedgerEntry(
-    RequestContent.Create(new { contents = "Hello world 1" }));
-Response subLedgerPostResponse = ledgerClient.PostLedgerEntry(
+    RequestContent.Create(new { contents = "Hello world 1" }),
+    waitForCompletion: true);
+PostLedgerEntryOperation subLedgerPostOperation = ledgerClient.PostLedgerEntry(
     RequestContent.Create(new { contents = "Hello world sub-ledger 0" }),
-    "my sub-ledger");
+    "my sub-ledger",
+    waitForCompletion: true);
 ledgerClient.PostLedgerEntry(
     RequestContent.Create(new { contents = "Hello world sub-ledger 1" }),
-    "my sub-ledger");
+    "my sub-ledger",
+    waitForCompletion: true);
 
-firstPostResponse.Headers.TryGetValue(ConfidentialLedgerConstants.Headers.TransactionId, out string transactionId);
+string transactionId = firstPostOperation.Id;
 
 // Wait for the entry to be committed
 status = "Pending";
 while (status == "Pending")
 {
-    statusResponse = ledgerClient.GetTransactionStatus(transactionId, new());
+    statusResponse = ledgerClient.GetTransactionStatus(transactionId);
     status = JsonDocument.Parse(statusResponse.Content)
         .RootElement
         .GetProperty("state")
@@ -245,7 +237,7 @@ while (status == "Pending")
 }
 
 // The ledger entry written at the transactionId in firstResponse is retrieved from the default sub-ledger.
-Response getResponse = ledgerClient.GetLedgerEntry(transactionId, new());
+Response getResponse = ledgerClient.GetLedgerEntry(transactionId);
 
 // Try until the entry is available.
 loaded = false;
@@ -262,7 +254,7 @@ while (!loaded)
     }
     else
     {
-        getResponse = ledgerClient.GetLedgerEntry(transactionId, new(), subLedgerId);
+        getResponse = ledgerClient.GetLedgerEntry(transactionId, subLedgerId);
     }
 }
 
@@ -275,7 +267,7 @@ string firstEntryContents = JsonDocument.Parse(getResponse.Content)
 Console.WriteLine(firstEntryContents); // "Hello world 0"
 
 // This will return the latest entry available in the default sub-ledger.
-getResponse = ledgerClient.GetCurrentLedgerEntry(new());
+getResponse = ledgerClient.GetCurrentLedgerEntry();
 
 // Try until the entry is available.
 loaded = false;
@@ -292,27 +284,16 @@ while (!loaded)
     }
     else
     {
-        getResponse = ledgerClient.GetCurrentLedgerEntry(new());
+        getResponse = ledgerClient.GetCurrentLedgerEntry();
     }
 }
 
 Console.WriteLine($"The latest ledger entry from the default sub-ledger is {latestDefaultSubLedger}"); //"Hello world 1"
 
 // The ledger entry written at subLedgerTransactionId is retrieved from the sub-ledger 'sub-ledger'.
-subLedgerPostResponse.Headers.TryGetValue(ConfidentialLedgerConstants.TransactionIdHeaderName, out string subLedgerTransactionId);
+string subLedgerTransactionId = subLedgerPostOperation.Id;
 
-// Wait for the entry to be committed
-status = "Pending";
-while (status == "Pending")
-{
-    statusResponse = ledgerClient.GetTransactionStatus(subLedgerTransactionId, new());
-    status = JsonDocument.Parse(statusResponse.Content)
-        .RootElement
-        .GetProperty("state")
-        .GetString();
-}
-
-getResponse = ledgerClient.GetLedgerEntry(subLedgerTransactionId, new(), "my sub-ledger");
+getResponse = ledgerClient.GetLedgerEntry(subLedgerTransactionId, "my sub-ledger");
 // Try until the entry is available.
 loaded = false;
 element = default;
@@ -328,14 +309,14 @@ while (!loaded)
     }
     else
     {
-        getResponse = ledgerClient.GetLedgerEntry(subLedgerTransactionId, new(), "my sub-ledger");
+        getResponse = ledgerClient.GetLedgerEntry(subLedgerTransactionId, "my sub-ledger");
     }
 }
 
 Console.WriteLine(subLedgerEntry); // "Hello world sub-ledger 0"
 
 // This will return the latest entry available in the sub-ledger.
-getResponse = ledgerClient.GetCurrentLedgerEntry(new(), "my sub-ledger");
+getResponse = ledgerClient.GetCurrentLedgerEntry("my sub-ledger");
 string latestSubLedger = JsonDocument.Parse(getResponse.Content)
     .RootElement
     .GetProperty("contents")
@@ -350,7 +331,7 @@ Ledger entries in a sub-ledger may be retrieved over a range of transaction ids.
 Note: Both ranges are optional; they can be provided individually or not at all.
 
 ```C# Snippet:RangedQuery
-ledgerClient.GetLedgerEntries(new(), fromTransactionId: "2.1", toTransactionId: subLedgerTransactionId);
+ledgerClient.GetLedgerEntries(fromTransactionId: "2.1", toTransactionId: subLedgerTransactionId);
 ```
 
 ### User management
@@ -370,7 +351,7 @@ ledgerClient.CreateOrUpdateUser(
 One may want to validate details about the Confidential Ledger for a variety of reasons. For example, you may want to view details about how Microsoft may manage your Confidential Ledger as part of [Confidential Consortium Framework governance](https://microsoft.github.io/CCF/main/governance/index.html), or verify that your Confidential Ledger is indeed running in SGX enclaves. A number of client methods are provided for these use cases.
 
 ```C# Snippet:Consortium
-Response consortiumResponse = ledgerClient.GetConsortiumMembers(new());
+Response consortiumResponse = ledgerClient.GetConsortiumMembers();
 string membersJson = new StreamReader(consortiumResponse.ContentStream).ReadToEnd();
 
 // Consortium members can manage and alter the Confidential Ledger, such as by replacing unhealthy nodes.
@@ -378,13 +359,13 @@ Console.WriteLine(membersJson);
 
 // The constitution is a collection of JavaScript code that defines actions available to members,
 // and vets proposals by members to execute those actions.
-Response constitutionResponse = ledgerClient.GetConstitution(new());
+Response constitutionResponse = ledgerClient.GetConstitution();
 string constitutionJson = new StreamReader(constitutionResponse.ContentStream).ReadToEnd();
 
 Console.WriteLine(constitutionJson);
 
 // Enclave quotes contain material that can be used to cryptographically verify the validity and contents of an enclave.
-Response enclavesResponse = ledgerClient.GetEnclaveQuotes(new());
+Response enclavesResponse = ledgerClient.GetEnclaveQuotes();
 string enclavesJson = new StreamReader(enclavesResponse.ContentStream).ReadToEnd();
 
 Console.WriteLine(enclavesJson);

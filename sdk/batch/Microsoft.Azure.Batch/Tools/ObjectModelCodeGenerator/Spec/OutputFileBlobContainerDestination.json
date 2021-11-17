@@ -2,7 +2,7 @@
   "Name": "OutputFileBlobContainerDestination",
   "ProtocolName": "Models.OutputFileBlobContainerDestination",
   "SummaryComment": "Specifies a file upload destination within an Azure blob storage container.",
-  "IsConstructorPublic": true,
+  "ConstructorAccess": "public",
   "Properties": [
     {
       "Key": {

@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations
 {
     /// <summary> The type of a target service. </summary>
     public readonly partial struct TargetKind : IEquatable<TargetKind>
@@ -23,15 +23,18 @@ namespace Azure.AI.Language.Conversations.Models
         }
 
         private const string LuisValue = "luis";
-        private const string LuisDeepstackValue = "luis_deepstack";
+        private const string ConversationValue = "conversation";
         private const string QuestionAnsweringValue = "question_answering";
+        private const string NonLinkedValue = "non_linked";
 
         /// <summary> luis. </summary>
         public static TargetKind Luis { get; } = new TargetKind(LuisValue);
-        /// <summary> luis_deepstack. </summary>
-        public static TargetKind LuisDeepstack { get; } = new TargetKind(LuisDeepstackValue);
+        /// <summary> conversation. </summary>
+        public static TargetKind Conversation { get; } = new TargetKind(ConversationValue);
         /// <summary> question_answering. </summary>
         public static TargetKind QuestionAnswering { get; } = new TargetKind(QuestionAnsweringValue);
+        /// <summary> non_linked. </summary>
+        public static TargetKind NonLinked { get; } = new TargetKind(NonLinkedValue);
         /// <summary> Determines if two <see cref="TargetKind"/> values are the same. </summary>
         public static bool operator ==(TargetKind left, TargetKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TargetKind"/> values are not the same. </summary>

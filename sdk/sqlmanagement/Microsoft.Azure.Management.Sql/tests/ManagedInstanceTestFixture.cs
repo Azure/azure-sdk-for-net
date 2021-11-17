@@ -27,24 +27,8 @@ namespace Sql.Tests
             {
                 SqlManagementClient sqlClient = Context.GetClient<SqlManagementClient>();
 
-                ResourceGroup = Context.CreateResourceGroup();
-
-                // Create vnet and get the subnet id
-                VirtualNetwork vnet = CreateVirtualNetwork(Context, ResourceGroup, TestEnvironmentUtilities.DefaultLocationId);
-                
-                Sku sku = new Sku();
-                sku.Name = "MIGP8G4";
-                sku.Tier = "GeneralPurpose";
-                ManagedInstance = sqlClient.ManagedInstances.CreateOrUpdate(ResourceGroup.Name,
-                    "crud-tests-" + SqlManagementTestUtilities.GenerateName(), new ManagedInstance()
-                    {
-                        AdministratorLogin = SqlManagementTestUtilities.DefaultLogin,
-                        AdministratorLoginPassword = SqlManagementTestUtilities.DefaultPassword,
-                        Sku = sku,
-                        SubnetId = vnet.Subnets[0].Id,
-                        Tags = new Dictionary<string, string>(),
-                        Location = TestEnvironmentUtilities.DefaultLocationId,
-                    });
+                ResourceGroup = Context.CreateResourceGroup(ManagedInstanceTestUtilities.Region);
+                ManagedInstance = Context.CreateManagedInstance(ResourceGroup);
             }
             catch(Exception ex)
             {

@@ -12,11 +12,11 @@ namespace Azure.ResourceManager.Tests.Samples
     {
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        public void GettingDefaultSubscription()
+        public async Task GettingDefaultSubscription()
         {
             #region Snippet:Hello_World_Async_DefaultSubscription
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = armClient.DefaultSubscription;
+            Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
             Console.WriteLine(subscription.Id);
             #endregion Snippet:Hello_World_Async_DefaultSubscription
         }
@@ -35,13 +35,25 @@ namespace Azure.ResourceManager.Tests.Samples
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        public void RetrieveResourceGroupContainer()
+        public async Task GettingSpecifiedDefaultSubscriptionAsync()
+        {
+            #region Snippet:Hello_World_Async_SpecifyDefaultSubscription
+            string defaultSubscriptionId = "your-subscription-id";
+            ArmClient armClient = new ArmClient(defaultSubscriptionId, new DefaultAzureCredential());
+            Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
+            Console.WriteLine(subscription.Id);
+            #endregion
+        }
+
+        [Test]
+        [Ignore("Only verifying that the sample builds")]
+        public void RetrieveResourceGroupCollection()
         {
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = armClient.DefaultSubscription;
-            #region Snippet:Hello_World_Async_ResourceGroupContainer
-            ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
-            #endregion Snippet:Hello_World_Async_ResourceGroupContainer
+            Subscription subscription = armClient.GetDefaultSubscription();
+            #region Snippet:Hello_World_Async_ResourceGroupCollection
+            ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
+            #endregion Snippet:Hello_World_Async_ResourceGroupCollection
         }
     }
 }
