@@ -247,7 +247,7 @@
   <!-- Set global test timeout of 5 seconds -->
   <ItemGroup Condition="'$(IsTestProject)' == 'true' and '$(IsClientLibrary)' == 'true' and '$(IsOptOutOfGlobalTestTimeout)' != 'true'">
     <AssemblyAttribute Include="NUnit.Framework.Timeout">
-      <_Parameter1>8000</_Parameter1>
+      <_Parameter1>10000</_Parameter1>
       <_Parameter1_TypeName>System.Int32</_Parameter1_TypeName>
     </AssemblyAttribute>
   </ItemGroup>
