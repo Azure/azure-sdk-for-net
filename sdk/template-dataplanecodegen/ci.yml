@@ -7,7 +7,7 @@ trigger:
     - release/*
   paths:
     include:
-    - sdk/template-LLC/
+    - sdk/template-dataplanecodegen/
 
 pr:
   branches:
@@ -18,13 +18,13 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/template-LLC/
+    - sdk/template-dataplanecodegen/
 
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
-    ServiceDirectory: template-LLC
+    ServiceDirectory: template-dataplanecodegen
     ArtifactName: packages
     Artifacts:
-    - name: Azure.Template.LLC
-      safeName: AzureTemplateLLC
+    - name: Azure.Template.DataplaneCodeGen
+      safeName: AzureTemplateDataplaneCodeGen

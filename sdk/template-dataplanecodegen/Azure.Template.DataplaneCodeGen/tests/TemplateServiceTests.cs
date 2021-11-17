@@ -8,7 +8,7 @@ using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.Template.LLC.Tests
+namespace Azure.Template.DataplaneCodeGen.Tests
 {
     public class TemplateServiceTests
     {

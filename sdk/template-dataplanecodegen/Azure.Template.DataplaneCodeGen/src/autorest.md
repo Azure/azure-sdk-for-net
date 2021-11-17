@@ -1,4 +1,4 @@
-# Azure.Template.LLC Code Generation
+# Azure.Template.DataplaneCodeGen Code Generation
 
 Run `dotnet build /t:GenerateCode` to generate code.
 
@@ -8,9 +8,9 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 input-file:
 - $(this-folder)/swagger/swagger.json
-namespace: Azure.Template.LLC
+namespace: Azure.Template.DataplaneCodeGen
 public-clients: true
 low-level-client: true
 security: AADToken
-security-scopes: https://dev.LLCtemplate.net/.default
+security-scopes: https://dev.dataplaneCodeGenTemplate.net/.default
 ```

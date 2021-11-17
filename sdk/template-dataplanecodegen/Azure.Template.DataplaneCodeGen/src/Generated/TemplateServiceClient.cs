@@ -14,12 +14,12 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.Template.LLC
+namespace Azure.Template.DataplaneCodeGen
 {
     /// <summary> The TemplateService service client. </summary>
     public partial class TemplateServiceClient
     {
-        private static readonly string[] AuthorizationScopes = new string[] { "https://dev.LLCtemplate.net/.default" };
+        private static readonly string[] AuthorizationScopes = new string[] { "https://dev.dataplaneCodeGenTemplate.net/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;

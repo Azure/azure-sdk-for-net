@@ -9,7 +9,7 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.Template.LLC.Tests.Samples
+namespace Azure.Template.DataplaneCodeGen.Tests.Samples
 {
     public class TemplateServiceSamples : SamplesBase<TemplateServiceTestEnvironment>
     {
@@ -17,7 +17,7 @@ namespace Azure.Template.LLC.Tests.Samples
         {
             var endpoint = TestEnvironment.Endpoint;
 
-            #region Snippet:TemplateLLCAuthenticate
+            #region Snippet:TemplateServiceAuthenticate
             var serviceClient = new TemplateServiceClient(new DefaultAzureCredential(), new Uri(endpoint));
             #endregion
 
