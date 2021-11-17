@@ -1,0 +1,51 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30309.148
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{899FB17D-4DC6-43D7-A391-EEA18A149BB5}") = "Azure.ResourceManager.Avs", "src\Azure.ResourceManager.Avs.csproj", "{8BC02799-7B2F-425F-BB6F-9BA3BBB2B460}"
+EndProject
+Project("{899FB17D-4DC6-43D7-A391-EEA18A149BB5}") = "Azure.ResourceManager.Avs.Tests", "tests\Azure.ResourceManager.Avs.Tests.csproj", "{F32C13B8-1004-4716-8FEE-7B5AB7FEDB5E}"
+EndProject
+Global
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {86ED4C64-C66D-4CCF-A0DA-CCB59162C299}
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8BC02799-7B2F-425F-BB6F-9BA3BBB2B460}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BC02799-7B2F-425F-BB6F-9BA3BBB2B460}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BC02799-7B2F-425F-BB6F-9BA3BBB2B460}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{8BC02799-7B2F-425F-BB6F-9BA3BBB2B460}.Debug|x64.Build.0 = Debug|Any CPU
+		{8BC02799-7B2F-425F-BB6F-9BA3BBB2B460}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8BC02799-7B2F-425F-BB6F-9BA3BBB2B460}.Debug|x86.Build.0 = Debug|Any CPU
+		{8BC02799-7B2F-425F-BB6F-9BA3BBB2B460}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BC02799-7B2F-425F-BB6F-9BA3BBB2B460}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8BC02799-7B2F-425F-BB6F-9BA3BBB2B460}.Release|x64.ActiveCfg = Release|Any CPU
+		{8BC02799-7B2F-425F-BB6F-9BA3BBB2B460}.Release|x64.Build.0 = Release|Any CPU
+		{8BC02799-7B2F-425F-BB6F-9BA3BBB2B460}.Release|x86.ActiveCfg = Release|Any CPU
+		{8BC02799-7B2F-425F-BB6F-9BA3BBB2B460}.Release|x86.Build.0 = Release|Any CPU
+		{F32C13B8-1004-4716-8FEE-7B5AB7FEDB5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F32C13B8-1004-4716-8FEE-7B5AB7FEDB5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F32C13B8-1004-4716-8FEE-7B5AB7FEDB5E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F32C13B8-1004-4716-8FEE-7B5AB7FEDB5E}.Debug|x64.Build.0 = Debug|Any CPU
+		{F32C13B8-1004-4716-8FEE-7B5AB7FEDB5E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F32C13B8-1004-4716-8FEE-7B5AB7FEDB5E}.Debug|x86.Build.0 = Debug|Any CPU
+		{F32C13B8-1004-4716-8FEE-7B5AB7FEDB5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F32C13B8-1004-4716-8FEE-7B5AB7FEDB5E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F32C13B8-1004-4716-8FEE-7B5AB7FEDB5E}.Release|x64.ActiveCfg = Release|Any CPU
+		{F32C13B8-1004-4716-8FEE-7B5AB7FEDB5E}.Release|x64.Build.0 = Release|Any CPU
+		{F32C13B8-1004-4716-8FEE-7B5AB7FEDB5E}.Release|x86.ActiveCfg = Release|Any CPU
+		{F32C13B8-1004-4716-8FEE-7B5AB7FEDB5E}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

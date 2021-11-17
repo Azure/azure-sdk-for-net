@@ -1,0 +1,20 @@
+<!-- https://docs.microsoft.com/en-us/visualstudio/test/configure-unit-tests-by-using-a-dot-runsettings-file -->
+<RunSettings>
+  <RunConfiguration>
+    <EnvironmentVariables>
+      <!-- List of environment variables we want to set-->
+      <HTTPS_PROXY>http://localhost:8888</HTTPS_PROXY>
+      <AZURE_TEST_MODE>Record<AZURE_TEST_MODE>
+      <!-- <HTTPS_PROXY>http://ipv4.fiddler</HTTPS_PROXY> -->
+      <!-- AzureCloud -->
+      <!-- <TEST_CSM_ORGID_AUTHENTICATION>SubscriptionId=7f1fae41-7708-4fa4-89b3-f6552cad2fc1;ServicePrincipal=44fba2dc-ec80-400b-84d3-4e03cd6de875;ServicePrincipalSecret=0U77Q~2UJ~1wukVmpXqzomHH5A8rwkvd5wdfn;AADTenant=72f988bf-86f1-41af-91ab-2d7cd011db47;HttpRecorderMode=Record;</TEST_CSM_ORGID_AUTHENTICATION> -->
+      <!-- dogfood -->
+      <!-- <TEST_CSM_ORGID_AUTHENTICATION>SubscriptionId=ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5;ServicePrincipal=690b56ab-007b-4342-ab59-9bf340c560a0;ServicePrincipalSecret=bjK7Q~jFMUztv8koNR1~tWvNyvUwbIJgHNrvV;AADTenant=f686d426-8d16-42db-81b7-ab578e110ccd;Environment=dogfood;HttpRecorderMode=Record;</TEST_CSM_ORGID_AUTHENTICATION> -->
+      <!-- <TEST_CSM_ORGID_AUTHENTICATION>SubscriptionId=ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5;ServicePrincipal=690b56ab-007b-4342-ab59-9bf340c560a0;ServicePrincipalSecret=bjK7Q~jFMUztv8koNR1~tWvNyvUwbIJgHNrvV;AADTenant=f686d426-8d16-42db-81b7-ab578e110ccd;Environment=Dogfood;ResourceManagementUri=https://localhost;HttpRecorderMode=Record;</TEST_CSM_ORGID_AUTHENTICATION> -->
+      <!-- mock_api with GraphUri -->
+      <!-- <TEST_CSM_ORGID_AUTHENTICATION>SubscriptionId=ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5;ServicePrincipal=690b56ab-007b-4342-ab59-9bf340c560a0;ServicePrincipalSecret=bjK7Q~jFMUztv8koNR1~tWvNyvUwbIJgHNrvV;AADTenant=f686d426-8d16-42db-81b7-ab578e110ccd;Environment=Dogfood;ResourceManagementUri=https://localhost;HttpRecorderMode=Record;GraphUri=https://localhost;AADAuthUri=https://localhost/adfs/</TEST_CSM_ORGID_AUTHENTICATION> -->
+      <TEST_CSM_ORGID_AUTHENTICATION>SubscriptionId=ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5;ServicePrincipal=690b56ab-007b-4342-ab59-9bf340c560a0;ServicePrincipalSecret=bjK7Q~jFMUztv8koNR1~tWvNyvUwbIJgHNrvV;AADTenant=f686d426-8d16-42db-81b7-ab578e110ccd;Environment=Dogfood;ResourceManagementUri=https://localhost;HttpRecorderMode=Record;GraphUri=https://localhost;AADAuthUri=https://localhost/adfs/</TEST_CSM_ORGID_AUTHENTICATION>
+      <!-- <TEST_CSM_ORGID_AUTHENTICATION>SubscriptionId=ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5;ServicePrincipal=690b56ab-007b-4342-ab59-9bf340c560a0;ServicePrincipalSecret=bjK7Q~jFMUztv8koNR1~tWvNyvUwbIJgHNrvV;AADTenant=f686d426-8d16-42db-81b7-ab578e110ccd;Environment=Dogfood;ResourceManagementUri=https://ipv4.fiddler;HttpRecorderMode=Record;GraphUri=https://localhost;AADAuthUri=https://ipv4.fiddler/adfs/</TEST_CSM_ORGID_AUTHENTICATION> -->
+    </EnvironmentVariables>
+  </RunConfiguration>
+</RunSettings>
