@@ -15,7 +15,6 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources.Models;
-using Azure.ResourceManager.WebPubSub.Models;
 
 namespace Azure.ResourceManager.WebPubSub
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.WebPubSub
     public partial class EventHandler : ArmResource
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly WebPubSubEventHandlersRestOperations _restClient;
+        private readonly WebPubSubEventHandlersRestOperations _webPubSubEventHandlersRestClient;
         private readonly EventHandlerData _data;
 
         /// <summary> Initializes a new instance of the <see cref="EventHandler"/> class for mocking. </summary>
@@ -38,9 +37,8 @@ namespace Azure.ResourceManager.WebPubSub
         {
             HasData = true;
             _data = resource;
-            Parent = options;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new WebPubSubEventHandlersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _webPubSubEventHandlersRestClient = new WebPubSubEventHandlersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="EventHandler"/> class. </summary>
@@ -48,9 +46,8 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal EventHandler(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
-            Parent = options;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new WebPubSubEventHandlersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _webPubSubEventHandlersRestClient = new WebPubSubEventHandlersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="EventHandler"/> class. </summary>
@@ -62,7 +59,7 @@ namespace Azure.ResourceManager.WebPubSub
         internal EventHandler(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new WebPubSubEventHandlersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _webPubSubEventHandlersRestClient = new WebPubSubEventHandlersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -86,12 +83,10 @@ namespace Azure.ResourceManager.WebPubSub
             }
         }
 
-        /// <summary> Gets the parent resource of this resource. </summary>
-        public ArmResource Parent { get; }
-
         /// <summary> Get an event handler. </summary>
         /// <param name="eventHandlerName"> The event handler name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="eventHandlerName"/> is null. </exception>
         public async virtual Task<Response<EventHandler>> GetAsync(string eventHandlerName, CancellationToken cancellationToken = default)
         {
             if (eventHandlerName == null)
@@ -103,7 +98,7 @@ namespace Azure.ResourceManager.WebPubSub
             scope.Start();
             try
             {
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, eventHandlerName, cancellationToken).ConfigureAwait(false);
+                var response = await _webPubSubEventHandlersRestClient.GetAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, eventHandlerName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new EventHandler(this, response.Value), response.GetRawResponse());
@@ -118,6 +113,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <summary> Get an event handler. </summary>
         /// <param name="eventHandlerName"> The event handler name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="eventHandlerName"/> is null. </exception>
         public virtual Response<EventHandler> Get(string eventHandlerName, CancellationToken cancellationToken = default)
         {
             if (eventHandlerName == null)
@@ -129,7 +125,7 @@ namespace Azure.ResourceManager.WebPubSub
             scope.Start();
             try
             {
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, eventHandlerName, cancellationToken);
+                var response = _webPubSubEventHandlersRestClient.Get(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, eventHandlerName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new EventHandler(this, response.Value), response.GetRawResponse());
@@ -155,108 +151,6 @@ namespace Azure.ResourceManager.WebPubSub
         public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
-        }
-
-        /// <summary> Delete an event handler. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<WebPubSubEventHandlerDeleteOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("EventHandler.Delete");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new WebPubSubEventHandlerDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
-                if (waitForCompletion)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Delete an event handler. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual WebPubSubEventHandlerDeleteOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("EventHandler.Delete");
-            scope.Start();
-            try
-            {
-                var response = _restClient.Delete(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new WebPubSubEventHandlerDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create or update an event handler. </summary>
-        /// <param name="properties"> Properties of the event handler. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public async virtual Task<WebPubSubEventHandlerCreateOrUpdateOperation> CreateOrUpdateAsync(EventHandlerProperties properties, bool waitForCompletion = true, CancellationToken cancellationToken = default)
-        {
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("EventHandler.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, properties, cancellationToken).ConfigureAwait(false);
-                var operation = new WebPubSubEventHandlerCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, properties).Request, response);
-                if (waitForCompletion)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create or update an event handler. </summary>
-        /// <param name="properties"> Properties of the event handler. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public virtual WebPubSubEventHandlerCreateOrUpdateOperation CreateOrUpdate(EventHandlerProperties properties, bool waitForCompletion = true, CancellationToken cancellationToken = default)
-        {
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("EventHandler.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, properties, cancellationToken);
-                var operation = new WebPubSubEventHandlerCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, properties).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
     }
 }

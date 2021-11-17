@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.WebPubSub
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateGetAllRequest(string location)
+        internal HttpMessage CreateListRequest(string location)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -67,14 +67,14 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="location"> the location like &quot;eastus&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public async Task<Response<SignalRServiceUsageList>> GetAllAsync(string location, CancellationToken cancellationToken = default)
+        public async Task<Response<SignalRServiceUsageList>> ListAsync(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
             }
 
-            using var message = CreateGetAllRequest(location);
+            using var message = CreateListRequest(location);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -94,14 +94,14 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="location"> the location like &quot;eastus&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public Response<SignalRServiceUsageList> GetAll(string location, CancellationToken cancellationToken = default)
+        public Response<SignalRServiceUsageList> List(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
             }
 
-            using var message = CreateGetAllRequest(location);
+            using var message = CreateListRequest(location);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.WebPubSub
             }
         }
 
-        internal HttpMessage CreateGetAllNextPageRequest(string nextLink, string location)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string location)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="location"> the location like &quot;eastus&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="location"/> is null. </exception>
-        public async Task<Response<SignalRServiceUsageList>> GetAllNextPageAsync(string nextLink, string location, CancellationToken cancellationToken = default)
+        public async Task<Response<SignalRServiceUsageList>> ListNextPageAsync(string nextLink, string location, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.WebPubSub
                 throw new ArgumentNullException(nameof(location));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, location);
+            using var message = CreateListNextPageRequest(nextLink, location);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="location"> the location like &quot;eastus&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="location"/> is null. </exception>
-        public Response<SignalRServiceUsageList> GetAllNextPage(string nextLink, string location, CancellationToken cancellationToken = default)
+        public Response<SignalRServiceUsageList> ListNextPage(string nextLink, string location, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.WebPubSub
                 throw new ArgumentNullException(nameof(location));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, location);
+            using var message = CreateListNextPageRequest(nextLink, location);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
