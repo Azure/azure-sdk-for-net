@@ -10,6 +10,9 @@ namespace Azure.AI.TextAnalytics
 {
     internal class OperationIdInformation
     {
+        // Parameterless constructor required for JSON deserialization.
+        public OperationIdInformation() { }
+
         public OperationIdInformation(string jobId, IDictionary<string, int> indexMap, bool? showStats)
         {
             JobId = jobId;
