@@ -25,7 +25,6 @@ namespace Azure.Communication.NetworkTraversal
         {
             ApiVersion = version switch
             {
-                ServiceVersion.V2021_06_21_preview  => "2021-06-21-preview",
                 ServiceVersion.V2021_10_08_preview  => "2021-10-08-preview",
                 _ => throw new ArgumentOutOfRangeException(nameof(version)),
             };
@@ -39,13 +38,9 @@ namespace Azure.Communication.NetworkTraversal
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 #pragma warning disable AZC0016 // Invalid ServiceVersion member name.
             /// <summary>
-            /// The V2021_06_21_preview of the networking service.
-            /// </summary>
-            V2021_06_21_preview = 1,
-            /// <summary>
             /// The V2021_10_08_preview of the networking service.
             /// </summary>
-            V2021_10_08_preview = 2,
+            V2021_10_08_preview = 1,
 #pragma warning restore AZC0016 // Invalid ServiceVersion member name.
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }

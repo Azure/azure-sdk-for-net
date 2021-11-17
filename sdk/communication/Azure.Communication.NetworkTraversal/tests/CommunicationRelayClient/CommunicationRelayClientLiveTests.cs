@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Azure.Communication.Tests;
 using Azure.Communication.Identity;
 using NUnit.Framework;
+using Azure.Communication.NetworkTraversal.Models;
 
 namespace Azure.Communication.NetworkTraversal.Tests
 {
@@ -43,7 +44,7 @@ namespace Azure.Communication.NetworkTraversal.Tests
             CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
 
             Response<CommunicationUserIdentifier> userResponse = await communicationIdentityClient.CreateUserAsync();
-            Response<CommunicationRelayConfiguration> turnCredentialsResponse = await client.GetRelayConfigurationAsync(userResponse.Value);
+            Response<CommunicationRelayConfiguration> turnCredentialsResponse = await client.GetRelayConfigurationAsync(new GetRelayConfigurationOptions(userResponse.Value));
 
             Assert.IsNotNull(turnCredentialsResponse.Value);
             Assert.IsNotNull(turnCredentialsResponse.Value.ExpiresOn);
@@ -65,40 +66,16 @@ namespace Azure.Communication.NetworkTraversal.Tests
         [TestCase(AuthMethod.KeyCredential, TestName = "GettingTurnCredentialsWithKeyCredentialRouteTypeNearest")]
         [TestCase(AuthMethod.TokenCredential, TestName = "GettingTurnCredentialsWithTokenCredentialRouteTypeNearest")]
         public async Task GettingTurnCredentialsGeneratesTurnCredentialsWithNearestRouteType(AuthMethod authMethod, params string[] scopes)
-        {
-            CommunicationRelayClient client = authMethod switch
-            {
-                AuthMethod.ConnectionString => CreateClientWithConnectionString(),
-                AuthMethod.KeyCredential => CreateClientWithAzureKeyCredential(),
-                AuthMethod.TokenCredential => CreateClientWithTokenCredential(),
-                _ => throw new ArgumentOutOfRangeException(nameof(authMethod)),
-            };
-
-            CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
-
-            Response<CommunicationUserIdentifier> userResponse = await communicationIdentityClient.CreateUserAsync();
-            Response<CommunicationRelayConfiguration> turnCredentialsResponse = await client.GetRelayConfigurationAsync(userResponse.Value, RouteType.Nearest);
-
-            Assert.IsNotNull(turnCredentialsResponse.Value);
-            Assert.IsNotNull(turnCredentialsResponse.Value.ExpiresOn);
-            Assert.IsNotNull(turnCredentialsResponse.Value.IceServers);
-            foreach (CommunicationIceServer serverCredential in turnCredentialsResponse.Value.IceServers)
-            {
-                foreach (string url in serverCredential.Urls)
-                {
-                    Assert.IsFalse(string.IsNullOrWhiteSpace(url));
-                }
-                Assert.IsFalse(string.IsNullOrWhiteSpace(serverCredential.Username));
-                Assert.IsFalse(string.IsNullOrWhiteSpace(serverCredential.Credential));
-                Assert.AreEqual(RouteType.Nearest, serverCredential.RouteType);
-            }
-        }
+            => await GettingTurnCredentialsWithRequestedRouteType(authMethod, RouteType.Nearest);
 
         [Test]
         [TestCase(AuthMethod.ConnectionString, TestName = "GettingTurnCredentialsWithConnectionStringRouteTypeAny")]
         [TestCase(AuthMethod.KeyCredential, TestName = "GettingTurnCredentialsWithKeyCredentialRouteTypeAny")]
         [TestCase(AuthMethod.TokenCredential, TestName = "GettingTurnCredentialsWithTokenCredentialRouteTypeAny")]
         public async Task GettingTurnCredentialsGeneratesTurnCredentialsWithAnyRouteType(AuthMethod authMethod, params string[] scopes)
+        => await GettingTurnCredentialsWithRequestedRouteType(authMethod, RouteType.Any);
+
+        public async Task GettingTurnCredentialsWithRequestedRouteType(AuthMethod authMethod, RouteType routeType)
         {
             CommunicationRelayClient client = authMethod switch
             {
@@ -111,7 +88,7 @@ namespace Azure.Communication.NetworkTraversal.Tests
             CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
 
             Response<CommunicationUserIdentifier> userResponse = await communicationIdentityClient.CreateUserAsync();
-            Response<CommunicationRelayConfiguration> turnCredentialsResponse = await client.GetRelayConfigurationAsync(userResponse.Value, RouteType.Any);
+            Response<CommunicationRelayConfiguration> turnCredentialsResponse = await client.GetRelayConfigurationAsync(new GetRelayConfigurationOptions(userResponse.Value, routeType));
 
             Assert.IsNotNull(turnCredentialsResponse.Value);
             Assert.IsNotNull(turnCredentialsResponse.Value.ExpiresOn);
@@ -124,7 +101,7 @@ namespace Azure.Communication.NetworkTraversal.Tests
                 }
                 Assert.IsFalse(string.IsNullOrWhiteSpace(serverCredential.Username));
                 Assert.IsFalse(string.IsNullOrWhiteSpace(serverCredential.Credential));
-                Assert.AreEqual(RouteType.Any, serverCredential.RouteType);
+                Assert.AreEqual(routeType, serverCredential.RouteType);
             }
         }
 

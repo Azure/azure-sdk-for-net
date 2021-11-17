@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Communication.Identity;
+using Azure.Communication.NetworkTraversal.Models;
 using Azure.Communication.NetworkTraversal.Tests;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -41,7 +42,7 @@ namespace Azure.Communication.NetworkTraversal.Samples
             client = CreateClientWithConnectionString();
 
             #region Snippet:GetRelayConfigurationAsync
-            Response<CommunicationRelayConfiguration> relayConfiguration = await client.GetRelayConfigurationAsync(user);
+            Response<CommunicationRelayConfiguration> relayConfiguration = await client.GetRelayConfigurationAsync(new GetRelayConfigurationOptions(user));
             DateTimeOffset turnTokenExpiresOn = relayConfiguration.Value.ExpiresOn;
             IReadOnlyList<CommunicationIceServer> iceServers = relayConfiguration.Value.IceServers;
             Console.WriteLine($"Expires On: {turnTokenExpiresOn}");
@@ -73,7 +74,7 @@ namespace Azure.Communication.NetworkTraversal.Samples
             var client = new CommunicationRelayClient(connectionString);
             client = CreateClientWithConnectionString();
             #region Snippet:GetRelayConfigurationAsyncWithNearestRouteType
-            Response<CommunicationRelayConfiguration> relayConfiguration = await client.GetRelayConfigurationAsync(user, RouteType.Nearest);
+            Response<CommunicationRelayConfiguration> relayConfiguration = await client.GetRelayConfigurationAsync(new GetRelayConfigurationOptions(user, RouteType.Nearest));
             DateTimeOffset turnTokenExpiresOn = relayConfiguration.Value.ExpiresOn;
             IReadOnlyList<CommunicationIceServer> iceServers = relayConfiguration.Value.IceServers;
             Console.WriteLine($"Expires On: {turnTokenExpiresOn}");
@@ -136,7 +137,7 @@ namespace Azure.Communication.NetworkTraversal.Samples
             client = CreateClientWithConnectionString();
 
             #region Snippet:GetRelayConfiguration
-            Response<CommunicationRelayConfiguration> relayConfiguration = client.GetRelayConfiguration(user);
+            Response<CommunicationRelayConfiguration> relayConfiguration = client.GetRelayConfiguration(new GetRelayConfigurationOptions(user));
             DateTimeOffset turnTokenExpiresOn = relayConfiguration.Value.ExpiresOn;
             IReadOnlyList<CommunicationIceServer> iceServers = relayConfiguration.Value.IceServers;
             Console.WriteLine($"Expires On: {turnTokenExpiresOn}");
@@ -167,7 +168,7 @@ namespace Azure.Communication.NetworkTraversal.Samples
             var client = new CommunicationRelayClient(connectionString);
             client = CreateClientWithConnectionString();
 
-            Response<CommunicationRelayConfiguration> relayConfiguration = client.GetRelayConfiguration(user, RouteType.Nearest);
+            Response<CommunicationRelayConfiguration> relayConfiguration = client.GetRelayConfiguration(new GetRelayConfigurationOptions(user, RouteType.Nearest));
             DateTimeOffset turnTokenExpiresOn = relayConfiguration.Value.ExpiresOn;
             IReadOnlyList<CommunicationIceServer> iceServers = relayConfiguration.Value.IceServers;
             Console.WriteLine($"Expires On: {turnTokenExpiresOn}");
@@ -226,7 +227,7 @@ namespace Azure.Communication.NetworkTraversal.Samples
             client = CreateClientWithTokenCredential();
             try
             {
-                Response<CommunicationRelayConfiguration> relayConfigurationResponse = await client.GetRelayConfigurationAsync(user);
+                Response<CommunicationRelayConfiguration> relayConfigurationResponse = await client.GetRelayConfigurationAsync(new GetRelayConfigurationOptions(user));
             }
             catch (Exception ex)
             {
@@ -252,7 +253,7 @@ namespace Azure.Communication.NetworkTraversal.Samples
             client = CreateClientWithAzureKeyCredential();
             try
             {
-                Response<CommunicationRelayConfiguration> relayConfigurationResponse = await client.GetRelayConfigurationAsync(user);
+                Response<CommunicationRelayConfiguration> relayConfigurationResponse = await client.GetRelayConfigurationAsync(new GetRelayConfigurationOptions(user));
             }
             catch (Exception ex)
             {

@@ -15,16 +15,17 @@ namespace Azure.Communication.NetworkTraversal
         public CommunicationRelayClient(string connectionString, Azure.Communication.NetworkTraversal.CommunicationRelayClientOptions options) { }
         public CommunicationRelayClient(System.Uri endpoint, Azure.AzureKeyCredential keyCredential, Azure.Communication.NetworkTraversal.CommunicationRelayClientOptions options = null) { }
         public CommunicationRelayClient(System.Uri endpoint, Azure.Core.TokenCredential tokenCredential, Azure.Communication.NetworkTraversal.CommunicationRelayClientOptions options = null) { }
-        public virtual Azure.Response<Azure.Communication.NetworkTraversal.CommunicationRelayConfiguration> GetRelayConfiguration(Azure.Communication.CommunicationUserIdentifier communicationUser = null, Azure.Communication.NetworkTraversal.RouteType? routeType = default(Azure.Communication.NetworkTraversal.RouteType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.NetworkTraversal.CommunicationRelayConfiguration>> GetRelayConfigurationAsync(Azure.Communication.CommunicationUserIdentifier communicationUser = null, Azure.Communication.NetworkTraversal.RouteType? routeType = default(Azure.Communication.NetworkTraversal.RouteType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Communication.NetworkTraversal.CommunicationRelayConfiguration> GetRelayConfiguration(Azure.Communication.NetworkTraversal.Models.GetRelayConfigurationOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Communication.NetworkTraversal.CommunicationRelayConfiguration> GetRelayConfiguration(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.NetworkTraversal.CommunicationRelayConfiguration>> GetRelayConfigurationAsync(Azure.Communication.NetworkTraversal.Models.GetRelayConfigurationOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.NetworkTraversal.CommunicationRelayConfiguration>> GetRelayConfigurationAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class CommunicationRelayClientOptions : Azure.Core.ClientOptions
     {
         public CommunicationRelayClientOptions(Azure.Communication.NetworkTraversal.CommunicationRelayClientOptions.ServiceVersion version = Azure.Communication.NetworkTraversal.CommunicationRelayClientOptions.ServiceVersion.V2021_10_08_preview) { }
         public enum ServiceVersion
         {
-            V2021_06_21_preview = 1,
-            V2021_10_08_preview = 2,
+            V2021_10_08_preview = 1,
         }
     }
     public partial class CommunicationRelayConfiguration
@@ -55,5 +56,15 @@ namespace Azure.Communication.NetworkTraversal
         public static implicit operator Azure.Communication.NetworkTraversal.RouteType (string value) { throw null; }
         public static bool operator !=(Azure.Communication.NetworkTraversal.RouteType left, Azure.Communication.NetworkTraversal.RouteType right) { throw null; }
         public override string ToString() { throw null; }
+    }
+}
+namespace Azure.Communication.NetworkTraversal.Models
+{
+    public partial class GetRelayConfigurationOptions
+    {
+        public GetRelayConfigurationOptions() { }
+        public GetRelayConfigurationOptions(Azure.Communication.CommunicationUserIdentifier communicationUser = null, Azure.Communication.NetworkTraversal.RouteType? routeType = default(Azure.Communication.NetworkTraversal.RouteType?)) { }
+        public Azure.Communication.CommunicationUserIdentifier CommunicationUser { get { throw null; } set { } }
+        public Azure.Communication.NetworkTraversal.RouteType? RouteType { get { throw null; } set { } }
     }
 }
