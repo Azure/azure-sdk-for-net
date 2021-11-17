@@ -22,7 +22,7 @@ namespace Azure.Messaging.WebPubSub
         private readonly string _apiVersion;
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get => _pipeline; }
+        public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary> Initializes a new instance of HealthApiClient for mocking. </summary>
         protected HealthApiClient()
@@ -39,7 +39,6 @@ namespace Azure.Messaging.WebPubSub
             {
                 throw new ArgumentNullException(nameof(endpoint));
             }
-
             options ??= new WebPubSubServiceClientOptions();
 
             _clientDiagnostics = new ClientDiagnostics(options);

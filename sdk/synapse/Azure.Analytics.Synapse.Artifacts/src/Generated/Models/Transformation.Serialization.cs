@@ -25,6 +25,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
             }
+            if (Optional.IsDefined(Dataset))
+            {
+                writer.WritePropertyName("dataset");
+                writer.WriteObjectValue(Dataset);
+            }
+            if (Optional.IsDefined(LinkedService))
+            {
+                writer.WritePropertyName("linkedService");
+                writer.WriteObjectValue(LinkedService);
+            }
+            if (Optional.IsDefined(Flowlet))
+            {
+                writer.WritePropertyName("flowlet");
+                writer.WriteObjectValue(Flowlet);
+            }
             writer.WriteEndObject();
         }
 
@@ -32,6 +47,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             string name = default;
             Optional<string> description = default;
+            Optional<DatasetReference> dataset = default;
+            Optional<LinkedServiceReference> linkedService = default;
+            Optional<DataFlowReference> flowlet = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -44,8 +62,38 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     description = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("dataset"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    dataset = DatasetReference.DeserializeDatasetReference(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("linkedService"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    linkedService = LinkedServiceReference.DeserializeLinkedServiceReference(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("flowlet"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    flowlet = DataFlowReference.DeserializeDataFlowReference(property.Value);
+                    continue;
+                }
             }
-            return new Transformation(name, description.Value);
+            return new Transformation(name, description.Value, dataset.Value, linkedService.Value, flowlet.Value);
         }
 
         internal partial class TransformationConverter : JsonConverter<Transformation>

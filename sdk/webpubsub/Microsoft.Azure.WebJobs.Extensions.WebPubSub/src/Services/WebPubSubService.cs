@@ -24,7 +24,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
         internal WebPubSubConnection GetClientConnection(string userId = null, string[] roles = null)
         {
-            var url = _client.GenerateClientAccessUri(userId: userId, roles: roles);
+            var url = _client.GetClientAccessUri(userId: userId, roles: roles);
 
             return new WebPubSubConnection(url);
         }

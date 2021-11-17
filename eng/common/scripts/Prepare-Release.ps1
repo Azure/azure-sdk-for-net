@@ -113,8 +113,11 @@ Write-Host "Assuming release is in $month with release date $releaseDateString" 
 if (Test-Path "Function:GetExistingPackageVersions")
 {
     $releasedVersions = GetExistingPackageVersions -PackageName $packageProperties.Name -GroupId $packageProperties.Group
-    $latestReleasedVersion = $releasedVersions[$releasedVersions.Count - 1]
-    Write-Host "Latest released version: ${latestReleasedVersion}" -ForegroundColor Green
+    if ($null -ne $releasedVersions -and $releasedVersions.Count -gt 0)
+    {
+      $latestReleasedVersion = $releasedVersions[$releasedVersions.Count - 1]
+      Write-Host "Latest released version: ${latestReleasedVersion}" -ForegroundColor Green
+    }
 }
 
 $currentProjectVersion = $packageProperties.Version
@@ -177,8 +180,17 @@ if ($releaseTrackingOnly)
 
 if (Test-Path "Function:SetPackageVersion")
 {
-  SetPackageVersion -PackageName $packageProperties.Name -Version $newVersion -ServiceDirectory $packageProperties.ServiceDirectory -ReleaseDate $releaseDateString `
-    -PackageProperties $packageProperties
+  $replaceLatestEntryTitle = $true
+  $latestVersion = Get-LatestReleaseDateFromChangeLog -ChangeLogLocation $packageProperties.ChangeLogPath
+  if ($latestVersion)
+  {
+    $promptMessage = "The latest entry in the CHANGELOG.md already has a release date. Do you want to replace the latest entry title? Please enter (y or n)."
+    while (($readInput = Read-Host -Prompt $promptMessage) -notmatch '^[yn]$'){ }
+    $replaceLatestEntryTitle = ($readInput -eq "y")
+  }
+  SetPackageVersion -PackageName $packageProperties.Name -Version $newVersion `
+    -ServiceDirectory $packageProperties.ServiceDirectory -ReleaseDate $releaseDateString `
+    -PackageProperties $packageProperties -ReplaceLatestEntryTitle $replaceLatestEntryTitle
 }
 else
 {

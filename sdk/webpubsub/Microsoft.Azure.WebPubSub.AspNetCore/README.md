@@ -45,6 +45,14 @@ var serviceClient = new WebPubSubServiceClient(new Uri(endpoint), "some_hub", ne
 
 For information about general Web PubSub concepts [Concepts in Azure Web PubSub](https://docs.microsoft.com/azure/azure-web-pubsub/key-concepts)
 
+### `WebPubSubHub`
+
+`WebPubSubHub` is an abstract class to let users implement the subscribed Web PubSub service events. After user register the [event handler](https://docs.microsoft.com/azure/azure-web-pubsub/howto-develop-eventhandler) in service side, these events will be forwarded from service to server. And `WebPubSubHub` provides 4 methods mapping to the service events to enable users deal with these events, for example, client management, validations or working with `Azure.Messaging.WebPubSub` to broadcast the messages. See samples below for details.
+
+> NOTE
+> 
+> Among the 4 methods, `OnConnectAsync()` and `OnMessageReceivedAsync()` are blocking events that service will respect server returns. Besides the mapped correct response, server can throw exceptions whenever the request is against the server side logic. And `UnauthorizedAccessException` will be converted to `401Unauthorized` and rest will be converted to `500InternalServerError` along with exception message to return service. Then service will drop current client connection.
+
 ## Examples
 
 ### Add Web PubSub service with options
@@ -76,13 +84,13 @@ public void Configure(IApplicationBuilder app)
 ### Handle Upstream event
 
 ```C#
-public override ValueTask<WebPubSubEventResponse> OnConnectAsync(ConnectEventRequest request, CancellationToken cancellationToken)
+public override ValueTask<ConnectEventResponse> OnConnectAsync(ConnectEventRequest request, CancellationToken cancellationToken)
 {
     var response = new ConnectEventResponse
     {
         UserId = request.ConnectionContext.UserId
     };
-    return new ValueTask<WebPubSubEventResponse>(response);
+    return new ValueTask<ConnectEventResponse>(response);
 }
 ```
 

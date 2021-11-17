@@ -2,7 +2,7 @@
   "Name": "TaskCounts",
   "ProtocolName": "Models.TaskCounts",
   "SummaryComment": "The task counts for a job.",
-  "IsConstructorPublic": false,
+  "ConstructorAccess": "internal",
   "Properties": [
     {
       "Key": {

@@ -3,7 +3,7 @@
   "ProtocolName": "Models.ResourceFile",
   "SummaryComment": "A file to be downloaded to a compute node from Azure Blob Storage, such as task executables and task input data files.",
   "IsUsedInCollections": true,
-  "IsConstructorPublic": false,
+  "ConstructorAccess": "internal",
   "Properties": [
     {
       "Key": {

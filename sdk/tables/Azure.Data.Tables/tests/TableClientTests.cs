@@ -500,6 +500,63 @@ namespace Azure.Data.Tables.Tests
             Assert.AreEqual("?" + expectedSas, actualSas.Query);
         }
 
+        [Test]
+        [NonParallelizable]
+        public async Task CreateClientRespectsSingleQuoteEscapeCompatSwithc(
+            [Values(true, false, null)] bool? setDisableSwitch,
+            [Values(true, false, null)] bool? setDisableEnvVar)
+        {
+            TestAppContextSwitch ctx = null;
+            TestEnvVar env = null;
+            string getEntityResponse =
+                "{\"odata.etag\": \"2021-03-23T18%3A28%3A39.9160983Z\", \"PartitionKey\": \"somPartition\", \"RowKey\": \"01\", \"Timestamp\": \"2021-03-23T18:28:39.9160983Z\"}";
+            try
+            {
+                if (setDisableSwitch.HasValue)
+                {
+                    ctx = new TestAppContextSwitch(TableConstants.CompatSwitches.DisableEscapeSingleQuotesOnGetEntitySwitchName, setDisableSwitch.Value.ToString());
+                }
+                if (setDisableEnvVar.HasValue)
+                {
+                    env = new TestEnvVar(TableConstants.CompatSwitches.DisableEscapeSingleQuotesOnGetEntityEnvVar, setDisableEnvVar.Value.ToString());
+                }
+                var response = new MockResponse(200);
+                response.SetContent(getEntityResponse);
+                var transport = new MockTransport(_ => response);
+                var client = new TableClient(_url, TableName, new MockCredential(), new TableClientOptions { Transport = transport });
+
+                await client.GetEntityAsync<TableEntity>("fo'o", "ba'r");
+
+                if (setDisableSwitch.HasValue)
+                {
+                    if (setDisableSwitch.Value)
+                    {
+                        Assert.That(WebUtility.UrlDecode(transport.SingleRequest.Uri.PathAndQuery), Does.Not.Contain("''"));
+                    }
+                    else
+                    {
+                        Assert.That(WebUtility.UrlDecode(transport.SingleRequest.Uri.PathAndQuery), Does.Contain("''"));
+                    }
+                }
+                else
+                {
+                    if (setDisableEnvVar.HasValue && setDisableEnvVar.Value)
+                    {
+                        Assert.That(WebUtility.UrlDecode(transport.SingleRequest.Uri.PathAndQuery), Does.Not.Contain("''"));
+                    }
+                    else
+                    {
+                        Assert.That(WebUtility.UrlDecode(transport.SingleRequest.Uri.PathAndQuery), Does.Contain("''"));
+                    }
+                }
+            }
+            finally
+            {
+                ctx?.Dispose();
+                env?.Dispose();
+            }
+        }
+
         private static MockTransport TableAlreadyExistsTransport() =>
             new(
                 _ => throw new RequestFailedException(

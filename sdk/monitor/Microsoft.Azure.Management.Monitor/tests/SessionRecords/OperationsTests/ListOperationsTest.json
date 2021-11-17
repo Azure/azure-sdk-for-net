@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/providers/microsoft.insights/operations?api-version=2015-04-01",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9taWNyb3NvZnQuaW5zaWdodHMvb3BlcmF0aW9ucz9hcGktdmVyc2lvbj0yMDE1LTA0LTAx",
+      "RequestUri": "/providers/Microsoft.Insights/operations?api-version=2015-04-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuSW5zaWdodHMvb3BlcmF0aW9ucz9hcGktdmVyc2lvbj0yMDE1LTA0LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {

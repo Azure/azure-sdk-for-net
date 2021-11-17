@@ -313,6 +313,42 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
+        [NonParallelizable]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_10_02)]
+        public async Task GetFileSystemsAsync_System()
+        {
+            // Arrange
+            DataLakeServiceClient service = DataLakeClientBuilder.GetServiceClient_Hns();
+
+            DataLakeServiceProperties properties = await service.GetPropertiesAsync();
+            DataLakeStaticWebsite originalStaticWebsite = properties.StaticWebsite;
+            string errorDocument404Path = "error/404.html";
+            string defaultIndexDocumentPath = "index2.html";
+            properties.StaticWebsite = new DataLakeStaticWebsite
+            {
+                Enabled = true,
+                ErrorDocument404Path = errorDocument404Path,
+                DefaultIndexDocumentPath = defaultIndexDocumentPath
+            };
+
+            // Act
+            await service.SetPropertiesAsync(properties);
+
+            // Act
+            IList<FileSystemItem> fileSystems = await service.GetFileSystemsAsync(states: FileSystemStates.System).ToListAsync();
+            FileSystemItem webFileSystemItem = fileSystems.Where(r => r.Name == "$web").FirstOrDefault();
+
+            // Assert
+            Assert.IsTrue(fileSystems.Count > 0);
+            Assert.IsNotNull(webFileSystemItem);
+
+            // Cleanup
+            properties = await service.GetPropertiesAsync();
+            properties.StaticWebsite = originalStaticWebsite;
+            await service.SetPropertiesAsync(properties);
+        }
+
+        [RecordedTest]
         [AsyncOnly]
         public async Task GetFileSystemsAsync_Error()
         {

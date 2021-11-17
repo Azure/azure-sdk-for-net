@@ -80,8 +80,6 @@ The `DefaultAzureCredential` will attempt to authenticate via the following mech
 
 ## Examples
 
-You can find more examples of using various credentials in [Azure Identity Examples Wiki page](https://github.com/Azure/azure-sdk-for-net/wiki/Azure-Identity-Examples).
-
 ### Authenticating with the `DefaultAzureCredential`
 
 This example demonstrates authenticating the `SecretClient` from the [Azure.Security.KeyVault.Secrets][secrets_client_library] client library using the `DefaultAzureCredential`.

@@ -9,6 +9,7 @@
     <PackageReference Include="CommandLineParser" />
     <PackageReference Include="System.Reflection.Emit" />
     <PackageReference Include="System.Text.Json" />
+    <PackageReference Include="System.Text.Encodings.Web" />
   </ItemGroup>
 
   <ItemGroup>

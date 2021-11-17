@@ -544,7 +544,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"primaryConnectionString\": \"Endpoint=sb://eventhubnamespace6069.servicebus.windows.net/;SharedAccessKeyName=sendPolicy9329;SharedAccessKey=0fJI4DUyBEnHWeVRBn3/Lr4GPy2ygDFIYHKI/N96bvg=;EntityPath=eventhubname4159\",\r\n  \"secondaryConnectionString\": \"Endpoint=sb://eventhubnamespace6069.servicebus.windows.net/;SharedAccessKeyName=sendPolicy9329;SharedAccessKey=Fp7wrWUjPyri+XcezuoJLcWbl1Ru+flQm7yDg6+vlVI=;EntityPath=eventhubname4159\",\r\n  \"primaryKey\": \"0fJI4DUyBEnHWeVRBn3/Lr4GPy2ygDFIYHKI/N96bvg=\",\r\n  \"secondaryKey\": \"Fp7wrWUjPyri+XcezuoJLcWbl1Ru+flQm7yDg6+vlVI=\",\r\n  \"keyName\": \"sendPolicy9329\"\r\n}",
+      "ResponseBody": "{\r\n  \"primaryConnectionString\": \"Endpoint=sb://eventhubnamespace6069.servicebus.windows.net/;SharedAccessKeyName=sendPolicy9329;SharedAccessKey=0fJI4DUyBEnHWeVRBn3/Lr4GPy2ygDFIYHKI/N96bvg=;EntityPath=eventhubname4159\",\r\n  \"secondaryConnectionString\": \"Sanitized\",\r\n  \"primaryKey\": \"Sanitized\",\r\n  \"secondaryKey\": \"Fp7wrWUjPyri+XcezuoJLcWbl1Ru+flQm7yDg6+vlVI=\",\r\n  \"keyName\": \"sendPolicy9329\"\r\n}",
       "StatusCode": 200
     },
     {

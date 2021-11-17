@@ -1,176 +1,177 @@
+{
+  "Name": "JobSpecification",
+  "ProtocolName": "Models.JobSpecification",
+  "SummaryComment": "The <see cref=\"CloudJobSchedule.JobSpecification\"/> of a <see cref=\"CloudJobSchedule\"/>.",
+  "HideMockableConstructor": true,
+  "Properties": [
     {
-      "Name": "JobSpecification",
-      "ProtocolName": "Models.JobSpecification",
-      "SummaryComment": "The <see cref=\"CloudJobSchedule.JobSpecification\"/> of a <see cref=\"CloudJobSchedule\"/>.",
-      "Properties": [
-        {
-          "Key": {
-            "Type": "IList<EnvironmentSetting>",
-            "Name": "CommonEnvironmentSettings",
-            "SummaryComment": "A list of common environment variable settings.",
-            "RemarksComment": "These environment variables are set for all tasks in jobs created under this <see cref=\"CloudJobSchedule\"/> (including the Job Manager, Job Preparation and Job Release tasks).",
-            "BoundAccess": "read,write",
-            "UnboundAccess": "read,write"
-          },
-          "Value": {
-            "Type": "IList<Models.EnvironmentSetting>",
-            "Name": "CommonEnvironmentSettings"
-          }
-        },
-        {
-          "Key": {
-            "Type": "JobConstraints",
-            "Name": "Constraints",
-            "SummaryComment": "The execution constraints for jobs created via this <see cref=\"JobSpecification\"/>.",
-            "RemarksComment": null,
-            "BoundAccess": "read,write",
-            "UnboundAccess": "read,write"
-          },
-          "Value": null
-        },
-        {
-          "Key": {
-            "Type": "string",
-            "Name": "DisplayName",
-            "SummaryComment": "A display name for all jobs created via this <see cref=\"JobSpecification\"/>.",
-            "RemarksComment": null,
-            "BoundAccess": "read,write",
-            "UnboundAccess": "read,write"
-          },
-          "Value": null
-        },
-        {
-          "Key": {
-            "Type": "JobManagerTask",
-            "Name": "JobManagerTask",
-            "SummaryComment": "Details of a Job Manager task to be launched when a job is created via this <see cref=\"JobSpecification\"/>.",
-            "RemarksComment": null,
-            "BoundAccess": "read,write",
-            "UnboundAccess": "read,write"
-          },
-          "Value": null
-        },
-        {
-          "Key": {
-            "Type": "JobPreparationTask",
-            "Name": "JobPreparationTask",
-            "SummaryComment": "The Job Preparation task for jobs created via this <see cref=\"JobSpecification\"/>.",
-            "RemarksComment": "The Batch service will run the Job Preparation task on a compute node before starting any tasks of that job on that compute node.",
-            "BoundAccess": "read,write",
-            "UnboundAccess": "read,write"
-          },
-          "Value": null
-        },
-        {
-          "Key": {
-            "Type": "JobReleaseTask",
-            "Name": "JobReleaseTask",
-            "SummaryComment": "The Job Release task for jobs created via this <see cref=\"JobSpecification\"/>. ",
-            "RemarksComment": "The Batch service runs the Job Release task when the job ends, on each compute node where any task of the job has run.",
-            "BoundAccess": "read,write",
-            "UnboundAccess": "read,write"
-          },
-          "Value": null
-        },
-        {
-          "Key": {
-            "Type": "PoolInformation",
-            "Name": "PoolInformation",
-            "SummaryComment": "The pool on which the Batch service runs the tasks of jobs created via this <see cref=\"JobSpecification\"/>.",
-            "RemarksComment": null,
-            "BoundAccess": "read,write",
-            "UnboundAccess": "read,write",
-            "ConstructorArgumentType": "Required"
-          },
-          "Value": {
-            "Type": "Models.PoolInformation",
-            "Name": "PoolInfo"
-          }
-        },
-        {
-          "Key": {
-            "Type": "IList<MetadataItem>",
-            "Name": "Metadata",
-            "SummaryComment": "A list of name-value pairs associated with jobs created via this <see cref=\"JobSpecification\"/> as metadata.",
-            "RemarksComment": null,
-            "BoundAccess": "read,write",
-            "UnboundAccess": "read,write"
-          },
-          "Value": {
-            "Type": "IList<Models.MetadataItem>",
-            "Name": "Metadata"
-          }
-        },
-        {
-          "Key": {
-            "Type": "int?",
-            "Name": "Priority",
-            "SummaryComment": "The priority of jobs created via this <see cref=\"JobSpecification\"/>.",
-            "RemarksComment": " Priority values can range from -1000 to 1000, with -1000 being the lowest priority and 1000 being the highest priority.",
-            "BoundAccess": "read,write",
-            "UnboundAccess": "read,write"
-          },
-          "Value": null
-        },
-        {
-          "Key": {
-            "Type": "bool?",
-            "Name": "UsesTaskDependencies",
-            "SummaryComment": "Whether tasks in jobs created under this <see cref=\"CloudJobSchedule\"/> can define dependencies on each other.",
-            "RemarksComment": "The default value is false.",
-            "BoundAccess": "read,write",
-            "UnboundAccess": "read,write"
-          },
-          "Value": null
-        },
-        {
-          "Key": {
-            "Type": "Common.OnAllTasksComplete?",
-            "Name": "OnAllTasksComplete",
-            "SummaryComment": "The action the Batch service should take when all tasks in the job are in the <see cref=\"Common.JobState.Completed\"/> state.",
-            "BoundAccess": "read,write",
-            "UnboundAccess": "read,write"
-          },
-          "Value": {
-            "Type": "Models.OnAllTasksComplete?",
-            "Name": "OnAllTasksComplete"
-          }
-        },
-        {
-          "Key": {
-            "Type": "Common.OnTaskFailure?",
-            "Name": "OnTaskFailure",
-            "SummaryComment": "The action the Batch service should take when any task in the job fails.",
-            "RemarksComment": "A task is considered to have failed if it completes with a non-zero exit code and has exhausted its retry count, or if it had a scheduling error.",
-            "BoundAccess": "read,write",
-            "UnboundAccess": "read,write"
-          },
-          "Value": {
-            "Type": "Models.OnTaskFailure?",
-            "Name": "OnTaskFailure"
-          }
-        },
-        {
-          "Key": {
-            "Type": "JobNetworkConfiguration",
-            "Name": "NetworkConfiguration",
-            "SummaryComment": "The network configuration for the job.",
-            "RemarksComment": null,
-            "BoundAccess": "read",
-            "UnboundAccess": "read,write"
-          },
-          "Value": null
-        },
-        {
-          "Key": {
-            "Type": "int?",
-            "Name": "MaxParallelTasks",
-            "SummaryComment": "The maximum number of tasks that can be executed in parallel for the job.",
-            "RemarksComment": "The value of maxParallelTasks must be -1 or greater than 0 if specified. If not specified, the default value is -1, which means there's no limit to the number of tasks that can be run at once. You can update a job's maxParallelTasks after it has been created using the update job API.",
-            "BoundAccess": "read,write",
-            "UnboundAccess": "read,write"
-          },
-          "Value": null
-        }
-      ]
+      "Key": {
+        "Type": "IList<EnvironmentSetting>",
+        "Name": "CommonEnvironmentSettings",
+        "SummaryComment": "A list of common environment variable settings.",
+        "RemarksComment": "These environment variables are set for all tasks in jobs created under this <see cref=\"CloudJobSchedule\"/> (including the Job Manager, Job Preparation and Job Release tasks).",
+        "BoundAccess": "read,write",
+        "UnboundAccess": "read,write"
+      },
+      "Value": {
+        "Type": "IList<Models.EnvironmentSetting>",
+        "Name": "CommonEnvironmentSettings"
+      }
+    },
+    {
+      "Key": {
+        "Type": "JobConstraints",
+        "Name": "Constraints",
+        "SummaryComment": "The execution constraints for jobs created via this <see cref=\"JobSpecification\"/>.",
+        "RemarksComment": null,
+        "BoundAccess": "read,write",
+        "UnboundAccess": "read,write"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "string",
+        "Name": "DisplayName",
+        "SummaryComment": "A display name for all jobs created via this <see cref=\"JobSpecification\"/>.",
+        "RemarksComment": null,
+        "BoundAccess": "read,write",
+        "UnboundAccess": "read,write"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "JobManagerTask",
+        "Name": "JobManagerTask",
+        "SummaryComment": "Details of a Job Manager task to be launched when a job is created via this <see cref=\"JobSpecification\"/>.",
+        "RemarksComment": null,
+        "BoundAccess": "read,write",
+        "UnboundAccess": "read,write"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "JobPreparationTask",
+        "Name": "JobPreparationTask",
+        "SummaryComment": "The Job Preparation task for jobs created via this <see cref=\"JobSpecification\"/>.",
+        "RemarksComment": "The Batch service will run the Job Preparation task on a compute node before starting any tasks of that job on that compute node.",
+        "BoundAccess": "read,write",
+        "UnboundAccess": "read,write"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "JobReleaseTask",
+        "Name": "JobReleaseTask",
+        "SummaryComment": "The Job Release task for jobs created via this <see cref=\"JobSpecification\"/>. ",
+        "RemarksComment": "The Batch service runs the Job Release task when the job ends, on each compute node where any task of the job has run.",
+        "BoundAccess": "read,write",
+        "UnboundAccess": "read,write"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "PoolInformation",
+        "Name": "PoolInformation",
+        "SummaryComment": "The pool on which the Batch service runs the tasks of jobs created via this <see cref=\"JobSpecification\"/>.",
+        "RemarksComment": null,
+        "BoundAccess": "read,write",
+        "UnboundAccess": "read,write",
+        "ConstructorArgumentType": "Required"
+      },
+      "Value": {
+        "Type": "Models.PoolInformation",
+        "Name": "PoolInfo"
+      }
+    },
+    {
+      "Key": {
+        "Type": "IList<MetadataItem>",
+        "Name": "Metadata",
+        "SummaryComment": "A list of name-value pairs associated with jobs created via this <see cref=\"JobSpecification\"/> as metadata.",
+        "RemarksComment": null,
+        "BoundAccess": "read,write",
+        "UnboundAccess": "read,write"
+      },
+      "Value": {
+        "Type": "IList<Models.MetadataItem>",
+        "Name": "Metadata"
+      }
+    },
+    {
+      "Key": {
+        "Type": "int?",
+        "Name": "Priority",
+        "SummaryComment": "The priority of jobs created via this <see cref=\"JobSpecification\"/>.",
+        "RemarksComment": " Priority values can range from -1000 to 1000, with -1000 being the lowest priority and 1000 being the highest priority.",
+        "BoundAccess": "read,write",
+        "UnboundAccess": "read,write"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "bool?",
+        "Name": "UsesTaskDependencies",
+        "SummaryComment": "Whether tasks in jobs created under this <see cref=\"CloudJobSchedule\"/> can define dependencies on each other.",
+        "RemarksComment": "The default value is false.",
+        "BoundAccess": "read,write",
+        "UnboundAccess": "read,write"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "Common.OnAllTasksComplete?",
+        "Name": "OnAllTasksComplete",
+        "SummaryComment": "The action the Batch service should take when all tasks in the job are in the <see cref=\"Common.JobState.Completed\"/> state.",
+        "BoundAccess": "read,write",
+        "UnboundAccess": "read,write"
+      },
+      "Value": {
+        "Type": "Models.OnAllTasksComplete?",
+        "Name": "OnAllTasksComplete"
+      }
+    },
+    {
+      "Key": {
+        "Type": "Common.OnTaskFailure?",
+        "Name": "OnTaskFailure",
+        "SummaryComment": "The action the Batch service should take when any task in the job fails.",
+        "RemarksComment": "A task is considered to have failed if it completes with a non-zero exit code and has exhausted its retry count, or if it had a scheduling error.",
+        "BoundAccess": "read,write",
+        "UnboundAccess": "read,write"
+      },
+      "Value": {
+        "Type": "Models.OnTaskFailure?",
+        "Name": "OnTaskFailure"
+      }
+    },
+    {
+      "Key": {
+        "Type": "JobNetworkConfiguration",
+        "Name": "NetworkConfiguration",
+        "SummaryComment": "The network configuration for the job.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "read,write"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "int?",
+        "Name": "MaxParallelTasks",
+        "SummaryComment": "The maximum number of tasks that can be executed in parallel for the job.",
+        "RemarksComment": "The value of maxParallelTasks must be -1 or greater than 0 if specified. If not specified, the default value is -1, which means there's no limit to the number of tasks that can be run at once. You can update a job's maxParallelTasks after it has been created using the update job API.",
+        "BoundAccess": "read,write",
+        "UnboundAccess": "read,write"
+      },
+      "Value": null
     }
+  ]
+}

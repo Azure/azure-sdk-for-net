@@ -1,6 +1,9 @@
 # Release History
 
-## 12.0.0-preview.17 (2021-11-02)
+## 12.0.0-preview.18 (Unreleased)
+- Added support for service version 2021-02-12.
+
+## 12.0.0-preview.17 (2021-11-03)
 - Added support for service version 2020-12-06.
 - This release contains bug fixes to improve quality.
 - Fixed bug where Segment.GetCursor() would throw an ArgumentOutOfRangeException if the Segment has no Shards.
