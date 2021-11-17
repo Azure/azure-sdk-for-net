@@ -105,28 +105,31 @@ namespace Azure.Core.Pipeline
         /// <param name="message">The <see cref="HttpMessage"/> to send.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>The <see cref="ValueTask"/> representing the asynchronous operation.</returns>
-        public async ValueTask SendAsync(HttpMessage message, CancellationToken cancellationToken)
+        public ValueTask SendAsync(HttpMessage message, CancellationToken cancellationToken)
         {
             message.CancellationToken = cancellationToken;
             AddHttpMessageProperties(message);
 
             if (message.Policies == null || message.Policies.Count == 0)
             {
-                await _pipeline.Span[0].ProcessAsync(message, _pipeline.Slice(1)).ConfigureAwait(false);
+                return _pipeline.Span[0].ProcessAsync(message, _pipeline.Slice(1));
             }
-            else
+
+            return SendAsync(message);
+        }
+
+        private async ValueTask SendAsync(HttpMessage message)
+        {
+            var length = _pipeline.Length + message.Policies!.Count;
+            var policies = ArrayPool<HttpPipelinePolicy>.Shared.Rent(length);
+            try
             {
-                var length = _pipeline.Length + message.Policies.Count;
-                var policies = ArrayPool<HttpPipelinePolicy>.Shared.Rent(length);
-                try
-                {
-                    var pipeline = CreateRequestPipeline(policies, message.Policies);
-                    await pipeline.Span[0].ProcessAsync(message, pipeline.Slice(1)).ConfigureAwait(false);
-                }
-                finally
-                {
-                    ArrayPool<HttpPipelinePolicy>.Shared.Return(policies);
-                }
+                var pipeline = CreateRequestPipeline(policies, message.Policies);
+                await pipeline.Span[0].ProcessAsync(message, pipeline.Slice(1)).ConfigureAwait(false);
+            }
+            finally
+            {
+                ArrayPool<HttpPipelinePolicy>.Shared.Return(policies);
             }
         }
 
