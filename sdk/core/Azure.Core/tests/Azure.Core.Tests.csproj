@@ -47,9 +47,6 @@
     <Compile Include="..\..\..\..\common\ManagementTestShared\Redesign\*.cs" LinkBase="Shared\Mgmt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="TestClients\RequestContextTestClient\Azure.Template.LLC.csproj" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Update="PemReaderTests.Keys.cs" DependentUpon="PemReaderTests.cs" />
   </ItemGroup>
 </Project>
