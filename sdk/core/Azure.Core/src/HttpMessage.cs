@@ -87,7 +87,8 @@ namespace Azure.Core
                 return;
             }
 
-            Policies ??= new(context.Policies);
+            Policies ??= new(context.Policies.Count);
+            Policies.AddRange(context.Policies);
         }
 
         internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; set; }

@@ -154,7 +154,7 @@ namespace Azure.Core.Pipeline
                 try
                 {
                     var pipeline = CreateRequestPipeline(policies, message.Policies);
-                    pipeline.Span[0].ProcessAsync(message, pipeline.Slice(1));
+                    pipeline.Span[0].Process(message, pipeline.Slice(1));
                 }
                 finally
                 {
