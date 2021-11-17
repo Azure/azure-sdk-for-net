@@ -25,7 +25,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 tenants,
                 (uri, clientOptions) => new ShareServiceClient(uri, clientOptions),
                 (uri, sharedKeyCredential, clientOptions) => new ShareServiceClient(uri, sharedKeyCredential, clientOptions),
-                default, // file shares don't suppot oauth
+                (uri, tokenCredential, clientOptions) => new ShareServiceClient(uri, tokenCredential, clientOptions),
                 (uri, azureSasCredential, clientOptions) => new ShareServiceClient(uri, azureSasCredential, clientOptions),
                 () => new ShareClientOptions(serviceVersion));
 
@@ -42,6 +42,9 @@ namespace Azure.Storage.Files.Shares.Tests
 
         public static ShareServiceClient GetServiceClient_SharedKey(this ShareClientBuilder clientBuilder, ShareClientOptions options = default)
             => clientBuilder.GetServiceClientFromSharedKeyConfig(clientBuilder.Tenants.TestConfigDefault, options);
+
+        public static ShareServiceClient GetServiceClient_OAuth(this ShareClientBuilder clientBuilder) =>
+            clientBuilder.GetServiceClientFromOauthConfig(clientBuilder.Tenants.TestConfigOAuth);
 
         public static ShareServiceClient GetServiceClient_OAuthAccount_SharedKey(this ShareClientBuilder clientBuilder) =>
             clientBuilder.GetServiceClientFromSharedKeyConfig(clientBuilder.Tenants.TestConfigOAuth);

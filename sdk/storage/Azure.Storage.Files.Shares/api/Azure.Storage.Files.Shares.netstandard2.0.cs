@@ -6,6 +6,7 @@ namespace Azure.Storage.Files.Shares
         public ShareClient(string connectionString, string shareName) { }
         public ShareClient(string connectionString, string shareName, Azure.Storage.Files.Shares.ShareClientOptions options) { }
         public ShareClient(System.Uri shareUri, Azure.AzureSasCredential credential, Azure.Storage.Files.Shares.ShareClientOptions options = null) { }
+        public ShareClient(System.Uri shareUri, Azure.Core.TokenCredential credential, Azure.Storage.Files.Shares.ShareClientOptions options = null) { }
         public ShareClient(System.Uri shareUri, Azure.Storage.Files.Shares.ShareClientOptions options = null) { }
         public ShareClient(System.Uri shareUri, Azure.Storage.StorageSharedKeyCredential credential, Azure.Storage.Files.Shares.ShareClientOptions options = null) { }
         public virtual string AccountName { get { throw null; } }
@@ -125,6 +126,7 @@ namespace Azure.Storage.Files.Shares
         public ShareDirectoryClient(string connectionString, string shareName, string directoryPath) { }
         public ShareDirectoryClient(string connectionString, string shareName, string directoryPath, Azure.Storage.Files.Shares.ShareClientOptions options) { }
         public ShareDirectoryClient(System.Uri directoryUri, Azure.AzureSasCredential credential, Azure.Storage.Files.Shares.ShareClientOptions options = null) { }
+        public ShareDirectoryClient(System.Uri directoryUri, Azure.Core.TokenCredential credential, Azure.Storage.Files.Shares.ShareClientOptions options = null) { }
         public ShareDirectoryClient(System.Uri directoryUri, Azure.Storage.Files.Shares.ShareClientOptions options = null) { }
         public ShareDirectoryClient(System.Uri directoryUri, Azure.Storage.StorageSharedKeyCredential credential, Azure.Storage.Files.Shares.ShareClientOptions options = null) { }
         public virtual string AccountName { get { throw null; } }
@@ -191,6 +193,7 @@ namespace Azure.Storage.Files.Shares
         public ShareFileClient(string connectionString, string shareName, string filePath) { }
         public ShareFileClient(string connectionString, string shareName, string filePath, Azure.Storage.Files.Shares.ShareClientOptions options) { }
         public ShareFileClient(System.Uri fileUri, Azure.AzureSasCredential credential, Azure.Storage.Files.Shares.ShareClientOptions options = null) { }
+        public ShareFileClient(System.Uri fileUri, Azure.Core.TokenCredential credential, Azure.Storage.Files.Shares.ShareClientOptions options = null) { }
         public ShareFileClient(System.Uri fileUri, Azure.Storage.Files.Shares.ShareClientOptions options = null) { }
         public ShareFileClient(System.Uri fileUri, Azure.Storage.StorageSharedKeyCredential credential, Azure.Storage.Files.Shares.ShareClientOptions options = null) { }
         public virtual string AccountName { get { throw null; } }
@@ -335,6 +338,7 @@ namespace Azure.Storage.Files.Shares
         public ShareServiceClient(string connectionString) { }
         public ShareServiceClient(string connectionString, Azure.Storage.Files.Shares.ShareClientOptions options) { }
         public ShareServiceClient(System.Uri serviceUri, Azure.AzureSasCredential credential, Azure.Storage.Files.Shares.ShareClientOptions options = null) { }
+        public ShareServiceClient(System.Uri serviceUri, Azure.Core.TokenCredential credential, Azure.Storage.Files.Shares.ShareClientOptions options = null) { }
         public ShareServiceClient(System.Uri serviceUri, Azure.Storage.Files.Shares.ShareClientOptions options = null) { }
         public ShareServiceClient(System.Uri serviceUri, Azure.Storage.StorageSharedKeyCredential credential, Azure.Storage.Files.Shares.ShareClientOptions options = null) { }
         public virtual string AccountName { get { throw null; } }
