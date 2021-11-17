@@ -117,7 +117,7 @@ namespace Azure.Core.Tests
                 // Sending the request would fail because of length mismatch
             }
 
-            Assert.AreEqual(contentLength, requestContentLength);
+            Assert.AreEqual(requestContentLength, contentLength);
         }
 
         [Test]
