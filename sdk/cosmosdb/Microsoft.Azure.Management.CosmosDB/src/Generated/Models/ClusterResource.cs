@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
     /// <summary>
     /// Representation of a managed Cassandra cluster.
     /// </summary>
-    public partial class ClusterResource : ARMResourceProperties
+    public partial class ClusterResource : ManagedCassandraARMResourceProperties
     {
         /// <summary>
         /// Initializes a new instance of the ClusterResource class.
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// the resource belongs.</param>
         /// <param name="properties">Properties of a managed Cassandra
         /// cluster.</param>
-        public ClusterResource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ManagedServiceIdentity identity = default(ManagedServiceIdentity), ClusterResourceProperties properties = default(ClusterResourceProperties))
+        public ClusterResource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ManagedCassandraManagedServiceIdentity identity = default(ManagedCassandraManagedServiceIdentity), ClusterResourceProperties properties = default(ClusterResourceProperties))
             : base(id, name, type, location, tags, identity)
         {
             Properties = properties;

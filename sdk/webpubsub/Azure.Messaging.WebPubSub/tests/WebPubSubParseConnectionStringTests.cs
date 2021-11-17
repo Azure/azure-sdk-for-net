@@ -37,7 +37,7 @@ namespace Azure.Messaging.WebPubSub.Tests
         {
             var serviceClient = new WebPubSubServiceClient(string.Format("Endpoint=http://localhost;Port=8080;AccessKey={0};Version=1.0;", FakeAccessKey), "hub");
             var expiresAt = DateTimeOffset.UtcNow + TimeSpan.FromMinutes(5);
-            var uri = serviceClient.GenerateClientAccessUri(expiresAt, userId, roles);
+            var uri = serviceClient.GetClientAccessUri(expiresAt, userId, roles);
             var token = HttpUtility.ParseQueryString(uri.Query).Get("access_token");
             Assert.NotNull(token);
             var jwt = JwtTokenHandler.ReadJwtToken(token);
@@ -87,7 +87,7 @@ namespace Azure.Messaging.WebPubSub.Tests
         public void TestGenerateUriContainsExpectedPayloads(string userId, string[] roles)
         {
             var serviceClient = new WebPubSubServiceClient(string.Format("Endpoint=http://localhost;Port=8080;AccessKey={0};Version=1.0;", FakeAccessKey), "hub");
-            var uri = serviceClient.GenerateClientAccessUri(TimeSpan.FromMinutes(5), userId, roles);
+            var uri = serviceClient.GetClientAccessUri(TimeSpan.FromMinutes(5), userId, roles);
             var token = HttpUtility.ParseQueryString(uri.Query).Get("access_token");
             Assert.NotNull(token);
             var jwt = JwtTokenHandler.ReadJwtToken(token);
@@ -135,8 +135,8 @@ namespace Azure.Messaging.WebPubSub.Tests
         public void TestGenerateUriUseSameKidWithSameKey(string connectionString, string hub, string expectedUrl)
         {
             var serviceClient = new WebPubSubServiceClient(string.Format(connectionString, FakeAccessKey), hub);
-            var uri1 = serviceClient.GenerateClientAccessUri();
-            var uri2 = serviceClient.GenerateClientAccessUri();
+            var uri1 = serviceClient.GetClientAccessUri();
+            var uri2 = serviceClient.GetClientAccessUri();
             var urlBuilder = new UriBuilder(uri1);
             urlBuilder.Query = string.Empty;
             Assert.AreEqual(expectedUrl, urlBuilder.Uri.ToString());

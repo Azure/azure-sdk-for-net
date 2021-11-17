@@ -4,7 +4,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ```yaml
 title: PurviewCatalog
-input-file: https://github.com/Azure/azure-rest-api-specs/blob/0bfd6032ae89b4d8d7c55ac23309cb6e30b6c1e0/specification/purview/data-plane/Azure.Analytics.Purview.Catalog/preview/2021-05-01-preview/purviewcatalog.json
+input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/d23ad89e8c3e98c4f941fd9ec3db6ab39951a494/specification/purview/data-plane/Azure.Analytics.Purview.Catalog/preview/2021-05-01-preview/purviewcatalog.json
 namespace: Azure.Analytics.Purview.Catalog
 low-level-client: true
 security: AADToken
@@ -21,6 +21,17 @@ directive:
       if ($.format === undefined) {
         $.format = "url";
       }
+```
+
+# Rename operation names in Collection
+```yaml
+directive:
+  - rename-operation:
+      from: Collection_CreateOrUpdate
+      to: Collection_CreateOrUpdateEntity
+  - rename-operation:
+      from: Collection_CreateOrUpdateBulk
+      to: Collection_CreateOrUpdateEntityInBulk
 ```
 
 # Promote Discovery members to PurviewCatalogClient

@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Resources.Models;
-
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Endpoint service. </summary>
-    public partial class EndpointServiceResult : WritableSubResource
+    public partial class EndpointServiceResult : SubResource
     {
         /// <summary> Initializes a new instance of EndpointServiceResult. </summary>
         public EndpointServiceResult()
@@ -18,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of EndpointServiceResult. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Name of the endpoint service. </param>
         /// <param name="type"> Type of the endpoint service. </param>
         internal EndpointServiceResult(string id, string name, string type) : base(id)

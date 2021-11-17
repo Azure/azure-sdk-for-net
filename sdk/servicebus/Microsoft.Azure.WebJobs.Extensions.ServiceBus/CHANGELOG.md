@@ -1,15 +1,26 @@
 # Release History
 
-## 5.0.0-beta.7 (Unreleased)
+## 5.2.0-beta.1 (Unreleased)
 
 ### Features Added
-- Adding DynamicConcurrency support
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 5.1.0 (2021-11-10)
+
+### Features Added
+- Added `EnableCrossEntityTransactions` option
+- Added ability to bind to `ServiceBusClient`
+
+## 5.0.0 (2021-10-21)
+
+### Features Added
+- Added DynamicConcurrency support.
+- General availability of Microsoft.Azure.WebJobs.Extensions.ServiceBus 5.0.0.
 
 ## 5.0.0-beta.6 (2021-09-07)
 

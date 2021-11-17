@@ -824,5 +824,38 @@ namespace Azure.Messaging.EventHubs
                 return ResourceManager.GetString("ProcessorLoadBalancingCycleSlowMask", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Events cannot be enqueued processing without the {0} handler set..
+        /// </summary>
+        internal static string CannotEnqueueEventWithoutHandler
+        {
+            get
+            {
+                return ResourceManager.GetString("CannotEnqueueEventWithoutHandler", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Events cannot be published to the requested partition; no partition with the id `{2}` are associated with the Event Hub..
+        /// </summary>
+        internal static string CannotSendToUknownPartition
+        {
+            get
+            {
+                return ResourceManager.GetString("CannotSendToUknownPartition", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The event is too large for be published to the Event Hub: '{0}`.  Size limit: {1} bytes..
+        /// </summary>
+        internal static string EventTooLargeMask
+        {
+            get
+            {
+                return ResourceManager.GetString("EventTooLargeMask", resourceCulture);
+            }
+        }
     }
 }

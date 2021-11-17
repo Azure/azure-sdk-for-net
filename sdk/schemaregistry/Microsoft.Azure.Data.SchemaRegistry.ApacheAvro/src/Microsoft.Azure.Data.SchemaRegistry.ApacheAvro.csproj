@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Description>Microsoft Azure Schema Registry Apache Avro SDK</Description>
     <AssemblyTitle>Microsoft Azure Schema Registry Apache Avro SDK</AssemblyTitle>
-    <Version>1.0.0-beta.4</Version>
+    <Version>1.0.0-beta.5</Version>
     <PackageTags>Azure;Schema Registry;SchemaRegistry;.NET;Data;Apache;Avro;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
@@ -10,6 +10,7 @@
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="Apache.Avro" VersionOverride="1.10.0" />
+    <PackageReference Include="Azure.Data.SchemaRegistry" />
   </ItemGroup>
 
   <!-- Shared source from Azure.Core -->
@@ -20,9 +21,6 @@
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)OperationHelpers.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="Shared" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Azure.Data.SchemaRegistry\src\Azure.Data.SchemaRegistry.csproj" />
   </ItemGroup>
 
 </Project>

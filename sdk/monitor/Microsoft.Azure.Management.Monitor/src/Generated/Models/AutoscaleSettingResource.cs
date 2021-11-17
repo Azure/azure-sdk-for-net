@@ -62,7 +62,9 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// autoscale setting.</param>
         /// <param name="targetResourceUri">the resource identifier of the
         /// resource that the autoscale setting should be added to.</param>
-        public AutoscaleSettingResource(string location, IList<AutoscaleProfile> profiles, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string kind = default(string), string etag = default(string), IList<AutoscaleNotification> notifications = default(IList<AutoscaleNotification>), bool? enabled = default(bool?), string autoscaleSettingResourceName = default(string), string targetResourceUri = default(string))
+        /// <param name="targetResourceLocation">the location of the resource
+        /// that the autoscale setting should be added to.</param>
+        public AutoscaleSettingResource(string location, IList<AutoscaleProfile> profiles, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string kind = default(string), string etag = default(string), IList<AutoscaleNotification> notifications = default(IList<AutoscaleNotification>), bool? enabled = default(bool?), string autoscaleSettingResourceName = default(string), string targetResourceUri = default(string), string targetResourceLocation = default(string))
             : base(location, id, name, type, tags, kind, etag)
         {
             Profiles = profiles;
@@ -70,6 +72,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
             Enabled = enabled;
             AutoscaleSettingResourceName = autoscaleSettingResourceName;
             TargetResourceUri = targetResourceUri;
+            TargetResourceLocation = targetResourceLocation;
             CustomInit();
         }
 
@@ -111,6 +114,13 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.targetResourceUri")]
         public string TargetResourceUri { get; set; }
+
+        /// <summary>
+        /// Gets or sets the location of the resource that the autoscale
+        /// setting should be added to.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.targetResourceLocation")]
+        public string TargetResourceLocation { get; set; }
 
         /// <summary>
         /// Validate the object.

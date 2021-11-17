@@ -6,12 +6,11 @@
 #nullable disable
 
 using System;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes the load balancer configuration. </summary>
-    public partial class LoadBalancerConfiguration : WritableSubResource
+    public partial class LoadBalancerConfiguration
     {
         /// <summary> Initializes a new instance of LoadBalancerConfiguration. </summary>
         /// <param name="name"> The name of the Load balancer. </param>
@@ -33,15 +32,18 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of LoadBalancerConfiguration. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"> Resource Id. </param>
         /// <param name="name"> The name of the Load balancer. </param>
         /// <param name="properties"> Properties of the load balancer configuration. </param>
-        internal LoadBalancerConfiguration(string id, string name, LoadBalancerConfigurationProperties properties) : base(id)
+        internal LoadBalancerConfiguration(string id, string name, LoadBalancerConfigurationProperties properties)
         {
+            Id = id;
             Name = name;
             Properties = properties;
         }
 
+        /// <summary> Resource Id. </summary>
+        public string Id { get; set; }
         /// <summary> The name of the Load balancer. </summary>
         public string Name { get; set; }
         /// <summary> Properties of the load balancer configuration. </summary>

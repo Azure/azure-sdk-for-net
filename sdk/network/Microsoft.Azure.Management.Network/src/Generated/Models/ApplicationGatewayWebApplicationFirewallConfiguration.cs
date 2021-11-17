@@ -165,34 +165,25 @@ namespace Microsoft.Azure.Management.Network.Models
                     }
                 }
             }
-            if (MaxRequestBodySize != null)
+            if (MaxRequestBodySize > 128)
             {
-                if (MaxRequestBodySize > 128)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMaximum, "MaxRequestBodySize", 128);
-                }
-                if (MaxRequestBodySize < 8)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMinimum, "MaxRequestBodySize", 8);
-                }
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "MaxRequestBodySize", 128);
             }
-            if (MaxRequestBodySizeInKb != null)
+            if (MaxRequestBodySize < 8)
             {
-                if (MaxRequestBodySizeInKb > 128)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMaximum, "MaxRequestBodySizeInKb", 128);
-                }
-                if (MaxRequestBodySizeInKb < 8)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMinimum, "MaxRequestBodySizeInKb", 8);
-                }
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "MaxRequestBodySize", 8);
             }
-            if (FileUploadLimitInMb != null)
+            if (MaxRequestBodySizeInKb > 128)
             {
-                if (FileUploadLimitInMb < 0)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMinimum, "FileUploadLimitInMb", 0);
-                }
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "MaxRequestBodySizeInKb", 128);
+            }
+            if (MaxRequestBodySizeInKb < 8)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "MaxRequestBodySizeInKb", 8);
+            }
+            if (FileUploadLimitInMb < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "FileUploadLimitInMb", 0);
             }
             if (Exclusions != null)
             {

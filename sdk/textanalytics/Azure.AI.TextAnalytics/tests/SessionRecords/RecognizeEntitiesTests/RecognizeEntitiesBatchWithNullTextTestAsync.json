@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://tacanaryjava.cognitiveservices.azure.com/text/analytics/v3.2-preview.1/entities/recognition/general?showStats=false\u0026stringIndexType=Utf16CodeUnit",
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/text/analytics/v3.2-preview.2/entities/recognition/general?showStats=false\u0026stringIndexType=Utf16CodeUnit",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": [
@@ -11,10 +11,10 @@
         "Content-Length": "54",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-f07b3c7b89581046b36d1b87cc0777f7-617784224b930343-00",
+        "traceparent": "00-8b8befd0369aaa439abf479b1f69ed13-a50858fe57edfb47-00",
         "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20210803.1",
-          "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
+          "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20211025.1",
+          "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "7afea088ca0a22de1ccfe4f56367e3ca",
         "x-ms-return-client-request-id": "true"
@@ -30,9 +30,9 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "365ee77d-e879-4e2f-b7c5-f31e9144433d",
+        "apim-request-id": "837b6c7e-06f0-4f00-85c4-f59277c77aa0",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 03 Aug 2021 18:39:53 GMT",
+        "Date": "Mon, 25 Oct 2021 21:20:28 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
@@ -60,6 +60,6 @@
   "Variables": {
     "RandomSeed": "794759441",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://tacanaryjava.cognitiveservices.azure.com/"
+    "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com/"
   }
 }

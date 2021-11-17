@@ -176,6 +176,10 @@
     }
   ],
   "outputs": {
+    "EVENTHUB_STORAGE_ENDPOINT_SUFFIX": {
+        "type": "string",
+        "value": "[parameters('storageEndpointSuffix')]"
+    },
     "EVENTHUB_PER_TEST_LIMIT_MINUTES": {
       "type": "string",
       "value": "[parameters('perTestExecutionLimitMinutes')]"

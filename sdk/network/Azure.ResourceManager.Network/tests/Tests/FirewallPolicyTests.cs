@@ -30,7 +30,8 @@ namespace Azure.ResourceManager.Network.Tests
         [OneTimeSetUp]
         public async Task GlobalSetUp()
         {
-            var rgLro = await GlobalClient.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(SessionRecording.GenerateAssetName("FirewallPolicyRG-"), new ResourceGroupData(Location.WestUS2));
+            Subscription subscription = await GlobalClient.GetDefaultSubscriptionAsync();
+            var rgLro = await subscription.GetResourceGroups().CreateOrUpdateAsync(SessionRecording.GenerateAssetName("FirewallPolicyRG-"), new ResourceGroupData(Location.WestUS2));
             ResourceGroup rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
 
@@ -65,8 +66,8 @@ namespace Azure.ResourceManager.Network.Tests
             firewallData.IpConfigurations.Add(new AzureFirewallIPConfiguration()
             {
                 Name = "fwpip",
-                PublicIPAddress = new Models.SubResource() { Id = _publicIPAddressIdentifier },
-                Subnet = new Models.SubResource() { Id = _networkIdentifier.ToString() + "/subnets/AzureFirewallSubnet" },
+                PublicIPAddress = new WritableSubResource() { Id = _publicIPAddressIdentifier },
+                Subnet = new WritableSubResource() { Id = _networkIdentifier.ToString() + "/subnets/AzureFirewallSubnet" },
             });
             var firewallLro = await rg.GetAzureFirewalls().CreateOrUpdateAsync(SessionRecording.GenerateAssetName("firewall-"), firewallData);
             _firewall = firewallLro.Value;

@@ -20,7 +20,6 @@ namespace Microsoft.Azure.Management.DataProtection.Models
     /// <remarks>
     /// Delete Option
     /// </remarks>
-    [Newtonsoft.Json.JsonObject("DeleteOption")]
     public partial class DeleteOption
     {
         /// <summary>

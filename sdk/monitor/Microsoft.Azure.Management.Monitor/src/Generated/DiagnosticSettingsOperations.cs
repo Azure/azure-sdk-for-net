@@ -113,7 +113,7 @@ namespace Microsoft.Azure.Management.Monitor
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{resourceUri}/providers/microsoft.insights/diagnosticSettings/{name}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}").ToString();
             _url = _url.Replace("{resourceUri}", resourceUri);
             _url = _url.Replace("{name}", System.Uri.EscapeDataString(name));
             List<string> _queryParameters = new List<string>();
@@ -312,7 +312,7 @@ namespace Microsoft.Azure.Management.Monitor
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{resourceUri}/providers/microsoft.insights/diagnosticSettings/{name}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}").ToString();
             _url = _url.Replace("{resourceUri}", resourceUri);
             _url = _url.Replace("{name}", System.Uri.EscapeDataString(name));
             List<string> _queryParameters = new List<string>();
@@ -506,7 +506,7 @@ namespace Microsoft.Azure.Management.Monitor
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{resourceUri}/providers/microsoft.insights/diagnosticSettings/{name}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}").ToString();
             _url = _url.Replace("{resourceUri}", resourceUri);
             _url = _url.Replace("{name}", System.Uri.EscapeDataString(name));
             List<string> _queryParameters = new List<string>();
@@ -671,7 +671,7 @@ namespace Microsoft.Azure.Management.Monitor
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{resourceUri}/providers/microsoft.insights/diagnosticSettings").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{resourceUri}/providers/Microsoft.Insights/diagnosticSettings").ToString();
             _url = _url.Replace("{resourceUri}", resourceUri);
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)

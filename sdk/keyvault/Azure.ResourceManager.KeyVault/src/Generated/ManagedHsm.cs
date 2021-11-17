@@ -363,9 +363,9 @@ namespace Azure.ResourceManager.KeyVault
 
         /// <summary> Gets a list of MhsmPrivateEndpointConnections in the ManagedHsm. </summary>
         /// <returns> An object representing collection of MhsmPrivateEndpointConnections and their operations over a ManagedHsm. </returns>
-        public MhsmPrivateEndpointConnectionContainer GetMhsmPrivateEndpointConnections()
+        public MhsmPrivateEndpointConnectionCollection GetMhsmPrivateEndpointConnections()
         {
-            return new MhsmPrivateEndpointConnectionContainer(this);
+            return new MhsmPrivateEndpointConnectionCollection(this);
         }
     }
 }
