@@ -7,8 +7,6 @@ namespace Azure.AI.TextAnalytics
 {
     internal class OperationIdInformation
     {
-        public OperationIdInformation() { }
-
         public OperationIdInformation(string jobId, IDictionary<string, int> indexMap, bool? showStats = default)
         {
             JobId = jobId;
@@ -17,7 +15,9 @@ namespace Azure.AI.TextAnalytics
         }
 
         public Dictionary<string, int> InputDocumentOrder { get; set; }
+
         public bool? ShowStats { get; set; }
+
         public string JobId { get; set; }
     }
 }
