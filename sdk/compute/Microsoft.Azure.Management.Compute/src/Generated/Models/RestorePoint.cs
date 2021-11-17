@@ -50,7 +50,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// 'FileSystemConsistent', 'ApplicationConsistent'</param>
         /// <param name="timeCreated">Gets the creation time of the restore
         /// point.</param>
-        public RestorePoint(string id = default(string), string name = default(string), string type = default(string), IList<ApiEntityReference> excludeDisks = default(IList<ApiEntityReference>), RestorePointSourceMetadata sourceMetadata = default(RestorePointSourceMetadata), string provisioningState = default(string), string consistencyMode = default(string), System.DateTime? timeCreated = default(System.DateTime?))
+        /// <param name="sourceRestorePoint">Resource Id of the source restore
+        /// point from which a copy needs to be created.</param>
+        /// <param name="instanceView">The restore point instance view.</param>
+        public RestorePoint(string id = default(string), string name = default(string), string type = default(string), IList<ApiEntityReference> excludeDisks = default(IList<ApiEntityReference>), RestorePointSourceMetadata sourceMetadata = default(RestorePointSourceMetadata), string provisioningState = default(string), string consistencyMode = default(string), System.DateTime? timeCreated = default(System.DateTime?), ApiEntityReference sourceRestorePoint = default(ApiEntityReference), RestorePointInstanceView instanceView = default(RestorePointInstanceView))
             : base(id, name, type)
         {
             ExcludeDisks = excludeDisks;
@@ -58,6 +61,8 @@ namespace Microsoft.Azure.Management.Compute.Models
             ProvisioningState = provisioningState;
             ConsistencyMode = consistencyMode;
             TimeCreated = timeCreated;
+            SourceRestorePoint = sourceRestorePoint;
+            InstanceView = instanceView;
             CustomInit();
         }
 
@@ -101,6 +106,19 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.timeCreated")]
         public System.DateTime? TimeCreated { get; set; }
+
+        /// <summary>
+        /// Gets or sets resource Id of the source restore point from which a
+        /// copy needs to be created.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.sourceRestorePoint")]
+        public ApiEntityReference SourceRestorePoint { get; set; }
+
+        /// <summary>
+        /// Gets the restore point instance view.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.instanceView")]
+        public RestorePointInstanceView InstanceView { get; private set; }
 
         /// <summary>
         /// Validate the object.

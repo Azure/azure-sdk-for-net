@@ -116,6 +116,11 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='restorePointName'>
         /// The name of the restore point.
         /// </param>
+        /// <param name='expand'>
+        /// The expand expression to apply on the operation. 'InstanceView' retrieves
+        /// information about the run-time state of a restore point. Possible values
+        /// include: 'instanceView'
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -137,7 +142,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<RestorePoint>> GetWithHttpMessagesAsync(string resourceGroupName, string restorePointCollectionName, string restorePointName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<RestorePoint>> GetWithHttpMessagesAsync(string resourceGroupName, string restorePointCollectionName, string restorePointName, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -166,6 +171,7 @@ namespace Microsoft.Azure.Management.Compute
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("restorePointCollectionName", restorePointCollectionName);
                 tracingParameters.Add("restorePointName", restorePointName);
+                tracingParameters.Add("expand", expand);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
@@ -178,6 +184,10 @@ namespace Microsoft.Azure.Management.Compute
             _url = _url.Replace("{restorePointCollectionName}", System.Uri.EscapeDataString(restorePointCollectionName));
             _url = _url.Replace("{restorePointName}", System.Uri.EscapeDataString(restorePointName));
             List<string> _queryParameters = new List<string>();
+            if (expand != null)
+            {
+                _queryParameters.Add(string.Format("$expand={0}", System.Uri.EscapeDataString(expand)));
+            }
             if (apiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));

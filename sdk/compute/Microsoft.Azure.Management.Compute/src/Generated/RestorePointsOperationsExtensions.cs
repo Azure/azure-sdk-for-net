@@ -133,9 +133,14 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='restorePointName'>
             /// The name of the restore point.
             /// </param>
-            public static RestorePoint Get(this IRestorePointsOperations operations, string resourceGroupName, string restorePointCollectionName, string restorePointName)
+            /// <param name='expand'>
+            /// The expand expression to apply on the operation. 'InstanceView' retrieves
+            /// information about the run-time state of a restore point. Possible values
+            /// include: 'instanceView'
+            /// </param>
+            public static RestorePoint Get(this IRestorePointsOperations operations, string resourceGroupName, string restorePointCollectionName, string restorePointName, string expand = default(string))
             {
-                return operations.GetAsync(resourceGroupName, restorePointCollectionName, restorePointName).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, restorePointCollectionName, restorePointName, expand).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -153,12 +158,17 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='restorePointName'>
             /// The name of the restore point.
             /// </param>
+            /// <param name='expand'>
+            /// The expand expression to apply on the operation. 'InstanceView' retrieves
+            /// information about the run-time state of a restore point. Possible values
+            /// include: 'instanceView'
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RestorePoint> GetAsync(this IRestorePointsOperations operations, string resourceGroupName, string restorePointCollectionName, string restorePointName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RestorePoint> GetAsync(this IRestorePointsOperations operations, string resourceGroupName, string restorePointCollectionName, string restorePointName, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, restorePointCollectionName, restorePointName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, restorePointCollectionName, restorePointName, expand, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
