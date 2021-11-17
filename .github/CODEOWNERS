@@ -130,7 +130,7 @@
 /sdk/cognitiveservices/Vision.Face/            @JinyuID @dipidoo @SteveMSFT @msyache @longli0 @ShaoAnLin @lulululululu
 
 # PRLabel: %Cognitive - Form Recognizer
-/sdk/formrecognizer/                            @kinelski @maririos
+/sdk/formrecognizer/                            @kinelski @jsquire @maririos
 
 # ServiceLabel: %Cognitive - Form Recognizer %Service Attention
 /sdk/cognitiveservices/FormRecognizer/            @ctstone @anrothMSFT
@@ -142,7 +142,7 @@
 /sdk/cognitiveservices/Knowledge.QnAMaker/            @bingisbestest @nerajput1607
 
 # PRLabel: %Cognitive - Text Analytics
-/sdk/textanalytics/                             @maririos
+/sdk/textanalytics/                            @kinelski @jsquire @maririos
 
 # ServiceLabel: %Cognitive - Text Analytics %Service Attention
 /sdk/cognitiveservices/Language.TextAnalytics/            @assafi
@@ -151,7 +151,7 @@
 #/<NotInRepo>/            @swmachan
 
 # PRLabel: %Cognitive - Translator
-/sdk/translation/                     @maririos
+/sdk/translation/                    @jsquire @maririos
 
 # ServiceLabel: %Cognitive - Speech %Service Attention
 #/<NotInRepo>/            @robch @oscholz
@@ -276,7 +276,7 @@
 
 # PRLabel: %Digital Twins
 # ServiceLabel: %Digital Twins %Service Attention
-/sdk/digitaltwins/                              @drwill-ms @azabbasi @johngallardo
+/sdk/digitaltwins/                              @johngallardo @efriesner @abhinav-ghai
 
 # PRLabel: %IoT Models Repository
 # ServiceLabel: %IoT Models Repository %Service Attention

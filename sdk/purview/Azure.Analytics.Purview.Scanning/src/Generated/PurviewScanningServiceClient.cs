@@ -19,16 +19,15 @@ namespace Azure.Analytics.Purview.Scanning
     /// <summary> The PurviewScanningService service client. </summary>
     public partial class PurviewScanningServiceClient
     {
-        private static readonly string[] AuthorizationScopes = { "https://purview.azure.net/.default" };
+        private static readonly string[] AuthorizationScopes = new string[] { "https://purview.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
-
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get => _pipeline; }
+        public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary> Initializes a new instance of PurviewScanningServiceClient for mocking. </summary>
         protected PurviewScanningServiceClient()
@@ -50,7 +49,6 @@ namespace Azure.Analytics.Purview.Scanning
             {
                 throw new ArgumentNullException(nameof(credential));
             }
-
             options ??= new PurviewScanningServiceClientOptions();
 
             _clientDiagnostics = new ClientDiagnostics(options);
@@ -62,7 +60,7 @@ namespace Azure.Analytics.Purview.Scanning
 
         /// <summary> Gets key vault information. </summary>
         /// <param name="keyVaultName"> The String to use. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultName"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -95,7 +93,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetKeyVaultReferenceAsync(string keyVaultName, RequestOptions options)
+        public virtual async Task<Response> GetKeyVaultReferenceAsync(string keyVaultName, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewScanningServiceClient.GetKeyVaultReference");
@@ -103,7 +101,7 @@ namespace Azure.Analytics.Purview.Scanning
             try
             {
                 using HttpMessage message = CreateGetKeyVaultReferenceRequest(keyVaultName);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -114,7 +112,7 @@ namespace Azure.Analytics.Purview.Scanning
 
         /// <summary> Gets key vault information. </summary>
         /// <param name="keyVaultName"> The String to use. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultName"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -147,7 +145,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetKeyVaultReference(string keyVaultName, RequestOptions options)
+        public virtual Response GetKeyVaultReference(string keyVaultName, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewScanningServiceClient.GetKeyVaultReference");
@@ -155,7 +153,7 @@ namespace Azure.Analytics.Purview.Scanning
             try
             {
                 using HttpMessage message = CreateGetKeyVaultReferenceRequest(keyVaultName);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -167,7 +165,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> Creates an instance of a key vault connection. </summary>
         /// <param name="keyVaultName"> The String to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultName"/> or <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -210,7 +208,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> CreateOrUpdateKeyVaultReferenceAsync(string keyVaultName, RequestContent content, RequestOptions options = null)
+        public virtual async Task<Response> CreateOrUpdateKeyVaultReferenceAsync(string keyVaultName, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewScanningServiceClient.CreateOrUpdateKeyVaultReference");
@@ -218,7 +216,7 @@ namespace Azure.Analytics.Purview.Scanning
             try
             {
                 using HttpMessage message = CreateCreateOrUpdateKeyVaultReferenceRequest(keyVaultName, content);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -230,7 +228,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> Creates an instance of a key vault connection. </summary>
         /// <param name="keyVaultName"> The String to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultName"/> or <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -273,7 +271,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response CreateOrUpdateKeyVaultReference(string keyVaultName, RequestContent content, RequestOptions options = null)
+        public virtual Response CreateOrUpdateKeyVaultReference(string keyVaultName, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewScanningServiceClient.CreateOrUpdateKeyVaultReference");
@@ -281,7 +279,7 @@ namespace Azure.Analytics.Purview.Scanning
             try
             {
                 using HttpMessage message = CreateCreateOrUpdateKeyVaultReferenceRequest(keyVaultName, content);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -292,7 +290,7 @@ namespace Azure.Analytics.Purview.Scanning
 
         /// <summary> Deletes the key vault connection associated with the account. </summary>
         /// <param name="keyVaultName"> The String to use. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultName"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -325,7 +323,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> DeleteKeyVaultReferenceAsync(string keyVaultName, RequestOptions options = null)
+        public virtual async Task<Response> DeleteKeyVaultReferenceAsync(string keyVaultName, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewScanningServiceClient.DeleteKeyVaultReference");
@@ -333,7 +331,7 @@ namespace Azure.Analytics.Purview.Scanning
             try
             {
                 using HttpMessage message = CreateDeleteKeyVaultReferenceRequest(keyVaultName);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -344,7 +342,7 @@ namespace Azure.Analytics.Purview.Scanning
 
         /// <summary> Deletes the key vault connection associated with the account. </summary>
         /// <param name="keyVaultName"> The String to use. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultName"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -377,7 +375,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response DeleteKeyVaultReference(string keyVaultName, RequestOptions options = null)
+        public virtual Response DeleteKeyVaultReference(string keyVaultName, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewScanningServiceClient.DeleteKeyVaultReference");
@@ -385,7 +383,7 @@ namespace Azure.Analytics.Purview.Scanning
             try
             {
                 using HttpMessage message = CreateDeleteKeyVaultReferenceRequest(keyVaultName);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -396,7 +394,7 @@ namespace Azure.Analytics.Purview.Scanning
 
         /// <summary> Get a scan ruleset. </summary>
         /// <param name="scanRulesetName"> The String to use. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scanRulesetName"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -429,7 +427,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetScanRulesetAsync(string scanRulesetName, RequestOptions options)
+        public virtual async Task<Response> GetScanRulesetAsync(string scanRulesetName, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewScanningServiceClient.GetScanRuleset");
@@ -437,7 +435,7 @@ namespace Azure.Analytics.Purview.Scanning
             try
             {
                 using HttpMessage message = CreateGetScanRulesetRequest(scanRulesetName);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -448,7 +446,7 @@ namespace Azure.Analytics.Purview.Scanning
 
         /// <summary> Get a scan ruleset. </summary>
         /// <param name="scanRulesetName"> The String to use. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scanRulesetName"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -481,7 +479,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetScanRuleset(string scanRulesetName, RequestOptions options)
+        public virtual Response GetScanRuleset(string scanRulesetName, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewScanningServiceClient.GetScanRuleset");
@@ -489,7 +487,7 @@ namespace Azure.Analytics.Purview.Scanning
             try
             {
                 using HttpMessage message = CreateGetScanRulesetRequest(scanRulesetName);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -501,7 +499,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> Creates or Updates a scan ruleset. </summary>
         /// <param name="scanRulesetName"> The String to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scanRulesetName"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -544,7 +542,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> CreateOrUpdateScanRulesetAsync(string scanRulesetName, RequestContent content, RequestOptions options = null)
+        public virtual async Task<Response> CreateOrUpdateScanRulesetAsync(string scanRulesetName, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewScanningServiceClient.CreateOrUpdateScanRuleset");
@@ -552,7 +550,7 @@ namespace Azure.Analytics.Purview.Scanning
             try
             {
                 using HttpMessage message = CreateCreateOrUpdateScanRulesetRequest(scanRulesetName, content);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -564,7 +562,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> Creates or Updates a scan ruleset. </summary>
         /// <param name="scanRulesetName"> The String to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scanRulesetName"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -607,7 +605,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response CreateOrUpdateScanRuleset(string scanRulesetName, RequestContent content, RequestOptions options = null)
+        public virtual Response CreateOrUpdateScanRuleset(string scanRulesetName, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewScanningServiceClient.CreateOrUpdateScanRuleset");
@@ -615,7 +613,7 @@ namespace Azure.Analytics.Purview.Scanning
             try
             {
                 using HttpMessage message = CreateCreateOrUpdateScanRulesetRequest(scanRulesetName, content);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -626,7 +624,7 @@ namespace Azure.Analytics.Purview.Scanning
 
         /// <summary> Deletes a scan ruleset. </summary>
         /// <param name="scanRulesetName"> The String to use. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scanRulesetName"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -659,7 +657,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> DeleteScanRulesetAsync(string scanRulesetName, RequestOptions options = null)
+        public virtual async Task<Response> DeleteScanRulesetAsync(string scanRulesetName, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewScanningServiceClient.DeleteScanRuleset");
@@ -667,7 +665,7 @@ namespace Azure.Analytics.Purview.Scanning
             try
             {
                 using HttpMessage message = CreateDeleteScanRulesetRequest(scanRulesetName);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -678,7 +676,7 @@ namespace Azure.Analytics.Purview.Scanning
 
         /// <summary> Deletes a scan ruleset. </summary>
         /// <param name="scanRulesetName"> The String to use. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scanRulesetName"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -711,7 +709,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response DeleteScanRuleset(string scanRulesetName, RequestOptions options = null)
+        public virtual Response DeleteScanRuleset(string scanRulesetName, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewScanningServiceClient.DeleteScanRuleset");
@@ -719,7 +717,7 @@ namespace Azure.Analytics.Purview.Scanning
             try
             {
                 using HttpMessage message = CreateDeleteScanRulesetRequest(scanRulesetName);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -730,7 +728,7 @@ namespace Azure.Analytics.Purview.Scanning
 
         /// <summary> Get a system scan ruleset for a data source. </summary>
         /// <param name="dataSourceType"> The DataSourceType to use. Allowed values: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataSourceType"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -763,7 +761,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetSystemRulesetsForDataSourceAsync(string dataSourceType, RequestOptions options)
+        public virtual async Task<Response> GetSystemRulesetsForDataSourceAsync(string dataSourceType, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewScanningServiceClient.GetSystemRulesetsForDataSource");
@@ -771,7 +769,7 @@ namespace Azure.Analytics.Purview.Scanning
             try
             {
                 using HttpMessage message = CreateGetSystemRulesetsForDataSourceRequest(dataSourceType);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -782,7 +780,7 @@ namespace Azure.Analytics.Purview.Scanning
 
         /// <summary> Get a system scan ruleset for a data source. </summary>
         /// <param name="dataSourceType"> The DataSourceType to use. Allowed values: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataSourceType"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -815,7 +813,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetSystemRulesetsForDataSource(string dataSourceType, RequestOptions options)
+        public virtual Response GetSystemRulesetsForDataSource(string dataSourceType, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewScanningServiceClient.GetSystemRulesetsForDataSource");
@@ -823,7 +821,7 @@ namespace Azure.Analytics.Purview.Scanning
             try
             {
                 using HttpMessage message = CreateGetSystemRulesetsForDataSourceRequest(dataSourceType);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -834,8 +832,8 @@ namespace Azure.Analytics.Purview.Scanning
 
         /// <summary> Get a scan ruleset by version. </summary>
         /// <param name="version"> The Integer to use. </param>
-        /// <param name="options"> The request options. </param>
         /// <param name="dataSourceType"> The DataSourceType to use. Allowed values: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;. </param>
+        /// <param name="context"> The request context. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -867,7 +865,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetSystemRulesetsForVersionAsync(int version, RequestOptions options, string dataSourceType = null)
+        public virtual async Task<Response> GetSystemRulesetsForVersionAsync(int version, string dataSourceType = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewScanningServiceClient.GetSystemRulesetsForVersion");
@@ -875,7 +873,7 @@ namespace Azure.Analytics.Purview.Scanning
             try
             {
                 using HttpMessage message = CreateGetSystemRulesetsForVersionRequest(version, dataSourceType);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -886,8 +884,8 @@ namespace Azure.Analytics.Purview.Scanning
 
         /// <summary> Get a scan ruleset by version. </summary>
         /// <param name="version"> The Integer to use. </param>
-        /// <param name="options"> The request options. </param>
         /// <param name="dataSourceType"> The DataSourceType to use. Allowed values: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;. </param>
+        /// <param name="context"> The request context. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -919,7 +917,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetSystemRulesetsForVersion(int version, RequestOptions options, string dataSourceType = null)
+        public virtual Response GetSystemRulesetsForVersion(int version, string dataSourceType = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewScanningServiceClient.GetSystemRulesetsForVersion");
@@ -927,7 +925,7 @@ namespace Azure.Analytics.Purview.Scanning
             try
             {
                 using HttpMessage message = CreateGetSystemRulesetsForVersionRequest(version, dataSourceType);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -937,8 +935,8 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> Get the latest version of a system scan ruleset. </summary>
-        /// <param name="options"> The request options. </param>
         /// <param name="dataSourceType"> The DataSourceType to use. Allowed values: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;. </param>
+        /// <param name="context"> The request context. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -970,7 +968,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetLatestSystemRulesetsAsync(RequestOptions options, string dataSourceType = null)
+        public virtual async Task<Response> GetLatestSystemRulesetsAsync(string dataSourceType = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewScanningServiceClient.GetLatestSystemRulesets");
@@ -978,7 +976,7 @@ namespace Azure.Analytics.Purview.Scanning
             try
             {
                 using HttpMessage message = CreateGetLatestSystemRulesetsRequest(dataSourceType);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -988,8 +986,8 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> Get the latest version of a system scan ruleset. </summary>
-        /// <param name="options"> The request options. </param>
         /// <param name="dataSourceType"> The DataSourceType to use. Allowed values: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;. </param>
+        /// <param name="context"> The request context. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1021,7 +1019,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetLatestSystemRulesets(RequestOptions options, string dataSourceType = null)
+        public virtual Response GetLatestSystemRulesets(string dataSourceType = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewScanningServiceClient.GetLatestSystemRulesets");
@@ -1029,7 +1027,7 @@ namespace Azure.Analytics.Purview.Scanning
             try
             {
                 using HttpMessage message = CreateGetLatestSystemRulesetsRequest(dataSourceType);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -1039,7 +1037,7 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> List key vault connections in account. </summary>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1077,7 +1075,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual AsyncPageable<BinaryData> GetKeyVaultReferencesAsync(RequestOptions options)
+        public virtual AsyncPageable<BinaryData> GetKeyVaultReferencesAsync(RequestContext context = null)
 #pragma warning restore AZC0002
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "PurviewScanningServiceClient.GetKeyVaultReferences");
@@ -1088,7 +1086,7 @@ namespace Azure.Analytics.Purview.Scanning
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetKeyVaultReferencesRequest()
                         : CreateGetKeyVaultReferencesNextPageRequest(nextLink);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, options, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -1096,7 +1094,7 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> List key vault connections in account. </summary>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1134,7 +1132,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Pageable<BinaryData> GetKeyVaultReferences(RequestOptions options)
+        public virtual Pageable<BinaryData> GetKeyVaultReferences(RequestContext context = null)
 #pragma warning restore AZC0002
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "PurviewScanningServiceClient.GetKeyVaultReferences");
@@ -1145,7 +1143,7 @@ namespace Azure.Analytics.Purview.Scanning
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetKeyVaultReferencesRequest()
                         : CreateGetKeyVaultReferencesNextPageRequest(nextLink);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, options, "value", "nextLink");
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -1153,7 +1151,7 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> List classification rules in Account. </summary>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1188,7 +1186,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual AsyncPageable<BinaryData> GetClassificationRulesAsync(RequestOptions options)
+        public virtual AsyncPageable<BinaryData> GetClassificationRulesAsync(RequestContext context = null)
 #pragma warning restore AZC0002
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "PurviewScanningServiceClient.GetClassificationRules");
@@ -1199,7 +1197,7 @@ namespace Azure.Analytics.Purview.Scanning
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetClassificationRulesRequest()
                         : CreateGetClassificationRulesNextPageRequest(nextLink);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, options, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -1207,7 +1205,7 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> List classification rules in Account. </summary>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1242,7 +1240,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Pageable<BinaryData> GetClassificationRules(RequestOptions options)
+        public virtual Pageable<BinaryData> GetClassificationRules(RequestContext context = null)
 #pragma warning restore AZC0002
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "PurviewScanningServiceClient.GetClassificationRules");
@@ -1253,7 +1251,7 @@ namespace Azure.Analytics.Purview.Scanning
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetClassificationRulesRequest()
                         : CreateGetClassificationRulesNextPageRequest(nextLink);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, options, "value", "nextLink");
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -1261,7 +1259,7 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> List data sources in Data catalog. </summary>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1345,7 +1343,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual AsyncPageable<BinaryData> GetDataSourcesAsync(RequestOptions options)
+        public virtual AsyncPageable<BinaryData> GetDataSourcesAsync(RequestContext context = null)
 #pragma warning restore AZC0002
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "PurviewScanningServiceClient.GetDataSources");
@@ -1356,7 +1354,7 @@ namespace Azure.Analytics.Purview.Scanning
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetDataSourcesRequest()
                         : CreateGetDataSourcesNextPageRequest(nextLink);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, options, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -1364,7 +1362,7 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> List data sources in Data catalog. </summary>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1448,7 +1446,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Pageable<BinaryData> GetDataSources(RequestOptions options)
+        public virtual Pageable<BinaryData> GetDataSources(RequestContext context = null)
 #pragma warning restore AZC0002
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "PurviewScanningServiceClient.GetDataSources");
@@ -1459,7 +1457,7 @@ namespace Azure.Analytics.Purview.Scanning
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetDataSourcesRequest()
                         : CreateGetDataSourcesNextPageRequest(nextLink);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, options, "value", "nextLink");
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -1467,7 +1465,7 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> List scan rulesets in Data catalog. </summary>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1505,7 +1503,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual AsyncPageable<BinaryData> GetScanRulesetsAsync(RequestOptions options)
+        public virtual AsyncPageable<BinaryData> GetScanRulesetsAsync(RequestContext context = null)
 #pragma warning restore AZC0002
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "PurviewScanningServiceClient.GetScanRulesets");
@@ -1516,7 +1514,7 @@ namespace Azure.Analytics.Purview.Scanning
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetScanRulesetsRequest()
                         : CreateGetScanRulesetsNextPageRequest(nextLink);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, options, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -1524,7 +1522,7 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> List scan rulesets in Data catalog. </summary>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1562,7 +1560,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Pageable<BinaryData> GetScanRulesets(RequestOptions options)
+        public virtual Pageable<BinaryData> GetScanRulesets(RequestContext context = null)
 #pragma warning restore AZC0002
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "PurviewScanningServiceClient.GetScanRulesets");
@@ -1573,7 +1571,7 @@ namespace Azure.Analytics.Purview.Scanning
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetScanRulesetsRequest()
                         : CreateGetScanRulesetsNextPageRequest(nextLink);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, options, "value", "nextLink");
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -1581,7 +1579,7 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> List all system scan rulesets for an account. </summary>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1619,7 +1617,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual AsyncPageable<BinaryData> GetSystemRulesetsAsync(RequestOptions options)
+        public virtual AsyncPageable<BinaryData> GetSystemRulesetsAsync(RequestContext context = null)
 #pragma warning restore AZC0002
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "PurviewScanningServiceClient.GetSystemRulesets");
@@ -1630,7 +1628,7 @@ namespace Azure.Analytics.Purview.Scanning
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetSystemRulesetsRequest()
                         : CreateGetSystemRulesetsNextPageRequest(nextLink);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, options, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -1638,7 +1636,7 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> List all system scan rulesets for an account. </summary>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1676,7 +1674,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Pageable<BinaryData> GetSystemRulesets(RequestOptions options)
+        public virtual Pageable<BinaryData> GetSystemRulesets(RequestContext context = null)
 #pragma warning restore AZC0002
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "PurviewScanningServiceClient.GetSystemRulesets");
@@ -1687,7 +1685,7 @@ namespace Azure.Analytics.Purview.Scanning
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetSystemRulesetsRequest()
                         : CreateGetSystemRulesetsNextPageRequest(nextLink);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, options, "value", "nextLink");
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -1695,8 +1693,8 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> List system scan ruleset versions in Data catalog. </summary>
-        /// <param name="options"> The request options. </param>
         /// <param name="dataSourceType"> The DataSourceType to use. Allowed values: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;. </param>
+        /// <param name="context"> The request context. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1734,7 +1732,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual AsyncPageable<BinaryData> GetSystemRulesetsVersionsAsync(RequestOptions options, string dataSourceType = null)
+        public virtual AsyncPageable<BinaryData> GetSystemRulesetsVersionsAsync(string dataSourceType = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "PurviewScanningServiceClient.GetSystemRulesetsVersions");
@@ -1745,7 +1743,7 @@ namespace Azure.Analytics.Purview.Scanning
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetSystemRulesetsVersionsRequest(dataSourceType)
                         : CreateGetSystemRulesetsVersionsNextPageRequest(nextLink, dataSourceType);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, options, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -1753,8 +1751,8 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> List system scan ruleset versions in Data catalog. </summary>
-        /// <param name="options"> The request options. </param>
         /// <param name="dataSourceType"> The DataSourceType to use. Allowed values: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;. </param>
+        /// <param name="context"> The request context. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1792,7 +1790,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Pageable<BinaryData> GetSystemRulesetsVersions(RequestOptions options, string dataSourceType = null)
+        public virtual Pageable<BinaryData> GetSystemRulesetsVersions(string dataSourceType = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "PurviewScanningServiceClient.GetSystemRulesetsVersions");
@@ -1803,7 +1801,7 @@ namespace Azure.Analytics.Purview.Scanning
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetSystemRulesetsVersionsRequest(dataSourceType)
                         : CreateGetSystemRulesetsVersionsNextPageRequest(nextLink, dataSourceType);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, options, "value", "nextLink");
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));

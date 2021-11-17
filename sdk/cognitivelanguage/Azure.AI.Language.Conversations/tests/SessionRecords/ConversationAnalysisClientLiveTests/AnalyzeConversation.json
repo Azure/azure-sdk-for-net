@@ -1,15 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://antischsdktest.cognitiveservices.azure.com/language/:analyze-conversations?projectName=antischOne\u0026deploymentName=production\u0026api-version=2021-07-15-preview",
+      "RequestUri": "https://antischsdktest.cognitiveservices.azure.com/language/:analyze-conversations?projectName=antischOne\u0026deploymentName=production\u0026api-version=2021-11-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "61",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-6cef0074e75e4a4da6b644d462396b14-5fd49e6e2de86449-00",
-        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20210929.1 (.NET Framework 4.8.4341.0; Microsoft Windows 10.0.19043 )",
+        "traceparent": "00-3818687475818d4b81f26fc99905f1e7-77e6cadd13b03442-00",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20211024.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "58944cee8b5ae8994782f5d492e4aa5a",
         "x-ms-return-client-request-id": "true"
       },
@@ -18,7 +18,7 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "cd472ca8-108a-4a34-964a-5227e58d3fbb",
+        "apim-request-id": "651e847b-f1b7-43a7-91c1-e4f4124d8108",
         "Cache-Control": [
           "no-store",
           "proxy-revalidate",
@@ -27,45 +27,43 @@
           "private"
         ],
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 29 Sep 2021 11:16:36 GMT",
+        "Date": "Sun, 24 Oct 2021 11:10:55 GMT",
         "pragma": "no-cache",
-        "request-id": "cd472ca8-108a-4a34-964a-5227e58d3fbb",
+        "request-id": "651e847b-f1b7-43a7-91c1-e4f4124d8108",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "45"
+        "x-envoy-upstream-service-time": "272"
       },
-      "ResponseBody": [
-        "{\n",
-        "  \u0022query\u0022: \u0022We\u0027ll have 2 plates of seared salmon nigiri.\u0022,\n",
-        "  \u0022prediction\u0022: {\n",
-        "    \u0022intents\u0022: [\n",
-        "      {\n",
-        "        \u0022category\u0022: \u0022Order\u0022,\n",
-        "        \u0022confidenceScore\u0022: 1\n",
-        "      }\n",
-        "    ],\n",
-        "    \u0022entities\u0022: [\n",
-        "      {\n",
-        "        \u0022category\u0022: \u0022OrderItem\u0022,\n",
-        "        \u0022text\u0022: \u00222 plates\u0022,\n",
-        "        \u0022offset\u0022: 11,\n",
-        "        \u0022length\u0022: 8,\n",
-        "        \u0022confidenceScore\u0022: 1\n",
-        "      },\n",
-        "      {\n",
-        "        \u0022category\u0022: \u0022OrderItem\u0022,\n",
-        "        \u0022text\u0022: \u0022seared salmon nigiri\u0022,\n",
-        "        \u0022offset\u0022: 23,\n",
-        "        \u0022length\u0022: 20,\n",
-        "        \u0022confidenceScore\u0022: 1\n",
-        "      }\n",
-        "    ],\n",
-        "    \u0022topIntent\u0022: \u0022Order\u0022,\n",
-        "    \u0022projectType\u0022: \u0022conversation\u0022\n",
-        "  }\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "query": "We\u0027ll have 2 plates of seared salmon nigiri.",
+        "prediction": {
+          "topIntent": "Order",
+          "projectKind": "conversation",
+          "intents": [
+            {
+              "category": "Order",
+              "confidenceScore": 1
+            }
+          ],
+          "entities": [
+            {
+              "category": "OrderItem",
+              "text": "2 plates",
+              "offset": 11,
+              "length": 8,
+              "confidenceScore": 1
+            },
+            {
+              "category": "OrderItem",
+              "text": "seared salmon nigiri",
+              "offset": 23,
+              "length": 20,
+              "confidenceScore": 1
+            }
+          ]
+        }
+      }
     }
   ],
   "Variables": {

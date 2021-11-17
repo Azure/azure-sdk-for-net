@@ -21,432 +21,432 @@ namespace Azure.ResourceManager.Network
     public static partial class ResourceGroupExtensions
     {
         #region ApplicationGateway
-        /// <summary> Gets an object representing a ApplicationGatewayContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a ApplicationGatewayCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="ApplicationGatewayContainer" /> object. </returns>
-        public static ApplicationGatewayContainer GetApplicationGateways(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="ApplicationGatewayCollection" /> object. </returns>
+        public static ApplicationGatewayCollection GetApplicationGateways(this ResourceGroup resourceGroup)
         {
-            return new ApplicationGatewayContainer(resourceGroup);
+            return new ApplicationGatewayCollection(resourceGroup);
         }
         #endregion
 
         #region ApplicationSecurityGroup
-        /// <summary> Gets an object representing a ApplicationSecurityGroupContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a ApplicationSecurityGroupCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="ApplicationSecurityGroupContainer" /> object. </returns>
-        public static ApplicationSecurityGroupContainer GetApplicationSecurityGroups(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="ApplicationSecurityGroupCollection" /> object. </returns>
+        public static ApplicationSecurityGroupCollection GetApplicationSecurityGroups(this ResourceGroup resourceGroup)
         {
-            return new ApplicationSecurityGroupContainer(resourceGroup);
+            return new ApplicationSecurityGroupCollection(resourceGroup);
         }
         #endregion
 
         #region AzureFirewall
-        /// <summary> Gets an object representing a AzureFirewallContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a AzureFirewallCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="AzureFirewallContainer" /> object. </returns>
-        public static AzureFirewallContainer GetAzureFirewalls(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="AzureFirewallCollection" /> object. </returns>
+        public static AzureFirewallCollection GetAzureFirewalls(this ResourceGroup resourceGroup)
         {
-            return new AzureFirewallContainer(resourceGroup);
+            return new AzureFirewallCollection(resourceGroup);
         }
         #endregion
 
         #region BastionHost
-        /// <summary> Gets an object representing a BastionHostContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a BastionHostCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="BastionHostContainer" /> object. </returns>
-        public static BastionHostContainer GetBastionHosts(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="BastionHostCollection" /> object. </returns>
+        public static BastionHostCollection GetBastionHosts(this ResourceGroup resourceGroup)
         {
-            return new BastionHostContainer(resourceGroup);
+            return new BastionHostCollection(resourceGroup);
         }
         #endregion
 
         #region CustomIpPrefix
-        /// <summary> Gets an object representing a CustomIpPrefixContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a CustomIpPrefixCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="CustomIpPrefixContainer" /> object. </returns>
-        public static CustomIpPrefixContainer GetCustomIpPrefixes(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="CustomIpPrefixCollection" /> object. </returns>
+        public static CustomIpPrefixCollection GetCustomIpPrefixes(this ResourceGroup resourceGroup)
         {
-            return new CustomIpPrefixContainer(resourceGroup);
+            return new CustomIpPrefixCollection(resourceGroup);
         }
         #endregion
 
         #region DdosCustomPolicy
-        /// <summary> Gets an object representing a DdosCustomPolicyContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a DdosCustomPolicyCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="DdosCustomPolicyContainer" /> object. </returns>
-        public static DdosCustomPolicyContainer GetDdosCustomPolicies(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="DdosCustomPolicyCollection" /> object. </returns>
+        public static DdosCustomPolicyCollection GetDdosCustomPolicies(this ResourceGroup resourceGroup)
         {
-            return new DdosCustomPolicyContainer(resourceGroup);
+            return new DdosCustomPolicyCollection(resourceGroup);
         }
         #endregion
 
         #region DdosProtectionPlan
-        /// <summary> Gets an object representing a DdosProtectionPlanContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a DdosProtectionPlanCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="DdosProtectionPlanContainer" /> object. </returns>
-        public static DdosProtectionPlanContainer GetDdosProtectionPlans(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="DdosProtectionPlanCollection" /> object. </returns>
+        public static DdosProtectionPlanCollection GetDdosProtectionPlans(this ResourceGroup resourceGroup)
         {
-            return new DdosProtectionPlanContainer(resourceGroup);
+            return new DdosProtectionPlanCollection(resourceGroup);
         }
         #endregion
 
         #region DscpConfiguration
-        /// <summary> Gets an object representing a DscpConfigurationContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a DscpConfigurationCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="DscpConfigurationContainer" /> object. </returns>
-        public static DscpConfigurationContainer GetDscpConfigurations(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="DscpConfigurationCollection" /> object. </returns>
+        public static DscpConfigurationCollection GetDscpConfigurations(this ResourceGroup resourceGroup)
         {
-            return new DscpConfigurationContainer(resourceGroup);
+            return new DscpConfigurationCollection(resourceGroup);
         }
         #endregion
 
         #region ExpressRouteCircuit
-        /// <summary> Gets an object representing a ExpressRouteCircuitContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a ExpressRouteCircuitCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="ExpressRouteCircuitContainer" /> object. </returns>
-        public static ExpressRouteCircuitContainer GetExpressRouteCircuits(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="ExpressRouteCircuitCollection" /> object. </returns>
+        public static ExpressRouteCircuitCollection GetExpressRouteCircuits(this ResourceGroup resourceGroup)
         {
-            return new ExpressRouteCircuitContainer(resourceGroup);
+            return new ExpressRouteCircuitCollection(resourceGroup);
         }
         #endregion
 
         #region ExpressRouteCrossConnection
-        /// <summary> Gets an object representing a ExpressRouteCrossConnectionContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a ExpressRouteCrossConnectionCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="ExpressRouteCrossConnectionContainer" /> object. </returns>
-        public static ExpressRouteCrossConnectionContainer GetExpressRouteCrossConnections(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="ExpressRouteCrossConnectionCollection" /> object. </returns>
+        public static ExpressRouteCrossConnectionCollection GetExpressRouteCrossConnections(this ResourceGroup resourceGroup)
         {
-            return new ExpressRouteCrossConnectionContainer(resourceGroup);
+            return new ExpressRouteCrossConnectionCollection(resourceGroup);
         }
         #endregion
 
         #region ExpressRoutePort
-        /// <summary> Gets an object representing a ExpressRoutePortContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a ExpressRoutePortCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="ExpressRoutePortContainer" /> object. </returns>
-        public static ExpressRoutePortContainer GetExpressRoutePorts(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="ExpressRoutePortCollection" /> object. </returns>
+        public static ExpressRoutePortCollection GetExpressRoutePorts(this ResourceGroup resourceGroup)
         {
-            return new ExpressRoutePortContainer(resourceGroup);
+            return new ExpressRoutePortCollection(resourceGroup);
         }
         #endregion
 
         #region FirewallPolicy
-        /// <summary> Gets an object representing a FirewallPolicyContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a FirewallPolicyCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="FirewallPolicyContainer" /> object. </returns>
-        public static FirewallPolicyContainer GetFirewallPolicies(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="FirewallPolicyCollection" /> object. </returns>
+        public static FirewallPolicyCollection GetFirewallPolicies(this ResourceGroup resourceGroup)
         {
-            return new FirewallPolicyContainer(resourceGroup);
+            return new FirewallPolicyCollection(resourceGroup);
         }
         #endregion
 
         #region IpAllocation
-        /// <summary> Gets an object representing a IpAllocationContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a IpAllocationCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="IpAllocationContainer" /> object. </returns>
-        public static IpAllocationContainer GetIpAllocations(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="IpAllocationCollection" /> object. </returns>
+        public static IpAllocationCollection GetIpAllocations(this ResourceGroup resourceGroup)
         {
-            return new IpAllocationContainer(resourceGroup);
+            return new IpAllocationCollection(resourceGroup);
         }
         #endregion
 
         #region IpGroup
-        /// <summary> Gets an object representing a IpGroupContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a IpGroupCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="IpGroupContainer" /> object. </returns>
-        public static IpGroupContainer GetIpGroups(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="IpGroupCollection" /> object. </returns>
+        public static IpGroupCollection GetIpGroups(this ResourceGroup resourceGroup)
         {
-            return new IpGroupContainer(resourceGroup);
+            return new IpGroupCollection(resourceGroup);
         }
         #endregion
 
         #region LoadBalancer
-        /// <summary> Gets an object representing a LoadBalancerContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a LoadBalancerCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="LoadBalancerContainer" /> object. </returns>
-        public static LoadBalancerContainer GetLoadBalancers(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="LoadBalancerCollection" /> object. </returns>
+        public static LoadBalancerCollection GetLoadBalancers(this ResourceGroup resourceGroup)
         {
-            return new LoadBalancerContainer(resourceGroup);
+            return new LoadBalancerCollection(resourceGroup);
         }
         #endregion
 
         #region NatGateway
-        /// <summary> Gets an object representing a NatGatewayContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a NatGatewayCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="NatGatewayContainer" /> object. </returns>
-        public static NatGatewayContainer GetNatGateways(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="NatGatewayCollection" /> object. </returns>
+        public static NatGatewayCollection GetNatGateways(this ResourceGroup resourceGroup)
         {
-            return new NatGatewayContainer(resourceGroup);
+            return new NatGatewayCollection(resourceGroup);
         }
         #endregion
 
         #region NetworkInterface
-        /// <summary> Gets an object representing a NetworkInterfaceContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a NetworkInterfaceCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="NetworkInterfaceContainer" /> object. </returns>
-        public static NetworkInterfaceContainer GetNetworkInterfaces(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="NetworkInterfaceCollection" /> object. </returns>
+        public static NetworkInterfaceCollection GetNetworkInterfaces(this ResourceGroup resourceGroup)
         {
-            return new NetworkInterfaceContainer(resourceGroup);
+            return new NetworkInterfaceCollection(resourceGroup);
         }
         #endregion
 
         #region NetworkProfile
-        /// <summary> Gets an object representing a NetworkProfileContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a NetworkProfileCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="NetworkProfileContainer" /> object. </returns>
-        public static NetworkProfileContainer GetNetworkProfiles(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="NetworkProfileCollection" /> object. </returns>
+        public static NetworkProfileCollection GetNetworkProfiles(this ResourceGroup resourceGroup)
         {
-            return new NetworkProfileContainer(resourceGroup);
+            return new NetworkProfileCollection(resourceGroup);
         }
         #endregion
 
         #region NetworkSecurityGroup
-        /// <summary> Gets an object representing a NetworkSecurityGroupContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a NetworkSecurityGroupCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="NetworkSecurityGroupContainer" /> object. </returns>
-        public static NetworkSecurityGroupContainer GetNetworkSecurityGroups(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="NetworkSecurityGroupCollection" /> object. </returns>
+        public static NetworkSecurityGroupCollection GetNetworkSecurityGroups(this ResourceGroup resourceGroup)
         {
-            return new NetworkSecurityGroupContainer(resourceGroup);
+            return new NetworkSecurityGroupCollection(resourceGroup);
         }
         #endregion
 
         #region NetworkVirtualAppliance
-        /// <summary> Gets an object representing a NetworkVirtualApplianceContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a NetworkVirtualApplianceCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="NetworkVirtualApplianceContainer" /> object. </returns>
-        public static NetworkVirtualApplianceContainer GetNetworkVirtualAppliances(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="NetworkVirtualApplianceCollection" /> object. </returns>
+        public static NetworkVirtualApplianceCollection GetNetworkVirtualAppliances(this ResourceGroup resourceGroup)
         {
-            return new NetworkVirtualApplianceContainer(resourceGroup);
+            return new NetworkVirtualApplianceCollection(resourceGroup);
         }
         #endregion
 
         #region NetworkWatcher
-        /// <summary> Gets an object representing a NetworkWatcherContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a NetworkWatcherCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="NetworkWatcherContainer" /> object. </returns>
-        public static NetworkWatcherContainer GetNetworkWatchers(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="NetworkWatcherCollection" /> object. </returns>
+        public static NetworkWatcherCollection GetNetworkWatchers(this ResourceGroup resourceGroup)
         {
-            return new NetworkWatcherContainer(resourceGroup);
+            return new NetworkWatcherCollection(resourceGroup);
         }
         #endregion
 
         #region PrivateEndpoint
-        /// <summary> Gets an object representing a PrivateEndpointContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a PrivateEndpointCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="PrivateEndpointContainer" /> object. </returns>
-        public static PrivateEndpointContainer GetPrivateEndpoints(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="PrivateEndpointCollection" /> object. </returns>
+        public static PrivateEndpointCollection GetPrivateEndpoints(this ResourceGroup resourceGroup)
         {
-            return new PrivateEndpointContainer(resourceGroup);
+            return new PrivateEndpointCollection(resourceGroup);
         }
         #endregion
 
         #region PrivateLinkService
-        /// <summary> Gets an object representing a PrivateLinkServiceContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a PrivateLinkServiceCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="PrivateLinkServiceContainer" /> object. </returns>
-        public static PrivateLinkServiceContainer GetPrivateLinkServices(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="PrivateLinkServiceCollection" /> object. </returns>
+        public static PrivateLinkServiceCollection GetPrivateLinkServices(this ResourceGroup resourceGroup)
         {
-            return new PrivateLinkServiceContainer(resourceGroup);
+            return new PrivateLinkServiceCollection(resourceGroup);
         }
         #endregion
 
         #region PublicIPAddress
-        /// <summary> Gets an object representing a PublicIPAddressContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a PublicIPAddressCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="PublicIPAddressContainer" /> object. </returns>
-        public static PublicIPAddressContainer GetPublicIPAddresses(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="PublicIPAddressCollection" /> object. </returns>
+        public static PublicIPAddressCollection GetPublicIPAddresses(this ResourceGroup resourceGroup)
         {
-            return new PublicIPAddressContainer(resourceGroup);
+            return new PublicIPAddressCollection(resourceGroup);
         }
         #endregion
 
         #region PublicIPPrefix
-        /// <summary> Gets an object representing a PublicIPPrefixContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a PublicIPPrefixCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="PublicIPPrefixContainer" /> object. </returns>
-        public static PublicIPPrefixContainer GetPublicIPPrefixes(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="PublicIPPrefixCollection" /> object. </returns>
+        public static PublicIPPrefixCollection GetPublicIPPrefixes(this ResourceGroup resourceGroup)
         {
-            return new PublicIPPrefixContainer(resourceGroup);
+            return new PublicIPPrefixCollection(resourceGroup);
         }
         #endregion
 
         #region RouteFilter
-        /// <summary> Gets an object representing a RouteFilterContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a RouteFilterCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="RouteFilterContainer" /> object. </returns>
-        public static RouteFilterContainer GetRouteFilters(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="RouteFilterCollection" /> object. </returns>
+        public static RouteFilterCollection GetRouteFilters(this ResourceGroup resourceGroup)
         {
-            return new RouteFilterContainer(resourceGroup);
+            return new RouteFilterCollection(resourceGroup);
         }
         #endregion
 
         #region RouteTable
-        /// <summary> Gets an object representing a RouteTableContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a RouteTableCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="RouteTableContainer" /> object. </returns>
-        public static RouteTableContainer GetRouteTables(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="RouteTableCollection" /> object. </returns>
+        public static RouteTableCollection GetRouteTables(this ResourceGroup resourceGroup)
         {
-            return new RouteTableContainer(resourceGroup);
+            return new RouteTableCollection(resourceGroup);
         }
         #endregion
 
         #region SecurityPartnerProvider
-        /// <summary> Gets an object representing a SecurityPartnerProviderContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a SecurityPartnerProviderCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="SecurityPartnerProviderContainer" /> object. </returns>
-        public static SecurityPartnerProviderContainer GetSecurityPartnerProviders(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="SecurityPartnerProviderCollection" /> object. </returns>
+        public static SecurityPartnerProviderCollection GetSecurityPartnerProviders(this ResourceGroup resourceGroup)
         {
-            return new SecurityPartnerProviderContainer(resourceGroup);
+            return new SecurityPartnerProviderCollection(resourceGroup);
         }
         #endregion
 
         #region ServiceEndpointPolicy
-        /// <summary> Gets an object representing a ServiceEndpointPolicyContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a ServiceEndpointPolicyCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="ServiceEndpointPolicyContainer" /> object. </returns>
-        public static ServiceEndpointPolicyContainer GetServiceEndpointPolicies(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="ServiceEndpointPolicyCollection" /> object. </returns>
+        public static ServiceEndpointPolicyCollection GetServiceEndpointPolicies(this ResourceGroup resourceGroup)
         {
-            return new ServiceEndpointPolicyContainer(resourceGroup);
+            return new ServiceEndpointPolicyCollection(resourceGroup);
         }
         #endregion
 
         #region VirtualNetwork
-        /// <summary> Gets an object representing a VirtualNetworkContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a VirtualNetworkCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="VirtualNetworkContainer" /> object. </returns>
-        public static VirtualNetworkContainer GetVirtualNetworks(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="VirtualNetworkCollection" /> object. </returns>
+        public static VirtualNetworkCollection GetVirtualNetworks(this ResourceGroup resourceGroup)
         {
-            return new VirtualNetworkContainer(resourceGroup);
+            return new VirtualNetworkCollection(resourceGroup);
         }
         #endregion
 
         #region VirtualNetworkGateway
-        /// <summary> Gets an object representing a VirtualNetworkGatewayContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a VirtualNetworkGatewayCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="VirtualNetworkGatewayContainer" /> object. </returns>
-        public static VirtualNetworkGatewayContainer GetVirtualNetworkGateways(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="VirtualNetworkGatewayCollection" /> object. </returns>
+        public static VirtualNetworkGatewayCollection GetVirtualNetworkGateways(this ResourceGroup resourceGroup)
         {
-            return new VirtualNetworkGatewayContainer(resourceGroup);
+            return new VirtualNetworkGatewayCollection(resourceGroup);
         }
         #endregion
 
         #region VirtualNetworkGatewayConnection
-        /// <summary> Gets an object representing a VirtualNetworkGatewayConnectionContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a VirtualNetworkGatewayConnectionCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="VirtualNetworkGatewayConnectionContainer" /> object. </returns>
-        public static VirtualNetworkGatewayConnectionContainer GetVirtualNetworkGatewayConnections(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="VirtualNetworkGatewayConnectionCollection" /> object. </returns>
+        public static VirtualNetworkGatewayConnectionCollection GetVirtualNetworkGatewayConnections(this ResourceGroup resourceGroup)
         {
-            return new VirtualNetworkGatewayConnectionContainer(resourceGroup);
+            return new VirtualNetworkGatewayConnectionCollection(resourceGroup);
         }
         #endregion
 
         #region LocalNetworkGateway
-        /// <summary> Gets an object representing a LocalNetworkGatewayContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a LocalNetworkGatewayCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="LocalNetworkGatewayContainer" /> object. </returns>
-        public static LocalNetworkGatewayContainer GetLocalNetworkGateways(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="LocalNetworkGatewayCollection" /> object. </returns>
+        public static LocalNetworkGatewayCollection GetLocalNetworkGateways(this ResourceGroup resourceGroup)
         {
-            return new LocalNetworkGatewayContainer(resourceGroup);
+            return new LocalNetworkGatewayCollection(resourceGroup);
         }
         #endregion
 
         #region VirtualNetworkTap
-        /// <summary> Gets an object representing a VirtualNetworkTapContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a VirtualNetworkTapCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="VirtualNetworkTapContainer" /> object. </returns>
-        public static VirtualNetworkTapContainer GetVirtualNetworkTaps(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="VirtualNetworkTapCollection" /> object. </returns>
+        public static VirtualNetworkTapCollection GetVirtualNetworkTaps(this ResourceGroup resourceGroup)
         {
-            return new VirtualNetworkTapContainer(resourceGroup);
+            return new VirtualNetworkTapCollection(resourceGroup);
         }
         #endregion
 
         #region VirtualRouter
-        /// <summary> Gets an object representing a VirtualRouterContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a VirtualRouterCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="VirtualRouterContainer" /> object. </returns>
-        public static VirtualRouterContainer GetVirtualRouters(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="VirtualRouterCollection" /> object. </returns>
+        public static VirtualRouterCollection GetVirtualRouters(this ResourceGroup resourceGroup)
         {
-            return new VirtualRouterContainer(resourceGroup);
+            return new VirtualRouterCollection(resourceGroup);
         }
         #endregion
 
         #region VirtualWAN
-        /// <summary> Gets an object representing a VirtualWANContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a VirtualWANCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="VirtualWANContainer" /> object. </returns>
-        public static VirtualWANContainer GetVirtualWANs(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="VirtualWANCollection" /> object. </returns>
+        public static VirtualWANCollection GetVirtualWANs(this ResourceGroup resourceGroup)
         {
-            return new VirtualWANContainer(resourceGroup);
+            return new VirtualWANCollection(resourceGroup);
         }
         #endregion
 
         #region VpnSite
-        /// <summary> Gets an object representing a VpnSiteContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a VpnSiteCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="VpnSiteContainer" /> object. </returns>
-        public static VpnSiteContainer GetVpnSites(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="VpnSiteCollection" /> object. </returns>
+        public static VpnSiteCollection GetVpnSites(this ResourceGroup resourceGroup)
         {
-            return new VpnSiteContainer(resourceGroup);
+            return new VpnSiteCollection(resourceGroup);
         }
         #endregion
 
         #region VpnServerConfiguration
-        /// <summary> Gets an object representing a VpnServerConfigurationContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a VpnServerConfigurationCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="VpnServerConfigurationContainer" /> object. </returns>
-        public static VpnServerConfigurationContainer GetVpnServerConfigurations(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="VpnServerConfigurationCollection" /> object. </returns>
+        public static VpnServerConfigurationCollection GetVpnServerConfigurations(this ResourceGroup resourceGroup)
         {
-            return new VpnServerConfigurationContainer(resourceGroup);
+            return new VpnServerConfigurationCollection(resourceGroup);
         }
         #endregion
 
         #region VirtualHub
-        /// <summary> Gets an object representing a VirtualHubContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a VirtualHubCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="VirtualHubContainer" /> object. </returns>
-        public static VirtualHubContainer GetVirtualHubs(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="VirtualHubCollection" /> object. </returns>
+        public static VirtualHubCollection GetVirtualHubs(this ResourceGroup resourceGroup)
         {
-            return new VirtualHubContainer(resourceGroup);
+            return new VirtualHubCollection(resourceGroup);
         }
         #endregion
 
         #region VpnGateway
-        /// <summary> Gets an object representing a VpnGatewayContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a VpnGatewayCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="VpnGatewayContainer" /> object. </returns>
-        public static VpnGatewayContainer GetVpnGateways(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="VpnGatewayCollection" /> object. </returns>
+        public static VpnGatewayCollection GetVpnGateways(this ResourceGroup resourceGroup)
         {
-            return new VpnGatewayContainer(resourceGroup);
+            return new VpnGatewayCollection(resourceGroup);
         }
         #endregion
 
         #region P2SVpnGateway
-        /// <summary> Gets an object representing a P2SVpnGatewayContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a P2SVpnGatewayCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="P2SVpnGatewayContainer" /> object. </returns>
-        public static P2SVpnGatewayContainer GetP2SVpnGateways(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="P2SVpnGatewayCollection" /> object. </returns>
+        public static P2SVpnGatewayCollection GetP2SVpnGateways(this ResourceGroup resourceGroup)
         {
-            return new P2SVpnGatewayContainer(resourceGroup);
+            return new P2SVpnGatewayCollection(resourceGroup);
         }
         #endregion
 
         #region ExpressRouteGateway
-        /// <summary> Gets an object representing a ExpressRouteGatewayContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a ExpressRouteGatewayCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="ExpressRouteGatewayContainer" /> object. </returns>
-        public static ExpressRouteGatewayContainer GetExpressRouteGateways(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="ExpressRouteGatewayCollection" /> object. </returns>
+        public static ExpressRouteGatewayCollection GetExpressRouteGateways(this ResourceGroup resourceGroup)
         {
-            return new ExpressRouteGatewayContainer(resourceGroup);
+            return new ExpressRouteGatewayCollection(resourceGroup);
         }
         #endregion
 
         #region WebApplicationFirewallPolicy
-        /// <summary> Gets an object representing a WebApplicationFirewallPolicyContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a WebApplicationFirewallPolicyCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="WebApplicationFirewallPolicyContainer" /> object. </returns>
-        public static WebApplicationFirewallPolicyContainer GetWebApplicationFirewallPolicies(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="WebApplicationFirewallPolicyCollection" /> object. </returns>
+        public static WebApplicationFirewallPolicyCollection GetWebApplicationFirewallPolicies(this ResourceGroup resourceGroup)
         {
-            return new WebApplicationFirewallPolicyContainer(resourceGroup);
+            return new WebApplicationFirewallPolicyCollection(resourceGroup);
         }
         #endregion
 

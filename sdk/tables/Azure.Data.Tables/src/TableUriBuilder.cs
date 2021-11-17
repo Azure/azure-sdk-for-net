@@ -248,5 +248,21 @@ namespace Azure.Data.Tables
                 Query = query.Length > 0 ? query.ToString() : null
             };
         }
+
+        internal static Uri GetEndpointWithoutTableName(Uri endpoint, string tableName)
+        {
+            if (string.IsNullOrEmpty(tableName) || !endpoint.AbsolutePath.Contains(tableName))
+            {
+                return endpoint;
+            }
+            var endpointString = endpoint.AbsoluteUri;
+            var indexOfTableName = endpointString.LastIndexOf("/" + tableName, StringComparison.OrdinalIgnoreCase);
+            if (indexOfTableName <= 0)
+            {
+                return endpoint;
+            }
+            endpointString = endpointString.Remove(indexOfTableName, tableName.Length + 1);
+            return new Uri(endpointString);
+        }
     }
 }

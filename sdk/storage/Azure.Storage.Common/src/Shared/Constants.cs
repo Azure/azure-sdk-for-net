@@ -24,8 +24,8 @@ namespace Azure.Storage
         /// Gets the default service version to use when building shared access
         /// signatures.
         /// </summary>
-        // TODO https://github.com/Azure/azure-sdk-for-net/issues/23369
-        public const string DefaultSasVersion = "2020-10-02";
+        // TODO https://github.com/Azure/azure-sdk-for-net/issues/25140
+        public const string DefaultSasVersion = "2020-12-06";
 
         /// <summary>
         /// The default size of staged blocks when uploading small blobs.
@@ -335,6 +335,7 @@ namespace Azure.Storage
             public const string AlreadyExists = "ContainerAlreadyExists";
             public const string FilesystemNotFound = "FilesystemNotFound";
             public const string PathNotFound = "PathNotFound";
+            public const string PathAlreadyExists = "PathAlreadyExists";
 
             /// <summary>
             /// Default concurrent transfers count.

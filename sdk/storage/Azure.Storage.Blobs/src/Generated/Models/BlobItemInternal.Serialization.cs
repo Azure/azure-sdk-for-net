@@ -15,7 +15,7 @@ namespace Azure.Storage.Blobs.Models
     {
         internal static BlobItemInternal DeserializeBlobItemInternal(XElement element)
         {
-            string name = default;
+            BlobName name = default;
             bool deleted = default;
             string snapshot = default;
             string versionId = default;
@@ -27,7 +27,7 @@ namespace Azure.Storage.Blobs.Models
             IReadOnlyDictionary<string, string> orMetadata = default;
             if (element.Element("Name") is XElement nameElement)
             {
-                name = (string)nameElement;
+                name = BlobName.DeserializeBlobName(nameElement);
             }
             if (element.Element("Deleted") is XElement deletedElement)
             {

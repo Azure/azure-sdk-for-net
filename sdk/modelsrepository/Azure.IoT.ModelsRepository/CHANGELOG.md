@@ -1,15 +1,27 @@
 # Release History
 
-## 1.0.0-preview.5 (Unreleased)
+## 1.0.0-preview.6 (Unreleased)
 
 ### Features Added
 
-- Repository metadata KPIs are stored in the client instance. When metadata is stale,
-  the next service operation that can make use of metadata will first attempt to
-  fetch and refresh the client metadata state. The operation will then continue as normal.
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.0-preview.5 (2021-11-04)
+
+### Features Added
+
 - Adds the `ModelsRepositoryClientMetadataOptions` class and plumbing with `ModelsRepositoryClientOptions` to configure
   client interactions with repository metadata.
-- Default metadata expiration is effectively "never" or `TimeSpan.MaxValue` by default.
+- When repository metadata fetching is enabled (the default), service operations that can make use of metadata such as GetModels,
+  will first attempt to fetch and store repository metadata state. The operation then continues as normal.
+  This will happen one time per instance lifetime.
+- Renames client method GetModels[Async] to GetModel[Async]
+- Removes the multiple dtmis overload of the GetModel[Async] methods.
+- Adds the `ModelResult` type, returned from the GetModel[Async] methods. `ModelResult` encompasses requested model content.
 
 ## 1.0.0-preview.4 (2021-07-22)
 

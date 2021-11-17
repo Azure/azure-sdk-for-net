@@ -72,16 +72,13 @@ namespace Microsoft.Azure.Management.Network.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ResourceId");
             }
-            if (Port != null)
+            if (Port > 65535)
             {
-                if (Port > 65535)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMaximum, "Port", 65535);
-                }
-                if (Port < 0)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMinimum, "Port", 0);
-                }
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "Port", 65535);
+            }
+            if (Port < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "Port", 0);
             }
         }
     }

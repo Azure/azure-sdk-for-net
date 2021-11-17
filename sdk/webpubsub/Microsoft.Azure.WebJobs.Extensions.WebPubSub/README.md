@@ -15,7 +15,7 @@ This extension provides functionality for receiving Web PubSub webhook calls in 
 Install the Web PubSub extension with [NuGet][nuget]:
 
 ```dotnetcli
-dotnet add package Microsoft.Azure.WebJobs.Extensions.WebPubSub --prerelease
+dotnet add package Microsoft.Azure.WebJobs.Extensions.WebPubSub
 ```
 
 ### Prerequisites
@@ -84,13 +84,9 @@ public static class WebPubSubOutputBindingFunction
     [FunctionName("WebPubSubOutputBindingFunction")]
     public static async Task RunAsync(
         [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequest req,
-        [WebPubSub(Hub = "hub", Connection = "<connection-string>")] IAsyncCollector<WebPubSubOperation> operation)
+        [WebPubSub(Hub = "hub", Connection = "<connection-string>")] IAsyncCollector<WebPubSubAction> action)
     {
-        await operation.AddAsync(new SendToAll
-        {
-            Message = BinaryData.FromString("Hello Web PubSub"),
-            DataType = MessageDataType.Text
-        });
+        await action.AddAsync(WebPubSubAction.CreateSendToAllAction("Hello Web PubSub!", WebPubSubDataType.Text));
     }
 }
 ```
@@ -104,11 +100,11 @@ public static class WebPubSubTriggerFunction
     public static void Run(
         ILogger logger,
         [WebPubSubTrigger("hub", WebPubSubEventType.User, "message")] UserEventRequest request,
-        string message,
-        MessageDataType dataType)
+        string data,
+        WebPubSubDataType dataType)
     {
-        logger.LogInformation("Request from: {user}, message: {message}, dataType: {dataType}",
-            request.ConnectionContext.UserId, message, dataType);
+        logger.LogInformation("Request from: {user}, data: {data}, dataType: {dataType}",
+            request.ConnectionContext.UserId, data, dataType);
     }
 }
 ```
@@ -122,7 +118,7 @@ public static class WebPubSubTriggerReturnValueFunction
     public static UserEventResponse Run(
         [WebPubSubTrigger("hub", WebPubSubEventType.User, "message")] UserEventRequest request)
     {
-        return request.CreateResponse(BinaryData.FromString("ack"), MessageDataType.Text);
+        return request.CreateResponse(BinaryData.FromString("ack"), WebPubSubDataType.Text);
     }
 }
 ```

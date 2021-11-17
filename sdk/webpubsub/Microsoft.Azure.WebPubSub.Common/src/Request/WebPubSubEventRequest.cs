@@ -16,7 +16,7 @@ namespace Microsoft.Azure.WebPubSub.Common
         /// Connection context contains connection metadata following CloudEvents.
         /// </summary>
         [JsonPropertyName(ConnectionContextProperty)]
-        public WebPubSubConnectionContext ConnectionContext { get; internal set; }
+        public WebPubSubConnectionContext ConnectionContext { get; }
 
         /// <summary>
         /// Create instance of <see cref="WebPubSubEventRequest"/>

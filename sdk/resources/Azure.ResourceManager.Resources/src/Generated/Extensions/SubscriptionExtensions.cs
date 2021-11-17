@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.Resources
     public static partial class SubscriptionExtensions
     {
         #region Deployment
-        /// <summary> Gets an object representing a DeploymentContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a DeploymentCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="DeploymentContainer" /> object. </returns>
-        public static DeploymentContainer GetDeployments(this Subscription subscription)
+        /// <returns> Returns a <see cref="DeploymentCollection" /> object. </returns>
+        public static DeploymentCollection GetDeployments(this Subscription subscription)
         {
-            return new DeploymentContainer(subscription);
+            return new DeploymentCollection(subscription);
         }
         #endregion
 

@@ -2,7 +2,7 @@
   "Name": "BatchPoolIdentity",
   "ProtocolName": "Models.BatchPoolIdentity",
   "SummaryComment": "The identity of the Batch pool, if configured.",
-  "IsConstructorPublic": false,
+  "ConstructorAccess": "internal",
   "Properties": [
     {
       "Key": {

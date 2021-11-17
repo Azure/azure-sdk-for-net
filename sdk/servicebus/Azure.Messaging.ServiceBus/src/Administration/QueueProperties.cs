@@ -316,7 +316,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// This feature is only available when using a Premium namespace and service version "2021-05" or higher.
         /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-premium-messaging"/>
         /// </summary>
-        public long MaxMessageSizeInKilobytes { get; set; }
+        public long? MaxMessageSizeInKilobytes { get; set; }
 
         /// <summary>
         /// List of properties that were retrieved using GetQueue but are not understood by this version of client is stored here.

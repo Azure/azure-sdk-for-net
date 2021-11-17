@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.KeyVault.Tests
         public VaultProperties VaultProperties { get; internal set; }
         public ManagedHsmProperties ManagedHsmProperties { get; internal set; }
 
-        public VaultContainer VaultContainer { get; set; }
-        public DeletedVaultContainer DeletedVaultContainer { get; set; }
-        public ManagedHsmContainer ManagedHsmContainer { get; set; }
+        public VaultCollection VaultCollection { get; set; }
+        public DeletedVaultCollection DeletedVaultCollection { get; set; }
+        public ManagedHsmCollection ManagedHsmCollection { get; set; }
         public ResourceGroup ResourceGroup { get; set; }
 
         protected VaultOperationsTestsBase(bool isAsync)
@@ -46,7 +46,8 @@ namespace Azure.ResourceManager.KeyVault.Tests
         protected async Task Initialize()
         {
             Client = GetArmClient();
-            DeletedVaultContainer = Client.DefaultSubscription.GetDeletedVaults();
+            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            DeletedVaultCollection = subscription.GetDeletedVaults();
 
             if (Mode == RecordedTestMode.Playback)
             {
@@ -66,10 +67,10 @@ namespace Azure.ResourceManager.KeyVault.Tests
             Location = "North Central US";
 
             ResGroupName = Recording.GenerateAssetName("sdktestrg");
-            var rgResponse = await Client.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(ResGroupName, new ResourceGroupData(Location)).ConfigureAwait(false);
+            var rgResponse = await subscription.GetResourceGroups().CreateOrUpdateAsync(ResGroupName, new ResourceGroupData(Location)).ConfigureAwait(false);
             ResourceGroup = rgResponse.Value;
 
-            VaultContainer = ResourceGroup.GetVaults();
+            VaultCollection = ResourceGroup.GetVaults();
             VaultName = Recording.GenerateAssetName("sdktestvault");
             TenantIdGuid = new Guid(TestEnvironment.TenantId);
             Tags = new Dictionary<string, string> { { "tag1", "value1" }, { "tag2", "value2" }, { "tag3", "value3" } };
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             };
             VaultProperties.AccessPolicies.Add(AccessPolicy);
 
-            ManagedHsmContainer = ResourceGroup.GetManagedHsms();
+            ManagedHsmCollection = ResourceGroup.GetManagedHsms();
             ManagedHsmProperties = new ManagedHsmProperties();
             ManagedHsmProperties.InitialAdminObjectIds.Add(ObjectId);
             ManagedHsmProperties.CreateMode = CreateMode.Default;
