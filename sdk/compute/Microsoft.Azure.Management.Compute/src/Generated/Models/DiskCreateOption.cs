@@ -54,5 +54,18 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// from the source.
         /// </summary>
         public const string CopyStart = "CopyStart";
+        /// <summary>
+        /// Similar to Import create option. Create a new TrustedLaunch or
+        /// ConfidentialVM supported disk by importing additional VM guest
+        /// state blob specified by securityDataUri in storage account
+        /// specified by storageAccountId
+        /// </summary>
+        public const string ImportSecure = "ImportSecure";
+        /// <summary>
+        /// Similar to Upload create option. Create a new TrustedLaunch or
+        /// ConfidentialVM supported disk and upload using write token in both
+        /// disk and VM guest state blob
+        /// </summary>
+        public const string UploadPreparedSecure = "UploadPreparedSecure";
     }
 }

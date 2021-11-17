@@ -32,5 +32,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// keys is Customer managed and the other key is Platform managed.
         /// </summary>
         public const string EncryptionAtRestWithPlatformAndCustomerKeys = "EncryptionAtRestWithPlatformAndCustomerKeys";
+        /// <summary>
+        /// Confidential VM supported disk encrypted with customer managed key.
+        /// </summary>
+        public const string ConfidentialVmEncryptedWithCustomerKey = "ConfidentialVmEncryptedWithCustomerKey";
     }
 }
