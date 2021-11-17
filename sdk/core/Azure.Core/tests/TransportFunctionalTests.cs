@@ -68,7 +68,7 @@ namespace Azure.Core.Tests
         public async Task SettingHeaderOverridesDefaultContentLength()
         {
             long contentLength = 0;
-            TestServer testServer = new TestServer(
+            using TestServer testServer = new TestServer(
                 context => contentLength = context.Request.ContentLength.Value);
 
             var transport = GetTransport();
@@ -94,7 +94,7 @@ namespace Azure.Core.Tests
         public async Task CanSetContentLengthOverMaxInt()
         {
             long contentLength = 0;
-            TestServer testServer = new TestServer(
+            using TestServer testServer = new TestServer(
                 context =>
                 {
                     contentLength = context.Request.ContentLength.Value;
@@ -117,7 +117,7 @@ namespace Azure.Core.Tests
                 // Sending the request would fail because of length mismatch
             }
 
-            Assert.AreEqual(requestContentLength, requestContentLength);
+            Assert.AreEqual(contentLength, requestContentLength);
         }
 
         [Test]

@@ -10,6 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
+    [NonParallelizable]
     public class AsyncLockWithValueTests
     {
         [Test]
@@ -165,7 +166,6 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        [Timeout(8000)]
         public async Task AsyncLockWithValue_GetLockOrValueAsync_OneHundredCalls_Canceled([Values(true, false)] bool async)
         {
             var alwv = new AsyncLockWithValue<int>();
