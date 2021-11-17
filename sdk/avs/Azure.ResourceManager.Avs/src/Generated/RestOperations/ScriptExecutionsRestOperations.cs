@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="scriptExecutionName"> Name of the user-invoked script execution resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, or <paramref name="scriptExecutionName"/> is null. </exception>
-        public async Task<Response<ScriptExecutionData>> GetAsync(string resourceGroupName, string privateCloudName, string scriptExecutionName, CancellationToken cancellationToken = default)
+        public async Task<Response<ScriptExecution>> GetAsync(string resourceGroupName, string privateCloudName, string scriptExecutionName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -179,13 +179,11 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        ScriptExecutionData value = default;
+                        ScriptExecution value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ScriptExecutionData.DeserializeScriptExecutionData(document.RootElement);
+                        value = ScriptExecution.DeserializeScriptExecution(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((ScriptExecutionData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -197,7 +195,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="scriptExecutionName"> Name of the user-invoked script execution resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, or <paramref name="scriptExecutionName"/> is null. </exception>
-        public Response<ScriptExecutionData> Get(string resourceGroupName, string privateCloudName, string scriptExecutionName, CancellationToken cancellationToken = default)
+        public Response<ScriptExecution> Get(string resourceGroupName, string privateCloudName, string scriptExecutionName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -218,19 +216,17 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        ScriptExecutionData value = default;
+                        ScriptExecution value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ScriptExecutionData.DeserializeScriptExecutionData(document.RootElement);
+                        value = ScriptExecution.DeserializeScriptExecution(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((ScriptExecutionData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string privateCloudName, string scriptExecutionName, ScriptExecutionData scriptExecution)
+        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string privateCloudName, string scriptExecutionName, ScriptExecution scriptExecution)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -263,7 +259,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="scriptExecution"> A script running in the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="scriptExecutionName"/>, or <paramref name="scriptExecution"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string privateCloudName, string scriptExecutionName, ScriptExecutionData scriptExecution, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string privateCloudName, string scriptExecutionName, ScriptExecution scriptExecution, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -301,7 +297,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="scriptExecution"> A script running in the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="scriptExecutionName"/>, or <paramref name="scriptExecution"/> is null. </exception>
-        public Response CreateOrUpdate(string resourceGroupName, string privateCloudName, string scriptExecutionName, ScriptExecutionData scriptExecution, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string resourceGroupName, string privateCloudName, string scriptExecutionName, ScriptExecution scriptExecution, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -464,7 +460,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="scriptOutputStreamType"> Name of the desired output stream to return. If not provided, will return all. An empty array will return nothing. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, or <paramref name="scriptExecutionName"/> is null. </exception>
-        public async Task<Response<ScriptExecutionData>> GetExecutionLogsAsync(string resourceGroupName, string privateCloudName, string scriptExecutionName, IEnumerable<ScriptOutputStreamType> scriptOutputStreamType = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ScriptExecution>> GetExecutionLogsAsync(string resourceGroupName, string privateCloudName, string scriptExecutionName, IEnumerable<ScriptOutputStreamType> scriptOutputStreamType = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -485,13 +481,11 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        ScriptExecutionData value = default;
+                        ScriptExecution value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ScriptExecutionData.DeserializeScriptExecutionData(document.RootElement);
+                        value = ScriptExecution.DeserializeScriptExecution(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((ScriptExecutionData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -504,7 +498,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="scriptOutputStreamType"> Name of the desired output stream to return. If not provided, will return all. An empty array will return nothing. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, or <paramref name="scriptExecutionName"/> is null. </exception>
-        public Response<ScriptExecutionData> GetExecutionLogs(string resourceGroupName, string privateCloudName, string scriptExecutionName, IEnumerable<ScriptOutputStreamType> scriptOutputStreamType = null, CancellationToken cancellationToken = default)
+        public Response<ScriptExecution> GetExecutionLogs(string resourceGroupName, string privateCloudName, string scriptExecutionName, IEnumerable<ScriptOutputStreamType> scriptOutputStreamType = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -525,13 +519,11 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        ScriptExecutionData value = default;
+                        ScriptExecution value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ScriptExecutionData.DeserializeScriptExecutionData(document.RootElement);
+                        value = ScriptExecution.DeserializeScriptExecution(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((ScriptExecutionData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }

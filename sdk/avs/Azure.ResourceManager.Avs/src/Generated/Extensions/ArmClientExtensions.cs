@@ -78,17 +78,6 @@ namespace Azure.ResourceManager.Avs
         }
         #endregion
 
-        #region WorkloadNetworkSegment
-        /// <summary> Gets an object representing a WorkloadNetworkSegment along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkloadNetworkSegment" /> object. </returns>
-        public static WorkloadNetworkSegment GetWorkloadNetworkSegment(this ArmClient armClient, ResourceIdentifier id)
-        {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new WorkloadNetworkSegment(clientOptions, credential, uri, pipeline, id));
-        }
-        #endregion
-
         #region CloudLink
         /// <summary> Gets an object representing a CloudLink along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -119,17 +108,6 @@ namespace Azure.ResourceManager.Avs
         public static PlacementPolicy GetPlacementPolicy(this ArmClient armClient, ResourceIdentifier id)
         {
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new PlacementPolicy(clientOptions, credential, uri, pipeline, id));
-        }
-        #endregion
-
-        #region ScriptExecution
-        /// <summary> Gets an object representing a ScriptExecution along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ScriptExecution" /> object. </returns>
-        public static ScriptExecution GetScriptExecution(this ArmClient armClient, ResourceIdentifier id)
-        {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ScriptExecution(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
     }

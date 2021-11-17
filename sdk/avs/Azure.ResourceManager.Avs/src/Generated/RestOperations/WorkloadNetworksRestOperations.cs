@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="segmentId"> NSX Segment identifier. Generally the same as the Segment&apos;s display name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, or <paramref name="segmentId"/> is null. </exception>
-        public async Task<Response<WorkloadNetworkSegmentData>> GetSegmentAsync(string resourceGroupName, string privateCloudName, string segmentId, CancellationToken cancellationToken = default)
+        public async Task<Response<WorkloadNetworkSegment>> GetSegmentAsync(string resourceGroupName, string privateCloudName, string segmentId, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -178,13 +178,11 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        WorkloadNetworkSegmentData value = default;
+                        WorkloadNetworkSegment value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WorkloadNetworkSegmentData.DeserializeWorkloadNetworkSegmentData(document.RootElement);
+                        value = WorkloadNetworkSegment.DeserializeWorkloadNetworkSegment(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((WorkloadNetworkSegmentData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -196,7 +194,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="segmentId"> NSX Segment identifier. Generally the same as the Segment&apos;s display name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, or <paramref name="segmentId"/> is null. </exception>
-        public Response<WorkloadNetworkSegmentData> GetSegment(string resourceGroupName, string privateCloudName, string segmentId, CancellationToken cancellationToken = default)
+        public Response<WorkloadNetworkSegment> GetSegment(string resourceGroupName, string privateCloudName, string segmentId, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -217,19 +215,17 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        WorkloadNetworkSegmentData value = default;
+                        WorkloadNetworkSegment value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WorkloadNetworkSegmentData.DeserializeWorkloadNetworkSegmentData(document.RootElement);
+                        value = WorkloadNetworkSegment.DeserializeWorkloadNetworkSegment(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((WorkloadNetworkSegmentData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateSegmentsRequest(string resourceGroupName, string privateCloudName, string segmentId, WorkloadNetworkSegmentData workloadNetworkSegment)
+        internal HttpMessage CreateCreateSegmentsRequest(string resourceGroupName, string privateCloudName, string segmentId, WorkloadNetworkSegment workloadNetworkSegment)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -262,7 +258,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="workloadNetworkSegment"> NSX Segment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="segmentId"/>, or <paramref name="workloadNetworkSegment"/> is null. </exception>
-        public async Task<Response> CreateSegmentsAsync(string resourceGroupName, string privateCloudName, string segmentId, WorkloadNetworkSegmentData workloadNetworkSegment, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateSegmentsAsync(string resourceGroupName, string privateCloudName, string segmentId, WorkloadNetworkSegment workloadNetworkSegment, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -300,7 +296,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="workloadNetworkSegment"> NSX Segment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="segmentId"/>, or <paramref name="workloadNetworkSegment"/> is null. </exception>
-        public Response CreateSegments(string resourceGroupName, string privateCloudName, string segmentId, WorkloadNetworkSegmentData workloadNetworkSegment, CancellationToken cancellationToken = default)
+        public Response CreateSegments(string resourceGroupName, string privateCloudName, string segmentId, WorkloadNetworkSegment workloadNetworkSegment, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -331,7 +327,7 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        internal HttpMessage CreateUpdateSegmentsRequest(string resourceGroupName, string privateCloudName, string segmentId, WorkloadNetworkSegmentData workloadNetworkSegment)
+        internal HttpMessage CreateUpdateSegmentsRequest(string resourceGroupName, string privateCloudName, string segmentId, WorkloadNetworkSegment workloadNetworkSegment)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -364,7 +360,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="workloadNetworkSegment"> NSX Segment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="segmentId"/>, or <paramref name="workloadNetworkSegment"/> is null. </exception>
-        public async Task<Response> UpdateSegmentsAsync(string resourceGroupName, string privateCloudName, string segmentId, WorkloadNetworkSegmentData workloadNetworkSegment, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateSegmentsAsync(string resourceGroupName, string privateCloudName, string segmentId, WorkloadNetworkSegment workloadNetworkSegment, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -402,7 +398,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="workloadNetworkSegment"> NSX Segment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="segmentId"/>, or <paramref name="workloadNetworkSegment"/> is null. </exception>
-        public Response UpdateSegments(string resourceGroupName, string privateCloudName, string segmentId, WorkloadNetworkSegmentData workloadNetworkSegment, CancellationToken cancellationToken = default)
+        public Response UpdateSegments(string resourceGroupName, string privateCloudName, string segmentId, WorkloadNetworkSegment workloadNetworkSegment, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

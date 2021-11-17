@@ -8,21 +8,20 @@
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Avs.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Avs
+namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> A class representing the WorkloadNetworkSegment data model. </summary>
-    public partial class WorkloadNetworkSegmentData : Resource
+    /// <summary> NSX Segment. </summary>
+    public partial class WorkloadNetworkSegment : Resource
     {
-        /// <summary> Initializes a new instance of WorkloadNetworkSegmentData. </summary>
-        public WorkloadNetworkSegmentData()
+        /// <summary> Initializes a new instance of WorkloadNetworkSegment. </summary>
+        public WorkloadNetworkSegment()
         {
             PortVif = new ChangeTrackingList<WorkloadNetworkSegmentPortVif>();
         }
 
-        /// <summary> Initializes a new instance of WorkloadNetworkSegmentData. </summary>
+        /// <summary> Initializes a new instance of WorkloadNetworkSegment. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="status"> Segment status. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="revision"> NSX revision number. </param>
-        internal WorkloadNetworkSegmentData(ResourceIdentifier id, string name, ResourceType type, string displayName, string connectedGateway, WorkloadNetworkSegmentSubnet subnet, IReadOnlyList<WorkloadNetworkSegmentPortVif> portVif, SegmentStatusEnum? status, WorkloadNetworkSegmentProvisioningState? provisioningState, long? revision) : base(id, name, type)
+        internal WorkloadNetworkSegment(ResourceIdentifier id, string name, ResourceType type, string displayName, string connectedGateway, WorkloadNetworkSegmentSubnet subnet, IReadOnlyList<WorkloadNetworkSegmentPortVif> portVif, SegmentStatusEnum? status, WorkloadNetworkSegmentProvisioningState? provisioningState, long? revision) : base(id, name, type)
         {
             DisplayName = displayName;
             ConnectedGateway = connectedGateway;

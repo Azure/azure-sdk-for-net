@@ -10,11 +10,10 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Avs.Models;
 
-namespace Azure.ResourceManager.Avs
+namespace Azure.ResourceManager.Avs.Models
 {
-    public partial class ScriptExecutionData : IUtf8JsonSerializable
+    public partial class ScriptExecution : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -86,7 +85,7 @@ namespace Azure.ResourceManager.Avs
             writer.WriteEndObject();
         }
 
-        internal static ScriptExecutionData DeserializeScriptExecutionData(JsonElement element)
+        internal static ScriptExecution DeserializeScriptExecution(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
@@ -301,7 +300,7 @@ namespace Azure.ResourceManager.Avs
                     continue;
                 }
             }
-            return new ScriptExecutionData(id, name, type, scriptCmdletId.Value, Optional.ToList(parameters), Optional.ToList(hiddenParameters), failureReason.Value, timeout.Value, retention.Value, Optional.ToNullable(submittedAt), Optional.ToNullable(startedAt), Optional.ToNullable(finishedAt), Optional.ToNullable(provisioningState), Optional.ToList(output), Optional.ToDictionary(namedOutputs), Optional.ToList(information), Optional.ToList(warnings), Optional.ToList(errors));
+            return new ScriptExecution(id, name, type, scriptCmdletId.Value, Optional.ToList(parameters), Optional.ToList(hiddenParameters), failureReason.Value, timeout.Value, retention.Value, Optional.ToNullable(submittedAt), Optional.ToNullable(startedAt), Optional.ToNullable(finishedAt), Optional.ToNullable(provisioningState), Optional.ToList(output), Optional.ToDictionary(namedOutputs), Optional.ToList(information), Optional.ToList(warnings), Optional.ToList(errors));
         }
     }
 }

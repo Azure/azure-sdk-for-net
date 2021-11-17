@@ -9,11 +9,10 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Avs.Models;
 
-namespace Azure.ResourceManager.Avs
+namespace Azure.ResourceManager.Avs.Models
 {
-    public partial class WorkloadNetworkSegmentData : IUtf8JsonSerializable
+    public partial class WorkloadNetworkSegment : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -44,7 +43,7 @@ namespace Azure.ResourceManager.Avs
             writer.WriteEndObject();
         }
 
-        internal static WorkloadNetworkSegmentData DeserializeWorkloadNetworkSegmentData(JsonElement element)
+        internal static WorkloadNetworkSegment DeserializeWorkloadNetworkSegment(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
@@ -151,7 +150,7 @@ namespace Azure.ResourceManager.Avs
                     continue;
                 }
             }
-            return new WorkloadNetworkSegmentData(id, name, type, displayName.Value, connectedGateway.Value, subnet.Value, Optional.ToList(portVif), Optional.ToNullable(status), Optional.ToNullable(provisioningState), Optional.ToNullable(revision));
+            return new WorkloadNetworkSegment(id, name, type, displayName.Value, connectedGateway.Value, subnet.Value, Optional.ToList(portVif), Optional.ToNullable(status), Optional.ToNullable(provisioningState), Optional.ToNullable(revision));
         }
     }
 }

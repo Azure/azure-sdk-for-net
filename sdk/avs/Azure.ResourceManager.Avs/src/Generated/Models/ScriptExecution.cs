@@ -9,16 +9,15 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Avs.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Avs
+namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> A class representing the ScriptExecution data model. </summary>
-    public partial class ScriptExecutionData : Resource
+    /// <summary> An instance of a script executed by a user - custom or AVS. </summary>
+    public partial class ScriptExecution : Resource
     {
-        /// <summary> Initializes a new instance of ScriptExecutionData. </summary>
-        public ScriptExecutionData()
+        /// <summary> Initializes a new instance of ScriptExecution. </summary>
+        public ScriptExecution()
         {
             Parameters = new ChangeTrackingList<ScriptExecutionParameter>();
             HiddenParameters = new ChangeTrackingList<ScriptExecutionParameter>();
@@ -29,7 +28,7 @@ namespace Azure.ResourceManager.Avs
             Errors = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ScriptExecutionData. </summary>
+        /// <summary> Initializes a new instance of ScriptExecution. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
@@ -48,7 +47,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="information"> Standard information out stream from the powershell execution. </param>
         /// <param name="warnings"> Standard warning out stream from the powershell execution. </param>
         /// <param name="errors"> Standard error output stream from the powershell execution. </param>
-        internal ScriptExecutionData(ResourceIdentifier id, string name, ResourceType type, string scriptCmdletId, IList<ScriptExecutionParameter> parameters, IList<ScriptExecutionParameter> hiddenParameters, string failureReason, string timeout, string retention, DateTimeOffset? submittedAt, DateTimeOffset? startedAt, DateTimeOffset? finishedAt, ScriptExecutionProvisioningState? provisioningState, IList<string> output, IDictionary<string, object> namedOutputs, IReadOnlyList<string> information, IReadOnlyList<string> warnings, IReadOnlyList<string> errors) : base(id, name, type)
+        internal ScriptExecution(ResourceIdentifier id, string name, ResourceType type, string scriptCmdletId, IList<ScriptExecutionParameter> parameters, IList<ScriptExecutionParameter> hiddenParameters, string failureReason, string timeout, string retention, DateTimeOffset? submittedAt, DateTimeOffset? startedAt, DateTimeOffset? finishedAt, ScriptExecutionProvisioningState? provisioningState, IList<string> output, IDictionary<string, object> namedOutputs, IReadOnlyList<string> information, IReadOnlyList<string> warnings, IReadOnlyList<string> errors) : base(id, name, type)
         {
             ScriptCmdletId = scriptCmdletId;
             Parameters = parameters;

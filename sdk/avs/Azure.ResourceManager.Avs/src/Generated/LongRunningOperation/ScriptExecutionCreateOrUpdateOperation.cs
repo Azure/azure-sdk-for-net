@@ -12,8 +12,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Avs;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -22,17 +20,14 @@ namespace Azure.ResourceManager.Avs.Models
     {
         private readonly OperationInternals<ScriptExecution> _operation;
 
-        private readonly ArmResource _operationBase;
-
         /// <summary> Initializes a new instance of ScriptExecutionCreateOrUpdateOperation for mocking. </summary>
         protected ScriptExecutionCreateOrUpdateOperation()
         {
         }
 
-        internal ScriptExecutionCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ScriptExecutionCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<ScriptExecution>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ScriptExecutionCreateOrUpdateOperation");
-            _operationBase = operationsBase;
         }
 
         /// <inheritdoc />
@@ -65,13 +60,13 @@ namespace Azure.ResourceManager.Avs.Models
         ScriptExecution IOperationSource<ScriptExecution>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new ScriptExecution(_operationBase, ScriptExecutionData.DeserializeScriptExecutionData(document.RootElement));
+            return ScriptExecution.DeserializeScriptExecution(document.RootElement);
         }
 
         async ValueTask<ScriptExecution> IOperationSource<ScriptExecution>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new ScriptExecution(_operationBase, ScriptExecutionData.DeserializeScriptExecutionData(document.RootElement));
+            return ScriptExecution.DeserializeScriptExecution(document.RootElement);
         }
     }
 }

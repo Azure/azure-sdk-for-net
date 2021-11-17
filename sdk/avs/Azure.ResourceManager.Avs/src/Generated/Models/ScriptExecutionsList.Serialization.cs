@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -16,7 +15,7 @@ namespace Azure.ResourceManager.Avs.Models
     {
         internal static ScriptExecutionsList DeserializeScriptExecutionsList(JsonElement element)
         {
-            Optional<IReadOnlyList<ScriptExecutionData>> value = default;
+            Optional<IReadOnlyList<ScriptExecution>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +26,10 @@ namespace Azure.ResourceManager.Avs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ScriptExecutionData> array = new List<ScriptExecutionData>();
+                    List<ScriptExecution> array = new List<ScriptExecution>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScriptExecutionData.DeserializeScriptExecutionData(item));
+                        array.Add(ScriptExecution.DeserializeScriptExecution(item));
                     }
                     value = array;
                     continue;

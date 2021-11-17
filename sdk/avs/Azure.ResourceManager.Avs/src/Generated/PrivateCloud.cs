@@ -25,7 +25,9 @@ namespace Azure.ResourceManager.Avs
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly PrivateCloudsRestOperations _restClient;
         private readonly PrivateCloudData _data;
+        private WorkloadNetworksRestOperations _workloadNetworksRestClient { get; }
         private ScriptPackagesRestOperations _scriptPackagesRestClient { get; }
+        private ScriptExecutionsRestOperations _scriptExecutionsRestClient { get; }
 
         /// <summary> Initializes a new instance of the <see cref="PrivateCloud"/> class for mocking. </summary>
         protected PrivateCloud()
@@ -41,7 +43,9 @@ namespace Azure.ResourceManager.Avs
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new PrivateCloudsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _workloadNetworksRestClient = new WorkloadNetworksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
             _scriptPackagesRestClient = new ScriptPackagesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _scriptExecutionsRestClient = new ScriptExecutionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="PrivateCloud"/> class. </summary>
@@ -51,7 +55,9 @@ namespace Azure.ResourceManager.Avs
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new PrivateCloudsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _workloadNetworksRestClient = new WorkloadNetworksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
             _scriptPackagesRestClient = new ScriptPackagesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _scriptExecutionsRestClient = new ScriptExecutionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="PrivateCloud"/> class. </summary>
@@ -64,7 +70,9 @@ namespace Azure.ResourceManager.Avs
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new PrivateCloudsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _workloadNetworksRestClient = new WorkloadNetworksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
             _scriptPackagesRestClient = new ScriptPackagesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _scriptExecutionsRestClient = new ScriptExecutionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -395,6 +403,1013 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
+        /// <summary> Get a segment by id in a private cloud workload network. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<WorkloadNetworkSegment>> GetWorkloadNetworkSegmentAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("PrivateCloud.GetWorkloadNetworkSegment");
+            scope.Start();
+            try
+            {
+                var response = await _workloadNetworksRestClient.GetSegmentAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get a segment by id in a private cloud workload network. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<WorkloadNetworkSegment> GetWorkloadNetworkSegment(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("PrivateCloud.GetWorkloadNetworkSegment");
+            scope.Start();
+            try
+            {
+                var response = _workloadNetworksRestClient.GetSegment(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get dhcp by id in a private cloud workload network. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<WorkloadNetworkDhcp>> GetWorkloadNetworkDhcpAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("PrivateCloud.GetWorkloadNetworkDhcp");
+            scope.Start();
+            try
+            {
+                var response = await _workloadNetworksRestClient.GetDhcpAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get dhcp by id in a private cloud workload network. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<WorkloadNetworkDhcp> GetWorkloadNetworkDhcp(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("PrivateCloud.GetWorkloadNetworkDhcp");
+            scope.Start();
+            try
+            {
+                var response = _workloadNetworksRestClient.GetDhcp(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get a gateway by id in a private cloud workload network. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<WorkloadNetworkGateway>> GetWorkloadNetworkGatewayAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("PrivateCloud.GetWorkloadNetworkGateway");
+            scope.Start();
+            try
+            {
+                var response = await _workloadNetworksRestClient.GetGatewayAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get a gateway by id in a private cloud workload network. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<WorkloadNetworkGateway> GetWorkloadNetworkGateway(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("PrivateCloud.GetWorkloadNetworkGateway");
+            scope.Start();
+            try
+            {
+                var response = _workloadNetworksRestClient.GetGateway(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get a port mirroring profile by id in a private cloud workload network. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<WorkloadNetworkPortMirroring>> GetWorkloadNetworkPortMirroringAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("PrivateCloud.GetWorkloadNetworkPortMirroring");
+            scope.Start();
+            try
+            {
+                var response = await _workloadNetworksRestClient.GetPortMirroringAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get a port mirroring profile by id in a private cloud workload network. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<WorkloadNetworkPortMirroring> GetWorkloadNetworkPortMirroring(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("PrivateCloud.GetWorkloadNetworkPortMirroring");
+            scope.Start();
+            try
+            {
+                var response = _workloadNetworksRestClient.GetPortMirroring(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get a vm group by id in a private cloud workload network. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<WorkloadNetworkVMGroup>> GetWorkloadNetworkVMGroupAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("PrivateCloud.GetWorkloadNetworkVMGroup");
+            scope.Start();
+            try
+            {
+                var response = await _workloadNetworksRestClient.GetVMGroupAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get a vm group by id in a private cloud workload network. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<WorkloadNetworkVMGroup> GetWorkloadNetworkVMGroup(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("PrivateCloud.GetWorkloadNetworkVMGroup");
+            scope.Start();
+            try
+            {
+                var response = _workloadNetworksRestClient.GetVMGroup(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get a virtual machine by id in a private cloud workload network. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<WorkloadNetworkVirtualMachine>> GetWorkloadNetworkVirtualMachineAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("PrivateCloud.GetWorkloadNetworkVirtualMachine");
+            scope.Start();
+            try
+            {
+                var response = await _workloadNetworksRestClient.GetVirtualMachineAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get a virtual machine by id in a private cloud workload network. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<WorkloadNetworkVirtualMachine> GetWorkloadNetworkVirtualMachine(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("PrivateCloud.GetWorkloadNetworkVirtualMachine");
+            scope.Start();
+            try
+            {
+                var response = _workloadNetworksRestClient.GetVirtualMachine(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get a DNS service by id in a private cloud workload network. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<WorkloadNetworkDnsService>> GetWorkloadNetworkDnsServiceAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("PrivateCloud.GetWorkloadNetworkDnsService");
+            scope.Start();
+            try
+            {
+                var response = await _workloadNetworksRestClient.GetDnsServiceAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get a DNS service by id in a private cloud workload network. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<WorkloadNetworkDnsService> GetWorkloadNetworkDnsService(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("PrivateCloud.GetWorkloadNetworkDnsService");
+            scope.Start();
+            try
+            {
+                var response = _workloadNetworksRestClient.GetDnsService(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get a DNS zone by id in a private cloud workload network. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<WorkloadNetworkDnsZone>> GetWorkloadNetworkDnsZoneAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("PrivateCloud.GetWorkloadNetworkDnsZone");
+            scope.Start();
+            try
+            {
+                var response = await _workloadNetworksRestClient.GetDnsZoneAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get a DNS zone by id in a private cloud workload network. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<WorkloadNetworkDnsZone> GetWorkloadNetworkDnsZone(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("PrivateCloud.GetWorkloadNetworkDnsZone");
+            scope.Start();
+            try
+            {
+                var response = _workloadNetworksRestClient.GetDnsZone(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get a Public IP Block by id in a private cloud workload network. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<WorkloadNetworkPublicIP>> GetWorkloadNetworkPublicIPAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("PrivateCloud.GetWorkloadNetworkPublicIP");
+            scope.Start();
+            try
+            {
+                var response = await _workloadNetworksRestClient.GetPublicIPAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get a Public IP Block by id in a private cloud workload network. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<WorkloadNetworkPublicIP> GetWorkloadNetworkPublicIP(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("PrivateCloud.GetWorkloadNetworkPublicIP");
+            scope.Start();
+            try
+            {
+                var response = _workloadNetworksRestClient.GetPublicIP(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> List of segments in a private cloud workload network. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="WorkloadNetworkSegment" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<WorkloadNetworkSegment> GetWorkloadNetworkSegments(CancellationToken cancellationToken = default)
+        {
+            Page<WorkloadNetworkSegment> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("PrivateCloud.GetWorkloadNetworkSegments");
+                scope.Start();
+                try
+                {
+                    var response = _workloadNetworksRestClient.GetSegments(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<WorkloadNetworkSegment> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("PrivateCloud.GetWorkloadNetworkSegments");
+                scope.Start();
+                try
+                {
+                    var response = _workloadNetworksRestClient.GetSegmentsNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> List of segments in a private cloud workload network. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="WorkloadNetworkSegment" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<WorkloadNetworkSegment> GetWorkloadNetworkSegmentsAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<WorkloadNetworkSegment>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("PrivateCloud.GetWorkloadNetworkSegments");
+                scope.Start();
+                try
+                {
+                    var response = await _workloadNetworksRestClient.GetSegmentsAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<WorkloadNetworkSegment>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("PrivateCloud.GetWorkloadNetworkSegments");
+                scope.Start();
+                try
+                {
+                    var response = await _workloadNetworksRestClient.GetSegmentsNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> List dhcp in a private cloud workload network. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="WorkloadNetworkDhcp" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<WorkloadNetworkDhcp> GetWorkloadNetworkDhcp(CancellationToken cancellationToken = default)
+        {
+            Page<WorkloadNetworkDhcp> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("PrivateCloud.GetWorkloadNetworkDhcp");
+                scope.Start();
+                try
+                {
+                    var response = _workloadNetworksRestClient.GetDhcp(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<WorkloadNetworkDhcp> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("PrivateCloud.GetWorkloadNetworkDhcp");
+                scope.Start();
+                try
+                {
+                    var response = _workloadNetworksRestClient.GetDhcpNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> List dhcp in a private cloud workload network. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="WorkloadNetworkDhcp" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<WorkloadNetworkDhcp> GetWorkloadNetworkDhcpAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<WorkloadNetworkDhcp>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("PrivateCloud.GetWorkloadNetworkDhcp");
+                scope.Start();
+                try
+                {
+                    var response = await _workloadNetworksRestClient.GetDhcpAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<WorkloadNetworkDhcp>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("PrivateCloud.GetWorkloadNetworkDhcp");
+                scope.Start();
+                try
+                {
+                    var response = await _workloadNetworksRestClient.GetDhcpNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> List of gateways in a private cloud workload network. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="WorkloadNetworkGateway" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<WorkloadNetworkGateway> GetWorkloadNetworkGateways(CancellationToken cancellationToken = default)
+        {
+            Page<WorkloadNetworkGateway> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("PrivateCloud.GetWorkloadNetworkGateways");
+                scope.Start();
+                try
+                {
+                    var response = _workloadNetworksRestClient.GetGateways(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<WorkloadNetworkGateway> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("PrivateCloud.GetWorkloadNetworkGateways");
+                scope.Start();
+                try
+                {
+                    var response = _workloadNetworksRestClient.GetGatewaysNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> List of gateways in a private cloud workload network. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="WorkloadNetworkGateway" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<WorkloadNetworkGateway> GetWorkloadNetworkGatewaysAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<WorkloadNetworkGateway>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("PrivateCloud.GetWorkloadNetworkGateways");
+                scope.Start();
+                try
+                {
+                    var response = await _workloadNetworksRestClient.GetGatewaysAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<WorkloadNetworkGateway>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("PrivateCloud.GetWorkloadNetworkGateways");
+                scope.Start();
+                try
+                {
+                    var response = await _workloadNetworksRestClient.GetGatewaysNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> List of port mirroring profiles in a private cloud workload network. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="WorkloadNetworkPortMirroring" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<WorkloadNetworkPortMirroring> GetWorkloadNetworkPortMirroring(CancellationToken cancellationToken = default)
+        {
+            Page<WorkloadNetworkPortMirroring> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("PrivateCloud.GetWorkloadNetworkPortMirroring");
+                scope.Start();
+                try
+                {
+                    var response = _workloadNetworksRestClient.GetPortMirroring(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<WorkloadNetworkPortMirroring> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("PrivateCloud.GetWorkloadNetworkPortMirroring");
+                scope.Start();
+                try
+                {
+                    var response = _workloadNetworksRestClient.GetPortMirroringNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> List of port mirroring profiles in a private cloud workload network. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="WorkloadNetworkPortMirroring" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<WorkloadNetworkPortMirroring> GetWorkloadNetworkPortMirroringAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<WorkloadNetworkPortMirroring>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("PrivateCloud.GetWorkloadNetworkPortMirroring");
+                scope.Start();
+                try
+                {
+                    var response = await _workloadNetworksRestClient.GetPortMirroringAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<WorkloadNetworkPortMirroring>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("PrivateCloud.GetWorkloadNetworkPortMirroring");
+                scope.Start();
+                try
+                {
+                    var response = await _workloadNetworksRestClient.GetPortMirroringNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> List of vm groups in a private cloud workload network. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="WorkloadNetworkVMGroup" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<WorkloadNetworkVMGroup> GetWorkloadNetworkVMGroups(CancellationToken cancellationToken = default)
+        {
+            Page<WorkloadNetworkVMGroup> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("PrivateCloud.GetWorkloadNetworkVMGroups");
+                scope.Start();
+                try
+                {
+                    var response = _workloadNetworksRestClient.GetVMGroups(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<WorkloadNetworkVMGroup> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("PrivateCloud.GetWorkloadNetworkVMGroups");
+                scope.Start();
+                try
+                {
+                    var response = _workloadNetworksRestClient.GetVMGroupsNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> List of vm groups in a private cloud workload network. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="WorkloadNetworkVMGroup" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<WorkloadNetworkVMGroup> GetWorkloadNetworkVMGroupsAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<WorkloadNetworkVMGroup>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("PrivateCloud.GetWorkloadNetworkVMGroups");
+                scope.Start();
+                try
+                {
+                    var response = await _workloadNetworksRestClient.GetVMGroupsAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<WorkloadNetworkVMGroup>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("PrivateCloud.GetWorkloadNetworkVMGroups");
+                scope.Start();
+                try
+                {
+                    var response = await _workloadNetworksRestClient.GetVMGroupsNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> List of virtual machines in a private cloud workload network. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="WorkloadNetworkVirtualMachine" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<WorkloadNetworkVirtualMachine> GetWorkloadNetworkVirtualMachines(CancellationToken cancellationToken = default)
+        {
+            Page<WorkloadNetworkVirtualMachine> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("PrivateCloud.GetWorkloadNetworkVirtualMachines");
+                scope.Start();
+                try
+                {
+                    var response = _workloadNetworksRestClient.GetVirtualMachines(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<WorkloadNetworkVirtualMachine> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("PrivateCloud.GetWorkloadNetworkVirtualMachines");
+                scope.Start();
+                try
+                {
+                    var response = _workloadNetworksRestClient.GetVirtualMachinesNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> List of virtual machines in a private cloud workload network. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="WorkloadNetworkVirtualMachine" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<WorkloadNetworkVirtualMachine> GetWorkloadNetworkVirtualMachinesAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<WorkloadNetworkVirtualMachine>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("PrivateCloud.GetWorkloadNetworkVirtualMachines");
+                scope.Start();
+                try
+                {
+                    var response = await _workloadNetworksRestClient.GetVirtualMachinesAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<WorkloadNetworkVirtualMachine>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("PrivateCloud.GetWorkloadNetworkVirtualMachines");
+                scope.Start();
+                try
+                {
+                    var response = await _workloadNetworksRestClient.GetVirtualMachinesNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> List of DNS services in a private cloud workload network. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="WorkloadNetworkDnsService" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<WorkloadNetworkDnsService> GetWorkloadNetworkDnsServices(CancellationToken cancellationToken = default)
+        {
+            Page<WorkloadNetworkDnsService> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("PrivateCloud.GetWorkloadNetworkDnsServices");
+                scope.Start();
+                try
+                {
+                    var response = _workloadNetworksRestClient.GetDnsServices(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<WorkloadNetworkDnsService> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("PrivateCloud.GetWorkloadNetworkDnsServices");
+                scope.Start();
+                try
+                {
+                    var response = _workloadNetworksRestClient.GetDnsServicesNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> List of DNS services in a private cloud workload network. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="WorkloadNetworkDnsService" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<WorkloadNetworkDnsService> GetWorkloadNetworkDnsServicesAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<WorkloadNetworkDnsService>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("PrivateCloud.GetWorkloadNetworkDnsServices");
+                scope.Start();
+                try
+                {
+                    var response = await _workloadNetworksRestClient.GetDnsServicesAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<WorkloadNetworkDnsService>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("PrivateCloud.GetWorkloadNetworkDnsServices");
+                scope.Start();
+                try
+                {
+                    var response = await _workloadNetworksRestClient.GetDnsServicesNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> List of DNS zones in a private cloud workload network. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="WorkloadNetworkDnsZone" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<WorkloadNetworkDnsZone> GetWorkloadNetworkDnsZones(CancellationToken cancellationToken = default)
+        {
+            Page<WorkloadNetworkDnsZone> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("PrivateCloud.GetWorkloadNetworkDnsZones");
+                scope.Start();
+                try
+                {
+                    var response = _workloadNetworksRestClient.GetDnsZones(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<WorkloadNetworkDnsZone> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("PrivateCloud.GetWorkloadNetworkDnsZones");
+                scope.Start();
+                try
+                {
+                    var response = _workloadNetworksRestClient.GetDnsZonesNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> List of DNS zones in a private cloud workload network. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="WorkloadNetworkDnsZone" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<WorkloadNetworkDnsZone> GetWorkloadNetworkDnsZonesAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<WorkloadNetworkDnsZone>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("PrivateCloud.GetWorkloadNetworkDnsZones");
+                scope.Start();
+                try
+                {
+                    var response = await _workloadNetworksRestClient.GetDnsZonesAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<WorkloadNetworkDnsZone>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("PrivateCloud.GetWorkloadNetworkDnsZones");
+                scope.Start();
+                try
+                {
+                    var response = await _workloadNetworksRestClient.GetDnsZonesNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> List of Public IP Blocks in a private cloud workload network. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="WorkloadNetworkPublicIP" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<WorkloadNetworkPublicIP> GetWorkloadNetworkPublicIPs(CancellationToken cancellationToken = default)
+        {
+            Page<WorkloadNetworkPublicIP> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("PrivateCloud.GetWorkloadNetworkPublicIPs");
+                scope.Start();
+                try
+                {
+                    var response = _workloadNetworksRestClient.GetPublicIPs(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<WorkloadNetworkPublicIP> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("PrivateCloud.GetWorkloadNetworkPublicIPs");
+                scope.Start();
+                try
+                {
+                    var response = _workloadNetworksRestClient.GetPublicIPsNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> List of Public IP Blocks in a private cloud workload network. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="WorkloadNetworkPublicIP" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<WorkloadNetworkPublicIP> GetWorkloadNetworkPublicIPsAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<WorkloadNetworkPublicIP>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("PrivateCloud.GetWorkloadNetworkPublicIPs");
+                scope.Start();
+                try
+                {
+                    var response = await _workloadNetworksRestClient.GetPublicIPsAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<WorkloadNetworkPublicIP>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("PrivateCloud.GetWorkloadNetworkPublicIPs");
+                scope.Start();
+                try
+                {
+                    var response = await _workloadNetworksRestClient.GetPublicIPsNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
         /// <summary> Get a script package available to run on a private cloud. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ScriptPackage>> GetScriptPackageAsync(CancellationToken cancellationToken = default)
@@ -496,6 +1511,155 @@ namespace Azure.ResourceManager.Avs
                 try
                 {
                     var response = await _scriptPackagesRestClient.GetAllNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+        /// <summary> Get an script execution by name in a private cloud. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ScriptExecution>> GetScriptExecutionAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("PrivateCloud.GetScriptExecution");
+            scope.Start();
+            try
+            {
+                var response = await _scriptExecutionsRestClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get an script execution by name in a private cloud. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ScriptExecution> GetScriptExecution(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("PrivateCloud.GetScriptExecution");
+            scope.Start();
+            try
+            {
+                var response = _scriptExecutionsRestClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Return the logs for a script execution resource. </summary>
+        /// <param name="scriptOutputStreamType"> Name of the desired output stream to return. If not provided, will return all. An empty array will return nothing. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ScriptExecution>> GetScriptExecutionExecutionLogsAsync(IEnumerable<ScriptOutputStreamType> scriptOutputStreamType = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("PrivateCloud.GetScriptExecutionExecutionLogs");
+            scope.Start();
+            try
+            {
+                var response = await _scriptExecutionsRestClient.GetExecutionLogsAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, scriptOutputStreamType, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Return the logs for a script execution resource. </summary>
+        /// <param name="scriptOutputStreamType"> Name of the desired output stream to return. If not provided, will return all. An empty array will return nothing. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ScriptExecution> GetScriptExecutionExecutionLogs(IEnumerable<ScriptOutputStreamType> scriptOutputStreamType = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("PrivateCloud.GetScriptExecutionExecutionLogs");
+            scope.Start();
+            try
+            {
+                var response = _scriptExecutionsRestClient.GetExecutionLogs(Id.ResourceGroupName, Id.Parent.Name, Id.Name, scriptOutputStreamType, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> List script executions in a private cloud. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ScriptExecution" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ScriptExecution> GetScriptExecutions(CancellationToken cancellationToken = default)
+        {
+            Page<ScriptExecution> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("PrivateCloud.GetScriptExecutions");
+                scope.Start();
+                try
+                {
+                    var response = _scriptExecutionsRestClient.GetAll(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<ScriptExecution> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("PrivateCloud.GetScriptExecutions");
+                scope.Start();
+                try
+                {
+                    var response = _scriptExecutionsRestClient.GetAllNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> List script executions in a private cloud. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ScriptExecution" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ScriptExecution> GetScriptExecutionsAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<ScriptExecution>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("PrivateCloud.GetScriptExecutions");
+                scope.Start();
+                try
+                {
+                    var response = await _scriptExecutionsRestClient.GetAllAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<ScriptExecution>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("PrivateCloud.GetScriptExecutions");
+                scope.Start();
+                try
+                {
+                    var response = await _scriptExecutionsRestClient.GetAllNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -681,13 +1845,6 @@ namespace Azure.ResourceManager.Avs
             return new GlobalReachConnectionCollection(this);
         }
 
-        /// <summary> Gets a list of WorkloadNetworkSegments in the PrivateCloud. </summary>
-        /// <returns> An object representing collection of WorkloadNetworkSegments and their operations over a PrivateCloud. </returns>
-        public WorkloadNetworkSegmentCollection GetWorkloadNetworkSegments()
-        {
-            return new WorkloadNetworkSegmentCollection(this);
-        }
-
         /// <summary> Gets a list of CloudLinks in the PrivateCloud. </summary>
         /// <returns> An object representing collection of CloudLinks and their operations over a PrivateCloud. </returns>
         public CloudLinkCollection GetCloudLinks()
@@ -700,13 +1857,6 @@ namespace Azure.ResourceManager.Avs
         public AddonCollection GetAddons()
         {
             return new AddonCollection(this);
-        }
-
-        /// <summary> Gets a list of ScriptExecutions in the PrivateCloud. </summary>
-        /// <returns> An object representing collection of ScriptExecutions and their operations over a PrivateCloud. </returns>
-        public ScriptExecutionCollection GetScriptExecutions()
-        {
-            return new ScriptExecutionCollection(this);
         }
     }
 }
