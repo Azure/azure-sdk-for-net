@@ -34,7 +34,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="type">Possible values include:
         /// 'EncryptionAtRestWithPlatformKey',
         /// 'EncryptionAtRestWithCustomerKey',
-        /// 'EncryptionAtRestWithPlatformAndCustomerKeys'</param>
+        /// 'EncryptionAtRestWithPlatformAndCustomerKeys',
+        /// 'ConfidentialVmEncryptedWithCustomerKey'</param>
         public Encryption(string diskEncryptionSetId = default(string), string type = default(string))
         {
             DiskEncryptionSetId = diskEncryptionSetId;
@@ -58,7 +59,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Gets or sets possible values include:
         /// 'EncryptionAtRestWithPlatformKey',
         /// 'EncryptionAtRestWithCustomerKey',
-        /// 'EncryptionAtRestWithPlatformAndCustomerKeys'
+        /// 'EncryptionAtRestWithPlatformAndCustomerKeys',
+        /// 'ConfidentialVmEncryptedWithCustomerKey'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }

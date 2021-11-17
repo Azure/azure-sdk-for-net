@@ -30,10 +30,17 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the DiskSecurityProfile class.
         /// </summary>
         /// <param name="securityType">Possible values include:
-        /// 'TrustedLaunch'</param>
-        public DiskSecurityProfile(string securityType = default(string))
+        /// 'TrustedLaunch',
+        /// 'ConfidentialVM_VMGuestStateOnlyEncryptedWithPlatformKey',
+        /// 'ConfidentialVM_DiskEncryptedWithPlatformKey',
+        /// 'ConfidentialVM_DiskEncryptedWithCustomerKey'</param>
+        /// <param name="secureVMDiskEncryptionSetId">ResourceId of the disk
+        /// encryption set associated to Confidential VM supported disk
+        /// encrypted with customer managed key</param>
+        public DiskSecurityProfile(string securityType = default(string), string secureVMDiskEncryptionSetId = default(string))
         {
             SecurityType = securityType;
+            SecureVMDiskEncryptionSetId = secureVMDiskEncryptionSetId;
             CustomInit();
         }
 
@@ -43,10 +50,20 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets possible values include: 'TrustedLaunch'
+        /// Gets or sets possible values include: 'TrustedLaunch',
+        /// 'ConfidentialVM_VMGuestStateOnlyEncryptedWithPlatformKey',
+        /// 'ConfidentialVM_DiskEncryptedWithPlatformKey',
+        /// 'ConfidentialVM_DiskEncryptedWithCustomerKey'
         /// </summary>
         [JsonProperty(PropertyName = "securityType")]
         public string SecurityType { get; set; }
+
+        /// <summary>
+        /// Gets or sets resourceId of the disk encryption set associated to
+        /// Confidential VM supported disk encrypted with customer managed key
+        /// </summary>
+        [JsonProperty(PropertyName = "secureVMDiskEncryptionSetId")]
+        public string SecureVMDiskEncryptionSetId { get; set; }
 
     }
 }

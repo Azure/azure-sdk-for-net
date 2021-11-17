@@ -36,7 +36,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         /// <param name="encryptionType">Possible values include:
         /// 'EncryptionAtRestWithCustomerKey',
-        /// 'EncryptionAtRestWithPlatformAndCustomerKeys'</param>
+        /// 'EncryptionAtRestWithPlatformAndCustomerKeys',
+        /// 'ConfidentialVmEncryptedWithCustomerKey'</param>
         /// <param name="rotationToLatestKeyVersionEnabled">Set this flag to
         /// true to enable auto-updating of this disk encryption set to the
         /// latest key version.</param>
@@ -59,7 +60,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets possible values include:
         /// 'EncryptionAtRestWithCustomerKey',
-        /// 'EncryptionAtRestWithPlatformAndCustomerKeys'
+        /// 'EncryptionAtRestWithPlatformAndCustomerKeys',
+        /// 'ConfidentialVmEncryptedWithCustomerKey'
         /// </summary>
         [JsonProperty(PropertyName = "properties.encryptionType")]
         public string EncryptionType { get; set; }
