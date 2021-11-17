@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -18,29 +20,30 @@ using Azure.ResourceManager.MachineLearningServices.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
-    /// <summary> A class representing collection of OnlineEndpointTrackedResource and their operations over a Workspace. </summary>
-    public partial class OnlineEndpointTrackedResourceContainer : ArmContainer
+    /// <summary> A class representing collection of OnlineEndpointTrackedResource and their operations over its parent. </summary>
+    public partial class OnlineEndpointTrackedResourceCollection : ArmCollection, IEnumerable<OnlineEndpointTrackedResource>, IAsyncEnumerable<OnlineEndpointTrackedResource>
+
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly OnlineEndpointsRestOperations _restClient;
+        private readonly OnlineEndpointsRestOperations _onlineEndpointsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="OnlineEndpointTrackedResourceContainer"/> class for mocking. </summary>
-        protected OnlineEndpointTrackedResourceContainer()
+        /// <summary> Initializes a new instance of the <see cref="OnlineEndpointTrackedResourceCollection"/> class for mocking. </summary>
+        protected OnlineEndpointTrackedResourceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of OnlineEndpointTrackedResourceContainer class. </summary>
+        /// <summary> Initializes a new instance of OnlineEndpointTrackedResourceCollection class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal OnlineEndpointTrackedResourceContainer(ArmResource parent) : base(parent)
+        internal OnlineEndpointTrackedResourceCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new OnlineEndpointsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _onlineEndpointsRestClient = new OnlineEndpointsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => Workspace.ResourceType;
 
-        // Container level operations.
+        // Collection level operations.
 
         /// <summary> Create or update Online Endpoint (asynchronous). </summary>
         /// <param name="endpointName"> Online Endpoint name. </param>
@@ -59,12 +62,12 @@ namespace Azure.ResourceManager.MachineLearningServices
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceContainer.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, endpointName, body, cancellationToken);
-                var operation = new OnlineEndpointCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, endpointName, body).Request, response);
+                var response = _onlineEndpointsRestClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, endpointName, body, cancellationToken);
+                var operation = new OnlineEndpointCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _onlineEndpointsRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, endpointName, body).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -93,12 +96,12 @@ namespace Azure.ResourceManager.MachineLearningServices
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceContainer.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, endpointName, body, cancellationToken).ConfigureAwait(false);
-                var operation = new OnlineEndpointCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, endpointName, body).Request, response);
+                var response = await _onlineEndpointsRestClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, endpointName, body, cancellationToken).ConfigureAwait(false);
+                var operation = new OnlineEndpointCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _onlineEndpointsRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, endpointName, body).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -110,21 +113,22 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Get Online Endpoint. </summary>
         /// <param name="endpointName"> Online Endpoint name. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         public virtual Response<OnlineEndpointTrackedResource> Get(string endpointName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceContainer.Get");
+            if (endpointName == null)
+            {
+                throw new ArgumentNullException(nameof(endpointName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceCollection.Get");
             scope.Start();
             try
             {
-                if (endpointName == null)
-                {
-                    throw new ArgumentNullException(nameof(endpointName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, endpointName, cancellationToken: cancellationToken);
+                var response = _onlineEndpointsRestClient.Get(Id.ResourceGroupName, Id.Name, endpointName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new OnlineEndpointTrackedResource(Parent, response.Value), response.GetRawResponse());
@@ -136,21 +140,22 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Get Online Endpoint. </summary>
         /// <param name="endpointName"> Online Endpoint name. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         public async virtual Task<Response<OnlineEndpointTrackedResource>> GetAsync(string endpointName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceContainer.Get");
+            if (endpointName == null)
+            {
+                throw new ArgumentNullException(nameof(endpointName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceCollection.Get");
             scope.Start();
             try
             {
-                if (endpointName == null)
-                {
-                    throw new ArgumentNullException(nameof(endpointName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, endpointName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _onlineEndpointsRestClient.GetAsync(Id.ResourceGroupName, Id.Name, endpointName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new OnlineEndpointTrackedResource(Parent, response.Value), response.GetRawResponse());
@@ -164,19 +169,20 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="endpointName"> Online Endpoint name. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         public virtual Response<OnlineEndpointTrackedResource> GetIfExists(string endpointName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceContainer.GetIfExists");
+            if (endpointName == null)
+            {
+                throw new ArgumentNullException(nameof(endpointName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceCollection.GetIfExists");
             scope.Start();
             try
             {
-                if (endpointName == null)
-                {
-                    throw new ArgumentNullException(nameof(endpointName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, endpointName, cancellationToken: cancellationToken);
+                var response = _onlineEndpointsRestClient.Get(Id.ResourceGroupName, Id.Name, endpointName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<OnlineEndpointTrackedResource>(null, response.GetRawResponse())
                     : Response.FromValue(new OnlineEndpointTrackedResource(this, response.Value), response.GetRawResponse());
@@ -190,19 +196,20 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="endpointName"> Online Endpoint name. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         public async virtual Task<Response<OnlineEndpointTrackedResource>> GetIfExistsAsync(string endpointName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceContainer.GetIfExists");
+            if (endpointName == null)
+            {
+                throw new ArgumentNullException(nameof(endpointName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceCollection.GetIfExistsAsync");
             scope.Start();
             try
             {
-                if (endpointName == null)
-                {
-                    throw new ArgumentNullException(nameof(endpointName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, endpointName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _onlineEndpointsRestClient.GetAsync(Id.ResourceGroupName, Id.Name, endpointName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<OnlineEndpointTrackedResource>(null, response.GetRawResponse())
                     : Response.FromValue(new OnlineEndpointTrackedResource(this, response.Value), response.GetRawResponse());
@@ -216,18 +223,19 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="endpointName"> Online Endpoint name. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         public virtual Response<bool> CheckIfExists(string endpointName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceContainer.CheckIfExists");
+            if (endpointName == null)
+            {
+                throw new ArgumentNullException(nameof(endpointName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceCollection.CheckIfExists");
             scope.Start();
             try
             {
-                if (endpointName == null)
-                {
-                    throw new ArgumentNullException(nameof(endpointName));
-                }
-
                 var response = GetIfExists(endpointName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -240,18 +248,19 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="endpointName"> Online Endpoint name. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(string endpointName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceContainer.CheckIfExists");
+            if (endpointName == null)
+            {
+                throw new ArgumentNullException(nameof(endpointName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceCollection.CheckIfExistsAsync");
             scope.Start();
             try
             {
-                if (endpointName == null)
-                {
-                    throw new ArgumentNullException(nameof(endpointName));
-                }
-
                 var response = await GetIfExistsAsync(endpointName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -276,11 +285,11 @@ namespace Azure.ResourceManager.MachineLearningServices
         {
             Page<OnlineEndpointTrackedResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAll(Id.ResourceGroupName, Id.Name, name, count, computeType, skip, tags, properties, orderBy, cancellationToken: cancellationToken);
+                    var response = _onlineEndpointsRestClient.List(Id.ResourceGroupName, Id.Name, name, count, computeType, skip, tags, properties, orderBy, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new OnlineEndpointTrackedResource(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -291,11 +300,11 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
             Page<OnlineEndpointTrackedResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAllNextPage(nextLink, Id.ResourceGroupName, Id.Name, name, count, computeType, skip, tags, properties, orderBy, cancellationToken: cancellationToken);
+                    var response = _onlineEndpointsRestClient.ListNextPage(nextLink, Id.ResourceGroupName, Id.Name, name, count, computeType, skip, tags, properties, orderBy, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new OnlineEndpointTrackedResource(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -321,11 +330,11 @@ namespace Azure.ResourceManager.MachineLearningServices
         {
             async Task<Page<OnlineEndpointTrackedResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllAsync(Id.ResourceGroupName, Id.Name, name, count, computeType, skip, tags, properties, orderBy, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _onlineEndpointsRestClient.ListAsync(Id.ResourceGroupName, Id.Name, name, count, computeType, skip, tags, properties, orderBy, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new OnlineEndpointTrackedResource(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -336,11 +345,11 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
             async Task<Page<OnlineEndpointTrackedResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, name, count, computeType, skip, tags, properties, orderBy, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _onlineEndpointsRestClient.ListNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, name, count, computeType, skip, tags, properties, orderBy, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new OnlineEndpointTrackedResource(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -352,7 +361,22 @@ namespace Azure.ResourceManager.MachineLearningServices
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
+        IEnumerator<OnlineEndpointTrackedResource> IEnumerable<OnlineEndpointTrackedResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<OnlineEndpointTrackedResource> IAsyncEnumerable<OnlineEndpointTrackedResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
+
         // Builders.
-        // public ArmBuilder<ResourceIdentifier, OnlineEndpointTrackedResource, OnlineEndpointTrackedResourceData> Construct() { }
+        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, OnlineEndpointTrackedResource, OnlineEndpointTrackedResourceData> Construct() { }
     }
 }

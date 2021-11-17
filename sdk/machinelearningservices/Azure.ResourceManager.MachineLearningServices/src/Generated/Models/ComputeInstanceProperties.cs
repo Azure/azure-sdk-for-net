@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="personalComputeInstanceSettings"> Settings for a personal compute instance. </param>
         /// <param name="setupScripts"> Details of customized scripts to execute for setting up the cluster. </param>
         /// <param name="lastOperation"> The last operation on ComputeInstance. </param>
-        internal ComputeInstanceProperties(string vmSize, ResourceId subnet, ApplicationSharingPolicy? applicationSharingPolicy, ComputeInstanceSshSettings sshSettings, ComputeInstanceConnectivityEndpoints connectivityEndpoints, IReadOnlyList<ComputeInstanceApplication> applications, ComputeInstanceCreatedBy createdBy, IReadOnlyList<ErrorResponse> errors, ComputeInstanceState? state, ComputeInstanceAuthorizationType? computeInstanceAuthorizationType, PersonalComputeInstanceSettings personalComputeInstanceSettings, SetupScripts setupScripts, ComputeInstanceLastOperation lastOperation)
+        internal ComputeInstanceProperties(string vmSize, WritableSubResource subnet, ApplicationSharingPolicy? applicationSharingPolicy, ComputeInstanceSshSettings sshSettings, ComputeInstanceConnectivityEndpoints connectivityEndpoints, IReadOnlyList<ComputeInstanceApplication> applications, ComputeInstanceCreatedBy createdBy, IReadOnlyList<ErrorResponse> errors, ComputeInstanceState? state, ComputeInstanceAuthorizationType? computeInstanceAuthorizationType, PersonalComputeInstanceSettings personalComputeInstanceSettings, SetupScripts setupScripts, ComputeInstanceLastOperation lastOperation)
         {
             VmSize = vmSize;
             Subnet = subnet;
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Virtual Machine Size. </summary>
         public string VmSize { get; set; }
         /// <summary> Virtual network subnet resource ID the compute nodes belong to. </summary>
-        public ResourceId Subnet { get; set; }
+        public WritableSubResource Subnet { get; set; }
         /// <summary> Policy for sharing applications on this compute instance among users of parent workspace. If Personal, only the creator can access applications on this compute instance. When Shared, any workspace user can access applications on this instance depending on his/her assigned role. </summary>
         public ApplicationSharingPolicy? ApplicationSharingPolicy { get; set; }
         /// <summary> Specifies policy and settings for SSH access. </summary>

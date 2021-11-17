@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.MachineLearningServices
     public partial class ModelContainerResource : ArmResource
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly ModelContainersRestOperations _restClient;
+        private readonly ModelContainersRestOperations _modelContainersRestClient;
         private readonly ModelContainerResourceData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ModelContainerResource"/> class for mocking. </summary>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new ModelContainersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _modelContainersRestClient = new ModelContainersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="ModelContainerResource"/> class. </summary>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         internal ModelContainerResource(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new ModelContainersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _modelContainersRestClient = new ModelContainersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="ModelContainerResource"/> class. </summary>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         internal ModelContainerResource(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new ModelContainersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _modelContainersRestClient = new ModelContainersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             scope.Start();
             try
             {
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _modelContainersRestClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new ModelContainerResource(this, response.Value), response.GetRawResponse());
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             scope.Start();
             try
             {
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _modelContainersRestClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ModelContainerResource(this, response.Value), response.GetRawResponse());
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             scope.Start();
             try
             {
-                var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _modelContainersRestClient.DeleteAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new ModelContainerDeleteOperation(response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             scope.Start();
             try
             {
-                var response = _restClient.Delete(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _modelContainersRestClient.Delete(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 var operation = new ModelContainerDeleteOperation(response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
@@ -184,11 +184,14 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        /// <summary> Gets a list of ModelVersionResources in the ModelContainerResource. </summary>
+        #region ModelVersionResource
+
+        /// <summary> Gets a collection of ModelVersionResources in the ModelContainerResource. </summary>
         /// <returns> An object representing collection of ModelVersionResources and their operations over a ModelContainerResource. </returns>
-        public ModelVersionResourceContainer GetModelVersionResources()
+        public ModelVersionResourceCollection GetModelVersionResources()
         {
-            return new ModelVersionResourceContainer(this);
+            return new ModelVersionResourceCollection(this);
         }
+        #endregion
     }
 }

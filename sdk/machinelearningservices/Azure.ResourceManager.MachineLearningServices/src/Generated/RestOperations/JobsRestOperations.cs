@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateGetAllRequest(string resourceGroupName, string workspaceName, string skip, string jobType, string tag)
+        internal HttpMessage CreateListRequest(string resourceGroupName, string workspaceName, string skip, string jobType, string tag)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="tag"> Jobs returned will have this tag key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
-        public async Task<Response<JobBaseResourceArmPaginatedResult>> GetAllAsync(string resourceGroupName, string workspaceName, string skip = null, string jobType = null, string tag = null, CancellationToken cancellationToken = default)
+        public async Task<Response<JobBaseResourceArmPaginatedResult>> ListAsync(string resourceGroupName, string workspaceName, string skip = null, string jobType = null, string tag = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                 throw new ArgumentNullException(nameof(workspaceName));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName, workspaceName, skip, jobType, tag);
+            using var message = CreateListRequest(resourceGroupName, workspaceName, skip, jobType, tag);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="tag"> Jobs returned will have this tag key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
-        public Response<JobBaseResourceArmPaginatedResult> GetAll(string resourceGroupName, string workspaceName, string skip = null, string jobType = null, string tag = null, CancellationToken cancellationToken = default)
+        public Response<JobBaseResourceArmPaginatedResult> List(string resourceGroupName, string workspaceName, string skip = null, string jobType = null, string tag = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                 throw new ArgumentNullException(nameof(workspaceName));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName, workspaceName, skip, jobType, tag);
+            using var message = CreateListRequest(resourceGroupName, workspaceName, skip, jobType, tag);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -537,7 +537,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        internal HttpMessage CreateGetAllNextPageRequest(string nextLink, string resourceGroupName, string workspaceName, string skip, string jobType, string tag)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string resourceGroupName, string workspaceName, string skip, string jobType, string tag)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -560,7 +560,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="tag"> Jobs returned will have this tag key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="workspaceName"/> is null. </exception>
-        public async Task<Response<JobBaseResourceArmPaginatedResult>> GetAllNextPageAsync(string nextLink, string resourceGroupName, string workspaceName, string skip = null, string jobType = null, string tag = null, CancellationToken cancellationToken = default)
+        public async Task<Response<JobBaseResourceArmPaginatedResult>> ListNextPageAsync(string nextLink, string resourceGroupName, string workspaceName, string skip = null, string jobType = null, string tag = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -575,7 +575,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                 throw new ArgumentNullException(nameof(workspaceName));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, workspaceName, skip, jobType, tag);
+            using var message = CreateListNextPageRequest(nextLink, resourceGroupName, workspaceName, skip, jobType, tag);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -600,7 +600,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="tag"> Jobs returned will have this tag key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="workspaceName"/> is null. </exception>
-        public Response<JobBaseResourceArmPaginatedResult> GetAllNextPage(string nextLink, string resourceGroupName, string workspaceName, string skip = null, string jobType = null, string tag = null, CancellationToken cancellationToken = default)
+        public Response<JobBaseResourceArmPaginatedResult> ListNextPage(string nextLink, string resourceGroupName, string workspaceName, string skip = null, string jobType = null, string tag = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -615,7 +615,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                 throw new ArgumentNullException(nameof(workspaceName));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, workspaceName, skip, jobType, tag);
+            using var message = CreateListNextPageRequest(nextLink, resourceGroupName, workspaceName, skip, jobType, tag);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

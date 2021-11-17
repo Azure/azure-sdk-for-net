@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.MachineLearningServices
     public partial class OnlineEndpointTrackedResource : ArmResource
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly OnlineEndpointsRestOperations _restClient;
+        private readonly OnlineEndpointsRestOperations _onlineEndpointsRestClient;
         private readonly OnlineEndpointTrackedResourceData _data;
 
         /// <summary> Initializes a new instance of the <see cref="OnlineEndpointTrackedResource"/> class for mocking. </summary>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new OnlineEndpointsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _onlineEndpointsRestClient = new OnlineEndpointsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="OnlineEndpointTrackedResource"/> class. </summary>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         internal OnlineEndpointTrackedResource(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new OnlineEndpointsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _onlineEndpointsRestClient = new OnlineEndpointsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="OnlineEndpointTrackedResource"/> class. </summary>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         internal OnlineEndpointTrackedResource(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new OnlineEndpointsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _onlineEndpointsRestClient = new OnlineEndpointsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             scope.Start();
             try
             {
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _onlineEndpointsRestClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new OnlineEndpointTrackedResource(this, response.Value), response.GetRawResponse());
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             scope.Start();
             try
             {
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _onlineEndpointsRestClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new OnlineEndpointTrackedResource(this, response.Value), response.GetRawResponse());
@@ -149,8 +149,8 @@ namespace Azure.ResourceManager.MachineLearningServices
             scope.Start();
             try
             {
-                var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new OnlineEndpointDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = await _onlineEndpointsRestClient.DeleteAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new OnlineEndpointDeleteOperation(_clientDiagnostics, Pipeline, _onlineEndpointsRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -171,8 +171,8 @@ namespace Azure.ResourceManager.MachineLearningServices
             scope.Start();
             try
             {
-                var response = _restClient.Delete(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new OnlineEndpointDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = _onlineEndpointsRestClient.Delete(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new OnlineEndpointDeleteOperation(_clientDiagnostics, Pipeline, _onlineEndpointsRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -202,8 +202,8 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
-                await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _restClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _onlineEndpointsRestClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new OnlineEndpointTrackedResource(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -231,8 +231,8 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
-                TagContainer.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _restClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _onlineEndpointsRestClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return Response.FromValue(new OnlineEndpointTrackedResource(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -260,8 +260,8 @@ namespace Azure.ResourceManager.MachineLearningServices
                 await TagResource.DeleteAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _restClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _onlineEndpointsRestClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new OnlineEndpointTrackedResource(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -289,8 +289,8 @@ namespace Azure.ResourceManager.MachineLearningServices
                 TagResource.Delete(cancellationToken: cancellationToken);
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                TagContainer.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _restClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _onlineEndpointsRestClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return Response.FromValue(new OnlineEndpointTrackedResource(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -317,8 +317,8 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _restClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _onlineEndpointsRestClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new OnlineEndpointTrackedResource(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -345,80 +345,9 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                TagContainer.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _restClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _onlineEndpointsRestClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return Response.FromValue(new OnlineEndpointTrackedResource(this, originalResponse.Value), originalResponse.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-        /// <summary> List EndpointAuthKeys for an Endpoint using Key-based authentication. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<EndpointAuthKeys>> GetKeysAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResource.GetKeys");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.GetKeysAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> List EndpointAuthKeys for an Endpoint using Key-based authentication. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<EndpointAuthKeys> GetKeys(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResource.GetKeys");
-            scope.Start();
-            try
-            {
-                var response = _restClient.GetKeys(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Retrieve a valid AAD token for an Endpoint using AMLToken-based authentication. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<EndpointAuthToken>> GetTokenAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResource.GetToken");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.GetTokenAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Retrieve a valid AAD token for an Endpoint using AMLToken-based authentication. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<EndpointAuthToken> GetToken(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResource.GetToken");
-            scope.Start();
-            try
-            {
-                var response = _restClient.GetToken(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return response;
             }
             catch (Exception e)
             {
@@ -443,8 +372,8 @@ namespace Azure.ResourceManager.MachineLearningServices
             scope.Start();
             try
             {
-                var response = await _restClient.UpdateAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, body, cancellationToken).ConfigureAwait(false);
-                var operation = new OnlineEndpointUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, body).Request, response);
+                var response = await _onlineEndpointsRestClient.UpdateAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, body, cancellationToken).ConfigureAwait(false);
+                var operation = new OnlineEndpointUpdateOperation(this, _clientDiagnostics, Pipeline, _onlineEndpointsRestClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, body).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -472,11 +401,47 @@ namespace Azure.ResourceManager.MachineLearningServices
             scope.Start();
             try
             {
-                var response = _restClient.Update(Id.ResourceGroupName, Id.Parent.Name, Id.Name, body, cancellationToken);
-                var operation = new OnlineEndpointUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, body).Request, response);
+                var response = _onlineEndpointsRestClient.Update(Id.ResourceGroupName, Id.Parent.Name, Id.Name, body, cancellationToken);
+                var operation = new OnlineEndpointUpdateOperation(this, _clientDiagnostics, Pipeline, _onlineEndpointsRestClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, body).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> List EndpointAuthKeys for an Endpoint using Key-based authentication. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response<EndpointAuthKeys>> GetKeysAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResource.GetKeys");
+            scope.Start();
+            try
+            {
+                var response = await _onlineEndpointsRestClient.ListKeysAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> List EndpointAuthKeys for an Endpoint using Key-based authentication. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<EndpointAuthKeys> GetKeys(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResource.GetKeys");
+            scope.Start();
+            try
+            {
+                var response = _onlineEndpointsRestClient.ListKeys(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {
@@ -496,8 +461,8 @@ namespace Azure.ResourceManager.MachineLearningServices
             scope.Start();
             try
             {
-                var response = await _restClient.RegenerateKeysAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, keyType, keyValue, cancellationToken).ConfigureAwait(false);
-                var operation = new OnlineEndpointRegenerateKeysOperation(_clientDiagnostics, Pipeline, _restClient.CreateRegenerateKeysRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, keyType, keyValue).Request, response);
+                var response = await _onlineEndpointsRestClient.RegenerateKeysAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, keyType, keyValue, cancellationToken).ConfigureAwait(false);
+                var operation = new OnlineEndpointRegenerateKeysOperation(_clientDiagnostics, Pipeline, _onlineEndpointsRestClient.CreateRegenerateKeysRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, keyType, keyValue).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -520,8 +485,8 @@ namespace Azure.ResourceManager.MachineLearningServices
             scope.Start();
             try
             {
-                var response = _restClient.RegenerateKeys(Id.ResourceGroupName, Id.Parent.Name, Id.Name, keyType, keyValue, cancellationToken);
-                var operation = new OnlineEndpointRegenerateKeysOperation(_clientDiagnostics, Pipeline, _restClient.CreateRegenerateKeysRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, keyType, keyValue).Request, response);
+                var response = _onlineEndpointsRestClient.RegenerateKeys(Id.ResourceGroupName, Id.Parent.Name, Id.Name, keyType, keyValue, cancellationToken);
+                var operation = new OnlineEndpointRegenerateKeysOperation(_clientDiagnostics, Pipeline, _onlineEndpointsRestClient.CreateRegenerateKeysRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, keyType, keyValue).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -533,11 +498,50 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        /// <summary> Gets a list of OnlineDeploymentTrackedResources in the OnlineEndpointTrackedResource. </summary>
-        /// <returns> An object representing collection of OnlineDeploymentTrackedResources and their operations over a OnlineEndpointTrackedResource. </returns>
-        public OnlineDeploymentTrackedResourceContainer GetOnlineDeploymentTrackedResources()
+        /// <summary> Retrieve a valid AAD token for an Endpoint using AMLToken-based authentication. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response<EndpointAuthToken>> GetTokenAsync(CancellationToken cancellationToken = default)
         {
-            return new OnlineDeploymentTrackedResourceContainer(this);
+            using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResource.GetToken");
+            scope.Start();
+            try
+            {
+                var response = await _onlineEndpointsRestClient.GetTokenAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
+
+        /// <summary> Retrieve a valid AAD token for an Endpoint using AMLToken-based authentication. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<EndpointAuthToken> GetToken(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResource.GetToken");
+            scope.Start();
+            try
+            {
+                var response = _onlineEndpointsRestClient.GetToken(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        #region OnlineDeploymentTrackedResource
+
+        /// <summary> Gets a collection of OnlineDeploymentTrackedResources in the OnlineEndpointTrackedResource. </summary>
+        /// <returns> An object representing collection of OnlineDeploymentTrackedResources and their operations over a OnlineEndpointTrackedResource. </returns>
+        public OnlineDeploymentTrackedResourceCollection GetOnlineDeploymentTrackedResources()
+        {
+            return new OnlineDeploymentTrackedResourceCollection(this);
+        }
+        #endregion
     }
 }

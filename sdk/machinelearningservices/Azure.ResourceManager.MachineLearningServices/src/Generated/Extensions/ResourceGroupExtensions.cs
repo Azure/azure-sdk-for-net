@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.MachineLearningServices
     public static partial class ResourceGroupExtensions
     {
         #region Workspace
-        /// <summary> Gets an object representing a WorkspaceContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a WorkspaceCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="WorkspaceContainer" /> object. </returns>
-        public static WorkspaceContainer GetWorkspaces(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="WorkspaceCollection" /> object. </returns>
+        public static WorkspaceCollection GetWorkspaces(this ResourceGroup resourceGroup)
         {
-            return new WorkspaceContainer(resourceGroup);
+            return new WorkspaceCollection(resourceGroup);
         }
         #endregion
     }

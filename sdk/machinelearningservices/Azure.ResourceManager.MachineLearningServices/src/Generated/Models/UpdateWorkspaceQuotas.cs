@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Resources.Models;
-
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> The properties for update Quota response. </summary>
-    public partial class UpdateWorkspaceQuotas : SubResource
+    public partial class UpdateWorkspaceQuotas
     {
         /// <summary> Initializes a new instance of UpdateWorkspaceQuotas. </summary>
         internal UpdateWorkspaceQuotas()
@@ -18,19 +16,22 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of UpdateWorkspaceQuotas. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"> Specifies the resource ID. </param>
         /// <param name="type"> Specifies the resource type. </param>
         /// <param name="limit"> The maximum permitted quota of the resource. </param>
         /// <param name="unit"> An enum describing the unit of quota measurement. </param>
         /// <param name="status"> Status of update workspace quota. </param>
-        internal UpdateWorkspaceQuotas(string id, string type, long? limit, QuotaUnit? unit, Status? status) : base(id)
+        internal UpdateWorkspaceQuotas(string id, string type, long? limit, QuotaUnit? unit, Status? status)
         {
+            Id = id;
             Type = type;
             Limit = limit;
             Unit = unit;
             Status = status;
         }
 
+        /// <summary> Specifies the resource ID. </summary>
+        public string Id { get; }
         /// <summary> Specifies the resource type. </summary>
         public string Type { get; }
         /// <summary> The maximum permitted quota of the resource. </summary>

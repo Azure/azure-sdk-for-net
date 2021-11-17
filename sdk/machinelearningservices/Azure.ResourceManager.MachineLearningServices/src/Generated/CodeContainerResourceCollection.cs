@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -18,29 +20,30 @@ using Azure.ResourceManager.MachineLearningServices.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
-    /// <summary> A class representing collection of CodeContainerResource and their operations over a Workspace. </summary>
-    public partial class CodeContainerResourceContainer : ArmContainer
+    /// <summary> A class representing collection of CodeContainerResource and their operations over its parent. </summary>
+    public partial class CodeContainerResourceCollection : ArmCollection, IEnumerable<CodeContainerResource>, IAsyncEnumerable<CodeContainerResource>
+
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly CodeContainersRestOperations _restClient;
+        private readonly CodeContainersRestOperations _codeContainersRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="CodeContainerResourceContainer"/> class for mocking. </summary>
-        protected CodeContainerResourceContainer()
+        /// <summary> Initializes a new instance of the <see cref="CodeContainerResourceCollection"/> class for mocking. </summary>
+        protected CodeContainerResourceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of CodeContainerResourceContainer class. </summary>
+        /// <summary> Initializes a new instance of CodeContainerResourceCollection class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal CodeContainerResourceContainer(ArmResource parent) : base(parent)
+        internal CodeContainerResourceCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new CodeContainersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _codeContainersRestClient = new CodeContainersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => Workspace.ResourceType;
 
-        // Container level operations.
+        // Collection level operations.
 
         /// <summary> Create or update container. </summary>
         /// <param name="name"> Container name. This is case-sensitive. </param>
@@ -59,11 +62,11 @@ namespace Azure.ResourceManager.MachineLearningServices
                 throw new ArgumentNullException(nameof(properties));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("CodeContainerResourceContainer.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("CodeContainerResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, name, properties, cancellationToken);
+                var response = _codeContainersRestClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, name, properties, cancellationToken);
                 var operation = new CodeContainerCreateOrUpdateOperation(Parent, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
@@ -93,11 +96,11 @@ namespace Azure.ResourceManager.MachineLearningServices
                 throw new ArgumentNullException(nameof(properties));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("CodeContainerResourceContainer.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("CodeContainerResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, name, properties, cancellationToken).ConfigureAwait(false);
+                var response = await _codeContainersRestClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, name, properties, cancellationToken).ConfigureAwait(false);
                 var operation = new CodeContainerCreateOrUpdateOperation(Parent, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -110,21 +113,22 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Get container. </summary>
         /// <param name="name"> Container name. This is case-sensitive. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual Response<CodeContainerResource> Get(string name, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("CodeContainerResourceContainer.Get");
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("CodeContainerResourceCollection.Get");
             scope.Start();
             try
             {
-                if (name == null)
-                {
-                    throw new ArgumentNullException(nameof(name));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
+                var response = _codeContainersRestClient.Get(Id.ResourceGroupName, Id.Name, name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CodeContainerResource(Parent, response.Value), response.GetRawResponse());
@@ -136,21 +140,22 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Get container. </summary>
         /// <param name="name"> Container name. This is case-sensitive. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public async virtual Task<Response<CodeContainerResource>> GetAsync(string name, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("CodeContainerResourceContainer.Get");
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("CodeContainerResourceCollection.Get");
             scope.Start();
             try
             {
-                if (name == null)
-                {
-                    throw new ArgumentNullException(nameof(name));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _codeContainersRestClient.GetAsync(Id.ResourceGroupName, Id.Name, name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new CodeContainerResource(Parent, response.Value), response.GetRawResponse());
@@ -164,19 +169,20 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="name"> Container name. This is case-sensitive. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual Response<CodeContainerResource> GetIfExists(string name, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("CodeContainerResourceContainer.GetIfExists");
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("CodeContainerResourceCollection.GetIfExists");
             scope.Start();
             try
             {
-                if (name == null)
-                {
-                    throw new ArgumentNullException(nameof(name));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
+                var response = _codeContainersRestClient.Get(Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<CodeContainerResource>(null, response.GetRawResponse())
                     : Response.FromValue(new CodeContainerResource(this, response.Value), response.GetRawResponse());
@@ -190,19 +196,20 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="name"> Container name. This is case-sensitive. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public async virtual Task<Response<CodeContainerResource>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("CodeContainerResourceContainer.GetIfExists");
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("CodeContainerResourceCollection.GetIfExistsAsync");
             scope.Start();
             try
             {
-                if (name == null)
-                {
-                    throw new ArgumentNullException(nameof(name));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _codeContainersRestClient.GetAsync(Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<CodeContainerResource>(null, response.GetRawResponse())
                     : Response.FromValue(new CodeContainerResource(this, response.Value), response.GetRawResponse());
@@ -216,18 +223,19 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="name"> Container name. This is case-sensitive. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual Response<bool> CheckIfExists(string name, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("CodeContainerResourceContainer.CheckIfExists");
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("CodeContainerResourceCollection.CheckIfExists");
             scope.Start();
             try
             {
-                if (name == null)
-                {
-                    throw new ArgumentNullException(nameof(name));
-                }
-
                 var response = GetIfExists(name, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -240,18 +248,19 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="name"> Container name. This is case-sensitive. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(string name, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("CodeContainerResourceContainer.CheckIfExists");
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("CodeContainerResourceCollection.CheckIfExistsAsync");
             scope.Start();
             try
             {
-                if (name == null)
-                {
-                    throw new ArgumentNullException(nameof(name));
-                }
-
                 var response = await GetIfExistsAsync(name, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -270,11 +279,11 @@ namespace Azure.ResourceManager.MachineLearningServices
         {
             Page<CodeContainerResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("CodeContainerResourceContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("CodeContainerResourceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAll(Id.ResourceGroupName, Id.Name, skip, cancellationToken: cancellationToken);
+                    var response = _codeContainersRestClient.List(Id.ResourceGroupName, Id.Name, skip, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new CodeContainerResource(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -285,11 +294,11 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
             Page<CodeContainerResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("CodeContainerResourceContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("CodeContainerResourceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAllNextPage(nextLink, Id.ResourceGroupName, Id.Name, skip, cancellationToken: cancellationToken);
+                    var response = _codeContainersRestClient.ListNextPage(nextLink, Id.ResourceGroupName, Id.Name, skip, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new CodeContainerResource(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -309,11 +318,11 @@ namespace Azure.ResourceManager.MachineLearningServices
         {
             async Task<Page<CodeContainerResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("CodeContainerResourceContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("CodeContainerResourceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllAsync(Id.ResourceGroupName, Id.Name, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _codeContainersRestClient.ListAsync(Id.ResourceGroupName, Id.Name, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new CodeContainerResource(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -324,11 +333,11 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
             async Task<Page<CodeContainerResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("CodeContainerResourceContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("CodeContainerResourceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _codeContainersRestClient.ListNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new CodeContainerResource(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -340,7 +349,22 @@ namespace Azure.ResourceManager.MachineLearningServices
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
+        IEnumerator<CodeContainerResource> IEnumerable<CodeContainerResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<CodeContainerResource> IAsyncEnumerable<CodeContainerResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
+
         // Builders.
-        // public ArmBuilder<ResourceIdentifier, CodeContainerResource, CodeContainerResourceData> Construct() { }
+        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, CodeContainerResource, CodeContainerResourceData> Construct() { }
     }
 }

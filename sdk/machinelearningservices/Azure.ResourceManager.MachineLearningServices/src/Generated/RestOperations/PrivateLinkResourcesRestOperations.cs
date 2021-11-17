@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateGetAllRequest(string resourceGroupName, string workspaceName)
+        internal HttpMessage CreateListRequest(string resourceGroupName, string workspaceName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
-        public async Task<Response<PrivateLinkResourceListResult>> GetAllAsync(string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        public async Task<Response<PrivateLinkResourceListResult>> ListAsync(string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                 throw new ArgumentNullException(nameof(workspaceName));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName, workspaceName);
+            using var message = CreateListRequest(resourceGroupName, workspaceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
-        public Response<PrivateLinkResourceListResult> GetAll(string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        public Response<PrivateLinkResourceListResult> List(string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                 throw new ArgumentNullException(nameof(workspaceName));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName, workspaceName);
+            using var message = CreateListRequest(resourceGroupName, workspaceName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

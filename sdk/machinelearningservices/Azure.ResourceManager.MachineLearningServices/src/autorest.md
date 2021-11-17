@@ -14,22 +14,22 @@ namespace: Azure.ResourceManager.MachineLearningServices
 skip-csproj: true
 payload-flattening-threshold: 2
 
-operation-group-to-resource-type:
-  WorkspaceFeatures: Microsoft.MachineLearningServices/workspaces/features
-  Usages: Microsoft.MachineLearningServices/locations/usages
-  VirtualMachineSizes: Microsoft.MachineLearningServices/locations/vmSizes
-  Quotas: Microsoft.MachineLearningServices/locations/quotas
-  WorkspaceSkus: Microsoft.MachineLearningServices/workspaces/skus
-  PrivateLinkResources: Microsoft.MachineLearningServices/workspaces/privateLinkResources
-  StorageAccount: Microsoft.MachineLearningServices/workspaces/storageAccounts
-operation-group-to-resource:
-  Quotas: NonResource # POST and GET
-  Usages: NonResource
-  VirtualMachineSizes: NonResource
-operation-group-to-parent:
-  Quotas: subscriptions
-  Usages: subscriptions
-  VirtualMachineSizes: subscriptions
+# operation-group-to-resource-type:
+#   WorkspaceFeatures: Microsoft.MachineLearningServices/workspaces/features
+#   Usages: Microsoft.MachineLearningServices/locations/usages
+#   VirtualMachineSizes: Microsoft.MachineLearningServices/locations/vmSizes
+#   Quotas: Microsoft.MachineLearningServices/locations/quotas
+#   WorkspaceSkus: Microsoft.MachineLearningServices/workspaces/skus
+#   PrivateLinkResources: Microsoft.MachineLearningServices/workspaces/privateLinkResources
+#   StorageAccount: Microsoft.MachineLearningServices/workspaces/storageAccounts
+# operation-group-to-resource:
+#   Quotas: NonResource # POST and GET
+#   Usages: NonResource
+#   VirtualMachineSizes: NonResource
+# operation-group-to-parent:
+#   Quotas: subscriptions
+#   Usages: subscriptions
+#   VirtualMachineSizes: subscriptions
 directive:
   - from: swagger-document
     where: $.definitions.ComputeNodesInformation.properties

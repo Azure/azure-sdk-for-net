@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -18,29 +20,30 @@ using Azure.ResourceManager.MachineLearningServices.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
-    /// <summary> A class representing collection of OnlineDeploymentTrackedResource and their operations over a OnlineEndpointTrackedResource. </summary>
-    public partial class OnlineDeploymentTrackedResourceContainer : ArmContainer
+    /// <summary> A class representing collection of OnlineDeploymentTrackedResource and their operations over its parent. </summary>
+    public partial class OnlineDeploymentTrackedResourceCollection : ArmCollection, IEnumerable<OnlineDeploymentTrackedResource>, IAsyncEnumerable<OnlineDeploymentTrackedResource>
+
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly OnlineDeploymentsRestOperations _restClient;
+        private readonly OnlineDeploymentsRestOperations _onlineDeploymentsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="OnlineDeploymentTrackedResourceContainer"/> class for mocking. </summary>
-        protected OnlineDeploymentTrackedResourceContainer()
+        /// <summary> Initializes a new instance of the <see cref="OnlineDeploymentTrackedResourceCollection"/> class for mocking. </summary>
+        protected OnlineDeploymentTrackedResourceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of OnlineDeploymentTrackedResourceContainer class. </summary>
+        /// <summary> Initializes a new instance of OnlineDeploymentTrackedResourceCollection class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal OnlineDeploymentTrackedResourceContainer(ArmResource parent) : base(parent)
+        internal OnlineDeploymentTrackedResourceCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new OnlineDeploymentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _onlineDeploymentsRestClient = new OnlineDeploymentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => OnlineEndpointTrackedResource.ResourceType;
 
-        // Container level operations.
+        // Collection level operations.
 
         /// <summary> Create or update Inference Endpoint Deployment (asynchronous). </summary>
         /// <param name="deploymentName"> Inference Endpoint Deployment name. </param>
@@ -59,12 +62,12 @@ namespace Azure.ResourceManager.MachineLearningServices
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("OnlineDeploymentTrackedResourceContainer.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("OnlineDeploymentTrackedResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, body, cancellationToken);
-                var operation = new OnlineDeploymentCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, body).Request, response);
+                var response = _onlineDeploymentsRestClient.CreateOrUpdate(Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, body, cancellationToken);
+                var operation = new OnlineDeploymentCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _onlineDeploymentsRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, body).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -93,12 +96,12 @@ namespace Azure.ResourceManager.MachineLearningServices
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("OnlineDeploymentTrackedResourceContainer.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("OnlineDeploymentTrackedResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, body, cancellationToken).ConfigureAwait(false);
-                var operation = new OnlineDeploymentCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, body).Request, response);
+                var response = await _onlineDeploymentsRestClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, body, cancellationToken).ConfigureAwait(false);
+                var operation = new OnlineDeploymentCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _onlineDeploymentsRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, body).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -110,21 +113,22 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Get Inference Deployment Deployment. </summary>
         /// <param name="deploymentName"> Inference Endpoint Deployment name. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         public virtual Response<OnlineDeploymentTrackedResource> Get(string deploymentName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("OnlineDeploymentTrackedResourceContainer.Get");
+            if (deploymentName == null)
+            {
+                throw new ArgumentNullException(nameof(deploymentName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("OnlineDeploymentTrackedResourceCollection.Get");
             scope.Start();
             try
             {
-                if (deploymentName == null)
-                {
-                    throw new ArgumentNullException(nameof(deploymentName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, cancellationToken: cancellationToken);
+                var response = _onlineDeploymentsRestClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new OnlineDeploymentTrackedResource(Parent, response.Value), response.GetRawResponse());
@@ -136,21 +140,22 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Get Inference Deployment Deployment. </summary>
         /// <param name="deploymentName"> Inference Endpoint Deployment name. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         public async virtual Task<Response<OnlineDeploymentTrackedResource>> GetAsync(string deploymentName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("OnlineDeploymentTrackedResourceContainer.Get");
+            if (deploymentName == null)
+            {
+                throw new ArgumentNullException(nameof(deploymentName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("OnlineDeploymentTrackedResourceCollection.Get");
             scope.Start();
             try
             {
-                if (deploymentName == null)
-                {
-                    throw new ArgumentNullException(nameof(deploymentName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _onlineDeploymentsRestClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new OnlineDeploymentTrackedResource(Parent, response.Value), response.GetRawResponse());
@@ -164,19 +169,20 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="deploymentName"> Inference Endpoint Deployment name. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         public virtual Response<OnlineDeploymentTrackedResource> GetIfExists(string deploymentName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("OnlineDeploymentTrackedResourceContainer.GetIfExists");
+            if (deploymentName == null)
+            {
+                throw new ArgumentNullException(nameof(deploymentName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("OnlineDeploymentTrackedResourceCollection.GetIfExists");
             scope.Start();
             try
             {
-                if (deploymentName == null)
-                {
-                    throw new ArgumentNullException(nameof(deploymentName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, cancellationToken: cancellationToken);
+                var response = _onlineDeploymentsRestClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<OnlineDeploymentTrackedResource>(null, response.GetRawResponse())
                     : Response.FromValue(new OnlineDeploymentTrackedResource(this, response.Value), response.GetRawResponse());
@@ -190,19 +196,20 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="deploymentName"> Inference Endpoint Deployment name. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         public async virtual Task<Response<OnlineDeploymentTrackedResource>> GetIfExistsAsync(string deploymentName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("OnlineDeploymentTrackedResourceContainer.GetIfExists");
+            if (deploymentName == null)
+            {
+                throw new ArgumentNullException(nameof(deploymentName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("OnlineDeploymentTrackedResourceCollection.GetIfExistsAsync");
             scope.Start();
             try
             {
-                if (deploymentName == null)
-                {
-                    throw new ArgumentNullException(nameof(deploymentName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _onlineDeploymentsRestClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<OnlineDeploymentTrackedResource>(null, response.GetRawResponse())
                     : Response.FromValue(new OnlineDeploymentTrackedResource(this, response.Value), response.GetRawResponse());
@@ -216,18 +223,19 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="deploymentName"> Inference Endpoint Deployment name. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         public virtual Response<bool> CheckIfExists(string deploymentName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("OnlineDeploymentTrackedResourceContainer.CheckIfExists");
+            if (deploymentName == null)
+            {
+                throw new ArgumentNullException(nameof(deploymentName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("OnlineDeploymentTrackedResourceCollection.CheckIfExists");
             scope.Start();
             try
             {
-                if (deploymentName == null)
-                {
-                    throw new ArgumentNullException(nameof(deploymentName));
-                }
-
                 var response = GetIfExists(deploymentName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -240,18 +248,19 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="deploymentName"> Inference Endpoint Deployment name. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(string deploymentName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("OnlineDeploymentTrackedResourceContainer.CheckIfExists");
+            if (deploymentName == null)
+            {
+                throw new ArgumentNullException(nameof(deploymentName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("OnlineDeploymentTrackedResourceCollection.CheckIfExistsAsync");
             scope.Start();
             try
             {
-                if (deploymentName == null)
-                {
-                    throw new ArgumentNullException(nameof(deploymentName));
-                }
-
                 var response = await GetIfExistsAsync(deploymentName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -272,11 +281,11 @@ namespace Azure.ResourceManager.MachineLearningServices
         {
             Page<OnlineDeploymentTrackedResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("OnlineDeploymentTrackedResourceContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("OnlineDeploymentTrackedResourceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAll(Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, cancellationToken: cancellationToken);
+                    var response = _onlineDeploymentsRestClient.List(Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new OnlineDeploymentTrackedResource(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -287,11 +296,11 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
             Page<OnlineDeploymentTrackedResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("OnlineDeploymentTrackedResourceContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("OnlineDeploymentTrackedResourceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAllNextPage(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, cancellationToken: cancellationToken);
+                    var response = _onlineDeploymentsRestClient.ListNextPage(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new OnlineDeploymentTrackedResource(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -313,11 +322,11 @@ namespace Azure.ResourceManager.MachineLearningServices
         {
             async Task<Page<OnlineDeploymentTrackedResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("OnlineDeploymentTrackedResourceContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("OnlineDeploymentTrackedResourceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _onlineDeploymentsRestClient.ListAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new OnlineDeploymentTrackedResource(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -328,11 +337,11 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
             async Task<Page<OnlineDeploymentTrackedResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("OnlineDeploymentTrackedResourceContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("OnlineDeploymentTrackedResourceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllNextPageAsync(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _onlineDeploymentsRestClient.ListNextPageAsync(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new OnlineDeploymentTrackedResource(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -344,7 +353,22 @@ namespace Azure.ResourceManager.MachineLearningServices
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
+        IEnumerator<OnlineDeploymentTrackedResource> IEnumerable<OnlineDeploymentTrackedResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<OnlineDeploymentTrackedResource> IAsyncEnumerable<OnlineDeploymentTrackedResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
+
         // Builders.
-        // public ArmBuilder<ResourceIdentifier, OnlineDeploymentTrackedResource, OnlineDeploymentTrackedResourceData> Construct() { }
+        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, OnlineDeploymentTrackedResource, OnlineDeploymentTrackedResourceData> Construct() { }
     }
 }

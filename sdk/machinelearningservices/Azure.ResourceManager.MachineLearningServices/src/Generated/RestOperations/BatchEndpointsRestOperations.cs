@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateGetAllRequest(string resourceGroupName, string workspaceName, int? count, string skip)
+        internal HttpMessage CreateListRequest(string resourceGroupName, string workspaceName, int? count, string skip)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
-        public async Task<Response<BatchEndpointTrackedResourceArmPaginatedResult>> GetAllAsync(string resourceGroupName, string workspaceName, int? count = null, string skip = null, CancellationToken cancellationToken = default)
+        public async Task<Response<BatchEndpointTrackedResourceArmPaginatedResult>> ListAsync(string resourceGroupName, string workspaceName, int? count = null, string skip = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                 throw new ArgumentNullException(nameof(workspaceName));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName, workspaceName, count, skip);
+            using var message = CreateListRequest(resourceGroupName, workspaceName, count, skip);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
-        public Response<BatchEndpointTrackedResourceArmPaginatedResult> GetAll(string resourceGroupName, string workspaceName, int? count = null, string skip = null, CancellationToken cancellationToken = default)
+        public Response<BatchEndpointTrackedResourceArmPaginatedResult> List(string resourceGroupName, string workspaceName, int? count = null, string skip = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                 throw new ArgumentNullException(nameof(workspaceName));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName, workspaceName, count, skip);
+            using var message = CreateListRequest(resourceGroupName, workspaceName, count, skip);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -535,7 +535,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        internal HttpMessage CreateGetKeysRequest(string resourceGroupName, string workspaceName, string endpointName)
+        internal HttpMessage CreateListKeysRequest(string resourceGroupName, string workspaceName, string endpointName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="endpointName"> Inference Endpoint name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, or <paramref name="endpointName"/> is null. </exception>
-        public async Task<Response<EndpointAuthKeys>> GetKeysAsync(string resourceGroupName, string workspaceName, string endpointName, CancellationToken cancellationToken = default)
+        public async Task<Response<EndpointAuthKeys>> ListKeysAsync(string resourceGroupName, string workspaceName, string endpointName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -579,7 +579,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                 throw new ArgumentNullException(nameof(endpointName));
             }
 
-            using var message = CreateGetKeysRequest(resourceGroupName, workspaceName, endpointName);
+            using var message = CreateListKeysRequest(resourceGroupName, workspaceName, endpointName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -601,7 +601,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="endpointName"> Inference Endpoint name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, or <paramref name="endpointName"/> is null. </exception>
-        public Response<EndpointAuthKeys> GetKeys(string resourceGroupName, string workspaceName, string endpointName, CancellationToken cancellationToken = default)
+        public Response<EndpointAuthKeys> ListKeys(string resourceGroupName, string workspaceName, string endpointName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -616,7 +616,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                 throw new ArgumentNullException(nameof(endpointName));
             }
 
-            using var message = CreateGetKeysRequest(resourceGroupName, workspaceName, endpointName);
+            using var message = CreateListKeysRequest(resourceGroupName, workspaceName, endpointName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -632,7 +632,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        internal HttpMessage CreateGetAllNextPageRequest(string nextLink, string resourceGroupName, string workspaceName, int? count, string skip)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string resourceGroupName, string workspaceName, int? count, string skip)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -654,7 +654,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="workspaceName"/> is null. </exception>
-        public async Task<Response<BatchEndpointTrackedResourceArmPaginatedResult>> GetAllNextPageAsync(string nextLink, string resourceGroupName, string workspaceName, int? count = null, string skip = null, CancellationToken cancellationToken = default)
+        public async Task<Response<BatchEndpointTrackedResourceArmPaginatedResult>> ListNextPageAsync(string nextLink, string resourceGroupName, string workspaceName, int? count = null, string skip = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -669,7 +669,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                 throw new ArgumentNullException(nameof(workspaceName));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, workspaceName, count, skip);
+            using var message = CreateListNextPageRequest(nextLink, resourceGroupName, workspaceName, count, skip);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -693,7 +693,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="workspaceName"/> is null. </exception>
-        public Response<BatchEndpointTrackedResourceArmPaginatedResult> GetAllNextPage(string nextLink, string resourceGroupName, string workspaceName, int? count = null, string skip = null, CancellationToken cancellationToken = default)
+        public Response<BatchEndpointTrackedResourceArmPaginatedResult> ListNextPage(string nextLink, string resourceGroupName, string workspaceName, int? count = null, string skip = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -708,7 +708,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                 throw new ArgumentNullException(nameof(workspaceName));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, workspaceName, count, skip);
+            using var message = CreateListNextPageRequest(nextLink, resourceGroupName, workspaceName, count, skip);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

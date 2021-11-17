@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -18,29 +20,30 @@ using Azure.ResourceManager.MachineLearningServices.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
-    /// <summary> A class representing collection of BatchDeploymentTrackedResource and their operations over a BatchEndpointTrackedResource. </summary>
-    public partial class BatchDeploymentTrackedResourceContainer : ArmContainer
+    /// <summary> A class representing collection of BatchDeploymentTrackedResource and their operations over its parent. </summary>
+    public partial class BatchDeploymentTrackedResourceCollection : ArmCollection, IEnumerable<BatchDeploymentTrackedResource>, IAsyncEnumerable<BatchDeploymentTrackedResource>
+
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly BatchDeploymentsRestOperations _restClient;
+        private readonly BatchDeploymentsRestOperations _batchDeploymentsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="BatchDeploymentTrackedResourceContainer"/> class for mocking. </summary>
-        protected BatchDeploymentTrackedResourceContainer()
+        /// <summary> Initializes a new instance of the <see cref="BatchDeploymentTrackedResourceCollection"/> class for mocking. </summary>
+        protected BatchDeploymentTrackedResourceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of BatchDeploymentTrackedResourceContainer class. </summary>
+        /// <summary> Initializes a new instance of BatchDeploymentTrackedResourceCollection class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal BatchDeploymentTrackedResourceContainer(ArmResource parent) : base(parent)
+        internal BatchDeploymentTrackedResourceCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new BatchDeploymentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _batchDeploymentsRestClient = new BatchDeploymentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => BatchEndpointTrackedResource.ResourceType;
 
-        // Container level operations.
+        // Collection level operations.
 
         /// <summary> Creates/updates a batch inference deployment (asynchronous). </summary>
         /// <param name="deploymentName"> The identifier for the Batch inference deployment. </param>
@@ -59,12 +62,12 @@ namespace Azure.ResourceManager.MachineLearningServices
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("BatchDeploymentTrackedResourceContainer.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("BatchDeploymentTrackedResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, body, cancellationToken);
-                var operation = new BatchDeploymentCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, body).Request, response);
+                var response = _batchDeploymentsRestClient.CreateOrUpdate(Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, body, cancellationToken);
+                var operation = new BatchDeploymentCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _batchDeploymentsRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, body).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -93,12 +96,12 @@ namespace Azure.ResourceManager.MachineLearningServices
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("BatchDeploymentTrackedResourceContainer.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("BatchDeploymentTrackedResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, body, cancellationToken).ConfigureAwait(false);
-                var operation = new BatchDeploymentCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, body).Request, response);
+                var response = await _batchDeploymentsRestClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, body, cancellationToken).ConfigureAwait(false);
+                var operation = new BatchDeploymentCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _batchDeploymentsRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, body).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -110,21 +113,22 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Gets a batch inference deployment by id. </summary>
         /// <param name="deploymentName"> The identifier for the Batch deployments. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         public virtual Response<BatchDeploymentTrackedResource> Get(string deploymentName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("BatchDeploymentTrackedResourceContainer.Get");
+            if (deploymentName == null)
+            {
+                throw new ArgumentNullException(nameof(deploymentName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("BatchDeploymentTrackedResourceCollection.Get");
             scope.Start();
             try
             {
-                if (deploymentName == null)
-                {
-                    throw new ArgumentNullException(nameof(deploymentName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, cancellationToken: cancellationToken);
+                var response = _batchDeploymentsRestClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new BatchDeploymentTrackedResource(Parent, response.Value), response.GetRawResponse());
@@ -136,21 +140,22 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Gets a batch inference deployment by id. </summary>
         /// <param name="deploymentName"> The identifier for the Batch deployments. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         public async virtual Task<Response<BatchDeploymentTrackedResource>> GetAsync(string deploymentName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("BatchDeploymentTrackedResourceContainer.Get");
+            if (deploymentName == null)
+            {
+                throw new ArgumentNullException(nameof(deploymentName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("BatchDeploymentTrackedResourceCollection.Get");
             scope.Start();
             try
             {
-                if (deploymentName == null)
-                {
-                    throw new ArgumentNullException(nameof(deploymentName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _batchDeploymentsRestClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new BatchDeploymentTrackedResource(Parent, response.Value), response.GetRawResponse());
@@ -164,19 +169,20 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="deploymentName"> The identifier for the Batch deployments. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         public virtual Response<BatchDeploymentTrackedResource> GetIfExists(string deploymentName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("BatchDeploymentTrackedResourceContainer.GetIfExists");
+            if (deploymentName == null)
+            {
+                throw new ArgumentNullException(nameof(deploymentName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("BatchDeploymentTrackedResourceCollection.GetIfExists");
             scope.Start();
             try
             {
-                if (deploymentName == null)
-                {
-                    throw new ArgumentNullException(nameof(deploymentName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, cancellationToken: cancellationToken);
+                var response = _batchDeploymentsRestClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<BatchDeploymentTrackedResource>(null, response.GetRawResponse())
                     : Response.FromValue(new BatchDeploymentTrackedResource(this, response.Value), response.GetRawResponse());
@@ -190,19 +196,20 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="deploymentName"> The identifier for the Batch deployments. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         public async virtual Task<Response<BatchDeploymentTrackedResource>> GetIfExistsAsync(string deploymentName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("BatchDeploymentTrackedResourceContainer.GetIfExists");
+            if (deploymentName == null)
+            {
+                throw new ArgumentNullException(nameof(deploymentName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("BatchDeploymentTrackedResourceCollection.GetIfExistsAsync");
             scope.Start();
             try
             {
-                if (deploymentName == null)
-                {
-                    throw new ArgumentNullException(nameof(deploymentName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _batchDeploymentsRestClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<BatchDeploymentTrackedResource>(null, response.GetRawResponse())
                     : Response.FromValue(new BatchDeploymentTrackedResource(this, response.Value), response.GetRawResponse());
@@ -216,18 +223,19 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="deploymentName"> The identifier for the Batch deployments. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         public virtual Response<bool> CheckIfExists(string deploymentName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("BatchDeploymentTrackedResourceContainer.CheckIfExists");
+            if (deploymentName == null)
+            {
+                throw new ArgumentNullException(nameof(deploymentName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("BatchDeploymentTrackedResourceCollection.CheckIfExists");
             scope.Start();
             try
             {
-                if (deploymentName == null)
-                {
-                    throw new ArgumentNullException(nameof(deploymentName));
-                }
-
                 var response = GetIfExists(deploymentName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -240,18 +248,19 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="deploymentName"> The identifier for the Batch deployments. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(string deploymentName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("BatchDeploymentTrackedResourceContainer.CheckIfExists");
+            if (deploymentName == null)
+            {
+                throw new ArgumentNullException(nameof(deploymentName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("BatchDeploymentTrackedResourceCollection.CheckIfExistsAsync");
             scope.Start();
             try
             {
-                if (deploymentName == null)
-                {
-                    throw new ArgumentNullException(nameof(deploymentName));
-                }
-
                 var response = await GetIfExistsAsync(deploymentName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -272,11 +281,11 @@ namespace Azure.ResourceManager.MachineLearningServices
         {
             Page<BatchDeploymentTrackedResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("BatchDeploymentTrackedResourceContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("BatchDeploymentTrackedResourceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAll(Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, cancellationToken: cancellationToken);
+                    var response = _batchDeploymentsRestClient.List(Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new BatchDeploymentTrackedResource(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -287,11 +296,11 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
             Page<BatchDeploymentTrackedResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("BatchDeploymentTrackedResourceContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("BatchDeploymentTrackedResourceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAllNextPage(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, cancellationToken: cancellationToken);
+                    var response = _batchDeploymentsRestClient.ListNextPage(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new BatchDeploymentTrackedResource(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -313,11 +322,11 @@ namespace Azure.ResourceManager.MachineLearningServices
         {
             async Task<Page<BatchDeploymentTrackedResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("BatchDeploymentTrackedResourceContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("BatchDeploymentTrackedResourceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _batchDeploymentsRestClient.ListAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new BatchDeploymentTrackedResource(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -328,11 +337,11 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
             async Task<Page<BatchDeploymentTrackedResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("BatchDeploymentTrackedResourceContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("BatchDeploymentTrackedResourceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllNextPageAsync(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _batchDeploymentsRestClient.ListNextPageAsync(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new BatchDeploymentTrackedResource(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -344,7 +353,22 @@ namespace Azure.ResourceManager.MachineLearningServices
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
+        IEnumerator<BatchDeploymentTrackedResource> IEnumerable<BatchDeploymentTrackedResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<BatchDeploymentTrackedResource> IAsyncEnumerable<BatchDeploymentTrackedResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
+
         // Builders.
-        // public ArmBuilder<ResourceIdentifier, BatchDeploymentTrackedResource, BatchDeploymentTrackedResourceData> Construct() { }
+        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, BatchDeploymentTrackedResource, BatchDeploymentTrackedResourceData> Construct() { }
     }
 }

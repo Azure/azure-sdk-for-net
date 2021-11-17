@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Resources.Models;
-
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Describes AML Resource Usage. </summary>
-    public partial class Usage : SubResource
+    public partial class Usage
     {
         /// <summary> Initializes a new instance of Usage. </summary>
         internal Usage()
@@ -18,15 +16,16 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of Usage. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"> Specifies the resource ID. </param>
         /// <param name="amlWorkspaceLocation"> Region of the AML workspace in the id. </param>
         /// <param name="type"> Specifies the resource type. </param>
         /// <param name="unit"> An enum describing the unit of usage measurement. </param>
         /// <param name="currentValue"> The current usage of the resource. </param>
         /// <param name="limit"> The maximum permitted usage of the resource. </param>
         /// <param name="name"> The name of the type of usage. </param>
-        internal Usage(string id, string amlWorkspaceLocation, string type, UsageUnit? unit, long? currentValue, long? limit, UsageName name) : base(id)
+        internal Usage(string id, string amlWorkspaceLocation, string type, UsageUnit? unit, long? currentValue, long? limit, UsageName name)
         {
+            Id = id;
             AmlWorkspaceLocation = amlWorkspaceLocation;
             Type = type;
             Unit = unit;
@@ -35,6 +34,8 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             Name = name;
         }
 
+        /// <summary> Specifies the resource ID. </summary>
+        public string Id { get; }
         /// <summary> Region of the AML workspace in the id. </summary>
         public string AmlWorkspaceLocation { get; }
         /// <summary> Specifies the resource type. </summary>

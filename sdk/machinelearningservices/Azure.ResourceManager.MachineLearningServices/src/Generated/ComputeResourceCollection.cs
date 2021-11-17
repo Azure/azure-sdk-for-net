@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -18,29 +20,30 @@ using Azure.ResourceManager.MachineLearningServices.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
-    /// <summary> A class representing collection of ComputeResource and their operations over a Workspace. </summary>
-    public partial class ComputeResourceContainer : ArmContainer
+    /// <summary> A class representing collection of ComputeResource and their operations over its parent. </summary>
+    public partial class ComputeResourceCollection : ArmCollection, IEnumerable<ComputeResource>, IAsyncEnumerable<ComputeResource>
+
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly ComputeRestOperations _restClient;
+        private readonly ComputeRestOperations _computeRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ComputeResourceContainer"/> class for mocking. </summary>
-        protected ComputeResourceContainer()
+        /// <summary> Initializes a new instance of the <see cref="ComputeResourceCollection"/> class for mocking. </summary>
+        protected ComputeResourceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of ComputeResourceContainer class. </summary>
+        /// <summary> Initializes a new instance of ComputeResourceCollection class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal ComputeResourceContainer(ArmResource parent) : base(parent)
+        internal ComputeResourceCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new ComputeRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _computeRestClient = new ComputeRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => Workspace.ResourceType;
 
-        // Container level operations.
+        // Collection level operations.
 
         /// <summary> Creates or updates compute. This call will overwrite a compute if it exists. This is a nonrecoverable operation. If your intent is to create a new compute, do a GET first to verify that it does not exist yet. </summary>
         /// <param name="computeName"> Name of the Azure Machine Learning compute. </param>
@@ -59,12 +62,12 @@ namespace Azure.ResourceManager.MachineLearningServices
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ComputeResourceContainer.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("ComputeResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, computeName, parameters, cancellationToken);
-                var operation = new ComputeCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, computeName, parameters).Request, response);
+                var response = _computeRestClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, computeName, parameters, cancellationToken);
+                var operation = new ComputeCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _computeRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, computeName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -93,12 +96,12 @@ namespace Azure.ResourceManager.MachineLearningServices
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ComputeResourceContainer.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("ComputeResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, computeName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, computeName, parameters).Request, response);
+                var response = await _computeRestClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, computeName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new ComputeCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _computeRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, computeName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -110,21 +113,22 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Gets compute definition by its name. Any secrets (storage keys, service credentials, etc) are not returned - use &apos;keys&apos; nested resource to get them. </summary>
         /// <param name="computeName"> Name of the Azure Machine Learning compute. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="computeName"/> is null. </exception>
         public virtual Response<ComputeResource> Get(string computeName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ComputeResourceContainer.Get");
+            if (computeName == null)
+            {
+                throw new ArgumentNullException(nameof(computeName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ComputeResourceCollection.Get");
             scope.Start();
             try
             {
-                if (computeName == null)
-                {
-                    throw new ArgumentNullException(nameof(computeName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, computeName, cancellationToken: cancellationToken);
+                var response = _computeRestClient.Get(Id.ResourceGroupName, Id.Name, computeName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ComputeResource(Parent, response.Value), response.GetRawResponse());
@@ -136,21 +140,22 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Gets compute definition by its name. Any secrets (storage keys, service credentials, etc) are not returned - use &apos;keys&apos; nested resource to get them. </summary>
         /// <param name="computeName"> Name of the Azure Machine Learning compute. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="computeName"/> is null. </exception>
         public async virtual Task<Response<ComputeResource>> GetAsync(string computeName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ComputeResourceContainer.Get");
+            if (computeName == null)
+            {
+                throw new ArgumentNullException(nameof(computeName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ComputeResourceCollection.Get");
             scope.Start();
             try
             {
-                if (computeName == null)
-                {
-                    throw new ArgumentNullException(nameof(computeName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, computeName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _computeRestClient.GetAsync(Id.ResourceGroupName, Id.Name, computeName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new ComputeResource(Parent, response.Value), response.GetRawResponse());
@@ -164,19 +169,20 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="computeName"> Name of the Azure Machine Learning compute. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="computeName"/> is null. </exception>
         public virtual Response<ComputeResource> GetIfExists(string computeName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ComputeResourceContainer.GetIfExists");
+            if (computeName == null)
+            {
+                throw new ArgumentNullException(nameof(computeName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ComputeResourceCollection.GetIfExists");
             scope.Start();
             try
             {
-                if (computeName == null)
-                {
-                    throw new ArgumentNullException(nameof(computeName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, computeName, cancellationToken: cancellationToken);
+                var response = _computeRestClient.Get(Id.ResourceGroupName, Id.Name, computeName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<ComputeResource>(null, response.GetRawResponse())
                     : Response.FromValue(new ComputeResource(this, response.Value), response.GetRawResponse());
@@ -190,19 +196,20 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="computeName"> Name of the Azure Machine Learning compute. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="computeName"/> is null. </exception>
         public async virtual Task<Response<ComputeResource>> GetIfExistsAsync(string computeName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ComputeResourceContainer.GetIfExists");
+            if (computeName == null)
+            {
+                throw new ArgumentNullException(nameof(computeName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ComputeResourceCollection.GetIfExistsAsync");
             scope.Start();
             try
             {
-                if (computeName == null)
-                {
-                    throw new ArgumentNullException(nameof(computeName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, computeName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _computeRestClient.GetAsync(Id.ResourceGroupName, Id.Name, computeName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<ComputeResource>(null, response.GetRawResponse())
                     : Response.FromValue(new ComputeResource(this, response.Value), response.GetRawResponse());
@@ -216,18 +223,19 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="computeName"> Name of the Azure Machine Learning compute. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="computeName"/> is null. </exception>
         public virtual Response<bool> CheckIfExists(string computeName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ComputeResourceContainer.CheckIfExists");
+            if (computeName == null)
+            {
+                throw new ArgumentNullException(nameof(computeName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ComputeResourceCollection.CheckIfExists");
             scope.Start();
             try
             {
-                if (computeName == null)
-                {
-                    throw new ArgumentNullException(nameof(computeName));
-                }
-
                 var response = GetIfExists(computeName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -240,18 +248,19 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="computeName"> Name of the Azure Machine Learning compute. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="computeName"/> is null. </exception>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(string computeName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ComputeResourceContainer.CheckIfExists");
+            if (computeName == null)
+            {
+                throw new ArgumentNullException(nameof(computeName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ComputeResourceCollection.CheckIfExistsAsync");
             scope.Start();
             try
             {
-                if (computeName == null)
-                {
-                    throw new ArgumentNullException(nameof(computeName));
-                }
-
                 var response = await GetIfExistsAsync(computeName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -270,11 +279,11 @@ namespace Azure.ResourceManager.MachineLearningServices
         {
             Page<ComputeResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ComputeResourceContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("ComputeResourceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAll(Id.ResourceGroupName, Id.Name, skip, cancellationToken: cancellationToken);
+                    var response = _computeRestClient.List(Id.ResourceGroupName, Id.Name, skip, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ComputeResource(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -285,11 +294,11 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
             Page<ComputeResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ComputeResourceContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("ComputeResourceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAllNextPage(nextLink, Id.ResourceGroupName, Id.Name, skip, cancellationToken: cancellationToken);
+                    var response = _computeRestClient.ListNextPage(nextLink, Id.ResourceGroupName, Id.Name, skip, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ComputeResource(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -309,11 +318,11 @@ namespace Azure.ResourceManager.MachineLearningServices
         {
             async Task<Page<ComputeResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ComputeResourceContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("ComputeResourceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllAsync(Id.ResourceGroupName, Id.Name, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _computeRestClient.ListAsync(Id.ResourceGroupName, Id.Name, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ComputeResource(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -324,11 +333,11 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
             async Task<Page<ComputeResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ComputeResourceContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("ComputeResourceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _computeRestClient.ListNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ComputeResource(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -340,7 +349,22 @@ namespace Azure.ResourceManager.MachineLearningServices
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
+        IEnumerator<ComputeResource> IEnumerable<ComputeResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<ComputeResource> IAsyncEnumerable<ComputeResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
+
         // Builders.
-        // public ArmBuilder<ResourceIdentifier, ComputeResource, ComputeResourceData> Construct() { }
+        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, ComputeResource, ComputeResourceData> Construct() { }
     }
 }

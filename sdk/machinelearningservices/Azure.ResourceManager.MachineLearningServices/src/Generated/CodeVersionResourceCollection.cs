@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -18,29 +20,30 @@ using Azure.ResourceManager.MachineLearningServices.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
-    /// <summary> A class representing collection of CodeVersionResource and their operations over a CodeContainerResource. </summary>
-    public partial class CodeVersionResourceContainer : ArmContainer
+    /// <summary> A class representing collection of CodeVersionResource and their operations over its parent. </summary>
+    public partial class CodeVersionResourceCollection : ArmCollection, IEnumerable<CodeVersionResource>, IAsyncEnumerable<CodeVersionResource>
+
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly CodeVersionsRestOperations _restClient;
+        private readonly CodeVersionsRestOperations _codeVersionsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="CodeVersionResourceContainer"/> class for mocking. </summary>
-        protected CodeVersionResourceContainer()
+        /// <summary> Initializes a new instance of the <see cref="CodeVersionResourceCollection"/> class for mocking. </summary>
+        protected CodeVersionResourceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of CodeVersionResourceContainer class. </summary>
+        /// <summary> Initializes a new instance of CodeVersionResourceCollection class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal CodeVersionResourceContainer(ArmResource parent) : base(parent)
+        internal CodeVersionResourceCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new CodeVersionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _codeVersionsRestClient = new CodeVersionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => CodeContainerResource.ResourceType;
 
-        // Container level operations.
+        // Collection level operations.
 
         /// <summary> Create or update version. </summary>
         /// <param name="version"> Version identifier. This is case-sensitive. </param>
@@ -59,11 +62,11 @@ namespace Azure.ResourceManager.MachineLearningServices
                 throw new ArgumentNullException(nameof(properties));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("CodeVersionResourceContainer.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("CodeVersionResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, properties, cancellationToken);
+                var response = _codeVersionsRestClient.CreateOrUpdate(Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, properties, cancellationToken);
                 var operation = new CodeVersionCreateOrUpdateOperation(Parent, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
@@ -93,11 +96,11 @@ namespace Azure.ResourceManager.MachineLearningServices
                 throw new ArgumentNullException(nameof(properties));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("CodeVersionResourceContainer.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("CodeVersionResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, properties, cancellationToken).ConfigureAwait(false);
+                var response = await _codeVersionsRestClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, properties, cancellationToken).ConfigureAwait(false);
                 var operation = new CodeVersionCreateOrUpdateOperation(Parent, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -110,21 +113,22 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Get version. </summary>
         /// <param name="version"> Version identifier. This is case-sensitive. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         public virtual Response<CodeVersionResource> Get(string version, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("CodeVersionResourceContainer.Get");
+            if (version == null)
+            {
+                throw new ArgumentNullException(nameof(version));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("CodeVersionResourceCollection.Get");
             scope.Start();
             try
             {
-                if (version == null)
-                {
-                    throw new ArgumentNullException(nameof(version));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, cancellationToken: cancellationToken);
+                var response = _codeVersionsRestClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CodeVersionResource(Parent, response.Value), response.GetRawResponse());
@@ -136,21 +140,22 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Get version. </summary>
         /// <param name="version"> Version identifier. This is case-sensitive. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         public async virtual Task<Response<CodeVersionResource>> GetAsync(string version, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("CodeVersionResourceContainer.Get");
+            if (version == null)
+            {
+                throw new ArgumentNullException(nameof(version));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("CodeVersionResourceCollection.Get");
             scope.Start();
             try
             {
-                if (version == null)
-                {
-                    throw new ArgumentNullException(nameof(version));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _codeVersionsRestClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new CodeVersionResource(Parent, response.Value), response.GetRawResponse());
@@ -164,19 +169,20 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="version"> Version identifier. This is case-sensitive. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         public virtual Response<CodeVersionResource> GetIfExists(string version, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("CodeVersionResourceContainer.GetIfExists");
+            if (version == null)
+            {
+                throw new ArgumentNullException(nameof(version));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("CodeVersionResourceCollection.GetIfExists");
             scope.Start();
             try
             {
-                if (version == null)
-                {
-                    throw new ArgumentNullException(nameof(version));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, cancellationToken: cancellationToken);
+                var response = _codeVersionsRestClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<CodeVersionResource>(null, response.GetRawResponse())
                     : Response.FromValue(new CodeVersionResource(this, response.Value), response.GetRawResponse());
@@ -190,19 +196,20 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="version"> Version identifier. This is case-sensitive. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         public async virtual Task<Response<CodeVersionResource>> GetIfExistsAsync(string version, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("CodeVersionResourceContainer.GetIfExists");
+            if (version == null)
+            {
+                throw new ArgumentNullException(nameof(version));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("CodeVersionResourceCollection.GetIfExistsAsync");
             scope.Start();
             try
             {
-                if (version == null)
-                {
-                    throw new ArgumentNullException(nameof(version));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _codeVersionsRestClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<CodeVersionResource>(null, response.GetRawResponse())
                     : Response.FromValue(new CodeVersionResource(this, response.Value), response.GetRawResponse());
@@ -216,18 +223,19 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="version"> Version identifier. This is case-sensitive. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         public virtual Response<bool> CheckIfExists(string version, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("CodeVersionResourceContainer.CheckIfExists");
+            if (version == null)
+            {
+                throw new ArgumentNullException(nameof(version));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("CodeVersionResourceCollection.CheckIfExists");
             scope.Start();
             try
             {
-                if (version == null)
-                {
-                    throw new ArgumentNullException(nameof(version));
-                }
-
                 var response = GetIfExists(version, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -240,18 +248,19 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="version"> Version identifier. This is case-sensitive. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(string version, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("CodeVersionResourceContainer.CheckIfExists");
+            if (version == null)
+            {
+                throw new ArgumentNullException(nameof(version));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("CodeVersionResourceCollection.CheckIfExistsAsync");
             scope.Start();
             try
             {
-                if (version == null)
-                {
-                    throw new ArgumentNullException(nameof(version));
-                }
-
                 var response = await GetIfExistsAsync(version, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -272,11 +281,11 @@ namespace Azure.ResourceManager.MachineLearningServices
         {
             Page<CodeVersionResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("CodeVersionResourceContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("CodeVersionResourceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAll(Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, cancellationToken: cancellationToken);
+                    var response = _codeVersionsRestClient.List(Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new CodeVersionResource(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -287,11 +296,11 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
             Page<CodeVersionResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("CodeVersionResourceContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("CodeVersionResourceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAllNextPage(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, cancellationToken: cancellationToken);
+                    var response = _codeVersionsRestClient.ListNextPage(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new CodeVersionResource(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -313,11 +322,11 @@ namespace Azure.ResourceManager.MachineLearningServices
         {
             async Task<Page<CodeVersionResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("CodeVersionResourceContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("CodeVersionResourceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _codeVersionsRestClient.ListAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new CodeVersionResource(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -328,11 +337,11 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
             async Task<Page<CodeVersionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("CodeVersionResourceContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("CodeVersionResourceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllNextPageAsync(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _codeVersionsRestClient.ListNextPageAsync(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new CodeVersionResource(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -344,7 +353,22 @@ namespace Azure.ResourceManager.MachineLearningServices
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
+        IEnumerator<CodeVersionResource> IEnumerable<CodeVersionResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<CodeVersionResource> IAsyncEnumerable<CodeVersionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
+
         // Builders.
-        // public ArmBuilder<ResourceIdentifier, CodeVersionResource, CodeVersionResourceData> Construct() { }
+        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, CodeVersionResource, CodeVersionResourceData> Construct() { }
     }
 }

@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        internal HttpMessage CreateGetAllRequest(string location)
+        internal HttpMessage CreateListRequest(string location)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -161,14 +161,14 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="location"> The location for which resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public async Task<Response<ListWorkspaceQuotas>> GetAllAsync(string location, CancellationToken cancellationToken = default)
+        public async Task<Response<ListWorkspaceQuotas>> ListAsync(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
             }
 
-            using var message = CreateGetAllRequest(location);
+            using var message = CreateListRequest(location);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -188,14 +188,14 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="location"> The location for which resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public Response<ListWorkspaceQuotas> GetAll(string location, CancellationToken cancellationToken = default)
+        public Response<ListWorkspaceQuotas> List(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
             }
 
-            using var message = CreateGetAllRequest(location);
+            using var message = CreateListRequest(location);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        internal HttpMessage CreateGetAllNextPageRequest(string nextLink, string location)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string location)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="location"> The location for which resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="location"/> is null. </exception>
-        public async Task<Response<ListWorkspaceQuotas>> GetAllNextPageAsync(string nextLink, string location, CancellationToken cancellationToken = default)
+        public async Task<Response<ListWorkspaceQuotas>> ListNextPageAsync(string nextLink, string location, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                 throw new ArgumentNullException(nameof(location));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, location);
+            using var message = CreateListNextPageRequest(nextLink, location);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="location"> The location for which resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="location"/> is null. </exception>
-        public Response<ListWorkspaceQuotas> GetAllNextPage(string nextLink, string location, CancellationToken cancellationToken = default)
+        public Response<ListWorkspaceQuotas> ListNextPage(string nextLink, string location, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                 throw new ArgumentNullException(nameof(location));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, location);
+            using var message = CreateListNextPageRequest(nextLink, location);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

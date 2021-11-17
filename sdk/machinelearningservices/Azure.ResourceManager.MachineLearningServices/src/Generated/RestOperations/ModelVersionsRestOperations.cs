@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateGetAllRequest(string resourceGroupName, string workspaceName, string name, string skip, string orderBy, int? top, string version, string description, int? offset, string tags, string properties, string feed)
+        internal HttpMessage CreateListRequest(string resourceGroupName, string workspaceName, string name, string skip, string orderBy, int? top, string version, string description, int? offset, string tags, string properties, string feed)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="feed"> Name of the feed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, or <paramref name="name"/> is null. </exception>
-        public async Task<Response<ModelVersionResourceArmPaginatedResult>> GetAllAsync(string resourceGroupName, string workspaceName, string name, string skip = null, string orderBy = null, int? top = null, string version = null, string description = null, int? offset = null, string tags = null, string properties = null, string feed = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ModelVersionResourceArmPaginatedResult>> ListAsync(string resourceGroupName, string workspaceName, string name, string skip = null, string orderBy = null, int? top = null, string version = null, string description = null, int? offset = null, string tags = null, string properties = null, string feed = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName, workspaceName, name, skip, orderBy, top, version, description, offset, tags, properties, feed);
+            using var message = CreateListRequest(resourceGroupName, workspaceName, name, skip, orderBy, top, version, description, offset, tags, properties, feed);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="feed"> Name of the feed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, or <paramref name="name"/> is null. </exception>
-        public Response<ModelVersionResourceArmPaginatedResult> GetAll(string resourceGroupName, string workspaceName, string name, string skip = null, string orderBy = null, int? top = null, string version = null, string description = null, int? offset = null, string tags = null, string properties = null, string feed = null, CancellationToken cancellationToken = default)
+        public Response<ModelVersionResourceArmPaginatedResult> List(string resourceGroupName, string workspaceName, string name, string skip = null, string orderBy = null, int? top = null, string version = null, string description = null, int? offset = null, string tags = null, string properties = null, string feed = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName, workspaceName, name, skip, orderBy, top, version, description, offset, tags, properties, feed);
+            using var message = CreateListRequest(resourceGroupName, workspaceName, name, skip, orderBy, top, version, description, offset, tags, properties, feed);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        internal HttpMessage CreateGetAllNextPageRequest(string nextLink, string resourceGroupName, string workspaceName, string name, string skip, string orderBy, int? top, string version, string description, int? offset, string tags, string properties, string feed)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string resourceGroupName, string workspaceName, string name, string skip, string orderBy, int? top, string version, string description, int? offset, string tags, string properties, string feed)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -562,7 +562,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="feed"> Name of the feed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, or <paramref name="name"/> is null. </exception>
-        public async Task<Response<ModelVersionResourceArmPaginatedResult>> GetAllNextPageAsync(string nextLink, string resourceGroupName, string workspaceName, string name, string skip = null, string orderBy = null, int? top = null, string version = null, string description = null, int? offset = null, string tags = null, string properties = null, string feed = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ModelVersionResourceArmPaginatedResult>> ListNextPageAsync(string nextLink, string resourceGroupName, string workspaceName, string name, string skip = null, string orderBy = null, int? top = null, string version = null, string description = null, int? offset = null, string tags = null, string properties = null, string feed = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -581,7 +581,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, workspaceName, name, skip, orderBy, top, version, description, offset, tags, properties, feed);
+            using var message = CreateListNextPageRequest(nextLink, resourceGroupName, workspaceName, name, skip, orderBy, top, version, description, offset, tags, properties, feed);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -613,7 +613,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="feed"> Name of the feed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, or <paramref name="name"/> is null. </exception>
-        public Response<ModelVersionResourceArmPaginatedResult> GetAllNextPage(string nextLink, string resourceGroupName, string workspaceName, string name, string skip = null, string orderBy = null, int? top = null, string version = null, string description = null, int? offset = null, string tags = null, string properties = null, string feed = null, CancellationToken cancellationToken = default)
+        public Response<ModelVersionResourceArmPaginatedResult> ListNextPage(string nextLink, string resourceGroupName, string workspaceName, string name, string skip = null, string orderBy = null, int? top = null, string version = null, string description = null, int? offset = null, string tags = null, string properties = null, string feed = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -632,7 +632,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, workspaceName, name, skip, orderBy, top, version, description, offset, tags, properties, feed);
+            using var message = CreateListNextPageRequest(nextLink, resourceGroupName, workspaceName, name, skip, orderBy, top, version, description, offset, tags, properties, feed);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

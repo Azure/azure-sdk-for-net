@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
@@ -21,22 +20,22 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         internal static PrivateEndpoint DeserializePrivateEndpoint(JsonElement element)
         {
+            Optional<string> id = default;
             Optional<string> subnetArmId = default;
-            ResourceIdentifier id = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("subnetArmId"))
-                {
-                    subnetArmId = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("id"))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("subnetArmId"))
+                {
+                    subnetArmId = property.Value.GetString();
+                    continue;
+                }
             }
-            return new PrivateEndpoint(id, subnetArmId.Value);
+            return new PrivateEndpoint(id.Value, subnetArmId.Value);
         }
     }
 }

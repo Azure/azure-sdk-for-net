@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             if (Optional.IsDefined(VirtualMachineImage))
             {
                 writer.WritePropertyName("virtualMachineImage");
-                writer.WriteObjectValue(VirtualMachineImage);
+                JsonSerializer.Serialize(writer, VirtualMachineImage);
             }
             if (Optional.IsDefined(IsolatedNetwork))
             {
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet");
-                writer.WriteObjectValue(Subnet);
+                JsonSerializer.Serialize(writer, Subnet);
             }
             if (Optional.IsDefined(RemoteLoginPortPublicAccess))
             {
@@ -87,11 +88,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             Optional<OsType> osType = default;
             Optional<string> vmSize = default;
             Optional<VmPriority> vmPriority = default;
-            Optional<VirtualMachineImage> virtualMachineImage = default;
+            Optional<WritableSubResource> virtualMachineImage = default;
             Optional<bool> isolatedNetwork = default;
             Optional<ScaleSettings> scaleSettings = default;
             Optional<UserAccountCredentials> userAccountCredentials = default;
-            Optional<ResourceId> subnet = default;
+            Optional<WritableSubResource> subnet = default;
             Optional<RemoteLoginPortPublicAccess> remoteLoginPortPublicAccess = default;
             Optional<AllocationState> allocationState = default;
             Optional<DateTimeOffset> allocationStateTransitionTime = default;
@@ -135,7 +136,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    virtualMachineImage = VirtualMachineImage.DeserializeVirtualMachineImage(property.Value);
+                    virtualMachineImage = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("isolatedNetwork"))
@@ -175,7 +176,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    subnet = ResourceId.DeserializeResourceId(property.Value);
+                    subnet = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("remoteLoginPortPublicAccess"))
@@ -279,7 +280,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     continue;
                 }
             }
-            return new AmlComputeProperties(Optional.ToNullable(osType), vmSize.Value, Optional.ToNullable(vmPriority), virtualMachineImage.Value, Optional.ToNullable(isolatedNetwork), scaleSettings.Value, userAccountCredentials.Value, subnet.Value, Optional.ToNullable(remoteLoginPortPublicAccess), Optional.ToNullable(allocationState), Optional.ToNullable(allocationStateTransitionTime), Optional.ToList(errors), Optional.ToNullable(currentNodeCount), Optional.ToNullable(targetNodeCount), nodeStateCounts.Value, Optional.ToNullable(enableNodePublicIp), Optional.ToDictionary(propertyBag));
+            return new AmlComputeProperties(Optional.ToNullable(osType), vmSize.Value, Optional.ToNullable(vmPriority), virtualMachineImage, Optional.ToNullable(isolatedNetwork), scaleSettings.Value, userAccountCredentials.Value, subnet, Optional.ToNullable(remoteLoginPortPublicAccess), Optional.ToNullable(allocationState), Optional.ToNullable(allocationStateTransitionTime), Optional.ToList(errors), Optional.ToNullable(currentNodeCount), Optional.ToNullable(targetNodeCount), nodeStateCounts.Value, Optional.ToNullable(enableNodePublicIp), Optional.ToDictionary(propertyBag));
         }
     }
 }
