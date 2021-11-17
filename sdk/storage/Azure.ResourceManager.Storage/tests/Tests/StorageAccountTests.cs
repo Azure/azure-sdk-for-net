@@ -39,6 +39,23 @@ namespace Azure.ResourceManager.Storage.Tests
 
         [Test]
         [RecordedTest]
+        public async Task ListSku()
+        {
+            List<SkuInformation> skulist = await DefaultSubscription.GetSkusAsync().ToEnumerableAsync();
+            Assert.NotNull(skulist);
+            Assert.AreEqual(@"storageAccounts", skulist.ElementAt(0).ResourceType);
+            Assert.NotNull(skulist.ElementAt(0).Name);
+            Assert.True(skulist.ElementAt(0).Name.Equals(SkuName.PremiumLRS)
+                || skulist.ElementAt(0).Name.Equals(SkuName.StandardGRS)
+                || skulist.ElementAt(0).Name.Equals(SkuName.StandardLRS)
+                || skulist.ElementAt(0).Name.Equals(SkuName.StandardRagrs)
+                || skulist.ElementAt(0).Name.Equals(SkuName.StandardZRS));
+            Assert.NotNull(skulist.ElementAt(0).Kind);
+            Assert.True(skulist.ElementAt(0).Kind.Equals(Kind.BlobStorage) || skulist.ElementAt(0).Kind.Equals(Kind.Storage) || skulist.ElementAt(0).Kind.Equals(Kind.StorageV2) || skulist.ElementAt(0).Kind.Equals(Kind.BlockBlobStorage));
+        }
+
+        [Test]
+        [RecordedTest]
         public async Task CreateDeleteStorageAccount()
         {
             //create storage account
@@ -1508,7 +1525,7 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccountCollection storageAccountCollection = resourceGroup1.GetStorageAccounts();
             StorageAccountCreateParameters parameters = GetDefaultStorageAccountParameters();
             parameters.KeyPolicy = new KeyPolicy(2);
-            parameters.SasPolicy = new SasPolicy("2.02:03:59",ExpirationAction.Log);
+            parameters.SasPolicy = new SasPolicy("2.02:03:59", ExpirationAction.Log);
             StorageAccount account = (await storageAccountCollection.CreateOrUpdateAsync(accountName1, parameters)).Value;
             Assert.AreEqual(2, account.Data.KeyPolicy.KeyExpirationPeriodInDays);
             Assert.AreEqual("2.02:03:59", account.Data.SasPolicy.SasExpirationPeriod);
@@ -1528,6 +1545,71 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual("0.02:03:59", account.Data.SasPolicy.SasExpirationPeriod);
             Assert.NotNull(account.Data.KeyCreationTime.Key1);
             Assert.NotNull(account.Data.KeyCreationTime.Key2);
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task StorageAccountFailOver()
+        {
+            //create an account with network rule set
+            string accountName1 = await CreateValidAccountNameAsync(namePrefix);
+            ResourceGroup resourceGroup1 = await CreateResourceGroupAsync();
+            StorageAccountCollection storageAccountCollection = resourceGroup1.GetStorageAccounts();
+            StorageAccountCreateParameters parameters = GetDefaultStorageAccountParameters(kind: Kind.StorageV2, sku: new Sku(SkuName.StandardRagrs));
+            StorageAccount account = (await storageAccountCollection.CreateOrUpdateAsync(accountName1, parameters)).Value;
+            int i = 100;
+            string location = account.Data.Location;
+            do
+            {
+                account = await account.GetAsync(expand: StorageAccountExpand.GeoReplicationStats);
+                Assert.AreEqual(SkuName.StandardRagrs, account.Data.Sku.Name);
+                Assert.Null(account.Data.FailoverInProgress);
+                location = account.Data.SecondaryLocation;
+
+                //Don't need sleep when playback, or Unit test will be very slow. Need sleep when record.
+                if (Mode != RecordedTestMode.Playback)
+                {
+                    await Task.Delay(10000);
+                }
+            } while ((account.Data.GeoReplicationStats.CanFailover != true) && (i-- > 0));
+
+            await account.FailoverAsync();
+
+            account = await account.GetAsync();
+
+            Assert.AreEqual(SkuName.StandardLRS, account.Data.Sku.Name);
+            Assert.AreEqual(location, account.Data.PrimaryLocation);
+        }
+
+        [Test]
+        [RecordedTest]
+        [Ignore("need enviroment")]
+        public async Task StorageAccountCreateSetGetFileAadIntegration()
+        {
+            //create an account
+            string accountName1 = await CreateValidAccountNameAsync(namePrefix);
+            ResourceGroup resourceGroup1 = await CreateResourceGroupAsync();
+            StorageAccountCollection storageAccountCollection = resourceGroup1.GetStorageAccounts();
+            StorageAccountCreateParameters parameters = GetDefaultStorageAccountParameters(kind: Kind.StorageV2);
+            parameters.AzureFilesIdentityBasedAuthentication = new AzureFilesIdentityBasedAuthentication(DirectoryServiceOptions.Aadds);
+            StorageAccount account = (await storageAccountCollection.CreateOrUpdateAsync(accountName1, parameters)).Value;
+
+            //validate
+            account = await account.GetAsync();
+            Assert.AreEqual(DirectoryServiceOptions.Aadds, account.Data.AzureFilesIdentityBasedAuthentication.DirectoryServiceOptions);
+
+            //Update storage account
+            var updateParameters = new StorageAccountUpdateParameters
+            {
+                AzureFilesIdentityBasedAuthentication = new AzureFilesIdentityBasedAuthentication(DirectoryServiceOptions.None),
+                EnableHttpsTrafficOnly = true
+            };
+            account = await account.UpdateAsync(updateParameters);
+            Assert.AreEqual(DirectoryServiceOptions.None, account.Data.AzureFilesIdentityBasedAuthentication.DirectoryServiceOptions);
+
+            // Validate
+            account = await account.GetAsync();
+            Assert.AreEqual(DirectoryServiceOptions.None, account.Data.AzureFilesIdentityBasedAuthentication.DirectoryServiceOptions);
         }
     }
 }

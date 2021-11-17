@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Storage.Tests
 
             // Prepare signedIdentifiers to set
             List<SignedIdentifier> sigs = new List<SignedIdentifier>();
-            DateTimeOffset datenow = DateTimeOffset.Now;
+            DateTimeOffset datenow = Recording.Now;
             DateTimeOffset start1 = datenow.ToUniversalTime();
             DateTimeOffset end1 = datenow.AddHours(2).ToUniversalTime();
             DateTimeOffset start2 = datenow.AddMinutes(1).ToUniversalTime();
@@ -280,6 +280,149 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(2, share.Data.SignedIdentifiers.Count);
             Assert.AreEqual("testSig1", share.Data.SignedIdentifiers[0].Id);
             Assert.AreEqual("rw", share.Data.SignedIdentifiers[0].AccessPolicy.Permission);
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task FileShareLease()
+        {
+            //update storage account to v2
+            StorageAccountUpdateParameters updateParameters = new StorageAccountUpdateParameters()
+            {
+                Kind = Kind.StorageV2
+            };
+            await _storageAccount.UpdateAsync(updateParameters);
+
+            //create base share
+            string fileShareName = Recording.GenerateAssetName("testfileshare");
+            FileShare share = (await _fileShareCollection.CreateOrUpdateAsync(fileShareName, new FileShareData())).Value;
+
+            //create share snapshots
+            FileShare shareSnapshot = (await _fileShareCollection.CreateOrUpdateAsync(fileShareName, new FileShareData(), "snapshots")).Value;
+
+            // Acquire lease share
+            string proposedLeaseID1 = "ca761232-ed42-11ce-bacd-00aa0057b223";
+            string proposedLeaseID2 = "dd761232-ed42-11ce-bacd-00aa0057b444";
+            LeaseShareResponse leaseResponse;
+            leaseResponse = await share.LeaseAsync(parameters: new LeaseShareRequest(LeaseShareAction.Acquire) { LeaseDuration = 60, ProposedLeaseId = proposedLeaseID1 });
+            Assert.AreEqual(proposedLeaseID1, leaseResponse.LeaseId);
+
+            share = await share.GetAsync();
+            Assert.AreEqual(LeaseDuration.Fixed, share.Data.LeaseDuration);
+            Assert.AreEqual(LeaseState.Leased, share.Data.LeaseState);
+            Assert.AreEqual(LeaseStatus.Locked, share.Data.LeaseStatus);
+
+            //renew lease share
+            leaseResponse = await share.LeaseAsync(parameters: new LeaseShareRequest(LeaseShareAction.Renew) { LeaseId = proposedLeaseID1 });
+            Assert.AreEqual(proposedLeaseID1, leaseResponse.LeaseId);
+
+            // change lease share
+            leaseResponse = await share.LeaseAsync(parameters: new LeaseShareRequest(LeaseShareAction.Change) { LeaseId = proposedLeaseID1, ProposedLeaseId = proposedLeaseID2 });
+            Assert.AreEqual(proposedLeaseID2, leaseResponse.LeaseId);
+
+            //break lease share
+            leaseResponse = await share.LeaseAsync(parameters: new LeaseShareRequest(LeaseShareAction.Break) { BreakPeriod = 20 });
+            Assert.AreEqual("20", leaseResponse.LeaseTimeSeconds);
+
+            //release lease share
+            leaseResponse = await share.LeaseAsync(parameters: new LeaseShareRequest(LeaseShareAction.Release) { LeaseId = proposedLeaseID2 });
+            Assert.IsNull(leaseResponse.LeaseId);
+
+            //lease share snapshot
+            leaseResponse = await share.LeaseAsync(xMsSnapshot: shareSnapshot.Data.SnapshotTime.Value.UtcDateTime.ToString("o"),
+                parameters: new LeaseShareRequest(LeaseShareAction.Acquire) { LeaseDuration = 60, ProposedLeaseId = proposedLeaseID1 });
+            Assert.AreEqual(proposedLeaseID1, leaseResponse.LeaseId);
+
+            shareSnapshot = await shareSnapshot.GetAsync(xMsSnapshot: shareSnapshot.Data.SnapshotTime.Value.UtcDateTime.ToString("o"));
+            Assert.AreEqual(LeaseDuration.Fixed, share.Data.LeaseDuration);
+            Assert.AreEqual(LeaseState.Leased, share.Data.LeaseState);
+            Assert.AreEqual(LeaseStatus.Locked, share.Data.LeaseStatus);
+
+            bool DeleteFail = false;
+            // try delete with include = none
+            try
+            {
+                await share.DeleteAsync(include: "none");
+            }
+            catch (RequestFailedException e) when (e.Status == 409)
+            {
+                DeleteFail = true;
+            }
+            Assert.IsTrue(DeleteFail, "Delete should fail with include = none");
+
+            DeleteFail = false;
+            // try delete with include = snapshots
+            try
+            {
+                await share.DeleteAsync(include: "snapshots");
+            }
+            catch (RequestFailedException e) when (e.Status == 409)
+            {
+                DeleteFail = true;
+            }
+            Assert.IsTrue(DeleteFail, "Delete should fail with include = snapshots");
+
+            //delete with include = leased-snapshots
+            await share.DeleteAsync(include: "leased-snapshots");
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task FileServiceCors()
+        {
+            FileServiceData properties1 = _fileService.Data;
+            FileServiceData properties2 = new FileServiceData();
+            properties2.Cors = new CorsRules();
+            properties2.Cors.CorsRulesValue.Add(new CorsRule(new string[] { "http://www.contoso.com", "http://www.fabrikam.com" },
+                new CorsRuleAllowedMethodsItem[] { CorsRuleAllowedMethodsItem.GET, CorsRuleAllowedMethodsItem.PUT },
+                100, new string[] { "x-ms-meta-*" },
+                new string[] { "x-ms-meta-abc", "x-ms-meta-data*", "x-ms-meta-target*" }
+                ));
+            properties2.Cors.CorsRulesValue.Add(new CorsRule(new string[] { "*" },
+                new CorsRuleAllowedMethodsItem[] { CorsRuleAllowedMethodsItem.GET },
+                2, new string[] { "*" },
+                new string[] { "*" }
+                ));
+            properties2.Cors.CorsRulesValue.Add(new CorsRule(new string[] { "http://www.abc23.com", "https://www.fabrikam.com/*" },
+                new CorsRuleAllowedMethodsItem[] { CorsRuleAllowedMethodsItem.GET, CorsRuleAllowedMethodsItem.PUT, CorsRuleAllowedMethodsItem.Post },
+                2000, new string[] { "x-ms-meta-12345675754564*" },
+                new string[] { "x-ms-meta-abc", "x-ms-meta-data*", "x-ms-meta-target*" }
+                ));
+
+            _fileService = await _fileService.SetServicePropertiesAsync(properties2);
+            FileServiceData properties3 = _fileService.Data;
+
+            //validate CORS rules
+            Assert.AreEqual(properties2.Cors.CorsRulesValue.Count, properties3.Cors.CorsRulesValue.Count);
+            for (int i = 0; i < properties2.Cors.CorsRulesValue.Count; i++)
+            {
+                CorsRule putRule = properties2.Cors.CorsRulesValue[i];
+                CorsRule getRule = properties3.Cors.CorsRulesValue[i];
+
+                Assert.AreEqual(putRule.AllowedHeaders, getRule.AllowedHeaders);
+                Assert.AreEqual(putRule.AllowedMethods, getRule.AllowedMethods);
+                Assert.AreEqual(putRule.AllowedOrigins, getRule.AllowedOrigins);
+                Assert.AreEqual(putRule.ExposedHeaders, getRule.ExposedHeaders);
+                Assert.AreEqual(putRule.MaxAgeInSeconds, getRule.MaxAgeInSeconds);
+            }
+
+            _fileService = await _fileService.GetAsync();
+
+            FileServiceData properties4 = _fileService.Data;
+
+            //validate CORS rules
+            Assert.AreEqual(properties2.Cors.CorsRulesValue.Count, properties4.Cors.CorsRulesValue.Count);
+            for (int i = 0; i < properties2.Cors.CorsRulesValue.Count; i++)
+            {
+                CorsRule putRule = properties2.Cors.CorsRulesValue[i];
+                CorsRule getRule = properties4.Cors.CorsRulesValue[i];
+
+                Assert.AreEqual(putRule.AllowedHeaders, getRule.AllowedHeaders);
+                Assert.AreEqual(putRule.AllowedMethods, getRule.AllowedMethods);
+                Assert.AreEqual(putRule.AllowedOrigins, getRule.AllowedOrigins);
+                Assert.AreEqual(putRule.ExposedHeaders, getRule.ExposedHeaders);
+                Assert.AreEqual(putRule.MaxAgeInSeconds, getRule.MaxAgeInSeconds);
+            }
         }
     }
 }
