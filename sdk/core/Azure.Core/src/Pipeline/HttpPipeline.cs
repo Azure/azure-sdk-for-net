@@ -231,8 +231,8 @@ namespace Azure.Core.Pipeline
             }
 
             // Copy over client policies and splice in custom policies at designated indices
-            int transportIndex = _pipeline.Length - 1;
             var pipeline = _pipeline.Span;
+            int transportIndex = pipeline.Length - 1;
 
             pipeline.Slice(0, _perCallIndex).CopyTo(policies);
 

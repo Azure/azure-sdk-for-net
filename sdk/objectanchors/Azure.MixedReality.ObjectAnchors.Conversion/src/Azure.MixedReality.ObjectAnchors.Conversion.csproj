@@ -10,7 +10,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Core" />
     <PackageReference Include="Azure.MixedReality.Authentication" VersionOverride="1.0.1" />
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
@@ -29,6 +28,9 @@
     <Compile Include="$(AzureCoreSharedSources)OperationHelpers.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
     <Compile Include="$(AzureMixedRealityAuthenticationSharedSources)*.cs" LinkBase="Shared" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
   </ItemGroup>
 
 </Project>
