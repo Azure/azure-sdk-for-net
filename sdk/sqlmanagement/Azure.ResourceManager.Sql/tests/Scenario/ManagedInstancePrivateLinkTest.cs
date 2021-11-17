@@ -29,8 +29,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         [OneTimeSetUp]
         public async Task GlobalSetUp()
         {
-            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().GetAsync("Sql-RG-1100");
-            //var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(SessionRecording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(Location.WestUS2));
+            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(SessionRecording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(Location.WestUS2));
             ResourceGroup rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
             StopSessionRecording();
@@ -44,7 +43,6 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         }
 
         [Test]
-        [Ignore("not debug yet")]
         [RecordedTest]
         public async Task ManagedInstancePrivateLinkApiTests()
         {
@@ -56,8 +54,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             var managedInstance = await CreateDefaultManagedInstance(managedInstanceName, networkSecurityGroupName, routeTableName, vnetName, Location.WestUS2, _resourceGroup);
             Assert.IsNotNull(managedInstance.Data);
 
-            //var collection = managedInstance.GetManagedInstancePrivateLinks();
-            var collection = _resourceGroup.GetManagedInstances().GetAsync("managed-instance-1100").Result.Value.GetManagedInstancePrivateLinks();
+            var collection = managedInstance.GetManagedInstancePrivateLinks();
 
             // 1.GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
@@ -70,10 +67,12 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             // 3.Get
             var getPrivateLink = await collection.GetAsync(privateLinkName);
             Assert.AreEqual(privateLinkName.ToString(), getPrivateLink.Value.Data.Name);
+            Assert.AreEqual("Microsoft.Sql/managedInstances/privateLinkResources", getPrivateLink.Value.Data.Type.ToString());
 
             // 4.GetIfExist
             var GetIfExistPrivateLink = await collection.GetIfExistsAsync(privateLinkName);
             Assert.AreEqual(privateLinkName.ToString(), GetIfExistPrivateLink.Value.Data.Name);
+            Assert.AreEqual("Microsoft.Sql/managedInstances/privateLinkResources", GetIfExistPrivateLink.Value.Data.Type.ToString());
         }
     }
 }
