@@ -82,7 +82,7 @@ This will make it easier to see the changes you make when you generate code in t
 
 ```
 % git add -A
-% git commit -m "initial commit"
+% git commit -m "initial commit for <service-name>"
 ```
 
 ### Create the generated layer
