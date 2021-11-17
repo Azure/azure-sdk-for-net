@@ -174,7 +174,7 @@ namespace Azure.Core.Tests
 
             DiagnosticScope scope = clientDiagnostics.CreateScope("ClientName.ActivityName");
 
-            scope.AddLink("LALALA");
+            scope.AddLink("test");
 
             scope.Start();
             scope.Dispose();
