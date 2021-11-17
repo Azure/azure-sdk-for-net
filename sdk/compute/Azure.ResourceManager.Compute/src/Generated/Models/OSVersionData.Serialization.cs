@@ -8,15 +8,16 @@
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Compute.Models;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Azure.ResourceManager.Compute
 {
-    public partial class OSFamily
+    public partial class OSVersionData
     {
-        internal static OSFamily DeserializeOSFamily(JsonElement element)
+        internal static OSVersionData DeserializeOSVersionData(JsonElement element)
         {
             Optional<string> location = default;
-            Optional<OSFamilyProperties> properties = default;
+            Optional<OSVersionProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = OSFamilyProperties.DeserializeOSFamilyProperties(property.Value);
+                    properties = OSVersionProperties.DeserializeOSVersionProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new OSFamily(id, name, type, location.Value, properties.Value);
+            return new OSVersionData(id, name, type, location.Value, properties.Value);
         }
     }
 }

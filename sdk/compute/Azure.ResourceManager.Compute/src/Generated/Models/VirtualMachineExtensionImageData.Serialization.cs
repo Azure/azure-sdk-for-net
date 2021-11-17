@@ -11,9 +11,9 @@ using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Azure.ResourceManager.Compute
 {
-    public partial class VirtualMachineExtensionImage : IUtf8JsonSerializable
+    public partial class VirtualMachineExtensionImageData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteEndObject();
         }
 
-        internal static VirtualMachineExtensionImage DeserializeVirtualMachineExtensionImage(JsonElement element)
+        internal static VirtualMachineExtensionImageData DeserializeVirtualMachineExtensionImageData(JsonElement element)
         {
             IDictionary<string, string> tags = default;
             Location location = default;
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineExtensionImage(id, name, type, tags, location, operatingSystem.Value, computeRole.Value, handlerSchema.Value, Optional.ToNullable(vmScaleSetEnabled), Optional.ToNullable(supportsMultipleExtensions));
+            return new VirtualMachineExtensionImageData(id, name, type, tags, location, operatingSystem.Value, computeRole.Value, handlerSchema.Value, Optional.ToNullable(vmScaleSetEnabled), Optional.ToNullable(supportsMultipleExtensions));
         }
     }
 }

@@ -5,20 +5,20 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Compute
+namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> A class representing the UpdateDomain data model. </summary>
-    public partial class UpdateDomainData
+    /// <summary> Defines an update domain for the cloud service. </summary>
+    public partial class UpdateDomain
     {
-        /// <summary> Initializes a new instance of UpdateDomainData. </summary>
-        public UpdateDomainData()
+        /// <summary> Initializes a new instance of UpdateDomain. </summary>
+        public UpdateDomain()
         {
         }
 
-        /// <summary> Initializes a new instance of UpdateDomainData. </summary>
+        /// <summary> Initializes a new instance of UpdateDomain. </summary>
         /// <param name="id"> Resource Id. </param>
         /// <param name="name"> Resource Name. </param>
-        internal UpdateDomainData(string id, string name)
+        internal UpdateDomain(string id, string name)
         {
             Id = id;
             Name = name;

@@ -15,18 +15,18 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Deletes a private endpoint connection under a disk access resource. </summary>
-    public partial class PrivateEndpointConnectionDeleteOperation : Operation
+    public partial class DiskAccessDeleteAPrivateEndpointConnectionOperation : Operation
     {
         private readonly OperationInternals _operation;
 
-        /// <summary> Initializes a new instance of PrivateEndpointConnectionDeleteOperation for mocking. </summary>
-        protected PrivateEndpointConnectionDeleteOperation()
+        /// <summary> Initializes a new instance of DiskAccessDeleteAPrivateEndpointConnectionOperation for mocking. </summary>
+        protected DiskAccessDeleteAPrivateEndpointConnectionOperation()
         {
         }
 
-        internal PrivateEndpointConnectionDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal DiskAccessDeleteAPrivateEndpointConnectionOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "PrivateEndpointConnectionDeleteOperation");
+            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DiskAccessDeleteAPrivateEndpointConnectionOperation");
         }
 
         /// <inheritdoc />
