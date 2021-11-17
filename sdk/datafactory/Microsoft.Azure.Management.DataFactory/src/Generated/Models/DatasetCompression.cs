@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.DataFactory.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -31,11 +32,17 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Initializes a new instance of the DatasetCompression class.
         /// </summary>
+        /// <param name="type">Type of dataset compression. Type: string (or
+        /// Expression with resultType string).</param>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
-        public DatasetCompression(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>))
+        /// <param name="level">The dataset compression level. Type: string (or
+        /// Expression with resultType string).</param>
+        public DatasetCompression(object type, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object level = default(object))
         {
             AdditionalProperties = additionalProperties;
+            Type = type;
+            Level = level;
             CustomInit();
         }
 
@@ -51,5 +58,32 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         [JsonExtensionData]
         public IDictionary<string, object> AdditionalProperties { get; set; }
 
+        /// <summary>
+        /// Gets or sets type of dataset compression. Type: string (or
+        /// Expression with resultType string).
+        /// </summary>
+        [JsonProperty(PropertyName = "type")]
+        public object Type { get; set; }
+
+        /// <summary>
+        /// Gets or sets the dataset compression level. Type: string (or
+        /// Expression with resultType string).
+        /// </summary>
+        [JsonProperty(PropertyName = "level")]
+        public object Level { get; set; }
+
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Type == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Type");
+            }
+        }
     }
 }

@@ -46,6 +46,7 @@ pr:
     - sdk/botservice/Microsoft.Azure.Management.BotService
     - sdk/cdn/Microsoft.Azure.Management.Cdn
     - sdk/changeanalysis/Microsoft.Azure.Management.ChangeAnalysis
+    - sdk/chaos/Microsoft.Azure.Management.Chaos
     - sdk/cognitiveservices/Microsoft.Azure.Management.CognitiveServices
     - sdk/compute/Microsoft.Azure.Management.Compute
     - sdk/confluent/Microsoft.Azure.Management.Confluent

@@ -13,8 +13,8 @@ copy them locally in `/sdk/search/generate.ps1` and reference them here.
 ```yaml
 title: SearchServiceClient
 input-file:
- - https://github.com/Azure/azure-rest-api-specs/blob/4e3ae66b8b25c53be84bb0c35c3d6d43291f7a40/specification/search/data-plane/Azure.Search/preview/2021-04-30-Preview/searchindex.json
- - https://github.com/Azure/azure-rest-api-specs/blob/4e3ae66b8b25c53be84bb0c35c3d6d43291f7a40/specification/search/data-plane/Azure.Search/preview/2021-04-30-Preview/searchservice.json
+ - https://github.com/shmed/azure-rest-api-specs/blob/7a003b0aa0def1a454ff0844fa4c6a276bc1ee53/specification/search/data-plane/Azure.Search/preview/2021-04-30-Preview/searchindex.json
+ - https://github.com/shmed/azure-rest-api-specs/blob/7a003b0aa0def1a454ff0844fa4c6a276bc1ee53/specification/search/data-plane/Azure.Search/preview/2021-04-30-Preview/searchservice.json
 modelerfour:
     seal-single-value-enum-by-default: true
 ```
