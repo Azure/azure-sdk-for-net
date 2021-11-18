@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
             var input1 = new ProfileData(Location.WestUS, new Sku { Name = SkuName.StandardMicrosoft });
             ProfileCreateOperation lro1 = await resourceGroup.GetProfiles().CreateOrUpdateAsync(profileName, input1);
             Profile profile = lro1.Value;
-            // Get the endpoint container from the specific profile and create an endpoint
+            // Get the endpoint collection from the specific profile and create an endpoint
             string endpointName = "myEndpoint";
             var input2 = new EndpointData(Location.WestUS)
             {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
             input2.Origins.Add(deepCreatedOrigin);
             EndpointCreateOperation lro2 = await profile.GetEndpoints().CreateOrUpdateAsync(endpointName, input2);
             Endpoint endpoint = lro2.Value;
-            // Get the origin group container from the specific endpoint and create an origin group
+            // Get the origin group collection from the specific endpoint and create an origin group
             string originGroupName = "myOriginGroup";
             var input3 = new OriginGroupData();
             input3.Origins.Add(new WritableSubResource
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
         public async Task ListOriginGroups()
         {
             #region Snippet:Managing_OriginGroups_ListAllOriginGroups
-            // First we need to get the origin group container from the specific endpoint
+            // First we need to get the origin group collection from the specific endpoint
             Profile profile = await resourceGroup.GetProfiles().GetAsync("myProfile");
             Endpoint endpoint = await profile.GetEndpoints().GetAsync("myEndpoint");
             OriginGroupCollection originGroupCollection = endpoint.GetOriginGroups();
-            // With GetAllAsync(), we can get a list of the origin group in the container
+            // With GetAllAsync(), we can get a list of the origin group in the collection
             AsyncPageable<OriginGroup> response = originGroupCollection.GetAllAsync();
             await foreach (OriginGroup originGroup in response)
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
         public async Task UpdateOriginGroups()
         {
             #region Snippet:Managing_OriginGroups_UpdateAnOriginGroup
-            // First we need to get the origin group container from the specific endpoint
+            // First we need to get the origin group collection from the specific endpoint
             Profile profile = await resourceGroup.GetProfiles().GetAsync("myProfile");
             Endpoint endpoint = await profile.GetEndpoints().GetAsync("myEndpoint");
             OriginGroupCollection originGroupCollection = endpoint.GetOriginGroups();
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
         public async Task DeleteOriginGroups()
         {
             #region Snippet:Managing_OriginGroups_DeleteAnOriginGroup
-            // First we need to get the origin group container from the specific endpoint
+            // First we need to get the origin group collection from the specific endpoint
             Profile profile = await resourceGroup.GetProfiles().GetAsync("myProfile");
             Endpoint endpoint = await profile.GetEndpoints().GetAsync("myEndpoint");
             OriginGroupCollection originGroupCollection = endpoint.GetOriginGroups();
@@ -125,9 +125,9 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
             Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
             #endregion
 
-            #region Snippet:Readme_GetResourceGroupContainer
+            #region Snippet:Readme_GetResourceGroupCollection
             ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
-            // With the container, we can create a new resource group with a specific name
+            // With the collection, we can create a new resource group with a specific name
             string rgName = "myRgName";
             Location location = Location.WestUS2;
             ResourceGroupCreateOrUpdateOperation lro = await rgCollection.CreateOrUpdateAsync(rgName, new ResourceGroupData(location));

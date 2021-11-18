@@ -27,11 +27,11 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
             var input1 = new ProfileData("Global", new Sku { Name = SkuName.StandardAzureFrontDoor });
             ProfileCreateOperation lro1 = await resourceGroup.GetProfiles().CreateOrUpdateAsync(AFDProfileName, input1);
             Profile AFDProfile = lro1.Value;
-            // Get the rule set container from the specific azure front door profile and create a rule set
+            // Get the rule set collection from the specific azure front door profile and create a rule set
             string ruleSetName = "myAFDRuleSet";
             RuleSetCreateOperation lro2 = await AFDProfile.GetRuleSets().CreateOrUpdateAsync(ruleSetName);
             RuleSet ruleSet = lro2.Value;
-            // Get the rule container from the specific rule set and create a rule
+            // Get the rule collection from the specific rule set and create a rule
             string ruleName = "myAFDRule";
             RuleData input3 = new RuleData
             {
@@ -52,11 +52,11 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
         public async Task ListAFDRules()
         {
             #region Snippet:Managing_AFDRules_ListAllAzureFrontDoorRules
-            // First we need to get the rule container from the specific rule set
+            // First we need to get the rule collection from the specific rule set
             Profile AFDProfile = await resourceGroup.GetProfiles().GetAsync("myAFDProfile");
             RuleSet ruleSet = await AFDProfile.GetRuleSets().GetAsync("myAFDRuleSet");
             RuleCollection ruleCollection = ruleSet.GetRules();
-            // With GetAllAsync(), we can get a list of the rule in the container
+            // With GetAllAsync(), we can get a list of the rule in the collection
             AsyncPageable<Rule> response = ruleCollection.GetAllAsync();
             await foreach (Rule rule in response)
             {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
         public async Task UpdateAFDRules()
         {
             #region Snippet:Managing_AFDRules_UpdateAnAzureFrontDoorRule
-            // First we need to get the rule container from the specific rule set
+            // First we need to get the rule collection from the specific rule set
             Profile AFDProfile = await resourceGroup.GetProfiles().GetAsync("myAFDProfile");
             RuleSet ruleSet = await AFDProfile.GetRuleSets().GetAsync("myAFDRuleSet");
             RuleCollection ruleCollection = ruleSet.GetRules();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
         public async Task DeleteAFDRules()
         {
             #region Snippet:Managing_AFDRules_DeleteAnAzureFrontDoorRule
-            // First we need to get the rule container from the specific rule set
+            // First we need to get the rule collection from the specific rule set
             Profile AFDProfile = await resourceGroup.GetProfiles().GetAsync("myAFDProfile");
             RuleSet ruleSet = await AFDProfile.GetRuleSets().GetAsync("myAFDRuleSet");
             RuleCollection ruleCollection = ruleSet.GetRules();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
             Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 
             ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
-            // With the container, we can create a new resource group with an specific name
+            // With the collection, we can create a new resource group with an specific name
             string rgName = "myRgName";
             Location location = Location.WestUS2;
             ResourceGroupCreateOrUpdateOperation lro = await rgCollection.CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
