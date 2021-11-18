@@ -30,10 +30,7 @@ namespace Azure.Core.TestFramework
                     return new FallbackCommand(command);
                 }
                 // For any Live modes, zero out the Timeout.
-                foreach (ITest testInstance in test.Tests)
-                {
-                    testInstance.Properties.Set(PropertyNames.Timeout, 0);
-                }
+                TestTimeoutHelper.ZeroTestsTimeoutProperty(test.Tests);
             }
             return command;
         }

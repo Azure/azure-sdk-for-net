@@ -24,11 +24,7 @@ namespace Azure.Core.TestFramework
             }
 
             // Global Timeout should be cleared for LiveOnly tests
-            foreach (ITest testInstance in test.Tests)
-            {
-                testInstance.Properties.Set(PropertyNames.Timeout, 0);
-            }
-
+            TestTimeoutHelper.ZeroTestsTimeoutProperty(test.Tests);
             return command;
         }
 
