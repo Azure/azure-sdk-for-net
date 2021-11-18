@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<EventHubCluster> GetBySubscriptionClustersAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static AsyncPageable<EventHubCluster> GetClustersAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.EventHubs
                 var restOperations = GetClustersRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
                 async Task<Page<EventHubCluster>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetBySubscriptionClusters");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetClusters");
                     scope.Start();
                     try
                     {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.EventHubs
                 }
                 async Task<Page<EventHubCluster>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetBySubscriptionClusters");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetClusters");
                     scope.Start();
                     try
                     {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<EventHubCluster> GetBySubscriptionClusters(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static Pageable<EventHubCluster> GetClusters(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.EventHubs
                 var restOperations = GetClustersRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
                 Page<EventHubCluster> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetBySubscriptionClusters");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetClusters");
                     scope.Start();
                     try
                     {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.EventHubs
                 }
                 Page<EventHubCluster> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetBySubscriptionClusters");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetClusters");
                     scope.Start();
                     try
                     {
