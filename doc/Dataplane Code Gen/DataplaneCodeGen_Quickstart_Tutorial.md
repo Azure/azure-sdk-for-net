@@ -1,9 +1,9 @@
-# LLC Quickstart Tutorial
-In this tutorial, we will walk through creating a new Low Level Client SDK based on [Azure SDK Design guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html).
+# Dataplane Code Gen Quickstart Tutorial
+In this tutorial, we will walk through creating a new DataPlane Code Gen SDK based on [Azure SDK Design guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html).
 
-We will use [LLC template](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/template-LLC) project as a reference. We have a template [swagger file](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/template-LLC/Azure.Template.LLC/src/swagger) containing a REST API definition based on [Azure REST API Guidelines](https://github.com/microsoft/api-guidelines/blob/vNext/azure/Guidelines.md). We will use the swagger to generate LLC SDK using [autorest.csharp](https://github.com/Azure/autorest.csharp).
+We will use the [Dataplane Code Gen template](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/template-LLC) project as a reference. We have a template [swagger file](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/template-LLC/Azure.Template.LLC/src/swagger) containing a REST API definition based on [Azure REST API Guidelines](https://github.com/microsoft/api-guidelines/blob/vNext/azure/Guidelines.md). We will use the swagger to generate SDK using [autorest.csharp](https://github.com/Azure/autorest.csharp).
 
-**Learn more**: to understand more about LLC, see the [LLC docs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md).
+**Learn more**: to understand more about Dataplane Code Gen, see the [Dataplane Code Gen docs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md).
 
 This tutorial has following sections:
 
@@ -38,41 +38,41 @@ This tutorial has following sections:
 
 ## Getting started
 
-For this tutorial, we'll create a getting started project in a branch of your fork of `azure-sdk-for-net` repo. To create the project, we'll copy the [Azure.Template.LLC](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/template-LLC) project for .NET.
+For this tutorial, we'll create a getting started project in a branch of your fork of `azure-sdk-for-net` repo. To create the project, we'll copy the [Azure.Template.DataplaneCodeGen](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/template-LLC) project for .NET.
 
-The `Azure.Template.LLC` project is a great place to get started with Azure SDK .NET library development in general, as it contains a number of common patterns we use for tests, samples, documentation, generating API listings. It also has an example of a generated library for demonstrating LLC APIs.
+The `Azure.Template.DataplaneCodeGen` project is a great place to get started with Azure SDK .NET library development in general, as it contains a number of common patterns we use for tests, samples, documentation, generating API listings. It also has an example of a generated library for demonstrating Dataplane Code Gen APIs.
 
-**Learn more**: see other features listed in the [Azure.Template.LLC README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template-LLC/Azure.Template.LLC/README.md).
+**Learn more**: see other features listed in the [Azure.Template.DataplaneCodeGen README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template-LLC/Azure.Template.LLC/README.md).
 
 ### Create the project
 
-#### 1. Copy the Azure.Template.LLC directory
+#### 1. Copy the Azure.Template.DataplaneCodeGen directory
 
-Copy the `sdk\template-LLC` directory to an `sdk\<your-service-name>` directory at the same level. For example, from the root of your cloned repo:
+Copy the `sdk\template-dataplanecodegen` directory to an `sdk\<your-service-name>` directory at the same level. For example, from the root of your cloned repo:
 
 ```
 % mkdir sdk\<your-service-name>
-% xcopy sdk\template-LLC sdk\<your-service-name> /E
+% xcopy sdk\template-dataplanecodegen sdk\<your-service-name> /E
 ```
 
 **Learn more:** to understand more about the Azure SDK repo structure, see [Repo Structure](https://github.com/Azure/azure-sdk/blob/master/docs/policies/repostructure.md) in the `azure-sdk` repo.
 
 #### 2. Remove existing generated code
 
-Open the `Azure.Template.LLC.sln` file from the `sdk\<your-service-name>\Azure.Template.LLC` directory.
+Open the `Azure.Template.DataplaneCodeGen.sln` file from the `sdk\<your-service-name>\Azure.Template.DataplaneCodeGen` directory.
 
-You'll notice that the `Azure.Template.LLC` project already has generated code in it!  You're welcome to explore what's there -- it's been generated from the swagger file in the `swagger` folder. For this tutorial, however, we'll delete these generated files so we can start clean.
+You'll notice that the `Azure.Template.DataplaneCodeGen` project already has generated code in it!  You're welcome to explore what's there -- it's been generated from the swagger file in the `swagger` folder. For this tutorial, however, we'll delete these generated files so we can start clean.
 
-- Delete the Generated folder in the `Azure.Template.LLC` project.
-- Delete the `swagger` folder in the `Azure.Template.LLC` project.
+- Delete the Generated folder in the `Azure.Template.DataplaneCodeGen` project.
+- Delete the `swagger` folder in the `Azure.Template.DataplaneCodeGen` project.
 
 #### 3. Rename the solution and projects
 
 In Visual Studio:
 
-- Rename the `Azure.Template.LLC` project to `Azure.<your-sdk-name>`.
-- Rename the `Azure.Template.LLC` solution to `Azure.<your-sdk-name>`.
-- Remove the `Azure.Template.LLC.Tests` project from the solution.
+- Rename the `Azure.Template.DataplaneCodeGen` project to `Azure.<your-sdk-name>`.
+- Rename the `Azure.Template.DataplaneCodeGen` solution to `Azure.<your-sdk-name>`.
+- Remove the `Azure.Template.DataplaneCodeGen.Tests` project from the solution.
 
 **Note**: `Azure.<your-sdk-name>` is the Azure SDK package name.
 
@@ -146,8 +146,8 @@ Congratulations, you've generated your first Azure SDK library! Next, we'll disc
 
 In this section, we will talk about adding unit tests and live tests and how to run them.
 
-- Add back `Azure.Template.LLC.Tests` csproj in your `Azure.<your-sdk-name>.sln`.
-- Rename the `Azure.Template.LLC.Tests` project to `Azure.<your-sdk-name>.Tests`.
+- Add back `Azure.Template.DataplaneCodeGen.Tests` csproj in your `Azure.<your-sdk-name>.sln`.
+- Rename the `Azure.Template.DataplaneCodeGen.Tests` project to `Azure.<your-sdk-name>.Tests`.
 - Rename the `TemplateServiceTestEnvironment.cs` file to `<client-name>TestEnvironment.cs` and update the test environment. Before running live tests you will need to create live test resources, please refer [this](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/common/TestResources/README.md) to learn more about how to manager resources and update test environment.
 - Rename the `TemplateServiceLiveTests.cs` file to `<client-name>LiveTests.cs` and remove all the template project tests. Please refer [this](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md#live-testing) to add live tests.
 - Rename the `TemplateServiceTests.cs` file to `<client-name>Tests.cs` and remove all the template project tests and add all the unit tests in this file.
@@ -169,7 +169,7 @@ Snippets are the great way to reuse the sample code. Please refer [this](https:/
 
 ## Export Public API
 
-If you make public API changes or additions, the `eng\scripts\Export-API.ps1` script has to be run to update public API listings. This generates a file in the library's directory similar to the example found in [sdk\template-LLC\Azure.Template.LLC\api\Azure.Template.LLC.netstandard2.0.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template-LLC/Azure.Template.LLC/api/Azure.Template.LLC.netstandard2.0.cs).
+If you make public API changes or additions, the `eng\scripts\Export-API.ps1` script has to be run to update public API listings. This generates a file in the library's directory similar to the example found in [sdk\template-dataplanecodegen\Azure.Template.DataplaneCodeGen\api\Azure.Template.DataplaneCodeGen.netstandard2.0.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template-LLC/Azure.Template.LLC/api/Azure.Template.LLC.netstandard2.0.cs).
 
 Running the script for a project in `sdk\webpubsub` would look like this: 
 ```
