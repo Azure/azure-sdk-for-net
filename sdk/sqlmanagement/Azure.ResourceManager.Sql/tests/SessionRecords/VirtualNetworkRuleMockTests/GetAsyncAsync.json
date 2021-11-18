@@ -1,0 +1,265 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000?api-version=2019-11-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-5781dc127f84fb48abc66ab8262ad543-3e957b25d8965047-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-beta.5 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "bb7c9d1b37577e1a23136ff91bb2be0f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "421",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 18 Nov 2021 07:14:41 GMT",
+        "ETag": "W/\u00221a5-b64HHnH9EN33hGrzmS4rCOV9S7w\u0022",
+        "Keep-Alive": "timeout=5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000",
+        "subscriptionId": "aaaaa",
+        "displayName": "aa",
+        "tenantId": "00000000-0000-0000-0000-000000000000",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "aaaaaaa",
+          "quotaId": "aaaaaaaaaaaaaaaaa",
+          "spendingLimit": "On"
+        },
+        "authorizationSource": "aaaaaaa",
+        "managedByTenants": [
+          {
+            "tenantId": "00000000-0000-0000-0000-000000000000"
+          }
+        ],
+        "tags": {
+          "key1123": "aaaaaaaaaaaaaa"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/Default?api-version=2019-10-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "81",
+        "Content-Type": "application/json",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-beta.5 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "6970987ee025ba29d5bf7141a2e2300d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "Azure.ResourceManager.Resources.Subscription",
+        "tags": {
+          "test": "env"
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "265",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 18 Nov 2021 07:14:41 GMT",
+        "ETag": "W/\u0022109-gQbr9grJUwwWD/fenXNCnPXXHRI\u0022",
+        "Keep-Alive": "timeout=5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/Default",
+        "name": "Default",
+        "type": "a",
+        "properties": {
+          "provisioningState": "Succeeded"
+        },
+        "location": "aaaaaaaaaaaaaa",
+        "managedBy": "aaaaaaaaaaaaaaaa",
+        "tags": {
+          "key5303": "aaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/Default/providers/Microsoft.Sql/servers/vnet-test-svr?api-version=2021-02-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "396",
+        "Content-Type": "application/json",
+        "User-Agent": "azsdk-net-ResourceManager.Sql/1.0.0-alpha.20211117.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "e2e48b252c5c87ca8d1ed97834746a63",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {},
+        "location": "japaneast",
+        "properties": {
+          "administratorLogin": "dummylogin",
+          "administratorLoginPassword": "PLACEHOLDER",
+          "publicNetworkAccess": "Enabled",
+          "administrators": {
+            "principalType": "User",
+            "login": "bob@contoso.com",
+            "sid": "00000011-1111-2222-2222-123456789111",
+            "tenantId": "00000011-1111-2222-2222-123456789111",
+            "azureADOnlyAuthentication": true
+          },
+          "restrictOutboundNetworkAccess": "Enabled"
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "1930",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 18 Nov 2021 07:14:41 GMT",
+        "ETag": "W/\u002278a-3gVMIyDoBQEKfouZejJelUJ3G7k\u0022",
+        "Keep-Alive": "timeout=5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/Default/providers/Microsoft.Sql/servers/vnet-test-svr",
+        "name": "vnet-test-svr",
+        "type": "aaaaaaaaaaaaaaaaaaaaa",
+        "location": "aaaaaaaaaaaaaaaa",
+        "tags": {
+          "key9778": "aaaaaaa"
+        },
+        "identity": {
+          "userAssignedIdentities": {
+            "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/00000000-0000-0000-0000-000000000000/providers/Microsoft.ManagedIdentity/userAssignedIdentities/key440": {
+              "principalId": "00000000-0000-0000-0000-000000000000",
+              "clientId": "00000000-0000-0000-0000-000000000000"
+            }
+          },
+          "principalId": "00000000-0000-0000-0000-000000000000",
+          "type": "None",
+          "tenantId": "00000000-0000-0000-0000-000000000000"
+        },
+        "kind": "a",
+        "properties": {
+          "administratorLogin": "aaaaaaaaaa",
+          "administratorLoginPassword": "aaaaaaaaaaaaaaaaaa",
+          "version": "aaaaaaaaaaaaaaaaaaaaaaa",
+          "state": "aaaaaaaaaaaaaaaaaaa",
+          "fullyQualifiedDomainName": "aaaaaaaaaaaaaaaa",
+          "privateEndpointConnections": [
+            {
+              "id": "/subscriptions/a9cbceed-cd54-47f1-b7a2-bad149218603/resourceGroups/mockRg/providers/Microsoft.Resources/mockResource/mockName",
+              "properties": {
+                "privateEndpoint": {
+                  "id": "/subscriptions/a9cbceed-cd54-47f1-b7a2-bad149218603/resourceGroups/mockRg/providers/Microsoft.Resources/mockResource/mockName"
+                },
+                "privateLinkServiceConnectionState": {
+                  "status": "Approved",
+                  "description": "aaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "actionsRequired": "None"
+                },
+                "provisioningState": "Succeeded"
+              }
+            }
+          ],
+          "minimalTlsVersion": "aaaaaaaaaaaaaaaaaaa",
+          "publicNetworkAccess": "Enabled",
+          "workspaceFeature": "Connected",
+          "primaryUserAssignedIdentityId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "federatedClientId": "00000000-0000-0000-0000-000000000000",
+          "keyId": "aaaaaaaaaaaaaaaaaaaaaaaaa",
+          "administrators": {
+            "administratorType": "ActiveDirectory",
+            "principalType": "User",
+            "login": "aaaaaaaaaaaaaa",
+            "sid": "00000000-0000-0000-0000-000000000000",
+            "tenantId": "00000000-0000-0000-0000-000000000000",
+            "azureADOnlyAuthentication": true
+          },
+          "restrictOutboundNetworkAccess": "Enabled"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/Default/providers/Microsoft.Sql/servers/vnet-test-svr/virtualNetworkRules/vnet-firewall-rule?api-version=2020-11-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "231",
+        "Content-Type": "application/json",
+        "User-Agent": "azsdk-net-ResourceManager.Sql/1.0.0-alpha.20211117.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "90d461e2dbce51b3cde9db0706b18560",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "virtualNetworkSubnetId": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/Default/providers/Microsoft.Network/virtualNetworks/testvnet/subnets/testsubnet",
+          "ignoreMissingVnetServiceEndpoint": false
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "334",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 18 Nov 2021 07:14:41 GMT",
+        "ETag": "W/\u002214e-I5bUmiuehal4DBFgPfcFZk0vh20\u0022",
+        "Keep-Alive": "timeout=5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/Default/providers/Microsoft.Sql/servers/vnet-test-svr/virtualNetworkRules/vnet-firewall-rule",
+        "name": "vnet-firewall-rule",
+        "type": "aaaaaaaaaaaaaaaaa",
+        "properties": {
+          "virtualNetworkSubnetId": "aaaaa",
+          "ignoreMissingVnetServiceEndpoint": true,
+          "state": "Initializing"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/Default/providers/Microsoft.Sql/servers/vnet-test-svr/virtualNetworkRules/vnet-firewall-rule?api-version=2020-11-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager.Sql/1.0.0-alpha.20211117.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "d2959841d9a081954926e1b0f39634c2",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "334",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 18 Nov 2021 07:14:41 GMT",
+        "ETag": "W/\u002214e-I5bUmiuehal4DBFgPfcFZk0vh20\u0022",
+        "Keep-Alive": "timeout=5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/Default/providers/Microsoft.Sql/servers/vnet-test-svr/virtualNetworkRules/vnet-firewall-rule",
+        "name": "vnet-firewall-rule",
+        "type": "aaaaaaaaaaaaaaaaa",
+        "properties": {
+          "virtualNetworkSubnetId": "aaaaa",
+          "ignoreMissingVnetServiceEndpoint": true,
+          "state": "Initializing"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1531905423",
+    "RESOURCE_MANAGER_URL": "https://localhost:8443",
+    "SUBSCRIPTION_ID": "00000000-0000-0000-0000-000000000000"
+  }
+}

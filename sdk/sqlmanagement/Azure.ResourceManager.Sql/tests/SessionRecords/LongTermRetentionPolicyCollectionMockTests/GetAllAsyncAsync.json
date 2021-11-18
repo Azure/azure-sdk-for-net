@@ -1,0 +1,290 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000?api-version=2019-11-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-d19fa89d24690e48b62ab7d2837bdfa1-60da1d67c582e247-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-beta.5 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "23f574df63f8a5ce501c72068cc09913",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "421",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 18 Nov 2021 07:14:00 GMT",
+        "ETag": "W/\u00221a5-b64HHnH9EN33hGrzmS4rCOV9S7w\u0022",
+        "Keep-Alive": "timeout=5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000",
+        "subscriptionId": "aaaaa",
+        "displayName": "aa",
+        "tenantId": "00000000-0000-0000-0000-000000000000",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "aaaaaaa",
+          "quotaId": "aaaaaaaaaaaaaaaaa",
+          "spendingLimit": "On"
+        },
+        "authorizationSource": "aaaaaaa",
+        "managedByTenants": [
+          {
+            "tenantId": "00000000-0000-0000-0000-000000000000"
+          }
+        ],
+        "tags": {
+          "key1123": "aaaaaaaaaaaaaa"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/resourceGroup?api-version=2019-10-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "81",
+        "Content-Type": "application/json",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-beta.5 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "e2028f78cde6dd0252b41384b85110ad",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "Azure.ResourceManager.Resources.Subscription",
+        "tags": {
+          "test": "env"
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "277",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 18 Nov 2021 07:14:00 GMT",
+        "ETag": "W/\u0022115-\u002BYlAt2m/W2hIA993zgr2GidUiLk\u0022",
+        "Keep-Alive": "timeout=5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/resourceGroup",
+        "name": "resourceGroup",
+        "type": "a",
+        "properties": {
+          "provisioningState": "Succeeded"
+        },
+        "location": "aaaaaaaaaaaaaa",
+        "managedBy": "aaaaaaaaaaaaaaaa",
+        "tags": {
+          "key5303": "aaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resourceGroup/providers/Microsoft.Sql/servers/testserver?api-version=2021-02-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "396",
+        "Content-Type": "application/json",
+        "User-Agent": "azsdk-net-ResourceManager.Sql/1.0.0-alpha.20211117.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "a0987a81e5f446f9f353dc11b79d9478",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {},
+        "location": "japaneast",
+        "properties": {
+          "administratorLogin": "dummylogin",
+          "administratorLoginPassword": "PLACEHOLDER",
+          "publicNetworkAccess": "Enabled",
+          "administrators": {
+            "principalType": "User",
+            "login": "bob@contoso.com",
+            "sid": "00000011-1111-2222-2222-123456789111",
+            "tenantId": "00000011-1111-2222-2222-123456789111",
+            "azureADOnlyAuthentication": true
+          },
+          "restrictOutboundNetworkAccess": "Enabled"
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "1930",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 18 Nov 2021 07:14:00 GMT",
+        "ETag": "W/\u002278a-/C4imsLtITqARgxPEWzNu1Mrnm8\u0022",
+        "Keep-Alive": "timeout=5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resourceGroup/providers/Microsoft.Sql/servers/testserver",
+        "name": "testserver",
+        "type": "aaaaaaaaaaaaaaaaaaaaa",
+        "location": "aaaaaaaaaaaaaaaa",
+        "tags": {
+          "key9778": "aaaaaaa"
+        },
+        "identity": {
+          "userAssignedIdentities": {
+            "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/00000000-0000-0000-0000-000000000000/providers/Microsoft.ManagedIdentity/userAssignedIdentities/key440": {
+              "principalId": "00000000-0000-0000-0000-000000000000",
+              "clientId": "00000000-0000-0000-0000-000000000000"
+            }
+          },
+          "principalId": "00000000-0000-0000-0000-000000000000",
+          "type": "None",
+          "tenantId": "00000000-0000-0000-0000-000000000000"
+        },
+        "kind": "a",
+        "properties": {
+          "administratorLogin": "aaaaaaaaaa",
+          "administratorLoginPassword": "aaaaaaaaaaaaaaaaaa",
+          "version": "aaaaaaaaaaaaaaaaaaaaaaa",
+          "state": "aaaaaaaaaaaaaaaaaaa",
+          "fullyQualifiedDomainName": "aaaaaaaaaaaaaaaa",
+          "privateEndpointConnections": [
+            {
+              "id": "/subscriptions/a9cbceed-cd54-47f1-b7a2-bad149218603/resourceGroups/mockRg/providers/Microsoft.Resources/mockResource/mockName",
+              "properties": {
+                "privateEndpoint": {
+                  "id": "/subscriptions/a9cbceed-cd54-47f1-b7a2-bad149218603/resourceGroups/mockRg/providers/Microsoft.Resources/mockResource/mockName"
+                },
+                "privateLinkServiceConnectionState": {
+                  "status": "Approved",
+                  "description": "aaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "actionsRequired": "None"
+                },
+                "provisioningState": "Succeeded"
+              }
+            }
+          ],
+          "minimalTlsVersion": "aaaaaaaaaaaaaaaaaaa",
+          "publicNetworkAccess": "Enabled",
+          "workspaceFeature": "Connected",
+          "primaryUserAssignedIdentityId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "federatedClientId": "00000000-0000-0000-0000-000000000000",
+          "keyId": "aaaaaaaaaaaaaaaaaaaaaaaaa",
+          "administrators": {
+            "administratorType": "ActiveDirectory",
+            "principalType": "User",
+            "login": "aaaaaaaaaaaaaa",
+            "sid": "00000000-0000-0000-0000-000000000000",
+            "tenantId": "00000000-0000-0000-0000-000000000000",
+            "azureADOnlyAuthentication": true
+          },
+          "restrictOutboundNetworkAccess": "Enabled"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resourceGroup/providers/Microsoft.Sql/servers/testserver/databases/testDatabase?api-version=2021-02-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "103",
+        "Content-Type": "application/json",
+        "User-Agent": "azsdk-net-ResourceManager.Sql/1.0.0-alpha.20211117.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "1284c40bf828931e96bbef92f1f025b4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "sku": {
+          "name": "BC",
+          "family": "Gen4",
+          "capacity": 2
+        },
+        "tags": {},
+        "location": "southeastasia",
+        "properties": {}
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "1819",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 18 Nov 2021 07:14:00 GMT",
+        "ETag": "W/\u002271b-aPoIg/deHI6amL7F1eXK9tV5eE8\u0022",
+        "Keep-Alive": "timeout=5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resourceGroup/providers/Microsoft.Sql/servers/testserver/databases/testDatabase",
+        "name": "testDatabase",
+        "type": "aaaaaaaaaaaa",
+        "location": "aaaaaaaaaaa",
+        "tags": {
+          "key5320": "aa"
+        },
+        "sku": {
+          "name": "testDatabase",
+          "tier": "aaaaaaaaaaaaa",
+          "size": "aa",
+          "family": "aaaaaaaaaaaaaa",
+          "capacity": 22
+        },
+        "kind": "aaaaaaaaaaaaaaaaaaaaaaaaa",
+        "managedBy": "aaaaaaaaaaaaaaa",
+        "properties": {
+          "createMode": "Default",
+          "collation": "aa",
+          "maxSizeBytes": 20,
+          "sampleName": "AdventureWorksLT",
+          "elasticPoolId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "sourceDatabaseId": "aaaaaaaaaaaaaaa",
+          "status": "Online",
+          "databaseId": "00000000-0000-0000-0000-000000000000",
+          "creationDate": "2021-11-18T07:13:22.161Z",
+          "currentServiceObjectiveName": "aaaaaaaaaaaaaaaaaaaaaa",
+          "requestedServiceObjectiveName": "aaaaaaaaa",
+          "defaultSecondaryLocation": "aaaaaaaaaaa",
+          "failoverGroupId": "aaaaa",
+          "restorePointInTime": "2021-11-18T07:13:22.161Z",
+          "sourceDatabaseDeletionDate": "2021-11-18T07:13:22.161Z",
+          "recoveryServicesRecoveryPointId": "aaaaaaaaaaa",
+          "longTermRetentionBackupResourceId": "aaaaaaaaaaaaaaa",
+          "recoverableDatabaseId": "aaaaaa",
+          "restorableDroppedDatabaseId": "aaaaaaaaaaaa",
+          "catalogCollation": "DATABASE_DEFAULT",
+          "zoneRedundant": true,
+          "licenseType": "LicenseIncluded",
+          "maxLogSizeBytes": 7,
+          "earliestRestoreDate": "2021-11-18T07:13:22.161Z",
+          "readScale": "Enabled",
+          "highAvailabilityReplicaCount": 21,
+          "secondaryType": "Geo",
+          "currentSku": {
+            "name": "testDatabase",
+            "tier": "aaaaaaaaaaaaa",
+            "size": "aa",
+            "family": "aaaaaaaaaaaaaa",
+            "capacity": 22
+          },
+          "autoPauseDelay": 5,
+          "currentBackupStorageRedundancy": "Geo",
+          "requestedBackupStorageRedundancy": "Geo",
+          "minCapacity": 25,
+          "pausedDate": "2021-11-18T07:13:22.161Z",
+          "resumedDate": "2021-11-18T07:13:22.161Z",
+          "maintenanceConfigurationId": "aaaaaaaaaaaaaaaaaaaaa",
+          "isLedgerOn": true,
+          "isInfraEncryptionEnabled": true
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1980127831",
+    "RESOURCE_MANAGER_URL": "https://localhost:8443",
+    "SUBSCRIPTION_ID": "00000000-0000-0000-0000-000000000000"
+  }
+}

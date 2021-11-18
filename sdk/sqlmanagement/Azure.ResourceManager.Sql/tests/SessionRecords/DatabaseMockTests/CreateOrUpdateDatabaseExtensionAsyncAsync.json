@@ -1,0 +1,335 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000?api-version=2019-11-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-2a5e28b7a2538140804c0d5f3c9f5cfc-38c352af3bd2d747-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-beta.5 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "0b89a7b0eef2253f7a377536307a7c80",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "421",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 18 Nov 2021 07:13:34 GMT",
+        "ETag": "W/\u00221a5-b64HHnH9EN33hGrzmS4rCOV9S7w\u0022",
+        "Keep-Alive": "timeout=5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000",
+        "subscriptionId": "aaaaa",
+        "displayName": "aa",
+        "tenantId": "00000000-0000-0000-0000-000000000000",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "aaaaaaa",
+          "quotaId": "aaaaaaaaaaaaaaaaa",
+          "spendingLimit": "On"
+        },
+        "authorizationSource": "aaaaaaa",
+        "managedByTenants": [
+          {
+            "tenantId": "00000000-0000-0000-0000-000000000000"
+          }
+        ],
+        "tags": {
+          "key1123": "aaaaaaaaaaaaaa"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/Default-SQL-SouthEastAsia?api-version=2019-10-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "81",
+        "Content-Type": "application/json",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-beta.5 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "91b12dabf89d09c2f2226e8e870fbc81",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "Azure.ResourceManager.Resources.Subscription",
+        "tags": {
+          "test": "env"
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "301",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 18 Nov 2021 07:13:34 GMT",
+        "ETag": "W/\u002212d-Kd8l/DMicfSwctFruxwD25ZMPf4\u0022",
+        "Keep-Alive": "timeout=5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/Default-SQL-SouthEastAsia",
+        "name": "Default-SQL-SouthEastAsia",
+        "type": "a",
+        "properties": {
+          "provisioningState": "Succeeded"
+        },
+        "location": "aaaaaaaaaaaaaa",
+        "managedBy": "aaaaaaaaaaaaaaaa",
+        "tags": {
+          "key5303": "aaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/Default-SQL-SouthEastAsia/providers/Microsoft.Sql/servers/testsvr?api-version=2021-02-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "396",
+        "Content-Type": "application/json",
+        "User-Agent": "azsdk-net-ResourceManager.Sql/1.0.0-alpha.20211117.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "0ea6af79cefad73a8ad4fd1b5fed4734",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {},
+        "location": "japaneast",
+        "properties": {
+          "administratorLogin": "dummylogin",
+          "administratorLoginPassword": "PLACEHOLDER",
+          "publicNetworkAccess": "Enabled",
+          "administrators": {
+            "principalType": "User",
+            "login": "bob@contoso.com",
+            "sid": "00000011-1111-2222-2222-123456789111",
+            "tenantId": "00000011-1111-2222-2222-123456789111",
+            "azureADOnlyAuthentication": true
+          },
+          "restrictOutboundNetworkAccess": "Enabled"
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "1936",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 18 Nov 2021 07:13:34 GMT",
+        "ETag": "W/\u0022790-qpBcLsXF1z1ksLvaaOqahmT4/fg\u0022",
+        "Keep-Alive": "timeout=5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/Default-SQL-SouthEastAsia/providers/Microsoft.Sql/servers/testsvr",
+        "name": "testsvr",
+        "type": "aaaaaaaaaaaaaaaaaaaaa",
+        "location": "aaaaaaaaaaaaaaaa",
+        "tags": {
+          "key9778": "aaaaaaa"
+        },
+        "identity": {
+          "userAssignedIdentities": {
+            "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/00000000-0000-0000-0000-000000000000/providers/Microsoft.ManagedIdentity/userAssignedIdentities/key440": {
+              "principalId": "00000000-0000-0000-0000-000000000000",
+              "clientId": "00000000-0000-0000-0000-000000000000"
+            }
+          },
+          "principalId": "00000000-0000-0000-0000-000000000000",
+          "type": "None",
+          "tenantId": "00000000-0000-0000-0000-000000000000"
+        },
+        "kind": "a",
+        "properties": {
+          "administratorLogin": "aaaaaaaaaa",
+          "administratorLoginPassword": "aaaaaaaaaaaaaaaaaa",
+          "version": "aaaaaaaaaaaaaaaaaaaaaaa",
+          "state": "aaaaaaaaaaaaaaaaaaa",
+          "fullyQualifiedDomainName": "aaaaaaaaaaaaaaaa",
+          "privateEndpointConnections": [
+            {
+              "id": "/subscriptions/a9cbceed-cd54-47f1-b7a2-bad149218603/resourceGroups/mockRg/providers/Microsoft.Resources/mockResource/mockName",
+              "properties": {
+                "privateEndpoint": {
+                  "id": "/subscriptions/a9cbceed-cd54-47f1-b7a2-bad149218603/resourceGroups/mockRg/providers/Microsoft.Resources/mockResource/mockName"
+                },
+                "privateLinkServiceConnectionState": {
+                  "status": "Approved",
+                  "description": "aaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "actionsRequired": "None"
+                },
+                "provisioningState": "Succeeded"
+              }
+            }
+          ],
+          "minimalTlsVersion": "aaaaaaaaaaaaaaaaaaa",
+          "publicNetworkAccess": "Enabled",
+          "workspaceFeature": "Connected",
+          "primaryUserAssignedIdentityId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "federatedClientId": "00000000-0000-0000-0000-000000000000",
+          "keyId": "aaaaaaaaaaaaaaaaaaaaaaaaa",
+          "administrators": {
+            "administratorType": "ActiveDirectory",
+            "principalType": "User",
+            "login": "aaaaaaaaaaaaaa",
+            "sid": "00000000-0000-0000-0000-000000000000",
+            "tenantId": "00000000-0000-0000-0000-000000000000",
+            "azureADOnlyAuthentication": true
+          },
+          "restrictOutboundNetworkAccess": "Enabled"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/Default-SQL-SouthEastAsia/providers/Microsoft.Sql/servers/testsvr/databases/testdb?api-version=2021-02-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "103",
+        "Content-Type": "application/json",
+        "User-Agent": "azsdk-net-ResourceManager.Sql/1.0.0-alpha.20211117.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "81bcf47b6ed3dc85f2d907c8faa6aa04",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "sku": {
+          "name": "BC",
+          "family": "Gen4",
+          "capacity": 2
+        },
+        "tags": {},
+        "location": "southeastasia",
+        "properties": {}
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "1804",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 18 Nov 2021 07:13:34 GMT",
+        "ETag": "W/\u002270c-oZCBW8MUfrkpRQJj8QLkAxXewL8\u0022",
+        "Keep-Alive": "timeout=5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/Default-SQL-SouthEastAsia/providers/Microsoft.Sql/servers/testsvr/databases/testdb",
+        "name": "testdb",
+        "type": "aaaaaaaaaaaa",
+        "location": "aaaaaaaaaaa",
+        "tags": {
+          "key5320": "aa"
+        },
+        "sku": {
+          "name": "testdb",
+          "tier": "aaaaaaaaaaaaa",
+          "size": "aa",
+          "family": "aaaaaaaaaaaaaa",
+          "capacity": 22
+        },
+        "kind": "aaaaaaaaaaaaaaaaaaaaaaaaa",
+        "managedBy": "aaaaaaaaaaaaaaa",
+        "properties": {
+          "createMode": "Default",
+          "collation": "aa",
+          "maxSizeBytes": 20,
+          "sampleName": "AdventureWorksLT",
+          "elasticPoolId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "sourceDatabaseId": "aaaaaaaaaaaaaaa",
+          "status": "Online",
+          "databaseId": "00000000-0000-0000-0000-000000000000",
+          "creationDate": "2021-11-18T07:13:22.161Z",
+          "currentServiceObjectiveName": "aaaaaaaaaaaaaaaaaaaaaa",
+          "requestedServiceObjectiveName": "aaaaaaaaa",
+          "defaultSecondaryLocation": "aaaaaaaaaaa",
+          "failoverGroupId": "aaaaa",
+          "restorePointInTime": "2021-11-18T07:13:22.161Z",
+          "sourceDatabaseDeletionDate": "2021-11-18T07:13:22.161Z",
+          "recoveryServicesRecoveryPointId": "aaaaaaaaaaa",
+          "longTermRetentionBackupResourceId": "aaaaaaaaaaaaaaa",
+          "recoverableDatabaseId": "aaaaaa",
+          "restorableDroppedDatabaseId": "aaaaaaaaaaaa",
+          "catalogCollation": "DATABASE_DEFAULT",
+          "zoneRedundant": true,
+          "licenseType": "LicenseIncluded",
+          "maxLogSizeBytes": 7,
+          "earliestRestoreDate": "2021-11-18T07:13:22.161Z",
+          "readScale": "Enabled",
+          "highAvailabilityReplicaCount": 21,
+          "secondaryType": "Geo",
+          "currentSku": {
+            "name": "testdb",
+            "tier": "aaaaaaaaaaaaa",
+            "size": "aa",
+            "family": "aaaaaaaaaaaaaa",
+            "capacity": 22
+          },
+          "autoPauseDelay": 5,
+          "currentBackupStorageRedundancy": "Geo",
+          "requestedBackupStorageRedundancy": "Geo",
+          "minCapacity": 25,
+          "pausedDate": "2021-11-18T07:13:22.161Z",
+          "resumedDate": "2021-11-18T07:13:22.161Z",
+          "maintenanceConfigurationId": "aaaaaaaaaaaaaaaaaaaaa",
+          "isLedgerOn": true,
+          "isInfraEncryptionEnabled": true
+        }
+      }
+    },
+    {
+      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/Default-SQL-SouthEastAsia/providers/Microsoft.Sql/servers/testsvr/databases/testdb/extensions/polybaseimport?api-version=2021-02-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "274",
+        "Content-Type": "application/json",
+        "User-Agent": "azsdk-net-ResourceManager.Sql/1.0.0-alpha.20211117.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "6b9f9237c630e461a4fe9b3cfa87bd3e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "operationMode": "PolybaseImport",
+          "storageKeyType": "StorageAccessKey",
+          "storageKey": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+          "storageUri": "https://teststorage.blob.core.windows.net/testcontainer/Manifest.xml"
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "524",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 18 Nov 2021 07:13:34 GMT",
+        "ETag": "W/\u002220c-QfCDH9SI\u002BhpKSGZn6zpD4R0cqP4\u0022",
+        "Keep-Alive": "timeout=5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/Default-SQL-SouthEastAsia/providers/Microsoft.Sql/servers/testsvr/databases/testdb/extensions/polybaseimport",
+        "name": "polybaseimport",
+        "type": "aaaaaaaaaaaaaa",
+        "properties": {
+          "requestId": "00000000-0000-0000-0000-000000000000",
+          "requestType": "aaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "lastModifiedTime": "aaaaaaaaaaaaaaaaa",
+          "serverName": "aaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "databaseName": "aaaaaaaaaaa",
+          "status": "aaaaaaaaaaaa",
+          "errorMessage": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1391442466",
+    "RESOURCE_MANAGER_URL": "https://localhost:8443",
+    "SUBSCRIPTION_ID": "00000000-0000-0000-0000-000000000000"
+  }
+}

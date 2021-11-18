@@ -16,36 +16,36 @@ namespace Azure.ResourceManager.Sql.Tests
         {
         }
 
-        [Test]
-        public async Task TestGetCapabilitiesAsync()
-        {
-            Dictionary<string, string> tags = new Dictionary<string, string>();
-            string suiteName = this.GetType().Name;
+        //[Test]
+        //public async Task TestGetCapabilitiesAsync()
+        //{
+        //    Dictionary<string, string> tags = new Dictionary<string, string>();
+        //    string suiteName = this.GetType().Name;
 
-            SqlManagementClient sqlClient = GetSqlManagementClient();
+        //    SqlManagementClient sqlClient = GetSqlManagementClient();
 
-            LocationCapabilities capabilities = await sqlClient.Capabilities.ListByLocationAsync(DefaultLocation);
+        //    LocationCapabilities capabilities = await sqlClient.Capabilities.ListByLocationAsync(DefaultLocation);
 
-            Assert.NotNull(capabilities);
+        //    Assert.NotNull(capabilities);
 
-            foreach (ServerVersionCapability s in capabilities.SupportedServerVersions)
-            {
-                Assert.NotNull(s.Name);
-                foreach (EditionCapability e in s.SupportedEditions)
-                {
-                    Assert.NotNull(e.Name);
-                    foreach (ServiceObjectiveCapability o in e.SupportedServiceLevelObjectives)
-                    {
-                        Assert.NotNull(o.Name);
-                        Assert.NotNull(o.PerformanceLevel);
-                        foreach (MaxSizeRangeCapability m in o.SupportedMaxSizes)
-                        {
-                            Assert.NotNull(m.MinValue);
-                            Assert.NotNull(m.MaxValue);
-                        }
-                    }
-                }
-            }
-        }
+        //    foreach (ServerVersionCapability s in capabilities.SupportedServerVersions)
+        //    {
+        //        Assert.NotNull(s.Name);
+        //        foreach (EditionCapability e in s.SupportedEditions)
+        //        {
+        //            Assert.NotNull(e.Name);
+        //            foreach (ServiceObjectiveCapability o in e.SupportedServiceLevelObjectives)
+        //            {
+        //                Assert.NotNull(o.Name);
+        //                Assert.NotNull(o.PerformanceLevel);
+        //                foreach (MaxSizeRangeCapability m in o.SupportedMaxSizes)
+        //                {
+        //                    Assert.NotNull(m.MinValue);
+        //                    Assert.NotNull(m.MaxValue);
+        //                }
+        //            }
+        //        }
+        //    }
+        //}
     }
 }
