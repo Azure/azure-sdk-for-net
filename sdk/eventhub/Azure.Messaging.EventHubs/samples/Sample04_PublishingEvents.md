@@ -114,7 +114,7 @@ finally
 
 ### Event Hub Producer Client
 
-When using the `EventHubProducerClient` a batch is first created and then published.  The `SendAsync` call will receive an acknowledgment from the Event Hubs service; so long as no exception is thrown, your application can consider publishing successful.  All of your event data will be published to one of the Event Hub partitions, thought here may be a slight delay until it is available to be read.
+When using the `EventHubProducerClient` a batch is first created and then published.  The `SendAsync` call will receive an acknowledgment from the Event Hubs service; so long as no exception is thrown, your application can consider publishing successful.  All of your event data will be published to one of the Event Hub partitions, though there may be a slight delay until it is available to be read.
 
 ```C# Snippet:EventHubs_Sample04_AutomaticRouting
 var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
