@@ -112,6 +112,7 @@ namespace Azure.Core.Tests
                 // Sending the request would fail because of length mismatch
             }
 
+            // InfiniteStream has a length of long.MaxValue check that it got sent correctly
             Assert.AreEqual(long.MaxValue, contentLength);
         }
 
