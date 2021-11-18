@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Cdn
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateGetAllRequest()
+        internal HttpMessage CreateListRequest()
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -58,9 +58,9 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Edgenodes are the global Point of Presence (POP) locations used to deliver CDN content to end users. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<EdgenodeResult>> GetAllAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<EdgenodeResult>> ListAsync(CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetAllRequest();
+            using var message = CreateListRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -78,9 +78,9 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Edgenodes are the global Point of Presence (POP) locations used to deliver CDN content to end users. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<EdgenodeResult> GetAll(CancellationToken cancellationToken = default)
+        public Response<EdgenodeResult> List(CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetAllRequest();
+            using var message = CreateListRequest();
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal HttpMessage CreateGetAllNextPageRequest(string nextLink)
+        internal HttpMessage CreateListNextPageRequest(string nextLink)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -114,14 +114,14 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<EdgenodeResult>> GetAllNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<EdgenodeResult>> ListNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink);
+            using var message = CreateListNextPageRequest(nextLink);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -141,14 +141,14 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<EdgenodeResult> GetAllNextPage(string nextLink, CancellationToken cancellationToken = default)
+        public Response<EdgenodeResult> ListNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink);
+            using var message = CreateListNextPageRequest(nextLink);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

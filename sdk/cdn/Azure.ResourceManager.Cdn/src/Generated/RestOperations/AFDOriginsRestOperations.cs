@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Cdn
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateGetAllByOriginGroupRequest(string resourceGroupName, string profileName, string originGroupName)
+        internal HttpMessage CreateListByOriginGroupRequest(string resourceGroupName, string profileName, string originGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="originGroupName"> Name of the origin group which is unique within the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="originGroupName"/> is null. </exception>
-        public async Task<Response<AFDOriginListResult>> GetAllByOriginGroupAsync(string resourceGroupName, string profileName, string originGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<AFDOriginListResult>> ListByOriginGroupAsync(string resourceGroupName, string profileName, string originGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(originGroupName));
             }
 
-            using var message = CreateGetAllByOriginGroupRequest(resourceGroupName, profileName, originGroupName);
+            using var message = CreateListByOriginGroupRequest(resourceGroupName, profileName, originGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="originGroupName"> Name of the origin group which is unique within the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="originGroupName"/> is null. </exception>
-        public Response<AFDOriginListResult> GetAllByOriginGroup(string resourceGroupName, string profileName, string originGroupName, CancellationToken cancellationToken = default)
+        public Response<AFDOriginListResult> ListByOriginGroup(string resourceGroupName, string profileName, string originGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(originGroupName));
             }
 
-            using var message = CreateGetAllByOriginGroupRequest(resourceGroupName, profileName, originGroupName);
+            using var message = CreateListByOriginGroupRequest(resourceGroupName, profileName, originGroupName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -585,7 +585,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal HttpMessage CreateGetAllByOriginGroupNextPageRequest(string nextLink, string resourceGroupName, string profileName, string originGroupName)
+        internal HttpMessage CreateListByOriginGroupNextPageRequest(string nextLink, string resourceGroupName, string profileName, string originGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -606,7 +606,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="originGroupName"> Name of the origin group which is unique within the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="originGroupName"/> is null. </exception>
-        public async Task<Response<AFDOriginListResult>> GetAllByOriginGroupNextPageAsync(string nextLink, string resourceGroupName, string profileName, string originGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<AFDOriginListResult>> ListByOriginGroupNextPageAsync(string nextLink, string resourceGroupName, string profileName, string originGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -625,7 +625,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(originGroupName));
             }
 
-            using var message = CreateGetAllByOriginGroupNextPageRequest(nextLink, resourceGroupName, profileName, originGroupName);
+            using var message = CreateListByOriginGroupNextPageRequest(nextLink, resourceGroupName, profileName, originGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -648,7 +648,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="originGroupName"> Name of the origin group which is unique within the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="originGroupName"/> is null. </exception>
-        public Response<AFDOriginListResult> GetAllByOriginGroupNextPage(string nextLink, string resourceGroupName, string profileName, string originGroupName, CancellationToken cancellationToken = default)
+        public Response<AFDOriginListResult> ListByOriginGroupNextPage(string nextLink, string resourceGroupName, string profileName, string originGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -667,7 +667,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(originGroupName));
             }
 
-            using var message = CreateGetAllByOriginGroupNextPageRequest(nextLink, resourceGroupName, profileName, originGroupName);
+            using var message = CreateListByOriginGroupNextPageRequest(nextLink, resourceGroupName, profileName, originGroupName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

@@ -20,11 +20,12 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Cdn
 {
-    /// <summary> A class representing collection of SecurityPolicy and their operations over a Profile. </summary>
+    /// <summary> A class representing collection of SecurityPolicy and their operations over its parent. </summary>
     public partial class SecurityPolicyCollection : ArmCollection, IEnumerable<SecurityPolicy>, IAsyncEnumerable<SecurityPolicy>
+
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly SecurityPoliciesRestOperations _restClient;
+        private readonly SecurityPoliciesRestOperations _securityPoliciesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SecurityPolicyCollection"/> class for mocking. </summary>
         protected SecurityPolicyCollection()
@@ -36,22 +37,7 @@ namespace Azure.ResourceManager.Cdn
         internal SecurityPolicyCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new SecurityPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-        }
-
-        IEnumerator<SecurityPolicy> IEnumerable<SecurityPolicy>.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IAsyncEnumerator<SecurityPolicy> IAsyncEnumerable<SecurityPolicy>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            _securityPoliciesRestClient = new SecurityPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -80,8 +66,8 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = _restClient.Create(Id.ResourceGroupName, Id.Name, securityPolicyName, securityPolicy, cancellationToken);
-                var operation = new SecurityPolicyCreateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateRequest(Id.ResourceGroupName, Id.Name, securityPolicyName, securityPolicy).Request, response);
+                var response = _securityPoliciesRestClient.Create(Id.ResourceGroupName, Id.Name, securityPolicyName, securityPolicy, cancellationToken);
+                var operation = new SecurityPolicyCreateOperation(Parent, _clientDiagnostics, Pipeline, _securityPoliciesRestClient.CreateCreateRequest(Id.ResourceGroupName, Id.Name, securityPolicyName, securityPolicy).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -114,8 +100,8 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = await _restClient.CreateAsync(Id.ResourceGroupName, Id.Name, securityPolicyName, securityPolicy, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityPolicyCreateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateRequest(Id.ResourceGroupName, Id.Name, securityPolicyName, securityPolicy).Request, response);
+                var response = await _securityPoliciesRestClient.CreateAsync(Id.ResourceGroupName, Id.Name, securityPolicyName, securityPolicy, cancellationToken).ConfigureAwait(false);
+                var operation = new SecurityPolicyCreateOperation(Parent, _clientDiagnostics, Pipeline, _securityPoliciesRestClient.CreateCreateRequest(Id.ResourceGroupName, Id.Name, securityPolicyName, securityPolicy).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -127,21 +113,22 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Gets an existing security policy within a profile. </summary>
         /// <param name="securityPolicyName"> Name of the security policy under the profile. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
         public virtual Response<SecurityPolicy> Get(string securityPolicyName, CancellationToken cancellationToken = default)
         {
+            if (securityPolicyName == null)
+            {
+                throw new ArgumentNullException(nameof(securityPolicyName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("SecurityPolicyCollection.Get");
             scope.Start();
             try
             {
-                if (securityPolicyName == null)
-                {
-                    throw new ArgumentNullException(nameof(securityPolicyName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, securityPolicyName, cancellationToken: cancellationToken);
+                var response = _securityPoliciesRestClient.Get(Id.ResourceGroupName, Id.Name, securityPolicyName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SecurityPolicy(Parent, response.Value), response.GetRawResponse());
@@ -153,21 +140,22 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Gets an existing security policy within a profile. </summary>
         /// <param name="securityPolicyName"> Name of the security policy under the profile. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
         public async virtual Task<Response<SecurityPolicy>> GetAsync(string securityPolicyName, CancellationToken cancellationToken = default)
         {
+            if (securityPolicyName == null)
+            {
+                throw new ArgumentNullException(nameof(securityPolicyName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("SecurityPolicyCollection.Get");
             scope.Start();
             try
             {
-                if (securityPolicyName == null)
-                {
-                    throw new ArgumentNullException(nameof(securityPolicyName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, securityPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _securityPoliciesRestClient.GetAsync(Id.ResourceGroupName, Id.Name, securityPolicyName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new SecurityPolicy(Parent, response.Value), response.GetRawResponse());
@@ -181,19 +169,20 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="securityPolicyName"> Name of the security policy under the profile. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
         public virtual Response<SecurityPolicy> GetIfExists(string securityPolicyName, CancellationToken cancellationToken = default)
         {
+            if (securityPolicyName == null)
+            {
+                throw new ArgumentNullException(nameof(securityPolicyName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("SecurityPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
-                if (securityPolicyName == null)
-                {
-                    throw new ArgumentNullException(nameof(securityPolicyName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, securityPolicyName, cancellationToken: cancellationToken);
+                var response = _securityPoliciesRestClient.Get(Id.ResourceGroupName, Id.Name, securityPolicyName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<SecurityPolicy>(null, response.GetRawResponse())
                     : Response.FromValue(new SecurityPolicy(this, response.Value), response.GetRawResponse());
@@ -207,19 +196,20 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="securityPolicyName"> Name of the security policy under the profile. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
         public async virtual Task<Response<SecurityPolicy>> GetIfExistsAsync(string securityPolicyName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SecurityPolicyCollection.GetIfExists");
+            if (securityPolicyName == null)
+            {
+                throw new ArgumentNullException(nameof(securityPolicyName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("SecurityPolicyCollection.GetIfExistsAsync");
             scope.Start();
             try
             {
-                if (securityPolicyName == null)
-                {
-                    throw new ArgumentNullException(nameof(securityPolicyName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, securityPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _securityPoliciesRestClient.GetAsync(Id.ResourceGroupName, Id.Name, securityPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<SecurityPolicy>(null, response.GetRawResponse())
                     : Response.FromValue(new SecurityPolicy(this, response.Value), response.GetRawResponse());
@@ -233,18 +223,19 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="securityPolicyName"> Name of the security policy under the profile. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
         public virtual Response<bool> CheckIfExists(string securityPolicyName, CancellationToken cancellationToken = default)
         {
+            if (securityPolicyName == null)
+            {
+                throw new ArgumentNullException(nameof(securityPolicyName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("SecurityPolicyCollection.CheckIfExists");
             scope.Start();
             try
             {
-                if (securityPolicyName == null)
-                {
-                    throw new ArgumentNullException(nameof(securityPolicyName));
-                }
-
                 var response = GetIfExists(securityPolicyName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -257,18 +248,19 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="securityPolicyName"> Name of the security policy under the profile. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(string securityPolicyName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SecurityPolicyCollection.CheckIfExists");
+            if (securityPolicyName == null)
+            {
+                throw new ArgumentNullException(nameof(securityPolicyName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("SecurityPolicyCollection.CheckIfExistsAsync");
             scope.Start();
             try
             {
-                if (securityPolicyName == null)
-                {
-                    throw new ArgumentNullException(nameof(securityPolicyName));
-                }
-
                 var response = await GetIfExistsAsync(securityPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -290,7 +282,7 @@ namespace Azure.ResourceManager.Cdn
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAllByProfile(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _securityPoliciesRestClient.ListByProfile(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new SecurityPolicy(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -305,7 +297,7 @@ namespace Azure.ResourceManager.Cdn
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAllByProfileNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _securityPoliciesRestClient.ListByProfileNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new SecurityPolicy(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -328,7 +320,7 @@ namespace Azure.ResourceManager.Cdn
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllByProfileAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _securityPoliciesRestClient.ListByProfileAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new SecurityPolicy(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -343,7 +335,7 @@ namespace Azure.ResourceManager.Cdn
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllByProfileNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _securityPoliciesRestClient.ListByProfileNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new SecurityPolicy(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -355,7 +347,22 @@ namespace Azure.ResourceManager.Cdn
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
+        IEnumerator<SecurityPolicy> IEnumerable<SecurityPolicy>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<SecurityPolicy> IAsyncEnumerable<SecurityPolicy>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
+
         // Builders.
-        // public ArmBuilder<ResourceIdentifier, SecurityPolicy, SecurityPolicyData> Construct() { }
+        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, SecurityPolicy, SecurityPolicyData> Construct() { }
     }
 }

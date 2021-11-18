@@ -21,11 +21,12 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Cdn
 {
-    /// <summary> A class representing collection of CdnWebApplicationFirewallPolicy and their operations over a ResourceGroup. </summary>
+    /// <summary> A class representing collection of CdnWebApplicationFirewallPolicy and their operations over its parent. </summary>
     public partial class CdnWebApplicationFirewallPolicyCollection : ArmCollection, IEnumerable<CdnWebApplicationFirewallPolicy>, IAsyncEnumerable<CdnWebApplicationFirewallPolicy>
+
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly PoliciesRestOperations _restClient;
+        private readonly PoliciesRestOperations _policiesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="CdnWebApplicationFirewallPolicyCollection"/> class for mocking. </summary>
         protected CdnWebApplicationFirewallPolicyCollection()
@@ -37,22 +38,7 @@ namespace Azure.ResourceManager.Cdn
         internal CdnWebApplicationFirewallPolicyCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new PoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-        }
-
-        IEnumerator<CdnWebApplicationFirewallPolicy> IEnumerable<CdnWebApplicationFirewallPolicy>.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IAsyncEnumerator<CdnWebApplicationFirewallPolicy> IAsyncEnumerable<CdnWebApplicationFirewallPolicy>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            _policiesRestClient = new PoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -81,8 +67,8 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, policyName, cdnWebApplicationFirewallPolicy, cancellationToken);
-                var operation = new PolicyCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, policyName, cdnWebApplicationFirewallPolicy).Request, response);
+                var response = _policiesRestClient.CreateOrUpdate(Id.ResourceGroupName, policyName, cdnWebApplicationFirewallPolicy, cancellationToken);
+                var operation = new PolicyCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _policiesRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, policyName, cdnWebApplicationFirewallPolicy).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -115,8 +101,8 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, policyName, cdnWebApplicationFirewallPolicy, cancellationToken).ConfigureAwait(false);
-                var operation = new PolicyCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, policyName, cdnWebApplicationFirewallPolicy).Request, response);
+                var response = await _policiesRestClient.CreateOrUpdateAsync(Id.ResourceGroupName, policyName, cdnWebApplicationFirewallPolicy, cancellationToken).ConfigureAwait(false);
+                var operation = new PolicyCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _policiesRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, policyName, cdnWebApplicationFirewallPolicy).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -128,21 +114,22 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Retrieve protection policy with specified name within a resource group. </summary>
         /// <param name="policyName"> The name of the CdnWebApplicationFirewallPolicy. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
         public virtual Response<CdnWebApplicationFirewallPolicy> Get(string policyName, CancellationToken cancellationToken = default)
         {
+            if (policyName == null)
+            {
+                throw new ArgumentNullException(nameof(policyName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("CdnWebApplicationFirewallPolicyCollection.Get");
             scope.Start();
             try
             {
-                if (policyName == null)
-                {
-                    throw new ArgumentNullException(nameof(policyName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, policyName, cancellationToken: cancellationToken);
+                var response = _policiesRestClient.Get(Id.ResourceGroupName, policyName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CdnWebApplicationFirewallPolicy(Parent, response.Value), response.GetRawResponse());
@@ -154,21 +141,22 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Retrieve protection policy with specified name within a resource group. </summary>
         /// <param name="policyName"> The name of the CdnWebApplicationFirewallPolicy. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
         public async virtual Task<Response<CdnWebApplicationFirewallPolicy>> GetAsync(string policyName, CancellationToken cancellationToken = default)
         {
+            if (policyName == null)
+            {
+                throw new ArgumentNullException(nameof(policyName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("CdnWebApplicationFirewallPolicyCollection.Get");
             scope.Start();
             try
             {
-                if (policyName == null)
-                {
-                    throw new ArgumentNullException(nameof(policyName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, policyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _policiesRestClient.GetAsync(Id.ResourceGroupName, policyName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new CdnWebApplicationFirewallPolicy(Parent, response.Value), response.GetRawResponse());
@@ -182,19 +170,20 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="policyName"> The name of the CdnWebApplicationFirewallPolicy. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
         public virtual Response<CdnWebApplicationFirewallPolicy> GetIfExists(string policyName, CancellationToken cancellationToken = default)
         {
+            if (policyName == null)
+            {
+                throw new ArgumentNullException(nameof(policyName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("CdnWebApplicationFirewallPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
-                if (policyName == null)
-                {
-                    throw new ArgumentNullException(nameof(policyName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, policyName, cancellationToken: cancellationToken);
+                var response = _policiesRestClient.Get(Id.ResourceGroupName, policyName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<CdnWebApplicationFirewallPolicy>(null, response.GetRawResponse())
                     : Response.FromValue(new CdnWebApplicationFirewallPolicy(this, response.Value), response.GetRawResponse());
@@ -208,19 +197,20 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="policyName"> The name of the CdnWebApplicationFirewallPolicy. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
         public async virtual Task<Response<CdnWebApplicationFirewallPolicy>> GetIfExistsAsync(string policyName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("CdnWebApplicationFirewallPolicyCollection.GetIfExists");
+            if (policyName == null)
+            {
+                throw new ArgumentNullException(nameof(policyName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("CdnWebApplicationFirewallPolicyCollection.GetIfExistsAsync");
             scope.Start();
             try
             {
-                if (policyName == null)
-                {
-                    throw new ArgumentNullException(nameof(policyName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, policyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _policiesRestClient.GetAsync(Id.ResourceGroupName, policyName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<CdnWebApplicationFirewallPolicy>(null, response.GetRawResponse())
                     : Response.FromValue(new CdnWebApplicationFirewallPolicy(this, response.Value), response.GetRawResponse());
@@ -234,18 +224,19 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="policyName"> The name of the CdnWebApplicationFirewallPolicy. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
         public virtual Response<bool> CheckIfExists(string policyName, CancellationToken cancellationToken = default)
         {
+            if (policyName == null)
+            {
+                throw new ArgumentNullException(nameof(policyName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("CdnWebApplicationFirewallPolicyCollection.CheckIfExists");
             scope.Start();
             try
             {
-                if (policyName == null)
-                {
-                    throw new ArgumentNullException(nameof(policyName));
-                }
-
                 var response = GetIfExists(policyName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -258,18 +249,19 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="policyName"> The name of the CdnWebApplicationFirewallPolicy. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(string policyName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("CdnWebApplicationFirewallPolicyCollection.CheckIfExists");
+            if (policyName == null)
+            {
+                throw new ArgumentNullException(nameof(policyName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("CdnWebApplicationFirewallPolicyCollection.CheckIfExistsAsync");
             scope.Start();
             try
             {
-                if (policyName == null)
-                {
-                    throw new ArgumentNullException(nameof(policyName));
-                }
-
                 var response = await GetIfExistsAsync(policyName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -291,7 +283,7 @@ namespace Azure.ResourceManager.Cdn
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAll(Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _policiesRestClient.List(Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new CdnWebApplicationFirewallPolicy(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -306,7 +298,7 @@ namespace Azure.ResourceManager.Cdn
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAllNextPage(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _policiesRestClient.ListNextPage(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new CdnWebApplicationFirewallPolicy(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -329,7 +321,7 @@ namespace Azure.ResourceManager.Cdn
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllAsync(Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _policiesRestClient.ListAsync(Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new CdnWebApplicationFirewallPolicy(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -344,7 +336,7 @@ namespace Azure.ResourceManager.Cdn
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllNextPageAsync(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _policiesRestClient.ListNextPageAsync(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new CdnWebApplicationFirewallPolicy(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -402,7 +394,22 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
+        IEnumerator<CdnWebApplicationFirewallPolicy> IEnumerable<CdnWebApplicationFirewallPolicy>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<CdnWebApplicationFirewallPolicy> IAsyncEnumerable<CdnWebApplicationFirewallPolicy>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
+
         // Builders.
-        // public ArmBuilder<ResourceIdentifier, CdnWebApplicationFirewallPolicy, CdnWebApplicationFirewallPolicyData> Construct() { }
+        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, CdnWebApplicationFirewallPolicy, CdnWebApplicationFirewallPolicyData> Construct() { }
     }
 }

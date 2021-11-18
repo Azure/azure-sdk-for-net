@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Cdn
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateGetAllRequest()
+        internal HttpMessage CreateListRequest()
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -63,9 +63,9 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Check the quota and actual usage of the CDN profiles under the given subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<ResourceUsageListResult>> GetAllAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<ResourceUsageListResult>> ListAsync(CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetAllRequest();
+            using var message = CreateListRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -83,9 +83,9 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Check the quota and actual usage of the CDN profiles under the given subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<ResourceUsageListResult> GetAll(CancellationToken cancellationToken = default)
+        public Response<ResourceUsageListResult> List(CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetAllRequest();
+            using var message = CreateListRequest();
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal HttpMessage CreateGetAllNextPageRequest(string nextLink)
+        internal HttpMessage CreateListNextPageRequest(string nextLink)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -119,14 +119,14 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<ResourceUsageListResult>> GetAllNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<ResourceUsageListResult>> ListNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink);
+            using var message = CreateListNextPageRequest(nextLink);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -146,14 +146,14 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<ResourceUsageListResult> GetAllNextPage(string nextLink, CancellationToken cancellationToken = default)
+        public Response<ResourceUsageListResult> ListNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink);
+            using var message = CreateListNextPageRequest(nextLink);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Cdn
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateGetAllByProfileRequest(string resourceGroupName, string profileName)
+        internal HttpMessage CreateListByProfileRequest(string resourceGroupName, string profileName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is null. </exception>
-        public async Task<Response<SecretListResult>> GetAllByProfileAsync(string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
+        public async Task<Response<SecretListResult>> ListByProfileAsync(string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(profileName));
             }
 
-            using var message = CreateGetAllByProfileRequest(resourceGroupName, profileName);
+            using var message = CreateListByProfileRequest(resourceGroupName, profileName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is null. </exception>
-        public Response<SecretListResult> GetAllByProfile(string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
+        public Response<SecretListResult> ListByProfile(string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(profileName));
             }
 
-            using var message = CreateGetAllByProfileRequest(resourceGroupName, profileName);
+            using var message = CreateListByProfileRequest(resourceGroupName, profileName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal HttpMessage CreateGetAllByProfileNextPageRequest(string nextLink, string resourceGroupName, string profileName)
+        internal HttpMessage CreateListByProfileNextPageRequest(string nextLink, string resourceGroupName, string profileName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -545,7 +545,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="profileName"/> is null. </exception>
-        public async Task<Response<SecretListResult>> GetAllByProfileNextPageAsync(string nextLink, string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
+        public async Task<Response<SecretListResult>> ListByProfileNextPageAsync(string nextLink, string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -560,7 +560,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(profileName));
             }
 
-            using var message = CreateGetAllByProfileNextPageRequest(nextLink, resourceGroupName, profileName);
+            using var message = CreateListByProfileNextPageRequest(nextLink, resourceGroupName, profileName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -582,7 +582,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="profileName"/> is null. </exception>
-        public Response<SecretListResult> GetAllByProfileNextPage(string nextLink, string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
+        public Response<SecretListResult> ListByProfileNextPage(string nextLink, string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -597,7 +597,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(profileName));
             }
 
-            using var message = CreateGetAllByProfileNextPageRequest(nextLink, resourceGroupName, profileName);
+            using var message = CreateListByProfileNextPageRequest(nextLink, resourceGroupName, profileName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Cdn
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateGetAllByRuleSetRequest(string resourceGroupName, string profileName, string ruleSetName)
+        internal HttpMessage CreateListByRuleSetRequest(string resourceGroupName, string profileName, string ruleSetName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="ruleSetName"> Name of the rule set under the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="ruleSetName"/> is null. </exception>
-        public async Task<Response<RuleListResult>> GetAllByRuleSetAsync(string resourceGroupName, string profileName, string ruleSetName, CancellationToken cancellationToken = default)
+        public async Task<Response<RuleListResult>> ListByRuleSetAsync(string resourceGroupName, string profileName, string ruleSetName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(ruleSetName));
             }
 
-            using var message = CreateGetAllByRuleSetRequest(resourceGroupName, profileName, ruleSetName);
+            using var message = CreateListByRuleSetRequest(resourceGroupName, profileName, ruleSetName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="ruleSetName"> Name of the rule set under the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="ruleSetName"/> is null. </exception>
-        public Response<RuleListResult> GetAllByRuleSet(string resourceGroupName, string profileName, string ruleSetName, CancellationToken cancellationToken = default)
+        public Response<RuleListResult> ListByRuleSet(string resourceGroupName, string profileName, string ruleSetName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(ruleSetName));
             }
 
-            using var message = CreateGetAllByRuleSetRequest(resourceGroupName, profileName, ruleSetName);
+            using var message = CreateListByRuleSetRequest(resourceGroupName, profileName, ruleSetName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -585,7 +585,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal HttpMessage CreateGetAllByRuleSetNextPageRequest(string nextLink, string resourceGroupName, string profileName, string ruleSetName)
+        internal HttpMessage CreateListByRuleSetNextPageRequest(string nextLink, string resourceGroupName, string profileName, string ruleSetName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -606,7 +606,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="ruleSetName"> Name of the rule set under the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="ruleSetName"/> is null. </exception>
-        public async Task<Response<RuleListResult>> GetAllByRuleSetNextPageAsync(string nextLink, string resourceGroupName, string profileName, string ruleSetName, CancellationToken cancellationToken = default)
+        public async Task<Response<RuleListResult>> ListByRuleSetNextPageAsync(string nextLink, string resourceGroupName, string profileName, string ruleSetName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -625,7 +625,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(ruleSetName));
             }
 
-            using var message = CreateGetAllByRuleSetNextPageRequest(nextLink, resourceGroupName, profileName, ruleSetName);
+            using var message = CreateListByRuleSetNextPageRequest(nextLink, resourceGroupName, profileName, ruleSetName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -648,7 +648,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="ruleSetName"> Name of the rule set under the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="ruleSetName"/> is null. </exception>
-        public Response<RuleListResult> GetAllByRuleSetNextPage(string nextLink, string resourceGroupName, string profileName, string ruleSetName, CancellationToken cancellationToken = default)
+        public Response<RuleListResult> ListByRuleSetNextPage(string nextLink, string resourceGroupName, string profileName, string ruleSetName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -667,7 +667,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(ruleSetName));
             }
 
-            using var message = CreateGetAllByRuleSetNextPageRequest(nextLink, resourceGroupName, profileName, ruleSetName);
+            using var message = CreateListByRuleSetNextPageRequest(nextLink, resourceGroupName, profileName, ruleSetName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

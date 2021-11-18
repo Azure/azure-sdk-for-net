@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -45,7 +44,7 @@ namespace Azure.ResourceManager.Cdn
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateGetAllRequest()
+        internal HttpMessage CreateListRequest()
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -64,9 +63,9 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Lists all of the CDN profiles within an Azure subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<ProfileListResult>> GetAllAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<ProfileListResult>> ListAsync(CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetAllRequest();
+            using var message = CreateListRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -84,9 +83,9 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Lists all of the CDN profiles within an Azure subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<ProfileListResult> GetAll(CancellationToken cancellationToken = default)
+        public Response<ProfileListResult> List(CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetAllRequest();
+            using var message = CreateListRequest();
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -102,7 +101,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal HttpMessage CreateGetAllByResourceGroupRequest(string resourceGroupName)
+        internal HttpMessage CreateListByResourceGroupRequest(string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -125,14 +124,14 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<ProfileListResult>> GetAllByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<ProfileListResult>> ListByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateGetAllByResourceGroupRequest(resourceGroupName);
+            using var message = CreateListByResourceGroupRequest(resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -152,14 +151,14 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<ProfileListResult> GetAllByResourceGroup(string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<ProfileListResult> ListByResourceGroup(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateGetAllByResourceGroupRequest(resourceGroupName);
+            using var message = CreateListByResourceGroupRequest(resourceGroupName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -606,7 +605,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal HttpMessage CreateGetSupportedOptimizationTypesRequest(string resourceGroupName, string profileName)
+        internal HttpMessage CreateListSupportedOptimizationTypesRequest(string resourceGroupName, string profileName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -632,7 +631,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is null. </exception>
-        public async Task<Response<SupportedOptimizationTypesListResult>> GetSupportedOptimizationTypesAsync(string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
+        public async Task<Response<SupportedOptimizationTypesListResult>> ListSupportedOptimizationTypesAsync(string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -643,7 +642,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(profileName));
             }
 
-            using var message = CreateGetSupportedOptimizationTypesRequest(resourceGroupName, profileName);
+            using var message = CreateListSupportedOptimizationTypesRequest(resourceGroupName, profileName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -664,7 +663,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is null. </exception>
-        public Response<SupportedOptimizationTypesListResult> GetSupportedOptimizationTypes(string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
+        public Response<SupportedOptimizationTypesListResult> ListSupportedOptimizationTypes(string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -675,7 +674,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(profileName));
             }
 
-            using var message = CreateGetSupportedOptimizationTypesRequest(resourceGroupName, profileName);
+            using var message = CreateListSupportedOptimizationTypesRequest(resourceGroupName, profileName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -691,7 +690,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal HttpMessage CreateGetResourceUsageRequest(string resourceGroupName, string profileName)
+        internal HttpMessage CreateListResourceUsageRequest(string resourceGroupName, string profileName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -717,7 +716,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is null. </exception>
-        public async Task<Response<ResourceUsageListResult>> GetResourceUsageAsync(string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
+        public async Task<Response<ResourceUsageListResult>> ListResourceUsageAsync(string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -728,7 +727,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(profileName));
             }
 
-            using var message = CreateGetResourceUsageRequest(resourceGroupName, profileName);
+            using var message = CreateListResourceUsageRequest(resourceGroupName, profileName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -749,7 +748,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is null. </exception>
-        public Response<ResourceUsageListResult> GetResourceUsage(string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
+        public Response<ResourceUsageListResult> ListResourceUsage(string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -760,7 +759,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(profileName));
             }
 
-            using var message = CreateGetResourceUsageRequest(resourceGroupName, profileName);
+            using var message = CreateListResourceUsageRequest(resourceGroupName, profileName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -776,930 +775,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal HttpMessage CreateCheckResourceUsageRequest(string resourceGroupName, string profileName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
-            uri.AppendPath(profileName, true);
-            uri.AppendPath("/usages", false);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
-            return message;
-        }
-
-        /// <summary> Checks the quota and actual usage of endpoints under the given CDN profile. </summary>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
-        /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is null. </exception>
-        public async Task<Response<UsagesListResult>> CheckResourceUsageAsync(string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (profileName == null)
-            {
-                throw new ArgumentNullException(nameof(profileName));
-            }
-
-            using var message = CreateCheckResourceUsageRequest(resourceGroupName, profileName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        UsagesListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = UsagesListResult.DeserializeUsagesListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Checks the quota and actual usage of endpoints under the given CDN profile. </summary>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
-        /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is null. </exception>
-        public Response<UsagesListResult> CheckResourceUsage(string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (profileName == null)
-            {
-                throw new ArgumentNullException(nameof(profileName));
-            }
-
-            using var message = CreateCheckResourceUsageRequest(resourceGroupName, profileName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        UsagesListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = UsagesListResult.DeserializeUsagesListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateCheckHostNameAvailabilityRequest(string resourceGroupName, string profileName, ValidateCustomDomainInput checkHostNameAvailabilityInput)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
-            uri.AppendPath(profileName, true);
-            uri.AppendPath("/checkHostNameAvailability", false);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(checkHostNameAvailabilityInput);
-            request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
-            return message;
-        }
-
-        /// <summary> Validates the custom domain mapping to ensure it maps to the correct CDN endpoint in DNS. </summary>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
-        /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
-        /// <param name="checkHostNameAvailabilityInput"> Custom domain to be validated. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="checkHostNameAvailabilityInput"/> is null. </exception>
-        public async Task<Response<ValidateCustomDomainOutput>> CheckHostNameAvailabilityAsync(string resourceGroupName, string profileName, ValidateCustomDomainInput checkHostNameAvailabilityInput, CancellationToken cancellationToken = default)
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (profileName == null)
-            {
-                throw new ArgumentNullException(nameof(profileName));
-            }
-            if (checkHostNameAvailabilityInput == null)
-            {
-                throw new ArgumentNullException(nameof(checkHostNameAvailabilityInput));
-            }
-
-            using var message = CreateCheckHostNameAvailabilityRequest(resourceGroupName, profileName, checkHostNameAvailabilityInput);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ValidateCustomDomainOutput value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ValidateCustomDomainOutput.DeserializeValidateCustomDomainOutput(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Validates the custom domain mapping to ensure it maps to the correct CDN endpoint in DNS. </summary>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
-        /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
-        /// <param name="checkHostNameAvailabilityInput"> Custom domain to be validated. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="checkHostNameAvailabilityInput"/> is null. </exception>
-        public Response<ValidateCustomDomainOutput> CheckHostNameAvailability(string resourceGroupName, string profileName, ValidateCustomDomainInput checkHostNameAvailabilityInput, CancellationToken cancellationToken = default)
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (profileName == null)
-            {
-                throw new ArgumentNullException(nameof(profileName));
-            }
-            if (checkHostNameAvailabilityInput == null)
-            {
-                throw new ArgumentNullException(nameof(checkHostNameAvailabilityInput));
-            }
-
-            using var message = CreateCheckHostNameAvailabilityRequest(resourceGroupName, profileName, checkHostNameAvailabilityInput);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ValidateCustomDomainOutput value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ValidateCustomDomainOutput.DeserializeValidateCustomDomainOutput(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateGetLogAnalyticsMetricsRequest(string resourceGroupName, string profileName, IEnumerable<LogMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, LogMetricsGranularity granularity, IEnumerable<string> customDomains, IEnumerable<string> protocols, IEnumerable<LogMetricsGroupBy> groupBy, IEnumerable<string> continents, IEnumerable<string> countryOrRegions)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
-            uri.AppendPath(profileName, true);
-            uri.AppendPath("/getLogAnalyticsMetrics", false);
-            uri.AppendQuery("api-version", apiVersion, true);
-            foreach (var param in metrics)
-            {
-                uri.AppendQuery("metrics", param.ToString(), true);
-            }
-            uri.AppendQuery("dateTimeBegin", dateTimeBegin, "O", true);
-            uri.AppendQuery("dateTimeEnd", dateTimeEnd, "O", true);
-            uri.AppendQuery("granularity", granularity.ToString(), true);
-            if (groupBy != null)
-            {
-                foreach (var param0 in groupBy)
-                {
-                    uri.AppendQuery("groupBy", param0.ToString(), true);
-                }
-            }
-            if (continents != null)
-            {
-                foreach (var param0 in continents)
-                {
-                    uri.AppendQuery("continents", param0, true);
-                }
-            }
-            if (countryOrRegions != null)
-            {
-                foreach (var param0 in countryOrRegions)
-                {
-                    uri.AppendQuery("countryOrRegions", param0, true);
-                }
-            }
-            foreach (var param1 in customDomains)
-            {
-                uri.AppendQuery("customDomains", param1, true);
-            }
-            foreach (var param2 in protocols)
-            {
-                uri.AppendQuery("protocols", param2, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
-            return message;
-        }
-
-        /// <summary> Get log report for AFD profile. </summary>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
-        /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
-        /// <param name="metrics"> The ArrayOfLogMetric to use. </param>
-        /// <param name="dateTimeBegin"> The DateTime to use. </param>
-        /// <param name="dateTimeEnd"> The DateTime to use. </param>
-        /// <param name="granularity"> The LogMetricsGranularity to use. </param>
-        /// <param name="customDomains"> The ArrayOfGet11ItemsItem to use. </param>
-        /// <param name="protocols"> The ArrayOfGet12ItemsItem to use. </param>
-        /// <param name="groupBy"> The ArrayOfLogMetricsGroupBy to use. </param>
-        /// <param name="continents"> The ArrayOfGet9ItemsItem to use. </param>
-        /// <param name="countryOrRegions"> The ArrayOfGet10ItemsItem to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="metrics"/>, <paramref name="customDomains"/>, or <paramref name="protocols"/> is null. </exception>
-        public async Task<Response<MetricsResponse>> GetLogAnalyticsMetricsAsync(string resourceGroupName, string profileName, IEnumerable<LogMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, LogMetricsGranularity granularity, IEnumerable<string> customDomains, IEnumerable<string> protocols, IEnumerable<LogMetricsGroupBy> groupBy = null, IEnumerable<string> continents = null, IEnumerable<string> countryOrRegions = null, CancellationToken cancellationToken = default)
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (profileName == null)
-            {
-                throw new ArgumentNullException(nameof(profileName));
-            }
-            if (metrics == null)
-            {
-                throw new ArgumentNullException(nameof(metrics));
-            }
-            if (customDomains == null)
-            {
-                throw new ArgumentNullException(nameof(customDomains));
-            }
-            if (protocols == null)
-            {
-                throw new ArgumentNullException(nameof(protocols));
-            }
-
-            using var message = CreateGetLogAnalyticsMetricsRequest(resourceGroupName, profileName, metrics, dateTimeBegin, dateTimeEnd, granularity, customDomains, protocols, groupBy, continents, countryOrRegions);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        MetricsResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MetricsResponse.DeserializeMetricsResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Get log report for AFD profile. </summary>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
-        /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
-        /// <param name="metrics"> The ArrayOfLogMetric to use. </param>
-        /// <param name="dateTimeBegin"> The DateTime to use. </param>
-        /// <param name="dateTimeEnd"> The DateTime to use. </param>
-        /// <param name="granularity"> The LogMetricsGranularity to use. </param>
-        /// <param name="customDomains"> The ArrayOfGet11ItemsItem to use. </param>
-        /// <param name="protocols"> The ArrayOfGet12ItemsItem to use. </param>
-        /// <param name="groupBy"> The ArrayOfLogMetricsGroupBy to use. </param>
-        /// <param name="continents"> The ArrayOfGet9ItemsItem to use. </param>
-        /// <param name="countryOrRegions"> The ArrayOfGet10ItemsItem to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="metrics"/>, <paramref name="customDomains"/>, or <paramref name="protocols"/> is null. </exception>
-        public Response<MetricsResponse> GetLogAnalyticsMetrics(string resourceGroupName, string profileName, IEnumerable<LogMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, LogMetricsGranularity granularity, IEnumerable<string> customDomains, IEnumerable<string> protocols, IEnumerable<LogMetricsGroupBy> groupBy = null, IEnumerable<string> continents = null, IEnumerable<string> countryOrRegions = null, CancellationToken cancellationToken = default)
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (profileName == null)
-            {
-                throw new ArgumentNullException(nameof(profileName));
-            }
-            if (metrics == null)
-            {
-                throw new ArgumentNullException(nameof(metrics));
-            }
-            if (customDomains == null)
-            {
-                throw new ArgumentNullException(nameof(customDomains));
-            }
-            if (protocols == null)
-            {
-                throw new ArgumentNullException(nameof(protocols));
-            }
-
-            using var message = CreateGetLogAnalyticsMetricsRequest(resourceGroupName, profileName, metrics, dateTimeBegin, dateTimeEnd, granularity, customDomains, protocols, groupBy, continents, countryOrRegions);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        MetricsResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MetricsResponse.DeserializeMetricsResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateGetLogAnalyticsRankingsRequest(string resourceGroupName, string profileName, IEnumerable<LogRanking> rankings, IEnumerable<LogRankingMetric> metrics, int maxRanking, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, IEnumerable<string> customDomains)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
-            uri.AppendPath(profileName, true);
-            uri.AppendPath("/getLogAnalyticsRankings", false);
-            uri.AppendQuery("api-version", apiVersion, true);
-            foreach (var param in rankings)
-            {
-                uri.AppendQuery("rankings", param.ToString(), true);
-            }
-            foreach (var param0 in metrics)
-            {
-                uri.AppendQuery("metrics", param0.ToString(), true);
-            }
-            uri.AppendQuery("maxRanking", maxRanking, true);
-            uri.AppendQuery("dateTimeBegin", dateTimeBegin, "O", true);
-            uri.AppendQuery("dateTimeEnd", dateTimeEnd, "O", true);
-            if (customDomains != null)
-            {
-                foreach (var param1 in customDomains)
-                {
-                    uri.AppendQuery("customDomains", param1, true);
-                }
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
-            return message;
-        }
-
-        /// <summary> Get log analytics ranking report for AFD profile. </summary>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
-        /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
-        /// <param name="rankings"> The ArrayOfLogRanking to use. </param>
-        /// <param name="metrics"> The ArrayOfLogRankingMetric to use. </param>
-        /// <param name="maxRanking"> The Integer to use. </param>
-        /// <param name="dateTimeBegin"> The DateTime to use. </param>
-        /// <param name="dateTimeEnd"> The DateTime to use. </param>
-        /// <param name="customDomains"> The ArrayOfString to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="rankings"/>, or <paramref name="metrics"/> is null. </exception>
-        public async Task<Response<RankingsResponse>> GetLogAnalyticsRankingsAsync(string resourceGroupName, string profileName, IEnumerable<LogRanking> rankings, IEnumerable<LogRankingMetric> metrics, int maxRanking, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, IEnumerable<string> customDomains = null, CancellationToken cancellationToken = default)
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (profileName == null)
-            {
-                throw new ArgumentNullException(nameof(profileName));
-            }
-            if (rankings == null)
-            {
-                throw new ArgumentNullException(nameof(rankings));
-            }
-            if (metrics == null)
-            {
-                throw new ArgumentNullException(nameof(metrics));
-            }
-
-            using var message = CreateGetLogAnalyticsRankingsRequest(resourceGroupName, profileName, rankings, metrics, maxRanking, dateTimeBegin, dateTimeEnd, customDomains);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        RankingsResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RankingsResponse.DeserializeRankingsResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Get log analytics ranking report for AFD profile. </summary>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
-        /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
-        /// <param name="rankings"> The ArrayOfLogRanking to use. </param>
-        /// <param name="metrics"> The ArrayOfLogRankingMetric to use. </param>
-        /// <param name="maxRanking"> The Integer to use. </param>
-        /// <param name="dateTimeBegin"> The DateTime to use. </param>
-        /// <param name="dateTimeEnd"> The DateTime to use. </param>
-        /// <param name="customDomains"> The ArrayOfString to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="rankings"/>, or <paramref name="metrics"/> is null. </exception>
-        public Response<RankingsResponse> GetLogAnalyticsRankings(string resourceGroupName, string profileName, IEnumerable<LogRanking> rankings, IEnumerable<LogRankingMetric> metrics, int maxRanking, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, IEnumerable<string> customDomains = null, CancellationToken cancellationToken = default)
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (profileName == null)
-            {
-                throw new ArgumentNullException(nameof(profileName));
-            }
-            if (rankings == null)
-            {
-                throw new ArgumentNullException(nameof(rankings));
-            }
-            if (metrics == null)
-            {
-                throw new ArgumentNullException(nameof(metrics));
-            }
-
-            using var message = CreateGetLogAnalyticsRankingsRequest(resourceGroupName, profileName, rankings, metrics, maxRanking, dateTimeBegin, dateTimeEnd, customDomains);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        RankingsResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RankingsResponse.DeserializeRankingsResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateGetLogAnalyticsLocationsRequest(string resourceGroupName, string profileName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
-            uri.AppendPath(profileName, true);
-            uri.AppendPath("/getLogAnalyticsLocations", false);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
-            return message;
-        }
-
-        /// <summary> Get all available location names for AFD log analytics report. </summary>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
-        /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is null. </exception>
-        public async Task<Response<ContinentsResponse>> GetLogAnalyticsLocationsAsync(string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (profileName == null)
-            {
-                throw new ArgumentNullException(nameof(profileName));
-            }
-
-            using var message = CreateGetLogAnalyticsLocationsRequest(resourceGroupName, profileName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ContinentsResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ContinentsResponse.DeserializeContinentsResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Get all available location names for AFD log analytics report. </summary>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
-        /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is null. </exception>
-        public Response<ContinentsResponse> GetLogAnalyticsLocations(string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (profileName == null)
-            {
-                throw new ArgumentNullException(nameof(profileName));
-            }
-
-            using var message = CreateGetLogAnalyticsLocationsRequest(resourceGroupName, profileName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ContinentsResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ContinentsResponse.DeserializeContinentsResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateGetLogAnalyticsResourcesRequest(string resourceGroupName, string profileName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
-            uri.AppendPath(profileName, true);
-            uri.AppendPath("/getLogAnalyticsResources", false);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
-            return message;
-        }
-
-        /// <summary> Get all endpoints and custom domains available for AFD log report. </summary>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
-        /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is null. </exception>
-        public async Task<Response<ResourcesResponse>> GetLogAnalyticsResourcesAsync(string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (profileName == null)
-            {
-                throw new ArgumentNullException(nameof(profileName));
-            }
-
-            using var message = CreateGetLogAnalyticsResourcesRequest(resourceGroupName, profileName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ResourcesResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ResourcesResponse.DeserializeResourcesResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Get all endpoints and custom domains available for AFD log report. </summary>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
-        /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is null. </exception>
-        public Response<ResourcesResponse> GetLogAnalyticsResources(string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (profileName == null)
-            {
-                throw new ArgumentNullException(nameof(profileName));
-            }
-
-            using var message = CreateGetLogAnalyticsResourcesRequest(resourceGroupName, profileName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ResourcesResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ResourcesResponse.DeserializeResourcesResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateGetWafLogAnalyticsMetricsRequest(string resourceGroupName, string profileName, IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, WafGranularity granularity, IEnumerable<WafAction> actions, IEnumerable<WafRankingGroupBy> groupBy, IEnumerable<WafRuleType> ruleTypes)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
-            uri.AppendPath(profileName, true);
-            uri.AppendPath("/getWafLogAnalyticsMetrics", false);
-            uri.AppendQuery("api-version", apiVersion, true);
-            foreach (var param in metrics)
-            {
-                uri.AppendQuery("metrics", param.ToString(), true);
-            }
-            uri.AppendQuery("dateTimeBegin", dateTimeBegin, "O", true);
-            uri.AppendQuery("dateTimeEnd", dateTimeEnd, "O", true);
-            uri.AppendQuery("granularity", granularity.ToString(), true);
-            if (actions != null)
-            {
-                foreach (var param0 in actions)
-                {
-                    uri.AppendQuery("actions", param0.ToString(), true);
-                }
-            }
-            if (groupBy != null)
-            {
-                foreach (var param0 in groupBy)
-                {
-                    uri.AppendQuery("groupBy", param0.ToString(), true);
-                }
-            }
-            if (ruleTypes != null)
-            {
-                foreach (var param0 in ruleTypes)
-                {
-                    uri.AppendQuery("ruleTypes", param0.ToString(), true);
-                }
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
-            return message;
-        }
-
-        /// <summary> Get Waf related log analytics report for AFD profile. </summary>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
-        /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
-        /// <param name="metrics"> The ArrayOfWafMetric to use. </param>
-        /// <param name="dateTimeBegin"> The DateTime to use. </param>
-        /// <param name="dateTimeEnd"> The DateTime to use. </param>
-        /// <param name="granularity"> The WafGranularity to use. </param>
-        /// <param name="actions"> The ArrayOfWafAction to use. </param>
-        /// <param name="groupBy"> The ArrayOfWafRankingGroupBy to use. </param>
-        /// <param name="ruleTypes"> The ArrayOfWafRuleType to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="metrics"/> is null. </exception>
-        public async Task<Response<WafMetricsResponse>> GetWafLogAnalyticsMetricsAsync(string resourceGroupName, string profileName, IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, WafGranularity granularity, IEnumerable<WafAction> actions = null, IEnumerable<WafRankingGroupBy> groupBy = null, IEnumerable<WafRuleType> ruleTypes = null, CancellationToken cancellationToken = default)
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (profileName == null)
-            {
-                throw new ArgumentNullException(nameof(profileName));
-            }
-            if (metrics == null)
-            {
-                throw new ArgumentNullException(nameof(metrics));
-            }
-
-            using var message = CreateGetWafLogAnalyticsMetricsRequest(resourceGroupName, profileName, metrics, dateTimeBegin, dateTimeEnd, granularity, actions, groupBy, ruleTypes);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        WafMetricsResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WafMetricsResponse.DeserializeWafMetricsResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Get Waf related log analytics report for AFD profile. </summary>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
-        /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
-        /// <param name="metrics"> The ArrayOfWafMetric to use. </param>
-        /// <param name="dateTimeBegin"> The DateTime to use. </param>
-        /// <param name="dateTimeEnd"> The DateTime to use. </param>
-        /// <param name="granularity"> The WafGranularity to use. </param>
-        /// <param name="actions"> The ArrayOfWafAction to use. </param>
-        /// <param name="groupBy"> The ArrayOfWafRankingGroupBy to use. </param>
-        /// <param name="ruleTypes"> The ArrayOfWafRuleType to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="metrics"/> is null. </exception>
-        public Response<WafMetricsResponse> GetWafLogAnalyticsMetrics(string resourceGroupName, string profileName, IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, WafGranularity granularity, IEnumerable<WafAction> actions = null, IEnumerable<WafRankingGroupBy> groupBy = null, IEnumerable<WafRuleType> ruleTypes = null, CancellationToken cancellationToken = default)
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (profileName == null)
-            {
-                throw new ArgumentNullException(nameof(profileName));
-            }
-            if (metrics == null)
-            {
-                throw new ArgumentNullException(nameof(metrics));
-            }
-
-            using var message = CreateGetWafLogAnalyticsMetricsRequest(resourceGroupName, profileName, metrics, dateTimeBegin, dateTimeEnd, granularity, actions, groupBy, ruleTypes);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        WafMetricsResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WafMetricsResponse.DeserializeWafMetricsResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateGetWafLogAnalyticsRankingsRequest(string resourceGroupName, string profileName, IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, int maxRanking, IEnumerable<WafRankingType> rankings, IEnumerable<WafAction> actions, IEnumerable<WafRuleType> ruleTypes)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
-            uri.AppendPath(profileName, true);
-            uri.AppendPath("/getWafLogAnalyticsRankings", false);
-            uri.AppendQuery("api-version", apiVersion, true);
-            foreach (var param in metrics)
-            {
-                uri.AppendQuery("metrics", param.ToString(), true);
-            }
-            uri.AppendQuery("dateTimeBegin", dateTimeBegin, "O", true);
-            uri.AppendQuery("dateTimeEnd", dateTimeEnd, "O", true);
-            uri.AppendQuery("maxRanking", maxRanking, true);
-            foreach (var param0 in rankings)
-            {
-                uri.AppendQuery("rankings", param0.ToString(), true);
-            }
-            if (actions != null)
-            {
-                foreach (var param1 in actions)
-                {
-                    uri.AppendQuery("actions", param1.ToString(), true);
-                }
-            }
-            if (ruleTypes != null)
-            {
-                foreach (var param1 in ruleTypes)
-                {
-                    uri.AppendQuery("ruleTypes", param1.ToString(), true);
-                }
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
-            return message;
-        }
-
-        /// <summary> Get WAF log analytics charts for AFD profile. </summary>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
-        /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
-        /// <param name="metrics"> The ArrayOfWafMetric to use. </param>
-        /// <param name="dateTimeBegin"> The DateTime to use. </param>
-        /// <param name="dateTimeEnd"> The DateTime to use. </param>
-        /// <param name="maxRanking"> The Integer to use. </param>
-        /// <param name="rankings"> The ArrayOfWafRankingType to use. </param>
-        /// <param name="actions"> The ArrayOfWafAction to use. </param>
-        /// <param name="ruleTypes"> The ArrayOfWafRuleType to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="metrics"/>, or <paramref name="rankings"/> is null. </exception>
-        public async Task<Response<WafRankingsResponse>> GetWafLogAnalyticsRankingsAsync(string resourceGroupName, string profileName, IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, int maxRanking, IEnumerable<WafRankingType> rankings, IEnumerable<WafAction> actions = null, IEnumerable<WafRuleType> ruleTypes = null, CancellationToken cancellationToken = default)
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (profileName == null)
-            {
-                throw new ArgumentNullException(nameof(profileName));
-            }
-            if (metrics == null)
-            {
-                throw new ArgumentNullException(nameof(metrics));
-            }
-            if (rankings == null)
-            {
-                throw new ArgumentNullException(nameof(rankings));
-            }
-
-            using var message = CreateGetWafLogAnalyticsRankingsRequest(resourceGroupName, profileName, metrics, dateTimeBegin, dateTimeEnd, maxRanking, rankings, actions, ruleTypes);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        WafRankingsResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WafRankingsResponse.DeserializeWafRankingsResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Get WAF log analytics charts for AFD profile. </summary>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
-        /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
-        /// <param name="metrics"> The ArrayOfWafMetric to use. </param>
-        /// <param name="dateTimeBegin"> The DateTime to use. </param>
-        /// <param name="dateTimeEnd"> The DateTime to use. </param>
-        /// <param name="maxRanking"> The Integer to use. </param>
-        /// <param name="rankings"> The ArrayOfWafRankingType to use. </param>
-        /// <param name="actions"> The ArrayOfWafAction to use. </param>
-        /// <param name="ruleTypes"> The ArrayOfWafRuleType to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="metrics"/>, or <paramref name="rankings"/> is null. </exception>
-        public Response<WafRankingsResponse> GetWafLogAnalyticsRankings(string resourceGroupName, string profileName, IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, int maxRanking, IEnumerable<WafRankingType> rankings, IEnumerable<WafAction> actions = null, IEnumerable<WafRuleType> ruleTypes = null, CancellationToken cancellationToken = default)
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (profileName == null)
-            {
-                throw new ArgumentNullException(nameof(profileName));
-            }
-            if (metrics == null)
-            {
-                throw new ArgumentNullException(nameof(metrics));
-            }
-            if (rankings == null)
-            {
-                throw new ArgumentNullException(nameof(rankings));
-            }
-
-            using var message = CreateGetWafLogAnalyticsRankingsRequest(resourceGroupName, profileName, metrics, dateTimeBegin, dateTimeEnd, maxRanking, rankings, actions, ruleTypes);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        WafRankingsResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WafRankingsResponse.DeserializeWafRankingsResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateGetAllNextPageRequest(string nextLink)
+        internal HttpMessage CreateListNextPageRequest(string nextLink)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1717,14 +793,14 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<ProfileListResult>> GetAllNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<ProfileListResult>> ListNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink);
+            using var message = CreateListNextPageRequest(nextLink);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1744,14 +820,14 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<ProfileListResult> GetAllNextPage(string nextLink, CancellationToken cancellationToken = default)
+        public Response<ProfileListResult> ListNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink);
+            using var message = CreateListNextPageRequest(nextLink);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1767,7 +843,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal HttpMessage CreateGetAllByResourceGroupNextPageRequest(string nextLink, string resourceGroupName)
+        internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1786,7 +862,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<ProfileListResult>> GetAllByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<ProfileListResult>> ListByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1797,7 +873,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateGetAllByResourceGroupNextPageRequest(nextLink, resourceGroupName);
+            using var message = CreateListByResourceGroupNextPageRequest(nextLink, resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1818,7 +894,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<ProfileListResult> GetAllByResourceGroupNextPage(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<ProfileListResult> ListByResourceGroupNextPage(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1829,7 +905,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateGetAllByResourceGroupNextPageRequest(nextLink, resourceGroupName);
+            using var message = CreateListByResourceGroupNextPageRequest(nextLink, resourceGroupName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1845,7 +921,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal HttpMessage CreateGetResourceUsageNextPageRequest(string nextLink, string resourceGroupName, string profileName)
+        internal HttpMessage CreateListResourceUsageNextPageRequest(string nextLink, string resourceGroupName, string profileName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1865,7 +941,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="profileName"/> is null. </exception>
-        public async Task<Response<ResourceUsageListResult>> GetResourceUsageNextPageAsync(string nextLink, string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
+        public async Task<Response<ResourceUsageListResult>> ListResourceUsageNextPageAsync(string nextLink, string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1880,7 +956,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(profileName));
             }
 
-            using var message = CreateGetResourceUsageNextPageRequest(nextLink, resourceGroupName, profileName);
+            using var message = CreateListResourceUsageNextPageRequest(nextLink, resourceGroupName, profileName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1902,7 +978,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="profileName"/> is null. </exception>
-        public Response<ResourceUsageListResult> GetResourceUsageNextPage(string nextLink, string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
+        public Response<ResourceUsageListResult> ListResourceUsageNextPage(string nextLink, string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1917,7 +993,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(profileName));
             }
 
-            using var message = CreateGetResourceUsageNextPageRequest(nextLink, resourceGroupName, profileName);
+            using var message = CreateListResourceUsageNextPageRequest(nextLink, resourceGroupName, profileName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1926,94 +1002,6 @@ namespace Azure.ResourceManager.Cdn
                         ResourceUsageListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = ResourceUsageListResult.DeserializeResourceUsageListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateCheckResourceUsageNextPageRequest(string nextLink, string resourceGroupName, string profileName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
-            return message;
-        }
-
-        /// <summary> Checks the quota and actual usage of endpoints under the given CDN profile. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
-        /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="profileName"/> is null. </exception>
-        public async Task<Response<UsagesListResult>> CheckResourceUsageNextPageAsync(string nextLink, string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
-        {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (profileName == null)
-            {
-                throw new ArgumentNullException(nameof(profileName));
-            }
-
-            using var message = CreateCheckResourceUsageNextPageRequest(nextLink, resourceGroupName, profileName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        UsagesListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = UsagesListResult.DeserializeUsagesListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Checks the quota and actual usage of endpoints under the given CDN profile. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
-        /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="profileName"/> is null. </exception>
-        public Response<UsagesListResult> CheckResourceUsageNextPage(string nextLink, string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
-        {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (profileName == null)
-            {
-                throw new ArgumentNullException(nameof(profileName));
-            }
-
-            using var message = CreateCheckResourceUsageNextPageRequest(nextLink, resourceGroupName, profileName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        UsagesListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = UsagesListResult.DeserializeUsagesListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

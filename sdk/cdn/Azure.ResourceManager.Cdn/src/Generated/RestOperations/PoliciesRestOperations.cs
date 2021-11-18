@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Cdn
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateGetAllRequest(string resourceGroupName)
+        internal HttpMessage CreateListRequest(string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -67,14 +67,14 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<CdnWebApplicationFirewallPolicyList>> GetAllAsync(string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<CdnWebApplicationFirewallPolicyList>> ListAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName);
+            using var message = CreateListRequest(resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -94,14 +94,14 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<CdnWebApplicationFirewallPolicyList> GetAll(string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<CdnWebApplicationFirewallPolicyList> List(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName);
+            using var message = CreateListRequest(resourceGroupName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal HttpMessage CreateGetAllNextPageRequest(string nextLink, string resourceGroupName)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<CdnWebApplicationFirewallPolicyList>> GetAllNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<CdnWebApplicationFirewallPolicyList>> ListNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -492,7 +492,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName);
+            using var message = CreateListNextPageRequest(nextLink, resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<CdnWebApplicationFirewallPolicyList> GetAllNextPage(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<CdnWebApplicationFirewallPolicyList> ListNextPage(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName);
+            using var message = CreateListNextPageRequest(nextLink, resourceGroupName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

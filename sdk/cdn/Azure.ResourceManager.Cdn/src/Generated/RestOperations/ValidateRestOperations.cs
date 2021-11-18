@@ -17,7 +17,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Cdn
 {
-    internal partial class NameAvailabilityWithSubscriptionRestOperations
+    internal partial class ValidateRestOperations
     {
         private string subscriptionId;
         private Uri endpoint;
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Cdn
         private HttpPipeline _pipeline;
         private readonly string _userAgent;
 
-        /// <summary> Initializes a new instance of NameAvailabilityWithSubscriptionRestOperations. </summary>
+        /// <summary> Initializes a new instance of ValidateRestOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="options"> The client options used to construct the current client. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
-        public NameAvailabilityWithSubscriptionRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null, string apiVersion = "2020-09-01")
+        public ValidateRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null, string apiVersion = "2020-09-01")
         {
             this.subscriptionId = subscriptionId ?? throw new ArgumentNullException(nameof(subscriptionId));
             this.endpoint = endpoint ?? new Uri("https://management.azure.com");
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Cdn
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateCheckRequest(CheckNameAvailabilityInput checkNameAvailabilityInput)
+        internal HttpMessage CreateSecretRequest(ValidateSecretInput validateSecretInput)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -53,38 +53,38 @@ namespace Azure.ResourceManager.Cdn
             uri.Reset(endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.Cdn/checkNameAvailability", false);
+            uri.AppendPath("/providers/Microsoft.Cdn/validateSecret", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(checkNameAvailabilityInput);
+            content.JsonWriter.WriteObjectValue(validateSecretInput);
             request.Content = content;
             message.SetProperty("UserAgentOverride", _userAgent);
             return message;
         }
 
-        /// <summary> Check the availability of a resource name. This is needed for resources where name is globally unique, such as a CDN endpoint. </summary>
-        /// <param name="checkNameAvailabilityInput"> Input to check. </param>
+        /// <summary> Validate a Secret in the profile. </summary>
+        /// <param name="validateSecretInput"> The Secret source. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityInput"/> is null. </exception>
-        public async Task<Response<CheckNameAvailabilityOutput>> CheckAsync(CheckNameAvailabilityInput checkNameAvailabilityInput, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="validateSecretInput"/> is null. </exception>
+        public async Task<Response<ValidateSecretOutput>> SecretAsync(ValidateSecretInput validateSecretInput, CancellationToken cancellationToken = default)
         {
-            if (checkNameAvailabilityInput == null)
+            if (validateSecretInput == null)
             {
-                throw new ArgumentNullException(nameof(checkNameAvailabilityInput));
+                throw new ArgumentNullException(nameof(validateSecretInput));
             }
 
-            using var message = CreateCheckRequest(checkNameAvailabilityInput);
+            using var message = CreateSecretRequest(validateSecretInput);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        CheckNameAvailabilityOutput value = default;
+                        ValidateSecretOutput value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CheckNameAvailabilityOutput.DeserializeCheckNameAvailabilityOutput(document.RootElement);
+                        value = ValidateSecretOutput.DeserializeValidateSecretOutput(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -92,26 +92,26 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Check the availability of a resource name. This is needed for resources where name is globally unique, such as a CDN endpoint. </summary>
-        /// <param name="checkNameAvailabilityInput"> Input to check. </param>
+        /// <summary> Validate a Secret in the profile. </summary>
+        /// <param name="validateSecretInput"> The Secret source. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityInput"/> is null. </exception>
-        public Response<CheckNameAvailabilityOutput> Check(CheckNameAvailabilityInput checkNameAvailabilityInput, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="validateSecretInput"/> is null. </exception>
+        public Response<ValidateSecretOutput> Secret(ValidateSecretInput validateSecretInput, CancellationToken cancellationToken = default)
         {
-            if (checkNameAvailabilityInput == null)
+            if (validateSecretInput == null)
             {
-                throw new ArgumentNullException(nameof(checkNameAvailabilityInput));
+                throw new ArgumentNullException(nameof(validateSecretInput));
             }
 
-            using var message = CreateCheckRequest(checkNameAvailabilityInput);
+            using var message = CreateSecretRequest(validateSecretInput);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        CheckNameAvailabilityOutput value = default;
+                        ValidateSecretOutput value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CheckNameAvailabilityOutput.DeserializeCheckNameAvailabilityOutput(document.RootElement);
+                        value = ValidateSecretOutput.DeserializeValidateSecretOutput(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -20,11 +20,12 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Cdn
 {
-    /// <summary> A class representing collection of CustomDomain and their operations over a Endpoint. </summary>
+    /// <summary> A class representing collection of CustomDomain and their operations over its parent. </summary>
     public partial class CustomDomainCollection : ArmCollection, IEnumerable<CustomDomain>, IAsyncEnumerable<CustomDomain>
+
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly CustomDomainsRestOperations _restClient;
+        private readonly CustomDomainsRestOperations _customDomainsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="CustomDomainCollection"/> class for mocking. </summary>
         protected CustomDomainCollection()
@@ -36,22 +37,7 @@ namespace Azure.ResourceManager.Cdn
         internal CustomDomainCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new CustomDomainsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-        }
-
-        IEnumerator<CustomDomain> IEnumerable<CustomDomain>.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IAsyncEnumerator<CustomDomain> IAsyncEnumerable<CustomDomain>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            _customDomainsRestClient = new CustomDomainsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -80,8 +66,8 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = _restClient.Create(Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainName, customDomainProperties, cancellationToken);
-                var operation = new CustomDomainCreateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainName, customDomainProperties).Request, response);
+                var response = _customDomainsRestClient.Create(Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainName, customDomainProperties, cancellationToken);
+                var operation = new CustomDomainCreateOperation(Parent, _clientDiagnostics, Pipeline, _customDomainsRestClient.CreateCreateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainName, customDomainProperties).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -114,8 +100,8 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = await _restClient.CreateAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainName, customDomainProperties, cancellationToken).ConfigureAwait(false);
-                var operation = new CustomDomainCreateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainName, customDomainProperties).Request, response);
+                var response = await _customDomainsRestClient.CreateAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainName, customDomainProperties, cancellationToken).ConfigureAwait(false);
+                var operation = new CustomDomainCreateOperation(Parent, _clientDiagnostics, Pipeline, _customDomainsRestClient.CreateCreateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainName, customDomainProperties).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -127,21 +113,22 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Gets an existing custom domain within an endpoint. </summary>
         /// <param name="customDomainName"> Name of the custom domain within an endpoint. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
         public virtual Response<CustomDomain> Get(string customDomainName, CancellationToken cancellationToken = default)
         {
+            if (customDomainName == null)
+            {
+                throw new ArgumentNullException(nameof(customDomainName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("CustomDomainCollection.Get");
             scope.Start();
             try
             {
-                if (customDomainName == null)
-                {
-                    throw new ArgumentNullException(nameof(customDomainName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainName, cancellationToken: cancellationToken);
+                var response = _customDomainsRestClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CustomDomain(Parent, response.Value), response.GetRawResponse());
@@ -153,21 +140,22 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Gets an existing custom domain within an endpoint. </summary>
         /// <param name="customDomainName"> Name of the custom domain within an endpoint. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
         public async virtual Task<Response<CustomDomain>> GetAsync(string customDomainName, CancellationToken cancellationToken = default)
         {
+            if (customDomainName == null)
+            {
+                throw new ArgumentNullException(nameof(customDomainName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("CustomDomainCollection.Get");
             scope.Start();
             try
             {
-                if (customDomainName == null)
-                {
-                    throw new ArgumentNullException(nameof(customDomainName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _customDomainsRestClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new CustomDomain(Parent, response.Value), response.GetRawResponse());
@@ -181,19 +169,20 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="customDomainName"> Name of the custom domain within an endpoint. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
         public virtual Response<CustomDomain> GetIfExists(string customDomainName, CancellationToken cancellationToken = default)
         {
+            if (customDomainName == null)
+            {
+                throw new ArgumentNullException(nameof(customDomainName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("CustomDomainCollection.GetIfExists");
             scope.Start();
             try
             {
-                if (customDomainName == null)
-                {
-                    throw new ArgumentNullException(nameof(customDomainName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainName, cancellationToken: cancellationToken);
+                var response = _customDomainsRestClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<CustomDomain>(null, response.GetRawResponse())
                     : Response.FromValue(new CustomDomain(this, response.Value), response.GetRawResponse());
@@ -207,19 +196,20 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="customDomainName"> Name of the custom domain within an endpoint. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
         public async virtual Task<Response<CustomDomain>> GetIfExistsAsync(string customDomainName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("CustomDomainCollection.GetIfExists");
+            if (customDomainName == null)
+            {
+                throw new ArgumentNullException(nameof(customDomainName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("CustomDomainCollection.GetIfExistsAsync");
             scope.Start();
             try
             {
-                if (customDomainName == null)
-                {
-                    throw new ArgumentNullException(nameof(customDomainName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _customDomainsRestClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<CustomDomain>(null, response.GetRawResponse())
                     : Response.FromValue(new CustomDomain(this, response.Value), response.GetRawResponse());
@@ -233,18 +223,19 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="customDomainName"> Name of the custom domain within an endpoint. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
         public virtual Response<bool> CheckIfExists(string customDomainName, CancellationToken cancellationToken = default)
         {
+            if (customDomainName == null)
+            {
+                throw new ArgumentNullException(nameof(customDomainName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("CustomDomainCollection.CheckIfExists");
             scope.Start();
             try
             {
-                if (customDomainName == null)
-                {
-                    throw new ArgumentNullException(nameof(customDomainName));
-                }
-
                 var response = GetIfExists(customDomainName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -257,18 +248,19 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="customDomainName"> Name of the custom domain within an endpoint. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(string customDomainName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("CustomDomainCollection.CheckIfExists");
+            if (customDomainName == null)
+            {
+                throw new ArgumentNullException(nameof(customDomainName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("CustomDomainCollection.CheckIfExistsAsync");
             scope.Start();
             try
             {
-                if (customDomainName == null)
-                {
-                    throw new ArgumentNullException(nameof(customDomainName));
-                }
-
                 var response = await GetIfExistsAsync(customDomainName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -290,7 +282,7 @@ namespace Azure.ResourceManager.Cdn
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAllByEndpoint(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    var response = _customDomainsRestClient.ListByEndpoint(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new CustomDomain(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -305,7 +297,7 @@ namespace Azure.ResourceManager.Cdn
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAllByEndpointNextPage(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    var response = _customDomainsRestClient.ListByEndpointNextPage(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new CustomDomain(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -328,7 +320,7 @@ namespace Azure.ResourceManager.Cdn
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllByEndpointAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _customDomainsRestClient.ListByEndpointAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new CustomDomain(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -343,7 +335,7 @@ namespace Azure.ResourceManager.Cdn
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllByEndpointNextPageAsync(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _customDomainsRestClient.ListByEndpointNextPageAsync(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new CustomDomain(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -355,7 +347,22 @@ namespace Azure.ResourceManager.Cdn
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
+        IEnumerator<CustomDomain> IEnumerable<CustomDomain>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<CustomDomain> IAsyncEnumerable<CustomDomain>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
+
         // Builders.
-        // public ArmBuilder<ResourceIdentifier, CustomDomain, CustomDomainData> Construct() { }
+        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, CustomDomain, CustomDomainData> Construct() { }
     }
 }

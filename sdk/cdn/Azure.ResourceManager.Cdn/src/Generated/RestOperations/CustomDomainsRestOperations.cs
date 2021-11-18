@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Cdn
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateGetAllByEndpointRequest(string resourceGroupName, string profileName, string endpointName)
+        internal HttpMessage CreateListByEndpointRequest(string resourceGroupName, string profileName, string endpointName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="endpointName"/> is null. </exception>
-        public async Task<Response<CustomDomainListResult>> GetAllByEndpointAsync(string resourceGroupName, string profileName, string endpointName, CancellationToken cancellationToken = default)
+        public async Task<Response<CustomDomainListResult>> ListByEndpointAsync(string resourceGroupName, string profileName, string endpointName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(endpointName));
             }
 
-            using var message = CreateGetAllByEndpointRequest(resourceGroupName, profileName, endpointName);
+            using var message = CreateListByEndpointRequest(resourceGroupName, profileName, endpointName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="endpointName"/> is null. </exception>
-        public Response<CustomDomainListResult> GetAllByEndpoint(string resourceGroupName, string profileName, string endpointName, CancellationToken cancellationToken = default)
+        public Response<CustomDomainListResult> ListByEndpoint(string resourceGroupName, string profileName, string endpointName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(endpointName));
             }
 
-            using var message = CreateGetAllByEndpointRequest(resourceGroupName, profileName, endpointName);
+            using var message = CreateListByEndpointRequest(resourceGroupName, profileName, endpointName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -682,7 +682,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal HttpMessage CreateGetAllByEndpointNextPageRequest(string nextLink, string resourceGroupName, string profileName, string endpointName)
+        internal HttpMessage CreateListByEndpointNextPageRequest(string nextLink, string resourceGroupName, string profileName, string endpointName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -703,7 +703,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="endpointName"/> is null. </exception>
-        public async Task<Response<CustomDomainListResult>> GetAllByEndpointNextPageAsync(string nextLink, string resourceGroupName, string profileName, string endpointName, CancellationToken cancellationToken = default)
+        public async Task<Response<CustomDomainListResult>> ListByEndpointNextPageAsync(string nextLink, string resourceGroupName, string profileName, string endpointName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -722,7 +722,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(endpointName));
             }
 
-            using var message = CreateGetAllByEndpointNextPageRequest(nextLink, resourceGroupName, profileName, endpointName);
+            using var message = CreateListByEndpointNextPageRequest(nextLink, resourceGroupName, profileName, endpointName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -745,7 +745,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="endpointName"/> is null. </exception>
-        public Response<CustomDomainListResult> GetAllByEndpointNextPage(string nextLink, string resourceGroupName, string profileName, string endpointName, CancellationToken cancellationToken = default)
+        public Response<CustomDomainListResult> ListByEndpointNextPage(string nextLink, string resourceGroupName, string profileName, string endpointName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -764,7 +764,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(endpointName));
             }
 
-            using var message = CreateGetAllByEndpointNextPageRequest(nextLink, resourceGroupName, profileName, endpointName);
+            using var message = CreateListByEndpointNextPageRequest(nextLink, resourceGroupName, profileName, endpointName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

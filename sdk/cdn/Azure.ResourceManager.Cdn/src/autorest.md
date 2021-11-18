@@ -13,32 +13,6 @@ skip-csproj: true
 output-folder: Generated/
 modelerfour:
   lenient-model-deduplication: true
-operation-group-to-resource-type:
-  NameAvailabilityWithTenant: Microsoft.Cdn/checkNameAvailability
-  NameAvailabilityWithSubscription: Microsoft.Cdn/checkNameAvailability
-  Probe: Microsoft.Cdn/validateProbe
-  ResourceUsage: Microsoft.Cdn/checkResourceUsage
-  EdgeNodes: Microsoft.Cdn/edgenodes
-  Secret: Microsoft.Cdn/validateSecret
-  ManagedRuleSets: Microsoft.Cdn/CdnWebApplicationFirewallManagedRuleSets
-operation-group-to-resource:
-  NameAvailabilityWithTenant: NonResource
-  NameAvailabilityWithSubscription: NonResource
-  Probe: NonResource
-  ResourceUsage: NonResource
-  EdgeNodes: NonResource
-  Secret: NonResource
-  ManagedRuleSets: NonResource
-  RuleSets: RuleSet
-  CustomDomains: CustomDomain
-operation-group-to-parent:
-  NameAvailabilityWithTenant: tenant
-  NameAvailabilityWithSubscription: subscriptions
-  Probe: subscriptions
-  ResourceUsage: subscriptions
-  EdgeNodes: tenant
-  Secret: subscriptions
-  ManagedRuleSets: subscriptions
 no-property-type-replacement: 
   - ContinentsResponseContinentsItem
   - EndpointPropertiesUpdateParametersDefaultOriginGroup
@@ -71,9 +45,6 @@ directive:
                 }
             }
         }
-  - from: swagger-document
-    where: $.definitions.DeliveryRuleAction
-    transform: $['x-ms-client-name'] = 'DeliveryRuleOperation'
   - from: swagger-document
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}'].patch
     transform: >
@@ -188,45 +159,6 @@ directive:
   - from: swagger-document
     where: $.definitions.policySettings.properties.defaultCustomBlockResponseStatusCode
     transform: $['x-nullable'] = true
-  - from: swagger-document
-    where: $.paths['/providers/Microsoft.Cdn/checkNameAvailability'].post.operationId
-    transform: return 'NameAvailabilityWithTenant_Check'
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/providers/Microsoft.Cdn/checkNameAvailability'].post.operationId
-    transform: return 'NameAvailabilityWithSubscription_Check'
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/providers/Microsoft.Cdn/validateProbe'].post.operationId
-    transform: return 'Probe_Validate'
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/usages'].post.operationId
-    transform: return 'Profiles_CheckResourceUsage'
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/checkHostNameAvailability'].post.operationId
-    transform: return 'Profiles_CheckHostNameAvailability'
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/getLogAnalyticsMetrics'].get.operationId
-    transform: return 'Profiles_GetLogAnalyticsMetrics'
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/getLogAnalyticsRankings'].get.operationId
-    transform: return 'Profiles_GetLogAnalyticsRankings'
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/getLogAnalyticsLocations'].get.operationId
-    transform: return 'Profiles_GetLogAnalyticsLocations'
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/getLogAnalyticsResources'].get.operationId
-    transform: return 'Profiles_GetLogAnalyticsResources'
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/getWafLogAnalyticsMetrics'].get.operationId
-    transform: return 'Profiles_GetWafLogAnalyticsMetrics'
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/getWafLogAnalyticsRankings'].get.operationId
-    transform: return 'Profiles_GetWafLogAnalyticsRankings'
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/providers/Microsoft.Cdn/validateSecret'].post.operationId
-    transform: return 'Secret_Validate'
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/securityPolicies/{securityPolicyName}'].patch.operationId
-    transform: return 'SecurityPolicies_Update'
   - from: swagger-document
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}'].put.parameters[3]
     transform: $['x-ms-client-name'] = 'endpointInput'

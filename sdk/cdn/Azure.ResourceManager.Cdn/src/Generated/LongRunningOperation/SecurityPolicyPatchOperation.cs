@@ -18,20 +18,20 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Updates an existing Secret within a profile. </summary>
-    public partial class SecurityPolicyUpdateOperation : Operation<SecurityPolicy>, IOperationSource<SecurityPolicy>
+    public partial class SecurityPolicyPatchOperation : Operation<SecurityPolicy>, IOperationSource<SecurityPolicy>
     {
         private readonly OperationInternals<SecurityPolicy> _operation;
 
         private readonly ArmResource _operationBase;
 
-        /// <summary> Initializes a new instance of SecurityPolicyUpdateOperation for mocking. </summary>
-        protected SecurityPolicyUpdateOperation()
+        /// <summary> Initializes a new instance of SecurityPolicyPatchOperation for mocking. </summary>
+        protected SecurityPolicyPatchOperation()
         {
         }
 
-        internal SecurityPolicyUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal SecurityPolicyPatchOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<SecurityPolicy>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "SecurityPolicyUpdateOperation");
+            _operation = new OperationInternals<SecurityPolicy>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "SecurityPolicyPatchOperation");
             _operationBase = operationsBase;
         }
 

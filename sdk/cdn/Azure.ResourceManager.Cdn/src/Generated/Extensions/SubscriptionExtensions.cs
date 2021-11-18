@@ -22,10 +22,29 @@ namespace Azure.ResourceManager.Cdn
     /// <summary> A class to add extension methods to Subscription. </summary>
     public static partial class SubscriptionExtensions
     {
-        #region Profile
         private static ProfilesRestOperations GetProfilesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             return new ProfilesRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
+        }
+
+        private static CdnManagementRestOperations GetCdnManagementRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
+        {
+            return new CdnManagementRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
+        }
+
+        private static ResourceUsageRestOperations GetResourceUsageRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
+        {
+            return new ResourceUsageRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
+        }
+
+        private static ValidateRestOperations GetValidateRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
+        {
+            return new ValidateRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
+        }
+
+        private static ManagedRuleSetsRestOperations GetManagedRuleSetsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
+        {
+            return new ManagedRuleSetsRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Lists the Profiles for this <see cref="Subscription" />. </summary>
@@ -44,7 +63,7 @@ namespace Azure.ResourceManager.Cdn
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetAllAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new Profile(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -59,7 +78,7 @@ namespace Azure.ResourceManager.Cdn
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetAllNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new Profile(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -89,7 +108,7 @@ namespace Azure.ResourceManager.Cdn
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetAll(cancellationToken: cancellationToken);
+                        var response = restOperations.List(cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new Profile(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -104,7 +123,7 @@ namespace Azure.ResourceManager.Cdn
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetAllNextPage(nextLink, cancellationToken: cancellationToken);
+                        var response = restOperations.ListNextPage(nextLink, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new Profile(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -145,13 +164,6 @@ namespace Azure.ResourceManager.Cdn
             filters.SubstringFilter = filter;
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
-        #endregion
-
-        #region NameAvailabilityWithSubscription
-        private static NameAvailabilityWithSubscriptionRestOperations GetNameAvailabilityWithSubscriptionRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
-        {
-            return new NameAvailabilityWithSubscriptionRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
-        }
 
         /// <summary> Check the availability of a resource name. This is needed for resources where name is globally unique, such as a CDN endpoint. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
@@ -168,12 +180,12 @@ namespace Azure.ResourceManager.Cdn
             return await subscription.UseClientContext(async (baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetNameAvailabilityWithSubscriptionRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
                 using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckNameAvailabilityWithSubscription");
                 scope.Start();
                 try
                 {
-                    var response = await restOperations.CheckAsync(checkNameAvailabilityInput, cancellationToken).ConfigureAwait(false);
+                    var restOperations = GetCdnManagementRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                    var response = await restOperations.CheckNameAvailabilityWithSubscriptionAsync(checkNameAvailabilityInput, cancellationToken).ConfigureAwait(false);
                     return response;
                 }
                 catch (Exception e)
@@ -200,12 +212,12 @@ namespace Azure.ResourceManager.Cdn
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetNameAvailabilityWithSubscriptionRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
                 using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckNameAvailabilityWithSubscription");
                 scope.Start();
                 try
                 {
-                    var response = restOperations.Check(checkNameAvailabilityInput, cancellationToken);
+                    var restOperations = GetCdnManagementRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                    var response = restOperations.CheckNameAvailabilityWithSubscription(checkNameAvailabilityInput, cancellationToken);
                     return response;
                 }
                 catch (Exception e)
@@ -215,14 +227,6 @@ namespace Azure.ResourceManager.Cdn
                 }
             }
             );
-        }
-
-        #endregion
-
-        #region Probe
-        private static ProbeRestOperations GetProbeRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
-        {
-            return new ProbeRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Check if the probe path is a valid path and the file can be accessed. Probe path is the path to a file hosted on the origin server to help accelerate the delivery of dynamic content via the CDN endpoint. This path is relative to the origin path specified in the endpoint configuration. </summary>
@@ -240,12 +244,12 @@ namespace Azure.ResourceManager.Cdn
             return await subscription.UseClientContext(async (baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetProbeRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
                 using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.ValidateProbe");
                 scope.Start();
                 try
                 {
-                    var response = await restOperations.ValidateAsync(validateProbeInput, cancellationToken).ConfigureAwait(false);
+                    var restOperations = GetCdnManagementRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                    var response = await restOperations.ValidateProbeAsync(validateProbeInput, cancellationToken).ConfigureAwait(false);
                     return response;
                 }
                 catch (Exception e)
@@ -272,12 +276,12 @@ namespace Azure.ResourceManager.Cdn
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetProbeRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
                 using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.ValidateProbe");
                 scope.Start();
                 try
                 {
-                    var response = restOperations.Validate(validateProbeInput, cancellationToken);
+                    var restOperations = GetCdnManagementRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                    var response = restOperations.ValidateProbe(validateProbeInput, cancellationToken);
                     return response;
                 }
                 catch (Exception e)
@@ -287,14 +291,6 @@ namespace Azure.ResourceManager.Cdn
                 }
             }
             );
-        }
-
-        #endregion
-
-        #region ResourceUsage
-        private static ResourceUsageRestOperations GetResourceUsageRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
-        {
-            return new ResourceUsageRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Lists the ResourceUsages for this <see cref="Subscription" />. </summary>
@@ -313,7 +309,7 @@ namespace Azure.ResourceManager.Cdn
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetAllAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -328,7 +324,7 @@ namespace Azure.ResourceManager.Cdn
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetAllNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -358,7 +354,7 @@ namespace Azure.ResourceManager.Cdn
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetAll(cancellationToken: cancellationToken);
+                        var response = restOperations.List(cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -373,7 +369,7 @@ namespace Azure.ResourceManager.Cdn
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetAllNextPage(nextLink, cancellationToken: cancellationToken);
+                        var response = restOperations.ListNextPage(nextLink, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -387,20 +383,12 @@ namespace Azure.ResourceManager.Cdn
             );
         }
 
-        #endregion
-
-        #region Secret
-        private static SecretRestOperations GetSecretRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
-        {
-            return new SecretRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
-        }
-
         /// <summary> Validate a Secret in the profile. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="validateSecretInput"> The Secret source. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="validateSecretInput"/> is null. </exception>
-        public static async Task<Response<ValidateSecretOutput>> ValidateSecretAsync(this Subscription subscription, ValidateSecretInput validateSecretInput, CancellationToken cancellationToken = default)
+        public static async Task<Response<ValidateSecretOutput>> SecretValidateAsync(this Subscription subscription, ValidateSecretInput validateSecretInput, CancellationToken cancellationToken = default)
         {
             if (validateSecretInput == null)
             {
@@ -410,12 +398,12 @@ namespace Azure.ResourceManager.Cdn
             return await subscription.UseClientContext(async (baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetSecretRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.ValidateSecret");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.SecretValidate");
                 scope.Start();
                 try
                 {
-                    var response = await restOperations.ValidateAsync(validateSecretInput, cancellationToken).ConfigureAwait(false);
+                    var restOperations = GetValidateRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                    var response = await restOperations.SecretAsync(validateSecretInput, cancellationToken).ConfigureAwait(false);
                     return response;
                 }
                 catch (Exception e)
@@ -432,7 +420,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="validateSecretInput"> The Secret source. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="validateSecretInput"/> is null. </exception>
-        public static Response<ValidateSecretOutput> ValidateSecret(this Subscription subscription, ValidateSecretInput validateSecretInput, CancellationToken cancellationToken = default)
+        public static Response<ValidateSecretOutput> SecretValidate(this Subscription subscription, ValidateSecretInput validateSecretInput, CancellationToken cancellationToken = default)
         {
             if (validateSecretInput == null)
             {
@@ -442,12 +430,12 @@ namespace Azure.ResourceManager.Cdn
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetSecretRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.ValidateSecret");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.SecretValidate");
                 scope.Start();
                 try
                 {
-                    var response = restOperations.Validate(validateSecretInput, cancellationToken);
+                    var restOperations = GetValidateRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                    var response = restOperations.Secret(validateSecretInput, cancellationToken);
                     return response;
                 }
                 catch (Exception e)
@@ -457,14 +445,6 @@ namespace Azure.ResourceManager.Cdn
                 }
             }
             );
-        }
-
-        #endregion
-
-        #region ManagedRuleSet
-        private static ManagedRuleSetsRestOperations GetManagedRuleSetsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
-        {
-            return new ManagedRuleSetsRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Lists the ManagedRuleSetDefinitions for this <see cref="Subscription" />. </summary>
@@ -483,7 +463,7 @@ namespace Azure.ResourceManager.Cdn
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetAllAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -498,7 +478,7 @@ namespace Azure.ResourceManager.Cdn
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetAllNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -528,7 +508,7 @@ namespace Azure.ResourceManager.Cdn
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetAll(cancellationToken: cancellationToken);
+                        var response = restOperations.List(cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -543,7 +523,7 @@ namespace Azure.ResourceManager.Cdn
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetAllNextPage(nextLink, cancellationToken: cancellationToken);
+                        var response = restOperations.ListNextPage(nextLink, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -556,7 +536,5 @@ namespace Azure.ResourceManager.Cdn
             }
             );
         }
-
-        #endregion
     }
 }
