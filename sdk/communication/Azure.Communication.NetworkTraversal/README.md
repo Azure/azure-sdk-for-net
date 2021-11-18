@@ -87,7 +87,7 @@ foreach (CommunicationIceServer iceServer in iceServers)
 ## Getting a Relay Configuration for a user with a specified routeType
 
 ```C# Snippet:GetRelayConfigurationAsyncWithNearestRouteType
-Response<CommunicationRelayConfiguration> relayConfiguration = await client.GetRelayConfigurationAsync(new GetRelayConfigurationOptions(user, RouteType.Nearest));
+Response<CommunicationRelayConfiguration> relayConfiguration = await client.GetRelayConfigurationAsync(new GetRelayConfigurationOptions { CommunicationUser = user, RouteType = RouteType.Nearest });
 DateTimeOffset turnTokenExpiresOn = relayConfiguration.Value.ExpiresOn;
 IReadOnlyList<CommunicationIceServer> iceServers = relayConfiguration.Value.IceServers;
 Console.WriteLine($"Expires On: {turnTokenExpiresOn}");
