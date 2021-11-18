@@ -8,14 +8,14 @@
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The json object that contains properties required to create a security policy. </summary>
-    public partial class SecurityPolicyProperties : AFDStateProperties
+    internal partial class SecurityPolicyProperties : AFDStateProperties
     {
         /// <summary> Initializes a new instance of SecurityPolicyProperties. </summary>
-        public SecurityPolicyProperties()
+        internal SecurityPolicyProperties()
         {
         }
 
         /// <summary> object which contains security policy parameters. </summary>
-        public SecurityPolicyParameters Parameters { get; set; }
+        public SecurityPolicyParameters Parameters { get; }
     }
 }

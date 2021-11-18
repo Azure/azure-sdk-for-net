@@ -10,12 +10,12 @@ using System;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The JSON object that contains the properties of the domain to create. </summary>
-    public partial class AFDDomainProperties : AFDDomainUpdatePropertiesParameters
+    internal partial class AFDDomainProperties : AFDDomainUpdatePropertiesParameters
     {
         /// <summary> Initializes a new instance of AFDDomainProperties. </summary>
         /// <param name="hostName"> The host name of the domain. Must be a domain name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
-        public AFDDomainProperties(string hostName)
+        internal AFDDomainProperties(string hostName)
         {
             if (hostName == null)
             {

@@ -10,30 +10,30 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The JSON object that contains the properties of the origin. </summary>
-    public partial class AFDOriginUpdatePropertiesParameters
+    internal partial class AFDOriginUpdatePropertiesParameters
     {
         /// <summary> Initializes a new instance of AFDOriginUpdatePropertiesParameters. </summary>
-        public AFDOriginUpdatePropertiesParameters()
+        internal AFDOriginUpdatePropertiesParameters()
         {
         }
 
         /// <summary> Resource reference to the Azure origin resource. </summary>
-        public WritableSubResource AzureOrigin { get; set; }
+        public WritableSubResource AzureOrigin { get; }
         /// <summary> The address of the origin. Domain names, IPv4 addresses, and IPv6 addresses are supported.This should be unique across all origins in an endpoint. </summary>
-        public string HostName { get; set; }
+        public string HostName { get; }
         /// <summary> The value of the HTTP port. Must be between 1 and 65535. </summary>
-        public int? HttpPort { get; set; }
+        public int? HttpPort { get; }
         /// <summary> The value of the HTTPS port. Must be between 1 and 65535. </summary>
-        public int? HttpsPort { get; set; }
+        public int? HttpsPort { get; }
         /// <summary> The host header value sent to the origin with each request. If you leave this blank, the request hostname determines this value. Azure CDN origins, such as Web Apps, Blob Storage, and Cloud Services require this host header value to match the origin hostname by default. This overrides the host header defined at Endpoint. </summary>
-        public string OriginHostHeader { get; set; }
+        public string OriginHostHeader { get; }
         /// <summary> Priority of origin in given origin group for load balancing. Higher priorities will not be used for load balancing if any lower priority origin is healthy.Must be between 1 and 5. </summary>
-        public int? Priority { get; set; }
+        public int? Priority { get; }
         /// <summary> Weight of the origin in given origin group for load balancing. Must be between 1 and 1000. </summary>
-        public int? Weight { get; set; }
+        public int? Weight { get; }
         /// <summary> The properties of the private link resource for private origin. </summary>
-        public object SharedPrivateLinkResource { get; set; }
+        public object SharedPrivateLinkResource { get; }
         /// <summary> Whether to enable health probes to be made against backends defined under backendPools. Health probes can only be disabled if there is a single enabled backend in single enabled backend pool. </summary>
-        public EnabledState? EnabledState { get; set; }
+        public EnabledState? EnabledState { get; }
     }
 }

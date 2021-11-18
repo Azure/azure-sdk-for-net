@@ -8,14 +8,14 @@
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The JSON object that contains the properties of the Secret to create. </summary>
-    public partial class SecretProperties : AFDStateProperties
+    internal partial class SecretProperties : AFDStateProperties
     {
         /// <summary> Initializes a new instance of SecretProperties. </summary>
-        public SecretProperties()
+        internal SecretProperties()
         {
         }
 
         /// <summary> object which contains secret parameters. </summary>
-        public SecretParameters Parameters { get; set; }
+        public SecretParameters Parameters { get; }
     }
 }

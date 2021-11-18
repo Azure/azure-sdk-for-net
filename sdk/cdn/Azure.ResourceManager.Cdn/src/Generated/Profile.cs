@@ -642,56 +642,6 @@ namespace Azure.ResourceManager.Cdn
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Validates the custom domain mapping to ensure it maps to the correct CDN endpoint in DNS. </summary>
-        /// <param name="checkHostNameAvailabilityInput"> Custom domain to be validated. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="checkHostNameAvailabilityInput"/> is null. </exception>
-        public async virtual Task<Response<ValidateCustomDomainOutput>> CheckHostNameAvailabilityAFDProfileAsync(ValidateCustomDomainInput checkHostNameAvailabilityInput, CancellationToken cancellationToken = default)
-        {
-            if (checkHostNameAvailabilityInput == null)
-            {
-                throw new ArgumentNullException(nameof(checkHostNameAvailabilityInput));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("Profile.CheckHostNameAvailabilityAFDProfile");
-            scope.Start();
-            try
-            {
-                var response = await _aFDProfilesRestClient.CheckHostNameAvailabilityAsync(Id.ResourceGroupName, Id.Name, checkHostNameAvailabilityInput, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Validates the custom domain mapping to ensure it maps to the correct CDN endpoint in DNS. </summary>
-        /// <param name="checkHostNameAvailabilityInput"> Custom domain to be validated. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="checkHostNameAvailabilityInput"/> is null. </exception>
-        public virtual Response<ValidateCustomDomainOutput> CheckHostNameAvailabilityAFDProfile(ValidateCustomDomainInput checkHostNameAvailabilityInput, CancellationToken cancellationToken = default)
-        {
-            if (checkHostNameAvailabilityInput == null)
-            {
-                throw new ArgumentNullException(nameof(checkHostNameAvailabilityInput));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("Profile.CheckHostNameAvailabilityAFDProfile");
-            scope.Start();
-            try
-            {
-                var response = _aFDProfilesRestClient.CheckHostNameAvailability(Id.ResourceGroupName, Id.Name, checkHostNameAvailabilityInput, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> Get log report for AFD profile. </summary>
         /// <param name="metrics"> The ArrayOfLogMetric to use. </param>
         /// <param name="dateTimeBegin"> The DateTime to use. </param>

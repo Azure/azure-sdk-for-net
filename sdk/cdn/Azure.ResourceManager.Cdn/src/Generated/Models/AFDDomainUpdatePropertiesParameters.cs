@@ -10,16 +10,16 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The JSON object that contains the properties of the domain to create. </summary>
-    public partial class AFDDomainUpdatePropertiesParameters
+    internal partial class AFDDomainUpdatePropertiesParameters
     {
         /// <summary> Initializes a new instance of AFDDomainUpdatePropertiesParameters. </summary>
-        public AFDDomainUpdatePropertiesParameters()
+        internal AFDDomainUpdatePropertiesParameters()
         {
         }
 
         /// <summary> The configuration specifying how to enable HTTPS for the domain - using AzureFrontDoor managed certificate or user&apos;s own certificate. If not specified, enabling ssl uses AzureFrontDoor managed certificate by default. </summary>
-        public AFDDomainHttpsParameters TlsSettings { get; set; }
+        public AFDDomainHttpsParameters TlsSettings { get; }
         /// <summary> Resource reference to the Azure DNS zone. </summary>
-        public WritableSubResource AzureDnsZone { get; set; }
+        public WritableSubResource AzureDnsZone { get; }
     }
 }

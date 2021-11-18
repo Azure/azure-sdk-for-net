@@ -8,10 +8,10 @@
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The JSON object that contains the properties of the Routes to create. </summary>
-    public partial class RouteProperties : RouteUpdatePropertiesParameters
+    internal partial class RouteProperties : RouteUpdatePropertiesParameters
     {
         /// <summary> Initializes a new instance of RouteProperties. </summary>
-        public RouteProperties()
+        internal RouteProperties()
         {
         }
 

@@ -8,10 +8,10 @@
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The tracking states for afd resources. </summary>
-    public partial class AFDStateProperties
+    internal partial class AFDStateProperties
     {
         /// <summary> Initializes a new instance of AFDStateProperties. </summary>
-        public AFDStateProperties()
+        internal AFDStateProperties()
         {
         }
 

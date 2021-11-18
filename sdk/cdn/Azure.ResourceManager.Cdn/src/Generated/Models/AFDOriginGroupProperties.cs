@@ -8,10 +8,10 @@
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The JSON object that contains the properties of the origin group. </summary>
-    public partial class AFDOriginGroupProperties : AFDOriginGroupUpdatePropertiesParameters
+    internal partial class AFDOriginGroupProperties : AFDOriginGroupUpdatePropertiesParameters
     {
         /// <summary> Initializes a new instance of AFDOriginGroupProperties. </summary>
-        public AFDOriginGroupProperties()
+        internal AFDOriginGroupProperties()
         {
         }
 

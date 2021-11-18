@@ -8,10 +8,10 @@
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The JSON object that contains the properties of the origin. </summary>
-    public partial class AFDOriginProperties : AFDOriginUpdatePropertiesParameters
+    internal partial class AFDOriginProperties : AFDOriginUpdatePropertiesParameters
     {
         /// <summary> Initializes a new instance of AFDOriginProperties. </summary>
-        public AFDOriginProperties()
+        internal AFDOriginProperties()
         {
         }
 

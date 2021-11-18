@@ -11,13 +11,13 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Input of the secret to be validated. </summary>
-    public partial class ValidateSecretInput
+    internal partial class ValidateSecretInput
     {
         /// <summary> Initializes a new instance of ValidateSecretInput. </summary>
         /// <param name="secretSource"> The secret source. </param>
         /// <param name="secretType"> The secret type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="secretSource"/> is null. </exception>
-        public ValidateSecretInput(WritableSubResource secretSource, ValidateSecretType secretType)
+        internal ValidateSecretInput(WritableSubResource secretSource, ValidateSecretType secretType)
         {
             if (secretSource == null)
             {

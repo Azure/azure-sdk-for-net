@@ -166,9 +166,6 @@ directive:
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}'].put.parameters[3]
     transform: $['x-ms-client-name'] = 'endpointInput'
   - rename-operation:
-      from: Validate_Secret
-      to: Secret_Validate
-  - rename-operation:
       from: LogAnalytics_GetLogAnalyticsMetrics
       to: AFDProfiles_GetLogAnalyticsMetrics
   - rename-operation:
@@ -186,4 +183,9 @@ directive:
   - rename-operation:
       from: LogAnalytics_GetWafLogAnalyticsRankings
       to: AFDProfiles_GetWafLogAnalyticsRankings
+  # remove below operations to avoid breaking changes
+  - remove-operation: AFDProfiles_CheckHostNameAvailability
+  - remove-operation: SecurityPolicies_Patch
+  - remove-operation: Secrets_Update
+  - remove-operation: Validate_Secret
 ```
