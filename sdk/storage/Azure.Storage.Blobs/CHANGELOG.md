@@ -1,7 +1,7 @@
 # Release History
 
 ## 12.11.0-beta.2 (Unreleased)
-- Added support for service vesrion 2021-02-12
+- Added support for service version 2021-02-12
 - Added support for listing system containers with BlobServiceClient.GetBlobContainers() and .GetBlobContainersAsync().
 - Added support for blob names container invalid XML characters.
 - Fixed a bug where BlobClient.Upload() and UploadAsync() when using client-side encryption would modify the Dictionary instance passed by the caller for blob metadata.
