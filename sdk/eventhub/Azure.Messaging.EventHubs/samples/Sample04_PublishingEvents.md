@@ -70,7 +70,7 @@ Allowing automatic assignment to partitions is recommended when publishing needs
 
 ### Event Hub Buffered Producer Client
 
-When using the `EventHubBufferedProducerClient`, events enqueued with no options specified will be automatically routed.  Because the producer manages publishing, there is no explicit call.  When the producer is closed, it will ensure that any remaining enqueued events have been published.  All of your event data will be published to one of the Event Hub partitions, thought here may be a slight delay until it is available to be read.
+When using the `EventHubBufferedProducerClient`, events enqueued with no options specified will be automatically routed.  Because the producer manages publishing, there is no explicit call.  When the producer is closed, it will ensure that any remaining enqueued events have been published.  All of your event data will be published to one of the Event Hub partitions, though there may be a slight delay until it is available to be read.
 
 ```C# Snippet:EventHubs_Sample04_AutomaticRoutingBuffered
 var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
