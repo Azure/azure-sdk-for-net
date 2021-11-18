@@ -13,8 +13,10 @@ output-folder: Generated/
 no-property-type-replacement:
   - CheckNameAvailabilityRequest
 directive:
-  from: swagger-document
-  where: $.definitions.GroupInformation
-  transform: $['x-ms-client-name'] = 'PrivateLinkResource'
+  - from: swagger-document
+    where: $.definitions.GroupInformation
+    transform: $['x-ms-client-name'] = 'PrivateLinkResource'
+  - remove-operation: Accounts_Head
+  - remove-operation: Instances_Head
 
 ```

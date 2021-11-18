@@ -50,17 +50,5 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests
             updatedInstance = lro.Value;
             ResourceDataHelper.AssertInstanceUpdate(updatedInstance, updateParameters);
         }
-
-        [TestCase]
-        [RecordedTest]
-        [Ignore("405")]
-        public async Task Head()
-        {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroup rg = await subscription.GetResourceGroups().GetAsync("DeviceUpdateResourceGroup");
-            Account account = await rg.GetAccounts().GetAsync("AzureDeviceUpdateAccount");
-            Instance instance = await account.GetInstances().GetAsync("Instance");
-            Assert.IsTrue(await instance.HeadAsync());
-        }
     }
 }

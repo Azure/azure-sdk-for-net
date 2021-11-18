@@ -414,42 +414,6 @@ namespace Azure.ResourceManager.DeviceUpdate
             }
         }
 
-        /// <summary> Checks whether account exists. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<bool>> HeadAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("Account.Head");
-            scope.Start();
-            try
-            {
-                var response = await _accountsRestClient.HeadAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Checks whether account exists. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> Head(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("Account.Head");
-            scope.Start();
-            try
-            {
-                var response = _accountsRestClient.Head(Id.ResourceGroupName, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         #region Instance
 
         /// <summary> Gets a collection of Instances in the Account. </summary>
