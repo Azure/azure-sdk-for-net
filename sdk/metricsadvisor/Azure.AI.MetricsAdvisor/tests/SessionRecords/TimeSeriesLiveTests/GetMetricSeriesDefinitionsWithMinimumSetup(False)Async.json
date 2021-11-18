@@ -1,182 +1,185 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://js-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/metrics/27e3015f-04fd-44ba-a20b-bc529a0aebae/series/query",
+      "RequestUri": "https://ga-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/metrics/390d1139-98fb-45af-b831-8d5ad61b150a/series/query",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "38",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-7055622aadfc32469873dd0d1b438913-df89db9d480afc49-00",
-        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20210119.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-9127c4c2bb880d4a993fd4b3abea9ad6-2b1e1abe08fdae45-00",
+        "User-Agent": [
+          "azsdk-net-AI.MetricsAdvisor/1.2.0-alpha.20211118.1",
+          "(.NET 5.0.12; Microsoft Windows 10.0.22000)"
+        ],
         "x-api-key": "Sanitized",
         "x-ms-client-request-id": "4ee107f599d39353ec0aabc8f2f8b5c4",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "activeSince": "2020-10-01T00:00:00Z"
+        "activeSince": "2021-10-01T00:00:00Z"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "c24294e9-297b-426b-b238-529c3e17e17a",
+        "apim-request-id": "f44441ed-5cd4-43d7-8968-71dabff2b5f8",
         "Content-Length": "2487",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 19 Jan 2021 17:43:10 GMT",
+        "Date": "Thu, 18 Nov 2021 17:48:52 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "119",
-        "x-request-id": "c24294e9-297b-426b-b238-529c3e17e17a"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "107",
+        "X-Request-ID": "f44441ed-5cd4-43d7-8968-71dabff2b5f8"
       },
       "ResponseBody": {
         "value": [
           {
-            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "metricId": "390d1139-98fb-45af-b831-8d5ad61b150a",
             "dimension": {
-              "city": "Miami",
-              "category": "Health \u0026 Personal Care"
+              "category": "Shoes Handbags \u0026 Sunglasses",
+              "region": "Cairo"
             }
           },
           {
-            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "metricId": "390d1139-98fb-45af-b831-8d5ad61b150a",
             "dimension": {
-              "city": "Rio de Janeiro",
-              "category": "Historical \u0026 Advertising Collectibles"
+              "category": "Shoes Handbags \u0026 Sunglasses",
+              "region": "__SUM__"
             }
           },
           {
-            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "metricId": "390d1139-98fb-45af-b831-8d5ad61b150a",
             "dimension": {
-              "city": "Belo Horizonte",
-              "category": "Electronics (Consumer)"
+              "category": "Office Products",
+              "region": "Seoul"
             }
           },
           {
-            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "metricId": "390d1139-98fb-45af-b831-8d5ad61b150a",
             "dimension": {
-              "city": "Kinshasa",
-              "category": "Beauty"
+              "category": "__SUM__",
+              "region": "Miami"
             }
           },
           {
-            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "metricId": "390d1139-98fb-45af-b831-8d5ad61b150a",
             "dimension": {
-              "city": "Lahore",
-              "category": "Shoes Handbags \u0026 Sunglasses"
+              "category": "Handmade",
+              "region": "Miami"
             }
           },
           {
-            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "metricId": "390d1139-98fb-45af-b831-8d5ad61b150a",
             "dimension": {
-              "city": "Hong Kong",
-              "category": "Electronics (Accessories)"
+              "category": "Home \u0026 Garden",
+              "region": "Miami"
             }
           },
           {
-            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "metricId": "390d1139-98fb-45af-b831-8d5ad61b150a",
             "dimension": {
-              "city": "Sao Paulo",
-              "category": "Beauty"
+              "category": "Office Products",
+              "region": "Miami"
             }
           },
           {
-            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "metricId": "390d1139-98fb-45af-b831-8d5ad61b150a",
             "dimension": {
-              "city": "Delhi",
-              "category": "Books"
+              "category": "Electronics (Accessories)",
+              "region": "Istanbul"
             }
           },
           {
-            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "metricId": "390d1139-98fb-45af-b831-8d5ad61b150a",
             "dimension": {
-              "city": "Istanbul",
-              "category": "Camera \u0026 Photo"
+              "category": "Shoes Handbags \u0026 Sunglasses",
+              "region": "Seoul"
             }
           },
           {
-            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "metricId": "390d1139-98fb-45af-b831-8d5ad61b150a",
             "dimension": {
-              "city": "Kinshasa",
-              "category": "Musical Instruments"
+              "category": "Home \u0026 Garden",
+              "region": "Tianjin"
             }
           },
           {
-            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "metricId": "390d1139-98fb-45af-b831-8d5ad61b150a",
             "dimension": {
-              "city": "Guangzhou",
-              "category": "Jewelry"
+              "category": "Handmade",
+              "region": "Cairo"
             }
           },
           {
-            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "metricId": "390d1139-98fb-45af-b831-8d5ad61b150a",
             "dimension": {
-              "city": "Bengaluru",
-              "category": "Jewelry"
+              "category": "Electronics (Accessories)",
+              "region": "Cairo"
             }
           },
           {
-            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "metricId": "390d1139-98fb-45af-b831-8d5ad61b150a",
             "dimension": {
-              "city": "Kinshasa",
-              "category": "Health \u0026 Personal Care"
+              "category": "Handmade",
+              "region": "__SUM__"
             }
           },
           {
-            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "metricId": "390d1139-98fb-45af-b831-8d5ad61b150a",
             "dimension": {
-              "city": "Dallas",
-              "category": "Office Products"
+              "category": "Shoes Handbags \u0026 Sunglasses",
+              "region": "Beijing"
             }
           },
           {
-            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "metricId": "390d1139-98fb-45af-b831-8d5ad61b150a",
             "dimension": {
-              "city": "Beijing",
-              "category": "Electronics (Consumer)"
+              "category": "Handmade",
+              "region": "Mumbai"
             }
           },
           {
-            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "metricId": "390d1139-98fb-45af-b831-8d5ad61b150a",
             "dimension": {
-              "city": "Hyderabad",
-              "category": "Handmade"
+              "category": "Grocery \u0026 Gourmet Food",
+              "region": "Cairo"
             }
           },
           {
-            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "metricId": "390d1139-98fb-45af-b831-8d5ad61b150a",
             "dimension": {
-              "city": "Kolkata",
-              "category": "Electronics (Consumer)"
+              "category": "Shoes Handbags \u0026 Sunglasses",
+              "region": "Karachi"
             }
           },
           {
-            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "metricId": "390d1139-98fb-45af-b831-8d5ad61b150a",
             "dimension": {
-              "city": "Chicago",
-              "category": "Electronics (Accessories)"
+              "category": "Handmade",
+              "region": "Seoul"
             }
           },
           {
-            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "metricId": "390d1139-98fb-45af-b831-8d5ad61b150a",
             "dimension": {
-              "city": "Madrid",
-              "category": "Industrial \u0026 Scientific"
+              "category": "Shoes Handbags \u0026 Sunglasses",
+              "region": "Miami"
             }
           },
           {
-            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "metricId": "390d1139-98fb-45af-b831-8d5ad61b150a",
             "dimension": {
-              "city": "Buenos Aires",
-              "category": "Outdoors"
+              "category": "__SUM__",
+              "region": "Tianjin"
             }
           }
         ],
-        "@nextLink": "https://js-metrics-advisor.cognitiveservices.azure.com:443/metricsadvisor/v1.0/metrics/27e3015f-04fd-44ba-a20b-bc529a0aebae/series/query?$top=20\u0026$skip=20"
+        "@nextLink": "https://ga-metrics-advisor.cognitiveservices.azure.com:443/metricsadvisor/v1.0/metrics/390d1139-98fb-45af-b831-8d5ad61b150a/series/query?$maxpagesize=20\u0026$skip=20"
       }
     }
   ],
   "Variables": {
-    "METRICSADVISOR_ACCOUNT_NAME": "js-metrics-advisor",
+    "METRICSADVISOR_ACCOUNT_NAME": "ga-metrics-advisor",
     "METRICSADVISOR_ENDPOINT_SUFFIX": null,
     "METRICSADVISOR_PRIMARY_API_KEY": "Sanitized",
     "METRICSADVISOR_SUBSCRIPTION_KEY": "Sanitized",
