@@ -159,7 +159,7 @@ namespace Azure.Messaging.EventHubs.Tests
         private NamespaceProperties EnsureEventHubsNamespace()
         {
             // The call to "GetVariable" will validate the environment variable and bootstrap
-            // test resource creation if it has not been.
+            // test resource creation if needed.
 
             var environmentConnectionString = GetVariable(EventHubsNamespaceConnectionStringEnvironmentVariable);
             var parsed = EventHubsConnectionStringProperties.Parse(environmentConnectionString);

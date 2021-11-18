@@ -67,7 +67,7 @@ namespace Azure.Messaging.EventHubs.Tests
         private StorageProperties EnsureStorageAccount()
         {
             // The call to "GetVariable" will validate the environment variable and bootstrap
-            // test resource creation if it has not been.
+            // test resource creation if needed.
 
             var connectionString = GetVariable(StorageAccountConnectionStringEnvironmentVariable);
             var nameStart = (connectionString.IndexOf('=', connectionString.IndexOf("AccountName")) + 1);
