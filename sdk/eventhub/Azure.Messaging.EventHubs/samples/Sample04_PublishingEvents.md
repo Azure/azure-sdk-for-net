@@ -203,7 +203,7 @@ finally
 
 ### Event Hub Producer Client
 
-When using the `EventHubProducerClient` a batch is first created with a partition key option and then published.  The `SendAsync` call will receive an acknowledgment from the Event Hubs service; so long as no exception is thrown, your application can consider publishing successful.  All of your event data will be published to one of the Event Hub partitions, thought here may be a slight delay until it is available to be read.
+When using the `EventHubProducerClient` a batch is first created with a partition key option and then published.  The `SendAsync` call will receive an acknowledgment from the Event Hubs service; so long as no exception is thrown, your application can consider publishing successful.  All of your event data will be published to one of the Event Hub partitions, though there may be a slight delay until it is available to be read.
 
 **Note:** It is important to be aware that if you are using a partition key, you may not also specify a partition identifier; they are mutually exclusive.
 
