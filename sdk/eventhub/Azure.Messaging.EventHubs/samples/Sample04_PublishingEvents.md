@@ -246,7 +246,7 @@ When publishing, it may be desirable to request that the Event Hubs service plac
 
 ### Event Hub Buffered Producer Client
 
-When using the `EventHubBufferedProducerClient`, events are enqueued with a partition identifier option.  Because the producer manages publishing, there is no explicit call.  When the producer is closed, it will ensure that any remaining enqueued events have been published.  All of your event data will be published to one of the Event Hub partitions, thought here may be a slight delay until it is available to be read.
+When using the `EventHubBufferedProducerClient`, events are enqueued with a partition identifier option.  Because the producer manages publishing, there is no explicit call.  When the producer is closed, it will ensure that any remaining enqueued events have been published.  All of your event data will be published to one of the Event Hub partitions, though there may be a slight delay until it is available to be read.
 
 **Note:** It is important to be aware that if you are using a partition key, you may not also specify a partition identifier; they are mutually exclusive.
 
@@ -299,7 +299,7 @@ finally
 
 ### Event Hub Producer Client
 
-When using the `EventHubProducerClient` a batch is first created with a partition identifier option and then published.  The `SendAsync` call will receive an acknowledgment from the Event Hubs service; so long as no exception is thrown, your application can consider publishing successful.  All of your event data will be published to one of the Event Hub partitions, thought here may be a slight delay until it is available to be read.
+When using the `EventHubProducerClient` a batch is first created with a partition identifier option and then published.  The `SendAsync` call will receive an acknowledgment from the Event Hubs service; so long as no exception is thrown, your application can consider publishing successful.  All of your event data will be published to one of the Event Hub partitions, though there may be a slight delay until it is available to be read.
 
 **Note:** It is important to be aware that if you are using a partition identifier, you may not also specify a partition key; they are mutually exclusive.
 
@@ -551,7 +551,7 @@ In scenarios where an application using the `EventProducerClient` wishes to publ
 
 When events are passed in this form, the `EventProducerClient` will package them as a single publishing operation.  When the set is published, the result is atomic; either publishing was successful for all events, or it has failed for all events.  Partial success or failure when publishing a batch is not possible.
 
-When published, the `EventHubProducerClient` will receive an acknowledgment from the Event Hubs service; so long as no exception is thrown by this call, your application can consider publishing successful.  The service assumes responsibility for delivery of the set.  All of your event data will be published to one of the Event Hub partitions, thought here may be a slight delay until it is available to be read.
+When published, the `EventHubProducerClient` will receive an acknowledgment from the Event Hubs service; so long as no exception is thrown by this call, your application can consider publishing successful.  The service assumes responsibility for delivery of the set.  All of your event data will be published to one of the Event Hub partitions, though there may be a slight delay until it is available to be read.
 
 ```C# Snippet:EventHubs_Sample04_NoBatch
 var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
