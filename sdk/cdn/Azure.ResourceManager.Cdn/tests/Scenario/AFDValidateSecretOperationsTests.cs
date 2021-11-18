@@ -17,18 +17,19 @@ namespace Azure.ResourceManager.Cdn.Tests
         {
         }
 
-        [TestCase]
-        [RecordedTest]
-        [Ignore("Not Ready")]
-        public async Task Validate()
-        {
-            ValidateSecretInput input = new ValidateSecretInput(new WritableSubResource
-            {
-                Id = "/subscriptions/87082bb7-c39f-42d2-83b6-4980444c7397/resourceGroups/CdnTest/providers/Microsoft.KeyVault/vaults/testKV4AFD/certificates/testCert"
-            }, ValidateSecretType.CustomerCertificate);
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
-            ValidateSecretOutput validateSecretOutput = await subscription.ValidateSecretAsync(input);
-            Assert.AreEqual(validateSecretOutput.Status, Status.Valid);
-        }
+        // ValidateSecret method is removed
+        //[TestCase]
+        //[RecordedTest]
+        //[Ignore("Not Ready")]
+        //public async Task Validate()
+        //{
+        //    ValidateSecretInput input = new ValidateSecretInput(new WritableSubResource
+        //    {
+        //        Id = "/subscriptions/87082bb7-c39f-42d2-83b6-4980444c7397/resourceGroups/CdnTest/providers/Microsoft.KeyVault/vaults/testKV4AFD/certificates/testCert"
+        //    }, ValidateSecretType.CustomerCertificate);
+        //    Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+        //    ValidateSecretOutput validateSecretOutput = await subscription.ValidateSecretAsync(input);
+        //    Assert.AreEqual(validateSecretOutput.Status, Status.Valid);
+        //}
     }
 }

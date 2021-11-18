@@ -33,31 +33,32 @@ namespace Azure.ResourceManager.Cdn.Tests
             Assert.AreEqual(404, ex.Status);
         }
 
-        [TestCase]
-        [RecordedTest]
-        [Ignore("Not Ready")]
-        public async Task Update()
-        {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
-            string AFDProfileName = Recording.GenerateAssetName("AFDProfile-");
-            Profile AFDProfile = await CreateAFDProfile(rg, AFDProfileName, SkuName.StandardAzureFrontDoor);
-            string secretName = Recording.GenerateAssetName("AFDSecret-");
-            Secret secret = await CreateSecret(AFDProfile, secretName);
-            SecretProperties updateParameters = new SecretProperties
-            {
-                Parameters = new CustomerCertificateParameters(new WritableSubResource
-                {
-                    Id = "/subscriptions/87082bb7-c39f-42d2-83b6-4980444c7397/resourceGroups/CdnTest/providers/Microsoft.KeyVault/vaults/testKV4AFD/certificates/testCert"
-                })
-                {
-                    UseLatestVersion = false,
-                    SecretVersion = "242fe9960a044ca1ab28e79cbcf75d29"
-                }
-            };
-            var lro = await secret.UpdateAsync(updateParameters);
-            Secret updatedSecret = lro.Value;
-            ResourceDataHelper.AssertSecretUpdate(updatedSecret, updateParameters);
-        }
+        // Update method is removed
+        //[TestCase]
+        //[RecordedTest]
+        //[Ignore("Not Ready")]
+        //public async Task Update()
+        //{
+        //    Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+        //    ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
+        //    string AFDProfileName = Recording.GenerateAssetName("AFDProfile-");
+        //    Profile AFDProfile = await CreateAFDProfile(rg, AFDProfileName, SkuName.StandardAzureFrontDoor);
+        //    string secretName = Recording.GenerateAssetName("AFDSecret-");
+        //    Secret secret = await CreateSecret(AFDProfile, secretName);
+        //    SecretProperties updateParameters = new SecretProperties
+        //    {
+        //        Parameters = new CustomerCertificateParameters(new WritableSubResource
+        //        {
+        //            Id = "/subscriptions/87082bb7-c39f-42d2-83b6-4980444c7397/resourceGroups/CdnTest/providers/Microsoft.KeyVault/vaults/testKV4AFD/certificates/testCert"
+        //        })
+        //        {
+        //            UseLatestVersion = false,
+        //            SecretVersion = "242fe9960a044ca1ab28e79cbcf75d29"
+        //        }
+        //    };
+        //    var lro = await secret.UpdateAsync(updateParameters);
+        //    Secret updatedSecret = lro.Value;
+        //    ResourceDataHelper.AssertSecretUpdate(updatedSecret, updateParameters);
+        //}
     }
 }
