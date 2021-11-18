@@ -9,11 +9,11 @@ using NUnit.Framework.Internal.Commands;
 
 namespace Azure.Core.TestFramework
 {
-    [AttributeUsage(AttributeTargets.Method)]
     /// <summary>
     /// This attribute replaces the [Test] attribute and will dynamically re-record recorded tests on failure.
     /// Tests that are re-recorded will complete with a error status and indicate that copying the updated recording to SessionRecords is needed.
     /// </summary>
+    [AttributeUsage(AttributeTargets.Method)]
     public class RecordedTestAttribute : TestAttribute, IWrapSetUpTearDown
     {
         public TestCommand Wrap(TestCommand command)
@@ -23,14 +23,19 @@ namespace Azure.Core.TestFramework
             {
                 test = test.Parent;
             }
-            if (test.Fixture is RecordedTestBase fixture && fixture.Mode == RecordedTestMode.Playback)
+            if (test.Fixture is RecordedTestBase fixture )
             {
-                return new FallbackCommand(command);
+                if (fixture.Mode == RecordedTestMode.Playback)
+                {
+                    return new FallbackCommand(command);
+                }
+                // For any Live modes, zero out the Timeout.
+                foreach (ITest testInstance in test.Tests)
+                {
+                    testInstance.Properties.Set(PropertyNames.Timeout, 0);
+                }
             }
-            else
-            {
-                return command;
-            }
+            return command;
         }
 
         private class FallbackCommand : DelegatingTestCommand
@@ -39,12 +44,6 @@ namespace Azure.Core.TestFramework
             { }
             public override TestResult Execute(TestExecutionContext context)
             {
-                // Lift the global timeout setting if we are not in Playback mode
-                var recordedTest = context.TestObject as RecordedTestBase;
-                if (recordedTest?.Mode != RecordedTestMode.Playback)
-                {
-                    context.TestCaseTimeout = 0; // set the default timeout;
-                }
                 // Run the test
                 context.CurrentResult = innerCommand.Execute(context);
 
