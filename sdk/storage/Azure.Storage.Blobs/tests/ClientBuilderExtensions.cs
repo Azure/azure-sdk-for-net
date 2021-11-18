@@ -12,7 +12,7 @@ using BlobsClientBuilder = Azure.Storage.Test.Shared.ClientBuilder<
 
 namespace Azure.Storage.Blobs.Tests
 {
-    public static class ClientBuilderExtensions
+    public static partial class ClientBuilderExtensions
     {
         /// <summary>
         /// Creates a new <see cref="ClientBuilder{TServiceClient, TServiceClientOptions}"/>
@@ -88,10 +88,5 @@ namespace Azure.Storage.Blobs.Tests
             await container.CreateIfNotExistsAsync(metadata: metadata, publicAccessType: publicAccessType.Value);
             return new DisposingContainer(container);
         }
-
-        public static BlockBlobClient ToBlockBlobClient(
-            this BlobsClientBuilder clientBuilder,
-            BlobBaseClient client)
-            => clientBuilder.AzureCoreRecordedTestBase.InstrumentClient(new BlockBlobClient(client.Uri, client.ClientConfiguration));
     }
 }
