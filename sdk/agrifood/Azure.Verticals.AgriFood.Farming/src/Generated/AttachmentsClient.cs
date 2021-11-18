@@ -19,16 +19,15 @@ namespace Azure.Verticals.AgriFood.Farming
     /// <summary> The Attachments service client. </summary>
     public partial class AttachmentsClient
     {
-        private static readonly string[] AuthorizationScopes = { "https://farmbeats.azure.net/.default" };
+        private static readonly string[] AuthorizationScopes = new string[] { "https://farmbeats.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
-
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get => _pipeline; }
+        public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary> Initializes a new instance of AttachmentsClient for mocking. </summary>
         protected AttachmentsClient()
@@ -50,7 +49,6 @@ namespace Azure.Verticals.AgriFood.Farming
             {
                 throw new ArgumentNullException(nameof(credential));
             }
-
             options ??= new FarmBeatsClientOptions();
 
             _clientDiagnostics = new ClientDiagnostics(options);
@@ -99,14 +97,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetAsync(string farmerId, string attachmentId, RequestContext context = null)
+        public virtual async Task<Response> GetAttachmentAsync(string farmerId, string attachmentId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("AttachmentsClient.Get");
+            using var scope = _clientDiagnostics.CreateScope("AttachmentsClient.GetAttachment");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetRequest(farmerId, attachmentId);
+                using HttpMessage message = CreateGetAttachmentRequest(farmerId, attachmentId);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -155,14 +153,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response Get(string farmerId, string attachmentId, RequestContext context = null)
+        public virtual Response GetAttachment(string farmerId, string attachmentId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("AttachmentsClient.Get");
+            using var scope = _clientDiagnostics.CreateScope("AttachmentsClient.GetAttachment");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetRequest(farmerId, attachmentId);
+                using HttpMessage message = CreateGetAttachmentRequest(farmerId, attachmentId);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -703,7 +701,7 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
-        internal HttpMessage CreateGetRequest(string farmerId, string attachmentId)
+        internal HttpMessage CreateGetAttachmentRequest(string farmerId, string attachmentId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;

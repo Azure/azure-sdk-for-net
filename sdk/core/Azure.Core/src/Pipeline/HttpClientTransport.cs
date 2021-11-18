@@ -288,6 +288,10 @@ namespace Azure.Core.Pipeline
             public PipelineRequest()
             {
                 _requestMessage = new HttpRequestMessage();
+
+#if NETFRAMEWORK
+                _requestMessage.Headers.ExpectContinue = false;
+#endif
             }
 
             public override RequestMethod Method

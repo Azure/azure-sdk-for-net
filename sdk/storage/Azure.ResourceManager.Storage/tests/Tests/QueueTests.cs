@@ -7,7 +7,7 @@ using NUnit.Framework;
 using Azure.ResourceManager.Storage.Models;
 using Azure.ResourceManager.Storage.Tests.Helpers;
 
-namespace Azure.ResourceManager.Storage.Tests.Tests
+namespace Azure.ResourceManager.Storage.Tests
 {
     public class QueueTests : StorageTestBase
     {
