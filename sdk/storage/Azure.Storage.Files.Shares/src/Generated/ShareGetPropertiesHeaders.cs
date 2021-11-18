@@ -36,6 +36,8 @@ namespace Azure.Storage.Files.Shares
         public int? ProvisionedEgressMBps => _response.Headers.TryGetValue("x-ms-share-provisioned-egress-mbps", out int? value) ? value : null;
         /// <summary> Returns the current share next allowed quota downgrade time. </summary>
         public DateTimeOffset? NextAllowedQuotaDowngradeTime => _response.Headers.TryGetValue("x-ms-share-next-allowed-quota-downgrade-time", out DateTimeOffset? value) ? value : null;
+        /// <summary> Returns the current share provisioned bandwidth in megabits per second. </summary>
+        public int? ProvisionedBandwidthMibps => _response.Headers.TryGetValue("x-ms-share-provisioned-bandwidth-mibps", out int? value) ? value : null;
         /// <summary> When a share is leased, specifies whether the lease is of infinite or fixed duration. </summary>
         public ShareLeaseDuration? LeaseDuration => _response.Headers.TryGetValue("x-ms-lease-duration", out string value) ? value.ToShareLeaseDuration() : null;
         /// <summary> Lease state of the share. </summary>

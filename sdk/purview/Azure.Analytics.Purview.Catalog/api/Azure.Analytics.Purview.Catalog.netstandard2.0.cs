@@ -180,8 +180,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response Delete(string guid, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(string guid, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response Get(string guid, bool? extendedInfo = default(bool?), Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetAsync(string guid, bool? extendedInfo = default(bool?), Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response GetPurviewRelationship(string guid, bool? extendedInfo = default(bool?), Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetPurviewRelationshipAsync(string guid, bool? extendedInfo = default(bool?), Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response Update(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
     }

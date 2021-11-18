@@ -301,14 +301,12 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         public string CorrelationId
         {
-            get => _correlationIdSet ? AmqpMessage.Properties.CorrelationId?.ToString() : AmqpMessage.Properties.CorrelationId.ToString();
+            get => AmqpMessage.Properties.CorrelationId?.ToString();
             set
             {
-                _correlationIdSet = true;
                 AmqpMessage.Properties.CorrelationId = value == null ? null : new AmqpMessageId(value);
             }
         }
-        private bool _correlationIdSet;
 
         /// <summary>Gets or sets an application specific subject.</summary>
         /// <value>The application specific subject.</value>
@@ -338,14 +336,12 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         public string To
         {
-            get => _toSet ? AmqpMessage.Properties.To?.ToString() : AmqpMessage.Properties.To.ToString();
+            get => AmqpMessage.Properties.To?.ToString();
             set
             {
-                _toSet = true;
                 AmqpMessage.Properties.To = value == null ? null : new AmqpAddress(value);
             }
         }
-        private bool _toSet;
 
         /// <summary>Gets or sets the content type descriptor.</summary>
         /// <value>RFC2045 Content-Type descriptor.</value>
@@ -375,14 +371,12 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         public string ReplyTo
         {
-            get => _replyToSet ? AmqpMessage.Properties.ReplyTo?.ToString() :  AmqpMessage.Properties.ReplyTo.ToString();
+            get => AmqpMessage.Properties.ReplyTo?.ToString();
             set
             {
-                _replyToSet = true;
                 AmqpMessage.Properties.ReplyTo = value == null ? null : new AmqpAddress(value);
             }
         }
-        private bool _replyToSet;
 
         /// <summary>
         /// Gets or sets the date and time in UTC at which the message will be enqueued. This

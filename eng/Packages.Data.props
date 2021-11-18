@@ -12,7 +12,7 @@
   -->
   <ItemGroup Condition="'$(IsClientLibrary)' != 'true'">
     <PackageReference Update="Microsoft.Azure.Amqp" Version="2.4.11" />
-    <PackageReference Update="Microsoft.Azure.Batch" Version="15.0.0" />
+    <PackageReference Update="Microsoft.Azure.Batch" Version="15.1.0" />
     <PackageReference Update="Microsoft.Azure.Devices.Client" Version="1.23.2" />
     <PackageReference Update="Microsoft.Azure.Devices" Version="1.19.0" />
     <PackageReference Update="Microsoft.Azure.KeyVault.Core" Version="3.0.3" />
@@ -79,12 +79,13 @@
 
     <!-- Azure SDK packages -->
     <PackageReference Update="Azure.Communication.Common" Version="1.0.1" />
-    <PackageReference Update="Azure.Core" Version="1.20.0" />
+    <PackageReference Update="Azure.Core" Version="1.21.0" />
     <PackageReference Update="Azure.Core.Amqp" Version="1.2.0" />
-    <PackageReference Update="Azure.Core.Experimental" Version="0.1.0-preview.17" />
+    <PackageReference Update="Azure.Core.Experimental" Version="0.1.0-preview.18" />
+    <PackageReference Update="Azure.Data.SchemaRegistry" Version="1.0.0" />  
     <PackageReference Update="Azure.Messaging.EventHubs" Version="5.6.2" />
     <PackageReference Update="Azure.Messaging.EventGrid" Version="4.7.0" />
-    <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.4.0" />
+    <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.5.0" />
     <PackageReference Update="Azure.Messaging.WebPubSub" Version="1.0.0-beta.2" />
     <PackageReference Update="Azure.Identity" Version="1.5.0" />
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.2.0" />
@@ -114,9 +115,9 @@
     <PackageReference Update="CloudNative.CloudEvents" Version="2.0.0" />
     <PackageReference Update="CloudNative.CloudEvents.SystemTextJson" Version="2.0.0" />
     <PackageReference Update="Microsoft.AspNetCore.SignalR.Protocols.NewtonsoftJson" Version="3.0.0" Condition="'$(TargetFramework)' == 'netcoreapp3.1'" />
-    <PackageReference Update="Microsoft.Azure.SignalR" Version="1.12.0" />
-    <PackageReference Update="Microsoft.Azure.SignalR.Management" Version="1.12.0" />
-    <PackageReference Update="Microsoft.Azure.SignalR.Protocols" Version="1.12.0" />
+    <PackageReference Update="Microsoft.Azure.SignalR" Version="1.13.0" />
+    <PackageReference Update="Microsoft.Azure.SignalR.Management" Version="1.13.0" />
+    <PackageReference Update="Microsoft.Azure.SignalR.Protocols" Version="1.13.0" />
     <PackageReference Update="Microsoft.Azure.SignalR.Serverless.Protocols" Version="1.6.0" />
     <PackageReference Update="Microsoft.Azure.WebJobs" Version="3.0.30" />
     <PackageReference Update="Microsoft.Azure.WebJobs.Sources" Version="3.0.30" />
@@ -128,6 +129,7 @@
   <ItemGroup Condition="'$(IsExtensionClientLibrary)' == 'true'">
     <PackageReference Update="Microsoft.AspNetCore.DataProtection" Version="2.1.0" />
     <PackageReference Update="Microsoft.AspNetCore.Http" Version="2.1.22" />
+    <PackageReference Update="Microsoft.AspNetCore.Http.Connections" Version="1.0.15" />
     <PackageReference Update="Microsoft.Azure.Functions.Extensions" Version="1.0.0" />
     <PackageReference Update="Microsoft.Extensions.Azure" Version="1.1.1" />
     <PackageReference Update="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.1.0" />
@@ -143,7 +145,7 @@
     All should have PrivateAssets="All" set so they don't become package dependencies
   -->
   <ItemGroup>
-    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20211102.2" PrivateAssets="All" />
+    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20211112.1" PrivateAssets="All" />
     <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20210903.4" PrivateAssets="All" />
     <PackageReference Update="coverlet.collector" Version="1.3.0" PrivateAssets="All" />
     <PackageReference Update="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.1" PrivateAssets="All" />
