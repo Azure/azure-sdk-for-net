@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.WebPubSub.Models
 {
     /// <summary> Data POST-ed to the nameAvailability action. </summary>
-    internal partial class NameAvailabilityParameters
+    public partial class NameAvailabilityParameters
     {
         /// <summary> Initializes a new instance of NameAvailabilityParameters. </summary>
         /// <param name="type"> The resource type. Can be &quot;Microsoft.SignalRService/SignalR&quot; or &quot;Microsoft.SignalRService/webPubSub&quot;. </param>

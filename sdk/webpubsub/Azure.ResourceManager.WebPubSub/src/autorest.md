@@ -13,7 +13,6 @@ namespace: Azure.ResourceManager.WebPubSub
 modelerfour:
   lenient-model-deduplication: true
 model-namespace: false
-payload-flattening-threshold: 2
 no-property-type-replacement: PrivateEndpoint
 # operation-group-to-resource-type:
 #     Usages: Microsoft.SignalRService/locations/usages

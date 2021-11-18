@@ -6,9 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Network.Tests.Helpers
+namespace Azure.ResourceManager.WebPubSub.Tests.Helpers
 {
     public static class WebPubHubManagementTestUtilities
     {
@@ -39,7 +38,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             }
             string[] parts = resourceType.Split('/');
             string providerName = parts[0];
-            Provider provider = await client.DefaultSubscription.GetProviders().GetAsync(providerName);
+            Provider provider = await client.GetDefaultSubscription().GetProviders().GetAsync(providerName);
             foreach (var resource in provider.Data.ResourceTypes)
             {
                 if (string.Equals(resource.ResourceType, parts[1], StringComparison.OrdinalIgnoreCase))

@@ -1,7 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
+    <Compile Remove="TestData\**" />
+    <EmbeddedResource Remove="TestData\**" />
+    <None Remove="TestData\**" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Azure.Identity" />
-    <PackageReference Include="Azure.ResourceManager.Network"/>
+    <PackageReference Include="Azure.ResourceManager.Network" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.WebPubSub.csproj" />
@@ -9,7 +14,6 @@
   <ItemGroup>
     <Folder Include="SessionRecords\PrivateEndpointConnectionTests\" />
     <Folder Include="SessionRecords\SharedPrivateLinkTests\" />
-    <Folder Include="TestData\" />
     <Folder Include="SessionRecords\" />
   </ItemGroup>
 </Project>

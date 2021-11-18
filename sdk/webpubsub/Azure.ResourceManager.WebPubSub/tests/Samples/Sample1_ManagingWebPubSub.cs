@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Samples
         {
             #region Snippet:Readme_DefaultSubscription
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = armClient.DefaultSubscription;
+            Subscription subscription = armClient.GetDefaultSubscription();
             #endregion
 
             #region Snippet:Readme_GetResourceGroupContainer
-            ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
+            ResourceGroupCollection rgContainer = subscription.GetResourceGroups();
             // With the container, we can create a new resource group with an specific name
             string rgName = "myRgName";
             Location location = Location.WestUS2;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Samples
         public async Task CreateOrUpdate()
         {
             #region Snippet:Managing_WebPubSub_CreateWebPubSub
-            WebPubSubResourceContainer webPubSubResourceContainer = resourceGroup.GetWebPubSubResources();
+            WebPubSubResourceCollection webPubSubResourceContainer = resourceGroup.GetWebPubSubResources();
 
             string webPubSubName = "myWebPubSubName";
 
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Samples
         public async Task List()
         {
             #region Snippet:Managing_WebPubSub_ListAllWebPubSub
-            WebPubSubResourceContainer webPubSubResourceContainer = resourceGroup.GetWebPubSubResources();
+            WebPubSubResourceCollection webPubSubResourceContainer = resourceGroup.GetWebPubSubResources();
 
             AsyncPageable<WebPubSubResource> response = webPubSubResourceContainer.GetAllAsync();
             await foreach (WebPubSubResource WebPubSubResource in response)
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Samples
         public async Task Get()
         {
             #region Snippet:Managing_WebPubSub_GetWebPubSub
-            WebPubSubResourceContainer webPubSubResourceContainer = resourceGroup.GetWebPubSubResources();
+            WebPubSubResourceCollection webPubSubResourceContainer = resourceGroup.GetWebPubSubResources();
 
             WebPubSubResource webPubSub = await webPubSubResourceContainer.GetAsync("myWebPubSubName");
             Console.WriteLine(webPubSub.Data.Name);
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Samples
         public async Task GetIfExists()
         {
             #region Snippet:Managing_WebPubSub_GetWebPubSubIfExists
-            WebPubSubResourceContainer webPubSubResourceContainer = resourceGroup.GetWebPubSubResources();
+            WebPubSubResourceCollection webPubSubResourceContainer = resourceGroup.GetWebPubSubResources();
 
             WebPubSubResource webPubSub = await webPubSubResourceContainer.GetIfExistsAsync("foo");
             if (webPubSub != null)
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Samples
         public async Task DeleteVirtualWebPubSub()
         {
             #region Snippet:Managing_WebPubSub_DeleteWebPubSub
-            WebPubSubResourceContainer webPubSubResourceContainer = resourceGroup.GetWebPubSubResources();
+            WebPubSubResourceCollection webPubSubResourceContainer = resourceGroup.GetWebPubSubResources();
 
             WebPubSubResource webPubSub = await webPubSubResourceContainer.GetAsync("myWebPubSubName");
             await webPubSub.DeleteAsync();

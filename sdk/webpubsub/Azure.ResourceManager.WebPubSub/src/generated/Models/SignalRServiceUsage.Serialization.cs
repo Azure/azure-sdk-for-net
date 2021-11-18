@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
@@ -15,13 +14,18 @@ namespace Azure.ResourceManager.WebPubSub.Models
     {
         internal static SignalRServiceUsage DeserializeSignalRServiceUsage(JsonElement element)
         {
+            Optional<string> id = default;
             Optional<long> currentValue = default;
             Optional<long> limit = default;
             Optional<SignalRServiceUsageName> name = default;
             Optional<string> unit = default;
-            ResourceIdentifier id = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("currentValue"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -57,13 +61,8 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     unit = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
             }
-            return new SignalRServiceUsage(id, Optional.ToNullable(currentValue), Optional.ToNullable(limit), name.Value, unit.Value);
+            return new SignalRServiceUsage(id.Value, Optional.ToNullable(currentValue), Optional.ToNullable(limit), name.Value, unit.Value);
         }
     }
 }

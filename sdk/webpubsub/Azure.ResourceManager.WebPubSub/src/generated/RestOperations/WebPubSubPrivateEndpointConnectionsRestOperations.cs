@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.WebPubSub
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateGetAllRequest(string resourceGroupName, string resourceName)
+        internal HttpMessage CreateListRequest(string resourceGroupName, string resourceName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
-        public async Task<Response<PrivateEndpointConnectionList>> GetAllAsync(string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
+        public async Task<Response<PrivateEndpointConnectionList>> ListAsync(string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.WebPubSub
                 throw new ArgumentNullException(nameof(resourceName));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName, resourceName);
+            using var message = CreateListRequest(resourceGroupName, resourceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
-        public Response<PrivateEndpointConnectionList> GetAll(string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
+        public Response<PrivateEndpointConnectionList> List(string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.WebPubSub
                 throw new ArgumentNullException(nameof(resourceName));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName, resourceName);
+            using var message = CreateListRequest(resourceGroupName, resourceName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.WebPubSub
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string resourceGroupName, string resourceName, string privateEndpointConnectionName, PrivateEndpoint privateEndpoint, PrivateLinkServiceConnectionState privateLinkServiceConnectionState)
+        internal HttpMessage CreateUpdateRequest(string resourceGroupName, string resourceName, string privateEndpointConnectionName, PrivateEndpointConnectionData parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -248,13 +248,8 @@ namespace Azure.ResourceManager.WebPubSub
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var model = new PrivateEndpointConnectionData()
-            {
-                PrivateEndpoint = privateEndpoint,
-                PrivateLinkServiceConnectionState = privateLinkServiceConnectionState
-            };
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
             message.SetProperty("UserAgentOverride", _userAgent);
             return message;
@@ -264,11 +259,10 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
-        /// <param name="privateEndpoint"> Private endpoint associated with the private endpoint connection. </param>
-        /// <param name="privateLinkServiceConnectionState"> Connection state. </param>
+        /// <param name="parameters"> The resource of private endpoint and its properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, or <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        public async Task<Response<PrivateEndpointConnectionData>> UpdateAsync(string resourceGroupName, string resourceName, string privateEndpointConnectionName, PrivateEndpoint privateEndpoint = null, PrivateLinkServiceConnectionState privateLinkServiceConnectionState = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="privateEndpointConnectionName"/>, or <paramref name="parameters"/> is null. </exception>
+        public async Task<Response<PrivateEndpointConnectionData>> UpdateAsync(string resourceGroupName, string resourceName, string privateEndpointConnectionName, PrivateEndpointConnectionData parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -282,8 +276,12 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 throw new ArgumentNullException(nameof(privateEndpointConnectionName));
             }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
 
-            using var message = CreateUpdateRequest(resourceGroupName, resourceName, privateEndpointConnectionName, privateEndpoint, privateLinkServiceConnectionState);
+            using var message = CreateUpdateRequest(resourceGroupName, resourceName, privateEndpointConnectionName, parameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -303,11 +301,10 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
-        /// <param name="privateEndpoint"> Private endpoint associated with the private endpoint connection. </param>
-        /// <param name="privateLinkServiceConnectionState"> Connection state. </param>
+        /// <param name="parameters"> The resource of private endpoint and its properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, or <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        public Response<PrivateEndpointConnectionData> Update(string resourceGroupName, string resourceName, string privateEndpointConnectionName, PrivateEndpoint privateEndpoint = null, PrivateLinkServiceConnectionState privateLinkServiceConnectionState = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="privateEndpointConnectionName"/>, or <paramref name="parameters"/> is null. </exception>
+        public Response<PrivateEndpointConnectionData> Update(string resourceGroupName, string resourceName, string privateEndpointConnectionName, PrivateEndpointConnectionData parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -321,8 +318,12 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 throw new ArgumentNullException(nameof(privateEndpointConnectionName));
             }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
 
-            using var message = CreateUpdateRequest(resourceGroupName, resourceName, privateEndpointConnectionName, privateEndpoint, privateLinkServiceConnectionState);
+            using var message = CreateUpdateRequest(resourceGroupName, resourceName, privateEndpointConnectionName, parameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -428,7 +429,7 @@ namespace Azure.ResourceManager.WebPubSub
             }
         }
 
-        internal HttpMessage CreateGetAllNextPageRequest(string nextLink, string resourceGroupName, string resourceName)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string resourceGroupName, string resourceName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -448,7 +449,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="resourceName"/> is null. </exception>
-        public async Task<Response<PrivateEndpointConnectionList>> GetAllNextPageAsync(string nextLink, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
+        public async Task<Response<PrivateEndpointConnectionList>> ListNextPageAsync(string nextLink, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -463,7 +464,7 @@ namespace Azure.ResourceManager.WebPubSub
                 throw new ArgumentNullException(nameof(resourceName));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, resourceName);
+            using var message = CreateListNextPageRequest(nextLink, resourceGroupName, resourceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -485,7 +486,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="resourceName"/> is null. </exception>
-        public Response<PrivateEndpointConnectionList> GetAllNextPage(string nextLink, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
+        public Response<PrivateEndpointConnectionList> ListNextPage(string nextLink, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -500,7 +501,7 @@ namespace Azure.ResourceManager.WebPubSub
                 throw new ArgumentNullException(nameof(resourceName));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, resourceName);
+            using var message = CreateListNextPageRequest(nextLink, resourceGroupName, resourceName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

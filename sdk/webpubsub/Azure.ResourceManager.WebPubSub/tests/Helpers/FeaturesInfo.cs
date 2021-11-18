@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.Network.Tests.Helpers
+namespace Azure.ResourceManager.WebPubSub.Tests.Helpers
 {
     public static class FeaturesInfo
     {

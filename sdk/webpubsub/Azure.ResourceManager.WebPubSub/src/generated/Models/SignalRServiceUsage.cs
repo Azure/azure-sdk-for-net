@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Resources.Models;
-
 namespace Azure.ResourceManager.WebPubSub.Models
 {
     /// <summary> Object that describes a specific usage of the resources. </summary>
-    public partial class SignalRServiceUsage : SubResource
+    public partial class SignalRServiceUsage
     {
         /// <summary> Initializes a new instance of SignalRServiceUsage. </summary>
         internal SignalRServiceUsage()
@@ -18,19 +16,22 @@ namespace Azure.ResourceManager.WebPubSub.Models
         }
 
         /// <summary> Initializes a new instance of SignalRServiceUsage. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"> Fully qualified ARM resource id. </param>
         /// <param name="currentValue"> Current value for the usage quota. </param>
         /// <param name="limit"> The maximum permitted value for the usage quota. If there is no limit, this value will be -1. </param>
         /// <param name="name"> Localizable String object containing the name and a localized value. </param>
         /// <param name="unit"> Representing the units of the usage quota. Possible values are: Count, Bytes, Seconds, Percent, CountPerSecond, BytesPerSecond. </param>
-        internal SignalRServiceUsage(string id, long? currentValue, long? limit, SignalRServiceUsageName name, string unit) : base(id)
+        internal SignalRServiceUsage(string id, long? currentValue, long? limit, SignalRServiceUsageName name, string unit)
         {
+            Id = id;
             CurrentValue = currentValue;
             Limit = limit;
             Name = name;
             Unit = unit;
         }
 
+        /// <summary> Fully qualified ARM resource id. </summary>
+        public string Id { get; }
         /// <summary> Current value for the usage quota. </summary>
         public long? CurrentValue { get; }
         /// <summary> The maximum permitted value for the usage quota. If there is no limit, this value will be -1. </summary>

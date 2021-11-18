@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.WebPubSub
     public static partial class ResourceGroupExtensions
     {
         #region WebPubSubResource
-        /// <summary> Gets an object representing a WebPubSubResourceContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a WebPubSubResourceCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="WebPubSubResourceContainer" /> object. </returns>
-        public static WebPubSubResourceContainer GetWebPubSubResources(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="WebPubSubResourceCollection" /> object. </returns>
+        public static WebPubSubResourceCollection GetWebPubSubResources(this ResourceGroup resourceGroup)
         {
-            return new WebPubSubResourceContainer(resourceGroup);
+            return new WebPubSubResourceCollection(resourceGroup);
         }
         #endregion
     }

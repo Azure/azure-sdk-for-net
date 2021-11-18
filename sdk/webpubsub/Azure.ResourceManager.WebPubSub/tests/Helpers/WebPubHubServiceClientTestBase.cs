@@ -2,19 +2,13 @@
 // Licensed under the MIT License.
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
 using System.Threading.Tasks;
 
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.TestFramework;
 
-using NUnit.Framework;
-using Azure.ResourceManager.WebPubSub.Tests;
-
-namespace Azure.ResourceManager.Network.Tests.Helpers
+namespace Azure.ResourceManager.WebPubSub.Tests.Helpers
 {
     [RunFrequency(RunTestFrequency.Manually)]
     public class WebPubHubServiceClientTestBase : ManagementRecordedTestBase<WebPubSubManagementTestEnvironment>
@@ -34,7 +28,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
         {
             get
             {
-                return ArmClient.DefaultSubscription;
+                return ArmClient.GetDefaultSubscription();
             }
         }
 

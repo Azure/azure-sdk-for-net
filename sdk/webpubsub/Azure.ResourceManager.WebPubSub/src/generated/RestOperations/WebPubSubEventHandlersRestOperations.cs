@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.WebPubSub
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateGetAllRequest(string resourceGroupName, string resourceName, string hubName)
+        internal HttpMessage CreateListRequest(string resourceGroupName, string resourceName, string hubName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="hubName"> The hub name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, or <paramref name="hubName"/> is null. </exception>
-        public async Task<Response<EventHandlerList>> GetAllAsync(string resourceGroupName, string resourceName, string hubName, CancellationToken cancellationToken = default)
+        public async Task<Response<EventHandlerList>> ListAsync(string resourceGroupName, string resourceName, string hubName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.WebPubSub
                 throw new ArgumentNullException(nameof(hubName));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName, resourceName, hubName);
+            using var message = CreateListRequest(resourceGroupName, resourceName, hubName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="hubName"> The hub name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, or <paramref name="hubName"/> is null. </exception>
-        public Response<EventHandlerList> GetAll(string resourceGroupName, string resourceName, string hubName, CancellationToken cancellationToken = default)
+        public Response<EventHandlerList> List(string resourceGroupName, string resourceName, string hubName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.WebPubSub
                 throw new ArgumentNullException(nameof(hubName));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName, resourceName, hubName);
+            using var message = CreateListRequest(resourceGroupName, resourceName, hubName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.WebPubSub
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string resourceName, string hubName, string eventHandlerName, EventHandlerProperties properties)
+        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string resourceName, string hubName, string eventHandlerName, EventHandlerData parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -162,9 +162,8 @@ namespace Azure.ResourceManager.WebPubSub
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var model = new EventHandlerData(properties);
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
             message.SetProperty("UserAgentOverride", _userAgent);
             return message;
@@ -175,10 +174,10 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="hubName"> The hub name. </param>
         /// <param name="eventHandlerName"> The event handler name. </param>
-        /// <param name="properties"> Properties of the event handler. </param>
+        /// <param name="parameters"> The resource of EventHandler and its properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="hubName"/>, <paramref name="eventHandlerName"/>, or <paramref name="properties"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string resourceName, string hubName, string eventHandlerName, EventHandlerProperties properties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="hubName"/>, <paramref name="eventHandlerName"/>, or <paramref name="parameters"/> is null. </exception>
+        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string resourceName, string hubName, string eventHandlerName, EventHandlerData parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -196,12 +195,12 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 throw new ArgumentNullException(nameof(eventHandlerName));
             }
-            if (properties == null)
+            if (parameters == null)
             {
-                throw new ArgumentNullException(nameof(properties));
+                throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var message = CreateCreateOrUpdateRequest(resourceGroupName, resourceName, hubName, eventHandlerName, properties);
+            using var message = CreateCreateOrUpdateRequest(resourceGroupName, resourceName, hubName, eventHandlerName, parameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -218,10 +217,10 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="hubName"> The hub name. </param>
         /// <param name="eventHandlerName"> The event handler name. </param>
-        /// <param name="properties"> Properties of the event handler. </param>
+        /// <param name="parameters"> The resource of EventHandler and its properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="hubName"/>, <paramref name="eventHandlerName"/>, or <paramref name="properties"/> is null. </exception>
-        public Response CreateOrUpdate(string resourceGroupName, string resourceName, string hubName, string eventHandlerName, EventHandlerProperties properties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="hubName"/>, <paramref name="eventHandlerName"/>, or <paramref name="parameters"/> is null. </exception>
+        public Response CreateOrUpdate(string resourceGroupName, string resourceName, string hubName, string eventHandlerName, EventHandlerData parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -239,12 +238,12 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 throw new ArgumentNullException(nameof(eventHandlerName));
             }
-            if (properties == null)
+            if (parameters == null)
             {
-                throw new ArgumentNullException(nameof(properties));
+                throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var message = CreateCreateOrUpdateRequest(resourceGroupName, resourceName, hubName, eventHandlerName, properties);
+            using var message = CreateCreateOrUpdateRequest(resourceGroupName, resourceName, hubName, eventHandlerName, parameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -419,6 +418,8 @@ namespace Azure.ResourceManager.WebPubSub
                         value = EventHandlerData.DeserializeEventHandlerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((EventHandlerData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -461,12 +462,14 @@ namespace Azure.ResourceManager.WebPubSub
                         value = EventHandlerData.DeserializeEventHandlerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((EventHandlerData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateGetAllNextPageRequest(string nextLink, string resourceGroupName, string resourceName, string hubName)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string resourceGroupName, string resourceName, string hubName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -487,7 +490,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="hubName"> The hub name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, or <paramref name="hubName"/> is null. </exception>
-        public async Task<Response<EventHandlerList>> GetAllNextPageAsync(string nextLink, string resourceGroupName, string resourceName, string hubName, CancellationToken cancellationToken = default)
+        public async Task<Response<EventHandlerList>> ListNextPageAsync(string nextLink, string resourceGroupName, string resourceName, string hubName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -506,7 +509,7 @@ namespace Azure.ResourceManager.WebPubSub
                 throw new ArgumentNullException(nameof(hubName));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, resourceName, hubName);
+            using var message = CreateListNextPageRequest(nextLink, resourceGroupName, resourceName, hubName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -529,7 +532,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="hubName"> The hub name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, or <paramref name="hubName"/> is null. </exception>
-        public Response<EventHandlerList> GetAllNextPage(string nextLink, string resourceGroupName, string resourceName, string hubName, CancellationToken cancellationToken = default)
+        public Response<EventHandlerList> ListNextPage(string nextLink, string resourceGroupName, string resourceName, string hubName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -548,7 +551,7 @@ namespace Azure.ResourceManager.WebPubSub
                 throw new ArgumentNullException(nameof(hubName));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, resourceName, hubName);
+            using var message = CreateListNextPageRequest(nextLink, resourceGroupName, resourceName, hubName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

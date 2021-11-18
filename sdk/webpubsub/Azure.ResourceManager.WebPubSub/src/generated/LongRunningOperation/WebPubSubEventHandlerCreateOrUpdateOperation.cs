@@ -12,34 +12,30 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.WebPubSub;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
     /// <summary> Create or update an event handler. </summary>
-    public partial class WebPubSubEventHandlerCreateOrUpdateOperation : Operation<EventHandler>, IOperationSource<EventHandler>
+    public partial class WebPubSubEventHandlerCreateOrUpdateOperation : Operation<EventHandlerData>, IOperationSource<EventHandlerData>
     {
-        private readonly OperationInternals<EventHandler> _operation;
-
-        private readonly ArmResource _operationBase;
+        private readonly OperationInternals<EventHandlerData> _operation;
 
         /// <summary> Initializes a new instance of WebPubSubEventHandlerCreateOrUpdateOperation for mocking. </summary>
         protected WebPubSubEventHandlerCreateOrUpdateOperation()
         {
         }
 
-        internal WebPubSubEventHandlerCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal WebPubSubEventHandlerCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<EventHandler>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "WebPubSubEventHandlerCreateOrUpdateOperation");
-            _operationBase = operationsBase;
+            _operation = new OperationInternals<EventHandlerData>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "WebPubSubEventHandlerCreateOrUpdateOperation");
         }
 
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override EventHandler Value => _operation.Value;
+        public override EventHandlerData Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -57,21 +53,21 @@ namespace Azure.ResourceManager.WebPubSub.Models
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<EventHandler>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<EventHandlerData>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<EventHandler>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<EventHandlerData>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        EventHandler IOperationSource<EventHandler>.CreateResult(Response response, CancellationToken cancellationToken)
+        EventHandlerData IOperationSource<EventHandlerData>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new EventHandler(_operationBase, EventHandlerData.DeserializeEventHandlerData(document.RootElement));
+            return EventHandlerData.DeserializeEventHandlerData(document.RootElement);
         }
 
-        async ValueTask<EventHandler> IOperationSource<EventHandler>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<EventHandlerData> IOperationSource<EventHandlerData>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new EventHandler(_operationBase, EventHandlerData.DeserializeEventHandlerData(document.RootElement));
+            return EventHandlerData.DeserializeEventHandlerData(document.RootElement);
         }
     }
 }
