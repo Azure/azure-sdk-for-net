@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for GeoBackupPolicy. </summary>
     public partial class GeoBackupPolicyMockTests : MockTestBase
     {
-        public GeoBackupPolicyMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public GeoBackupPolicyMockTests(bool isAsync) : base(isAsync)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
         }

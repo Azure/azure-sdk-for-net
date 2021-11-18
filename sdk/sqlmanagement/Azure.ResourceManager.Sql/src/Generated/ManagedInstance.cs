@@ -96,9 +96,6 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: ManagedInstances_Get
         /// <summary> Gets a managed instance. </summary>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -120,9 +117,6 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: ManagedInstances_Get
         /// <summary> Gets a managed instance. </summary>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -160,9 +154,6 @@ namespace Azure.ResourceManager.Sql
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: ManagedInstances_Delete
         /// <summary> Deletes a managed instance. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -185,9 +176,6 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: ManagedInstances_Delete
         /// <summary> Deletes a managed instance. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -382,9 +370,6 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: ManagedInstances_Update
         /// <summary> Updates a managed instance. </summary>
         /// <param name="parameters"> The requested managed instance resource state. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
@@ -414,9 +399,6 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: ManagedInstances_Update
         /// <summary> Updates a managed instance. </summary>
         /// <param name="parameters"> The requested managed instance resource state. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
@@ -446,9 +428,6 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/inaccessibleManagedDatabases
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: ManagedDatabases_ListInaccessibleByInstance
         /// <summary> Gets a list of inaccessible managed databases in a managed instance. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ManagedDatabaseData" /> that may take multiple service requests to iterate over. </returns>
@@ -487,9 +466,6 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/inaccessibleManagedDatabases
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: ManagedDatabases_ListInaccessibleByInstance
         /// <summary> Gets a list of inaccessible managed databases in a managed instance. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ManagedDatabaseData" /> that may take multiple service requests to iterate over. </returns>
@@ -528,9 +504,6 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/topqueries
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: ManagedInstances_ListByManagedInstance
         /// <summary> Get top resource consuming queries of a managed instance. </summary>
         /// <param name="numberOfQueries"> How many &apos;top queries&apos; to return. Default is 5. </param>
         /// <param name="databases"> Comma separated list of databases to be included into search. All DB&apos;s are included if this parameter is not specified. </param>
@@ -576,9 +549,6 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/topqueries
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: ManagedInstances_ListByManagedInstance
         /// <summary> Get top resource consuming queries of a managed instance. </summary>
         /// <param name="numberOfQueries"> How many &apos;top queries&apos; to return. Default is 5. </param>
         /// <param name="databases"> Comma separated list of databases to be included into search. All DB&apos;s are included if this parameter is not specified. </param>
@@ -624,9 +594,6 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/failover
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: ManagedInstances_Failover
         /// <summary> Failovers a managed instance. </summary>
         /// <param name="replicaType"> The type of replica to be failed over. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
@@ -650,9 +617,6 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/failover
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: ManagedInstances_Failover
         /// <summary> Failovers a managed instance. </summary>
         /// <param name="replicaType"> The type of replica to be failed over. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
@@ -676,9 +640,6 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/tdeCertificates
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: ManagedInstanceTdeCertificates_Create
         /// <summary> Creates a TDE certificate for a given server. </summary>
         /// <param name="parameters"> The requested TDE certificate to be created or updated. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
@@ -708,9 +669,6 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/tdeCertificates
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: ManagedInstanceTdeCertificates_Create
         /// <summary> Creates a TDE certificate for a given server. </summary>
         /// <param name="parameters"> The requested TDE certificate to be created or updated. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
@@ -740,17 +698,14 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/serverTrustGroups
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: ServerTrustGroups_ListByInstance
         /// <summary> Gets a server trust groups by instance name. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ServerTrustGroupData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServerTrustGroupData> GetByInstanceServerTrustGroupsAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ServerTrustGroupData> GetServerTrustGroupsByInstanceAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ServerTrustGroupData>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetByInstanceServerTrustGroups");
+                using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetServerTrustGroupsByInstance");
                 scope.Start();
                 try
                 {
@@ -765,7 +720,7 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<ServerTrustGroupData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetByInstanceServerTrustGroups");
+                using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetServerTrustGroupsByInstance");
                 scope.Start();
                 try
                 {
@@ -781,17 +736,14 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/serverTrustGroups
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: ServerTrustGroups_ListByInstance
         /// <summary> Gets a server trust groups by instance name. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ServerTrustGroupData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServerTrustGroupData> GetByInstanceServerTrustGroups(CancellationToken cancellationToken = default)
+        public virtual Pageable<ServerTrustGroupData> GetServerTrustGroupsByInstance(CancellationToken cancellationToken = default)
         {
             Page<ServerTrustGroupData> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetByInstanceServerTrustGroups");
+                using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetServerTrustGroupsByInstance");
                 scope.Start();
                 try
                 {
@@ -806,7 +758,7 @@ namespace Azure.ResourceManager.Sql
             }
             Page<ServerTrustGroupData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetByInstanceServerTrustGroups");
+                using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetServerTrustGroupsByInstance");
                 scope.Start();
                 try
                 {

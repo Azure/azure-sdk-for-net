@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for ServerDnsAlias. </summary>
     public partial class ServerDnsAliasMockTests : MockTestBase
     {
-        public ServerDnsAliasMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public ServerDnsAliasMockTests(bool isAsync) : base(isAsync)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
         }

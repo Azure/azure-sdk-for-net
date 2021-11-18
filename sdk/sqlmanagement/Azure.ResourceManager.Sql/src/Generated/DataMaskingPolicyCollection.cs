@@ -40,9 +40,6 @@ namespace Azure.ResourceManager.Sql
 
         // Collection level operations.
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataMaskingPolicies/{dataMaskingPolicyName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: DataMaskingPolicies_CreateOrUpdate
         /// <summary> Creates or updates a database data masking policy. </summary>
         /// <param name="parameters"> Parameters for creating or updating a data masking policy. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
@@ -72,9 +69,6 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataMaskingPolicies/{dataMaskingPolicyName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: DataMaskingPolicies_CreateOrUpdate
         /// <summary> Creates or updates a database data masking policy. </summary>
         /// <param name="parameters"> Parameters for creating or updating a data masking policy. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
@@ -104,9 +98,6 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataMaskingPolicies/{dataMaskingPolicyName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: DataMaskingPolicies_Get
         /// <summary> Gets a database data masking policy. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DataMaskingPolicy> Get(CancellationToken cancellationToken = default)
@@ -127,9 +118,6 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataMaskingPolicies/{dataMaskingPolicyName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: DataMaskingPolicies_Get
         /// <summary> Gets a database data masking policy. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<DataMaskingPolicy>> GetAsync(CancellationToken cancellationToken = default)

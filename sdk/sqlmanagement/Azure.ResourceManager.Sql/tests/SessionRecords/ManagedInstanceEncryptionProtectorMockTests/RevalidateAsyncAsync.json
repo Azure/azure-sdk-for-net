@@ -1,12 +1,12 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000?api-version=2019-11-01",
+      "RequestUri": "https://localhost:8441/subscriptions/00000000-0000-0000-0000-000000000000?api-version=2019-11-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-03298b60d9907c429812e7fbf86e1fc1-9fa2e4e172149846-00",
+        "traceparent": "00-5781572df4ae26418110941ffd68a908-de920a79dcee364a-00",
         "User-Agent": "azsdk-net-ResourceManager/1.0.0-beta.5 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "9835eec347cea867ccc55160f6d83a2a",
         "x-ms-return-client-request-id": "true"
@@ -17,7 +17,7 @@
         "Connection": "keep-alive",
         "Content-Length": "421",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 18 Nov 2021 07:14:09 GMT",
+        "Date": "Thu, 18 Nov 2021 07:30:18 GMT",
         "ETag": "W/\u00221a5-b64HHnH9EN33hGrzmS4rCOV9S7w\u0022",
         "Keep-Alive": "timeout=5",
         "X-Powered-By": "Express"
@@ -45,7 +45,7 @@
       }
     },
     {
-      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/sqlcrudtest-7398?api-version=2019-10-01",
+      "RequestUri": "https://localhost:8441/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/sqlcrudtest-7398?api-version=2019-10-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -67,7 +67,7 @@
         "Connection": "keep-alive",
         "Content-Length": "283",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 18 Nov 2021 07:14:09 GMT",
+        "Date": "Thu, 18 Nov 2021 07:30:18 GMT",
         "ETag": "W/\u002211b-KNvklC/IYyEOn3KzFRK6Y8xsVbQ\u0022",
         "Keep-Alive": "timeout=5",
         "X-Powered-By": "Express"
@@ -87,7 +87,7 @@
       }
     },
     {
-      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/sqlcrudtest-7398/providers/Microsoft.Sql/managedInstances/sqlcrudtest-4645?api-version=2020-11-01-preview",
+      "RequestUri": "https://localhost:8441/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/sqlcrudtest-7398/providers/Microsoft.Sql/managedInstances/sqlcrudtest-4645?api-version=2020-11-01-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -137,7 +137,7 @@
         "Connection": "keep-alive",
         "Content-Length": "2399",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 18 Nov 2021 07:14:09 GMT",
+        "Date": "Thu, 18 Nov 2021 07:30:18 GMT",
         "ETag": "W/\u002295f-5hQhZeIC7QT\u002BnZnhjpl9Dw\u002Bcats\u0022",
         "Keep-Alive": "timeout=5",
         "X-Powered-By": "Express"
@@ -222,7 +222,7 @@
       }
     },
     {
-      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/sqlcrudtest-7398/providers/Microsoft.Sql/managedInstances/sqlcrudtest-4645/encryptionProtector/current?api-version=2020-11-01-preview",
+      "RequestUri": "https://localhost:8441/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/sqlcrudtest-7398/providers/Microsoft.Sql/managedInstances/sqlcrudtest-4645/encryptionProtector/current?api-version=2020-11-01-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -245,7 +245,7 @@
         "Connection": "keep-alive",
         "Content-Length": "434",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 18 Nov 2021 07:14:09 GMT",
+        "Date": "Thu, 18 Nov 2021 07:30:18 GMT",
         "ETag": "W/\u00221b2-ll7FwnLKXHvoxLGaGHLJFif//x8\u0022",
         "Keep-Alive": "timeout=5",
         "X-Powered-By": "Express"
@@ -265,7 +265,7 @@
       }
     },
     {
-      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/sqlcrudtest-7398/providers/Microsoft.Sql/managedInstances/sqlcrudtest-4645/encryptionProtector/current/revalidate?api-version=2020-11-01-preview",
+      "RequestUri": "https://localhost:8441/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/sqlcrudtest-7398/providers/Microsoft.Sql/managedInstances/sqlcrudtest-4645/encryptionProtector/current/revalidate?api-version=2020-11-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -279,7 +279,7 @@
         "Connection": "keep-alive",
         "Content-Length": "2",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 18 Nov 2021 07:14:09 GMT",
+        "Date": "Thu, 18 Nov 2021 07:30:18 GMT",
         "ETag": "W/\u00222-vyGp6PvFo4RvsFtPoIWeCReyIC8\u0022",
         "Keep-Alive": "timeout=5",
         "X-Powered-By": "Express"
@@ -289,7 +289,7 @@
   ],
   "Variables": {
     "RandomSeed": "1306034432",
-    "RESOURCE_MANAGER_URL": "https://localhost:8443",
+    "RESOURCE_MANAGER_URL": "https://localhost:8441",
     "SUBSCRIPTION_ID": "00000000-0000-0000-0000-000000000000"
   }
 }

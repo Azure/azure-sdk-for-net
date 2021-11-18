@@ -11,14 +11,13 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.TestFramework;
-using NUnit.Framework;
 
 namespace Azure.ResourceManager.Sql.Tests.Mock
 {
     /// <summary> Test for ServerDevOpsAuditingSettings. </summary>
     public partial class ServerDevOpsAuditingSettingsCollectionMockTests : MockTestBase
     {
-        public ServerDevOpsAuditingSettingsCollectionMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public ServerDevOpsAuditingSettingsCollectionMockTests(bool isAsync) : base(isAsync)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
         }

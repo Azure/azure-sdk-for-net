@@ -1,12 +1,12 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000?api-version=2019-11-01",
+      "RequestUri": "https://localhost:8441/subscriptions/00000000-0000-0000-0000-000000000000?api-version=2019-11-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-a49eaf0386fc3a428c02aff1e1a69209-1bd2ea6a0f712045-00",
+        "traceparent": "00-af9f7a2691a326468c9df8e1973e65a5-6b3b8bae0cc67449-00",
         "User-Agent": "azsdk-net-ResourceManager/1.0.0-beta.5 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "3f342fb67f4cd55c245595270a923894",
         "x-ms-return-client-request-id": "true"
@@ -17,7 +17,7 @@
         "Connection": "keep-alive",
         "Content-Length": "421",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 18 Nov 2021 07:13:34 GMT",
+        "Date": "Thu, 18 Nov 2021 07:29:40 GMT",
         "ETag": "W/\u00221a5-b64HHnH9EN33hGrzmS4rCOV9S7w\u0022",
         "Keep-Alive": "timeout=5",
         "X-Powered-By": "Express"
@@ -45,7 +45,7 @@
       }
     },
     {
-      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/Default-SQL-SouthEastAsia?api-version=2019-10-01",
+      "RequestUri": "https://localhost:8441/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/Default-SQL-SouthEastAsia?api-version=2019-10-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -67,7 +67,7 @@
         "Connection": "keep-alive",
         "Content-Length": "301",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 18 Nov 2021 07:13:34 GMT",
+        "Date": "Thu, 18 Nov 2021 07:29:40 GMT",
         "ETag": "W/\u002212d-Kd8l/DMicfSwctFruxwD25ZMPf4\u0022",
         "Keep-Alive": "timeout=5",
         "X-Powered-By": "Express"
@@ -87,7 +87,7 @@
       }
     },
     {
-      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/Default-SQL-SouthEastAsia/providers/Microsoft.Sql/servers/testsvr?api-version=2021-02-01-preview",
+      "RequestUri": "https://localhost:8441/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/Default-SQL-SouthEastAsia/providers/Microsoft.Sql/servers/testsvr?api-version=2021-02-01-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -120,7 +120,7 @@
         "Connection": "keep-alive",
         "Content-Length": "1936",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 18 Nov 2021 07:13:34 GMT",
+        "Date": "Thu, 18 Nov 2021 07:29:40 GMT",
         "ETag": "W/\u0022790-qpBcLsXF1z1ksLvaaOqahmT4/fg\u0022",
         "Keep-Alive": "timeout=5",
         "X-Powered-By": "Express"
@@ -186,7 +186,7 @@
       }
     },
     {
-      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/Default-SQL-SouthEastAsia/providers/Microsoft.Sql/servers/testsvr/databases/testdb?api-version=2021-02-01-preview",
+      "RequestUri": "https://localhost:8441/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/Default-SQL-SouthEastAsia/providers/Microsoft.Sql/servers/testsvr/databases/testdb?api-version=2021-02-01-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -212,7 +212,7 @@
         "Connection": "keep-alive",
         "Content-Length": "1804",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 18 Nov 2021 07:13:34 GMT",
+        "Date": "Thu, 18 Nov 2021 07:29:40 GMT",
         "ETag": "W/\u002270c-oZCBW8MUfrkpRQJj8QLkAxXewL8\u0022",
         "Keep-Alive": "timeout=5",
         "X-Powered-By": "Express"
@@ -282,7 +282,7 @@
       }
     },
     {
-      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/Default-SQL-SouthEastAsia/providers/Microsoft.Sql/servers/testsvr/databases/testdb/operations/f779414b-e748-4925-8cfe-c8598f7660ae/cancel?api-version=2021-02-01-preview",
+      "RequestUri": "https://localhost:8441/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/Default-SQL-SouthEastAsia/providers/Microsoft.Sql/servers/testsvr/databases/testdb/operations/f779414b-e748-4925-8cfe-c8598f7660ae/cancel?api-version=2021-02-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -296,7 +296,7 @@
         "Connection": "keep-alive",
         "Content-Length": "2",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 18 Nov 2021 07:13:34 GMT",
+        "Date": "Thu, 18 Nov 2021 07:29:40 GMT",
         "ETag": "W/\u00222-vyGp6PvFo4RvsFtPoIWeCReyIC8\u0022",
         "Keep-Alive": "timeout=5",
         "X-Powered-By": "Express"
@@ -306,7 +306,7 @@
   ],
   "Variables": {
     "RandomSeed": "133974355",
-    "RESOURCE_MANAGER_URL": "https://localhost:8443",
+    "RESOURCE_MANAGER_URL": "https://localhost:8441",
     "SUBSCRIPTION_ID": "00000000-0000-0000-0000-000000000000"
   }
 }

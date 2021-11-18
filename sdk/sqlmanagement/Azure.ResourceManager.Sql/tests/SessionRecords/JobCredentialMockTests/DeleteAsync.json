@@ -1,12 +1,12 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000?api-version=2019-11-01",
+      "RequestUri": "https://localhost:8441/subscriptions/00000000-0000-0000-0000-000000000000?api-version=2019-11-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-c49cf19c5461bb4a9b28d007d62fc30c-4870222882364a4a-00",
+        "traceparent": "00-643c26af463d714da9f143b29798285d-4b079b7728af7541-00",
         "User-Agent": "azsdk-net-ResourceManager/1.0.0-beta.5 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "c6cb2f414abdc5077cab0e13a7ca03c6",
         "x-ms-return-client-request-id": "true"
@@ -17,7 +17,7 @@
         "Connection": "keep-alive",
         "Content-Length": "421",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 18 Nov 2021 07:13:56 GMT",
+        "Date": "Thu, 18 Nov 2021 07:30:06 GMT",
         "ETag": "W/\u00221a5-b64HHnH9EN33hGrzmS4rCOV9S7w\u0022",
         "Keep-Alive": "timeout=5",
         "X-Powered-By": "Express"
@@ -45,7 +45,7 @@
       }
     },
     {
-      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/group1?api-version=2019-10-01",
+      "RequestUri": "https://localhost:8441/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/group1?api-version=2019-10-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -67,7 +67,7 @@
         "Connection": "keep-alive",
         "Content-Length": "263",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 18 Nov 2021 07:13:56 GMT",
+        "Date": "Thu, 18 Nov 2021 07:30:06 GMT",
         "ETag": "W/\u0022107-eO3JRzZeq0SP2Zw/o71oA196uKM\u0022",
         "Keep-Alive": "timeout=5",
         "X-Powered-By": "Express"
@@ -87,7 +87,7 @@
       }
     },
     {
-      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/group1/providers/Microsoft.Sql/servers/server1?api-version=2021-02-01-preview",
+      "RequestUri": "https://localhost:8441/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/group1/providers/Microsoft.Sql/servers/server1?api-version=2021-02-01-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -120,7 +120,7 @@
         "Connection": "keep-alive",
         "Content-Length": "1917",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 18 Nov 2021 07:13:56 GMT",
+        "Date": "Thu, 18 Nov 2021 07:30:06 GMT",
         "ETag": "W/\u002277d-kSrKZ8Ke5dmhzcKL/vf2lmdLtv8\u0022",
         "Keep-Alive": "timeout=5",
         "X-Powered-By": "Express"
@@ -186,7 +186,7 @@
       }
     },
     {
-      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/group1/providers/Microsoft.Sql/servers/server1/jobAgents/agent1?api-version=2020-11-01-preview",
+      "RequestUri": "https://localhost:8441/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/group1/providers/Microsoft.Sql/servers/server1/jobAgents/agent1?api-version=2020-11-01-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -209,7 +209,7 @@
         "Connection": "keep-alive",
         "Content-Length": "373",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 18 Nov 2021 07:13:56 GMT",
+        "Date": "Thu, 18 Nov 2021 07:30:06 GMT",
         "ETag": "W/\u0022175-DHGLMLXebRdsYWf7koeseXe6LMs\u0022",
         "Keep-Alive": "timeout=5",
         "X-Powered-By": "Express"
@@ -236,7 +236,7 @@
       }
     },
     {
-      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/group1/providers/Microsoft.Sql/servers/server1/jobAgents/agent1/credentials/cred1?api-version=2020-11-01-preview",
+      "RequestUri": "https://localhost:8441/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/group1/providers/Microsoft.Sql/servers/server1/jobAgents/agent1/credentials/cred1?api-version=2020-11-01-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -258,7 +258,7 @@
         "Connection": "keep-alive",
         "Content-Length": "259",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 18 Nov 2021 07:13:56 GMT",
+        "Date": "Thu, 18 Nov 2021 07:30:06 GMT",
         "ETag": "W/\u0022103-bymzEo84lmXPvRTE0DoB7gbU7Oc\u0022",
         "Keep-Alive": "timeout=5",
         "X-Powered-By": "Express"
@@ -274,7 +274,7 @@
       }
     },
     {
-      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/group1/providers/Microsoft.Sql/servers/server1/jobAgents/agent1/credentials/cred1?api-version=2020-11-01-preview",
+      "RequestUri": "https://localhost:8441/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/group1/providers/Microsoft.Sql/servers/server1/jobAgents/agent1/credentials/cred1?api-version=2020-11-01-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -288,7 +288,7 @@
         "Connection": "keep-alive",
         "Content-Length": "2",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 18 Nov 2021 07:13:56 GMT",
+        "Date": "Thu, 18 Nov 2021 07:30:06 GMT",
         "ETag": "W/\u00222-vyGp6PvFo4RvsFtPoIWeCReyIC8\u0022",
         "Keep-Alive": "timeout=5",
         "X-Powered-By": "Express"
@@ -298,7 +298,7 @@
   ],
   "Variables": {
     "RandomSeed": "1851146133",
-    "RESOURCE_MANAGER_URL": "https://localhost:8443",
+    "RESOURCE_MANAGER_URL": "https://localhost:8441",
     "SUBSCRIPTION_ID": "00000000-0000-0000-0000-000000000000"
   }
 }

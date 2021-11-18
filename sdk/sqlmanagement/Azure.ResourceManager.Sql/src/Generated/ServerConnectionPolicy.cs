@@ -83,9 +83,6 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/connectionPolicies/{connectionPolicyName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/connectionPolicies/{connectionPolicyName}
-        /// OperationId: ServerConnectionPolicies_Get
         /// <summary> Gets the server&apos;s secure connection policy. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ServerConnectionPolicy>> GetAsync(CancellationToken cancellationToken = default)
@@ -106,9 +103,6 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/connectionPolicies/{connectionPolicyName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/connectionPolicies/{connectionPolicyName}
-        /// OperationId: ServerConnectionPolicies_Get
         /// <summary> Gets the server&apos;s secure connection policy. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ServerConnectionPolicy> Get(CancellationToken cancellationToken = default)

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for LogicalDatabaseTransparentDataEncryption. </summary>
     public partial class LogicalDatabaseTransparentDataEncryptionMockTests : MockTestBase
     {
-        public LogicalDatabaseTransparentDataEncryptionMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public LogicalDatabaseTransparentDataEncryptionMockTests(bool isAsync) : base(isAsync)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
         }

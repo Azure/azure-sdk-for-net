@@ -88,9 +88,6 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataMaskingPolicies/{dataMaskingPolicyName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataMaskingPolicies/{dataMaskingPolicyName}
-        /// OperationId: DataMaskingPolicies_Get
         /// <summary> Gets a database data masking policy. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<DataMaskingPolicy>> GetAsync(CancellationToken cancellationToken = default)
@@ -111,9 +108,6 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataMaskingPolicies/{dataMaskingPolicyName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataMaskingPolicies/{dataMaskingPolicyName}
-        /// OperationId: DataMaskingPolicies_Get
         /// <summary> Gets a database data masking policy. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DataMaskingPolicy> Get(CancellationToken cancellationToken = default)
@@ -150,9 +144,6 @@ namespace Azure.ResourceManager.Sql
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataMaskingPolicies/{dataMaskingPolicyName}/rules/{dataMaskingRuleName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataMaskingPolicies/{dataMaskingPolicyName}
-        /// OperationId: DataMaskingRules_CreateOrUpdate
         /// <summary> Creates or updates a database data masking rule. </summary>
         /// <param name="dataMaskingRuleName"> The name of the data masking rule. </param>
         /// <param name="parameters"> The required parameters for creating or updating a data masking rule. </param>
@@ -183,9 +174,6 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataMaskingPolicies/{dataMaskingPolicyName}/rules/{dataMaskingRuleName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataMaskingPolicies/{dataMaskingPolicyName}
-        /// OperationId: DataMaskingRules_CreateOrUpdate
         /// <summary> Creates or updates a database data masking rule. </summary>
         /// <param name="dataMaskingRuleName"> The name of the data masking rule. </param>
         /// <param name="parameters"> The required parameters for creating or updating a data masking rule. </param>
@@ -216,17 +204,14 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataMaskingPolicies/{dataMaskingPolicyName}/rules
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataMaskingPolicies/{dataMaskingPolicyName}
-        /// OperationId: DataMaskingRules_ListByDatabase
         /// <summary> Gets a list of database data masking rules. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DataMaskingRule" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DataMaskingRule> GetByDatabaseDataMaskingRulesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DataMaskingRule> GetDataMaskingRulesByDatabaseAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<DataMaskingRule>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DataMaskingPolicy.GetByDatabaseDataMaskingRules");
+                using var scope = _clientDiagnostics.CreateScope("DataMaskingPolicy.GetDataMaskingRulesByDatabase");
                 scope.Start();
                 try
                 {
@@ -242,17 +227,14 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataMaskingPolicies/{dataMaskingPolicyName}/rules
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataMaskingPolicies/{dataMaskingPolicyName}
-        /// OperationId: DataMaskingRules_ListByDatabase
         /// <summary> Gets a list of database data masking rules. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataMaskingRule" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DataMaskingRule> GetByDatabaseDataMaskingRules(CancellationToken cancellationToken = default)
+        public virtual Pageable<DataMaskingRule> GetDataMaskingRulesByDatabase(CancellationToken cancellationToken = default)
         {
             Page<DataMaskingRule> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DataMaskingPolicy.GetByDatabaseDataMaskingRules");
+                using var scope = _clientDiagnostics.CreateScope("DataMaskingPolicy.GetDataMaskingRulesByDatabase");
                 scope.Start();
                 try
                 {

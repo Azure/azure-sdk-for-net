@@ -100,9 +100,6 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}
-        /// OperationId: ElasticPools_Get
         /// <summary> Gets an elastic pool. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ElasticPool>> GetAsync(CancellationToken cancellationToken = default)
@@ -123,9 +120,6 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}
-        /// OperationId: ElasticPools_Get
         /// <summary> Gets an elastic pool. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ElasticPool> Get(CancellationToken cancellationToken = default)
@@ -162,9 +156,6 @@ namespace Azure.ResourceManager.Sql
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}
-        /// OperationId: ElasticPools_Delete
         /// <summary> Deletes an elastic pool. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -187,9 +178,6 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}
-        /// OperationId: ElasticPools_Delete
         /// <summary> Deletes an elastic pool. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -384,9 +372,6 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}
-        /// OperationId: ElasticPools_Update
         /// <summary> Updates an elastic pool. </summary>
         /// <param name="parameters"> The elastic pool update parameters. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
@@ -416,9 +401,6 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}
-        /// OperationId: ElasticPools_Update
         /// <summary> Updates an elastic pool. </summary>
         /// <param name="parameters"> The elastic pool update parameters. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
@@ -448,17 +430,14 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}/databases
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}
-        /// OperationId: Databases_ListByElasticPool
         /// <summary> Gets a list of databases in an elastic pool. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DatabaseData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DatabaseData> GetByElasticPoolDatabasesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DatabaseData> GetDatabasesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<DatabaseData>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ElasticPool.GetByElasticPoolDatabases");
+                using var scope = _clientDiagnostics.CreateScope("ElasticPool.GetDatabases");
                 scope.Start();
                 try
                 {
@@ -473,7 +452,7 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<DatabaseData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ElasticPool.GetByElasticPoolDatabases");
+                using var scope = _clientDiagnostics.CreateScope("ElasticPool.GetDatabases");
                 scope.Start();
                 try
                 {
@@ -489,17 +468,14 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}/databases
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}
-        /// OperationId: Databases_ListByElasticPool
         /// <summary> Gets a list of databases in an elastic pool. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DatabaseData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DatabaseData> GetByElasticPoolDatabases(CancellationToken cancellationToken = default)
+        public virtual Pageable<DatabaseData> GetDatabases(CancellationToken cancellationToken = default)
         {
             Page<DatabaseData> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ElasticPool.GetByElasticPoolDatabases");
+                using var scope = _clientDiagnostics.CreateScope("ElasticPool.GetDatabases");
                 scope.Start();
                 try
                 {
@@ -514,7 +490,7 @@ namespace Azure.ResourceManager.Sql
             }
             Page<DatabaseData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ElasticPool.GetByElasticPoolDatabases");
+                using var scope = _clientDiagnostics.CreateScope("ElasticPool.GetDatabases");
                 scope.Start();
                 try
                 {
@@ -530,9 +506,6 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}/metrics
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}
-        /// OperationId: ElasticPools_ListMetrics
         /// <summary> Returns elastic pool  metrics. </summary>
         /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -562,9 +535,6 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}/metrics
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}
-        /// OperationId: ElasticPools_ListMetrics
         /// <summary> Returns elastic pool  metrics. </summary>
         /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -594,9 +564,6 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}/metricDefinitions
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}
-        /// OperationId: ElasticPools_ListMetricDefinitions
         /// <summary> Returns elastic pool metric definitions. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MetricDefinition" /> that may take multiple service requests to iterate over. </returns>
@@ -620,9 +587,6 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}/metricDefinitions
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}
-        /// OperationId: ElasticPools_ListMetricDefinitions
         /// <summary> Returns elastic pool metric definitions. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MetricDefinition" /> that may take multiple service requests to iterate over. </returns>
@@ -646,9 +610,6 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}/failover
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}
-        /// OperationId: ElasticPools_Failover
         /// <summary> Failovers an elastic pool. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -671,9 +632,6 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}/failover
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}
-        /// OperationId: ElasticPools_Failover
         /// <summary> Failovers an elastic pool. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -696,17 +654,14 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}/elasticPoolActivity
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}
-        /// OperationId: ElasticPoolActivities_ListByElasticPool
         /// <summary> Returns elastic pool activities. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ElasticPoolActivity" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ElasticPoolActivity> GetByElasticPoolElasticPoolActivitiesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ElasticPoolActivity> GetElasticPoolActivitiesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ElasticPoolActivity>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ElasticPool.GetByElasticPoolElasticPoolActivities");
+                using var scope = _clientDiagnostics.CreateScope("ElasticPool.GetElasticPoolActivities");
                 scope.Start();
                 try
                 {
@@ -722,17 +677,14 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}/elasticPoolActivity
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}
-        /// OperationId: ElasticPoolActivities_ListByElasticPool
         /// <summary> Returns elastic pool activities. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ElasticPoolActivity" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ElasticPoolActivity> GetByElasticPoolElasticPoolActivities(CancellationToken cancellationToken = default)
+        public virtual Pageable<ElasticPoolActivity> GetElasticPoolActivities(CancellationToken cancellationToken = default)
         {
             Page<ElasticPoolActivity> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ElasticPool.GetByElasticPoolElasticPoolActivities");
+                using var scope = _clientDiagnostics.CreateScope("ElasticPool.GetElasticPoolActivities");
                 scope.Start();
                 try
                 {
@@ -748,17 +700,14 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}/elasticPoolDatabaseActivity
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}
-        /// OperationId: ElasticPoolDatabaseActivities_ListByElasticPool
         /// <summary> Returns activity on databases inside of an elastic pool. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ElasticPoolDatabaseActivity" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ElasticPoolDatabaseActivity> GetByElasticPoolElasticPoolDatabaseActivitiesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ElasticPoolDatabaseActivity> GetElasticPoolDatabaseActivitiesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ElasticPoolDatabaseActivity>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ElasticPool.GetByElasticPoolElasticPoolDatabaseActivities");
+                using var scope = _clientDiagnostics.CreateScope("ElasticPool.GetElasticPoolDatabaseActivities");
                 scope.Start();
                 try
                 {
@@ -774,17 +723,14 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}/elasticPoolDatabaseActivity
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}
-        /// OperationId: ElasticPoolDatabaseActivities_ListByElasticPool
         /// <summary> Returns activity on databases inside of an elastic pool. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ElasticPoolDatabaseActivity" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ElasticPoolDatabaseActivity> GetByElasticPoolElasticPoolDatabaseActivities(CancellationToken cancellationToken = default)
+        public virtual Pageable<ElasticPoolDatabaseActivity> GetElasticPoolDatabaseActivities(CancellationToken cancellationToken = default)
         {
             Page<ElasticPoolDatabaseActivity> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ElasticPool.GetByElasticPoolElasticPoolDatabaseActivities");
+                using var scope = _clientDiagnostics.CreateScope("ElasticPool.GetElasticPoolDatabaseActivities");
                 scope.Start();
                 try
                 {
@@ -800,9 +746,6 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}/operations/{operationId}/cancel
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}
-        /// OperationId: ElasticPoolOperations_Cancel
         /// <summary> Cancels the asynchronous operation on the elastic pool. </summary>
         /// <param name="operationId"> The operation identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -822,9 +765,6 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}/operations/{operationId}/cancel
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}
-        /// OperationId: ElasticPoolOperations_Cancel
         /// <summary> Cancels the asynchronous operation on the elastic pool. </summary>
         /// <param name="operationId"> The operation identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -844,17 +784,14 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}/operations
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}
-        /// OperationId: ElasticPoolOperations_ListByElasticPool
         /// <summary> Gets a list of operations performed on the elastic pool. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ElasticPoolOperation" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ElasticPoolOperation> GetByElasticPoolElasticPoolOperationsAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ElasticPoolOperation> GetElasticPoolOperationsAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ElasticPoolOperation>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ElasticPool.GetByElasticPoolElasticPoolOperations");
+                using var scope = _clientDiagnostics.CreateScope("ElasticPool.GetElasticPoolOperations");
                 scope.Start();
                 try
                 {
@@ -869,7 +806,7 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<ElasticPoolOperation>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ElasticPool.GetByElasticPoolElasticPoolOperations");
+                using var scope = _clientDiagnostics.CreateScope("ElasticPool.GetElasticPoolOperations");
                 scope.Start();
                 try
                 {
@@ -885,17 +822,14 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}/operations
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}
-        /// OperationId: ElasticPoolOperations_ListByElasticPool
         /// <summary> Gets a list of operations performed on the elastic pool. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ElasticPoolOperation" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ElasticPoolOperation> GetByElasticPoolElasticPoolOperations(CancellationToken cancellationToken = default)
+        public virtual Pageable<ElasticPoolOperation> GetElasticPoolOperations(CancellationToken cancellationToken = default)
         {
             Page<ElasticPoolOperation> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ElasticPool.GetByElasticPoolElasticPoolOperations");
+                using var scope = _clientDiagnostics.CreateScope("ElasticPool.GetElasticPoolOperations");
                 scope.Start();
                 try
                 {
@@ -910,7 +844,7 @@ namespace Azure.ResourceManager.Sql
             }
             Page<ElasticPoolOperation> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ElasticPool.GetByElasticPoolElasticPoolOperations");
+                using var scope = _clientDiagnostics.CreateScope("ElasticPool.GetElasticPoolOperations");
                 scope.Start();
                 try
                 {

@@ -1,12 +1,12 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000?api-version=2019-11-01",
+      "RequestUri": "https://localhost:8441/subscriptions/00000000-0000-0000-0000-000000000000?api-version=2019-11-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-7bc2716e3ec8ad4ba59787a9469a8b3d-8723ac87c8d2e04c-00",
+        "traceparent": "00-e2c816e96e0a504baea619ea61e0c0ed-9869b5ea40af0241-00",
         "User-Agent": "azsdk-net-ResourceManager/1.0.0-beta.5 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "e4cc2075d196dc5be0f676627d593e6e",
         "x-ms-return-client-request-id": "true"
@@ -17,7 +17,7 @@
         "Connection": "keep-alive",
         "Content-Length": "421",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 18 Nov 2021 07:14:35 GMT",
+        "Date": "Thu, 18 Nov 2021 07:30:41 GMT",
         "ETag": "W/\u00221a5-b64HHnH9EN33hGrzmS4rCOV9S7w\u0022",
         "Keep-Alive": "timeout=5",
         "X-Powered-By": "Express"
@@ -45,7 +45,7 @@
       }
     },
     {
-      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/syncagentcrud-65440?api-version=2019-10-01",
+      "RequestUri": "https://localhost:8441/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/syncagentcrud-65440?api-version=2019-10-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -67,7 +67,7 @@
         "Connection": "keep-alive",
         "Content-Length": "289",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 18 Nov 2021 07:14:35 GMT",
+        "Date": "Thu, 18 Nov 2021 07:30:41 GMT",
         "ETag": "W/\u0022121-OaKmc2PNrDy4Fs5HuIJ5O02E8zM\u0022",
         "Keep-Alive": "timeout=5",
         "X-Powered-By": "Express"
@@ -87,7 +87,7 @@
       }
     },
     {
-      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/syncagentcrud-65440/providers/Microsoft.Sql/servers/syncagentcrud-8475?api-version=2021-02-01-preview",
+      "RequestUri": "https://localhost:8441/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/syncagentcrud-65440/providers/Microsoft.Sql/servers/syncagentcrud-8475?api-version=2021-02-01-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -120,7 +120,7 @@
         "Connection": "keep-alive",
         "Content-Length": "1952",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 18 Nov 2021 07:14:35 GMT",
+        "Date": "Thu, 18 Nov 2021 07:30:41 GMT",
         "ETag": "W/\u00227a0-wJ6K9B61DgAm1pl4SVUnnO1eUGU\u0022",
         "Keep-Alive": "timeout=5",
         "X-Powered-By": "Express"
@@ -186,7 +186,7 @@
       }
     },
     {
-      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/syncagentcrud-65440/providers/Microsoft.Sql/servers/syncagentcrud-8475/syncAgents/syncagentcrud-3187?api-version=2020-11-01-preview",
+      "RequestUri": "https://localhost:8441/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/syncagentcrud-65440/providers/Microsoft.Sql/servers/syncagentcrud-8475/syncAgents/syncagentcrud-3187?api-version=2020-11-01-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -207,7 +207,7 @@
         "Connection": "keep-alive",
         "Content-Length": "472",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 18 Nov 2021 07:14:35 GMT",
+        "Date": "Thu, 18 Nov 2021 07:30:41 GMT",
         "ETag": "W/\u00221d8-VYQNGnta8XBD0yr5kWK9\u002BmeAiF4\u0022",
         "Keep-Alive": "timeout=5",
         "X-Powered-By": "Express"
@@ -228,7 +228,7 @@
       }
     },
     {
-      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/syncagentcrud-65440/providers/Microsoft.Sql/servers/syncagentcrud-8475/syncAgents/syncagentcrud-3187?api-version=2020-11-01-preview",
+      "RequestUri": "https://localhost:8441/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/syncagentcrud-65440/providers/Microsoft.Sql/servers/syncagentcrud-8475/syncAgents/syncagentcrud-3187?api-version=2020-11-01-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -242,7 +242,7 @@
         "Connection": "keep-alive",
         "Content-Length": "2",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 18 Nov 2021 07:14:35 GMT",
+        "Date": "Thu, 18 Nov 2021 07:30:41 GMT",
         "ETag": "W/\u00222-vyGp6PvFo4RvsFtPoIWeCReyIC8\u0022",
         "Keep-Alive": "timeout=5",
         "X-Powered-By": "Express"
@@ -252,7 +252,7 @@
   ],
   "Variables": {
     "RandomSeed": "37578602",
-    "RESOURCE_MANAGER_URL": "https://localhost:8443",
+    "RESOURCE_MANAGER_URL": "https://localhost:8441",
     "SUBSCRIPTION_ID": "00000000-0000-0000-0000-000000000000"
   }
 }

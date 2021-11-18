@@ -1,12 +1,12 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000?api-version=2019-11-01",
+      "RequestUri": "https://localhost:8441/subscriptions/00000000-0000-0000-0000-000000000000?api-version=2019-11-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-5b5eb2aa057af04b992888261d0abc8d-dc208e969004ac47-00",
+        "traceparent": "00-12fe9f8480b09043bb5f5ec5910987b7-242fa9332d074148-00",
         "User-Agent": "azsdk-net-ResourceManager/1.0.0-beta.5 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "08b9d7196703897ecb4cf6ce9a7fcbb4",
         "x-ms-return-client-request-id": "true"
@@ -17,7 +17,7 @@
         "Connection": "keep-alive",
         "Content-Length": "421",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 18 Nov 2021 07:14:04 GMT",
+        "Date": "Thu, 18 Nov 2021 07:30:13 GMT",
         "ETag": "W/\u00221a5-b64HHnH9EN33hGrzmS4rCOV9S7w\u0022",
         "Keep-Alive": "timeout=5",
         "X-Powered-By": "Express"
@@ -45,7 +45,7 @@
       }
     },
     {
-      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/securityalert-6852?api-version=2019-10-01",
+      "RequestUri": "https://localhost:8441/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/securityalert-6852?api-version=2019-10-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -67,7 +67,7 @@
         "Connection": "keep-alive",
         "Content-Length": "287",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 18 Nov 2021 07:14:04 GMT",
+        "Date": "Thu, 18 Nov 2021 07:30:13 GMT",
         "ETag": "W/\u002211f-p8IrGPE8cazV824koESFSh0T1HM\u0022",
         "Keep-Alive": "timeout=5",
         "X-Powered-By": "Express"
@@ -87,7 +87,7 @@
       }
     },
     {
-      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/securityalert-6852/providers/Microsoft.Sql/managedInstances/securityalert-2080?api-version=2020-11-01-preview",
+      "RequestUri": "https://localhost:8441/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/securityalert-6852/providers/Microsoft.Sql/managedInstances/securityalert-2080?api-version=2020-11-01-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -137,7 +137,7 @@
         "Connection": "keep-alive",
         "Content-Length": "2407",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 18 Nov 2021 07:14:04 GMT",
+        "Date": "Thu, 18 Nov 2021 07:30:13 GMT",
         "ETag": "W/\u0022967-Vq\u002BqEWnkxVSO2jOqEr5zkHfUmmE\u0022",
         "Keep-Alive": "timeout=5",
         "X-Powered-By": "Express"
@@ -222,7 +222,7 @@
       }
     },
     {
-      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/securityalert-6852/providers/Microsoft.Sql/managedInstances/securityalert-2080/databases/testdb?api-version=2020-11-01-preview",
+      "RequestUri": "https://localhost:8441/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/securityalert-6852/providers/Microsoft.Sql/managedInstances/securityalert-2080/databases/testdb?api-version=2020-11-01-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -250,7 +250,7 @@
         "Connection": "keep-alive",
         "Content-Length": "951",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 18 Nov 2021 07:14:04 GMT",
+        "Date": "Thu, 18 Nov 2021 07:30:13 GMT",
         "ETag": "W/\u00223b7-4qWvgwCWIetQM1l6J6vF9woNTTI\u0022",
         "Keep-Alive": "timeout=5",
         "X-Powered-By": "Express"
@@ -287,7 +287,7 @@
   ],
   "Variables": {
     "RandomSeed": "1408937017",
-    "RESOURCE_MANAGER_URL": "https://localhost:8443",
+    "RESOURCE_MANAGER_URL": "https://localhost:8441",
     "SUBSCRIPTION_ID": "00000000-0000-0000-0000-000000000000"
   }
 }

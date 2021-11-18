@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for ManagedInstanceKey. </summary>
     public partial class ManagedInstanceKeyMockTests : MockTestBase
     {
-        public ManagedInstanceKeyMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public ManagedInstanceKeyMockTests(bool isAsync) : base(isAsync)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
         }

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for BackupShortTermRetentionPolicy. </summary>
     public partial class BackupShortTermRetentionPolicyMockTests : MockTestBase
     {
-        public BackupShortTermRetentionPolicyMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public BackupShortTermRetentionPolicyMockTests(bool isAsync) : base(isAsync)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
         }

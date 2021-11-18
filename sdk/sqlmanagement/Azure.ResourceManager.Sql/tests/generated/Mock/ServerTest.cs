@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for Server. </summary>
     public partial class ServerMockTests : MockTestBase
     {
-        public ServerMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public ServerMockTests(bool isAsync) : base(isAsync)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
         }
@@ -78,39 +78,39 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
         }
 
         [RecordedTest]
-        public async Task GetInaccessibleByServerDatabasesAsync()
+        public async Task GetInaccessibleDatabasesAsync()
         {
             // Example: Gets a list of inaccessible databases in a logical server
             var resource = await GetServerAsync();
 
-            resource.GetInaccessibleByServerDatabasesAsync();
+            resource.GetInaccessibleDatabasesAsync();
         }
 
         [RecordedTest]
-        public async Task GetByServerReplicationLinksAsync()
+        public async Task GetReplicationLinksAsync()
         {
             // Example: List replication links on server
             var resource = await GetServerAsync();
 
-            resource.GetByServerReplicationLinksAsync();
+            resource.GetReplicationLinksAsync();
         }
 
         [RecordedTest]
-        public async Task GetByServerServerUsagesAsync()
+        public async Task GetServerUsagesAsync()
         {
             // Example: List servers usages
             var resource = await GetServerAsync();
 
-            resource.GetByServerServerUsagesAsync();
+            resource.GetServerUsagesAsync();
         }
 
         [RecordedTest]
-        public async Task GetByServerServerOperationsAsync()
+        public async Task GetServerOperationsAsync()
         {
             // Example: List the server management operations
             var resource = await GetServerAsync();
 
-            resource.GetByServerServerOperationsAsync();
+            resource.GetServerOperationsAsync();
         }
 
         [RecordedTest]

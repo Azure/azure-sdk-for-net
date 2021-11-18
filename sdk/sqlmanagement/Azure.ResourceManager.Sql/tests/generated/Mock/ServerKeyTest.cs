@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for ServerKey. </summary>
     public partial class ServerKeyMockTests : MockTestBase
     {
-        public ServerKeyMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public ServerKeyMockTests(bool isAsync) : base(isAsync)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
         }

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for WorkloadClassifier. </summary>
     public partial class WorkloadClassifierMockTests : MockTestBase
     {
-        public WorkloadClassifierMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public WorkloadClassifierMockTests(bool isAsync) : base(isAsync)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
         }

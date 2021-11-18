@@ -11,14 +11,13 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.TestFramework;
-using NUnit.Framework;
 
 namespace Azure.ResourceManager.Sql.Tests.Mock
 {
     /// <summary> Test for JobTargetGroup. </summary>
     public partial class JobTargetGroupCollectionMockTests : MockTestBase
     {
-        public JobTargetGroupCollectionMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public JobTargetGroupCollectionMockTests(bool isAsync) : base(isAsync)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
         }

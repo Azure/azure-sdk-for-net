@@ -45,9 +45,6 @@ namespace Azure.ResourceManager.Sql
 
         // Collection level operations.
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/outboundFirewallRules/{outboundRuleFqdn}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
-        /// OperationId: OutboundFirewallRules_CreateOrUpdate
         /// <summary> Create a outbound firewall rule with a given name. </summary>
         /// <param name="outboundRuleFqdn"> The String to use. </param>
         /// <param name="parameters"> The OutboundFirewallRule to use. </param>
@@ -82,9 +79,6 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/outboundFirewallRules/{outboundRuleFqdn}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
-        /// OperationId: OutboundFirewallRules_CreateOrUpdate
         /// <summary> Create a outbound firewall rule with a given name. </summary>
         /// <param name="outboundRuleFqdn"> The String to use. </param>
         /// <param name="parameters"> The OutboundFirewallRule to use. </param>
@@ -119,9 +113,6 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/outboundFirewallRules/{outboundRuleFqdn}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
-        /// OperationId: OutboundFirewallRules_Get
         /// <summary> Gets an outbound firewall rule. </summary>
         /// <param name="outboundRuleFqdn"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -149,9 +140,6 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/outboundFirewallRules/{outboundRuleFqdn}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
-        /// OperationId: OutboundFirewallRules_Get
         /// <summary> Gets an outbound firewall rule. </summary>
         /// <param name="outboundRuleFqdn"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -283,9 +271,6 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/outboundFirewallRules
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
-        /// OperationId: OutboundFirewallRules_ListByServer
         /// <summary> Gets all outbound firewall rules on a server. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="OutboundFirewallRule" /> that may take multiple service requests to iterate over. </returns>
@@ -324,9 +309,6 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/outboundFirewallRules
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
-        /// OperationId: OutboundFirewallRules_ListByServer
         /// <summary> Gets all outbound firewall rules on a server. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="OutboundFirewallRule" /> that may take multiple service requests to iterate over. </returns>

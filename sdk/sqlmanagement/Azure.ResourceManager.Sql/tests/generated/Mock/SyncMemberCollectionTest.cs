@@ -11,14 +11,13 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.TestFramework;
-using NUnit.Framework;
 
 namespace Azure.ResourceManager.Sql.Tests.Mock
 {
     /// <summary> Test for SyncMember. </summary>
     public partial class SyncMemberCollectionMockTests : MockTestBase
     {
-        public SyncMemberCollectionMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public SyncMemberCollectionMockTests(bool isAsync) : base(isAsync)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
         }

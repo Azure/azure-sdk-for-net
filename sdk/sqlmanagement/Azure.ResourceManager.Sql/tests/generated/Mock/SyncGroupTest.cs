@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for SyncGroup. </summary>
     public partial class SyncGroupMockTests : MockTestBase
     {
-        public SyncGroupMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public SyncGroupMockTests(bool isAsync) : base(isAsync)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
         }

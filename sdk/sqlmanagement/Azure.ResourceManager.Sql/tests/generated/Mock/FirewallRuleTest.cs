@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for FirewallRule. </summary>
     public partial class FirewallRuleMockTests : MockTestBase
     {
-        public FirewallRuleMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public FirewallRuleMockTests(bool isAsync) : base(isAsync)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
         }

@@ -89,9 +89,6 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets the parent resource of this resource. </summary>
         public ArmResource Parent { get; }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/sqlAgent/current
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/sqlAgent/current
-        /// OperationId: SqlAgent_Get
         /// <summary> Gets current instance sql agent configuration. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<SqlAgentConfiguration>> GetAsync(CancellationToken cancellationToken = default)
@@ -112,9 +109,6 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/sqlAgent/current
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/sqlAgent/current
-        /// OperationId: SqlAgent_Get
         /// <summary> Gets current instance sql agent configuration. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SqlAgentConfiguration> Get(CancellationToken cancellationToken = default)
@@ -151,9 +145,6 @@ namespace Azure.ResourceManager.Sql
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/sqlAgent/current
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/sqlAgent/current
-        /// OperationId: SqlAgent_CreateOrUpdate
         /// <summary> Puts new sql agent configuration to instance. </summary>
         /// <param name="parameters"> The SqlAgentConfiguration to use. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
@@ -183,9 +174,6 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/sqlAgent/current
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/sqlAgent/current
-        /// OperationId: SqlAgent_CreateOrUpdate
         /// <summary> Puts new sql agent configuration to instance. </summary>
         /// <param name="parameters"> The SqlAgentConfiguration to use. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for LedgerDigestUploads. </summary>
     public partial class LedgerDigestUploadsMockTests : MockTestBase
     {
-        public LedgerDigestUploadsMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public LedgerDigestUploadsMockTests(bool isAsync) : base(isAsync)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
         }

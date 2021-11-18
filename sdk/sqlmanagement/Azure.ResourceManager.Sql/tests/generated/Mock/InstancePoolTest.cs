@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for InstancePool. </summary>
     public partial class InstancePoolMockTests : MockTestBase
     {
-        public InstancePoolMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public InstancePoolMockTests(bool isAsync) : base(isAsync)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
         }
@@ -71,23 +71,23 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
         }
 
         [RecordedTest]
-        public async Task GetByInstancePoolManagedInstancesAsync()
+        public async Task GetManagedInstancesAsync()
         {
             // Example: List managed instances by instance pool
             var resource = await GetInstancePoolAsync();
             string expand = null;
 
-            resource.GetByInstancePoolManagedInstancesAsync(expand);
+            resource.GetManagedInstancesAsync(expand);
         }
 
         [RecordedTest]
-        public async Task GetByInstancePoolUsagesAsync()
+        public async Task GetUsagesAsync()
         {
             // Example: List instance pool usages expanded with children.
             var resource = await GetInstancePoolAsync();
             var expandChildren = true;
 
-            resource.GetByInstancePoolUsagesAsync(expandChildren);
+            resource.GetUsagesAsync(expandChildren);
         }
     }
 }

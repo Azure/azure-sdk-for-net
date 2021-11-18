@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for InstanceFailoverGroup. </summary>
     public partial class InstanceFailoverGroupMockTests : MockTestBase
     {
-        public InstanceFailoverGroupMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public InstanceFailoverGroupMockTests(bool isAsync) : base(isAsync)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
         }

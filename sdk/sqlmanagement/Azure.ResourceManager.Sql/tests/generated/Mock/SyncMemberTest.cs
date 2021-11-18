@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for SyncMember. </summary>
     public partial class SyncMemberMockTests : MockTestBase
     {
-        public SyncMemberMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public SyncMemberMockTests(bool isAsync) : base(isAsync)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
         }

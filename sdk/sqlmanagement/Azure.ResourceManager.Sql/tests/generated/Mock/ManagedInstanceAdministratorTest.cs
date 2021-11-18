@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for ManagedInstanceAdministrator. </summary>
     public partial class ManagedInstanceAdministratorMockTests : MockTestBase
     {
-        public ManagedInstanceAdministratorMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public ManagedInstanceAdministratorMockTests(bool isAsync) : base(isAsync)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
         }

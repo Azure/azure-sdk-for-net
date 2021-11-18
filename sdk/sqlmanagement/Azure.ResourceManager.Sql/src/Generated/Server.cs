@@ -104,9 +104,6 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
-        /// OperationId: Servers_Get
         /// <summary> Gets a server. </summary>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -128,9 +125,6 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
-        /// OperationId: Servers_Get
         /// <summary> Gets a server. </summary>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -168,9 +162,6 @@ namespace Azure.ResourceManager.Sql
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
-        /// OperationId: Servers_Delete
         /// <summary> Deletes a server. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -193,9 +184,6 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
-        /// OperationId: Servers_Delete
         /// <summary> Deletes a server. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -390,9 +378,6 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
-        /// OperationId: Servers_Update
         /// <summary> Updates a server. </summary>
         /// <param name="parameters"> The requested server resource state. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
@@ -422,9 +407,6 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
-        /// OperationId: Servers_Update
         /// <summary> Updates a server. </summary>
         /// <param name="parameters"> The requested server resource state. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
@@ -454,17 +436,14 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/inaccessibleDatabases
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
-        /// OperationId: Databases_ListInaccessibleByServer
         /// <summary> Gets a list of inaccessible databases in a logical server. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DatabaseData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DatabaseData> GetInaccessibleByServerDatabasesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DatabaseData> GetInaccessibleDatabasesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<DatabaseData>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Server.GetInaccessibleByServerDatabases");
+                using var scope = _clientDiagnostics.CreateScope("Server.GetInaccessibleDatabases");
                 scope.Start();
                 try
                 {
@@ -479,7 +458,7 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<DatabaseData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Server.GetInaccessibleByServerDatabases");
+                using var scope = _clientDiagnostics.CreateScope("Server.GetInaccessibleDatabases");
                 scope.Start();
                 try
                 {
@@ -495,17 +474,14 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/inaccessibleDatabases
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
-        /// OperationId: Databases_ListInaccessibleByServer
         /// <summary> Gets a list of inaccessible databases in a logical server. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DatabaseData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DatabaseData> GetInaccessibleByServerDatabases(CancellationToken cancellationToken = default)
+        public virtual Pageable<DatabaseData> GetInaccessibleDatabases(CancellationToken cancellationToken = default)
         {
             Page<DatabaseData> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Server.GetInaccessibleByServerDatabases");
+                using var scope = _clientDiagnostics.CreateScope("Server.GetInaccessibleDatabases");
                 scope.Start();
                 try
                 {
@@ -520,7 +496,7 @@ namespace Azure.ResourceManager.Sql
             }
             Page<DatabaseData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Server.GetInaccessibleByServerDatabases");
+                using var scope = _clientDiagnostics.CreateScope("Server.GetInaccessibleDatabases");
                 scope.Start();
                 try
                 {
@@ -536,17 +512,14 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/replicationLinks
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
-        /// OperationId: ReplicationLinks_ListByServer
         /// <summary> Gets a list of replication links. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ReplicationLinkData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ReplicationLinkData> GetByServerReplicationLinksAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ReplicationLinkData> GetReplicationLinksAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ReplicationLinkData>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Server.GetByServerReplicationLinks");
+                using var scope = _clientDiagnostics.CreateScope("Server.GetReplicationLinks");
                 scope.Start();
                 try
                 {
@@ -561,7 +534,7 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<ReplicationLinkData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Server.GetByServerReplicationLinks");
+                using var scope = _clientDiagnostics.CreateScope("Server.GetReplicationLinks");
                 scope.Start();
                 try
                 {
@@ -577,17 +550,14 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/replicationLinks
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
-        /// OperationId: ReplicationLinks_ListByServer
         /// <summary> Gets a list of replication links. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ReplicationLinkData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ReplicationLinkData> GetByServerReplicationLinks(CancellationToken cancellationToken = default)
+        public virtual Pageable<ReplicationLinkData> GetReplicationLinks(CancellationToken cancellationToken = default)
         {
             Page<ReplicationLinkData> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Server.GetByServerReplicationLinks");
+                using var scope = _clientDiagnostics.CreateScope("Server.GetReplicationLinks");
                 scope.Start();
                 try
                 {
@@ -602,7 +572,7 @@ namespace Azure.ResourceManager.Sql
             }
             Page<ReplicationLinkData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Server.GetByServerReplicationLinks");
+                using var scope = _clientDiagnostics.CreateScope("Server.GetReplicationLinks");
                 scope.Start();
                 try
                 {
@@ -618,17 +588,14 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/usages
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
-        /// OperationId: ServerUsages_ListByServer
         /// <summary> Returns server usages. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ServerUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServerUsage> GetByServerServerUsagesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ServerUsage> GetServerUsagesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ServerUsage>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Server.GetByServerServerUsages");
+                using var scope = _clientDiagnostics.CreateScope("Server.GetServerUsages");
                 scope.Start();
                 try
                 {
@@ -644,17 +611,14 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/usages
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
-        /// OperationId: ServerUsages_ListByServer
         /// <summary> Returns server usages. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ServerUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServerUsage> GetByServerServerUsages(CancellationToken cancellationToken = default)
+        public virtual Pageable<ServerUsage> GetServerUsages(CancellationToken cancellationToken = default)
         {
             Page<ServerUsage> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Server.GetByServerServerUsages");
+                using var scope = _clientDiagnostics.CreateScope("Server.GetServerUsages");
                 scope.Start();
                 try
                 {
@@ -670,17 +634,14 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/operations
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
-        /// OperationId: ServerOperations_ListByServer
         /// <summary> Gets a list of operations performed on the server. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ServerOperation" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServerOperation> GetByServerServerOperationsAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ServerOperation> GetServerOperationsAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ServerOperation>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Server.GetByServerServerOperations");
+                using var scope = _clientDiagnostics.CreateScope("Server.GetServerOperations");
                 scope.Start();
                 try
                 {
@@ -695,7 +656,7 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<ServerOperation>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Server.GetByServerServerOperations");
+                using var scope = _clientDiagnostics.CreateScope("Server.GetServerOperations");
                 scope.Start();
                 try
                 {
@@ -711,17 +672,14 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/operations
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
-        /// OperationId: ServerOperations_ListByServer
         /// <summary> Gets a list of operations performed on the server. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ServerOperation" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServerOperation> GetByServerServerOperations(CancellationToken cancellationToken = default)
+        public virtual Pageable<ServerOperation> GetServerOperations(CancellationToken cancellationToken = default)
         {
             Page<ServerOperation> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Server.GetByServerServerOperations");
+                using var scope = _clientDiagnostics.CreateScope("Server.GetServerOperations");
                 scope.Start();
                 try
                 {
@@ -736,7 +694,7 @@ namespace Azure.ResourceManager.Sql
             }
             Page<ServerOperation> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Server.GetByServerServerOperations");
+                using var scope = _clientDiagnostics.CreateScope("Server.GetServerOperations");
                 scope.Start();
                 try
                 {
@@ -752,9 +710,6 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/tdeCertificates
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
-        /// OperationId: TdeCertificates_Create
         /// <summary> Creates a TDE certificate for a given server. </summary>
         /// <param name="parameters"> The requested TDE certificate to be created or updated. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
@@ -784,9 +739,6 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/tdeCertificates
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
-        /// OperationId: TdeCertificates_Create
         /// <summary> Creates a TDE certificate for a given server. </summary>
         /// <param name="parameters"> The requested TDE certificate to be created or updated. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
@@ -816,9 +768,6 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/import
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
-        /// OperationId: Servers_ImportDatabase
         /// <summary> Imports a bacpac into a new database. </summary>
         /// <param name="parameters"> The database import request parameters. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
@@ -848,9 +797,6 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/import
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
-        /// OperationId: Servers_ImportDatabase
         /// <summary> Imports a bacpac into a new database. </summary>
         /// <param name="parameters"> The database import request parameters. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>

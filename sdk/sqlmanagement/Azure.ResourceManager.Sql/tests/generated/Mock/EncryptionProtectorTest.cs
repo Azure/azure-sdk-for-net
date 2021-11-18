@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for EncryptionProtector. </summary>
     public partial class EncryptionProtectorMockTests : MockTestBase
     {
-        public EncryptionProtectorMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public EncryptionProtectorMockTests(bool isAsync) : base(isAsync)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
         }

@@ -11,14 +11,13 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.TestFramework;
-using NUnit.Framework;
 
 namespace Azure.ResourceManager.Sql.Tests.Mock
 {
     /// <summary> Test for JobExecution. </summary>
     public partial class ServerJobAgentJobExecutionCollectionMockTests : MockTestBase
     {
-        public ServerJobAgentJobExecutionCollectionMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public ServerJobAgentJobExecutionCollectionMockTests(bool isAsync) : base(isAsync)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
         }
@@ -60,11 +59,11 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
         }
 
         [RecordedTest]
-        public async Task GetByJobExecutionJobTargetExecutionsAsync()
+        public async Task GetJobTargetExecutionsAsync()
         {
             // Example: List job step target executions
             var collection = await GetServerJobAgentJobExecutionCollectionAsync("group1", "server1", "agent1", "job1");
-            TestHelper.GetByJobExecutionJobTargetExecutionsExampleInstanceAsync(collection).AsPages();
+            TestHelper.GetJobTargetExecutionsExampleInstanceAsync(collection).AsPages();
         }
     }
 }

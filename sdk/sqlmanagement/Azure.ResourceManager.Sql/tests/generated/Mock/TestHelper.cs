@@ -607,7 +607,7 @@ namespace Azure.ResourceManager.Sql.Tests
             return collection.GetAllAsync(createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top);
         }
 
-        public static AsyncPageable<Sql.ServerJobAgentJobExecution> GetByJobExecutionJobTargetExecutionsExampleInstanceAsync(ServerJobAgentJobExecutionCollection collection)
+        public static AsyncPageable<Sql.ServerJobAgentJobExecution> GetJobTargetExecutionsExampleInstanceAsync(ServerJobAgentJobExecutionCollection collection)
         {
             // Example: List job step target executions
             var jobExecutionId = Guid.Parse("5555-6666-7777-8888-999999999999");
@@ -619,7 +619,7 @@ namespace Azure.ResourceManager.Sql.Tests
             int? skip = null;
             int? top = null;
 
-            return collection.GetByJobExecutionJobTargetExecutionsAsync(jobExecutionId, createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top);
+            return collection.GetJobTargetExecutionsAsync(jobExecutionId, createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top);
         }
 
         public static AsyncPageable<Sql.ServerJobAgentJobExecutionStep> GetAllExampleInstanceAsync(ServerJobAgentJobExecutionStepCollection collection)
@@ -885,36 +885,6 @@ namespace Azure.ResourceManager.Sql.Tests
             // Example: Get a list of the database's threat detection policies.
 
             return collection.GetAllAsync();
-        }
-
-        public static async Task<Sql.Models.ManagedDatabaseSensitivityLabelCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelCollection collection)
-        {
-            // Example: Updates or creates a sensitivity label of a given column with all parameters in a managed database
-            var parameters = new Sql.SensitivityLabelData()
-            {
-                LabelName = "PII",
-                LabelId = "bf91e08c-f4f0-478a-b016-25164b2a65ff",
-                InformationType = "PhoneNumber",
-                InformationTypeId = "d22fa6e9-5ee4-3bde-4c2b-a409604c4646",
-                Rank = SensitivityLabelRank.High,
-            };
-
-            return await collection.CreateOrUpdateAsync(parameters);
-        }
-
-        public static async Task<Sql.Models.SensitivityLabelCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(ServerDatabaseSchemaTableColumnSensitivityLabelCollection collection)
-        {
-            // Example: Updates the sensitivity label of a given column with all parameters
-            var parameters = new Sql.SensitivityLabelData()
-            {
-                LabelName = "PII",
-                LabelId = "bf91e08c-f4f0-478a-b016-25164b2a65ff",
-                InformationType = "PhoneNumber",
-                InformationTypeId = "d22fa6e9-5ee4-3bde-4c2b-a409604c4646",
-                Rank = SensitivityLabelRank.Low,
-            };
-
-            return await collection.CreateOrUpdateAsync(parameters);
         }
 
         public static async Task<Sql.Models.ManagedDatabaseTransparentDataEncryptionCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(ManagedTransparentDataEncryptionCollection collection)

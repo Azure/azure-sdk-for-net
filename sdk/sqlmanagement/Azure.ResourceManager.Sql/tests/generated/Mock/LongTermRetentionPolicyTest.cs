@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for LongTermRetentionPolicy. </summary>
     public partial class LongTermRetentionPolicyMockTests : MockTestBase
     {
-        public LongTermRetentionPolicyMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public LongTermRetentionPolicyMockTests(bool isAsync) : base(isAsync)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
         }

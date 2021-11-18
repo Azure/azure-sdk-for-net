@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for ManagedInstanceEncryptionProtector. </summary>
     public partial class ManagedInstanceEncryptionProtectorMockTests : MockTestBase
     {
-        public ManagedInstanceEncryptionProtectorMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public ManagedInstanceEncryptionProtectorMockTests(bool isAsync) : base(isAsync)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
         }

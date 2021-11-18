@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for ServerCommunicationLink. </summary>
     public partial class ServerCommunicationLinkMockTests : MockTestBase
     {
-        public ServerCommunicationLinkMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public ServerCommunicationLinkMockTests(bool isAsync) : base(isAsync)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
         }

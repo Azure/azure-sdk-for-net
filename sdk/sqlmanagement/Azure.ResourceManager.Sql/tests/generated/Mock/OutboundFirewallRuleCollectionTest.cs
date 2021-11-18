@@ -11,14 +11,13 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.TestFramework;
-using NUnit.Framework;
 
 namespace Azure.ResourceManager.Sql.Tests.Mock
 {
     /// <summary> Test for OutboundFirewallRule. </summary>
     public partial class OutboundFirewallRuleCollectionMockTests : MockTestBase
     {
-        public OutboundFirewallRuleCollectionMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public OutboundFirewallRuleCollectionMockTests(bool isAsync) : base(isAsync)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
         }

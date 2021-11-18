@@ -88,9 +88,6 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets the parent resource of this resource. </summary>
         public ArmResource Parent { get; }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/maintenanceWindowOptions/current
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/maintenanceWindowOptions/current
-        /// OperationId: MaintenanceWindowOptions_Get
         /// <summary> Gets a list of available maintenance windows. </summary>
         /// <param name="maintenanceWindowOptionsName"> Maintenance window options name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -118,9 +115,6 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/maintenanceWindowOptions/current
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/maintenanceWindowOptions/current
-        /// OperationId: MaintenanceWindowOptions_Get
         /// <summary> Gets a list of available maintenance windows. </summary>
         /// <param name="maintenanceWindowOptionsName"> Maintenance window options name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for ServerConnectionPolicy. </summary>
     public partial class ServerConnectionPolicyMockTests : MockTestBase
     {
-        public ServerConnectionPolicyMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public ServerConnectionPolicyMockTests(bool isAsync) : base(isAsync)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
         }

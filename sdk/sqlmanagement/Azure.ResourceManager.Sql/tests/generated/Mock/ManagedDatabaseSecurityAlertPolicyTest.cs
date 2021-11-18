@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for ManagedDatabaseSecurityAlertPolicy. </summary>
     public partial class ManagedDatabaseSecurityAlertPolicyMockTests : MockTestBase
     {
-        public ManagedDatabaseSecurityAlertPolicyMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public ManagedDatabaseSecurityAlertPolicyMockTests(bool isAsync) : base(isAsync)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
         }

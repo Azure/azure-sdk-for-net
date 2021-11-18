@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for ElasticPool. </summary>
     public partial class ElasticPoolMockTests : MockTestBase
     {
-        public ElasticPoolMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public ElasticPoolMockTests(bool isAsync) : base(isAsync)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
         }
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
         }
 
         [RecordedTest]
-        public async Task GetByElasticPoolDatabasesAsync()
+        public async Task GetDatabasesAsync()
         {
             // Example: Gets a list of databases in an elastic pool.
             var resource = await GetElasticPoolAsync();
 
-            resource.GetByElasticPoolDatabasesAsync();
+            resource.GetDatabasesAsync();
         }
 
         [RecordedTest]
@@ -114,21 +114,21 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
         }
 
         [RecordedTest]
-        public async Task GetByElasticPoolElasticPoolActivitiesAsync()
+        public async Task GetElasticPoolActivitiesAsync()
         {
             // Example: List Elastic pool activity
             var resource = await GetElasticPoolAsync();
 
-            resource.GetByElasticPoolElasticPoolActivitiesAsync();
+            resource.GetElasticPoolActivitiesAsync();
         }
 
         [RecordedTest]
-        public async Task GetByElasticPoolElasticPoolDatabaseActivitiesAsync()
+        public async Task GetElasticPoolDatabaseActivitiesAsync()
         {
             // Example: List elastic pool database activity
             var resource = await GetElasticPoolAsync();
 
-            resource.GetByElasticPoolElasticPoolDatabaseActivitiesAsync();
+            resource.GetElasticPoolDatabaseActivitiesAsync();
         }
 
         [RecordedTest]
@@ -142,12 +142,12 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
         }
 
         [RecordedTest]
-        public async Task GetByElasticPoolElasticPoolOperationsAsync()
+        public async Task GetElasticPoolOperationsAsync()
         {
             // Example: List the elastic pool management operations
             var resource = await GetElasticPoolAsync();
 
-            resource.GetByElasticPoolElasticPoolOperationsAsync();
+            resource.GetElasticPoolOperationsAsync();
         }
     }
 }

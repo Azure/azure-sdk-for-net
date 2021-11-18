@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for ManagedInstanceAzureADOnlyAuthentication. </summary>
     public partial class ManagedInstanceAzureADOnlyAuthenticationMockTests : MockTestBase
     {
-        public ManagedInstanceAzureADOnlyAuthenticationMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public ManagedInstanceAzureADOnlyAuthenticationMockTests(bool isAsync) : base(isAsync)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
         }

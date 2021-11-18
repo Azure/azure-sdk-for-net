@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for ServerAzureADAdministrator. </summary>
     public partial class ServerAzureADAdministratorMockTests : MockTestBase
     {
-        public ServerAzureADAdministratorMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public ServerAzureADAdministratorMockTests(bool isAsync) : base(isAsync)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
         }

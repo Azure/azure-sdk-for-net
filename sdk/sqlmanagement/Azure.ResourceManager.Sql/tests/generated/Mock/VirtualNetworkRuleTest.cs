@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for VirtualNetworkRule. </summary>
     public partial class VirtualNetworkRuleMockTests : MockTestBase
     {
-        public VirtualNetworkRuleMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public VirtualNetworkRuleMockTests(bool isAsync) : base(isAsync)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
         }

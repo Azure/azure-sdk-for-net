@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for ManagedDatabase. </summary>
     public partial class ManagedDatabaseMockTests : MockTestBase
     {
-        public ManagedDatabaseMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public ManagedDatabaseMockTests(bool isAsync) : base(isAsync)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
         }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
         }
 
         [RecordedTest]
-        public async Task GetByDatabaseManagedDatabaseColumnsAsync()
+        public async Task GetManagedDatabaseColumnsByDatabaseAsync()
         {
             // Example: Filter managed database columns
             var resource = await GetManagedDatabaseAsync();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
 "schema asc","table","column desc",};
             string skiptoken = null;
 
-            resource.GetByDatabaseManagedDatabaseColumnsAsync(schema, table, column, orderBy, skiptoken);
+            resource.GetManagedDatabaseColumnsByDatabaseAsync(schema, table, column, orderBy, skiptoken);
         }
 
         [RecordedTest]
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
         }
 
         [RecordedTest]
-        public async Task GetByDatabaseManagedDatabaseSecurityEventsAsync()
+        public async Task GetManagedDatabaseSecurityEventsByDatabaseAsync()
         {
             // Example: Get the managed database's security events with maximal parameters
             var resource = await GetManagedDatabaseAsync();
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
             var top = 1;
             var skiptoken = "eyJCbG9iTmFtZURhdGVUaW1lIjoiXC9EYXRlKDE1MTIyODg4MTIwMTArMDIwMClcLyIsIkJsb2JOYW1lUm9sbG92ZXJJbmRleCI6IjAiLCJFbmREYXRlIjoiXC9EYXRlKDE1MTI0NjYyMDA1MjkpXC8iLCJJc1NraXBUb2tlblNldCI6ZmFsc2UsIklzVjJCbG9iVGltZUZvcm1hdCI6dHJ1ZSwiU2hvd1NlcnZlclJlY29yZHMiOmZhbHNlLCJTa2lwVmFsdWUiOjAsIlRha2VWYWx1ZSI6MTB9";
 
-            resource.GetByDatabaseManagedDatabaseSecurityEventsAsync(filter, skip, top, skiptoken);
+            resource.GetManagedDatabaseSecurityEventsByDatabaseAsync(filter, skip, top, skiptoken);
         }
 
         [RecordedTest]

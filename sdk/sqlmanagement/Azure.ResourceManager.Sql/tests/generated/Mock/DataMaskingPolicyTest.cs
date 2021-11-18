@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for DataMaskingPolicy. </summary>
     public partial class DataMaskingPolicyMockTests : MockTestBase
     {
-        public DataMaskingPolicyMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public DataMaskingPolicyMockTests(bool isAsync) : base(isAsync)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
         }
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
         }
 
         [RecordedTest]
-        public async Task GetByDatabaseDataMaskingRulesAsync()
+        public async Task GetDataMaskingRulesByDatabaseAsync()
         {
             // Example: List data masking rules
             var resource = await GetDataMaskingPolicyAsync();
 
-            resource.GetByDatabaseDataMaskingRulesAsync();
+            resource.GetDataMaskingRulesByDatabaseAsync();
         }
     }
 }

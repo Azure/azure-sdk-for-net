@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for JobStep. </summary>
     public partial class ServerJobAgentJobStepMockTests : MockTestBase
     {
-        public ServerJobAgentJobStepMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public ServerJobAgentJobStepMockTests(bool isAsync) : base(isAsync)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
         }

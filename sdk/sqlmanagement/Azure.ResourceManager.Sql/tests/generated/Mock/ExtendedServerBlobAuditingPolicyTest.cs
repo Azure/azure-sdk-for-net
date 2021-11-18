@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for ExtendedServerBlobAuditingPolicy. </summary>
     public partial class ExtendedServerBlobAuditingPolicyMockTests : MockTestBase
     {
-        public ExtendedServerBlobAuditingPolicyMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public ExtendedServerBlobAuditingPolicyMockTests(bool isAsync) : base(isAsync)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
         }

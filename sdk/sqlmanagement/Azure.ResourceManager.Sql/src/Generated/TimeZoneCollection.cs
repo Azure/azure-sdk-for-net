@@ -42,9 +42,6 @@ namespace Azure.ResourceManager.Sql
 
         // Collection level operations.
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/timeZones/{timeZoneId}
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: TimeZones_Get
         /// <summary> Gets a managed instance time zone. </summary>
         /// <param name="locationName"> The String to use. </param>
         /// <param name="timeZoneId"> The String to use. </param>
@@ -77,9 +74,6 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/timeZones/{timeZoneId}
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: TimeZones_Get
         /// <summary> Gets a managed instance time zone. </summary>
         /// <param name="locationName"> The String to use. </param>
         /// <param name="timeZoneId"> The String to use. </param>
@@ -236,9 +230,6 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/timeZones
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: TimeZones_ListByLocation
         /// <summary> Gets a list of managed instance time zones by location. </summary>
         /// <param name="locationName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -283,9 +274,6 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/timeZones
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: TimeZones_ListByLocation
         /// <summary> Gets a list of managed instance time zones by location. </summary>
         /// <param name="locationName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for ManagedInstance. </summary>
     public partial class ManagedInstanceMockTests : MockTestBase
     {
-        public ManagedInstanceMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public ManagedInstanceMockTests(bool isAsync) : base(isAsync)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
         }
@@ -123,12 +123,12 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
         }
 
         [RecordedTest]
-        public async Task GetByInstanceServerTrustGroupsAsync()
+        public async Task GetServerTrustGroupsByInstanceAsync()
         {
             // Example: List server trust groups by managed instance
             var resource = await GetManagedInstanceAsync();
 
-            resource.GetByInstanceServerTrustGroupsAsync();
+            resource.GetServerTrustGroupsByInstanceAsync();
         }
 
         [RecordedTest]

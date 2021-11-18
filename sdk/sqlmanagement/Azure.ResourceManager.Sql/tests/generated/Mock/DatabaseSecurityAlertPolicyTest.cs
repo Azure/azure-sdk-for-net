@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for DatabaseSecurityAlertPolicy. </summary>
     public partial class DatabaseSecurityAlertPolicyMockTests : MockTestBase
     {
-        public DatabaseSecurityAlertPolicyMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public DatabaseSecurityAlertPolicyMockTests(bool isAsync) : base(isAsync)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
         }

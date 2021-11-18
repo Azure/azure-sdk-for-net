@@ -11,14 +11,13 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.TestFramework;
-using NUnit.Framework;
 
 namespace Azure.ResourceManager.Sql.Tests.Mock
 {
     /// <summary> Test for ServerCommunicationLink. </summary>
     public partial class ServerCommunicationLinkCollectionMockTests : MockTestBase
     {
-        public ServerCommunicationLinkCollectionMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public ServerCommunicationLinkCollectionMockTests(bool isAsync) : base(isAsync)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
         }

@@ -92,9 +92,6 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/instancePools/{instancePoolName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/instancePools/{instancePoolName}
-        /// OperationId: InstancePools_Get
         /// <summary> Gets an instance pool. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<InstancePool>> GetAsync(CancellationToken cancellationToken = default)
@@ -115,9 +112,6 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/instancePools/{instancePoolName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/instancePools/{instancePoolName}
-        /// OperationId: InstancePools_Get
         /// <summary> Gets an instance pool. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<InstancePool> Get(CancellationToken cancellationToken = default)
@@ -154,9 +148,6 @@ namespace Azure.ResourceManager.Sql
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/instancePools/{instancePoolName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/instancePools/{instancePoolName}
-        /// OperationId: InstancePools_Delete
         /// <summary> Deletes an instance pool. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -179,9 +170,6 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/instancePools/{instancePoolName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/instancePools/{instancePoolName}
-        /// OperationId: InstancePools_Delete
         /// <summary> Deletes an instance pool. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -376,9 +364,6 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/instancePools/{instancePoolName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/instancePools/{instancePoolName}
-        /// OperationId: InstancePools_Update
         /// <summary> Updates an instance pool. </summary>
         /// <param name="parameters"> The requested instance pool resource state. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
@@ -408,9 +393,6 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/instancePools/{instancePoolName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/instancePools/{instancePoolName}
-        /// OperationId: InstancePools_Update
         /// <summary> Updates an instance pool. </summary>
         /// <param name="parameters"> The requested instance pool resource state. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
@@ -440,18 +422,15 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/instancePools/{instancePoolName}/managedInstances
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/instancePools/{instancePoolName}
-        /// OperationId: ManagedInstances_ListByInstancePool
         /// <summary> Gets a list of all managed instances in an instance pool. </summary>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ManagedInstanceData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ManagedInstanceData> GetByInstancePoolManagedInstancesAsync(string expand = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ManagedInstanceData> GetManagedInstancesAsync(string expand = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<ManagedInstanceData>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("InstancePool.GetByInstancePoolManagedInstances");
+                using var scope = _clientDiagnostics.CreateScope("InstancePool.GetManagedInstances");
                 scope.Start();
                 try
                 {
@@ -466,7 +445,7 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<ManagedInstanceData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("InstancePool.GetByInstancePoolManagedInstances");
+                using var scope = _clientDiagnostics.CreateScope("InstancePool.GetManagedInstances");
                 scope.Start();
                 try
                 {
@@ -482,18 +461,15 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/instancePools/{instancePoolName}/managedInstances
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/instancePools/{instancePoolName}
-        /// OperationId: ManagedInstances_ListByInstancePool
         /// <summary> Gets a list of all managed instances in an instance pool. </summary>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ManagedInstanceData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ManagedInstanceData> GetByInstancePoolManagedInstances(string expand = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ManagedInstanceData> GetManagedInstances(string expand = null, CancellationToken cancellationToken = default)
         {
             Page<ManagedInstanceData> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("InstancePool.GetByInstancePoolManagedInstances");
+                using var scope = _clientDiagnostics.CreateScope("InstancePool.GetManagedInstances");
                 scope.Start();
                 try
                 {
@@ -508,7 +484,7 @@ namespace Azure.ResourceManager.Sql
             }
             Page<ManagedInstanceData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("InstancePool.GetByInstancePoolManagedInstances");
+                using var scope = _clientDiagnostics.CreateScope("InstancePool.GetManagedInstances");
                 scope.Start();
                 try
                 {
@@ -524,18 +500,15 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/instancePools/{instancePoolName}/usages
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/instancePools/{instancePoolName}
-        /// OperationId: Usages_ListByInstancePool
         /// <summary> Gets all instance pool usage metrics. </summary>
         /// <param name="expandChildren"> Optional request parameter to include managed instance usages within the instance pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="Usage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Usage> GetByInstancePoolUsagesAsync(bool? expandChildren = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<Usage> GetUsagesAsync(bool? expandChildren = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<Usage>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("InstancePool.GetByInstancePoolUsages");
+                using var scope = _clientDiagnostics.CreateScope("InstancePool.GetUsages");
                 scope.Start();
                 try
                 {
@@ -550,7 +523,7 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<Usage>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("InstancePool.GetByInstancePoolUsages");
+                using var scope = _clientDiagnostics.CreateScope("InstancePool.GetUsages");
                 scope.Start();
                 try
                 {
@@ -566,18 +539,15 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/instancePools/{instancePoolName}/usages
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/instancePools/{instancePoolName}
-        /// OperationId: Usages_ListByInstancePool
         /// <summary> Gets all instance pool usage metrics. </summary>
         /// <param name="expandChildren"> Optional request parameter to include managed instance usages within the instance pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="Usage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Usage> GetByInstancePoolUsages(bool? expandChildren = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<Usage> GetUsages(bool? expandChildren = null, CancellationToken cancellationToken = default)
         {
             Page<Usage> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("InstancePool.GetByInstancePoolUsages");
+                using var scope = _clientDiagnostics.CreateScope("InstancePool.GetUsages");
                 scope.Start();
                 try
                 {
@@ -592,7 +562,7 @@ namespace Azure.ResourceManager.Sql
             }
             Page<Usage> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("InstancePool.GetByInstancePoolUsages");
+                using var scope = _clientDiagnostics.CreateScope("InstancePool.GetUsages");
                 scope.Start();
                 try
                 {

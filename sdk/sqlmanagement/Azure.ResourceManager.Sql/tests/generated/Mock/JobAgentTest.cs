@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for JobAgent. </summary>
     public partial class JobAgentMockTests : MockTestBase
     {
-        public JobAgentMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public JobAgentMockTests(bool isAsync) : base(isAsync)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
         }
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
         }
 
         [RecordedTest]
-        public async Task GetByAgentJobExecutionsAsync()
+        public async Task GetJobExecutionsByAgentAsync()
         {
             // Example: List all job executions in a job agent with filtering.
             var resource = await GetJobAgentAsync();
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
             int? skip = null;
             int? top = null;
 
-            resource.GetByAgentJobExecutionsAsync(createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top);
+            resource.GetJobExecutionsByAgentAsync(createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top);
         }
     }
 }

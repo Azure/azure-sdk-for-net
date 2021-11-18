@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for ServerDevOpsAuditingSettings. </summary>
     public partial class ServerDevOpsAuditingSettingsMockTests : MockTestBase
     {
-        public ServerDevOpsAuditingSettingsMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public ServerDevOpsAuditingSettingsMockTests(bool isAsync) : base(isAsync)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
         }

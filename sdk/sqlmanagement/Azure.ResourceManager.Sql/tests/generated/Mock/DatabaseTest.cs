@@ -19,8 +19,7 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for Database. </summary>
     public partial class DatabaseMockTests : MockTestBase
     {
-
-        public DatabaseMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public DatabaseMockTests(bool isAsync) : base(isAsync)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
         }
@@ -181,7 +180,7 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
         }
 
         [RecordedTest]
-        public async Task GetByDatabaseDatabaseColumnsAsync()
+        public async Task GetDatabaseColumnsAsync()
         {
             // Example: Filter database columns
             var resource = await GetDatabaseAsync();
@@ -199,7 +198,7 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
 "schema asc","table","column desc",};
             string skiptoken = null;
 
-            resource.GetByDatabaseDatabaseColumnsAsync(schema, table, column, orderBy, skiptoken);
+            resource.GetDatabaseColumnsAsync(schema, table, column, orderBy, skiptoken);
         }
 
         [RecordedTest]
@@ -213,7 +212,7 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
         }
 
         [RecordedTest]
-        public async Task GetCurrentByDatabaseSensitivityLabelsAsync()
+        public async Task GetCurrentSensitivityLabelsAsync()
         {
             // Example: Gets the current sensitivity labels of a given database
             var resource = await GetDatabaseAsync();
@@ -221,7 +220,7 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
             bool? count = null;
             string filter = null;
 
-            resource.GetCurrentByDatabaseSensitivityLabelsAsync(skipToken, count, filter);
+            resource.GetCurrentSensitivityLabelsAsync(skipToken, count, filter);
         }
 
         [RecordedTest]
@@ -235,7 +234,7 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
         }
 
         [RecordedTest]
-        public async Task GetRecommendedByDatabaseSensitivityLabelsAsync()
+        public async Task GetRecommendedSensitivityLabelsAsync()
         {
             // Example: Gets the recommended sensitivity labels of a given database
             var resource = await GetDatabaseAsync();
@@ -243,7 +242,7 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
             bool? includeDisabledRecommendations = null;
             string filter = null;
 
-            resource.GetRecommendedByDatabaseSensitivityLabelsAsync(skipToken, includeDisabledRecommendations, filter);
+            resource.GetRecommendedSensitivityLabelsAsync(skipToken, includeDisabledRecommendations, filter);
         }
 
         [RecordedTest]
@@ -274,12 +273,12 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
         }
 
         [RecordedTest]
-        public async Task GetByDatabaseDatabaseExtensionsAsync()
+        public async Task GetDatabaseExtensionsAsync()
         {
             // Example: List database extensions.
             var resource = await GetDatabaseAsync();
 
-            resource.GetByDatabaseDatabaseExtensionsAsync();
+            resource.GetDatabaseExtensionsAsync();
         }
 
         [RecordedTest]
@@ -293,21 +292,21 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
         }
 
         [RecordedTest]
-        public async Task GetByDatabaseDatabaseOperationsAsync()
+        public async Task GetDatabaseOperationsAsync()
         {
             // Example: List the database management operations
             var resource = await GetDatabaseAsync();
 
-            resource.GetByDatabaseDatabaseOperationsAsync();
+            resource.GetDatabaseOperationsAsync();
         }
 
         [RecordedTest]
-        public async Task GetByDatabaseDatabaseUsagesAsync()
+        public async Task GetDatabaseUsagesAsync()
         {
             // Example: Gets database usages.
             var resource = await GetDatabaseAsync();
 
-            resource.GetByDatabaseDatabaseUsagesAsync();
+            resource.GetDatabaseUsagesAsync();
         }
 
         [RecordedTest]
