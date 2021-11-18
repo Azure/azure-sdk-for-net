@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.Resources
     /// <summary> A class to add extension methods to ManagementGroup. </summary>
     public static partial class ManagementGroupExtensions
     {
-        #region Deployment
-        /// <summary> Gets an object representing a DeploymentCollection along with the instance operations that can be performed on it. </summary>
+        #region DeploymentExtended
+        /// <summary> Gets an object representing a DeploymentExtendedCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="managementGroup"> The <see cref="ManagementGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="DeploymentCollection" /> object. </returns>
-        public static DeploymentCollection GetDeployments(this ManagementGroup managementGroup)
+        /// <returns> Returns a <see cref="DeploymentExtendedCollection" /> object. </returns>
+        public static DeploymentExtendedCollection GetDeploymentExtendeds(this ManagementGroup managementGroup)
         {
-            return new DeploymentCollection(managementGroup);
+            return new DeploymentExtendedCollection(managementGroup);
         }
         #endregion
     }
