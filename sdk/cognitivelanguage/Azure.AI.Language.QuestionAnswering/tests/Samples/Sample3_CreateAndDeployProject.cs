@@ -87,7 +87,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
 
             // Deployments can be retrieved as follows
             Pageable<BinaryData> sources = client.GetSources(newProjectName);
-            Console.WriteLine("Deployments: ");
+            Console.WriteLine("Sources: ");
             foreach (BinaryData source in sources)
             {
                 Console.WriteLine(source);
@@ -201,7 +201,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
 
             // Deployments can be retrieved as follows
             AsyncPageable<BinaryData> sources = client.GetSourcesAsync(newProjectName);
-            Console.WriteLine("Deployments: ");
+            Console.WriteLine("Sources: ");
             await foreach (BinaryData source in sources)
             {
                 Console.WriteLine(source);

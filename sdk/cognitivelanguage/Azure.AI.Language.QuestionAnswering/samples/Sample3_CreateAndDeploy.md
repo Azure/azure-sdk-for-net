@@ -89,7 +89,7 @@ while (true)
 
 // Deployments can be retrieved as follows
 Pageable<BinaryData> sources = client.GetSources(newProjectName);
-Console.WriteLine("Deployments: ");
+Console.WriteLine("Sources: ");
 foreach (BinaryData source in sources)
 {
     Console.WriteLine(source);
@@ -195,7 +195,7 @@ Console.WriteLine($"Update Sources operation result: \n{updateSourcesOperationRe
 
 // Deployments can be retrieved as follows
 AsyncPageable<BinaryData> sources = client.GetSourcesAsync(newProjectName);
-Console.WriteLine("Deployments: ");
+Console.WriteLine("Sources: ");
 await foreach (BinaryData source in sources)
 {
     Console.WriteLine(source);
