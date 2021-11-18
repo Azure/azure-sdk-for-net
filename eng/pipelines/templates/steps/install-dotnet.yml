@@ -9,6 +9,13 @@ steps:
       useGlobalJson: true
       performMultiLevelLookup: true
       includePreviewVersions: true
+  # Mgmt uses netcoreapp2.0 for testing
+  - task: UseDotNet@2
+    condition: ne(variables['Agent.OS'], 'Windows_NT') # Windows supports MultiLevelLookup and doesn't need explicit framework installation
+    displayName: 'Use .NET Core 3.1 SDK'
+    inputs:
+      packageType: runtime
+      version: "2.0.x"
   - task: UseDotNet@2
     condition: ne(variables['Agent.OS'], 'Windows_NT') # Windows supports MultiLevelLookup and doesn't need explicit framework installation
     displayName: 'Use .NET Core 3.1 SDK'
@@ -16,6 +23,7 @@ steps:
       # AspNetCore runtime pack can't be installed outside of SDK and we need it for intergation tests
       packageType: sdk
       version: "3.1.x"
+  # Autorest temporary needs the 5.0 runtime
   - task: UseDotNet@2
     condition: ne(variables['Agent.OS'], 'Windows_NT') # Windows supports MultiLevelLookup and doesn't need explicit framework installation
     displayName: 'Use .NET Core 5.0 runtime'
