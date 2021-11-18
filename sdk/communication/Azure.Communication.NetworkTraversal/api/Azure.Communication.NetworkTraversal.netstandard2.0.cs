@@ -63,7 +63,6 @@ namespace Azure.Communication.NetworkTraversal.Models
     public partial class GetRelayConfigurationOptions
     {
         public GetRelayConfigurationOptions() { }
-        public GetRelayConfigurationOptions(Azure.Communication.CommunicationUserIdentifier communicationUser = null, Azure.Communication.NetworkTraversal.RouteType? routeType = default(Azure.Communication.NetworkTraversal.RouteType?)) { }
         public Azure.Communication.CommunicationUserIdentifier CommunicationUser { get { throw null; } set { } }
         public Azure.Communication.NetworkTraversal.RouteType? RouteType { get { throw null; } set { } }
     }

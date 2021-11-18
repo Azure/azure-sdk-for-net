@@ -44,7 +44,7 @@ namespace Azure.Communication.NetworkTraversal.Tests
             CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
 
             Response<CommunicationUserIdentifier> userResponse = await communicationIdentityClient.CreateUserAsync();
-            Response<CommunicationRelayConfiguration> turnCredentialsResponse = await client.GetRelayConfigurationAsync(new GetRelayConfigurationOptions(userResponse.Value));
+            Response<CommunicationRelayConfiguration> turnCredentialsResponse = await client.GetRelayConfigurationAsync(new GetRelayConfigurationOptions { CommunicationUser = userResponse.Value } );
 
             Assert.IsNotNull(turnCredentialsResponse.Value);
             Assert.IsNotNull(turnCredentialsResponse.Value.ExpiresOn);
@@ -88,7 +88,7 @@ namespace Azure.Communication.NetworkTraversal.Tests
             CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
 
             Response<CommunicationUserIdentifier> userResponse = await communicationIdentityClient.CreateUserAsync();
-            Response<CommunicationRelayConfiguration> turnCredentialsResponse = await client.GetRelayConfigurationAsync(new GetRelayConfigurationOptions(userResponse.Value, routeType));
+            Response<CommunicationRelayConfiguration> turnCredentialsResponse = await client.GetRelayConfigurationAsync(new GetRelayConfigurationOptions { CommunicationUser = userResponse.Value, RouteType = routeType }) ;
 
             Assert.IsNotNull(turnCredentialsResponse.Value);
             Assert.IsNotNull(turnCredentialsResponse.Value.ExpiresOn);

@@ -40,7 +40,7 @@ namespace Azure.Communication.NetworkTraversal
 
         /// <summary> Initializes a new instance of <see cref="CommunicationRelayClient"/>.</summary>
         /// <param name="endpoint"> The URI of the Azure Communication Services resource. </param>
-        /// <param name="keyCredential">T he <see cref="AzureKeyCredential"/> used to authenticate requests. </param>
+        /// <param name="keyCredential"> The <see cref="AzureKeyCredential"/> used to authenticate requests. </param>
         /// <param name="options"> Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
         public CommunicationRelayClient(Uri endpoint, AzureKeyCredential keyCredential, CommunicationRelayClientOptions options = default)
             : this(
@@ -51,7 +51,7 @@ namespace Azure.Communication.NetworkTraversal
 
         /// <summary> Initializes a new instance of <see cref="CommunicationRelayClient"/>.</summary>
         /// <param name="endpoint"> The URI of the Azure Communication Services resource. </param>
-        /// <param name="tokenCredential">T he <see cref="TokenCredential"/> used to authenticate requests, such as DefaultAzureCredential. </param>
+        /// <param name="tokenCredential"> The <see cref="TokenCredential"/> used to authenticate requests, such as DefaultAzureCredential. </param>
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
         public CommunicationRelayClient(Uri endpoint, TokenCredential tokenCredential, CommunicationRelayClientOptions options = default)
             : this(
