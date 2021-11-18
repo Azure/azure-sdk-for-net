@@ -12,6 +12,7 @@ using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Azure.Management.KeyVault.Models;
 using System.Collections.Generic;
+using System.Globalization;
 using Microsoft.Azure.Management.ResourceManager.Models;
 
 namespace KeyVault.Management.Tests
@@ -39,6 +40,7 @@ namespace KeyVault.Management.Tests
         public Guid tenantIdGuid { get; internal set; }
         public string vaultName { get; internal set; }
         public VaultProperties vaultProperties { get; internal set; }
+        public SystemData systemData { get; internal set; }
 
         public KeyVaultTestBase(MockContext context)
         {
@@ -120,6 +122,16 @@ namespace KeyVault.Management.Tests
                 VaultUri = "",
                 NetworkAcls = new NetworkRuleSet() { Bypass = "AzureServices", DefaultAction = "Allow", IpRules = ipRules, VirtualNetworkRules = null },
                 AccessPolicies = new[] { accPol }
+            };
+
+            systemData = new SystemData
+            {
+                CreatedBy = "vaultuser",
+                CreatedByType = "user",
+                CreatedAt = DateTime.Parse("2020-02-27T07:41:03Z", CultureInfo.InvariantCulture).ToUniversalTime(),
+                LastModifiedBy = "vaultuser",
+                LastModifiedByType = "user",
+                LastModifiedAt = DateTime.Parse("2020-02-27T07:41:03Z", CultureInfo.InvariantCulture).ToUniversalTime()
             };
         }
     }
