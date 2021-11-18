@@ -16,6 +16,12 @@ steps:
       # AspNetCore runtime pack can't be installed outside of SDK and we need it for intergation tests
       packageType: sdk
       version: "3.1.x"
+  - task: UseDotNet@2
+    condition: ne(variables['Agent.OS'], 'Windows_NT') # Windows supports MultiLevelLookup and doesn't need explicit framework installation
+    displayName: 'Use .NET Core 5.0 runtime'
+    inputs:
+      packageType: runtime
+      version: "5.0.x"
   - task: Cache@2
     inputs:
       key: 'nuget | "$(Agent.OS)" | $(Build.SourcesDirectory)/eng/Packages.Data.props | ${{parameters.NuGetCacheKey}}'
