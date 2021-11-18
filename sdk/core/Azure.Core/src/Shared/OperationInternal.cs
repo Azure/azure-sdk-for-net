@@ -149,7 +149,7 @@ namespace Azure.Core
         /// between calls is defined by the property <see cref="DefaultPollingInterval"/>, but it can change based on information returned
         /// from the server. After each service call, a retry-after header may be returned to communicate that there is no reason to poll
         /// for status change until the specified time has passed. In this case, the maximum value between the <see cref="DefaultPollingInterval"/>
-        /// property and the retry-after header is choosen as the wait interval. Headers supported are: "Retry-After", "retry-after-ms",
+        /// property and the retry-after header is chosen as the wait interval. Headers supported are: "Retry-After", "retry-after-ms",
         /// and "x-ms-retry-after-ms".
         /// <example>Usage example:
         /// <code>
@@ -169,7 +169,7 @@ namespace Azure.Core
         /// between calls is defined by the parameter <paramref name="pollingInterval"/>, but it can change based on information returned
         /// from the server. After each service call, a retry-after header may be returned to communicate that there is no reason to poll
         /// for status change until the specified time has passed. In this case, the maximum value between the <paramref name="pollingInterval"/>
-        /// parameter and the retry-after header is choosen as the wait interval. Headers supported are: "Retry-After", "retry-after-ms",
+        /// parameter and the retry-after header is chosen as the wait interval. Headers supported are: "Retry-After", "retry-after-ms",
         /// and "x-ms-retry-after-ms".
         /// <example>Usage example:
         /// <code>

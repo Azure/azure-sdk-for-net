@@ -1,14 +1,10 @@
 # Release History
 
-## 1.0.0-beta.5 (Unreleased)
+## 1.0.0-beta.5 (2021-11-18)
 
 ### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Updated the supported service version to "2021-07-01".
+- Added support to create instances of `ArtifactManifestProperties` using the `ContainerRegistryModelFactory`.
 
 ## 1.0.0-beta.4 (2021-08-10)
 
