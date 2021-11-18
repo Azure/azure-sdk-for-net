@@ -152,7 +152,7 @@ There is no means of predicting which partition will be associated with a given 
 
 ### Event Hub Buffered Producer Client
 
-When using the `EventHubBufferedProducerClient`, events are enqueued with a partition key option.  Because the producer manages publishing, there is no explicit call.  When the producer is closed, it will ensure that any remaining enqueued events have been published.  All of your event data will be published to one of the Event Hub partitions, thought here may be a slight delay until it is available to be read.
+When using the `EventHubBufferedProducerClient`, events are enqueued with a partition key option.  Because the producer manages publishing, there is no explicit call.  When the producer is closed, it will ensure that any remaining enqueued events have been published.  All of your event data will be published to one of the Event Hub partitions, though there may be a slight delay until it is available to be read.
 
 **Note:** It is important to be aware that if you are using a partition key, you may not also specify a partition identifier; they are mutually exclusive.
 
