@@ -36,6 +36,10 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
         protected int MaximumSamplesCount => 10;
 
+        protected int MaxPageSizeSamples => 1;
+
+        protected int SkipSamples => 1;
+
         protected DateTimeOffset SamplingStartTime => DateTimeOffset.Parse("2021-10-01T00:00:00Z");
 
         protected DateTimeOffset SamplingEndTime => DateTimeOffset.Parse("2021-10-31T00:00:00Z");
