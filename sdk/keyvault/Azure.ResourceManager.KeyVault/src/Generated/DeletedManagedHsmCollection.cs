@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.KeyVault
 
         // Collection level operations.
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/locations/{location}/deletedManagedHSMs/{name}
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: ManagedHsms_GetDeleted
         /// <summary> Gets the specified deleted managed HSM. </summary>
         /// <param name="location"> The location of the deleted managed HSM. </param>
         /// <param name="name"> The name of the deleted managed HSM. </param>
@@ -72,6 +75,9 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/locations/{location}/deletedManagedHSMs/{name}
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: ManagedHsms_GetDeleted
         /// <summary> Gets the specified deleted managed HSM. </summary>
         /// <param name="location"> The location of the deleted managed HSM. </param>
         /// <param name="name"> The name of the deleted managed HSM. </param>
