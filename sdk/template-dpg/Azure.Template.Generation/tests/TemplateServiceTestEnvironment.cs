@@ -3,7 +3,7 @@
 
 using Azure.Core.TestFramework;
 
-namespace Azure.Template.DataplaneCodeGen.Tests
+namespace Azure.Template.Generation.Tests
 {
     public class TemplateServiceTestEnvironment : TestEnvironment
     {

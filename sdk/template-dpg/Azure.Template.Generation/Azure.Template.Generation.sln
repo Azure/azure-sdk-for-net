@@ -5,9 +5,9 @@ VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{8052009B-2126-44A3-88CD-4F3B17894C64}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Template.DataplaneCodeGen", "src\Azure.Template.DataplaneCodeGen.csproj", "{AF06AB51-3B39-4905-B7EA-CD7563DE5770}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Template.Generation", "src\Azure.Template.Generation.csproj", "{AF06AB51-3B39-4905-B7EA-CD7563DE5770}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Template.DataplaneCodeGen.Tests", "tests\Azure.Template.DataplaneCodeGen.Tests.csproj", "{ADB00BD6-8FEE-4176-BE15-4F530F5C8F29}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Template.Generation.Tests", "tests\Azure.Template.Generation.Tests.csproj", "{ADB00BD6-8FEE-4176-BE15-4F530F5C8F29}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

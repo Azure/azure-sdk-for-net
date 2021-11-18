@@ -7,7 +7,7 @@ trigger:
     - release/*
   paths:
     include:
-    - sdk/template-dataplanecodegen/
+    - sdk/template-dpg/
 
 pr:
   branches:
@@ -18,13 +18,13 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/template-dataplanecodegen/
+    - sdk/template-dpg/
 
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
-    ServiceDirectory: template-dataplanecodegen
+    ServiceDirectory: template-dpg
     ArtifactName: packages
     Artifacts:
-    - name: Azure.Template.DataplaneCodeGen
-      safeName: AzureTemplateDataplaneCodeGen
+    - name: Azure.Template.Generation
+      safeName: AzureTemplateGeneration

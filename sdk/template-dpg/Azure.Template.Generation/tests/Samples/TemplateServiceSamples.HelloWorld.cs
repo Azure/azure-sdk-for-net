@@ -9,7 +9,7 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.Template.DataplaneCodeGen.Tests.Samples
+namespace Azure.Template.Generation.Tests.Samples
 {
     public class TemplateServiceSamples : SamplesBase<TemplateServiceTestEnvironment>
     {

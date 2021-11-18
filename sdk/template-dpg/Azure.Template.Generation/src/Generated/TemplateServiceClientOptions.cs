@@ -8,7 +8,7 @@
 using System;
 using Azure.Core;
 
-namespace Azure.Template.DataplaneCodeGen
+namespace Azure.Template.Generation
 {
     /// <summary> Client options for TemplateServiceClient. </summary>
     public partial class TemplateServiceClientOptions : ClientOptions
