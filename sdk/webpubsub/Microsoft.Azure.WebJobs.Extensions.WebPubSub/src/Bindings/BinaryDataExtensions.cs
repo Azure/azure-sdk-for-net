@@ -2,17 +2,18 @@
 // Licensed under the MIT License.
 
 using System.IO;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace System
 {
     internal static class BinaryDataExtensions
     {
-        public static object Convert(this BinaryData data, Type targetType)
+        public static object Convert(this BinaryData data, Type targetType, JsonSerializer serializer)
         {
             if (targetType == typeof(JObject))
             {
-                return JObject.FromObject(data.ToArray());
+                return JObject.FromObject(data.ToArray(), serializer);
             }
 
             if (targetType == typeof(Stream))

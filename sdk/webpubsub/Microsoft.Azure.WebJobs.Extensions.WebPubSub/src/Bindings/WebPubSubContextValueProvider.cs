@@ -32,13 +32,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
         private object GetRequest()
         {
+            var serializer = new WebPubSubJsonSerializer().Serializer;
             if (Type == typeof(JObject))
             {
-                return JObject.FromObject(_request);
+                return JObject.FromObject(_request, serializer);
             }
             if (Type == typeof(string))
             {
-                return JObject.FromObject(_request).ToString();
+                return JObject.FromObject(_request, serializer).ToString();
             }
 
             return _request;

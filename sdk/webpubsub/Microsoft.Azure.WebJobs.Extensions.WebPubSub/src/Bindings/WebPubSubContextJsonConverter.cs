@@ -13,6 +13,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
     internal class WebPubSubContextJsonConverter : JsonConverter<WebPubSubContext>
     {
+        public override bool CanRead => false;
+        public override bool CanWrite => true;
+
         public override WebPubSubContext ReadJson(JsonReader reader, Type objectType, WebPubSubContext existingValue, bool hasExistingValue, JsonSerializer serializer)
         {
             throw new NotImplementedException();
@@ -20,6 +23,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
         public override void WriteJson(JsonWriter writer, WebPubSubContext value, JsonSerializer serializer)
         {
+            // overwrite customers json converter.
+            serializer = new WebPubSubJsonSerializer().Serializer;
             serializer.Converters.Add(new HttpResponseMessageJsonConverter());
             // Request is using System.Json, use string as bridge to convert.
             var request = ConvertString(value.Request);

@@ -13,6 +13,7 @@ using Microsoft.Azure.WebJobs.Host.Listeners;
 using Microsoft.Azure.WebJobs.Host.Protocols;
 using Microsoft.Azure.WebJobs.Host.Triggers;
 using Microsoft.Azure.WebPubSub.Common;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
@@ -142,11 +143,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         {
             private readonly ParameterInfo _parameter;
             private readonly WebPubSubTriggerEvent _triggerEvent;
+            private readonly JsonSerializer _serializer;
 
             public WebPubSubTriggerValueProvider(ParameterInfo parameter, WebPubSubTriggerEvent triggerEvent)
             {
                 _parameter = parameter ?? throw new ArgumentNullException(nameof(parameter));
                 _triggerEvent = triggerEvent ?? throw new ArgumentNullException(nameof(triggerEvent));
+                _serializer = new WebPubSubJsonSerializer().Serializer;
             }
 
             public Task<object> GetValueAsync()
@@ -184,32 +187,32 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                     {
                         return value;
                     }
-                    return ConvertTypeIfPossible(value, targetType);
+                    return ConvertTypeIfPossible(value, targetType, _serializer);
                 }
                 return null;
             }
 
-            private static object ConvertTypeIfPossible(object source, Type target)
+            private static object ConvertTypeIfPossible(object source, Type target, JsonSerializer serializer)
             {
                 if (source is BinaryData data)
                 {
-                    return data.Convert(target);
+                    return data.Convert(target, serializer);
                 }
                 if (target == typeof(JObject))
                 {
-                    return JToken.FromObject(source);
+                    return JToken.FromObject(source, serializer);
                 }
                 if (target == typeof(string))
                 {
-                    return JToken.FromObject(source).ToString();
+                    return JToken.FromObject(source, serializer).ToString();
                 }
                 if (target == typeof(byte[]))
                 {
-                    return Encoding.UTF8.GetBytes(JToken.FromObject(source).ToString());
+                    return Encoding.UTF8.GetBytes(JToken.FromObject(source, serializer).ToString());
                 }
                 if (target == typeof(Stream))
                 {
-                    return new MemoryStream(Encoding.UTF8.GetBytes(JToken.FromObject(source).ToString()));
+                    return new MemoryStream(Encoding.UTF8.GetBytes(JToken.FromObject(source, serializer).ToString()));
                 }
                 return null;
             }

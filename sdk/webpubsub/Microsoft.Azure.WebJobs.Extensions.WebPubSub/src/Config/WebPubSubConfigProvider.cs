@@ -29,6 +29,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         private readonly ILogger _logger;
         private readonly WebPubSubFunctionsOptions _options;
         private readonly IWebPubSubTriggerDispatcher _dispatcher;
+        private readonly JsonSerializer _serializer;
 
         public WebPubSubConfigProvider(
             IOptions<WebPubSubFunctionsOptions> options,
@@ -41,6 +42,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             _nameResolver = nameResolver;
             _configuration = configuration;
             _dispatcher = new WebPubSubTriggerDispatcher(_logger, _options);
+            _serializer = new WebPubSubJsonSerializer().Serializer;
         }
 
         public void Initialize(ExtensionConfigContext context)
@@ -74,15 +76,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 webhookException = ex;
             }
 
-            // register JsonConverters
-            RegisterJsonConverter();
-
             // bindings
             context
-                .AddConverter<WebPubSubConnection, JObject>(JObject.FromObject)
-                .AddConverter<WebPubSubContext, JObject>(JObject.FromObject)
-                .AddConverter<JObject, WebPubSubAction>(ConvertToWebPubSubOperation)
-                .AddConverter<JArray, WebPubSubAction[]>(ConvertToWebPubSubOperationArray);
+                .AddConverter<WebPubSubConnection, JObject>(o => JObject.FromObject(o, _serializer))
+                .AddConverter<WebPubSubContext, JObject>(o => JObject.FromObject(o, _serializer))
+                .AddConverter<JObject, WebPubSubAction>(o => ConvertToWebPubSubOperation(o, _serializer))
+                .AddConverter<JArray, WebPubSubAction[]>(o => ConvertToWebPubSubOperationArray(o, _serializer));
 
             // Trigger binding
             context.AddBindingRule<WebPubSubTriggerAttribute>()
@@ -152,27 +151,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             }
         }
 
-        internal static void RegisterJsonConverter()
-        {
-            JsonConvert.DefaultSettings = () => new JsonSerializerSettings
-            {
-                Converters = new List<JsonConverter>
-                {
-                    new StringEnumConverter(),
-                    new BinaryDataJsonConverter(),
-                },
-                ContractResolver = new CamelCasePropertyNamesContractResolver()
-            };
-        }
-
-        internal static WebPubSubAction ConvertToWebPubSubOperation(JObject input)
+        internal static WebPubSubAction ConvertToWebPubSubOperation(JObject input, JsonSerializer serializer)
         {
             if (input.TryGetValue("actionName", StringComparison.OrdinalIgnoreCase, out var kind))
             {
                 var opeartions = typeof(WebPubSubAction).Assembly.GetTypes().Where(t => t.BaseType == typeof(WebPubSubAction));
                 foreach (var item in opeartions)
                 {
-                    if (TryToWebPubSubOperation(input, kind.ToString() + "Action", item, out var operation))
+                    if (TryToWebPubSubOperation(input, kind.ToString() + "Action", item, serializer, out var operation))
                     {
                         return operation;
                     }
@@ -181,17 +167,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             throw new ArgumentException($"Not supported WebPubSubOperation: {kind}.");
         }
 
-        internal static WebPubSubAction[] ConvertToWebPubSubOperationArray(JArray input)
+        internal static WebPubSubAction[] ConvertToWebPubSubOperationArray(JArray input, JsonSerializer serializer)
         {
             var result = new List<WebPubSubAction>();
             foreach (var item in input)
             {
-                result.Add(ConvertToWebPubSubOperation((JObject)item));
+                result.Add(ConvertToWebPubSubOperation((JObject)item, serializer));
             }
             return result.ToArray();
         }
 
-        private static bool TryToWebPubSubOperation(JObject input, string actionName, Type operationType, out WebPubSubAction operation)
+        private static bool TryToWebPubSubOperation(JObject input, string actionName, Type operationType, JsonSerializer serializer, out WebPubSubAction operation)
         {
             // message events need check dataType.
             if (actionName.StartsWith("Send", StringComparison.OrdinalIgnoreCase))
@@ -200,7 +186,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             }
             if (actionName.Equals(operationType.Name, StringComparison.OrdinalIgnoreCase))
             {
-                operation = input.ToObject(operationType) as WebPubSubAction;
+                operation = input.ToObject(operationType, serializer) as WebPubSubAction;
                 return true;
             }
             operation = null;

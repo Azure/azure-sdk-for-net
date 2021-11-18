@@ -98,22 +98,25 @@ namespace Microsoft.Azure.WebPubSub.Common
         /// </summary>
         /// <typeparam name="T">Customized type.</typeparam>
         /// <param name="stateKey">State key.</param>
-        /// <returns>Connection state mapped to the key.</returns>
-        public T GetState<T>(string stateKey)
+        /// <param name="value">Connection state mapped to the key.</param>
+        /// <returns>Returns true if is able to find the key and false means key doesn't exist.</returns>
+        public bool TryGetState<T>(string stateKey, out T value)
         {
-            if (States.TryGetValue(stateKey, out var value))
+            value = default(T);
+            if (States.TryGetValue(stateKey, out var stateValue))
             {
-                if (value != null)
+                if (stateValue != null)
                 {
                     // Should ensure in server SDK.
-                    if (value is not JsonElement element)
+                    if (stateValue is not JsonElement element)
                     {
                         throw new ArgumentException("States value should be inserted with type `JsonElement`.");
                     }
-                    return JsonSerializer.Deserialize<T>(element.GetRawText());
+                    value = JsonSerializer.Deserialize<T>(element.GetRawText());
                 }
+                return true;
             }
-            return default(T);
+            return false;
         }
     }
 }
