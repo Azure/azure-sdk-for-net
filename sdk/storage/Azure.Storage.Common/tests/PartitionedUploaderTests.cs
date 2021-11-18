@@ -148,7 +148,7 @@ namespace Azure.Storage.Tests
             const int dataSize = Constants.KB;
             const int numPartitions = 2;
             var data = TestHelper.GetRandomBuffer(dataSize);
-            int blockSize = oneshot ? dataSize : dataSize / numPartitions;
+            int blockSize = oneshot ? dataSize * 2 : dataSize / numPartitions;
 
             var stream = new Mock<MemoryStream>(MockBehavior.Loose, data);
             stream.CallBase = true;
