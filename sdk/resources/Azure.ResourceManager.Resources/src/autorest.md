@@ -37,6 +37,13 @@ request-path-to-parent:
 operation-groups-to-omit:
    Providers;ProviderResourceTypes;Resources;ResourceGroups;Tags;Subscriptions;Tenants
 directive:
+  - from: resources.json
+    where: $.definitions.DeploymentExtended
+    transform: $['x-ms-client-name'] = 'Deployment'
+  - from: resources.json
+    where: $.definitions.Deployment
+    transform: $['x-ms-client-name'] = 'DeploymentInput'
+
   - remove-operation: checkResourceName
   # Use AtScope methods to replace the following operations
   # Keep the get method at each scope so that generator can know the possible values of container's parent
@@ -93,12 +100,6 @@ directive:
   - rename-operation:
       from: ListOperations
       to: Operations_ListOps
-#   - rename-operation:
-#       from: DeploymentScripts_GetLogs
-#       to: DeploymentScriptLogs_GetLogs
-#   - rename-operation:
-#       from: DeploymentScripts_GetLogsDefault
-#       to: DeploymentScriptLogs_GetLogsDefault
   - from: resources.json
     where: $.definitions.DeploymentOperationProperties
     transform: >

@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.Resources
     /// <summary> A class to add extension methods to Tenant. </summary>
     public static partial class TenantExtensions
     {
-        #region DeploymentExtended
-        /// <summary> Gets an object representing a DeploymentExtendedCollection along with the instance operations that can be performed on it. </summary>
+        #region Deployment
+        /// <summary> Gets an object representing a DeploymentCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="DeploymentExtendedCollection" /> object. </returns>
-        public static DeploymentExtendedCollection GetDeploymentExtendeds(this Tenant tenant)
+        /// <returns> Returns a <see cref="DeploymentCollection" /> object. </returns>
+        public static DeploymentCollection GetDeployments(this Tenant tenant)
         {
-            return new DeploymentExtendedCollection(tenant);
+            return new DeploymentCollection(tenant);
         }
         #endregion
 
