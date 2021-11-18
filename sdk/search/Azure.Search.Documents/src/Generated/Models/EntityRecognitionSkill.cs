@@ -54,8 +54,6 @@ namespace Azure.Search.Documents.Indexes.Models
         }
         /// <summary> A value indicating which language code to use. Default is en. </summary>
         public EntityRecognitionSkillLanguage? DefaultLanguageCode { get; set; }
-        /// <summary> Determines whether or not to include entities which are well known but don&apos;t conform to a pre-defined type. If this configuration is not set (default), set to null or set to false, entities which don&apos;t conform to one of the pre-defined types will not be surfaced. </summary>
-        public bool? IncludeTypelessEntities { get; set; }
         /// <summary> A value between 0 and 1 that be used to only include entities whose confidence score is greater than the value specified. If not set (default), or if explicitly set to null, all entities will be included. </summary>
         public double? MinimumPrecision { get; set; }
     }

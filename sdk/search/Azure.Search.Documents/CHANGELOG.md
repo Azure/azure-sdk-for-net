@@ -1,7 +1,43 @@
 # Release History
 
-## 11.4.0-beta.1 (Unreleased)
+## 11.4.0-beta.5 (2021-11-09)
 
+### Features Added
+- Added support for [Semantic Search](https://docs.microsoft.com/azure/search/semantic-search-overview). `SearchOptions` now support specifying `SemanticSettings` to influence the search behavior.
+
+### Breaking Changes
+- Renamed `IndexerStateHighWaterMark` to `IndexerChangeTrackingState`.
+- Renamed the property `HighWaterMark` to `ChangeTrackingState` in `IndexerState`.
+
+## 11.4.0-beta.4 (2021-10-05)
+
+### Features Added
+- Added APIs to [reset documents](https://docs.microsoft.com/azure/search/search-howto-run-reset-indexers#reset-docs-preview) and [skills](https://docs.microsoft.com/azure/search/search-howto-run-reset-indexers#reset-skills-preview).
+
+### Breaking Changes
+- Renamed `QueryAnswer` to `QueryAnswerType` in `SearchOptions`.
+- Renamed `QueryCaption` to `QueryCaptionType` in `SearchOptions`.
+- Renamed `QuerySpeller` to `QuerySpellerType` in `SearchOptions`.
+- Renamed `QueryCaptionHighlight` to `QueryCaptionHighlightEnabled` in `SearchOptions`.
+
+## 11.4.0-beta.3 (2021-09-07)
+
+### Features Added
+- Support for [Lexical normalizers](https://docs.microsoft.com/azure/search/search-normalizers#normalizers) in [text analysers](https://docs.microsoft.com/rest/api/searchservice/test-analyzer) via `AnalyzeTextOptions`.
+
+## 11.4.0-beta.2 (2021-08-10)
+
+### Features Added
+- Support for [Azure Active Directory](https://docs.microsoft.com/azure/active-directory/authentication/) based authentication. Users can specify a [`TokenCredential`](https://docs.microsoft.com/dotnet/api/azure.core.tokencredential) when creating a `SearchClient`, `SearchIndexClient` or a `SearchIndexerClient`. For example, you can get started with `new SearchClient(endpoint, new DefaultAzureCredential())` to authenticate via AAD using [Azure.Identity](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md). For more details see [how to use role-based authentication in Azure Cognitive Search](https://docs.microsoft.com/azure/search/search-security-rbac?tabs=config-svc-portal%2Crbac-portal).
+
+### Bugs Fixed
+- Enhanced the documentation of some `SearchOptions` properties by adding links to REST docs - https://github.com/Azure/azure-sdk-for-net/issues/22808
+
+## 11.4.0-beta.1 (2021-07-06)
+
+### Features Added
+- Support for additional/enhanced skills - [EntityLinkingSkill](https://docs.microsoft.com/azure/search/cognitive-search-skill-entity-linking-v3), [EntityRecognitionSkill](https://docs.microsoft.com/azure/search/cognitive-search-skill-entity-recognition-v3), [PiiDetectionSkill](https://docs.microsoft.com/azure/search/cognitive-search-skill-pii-detection), [SentimentSkill](https://docs.microsoft.com/azure/search/cognitive-search-skill-sentiment-v3)
+- Use managed identities in Azure Active Directory with [SearchIndexerDataIdentity](https://docs.microsoft.com/azure/search/search-howto-managed-identities-data-sources)
 
 ## 11.3.0 (2021-06-08)
 

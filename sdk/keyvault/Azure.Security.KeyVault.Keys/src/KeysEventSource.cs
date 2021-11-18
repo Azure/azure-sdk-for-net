@@ -10,16 +10,17 @@ using Azure.Core.Diagnostics;
 namespace Azure.Security.KeyVault.Keys
 {
     [EventSource(Name = EventSourceName)]
-    internal sealed class KeysEventSource : EventSource
+    internal sealed class KeysEventSource : AzureEventSource
     {
         internal const int AlgorithmNotSupportedEvent = 1;
         internal const int KeyTypeNotSupportedEvent = 2;
         internal const int PrivateKeyRequiredEvent = 3;
         internal const int CryptographicExceptionEvent = 4;
+        internal const int GetPermissionDeniedEvent = 5;
 
         private const string EventSourceName = "Azure-Security-KeyVault-Keys";
 
-        private KeysEventSource() : base(EventSourceName, EventSourceSettings.Default, AzureEventSourceListener.TraitName, AzureEventSourceListener.TraitValue) { }
+        private KeysEventSource() : base(EventSourceName) { }
 
         public static KeysEventSource Singleton { get; } = new KeysEventSource();
 
@@ -40,7 +41,12 @@ namespace Azure.Security.KeyVault.Keys
         {
             if (IsEnabled())
             {
-                string keyType = key?.KeyType.ToString() ?? "(null)";
+                string keyType = "(null)";
+                if (key != null)
+                {
+                    keyType = key.KeyType.ToString();
+                }
+
                 KeyTypeNotSupported(operation, keyType);
             }
         }
@@ -92,5 +98,8 @@ namespace Azure.Security.KeyVault.Keys
 
             return sb.ToString();
         }
+
+        [Event(GetPermissionDeniedEvent, Level = EventLevel.Verbose, Message = "Permission denied to get key {1}. Cannot perform the {0} operation locally.")]
+        public void GetPermissionDenied(string operation, string keyName) => WriteEvent(GetPermissionDeniedEvent, operation, keyName);
     }
 }

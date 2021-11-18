@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Storage.Models
     public partial class ManagementPolicyFilter
     {
         /// <summary> Initializes a new instance of ManagementPolicyFilter. </summary>
-        /// <param name="blobTypes"> An array of predefined enum values. Only blockBlob is supported. </param>
+        /// <param name="blobTypes"> An array of predefined enum values. Currently blockBlob supports all tiering and delete actions. Only delete actions are supported for appendBlob. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="blobTypes"/> is null. </exception>
         public ManagementPolicyFilter(IEnumerable<string> blobTypes)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Initializes a new instance of ManagementPolicyFilter. </summary>
         /// <param name="prefixMatch"> An array of strings for prefixes to be match. </param>
-        /// <param name="blobTypes"> An array of predefined enum values. Only blockBlob is supported. </param>
+        /// <param name="blobTypes"> An array of predefined enum values. Currently blockBlob supports all tiering and delete actions. Only delete actions are supported for appendBlob. </param>
         /// <param name="blobIndexMatch"> An array of blob index tag based filters, there can be at most 10 tag filters. </param>
         internal ManagementPolicyFilter(IList<string> prefixMatch, IList<string> blobTypes, IList<TagFilter> blobIndexMatch)
         {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> An array of strings for prefixes to be match. </summary>
         public IList<string> PrefixMatch { get; }
-        /// <summary> An array of predefined enum values. Only blockBlob is supported. </summary>
+        /// <summary> An array of predefined enum values. Currently blockBlob supports all tiering and delete actions. Only delete actions are supported for appendBlob. </summary>
         public IList<string> BlobTypes { get; }
         /// <summary> An array of blob index tag based filters, there can be at most 10 tag filters. </summary>
         public IList<TagFilter> BlobIndexMatch { get; }

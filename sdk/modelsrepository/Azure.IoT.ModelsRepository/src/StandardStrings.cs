@@ -13,7 +13,8 @@ namespace Azure.IoT.ModelsRepository
         public const string DiscoveredDependencies = "Discovered dependencies \"{0}\".";
         public const string FetchingModelContent = "Attempting to fetch model content from \"{0}\".";
         public const string ErrorFetchingModelContent = "Model file \"{0}\" not found or not accessible in target repository.";
-        public const string IncorrectDtmiCasing =
-            "Fetched model has incorrect DTMI casing. Expected \"{0}\", parsed \"{1}\".";
+        public const string FailureProcessingRepositoryMetadata = "Unable to fetch or process repository metadata file.";
+        public const string IncorrectDtmi =
+            "Fetched model has an incorrect DTMI. Expected \"{0}\", parsed \"{1}\".";
     }
 }

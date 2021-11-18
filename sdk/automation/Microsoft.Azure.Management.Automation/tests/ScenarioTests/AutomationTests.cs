@@ -21,7 +21,7 @@ namespace Automation.Tests.ScenarioTests
         {
             using (var context = MockContext.Start(this.GetType()))
             {
-                using (var testFixture = new AutomationTestBase(context))
+                using (var testFixture = new AutomationTestBase(context, "CanCreateUpdateDeleteRunbook"))
                 {
                     var runbookName = RunbookDefinition.TestPSScript.RunbookName;
                     var runbookContent = RunbookDefinition.TestPSScript.PsScript;
@@ -65,7 +65,7 @@ namespace Automation.Tests.ScenarioTests
         {
             using (var context = MockContext.Start(this.GetType()))
             {
-                using (var testFixture = new AutomationTestBase(context))
+                using (var testFixture = new AutomationTestBase(context, "CanCreateUpdateDeleteSchedule"))
                 {
                     var scheduleName = TestUtilities.GenerateName("hourlySche");
                     var startTime = DateTimeOffset.Now.AddDays(1);
@@ -102,7 +102,7 @@ namespace Automation.Tests.ScenarioTests
         {
             using (var context = MockContext.Start(this.GetType()))
             {
-                using (var testFixture = new AutomationTestBase(context))
+                using (var testFixture = new AutomationTestBase(context, "CanCreateUpdateDeleteVariable"))
                 {
                     var variableName = TestUtilities.GenerateName("variable");
                     var value = 10;
@@ -140,7 +140,7 @@ namespace Automation.Tests.ScenarioTests
         {
             using (var context = MockContext.Start(this.GetType()))
             {
-                using (var testFixture = new AutomationTestBase(context))
+                using (var testFixture = new AutomationTestBase(context, "CanCreateUpdateDeleteWebhook"))
                 {
                     var webhookName = TestUtilities.GenerateName("webhook");
                     var runbookName = RunbookDefinition.TestFasterWorkflow.RunbookName;
@@ -191,7 +191,7 @@ namespace Automation.Tests.ScenarioTests
         {
             using (var context = MockContext.Start(this.GetType()))
             {
-                using (var testFixture = new AutomationTestBase(context))
+                using (var testFixture = new AutomationTestBase(context, "CanCreateUpdateDeleteCredential"))
                 {
                     var credentialName = TestUtilities.GenerateName("credential");
                     var userName = "userName1";
@@ -231,7 +231,7 @@ namespace Automation.Tests.ScenarioTests
         {
             using (var context = MockContext.Start(this.GetType()))
             {
-                using (var testFixture = new AutomationTestBase(context))
+                using (var testFixture = new AutomationTestBase(context, "CanCreateUpdateDeleteDscConfiguration"))
                 {
                     var configName = DscConfigurationDefinition.TestSimpleConfigurationDefinition.ConfigurationName;
                     var configContent = DscConfigurationDefinition.TestSimpleConfigurationDefinition.PsScript;
@@ -275,7 +275,7 @@ namespace Automation.Tests.ScenarioTests
         {
             using (var context = MockContext.Start(this.GetType()))
             {
-                using (var testFixture = new AutomationTestBase(context))
+                using (var testFixture = new AutomationTestBase(context, "CanCreateUpdateDeleteDscNodeConfiguration"))
                 {
 
                     var configName = DscNodeConfigurationDefinition.TestSimpleConfigurationDefinition.ConfigurationName;
@@ -325,12 +325,12 @@ namespace Automation.Tests.ScenarioTests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "Skip")]
         public void CanCreateUpdateDeleteAutomationModules()
         {
             using (var context = MockContext.Start(this.GetType()))
             {
-                using (var testFixture = new AutomationTestBase(context))
+                using (var testFixture = new AutomationTestBase(context, "CanCreateUpdateDeleteAutomationModules"))
                 {
 
                     var moduleName = "powershellget";
@@ -373,12 +373,12 @@ namespace Automation.Tests.ScenarioTests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "Skip")]
         public void CanCreateUpdateDeletePython2Packages()
         {
             using (var context = MockContext.Start(this.GetType()))
             {
-                using (var testFixture = new AutomationTestBase(context))
+                using (var testFixture = new AutomationTestBase(context, "CanCreateUpdateDeletePython2Packages"))
                 {
 
                     var python2PackageName = "numpy";
@@ -421,12 +421,12 @@ namespace Automation.Tests.ScenarioTests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "Skip")]
         public void CanCreateUpdateDeleteSourceControl()
         {
             using (var context = MockContext.Start(this.GetType()))
             {
-                using (var testFixture = new AutomationTestBase(context))
+                using (var testFixture = new AutomationTestBase(context, "CanCreateUpdateDeleteSourceControl"))
                 {
 
                     var sourceControlName = SourceControlDefinition.TestSimpleSourceControlDefinition.SourceControlName;
@@ -479,12 +479,12 @@ namespace Automation.Tests.ScenarioTests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "Skip")]
         public void CanCreateSourceControlSyncJob()
         {
             using (var context = MockContext.Start(this.GetType()))
             {
-                using (var testFixture = new AutomationTestBase(context))
+                using (var testFixture = new AutomationTestBase(context, "CanCreateSourceControlSyncJob"))
                 {
                     var sourceControlName = SourceControlDefinition.TestSimpleSourceControlDefinition.SourceControlName;
                     var repoUrl = SourceControlDefinition.TestSimpleSourceControlDefinition.RepoUrl;

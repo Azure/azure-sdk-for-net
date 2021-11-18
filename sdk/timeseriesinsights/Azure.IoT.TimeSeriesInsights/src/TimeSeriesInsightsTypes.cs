@@ -41,7 +41,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The pageable list <see cref="AsyncPageable{TimeSeriesType}"/> of Time Series types with the http response.</returns>
         /// <example>
-        /// <code snippet="Snippet:TimeSeriesInsightsSampleGetAllTypes">
+        /// <code snippet="Snippet:TimeSeriesInsightsSampleGetAllTypes" language="csharp">
         /// // Get all Time Series types in the environment
         /// AsyncPageable&lt;TimeSeriesType&gt; getAllTypesResponse = typesClient.GetTypesAsync();
         ///
@@ -174,7 +174,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// Type object is set when operation is successful and error object is set when operation is unsuccessful.
         /// </returns>
         /// <remarks>
-        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples">our repo samples</see>.
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples">our repo samples</see>.
         /// </remarks>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="timeSeriesTypeNames"/> is <c>null</c>.
@@ -277,7 +277,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// Type object is set when operation is successful and error object is set when operation is unsuccessful.
         /// </returns>
         /// <remarks>
-        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples">our repo samples</see>.
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples">our repo samples</see>.
         /// </remarks>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="timeSeriesTypeIds"/> is <c>null</c>.
@@ -286,7 +286,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// The exception is thrown when <paramref name="timeSeriesTypeIds"/> is empty.
         /// </exception>
         /// <example>
-        /// <code snippet="Snippet:TimeSeriesInsightsSampleGetTypeById">
+        /// <code snippet="Snippet:TimeSeriesInsightsSampleGetTypeById" language="csharp">
         /// // Code snippet below shows getting a default Type using Id
         /// // The default type Id can be obtained programmatically by using the ModelSettings client.
         ///
@@ -405,7 +405,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// An error object will be set when operation is unsuccessful.
         /// </returns>
         /// <remarks>
-        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples">our repo samples</see>.
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples">our repo samples</see>.
         /// </remarks>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="timeSeriesTypes"/> is <c>null</c>.
@@ -414,7 +414,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// The exception is thrown when <paramref name="timeSeriesTypes"/> is empty.
         /// </exception>
         /// <example>
-        /// <code snippet="Snippet:TimeSeriesInsightsSampleCreateType">
+        /// <code snippet="Snippet:TimeSeriesInsightsSampleCreateType" language="csharp">
         /// TimeSeriesInsightsTypes typesClient = client.GetTypesClient();
         ///
         /// // Create a type with an aggregate variable
@@ -539,7 +539,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// List of error objects corresponding by position to the input array in the request. null when the operation is successful.
         /// </returns>
         /// <remarks>
-        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples">our repo samples</see>.
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples">our repo samples</see>.
         /// </remarks>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="timeSeriesTypeNames"/> is <c>null</c>.
@@ -640,7 +640,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// List of error objects corresponding by position to the input array in the request. null when the operation is successful.
         /// </returns>
         /// <remarks>
-        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples">our repo samples</see>.
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples">our repo samples</see>.
         /// </remarks>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="timeSeriesTypeIds"/> is <c>null</c>.
@@ -649,7 +649,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// The exception is thrown when <paramref name="timeSeriesTypeIds"/> is empty.
         /// </exception>
         /// <example>
-        /// <code snippet="Snippet:TimeSeriesInsightsSampleDeleteTypeById">
+        /// <code snippet="Snippet:TimeSeriesInsightsSampleDeleteTypeById" language="csharp">
         /// // Delete Time Series types with Ids
         ///
         /// var typesIdsToDelete = new List&lt;string&gt; { &quot;Type1Id&quot;, &quot; Type2Id&quot; };

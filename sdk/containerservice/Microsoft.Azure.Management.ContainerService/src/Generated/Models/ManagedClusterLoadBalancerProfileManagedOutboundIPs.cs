@@ -32,9 +32,10 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// Initializes a new instance of the
         /// ManagedClusterLoadBalancerProfileManagedOutboundIPs class.
         /// </summary>
-        /// <param name="count">Desired number of outbound IP created/managed
-        /// by Azure for the cluster load balancer. Allowed values must be in
-        /// the range of 1 to 100 (inclusive). The default value is 1. </param>
+        /// <param name="count">The desired number of outbound IPs
+        /// created/managed by Azure for the cluster load balancer. Allowed
+        /// values must be in the range of 1 to 100 (inclusive). The default
+        /// value is 1. </param>
         public ManagedClusterLoadBalancerProfileManagedOutboundIPs(int? count = default(int?))
         {
             Count = count;
@@ -47,9 +48,9 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets desired number of outbound IP created/managed by Azure
-        /// for the cluster load balancer. Allowed values must be in the range
-        /// of 1 to 100 (inclusive). The default value is 1.
+        /// Gets or sets the desired number of outbound IPs created/managed by
+        /// Azure for the cluster load balancer. Allowed values must be in the
+        /// range of 1 to 100 (inclusive). The default value is 1.
         /// </summary>
         [JsonProperty(PropertyName = "count")]
         public int? Count { get; set; }

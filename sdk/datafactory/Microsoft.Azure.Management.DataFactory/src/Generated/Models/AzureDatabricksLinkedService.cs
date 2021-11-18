@@ -111,7 +111,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="policyId">The policy id for limiting the ability to
         /// configure clusters based on a user defined set of rules. Type:
         /// string (or Expression with resultType string).</param>
-        public AzureDatabricksLinkedService(object domain, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), SecretBase accessToken = default(SecretBase), object authentication = default(object), object workspaceResourceId = default(object), object existingClusterId = default(object), object instancePoolId = default(object), object newClusterVersion = default(object), object newClusterNumOfWorker = default(object), object newClusterNodeType = default(object), IDictionary<string, object> newClusterSparkConf = default(IDictionary<string, object>), IDictionary<string, object> newClusterSparkEnvVars = default(IDictionary<string, object>), IDictionary<string, object> newClusterCustomTags = default(IDictionary<string, object>), object newClusterLogDestination = default(object), object newClusterDriverNodeType = default(object), object newClusterInitScripts = default(object), object newClusterEnableElasticDisk = default(object), object encryptedCredential = default(object), object policyId = default(object))
+        /// <param name="credential">The credential reference containing
+        /// authentication information.</param>
+        public AzureDatabricksLinkedService(object domain, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), SecretBase accessToken = default(SecretBase), object authentication = default(object), object workspaceResourceId = default(object), object existingClusterId = default(object), object instancePoolId = default(object), object newClusterVersion = default(object), object newClusterNumOfWorker = default(object), object newClusterNodeType = default(object), IDictionary<string, object> newClusterSparkConf = default(IDictionary<string, object>), IDictionary<string, object> newClusterSparkEnvVars = default(IDictionary<string, object>), IDictionary<string, object> newClusterCustomTags = default(IDictionary<string, object>), object newClusterLogDestination = default(object), object newClusterDriverNodeType = default(object), object newClusterInitScripts = default(object), object newClusterEnableElasticDisk = default(object), object encryptedCredential = default(object), object policyId = default(object), CredentialReference credential = default(CredentialReference))
             : base(additionalProperties, connectVia, description, parameters, annotations)
         {
             Domain = domain;
@@ -132,6 +134,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             NewClusterEnableElasticDisk = newClusterEnableElasticDisk;
             EncryptedCredential = encryptedCredential;
             PolicyId = policyId;
+            Credential = credential;
             CustomInit();
         }
 
@@ -290,6 +293,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public object PolicyId { get; set; }
 
         /// <summary>
+        /// Gets or sets the credential reference containing authentication
+        /// information.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.credential")]
+        public CredentialReference Credential { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -301,6 +311,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             if (Domain == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Domain");
+            }
+            if (Credential != null)
+            {
+                Credential.Validate();
             }
         }
     }

@@ -1,11 +1,47 @@
 # Release History
 
-## 5.1.0-beta.8 (Unreleased)
+## 5.2.0-beta.3 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 5.2.0-beta.2 (2021-11-02)
+
+### Features Added
+- Adding support for three new actions in `StartAnalyzeActions`: `RecognizeCustomEntities`, `SingleCategoryClassify`, and `MultiCategoriesClassify`. The new actions allow you to use custom models to perform entity recognition and category classification.
+- Added property `ActionName` to all `xxActions` input types so user can specify a name per action. If not provided, service will generate a name.
+- Added property `ActionName` to all `xxActionResult` output types that displays the name of each action.
+- Added suppport for multiple actions of the same type.
+
+### Bugs Fixed
+- `AnalyzeActionsOperation.GetValuesAsync()` and `AnalyzeHealthcareEntitiesOperation.GetValuesAsync()` are now validating that the operation has completed successfully before attempting to return any values. An `InvalidOperationException` is thrown if this is not true.
+
+### Other Changes
+- We are now targeting the service version `3.2-preview.2` API as the default instead of `3.2-preview.1`.
+
+## 5.2.0-beta.1 (2021-08-09)
+
+### Features Added
+- The client defaults to the latest supported service version, which currently is `3.2-preview.1`.
+- Added property `ExtractSummaryActions` to `TextAnalyticsActions` to support the new 'extractive text summarization' API. This action can be used to get a summary for the input document by extracting the most relevant sentences.
+
+## 5.1.0 (2021-07-07)
 ### New features
 - Added support for service version `3.0`. This can be specified in the `TextAnalyticsClientOptions` object under the `ServiceVersion` enum. By default the SDK targets latest supported service version.
+- Added AAD support for the `StartAnalyzeHealthcareEntities` methods.
 - Added value `None` to enum `PiiEntityDomainType` to allow user to specify no domain.
+- Added new overload methods to all `xxActions` types that take a `xxOptions` object to facilitate a transition from a singular method to an actions method.
+- The parameter `CategoriesFilter` in `RecognizePiiEntitiesActions` has been enabled for `StartAnalyzeActions` methods.
 
 ### Breaking changes
+- Changed behavior in `StartAnalyzeActions` and `StartAnalyzeActionsAsync` where now accepts a single action per action type. An `ArgumentException` is raised if duplicate actions are passed.
+- Changed type `RecognizePiiEntitiesOptions.DomainFilter` from `PiiEntityDomainType?` to `PiiEntityDomainType`.
+- Changed type `AnalyzeActionsOptions.IncludeStatistics` from `bool` to `bool?`.
 - Renamed `StartAnalyzeBatchActions` to `StartAnalyzeActions`.
 - Renamed `AnalyzeBatchActionsOperation` to `AnalyzeActionsOperation`.
 - Renamed `AnalyzeBatchActionsResult` to `AnalyzeActionsResult`.
@@ -20,8 +56,6 @@
 - Renamed type `PiiEntityDomainType` to `PiiEntityDomain`.
 - Renamed type `Results` to `DocumentsResults` in `AnalyzeSentimentActionResult`, `ExtractKeyPhrasesActionResult`, `RecognizeEntitiesActionResult`, `RecognizeLinkedEntitiesActionResult`, and `RecognizePiiEntitiesActionResult`.
 - Renamed all types under `AnalyzeActionsResult` from `xxActionsResults` to ``xxResults`.
-- Changed type `RecognizePiiEntitiesOptions.DomainFilter` from `PiiEntityDomainType?` to `PiiEntityDomainType`.
-- Changed type `AnalyzeActionsOptions.IncludeStatistics` from `bool` to `bool?`.
 - Removed property `Statistics` from `AnalyzeActionsResult` as it is not currently returned by the service even if the user passes `IncludeStatistics  = true`.
 - Removed property `StringIndexType` from `TextAnalyticsRequestOptions`. This SDK will keep using `UTF-16` code unit as the default encoding.
 - Removed type `ExtractKeyPhrasesOptions` and respective exposure.

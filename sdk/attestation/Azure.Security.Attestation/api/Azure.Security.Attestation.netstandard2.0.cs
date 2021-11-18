@@ -223,10 +223,6 @@ namespace Azure.Security.Attestation
         public static bool operator !=(Azure.Security.Attestation.AttestationType left, Azure.Security.Attestation.AttestationType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public static partial class AzureSecurityAttestationModelFactory
-    {
-        public static Azure.Security.Attestation.TpmAttestationResponse TpmAttestationResponse(string internalData = null) { throw null; }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PolicyCertificateResolution : System.IEquatable<Azure.Security.Attestation.PolicyCertificateResolution>
     {

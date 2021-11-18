@@ -18,7 +18,6 @@ namespace Microsoft.Azure.Management.Security.Models
     /// <summary>
     /// Settings for cloud authentication management
     /// </summary>
-    [Newtonsoft.Json.JsonObject("AuthenticationDetailsProperties")]
     public partial class AuthenticationDetailsProperties
     {
         /// <summary>

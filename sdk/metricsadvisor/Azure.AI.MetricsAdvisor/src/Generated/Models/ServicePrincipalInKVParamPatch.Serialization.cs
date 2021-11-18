@@ -12,40 +12,5 @@ namespace Azure.AI.MetricsAdvisor.Models
 {
     internal partial class ServicePrincipalInKVParamPatch : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(KeyVaultEndpoint))
-            {
-                writer.WritePropertyName("keyVaultEndpoint");
-                writer.WriteStringValue(KeyVaultEndpoint);
-            }
-            if (Optional.IsDefined(KeyVaultClientId))
-            {
-                writer.WritePropertyName("keyVaultClientId");
-                writer.WriteStringValue(KeyVaultClientId);
-            }
-            if (Optional.IsDefined(KeyVaultClientSecret))
-            {
-                writer.WritePropertyName("keyVaultClientSecret");
-                writer.WriteStringValue(KeyVaultClientSecret);
-            }
-            if (Optional.IsDefined(ServicePrincipalIdNameInKV))
-            {
-                writer.WritePropertyName("servicePrincipalIdNameInKV");
-                writer.WriteStringValue(ServicePrincipalIdNameInKV);
-            }
-            if (Optional.IsDefined(ServicePrincipalSecretNameInKV))
-            {
-                writer.WritePropertyName("servicePrincipalSecretNameInKV");
-                writer.WriteStringValue(ServicePrincipalSecretNameInKV);
-            }
-            if (Optional.IsDefined(TenantId))
-            {
-                writer.WritePropertyName("tenantId");
-                writer.WriteStringValue(TenantId);
-            }
-            writer.WriteEndObject();
-        }
     }
 }

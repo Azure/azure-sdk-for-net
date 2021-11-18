@@ -8,16 +8,35 @@ using Azure.AI.MetricsAdvisor.Models;
 namespace Azure.AI.MetricsAdvisor.Administration
 {
     /// <summary>
-    /// Ingests data into a <see cref="DataFeed"/> for anomaly detection.
+    /// The source that periodically provides data to a <see cref="DataFeed"/>. The service
+    /// accepts tables of aggregated data. The supported data feed sources are:
+    /// <list type="bullet">
+    ///   <item><description><see cref="AzureApplicationInsightsDataFeedSource"/></description></item>
+    ///   <item><description><see cref="AzureBlobDataFeedSource"/></description></item>
+    ///   <item><description><see cref="AzureCosmosDbDataFeedSource"/></description></item>
+    ///   <item><description><see cref="AzureDataExplorerDataFeedSource"/></description></item>
+    ///   <item><description><see cref="AzureDataLakeStorageDataFeedSource"/></description></item>
+    ///   <item><description><see cref="AzureEventHubsDataFeedSource"/></description></item>
+    ///   <item><description><see cref="AzureTableDataFeedSource"/></description></item>
+    ///   <item><description><see cref="InfluxDbDataFeedSource"/></description></item>
+    ///   <item><description><see cref="LogAnalyticsDataFeedSource"/></description></item>
+    ///   <item><description><see cref="MongoDbDataFeedSource"/></description></item>
+    ///   <item><description><see cref="MySqlDataFeedSource"/></description></item>
+    ///   <item><description><see cref="PostgreSqlDataFeedSource"/></description></item>
+    ///   <item><description><see cref="SqlServerDataFeedSource"/></description></item>
+    /// </list>
     /// </summary>
     public abstract class DataFeedSource
     {
-        internal DataFeedSourceType Type { get; }
-
-        internal DataFeedSource(DataFeedSourceType dataFeedSourceType)
+        internal DataFeedSource(DataFeedSourceKind dataFeedSourceKind)
         {
-            Type = dataFeedSourceType;
+            DataSourceKind = dataFeedSourceKind;
         }
+
+        /// <summary>
+        /// The data source kind.
+        /// </summary>
+        public DataFeedSourceKind DataSourceKind { get; }
 
         internal static DataFeedSource GetDataFeedSource(DataFeedDetail dataFeedDetail) =>
             dataFeedDetail switch
@@ -26,7 +45,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 AzureBlobDataFeed d => new AzureBlobDataFeedSource(d.DataSourceParameter, d.AuthenticationType),
                 AzureCosmosDBDataFeed d => new AzureCosmosDbDataFeedSource(d.DataSourceParameter),
                 AzureDataExplorerDataFeed d => new AzureDataExplorerDataFeedSource(d.DataSourceParameter, d.AuthenticationType, d.CredentialId),
-                AzureDataLakeStorageGen2DataFeed d => new AzureDataLakeStorageGen2DataFeedSource(d.DataSourceParameter, d.AuthenticationType, d.CredentialId),
+                AzureDataLakeStorageGen2DataFeed d => new AzureDataLakeStorageDataFeedSource(d.DataSourceParameter, d.AuthenticationType, d.CredentialId),
                 AzureEventHubsDataFeed d => new AzureEventHubsDataFeedSource(d.DataSourceParameter),
                 AzureLogAnalyticsDataFeed d => new LogAnalyticsDataFeedSource(d.DataSourceParameter),
                 AzureTableDataFeed d => new AzureTableDataFeedSource(d.DataSourceParameter),
@@ -35,7 +54,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 MySqlDataFeed d => new MySqlDataFeedSource(d.DataSourceParameter),
                 PostgreSqlDataFeed d => new PostgreSqlDataFeedSource(d.DataSourceParameter),
                 SQLServerDataFeed d => new SqlServerDataFeedSource(d.DataSourceParameter, d.AuthenticationType, d.CredentialId),
-                _ => throw new InvalidOperationException("Invalid DataFeedDetail type")
+                _ => new UnknownDataFeedSource(dataFeedDetail.DataSourceType)
             };
 
         /// <summary>
@@ -55,7 +74,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
                     new AzureCosmosDBParameter(d.SqlQuery, d.Database, d.CollectionId) { ConnectionString = d.ConnectionString }),
                 AzureDataExplorerDataFeedSource d => new AzureDataExplorerDataFeed(name, granularityType, metricColumns, ingestionStartTime,
                     new SqlSourceParameter(d.Query) { ConnectionString = d.ConnectionString }),
-                AzureDataLakeStorageGen2DataFeedSource d => new AzureDataLakeStorageGen2DataFeed(name, granularityType, metricColumns, ingestionStartTime,
+                AzureDataLakeStorageDataFeedSource d => new AzureDataLakeStorageGen2DataFeed(name, granularityType, metricColumns, ingestionStartTime,
                     new AzureDataLakeStorageGen2Parameter(d.FileSystemName, d.DirectoryTemplate, d.FileTemplate) { AccountKey = d.AccountKey, AccountName = d.AccountName }),
                 AzureEventHubsDataFeedSource d => new AzureEventHubsDataFeed(name, granularityType, metricColumns, ingestionStartTime,
                     new AzureEventHubsParameter(d.ConsumerGroup) { ConnectionString = d.ConnectionString }),
@@ -73,7 +92,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
                     new SqlSourceParameter(d.Query) { ConnectionString = d.ConnectionString }),
                 SqlServerDataFeedSource d => new SQLServerDataFeed(name, granularityType, metricColumns, ingestionStartTime,
                     new SqlSourceParameter(d.Query) { ConnectionString = d.ConnectionString }),
-                _ => throw new InvalidOperationException("Invalid DataFeedDetail type")
+                _ => new DataFeedDetail(name, granularityType, metricColumns, ingestionStartTime) { DataSourceType = DataSourceKind }
             };
         }
 
@@ -90,7 +109,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 { DataSourceParameter = new() { SqlQuery = d.SqlQuery, Database = d.Database, CollectionId = d.CollectionId, ConnectionString = d.ConnectionString } },
             AzureDataExplorerDataFeedSource d => new AzureDataExplorerDataFeedPatch()
                 { DataSourceParameter = new() { Query = d.Query, ConnectionString = d.ConnectionString } },
-            AzureDataLakeStorageGen2DataFeedSource d => new AzureDataLakeStorageGen2DataFeedPatch()
+            AzureDataLakeStorageDataFeedSource d => new AzureDataLakeStorageGen2DataFeedPatch()
                 { DataSourceParameter = new() { FileSystemName = d.FileSystemName, DirectoryTemplate = d.DirectoryTemplate, FileTemplate = d.FileTemplate, AccountKey = d.AccountKey, AccountName = d.AccountName } },
             AzureEventHubsDataFeedSource d => new AzureEventHubsDataFeedPatch()
                 { DataSourceParameter = new() { ConnectionString = d.ConnectionString, ConsumerGroup = d.ConsumerGroup } },
@@ -108,7 +127,15 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 { DataSourceParameter = new() { Query = d.Query, ConnectionString = d.ConnectionString } },
             SqlServerDataFeedSource d => new SQLServerDataFeedPatch()
                 { DataSourceParameter = new() { Query = d.Query, ConnectionString = d.ConnectionString } },
-            _ => throw new InvalidOperationException("Invalid DataFeedDetailPatch type")
+            _ => new DataFeedDetailPatch() { DataSourceType = DataSourceKind }
         };
+
+        private class UnknownDataFeedSource : DataFeedSource
+        {
+            public UnknownDataFeedSource(DataFeedSourceKind dataFeedSourceKind)
+                : base(dataFeedSourceKind)
+            {
+            }
+        }
     }
 }

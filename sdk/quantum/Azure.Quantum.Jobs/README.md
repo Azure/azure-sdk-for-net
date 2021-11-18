@@ -1,6 +1,6 @@
 # Azure Quantum Jobs client library for .NET
 
-Azure Quantum is a Microsoft Azure service that you can use to run quantum computing programs or solve optimization problems in the cloud.  Using the Azure Quantum tools and SDKs, you can create quantum programs and run them against different quantum simulators and machines.  You can use the Azure.Quantum.Jobs client library t
+Azure Quantum is a Microsoft Azure service that you can use to run quantum computing programs or solve optimization problems in the cloud.  Using the Azure Quantum tools and SDKs, you can create quantum programs and run them against different quantum simulators and machines.  You can use the Azure.Quantum.Jobs client library to:
 - Create, enumerate, and cancel quantum jobs
 - Enumerate provider status and quotas
 
@@ -12,9 +12,9 @@ This section should include everything a developer needs to do to install and cr
 
 ### Install the package
 
-Install the Azure Quantum Jobs client library for .NET with [NuGet][nuget]:
+Install the Azure Quantum Jobs client library for .NET with [NuGet](https://www.nuget.org/):
 
-```Powershell
+```dotnetcli
 dotnet add package Azure.Quantum.Jobs --prerelease -v 1.0.0-beta.1
 ```
 
@@ -22,7 +22,7 @@ dotnet add package Azure.Quantum.Jobs --prerelease -v 1.0.0-beta.1
 
 Include a section after the install command that details any requirements that must be satisfied before a developer can [authenticate](#authenticate-the-client) and test all of the snippets in the [Examples](#examples) section. For example, for Cosmos DB:
 
-> You must have an [Azure subscription](https://azure.microsoft.com/free/), [Cosmos DB account](https://docs.microsoft.com/azure/cosmos-db/account-overview) (SQL API), and [Python 3.6+](https://www.python.org/downloads/) to use this package.
+> You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/), [Cosmos DB account](https://docs.microsoft.com/azure/cosmos-db/account-overview) (SQL API), and [Python 3.6+](https://www.python.org/downloads/) to use this package.
 
 ### Authenticate the client
 
@@ -180,15 +180,17 @@ testing, and contributing to this library.
 This project welcomes contributions and suggestions.  Most contributions require
 you to agree to a Contributor License Agreement (CLA) declaring that you have
 the right to, and actually do, grant us the rights to use your contribution. For
-details, visit [cla.microsoft.com][cla].
+details, visit https://cla.microsoft.com.
 
 This project has adopted the [Microsoft Open Source Code of Conduct][coc].
 For more information see the [Code of Conduct FAQ][coc_faq]
-or contact [opencode@microsoft.com][coc_contact] with any
+or contact opencode@microsoft.com with any
 additional questions or comments.
 
 
 <!-- LINKS -->
+[coc]: https://opensource.microsoft.com/codeofconduct/
+[coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/quantum/Azure.Quantum.Jobs/src
 [resource-groups]: https://docs.microsoft.com/azure/azure-resource-manager/management/manage-resource-groups-portal
 [workspaces]: https://docs.microsoft.com/azure/quantum/how-to-create-quantum-workspaces-with-the-azure-portal

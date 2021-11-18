@@ -19,15 +19,6 @@ namespace Azure.ResourceManager.Network.Models
             Value = new ChangeTrackingList<BastionSessionState>();
         }
 
-        /// <summary> Initializes a new instance of BastionSessionDeleteResult. </summary>
-        /// <param name="value"> List of sessions with their corresponding state. </param>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal BastionSessionDeleteResult(IReadOnlyList<BastionSessionState> value, string nextLink)
-        {
-            Value = value;
-            NextLink = nextLink;
-        }
-
         /// <summary> List of sessions with their corresponding state. </summary>
         public IReadOnlyList<BastionSessionState> Value { get; }
         /// <summary> The URL to get the next set of results. </summary>

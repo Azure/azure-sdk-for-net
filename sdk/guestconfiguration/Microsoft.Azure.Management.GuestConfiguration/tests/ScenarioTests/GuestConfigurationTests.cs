@@ -12,10 +12,16 @@ namespace GuestConfiguration.Tests.ScenarioTests
 
     public class AutomationTest 
     {
-        private const string ResourceGroupName = "geTestResourceGroup002";
-        private const string AzureVMName = "GeWin20200507";
-        private const string HybridMachineName = "WIN-9DFUIQ7NP1B";
+        private const string ResourceGroupName = "GuestConfigurationSDKTestRecord";
+        private const string AzureVMName = "SDKTestRecordVM002";
+
+        private const string HybridRG = "gehuan-arc0010";
+        private const string HybridMachineName = "IamPretendingTo";
         private const string AssignmentName = "AuditSecureProtocol";
+
+        private const string VMSSRG = "aashishDeleteRG";
+        private const string VMSSName = "vmss3";
+        private const string VMSSAssignmentName = "EnforcePasswordHistory$pid5im35hvyml6ow";
 
         [Fact]
         public void CanCreateGetUpdateGuestConfigurationAssignment()
@@ -80,7 +86,7 @@ namespace GuestConfiguration.Tests.ScenarioTests
                 using (var testFixture = new GuestConfigurationTestBase(context))
                 {
                     var gcAssignmentToCreateDefinition = new GuestConfigurationAssignmentForPutDefinition(
-                        ResourceGroupName,
+                        HybridRG,
                         HybridMachineName,
                         new GuestConfigurationAssignment(name: AssignmentName,
                         location: "westcentralus",
@@ -163,7 +169,7 @@ namespace GuestConfiguration.Tests.ScenarioTests
                 {
                     // get guest configuration assignment
                     var gcHCRPAssignment = GuestConfigurationHCRPAssignmentsOperationsExtensions.Get(testFixture.GuestConfigurationClient.GuestConfigurationHCRPAssignments,
-                        ResourceGroupName,
+                        HybridRG,
                         AssignmentName,
                         HybridMachineName);
 
@@ -171,7 +177,7 @@ namespace GuestConfiguration.Tests.ScenarioTests
 
                     // Get reports
                     var gcHCRPAssignmentReportsRetrieved = GuestConfigurationHCRPAssignmentReportsOperationsExtensions.List(testFixture.GuestConfigurationClient.GuestConfigurationHCRPAssignmentReports,
-                                             ResourceGroupName,
+                                             HybridRG,
                                              AssignmentName,
                                              HybridMachineName);
 
@@ -208,11 +214,27 @@ namespace GuestConfiguration.Tests.ScenarioTests
                 {
                     // get guest configuration assignment
                     var gcHCRPAssignments = GuestConfigurationHCRPAssignmentsOperationsExtensions.List(testFixture.GuestConfigurationClient.GuestConfigurationHCRPAssignments,
-                        ResourceGroupName,
+                        HybridRG,
                         HybridMachineName);
 
                     Assert.NotNull(gcHCRPAssignments);
                     Assert.True(gcHCRPAssignments.IsAny());
+                }
+            }
+        }
+
+        [Fact]
+        public void CanGetVMSSAssignment()
+        {
+            using (var context = MockContext.Start(this.GetType()))
+            {
+                using (var testFixture = new GuestConfigurationTestBase(context))
+                {
+                    var gcVMSSAssignment = GuestConfigurationAssignmentsVMSSOperationsExtensions.Get(testFixture.GuestConfigurationClient.GuestConfigurationAssignmentsVMSS, VMSSRG, VMSSAssignmentName, VMSSName);
+                    Assert.NotNull(gcVMSSAssignment);
+
+                    var gcVMSSAssignmentReport = GuestConfigurationAssignmentReportsVMSSOperationsExtensions.Get(testFixture.GuestConfigurationClient.GuestConfigurationAssignmentReportsVMSS, VMSSRG, VMSSAssignmentName, "93b97ae8-1e02-466e-af61-2eb6c506d9ec", VMSSName);
+                    Assert.NotNull(gcVMSSAssignmentReport);
                 }
             }
         }

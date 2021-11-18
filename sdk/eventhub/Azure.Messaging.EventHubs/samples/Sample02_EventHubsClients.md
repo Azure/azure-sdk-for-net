@@ -12,7 +12,9 @@ The mainstream set of clients provides an approachable onboarding experience for
 
 **Mainstream**
 
-- The [EventHubProducerClient](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.producer?view=azure-dotnet) is responsible for publishing events and supports multiple approaches for selecting the partition to which the event is associated, including automatic routing by the Event Hubs service and specifying an explicit partition.
+- The [EventHubBufferedProducerClient](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.producer?view=azure-dotnet) publishes events using a deferred model where events are collected into a buffer and the producer has responsibility for implicitly batching and sending them.  More on the design and philosophy behind this type can be found in its [design document](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs/design/proposal-event-hub-buffered-producer.md).
+
+- The [EventHubProducerClient](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.producer.eventhubproducerclient?view=azure-dotnet) publishes events with explicit model where callers have responsibility for management of batches and controlling when events are sent.
   
 - The [EventHubConsumerClient](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.consumer.eventhubconsumerclient?view=azure-dotnet) supports reading events from a single partition and also offers an easy way to familiarize yourself with Event Hubs by reading from all partitions without the rigor and complexity that you would need in a production application. For reading events from all partitions in a production scenario, we strongly recommend using the [EventProcessorClient](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples) from the [Azure.Messaging.EventHubs.Processor](https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor) package over the `EventHubConsumerClient`.
 
@@ -133,6 +135,42 @@ var eventHubName = "<< NAME OF THE EVENT HUB >>";
 
 var producerOptions = new EventHubProducerClientOptions();
 producerOptions.ConnectionOptions.CustomEndpointAddress = new Uri("amqps://app-gateway.mycompany.com");
+
+var producer = new EventHubProducerClient(
+    connectionString,
+    eventHubName,
+    producerOptions);
+```
+
+### Influencing SSL certificate validation
+
+For some environments using a proxy or custom gateway for routing traffic to Event Hubs, a certificate not trusted by the root certificate authorities may be issued.  This can often be a self-signed certificate from the gateway or one issued by a company's internal certificate authority.  
+
+By default, these certificates are not trusted by the Event Hubs client library and the connection will be refused.  To enable these scenarios, a [RemoteCertificateValidationCallback](https://docs.microsoft.com/dotnet/api/system.net.security.remotecertificatevalidationcallback) can be registered to provide custom validation logic for remote certificates.  This allows an application to override the default trust decision and assert responsibility for accepting or rejecting the certificate.
+
+```C# Snippet:EventHubs_Sample02_RemoteCertificateValidationCallback
+var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+var eventHubName = "<< NAME OF THE EVENT HUB >>";
+
+static bool ValidateServerCertificate(
+      object sender,
+      X509Certificate certificate,
+      X509Chain chain,
+      SslPolicyErrors sslPolicyErrors)
+{
+    if ((sslPolicyErrors == SslPolicyErrors.None)
+        || (certificate.Issuer == "My Company CA"))
+    {
+         return true;
+    }
+
+    // Do not allow communication with unauthorized servers.
+
+    return false;
+}
+
+var producerOptions = new EventHubProducerClientOptions();
+producerOptions.ConnectionOptions.CertificateValidationCallback = ValidateServerCertificate;
 
 var producer = new EventHubProducerClient(
     connectionString,

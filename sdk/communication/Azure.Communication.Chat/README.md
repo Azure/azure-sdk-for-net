@@ -10,8 +10,8 @@ This package contains a C# SDK for Azure Communication Services for chat.
 ### Install the package
 Install the Azure Communication Chat client library for .NET with [NuGet][nuget]:
 
-```PowerShell
-dotnet add package Azure.Communication.Chat --version 1.0.1
+```dotnetcli
+dotnet add package Azure.Communication.Chat 
 ``` 
 
 ### Prerequisites
@@ -369,7 +369,7 @@ This project welcomes contributions and suggestions. Most contributions require 
 This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For more information see the [Code of Conduct FAQ][coc_faq] or contact [opencode@microsoft.com][coc_contact] with any additional questions or comments.
 
 <!-- LINKS -->
-[azure_sub]: https://azure.microsoft.com/free/
+[azure_sub]: https://azure.microsoft.com/free/dotnet/
 [cla]: https://cla.microsoft.com
 [coc]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/

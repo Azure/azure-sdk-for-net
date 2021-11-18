@@ -1,14 +1,34 @@
 # Release History
 
-## 12.8.0-beta.1 (Unreleased)
+## 12.9.0-beta.2 (Unreleased)
+- Added supprot for service version 2021-02-12.
+- Added support for listing system file systems with DataLakeServiceClient.GetFileSystems() and .GetFileSystemsAsync().
+
+## 12.9.0-beta.1 (2021-11-03)
+- Added support for service version 2020-12-06.
+- Added support for SDK-calculated transactional hash checksums on data transfer.
+- Fixed bug / regression where the ETag values that had quotation marks surrounding it were being removed starting in version 12.7.0.
+- Fixed bug where DataLakeUriBuilder incorrectly convert "blob" or "dfs" in the account name in the Uri when attempting to convert the URL to a dfs or blob endpoint.
+
+## 12.8.0 (2021-09-08)
+- Includes all features from 12.8.0-beta.1 and 12.8.0-beta.2.
+
+## 12.8.0-beta.2 (2021-07-23)
+- This release contains bug fixes to improve quality.
+
+## 12.8.0-beta.1 (2021-07-22)
 - Added support for service version 2020-10-02.
 - Added support for Parquet as an input format in DataLakeFileClient.Query().
+- Added support for RequestConditions parameter validation.  If a request condition is set for an API that doesn't support it, and ArguementException will be thrown.
+    - This feature can be disabled with the environment variable "AZURE_STORAGE_DISABLE_REQUEST_CONDITIONS_VALIDATION" or the App Context switch "Azure.Storage.DisableRequestConditionsValidation".
 
 ## 12.7.0 (2021-06-08)
 - Includes all features from 12.7.0-beta.4
 - Fixed bug where DataLakeFileClient.Read could corrupt data on retry.
 - Fixed bug where specifying "*" as IfMatch condition could lead to inconsistend read in DataLakeFileClient.ReadTo.
 - Fixed bug where specifying conditions in DataLakeFileClient.OpenRead could override allowModifications flag in DataLakeOpenReadOptions leading to inconsistent read.
+- TenantId can now be discovered through the service challenge response, when using a TokenCredential for authorization.
+    - A new property is now available on the ClientOptions called `EnableTenantDiscovery`. If set to true, the client will attempt an initial unauthorized request to the service to prompt a challenge containing the tenantId hint.
 
 ## 12.6.2 (2021-05-20)
 - This release contains bug fixes to improve quality.

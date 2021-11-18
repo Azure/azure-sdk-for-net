@@ -58,11 +58,8 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// regions where Azure Data Explorer support Availability Zones. This
         /// Property can not be modified after cluster creation. Default value
         /// is 'true' if region supports Availability Zones.</param>
-        /// <param name="billingType">Configures whether billing will be only
-        /// on the cluster or each workspace will be billed by its proportional
-        /// use. This does not change the overall billing, only how it will be
-        /// distributed. Default value is 'Cluster'. Possible values include:
-        /// 'Cluster', 'Workspaces'</param>
+        /// <param name="billingType">The cluster's billing type. Possible
+        /// values include: 'Cluster', 'Workspaces'</param>
         /// <param name="keyVaultProperties">The associated key
         /// properties.</param>
         /// <param name="lastModifiedDate">The last time the cluster was
@@ -140,11 +137,8 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         public bool? IsAvailabilityZonesEnabled { get; set; }
 
         /// <summary>
-        /// Gets or sets configures whether billing will be only on the cluster
-        /// or each workspace will be billed by its proportional use. This does
-        /// not change the overall billing, only how it will be distributed.
-        /// Default value is 'Cluster'. Possible values include: 'Cluster',
-        /// 'Workspaces'
+        /// Gets or sets the cluster's billing type. Possible values include:
+        /// 'Cluster', 'Workspaces'
         /// </summary>
         [JsonProperty(PropertyName = "properties.billingType")]
         public string BillingType { get; set; }

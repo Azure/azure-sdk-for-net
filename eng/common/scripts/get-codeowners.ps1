@@ -47,4 +47,3 @@ else {
   Write-Host ($ownedFolders | ConvertTo-Json)
   return ""
 }
-

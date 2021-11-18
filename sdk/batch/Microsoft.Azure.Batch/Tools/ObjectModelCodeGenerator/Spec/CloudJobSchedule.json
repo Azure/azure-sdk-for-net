@@ -4,7 +4,7 @@
       "TransportProtocolName": "Models.JobScheduleAddParameter",
       "SummaryComment": "A job schedule that allows recurring jobs by specifying when to run jobs and a specification used to create each job.",
       "IsTopLevelObject": true,
-      "IsConstructorPublic": false,
+      "ConstructorAccess": "internal",
       "Properties": [
         {
           "Key": {

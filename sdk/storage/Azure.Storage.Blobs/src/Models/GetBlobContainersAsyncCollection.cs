@@ -96,6 +96,10 @@ namespace Azure.Storage.Blobs
             {
                 items.Add(ListContainersIncludeType.Metadata);
             }
+            if ((states & BlobContainerStates.System) == BlobContainerStates.System)
+            {
+                items.Add(ListContainersIncludeType.System);
+            }
 
             return items.Count > 0 ? items : null;
         }

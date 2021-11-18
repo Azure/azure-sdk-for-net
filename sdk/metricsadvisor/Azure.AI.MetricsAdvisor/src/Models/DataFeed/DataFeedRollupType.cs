@@ -15,18 +15,23 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// No roll-up will be applied for anomaly detection.
         /// </summary>
-        public static DataFeedRollupType NoRollup { get; } = new DataFeedRollupType(NoRollupValue);
+        [CodeGenMember("NoRollup")]
+        public static DataFeedRollupType NoRollupNeeded { get; } = new DataFeedRollupType(NoRollupNeededValue);
 
         /// <summary>
-        /// Let the service do the roll-up. The method can be set with <see cref="DataFeedRollupSettings.AutoRollupMethod"/>.
+        /// Let the service do the roll-up. The roll-up method must be set with
+        /// <see cref="DataFeedRollupSettings.AutoRollupMethod"/>, and the rolled-up dimension value with
+        /// <see cref="DataFeedRollupSettings.RollupIdentificationValue"/>.
         /// </summary>
-        public static DataFeedRollupType NeedRollup { get; } = new DataFeedRollupType(NeedRollupValue);
+        [CodeGenMember("NeedRollup")]
+        public static DataFeedRollupType RollupNeeded { get; } = new DataFeedRollupType(RollupNeededValue);
 
         /// <summary>
         /// The data source already provides rolled-up values, and the service should use them.
-        /// <see cref="DataFeedRollupSettings.AlreadyRollupIdentificationValue"/> must be set to help the
-        /// service identify the rolled-up data.
+        /// <see cref="DataFeedRollupSettings.RollupIdentificationValue"/> must be set to help the
+        /// service identify which dimension value corresponds to the rolled-up data.
         /// </summary>
-        public static DataFeedRollupType AlreadyRollup { get; } = new DataFeedRollupType(AlreadyRollupValue);
+        [CodeGenMember("AlreadyRollup")]
+        public static DataFeedRollupType AlreadyRolledUp { get; } = new DataFeedRollupType(AlreadyRolledUpValue);
     }
 }

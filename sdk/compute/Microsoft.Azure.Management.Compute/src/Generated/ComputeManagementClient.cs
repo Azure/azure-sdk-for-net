@@ -157,6 +157,16 @@ namespace Microsoft.Azure.Management.Compute
         public virtual IRestorePointsOperations RestorePoints { get; private set; }
 
         /// <summary>
+        /// Gets the ICapacityReservationGroupsOperations.
+        /// </summary>
+        public virtual ICapacityReservationGroupsOperations CapacityReservationGroups { get; private set; }
+
+        /// <summary>
+        /// Gets the ICapacityReservationsOperations.
+        /// </summary>
+        public virtual ICapacityReservationsOperations CapacityReservations { get; private set; }
+
+        /// <summary>
         /// Gets the IVirtualMachineScaleSetExtensionsOperations.
         /// </summary>
         public virtual IVirtualMachineScaleSetExtensionsOperations VirtualMachineScaleSetExtensions { get; private set; }
@@ -549,6 +559,8 @@ namespace Microsoft.Azure.Management.Compute
             Images = new ImagesOperations(this);
             RestorePointCollections = new RestorePointCollectionsOperations(this);
             RestorePoints = new RestorePointsOperations(this);
+            CapacityReservationGroups = new CapacityReservationGroupsOperations(this);
+            CapacityReservations = new CapacityReservationsOperations(this);
             VirtualMachineScaleSetExtensions = new VirtualMachineScaleSetExtensionsOperations(this);
             VirtualMachineScaleSetRollingUpgrades = new VirtualMachineScaleSetRollingUpgradesOperations(this);
             VirtualMachineScaleSetVMExtensions = new VirtualMachineScaleSetVMExtensionsOperations(this);

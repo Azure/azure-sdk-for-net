@@ -256,7 +256,7 @@ namespace Azure.Storage.Blobs
 
             return new BlobContainerInfo
             {
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault()
             };
         }
@@ -274,7 +274,7 @@ namespace Azure.Storage.Blobs
             return new BlobContainerAccessPolicy
             {
                 BlobPublicAccess = response.Headers.BlobPublicAccess.GetValueOrDefault(),
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
                 SignedIdentifiers = response.Value.ToList()
             };
@@ -290,7 +290,7 @@ namespace Azure.Storage.Blobs
             }
             return new BlobContainerInfo
             {
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
             };
         }
@@ -303,7 +303,7 @@ namespace Azure.Storage.Blobs
             }
             return new BlobContainerInfo
             {
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
             };
         }
@@ -319,7 +319,7 @@ namespace Azure.Storage.Blobs
 
             return new BlobContentInfo
             {
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
                 ContentHash = response.Headers.ContentMD5,
                 VersionId = response.Headers.VersionId,
@@ -338,7 +338,7 @@ namespace Azure.Storage.Blobs
 
             return new BlobContentInfo
             {
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
                 ContentHash = response.Headers.ContentMD5,
                 VersionId = response.Headers.VersionId,
@@ -359,7 +359,7 @@ namespace Azure.Storage.Blobs
 
             return new BlobAppendInfo
             {
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
                 ContentHash = response.Headers.ContentMD5,
                 ContentCrc64 = response.Headers.XMsContentCrc64,
@@ -380,7 +380,7 @@ namespace Azure.Storage.Blobs
 
             return new BlobAppendInfo
             {
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
                 ContentHash = response.Headers.ContentMD5,
                 ContentCrc64 = response.Headers.XMsContentCrc64,
@@ -403,7 +403,7 @@ namespace Azure.Storage.Blobs
 
             return new BlobInfo
             {
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
                 // BlobSequenceNumber does not apply to Append Blobs.
                 // Seal Append Blob does not return VersionId
@@ -421,7 +421,7 @@ namespace Azure.Storage.Blobs
 
             return new PageInfo
             {
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
                 ContentHash = response.Headers.ContentMD5,
                 ContentCrc64 = response.Headers.XMsContentCrc64,
@@ -440,7 +440,7 @@ namespace Azure.Storage.Blobs
 
             return new PageInfo
             {
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
                 ContentHash = response.Headers.ContentMD5,
                 ContentCrc64 = response.Headers.XMsContentCrc64,
@@ -459,7 +459,7 @@ namespace Azure.Storage.Blobs
 
             return new PageInfo
             {
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
                 ContentHash = response.Headers.ContentMD5,
                 ContentCrc64 = response.Headers.XMsContentCrc64,
@@ -481,7 +481,7 @@ namespace Azure.Storage.Blobs
             return new PageRangesInfo
             {
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 BlobContentLength = response.Headers.BlobContentLength.GetValueOrDefault(),
                 PageRanges = response.Value.PageRange.Select(r => r.ToHttpRange()).ToList(),
                 ClearRanges = response.Value.ClearRange.Select(r => r.ToHttpRange()).ToList(),
@@ -498,7 +498,7 @@ namespace Azure.Storage.Blobs
             return new PageRangesInfo
             {
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 BlobContentLength = response.Headers.BlobContentLength.GetValueOrDefault(),
                 PageRanges = response.Value.PageRange.Select(r => r.ToHttpRange()).ToList(),
                 ClearRanges = response.Value.ClearRange.Select(r => r.ToHttpRange()).ToList(),
@@ -527,7 +527,7 @@ namespace Azure.Storage.Blobs
 
             return new PageBlobInfo
             {
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
                 BlobSequenceNumber = response.Headers.BlobSequenceNumber.GetValueOrDefault()
             };
@@ -542,7 +542,7 @@ namespace Azure.Storage.Blobs
 
             return new PageBlobInfo
             {
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
                 BlobSequenceNumber = response.Headers.BlobSequenceNumber.GetValueOrDefault()
             };
@@ -593,7 +593,7 @@ namespace Azure.Storage.Blobs
 
             return new BlobContentInfo
             {
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
                 ContentHash = response.Headers.ContentMD5,
                 VersionId = response.Headers.VersionId,
@@ -612,7 +612,7 @@ namespace Azure.Storage.Blobs
 
             return new BlobContentInfo
             {
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
                 ContentHash = response.Headers.ContentMD5,
                 VersionId = response.Headers.VersionId,
@@ -631,7 +631,7 @@ namespace Azure.Storage.Blobs
 
             return new BlobContentInfo
             {
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
                 ContentHash = response.Headers.ContentMD5,
                 VersionId = response.Headers.VersionId,
@@ -653,7 +653,7 @@ namespace Azure.Storage.Blobs
             return new BlockList
             {
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 ContentType = response.Headers.ContentType,
                 BlobContentLength = response.Headers.BlobContentLength.GetValueOrDefault(),
                 CommittedBlocks = response.Value.CommittedBlocks,
@@ -673,7 +673,7 @@ namespace Azure.Storage.Blobs
             return new BlobSnapshotInfo
             {
                 Snapshot = response.Headers.Snapshot,
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
                 VersionId = response.Headers.VersionId,
                 IsServerEncrypted = response.Headers.IsServerEncrypted.GetValueOrDefault()
@@ -691,7 +691,7 @@ namespace Azure.Storage.Blobs
 
             return new BlobInfo
             {
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
                 // Set Metadata does not return BlobSequenceNumber.
                 VersionId = response.Headers.VersionId
@@ -707,7 +707,7 @@ namespace Azure.Storage.Blobs
 
             return new BlobInfo
             {
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
                 // Set HTTP Headers does not return BlobSequenceNumber.
                 // Set HTTP Headers does not returnVersionId.
@@ -750,7 +750,7 @@ namespace Azure.Storage.Blobs
                 leaseStatus: response.Headers.LeaseStatus.GetValueOrDefault(),
                 contentLength: response.Headers.ContentLength.GetValueOrDefault(),
                 contentType: response.Headers.ContentType,
-                eTag: response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                eTag: response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 contentHash: response.Headers.ContentMD5,
                 contentEncoding: response.Headers.ContentEncoding,
                 contentDisposition: response.Headers.ContentDisposition,
@@ -788,11 +788,12 @@ namespace Azure.Storage.Blobs
 
             return new BlobCopyInfo
             {
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
                 VersionId = response.Headers.VersionId,
                 CopyId = response.Headers.CopyId,
-                CopyStatus = CopyStatusExtensions.ToCopyStatus(response.Headers.CopyStatus)
+                CopyStatus = CopyStatusExtensions.ToCopyStatus(response.Headers.CopyStatus),
+                EncryptionScope = response.Headers.EncryptionScope
             };
         }
 
@@ -805,7 +806,7 @@ namespace Azure.Storage.Blobs
 
             return new BlobCopyInfo
             {
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
                 VersionId = response.Headers.VersionId,
                 CopyId = response.Headers.CopyId,
@@ -822,7 +823,7 @@ namespace Azure.Storage.Blobs
 
             return new BlobCopyInfo
             {
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
                 // Page Blob Copy Incremental does not return VersionId.
                 CopyId = response.Headers.CopyId,
@@ -857,7 +858,7 @@ namespace Azure.Storage.Blobs
                     LastModified = response.Headers.LastModified.GetValueOrDefault(),
                     Metadata = metadata,
                     ContentRange = response.Headers.ContentRange,
-                    ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                    ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                     ContentEncoding = response.Headers.ContentEncoding,
                     CacheControl = response.Headers.CacheControl,
                     ContentDisposition = response.Headers.ContentDisposition,
@@ -870,6 +871,7 @@ namespace Azure.Storage.Blobs
                     CopySource = response.Headers.CopySource == null ? null : new Uri(response.Headers.CopySource),
                     CopyStatus = response.Headers.CopyStatus.GetValueOrDefault(),
                     LeaseDuration = response.Headers.LeaseDuration ?? LeaseDurationType.Infinite,
+                    LeaseStatus = response.Headers.LeaseStatus ?? LeaseStatus.Unlocked,
                     LeaseState = response.Headers.LeaseState.GetValueOrDefault(),
                     AcceptRanges = response.Headers.AcceptRanges,
                     BlobCommittedBlockCount = response.Headers.BlobCommittedBlockCount.GetValueOrDefault(),
@@ -921,7 +923,7 @@ namespace Azure.Storage.Blobs
                     LastModified = response.Headers.LastModified.GetValueOrDefault(),
                     Metadata = response.Headers.Metadata.ToMetadata(),
                     ContentRange = response.Headers.ContentRange,
-                    ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                    ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                     ContentEncoding = response.Headers.ContentEncoding,
                     CacheControl = response.Headers.CacheControl,
                     ContentDisposition = response.Headers.ContentDisposition,
@@ -974,7 +976,7 @@ namespace Azure.Storage.Blobs
 
             return new BlobLease
             {
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
                 LeaseId = response.Headers.LeaseId,
                 LeaseTime = response.GetRawResponse().Headers.ExtractLeaseTime()
@@ -990,7 +992,7 @@ namespace Azure.Storage.Blobs
 
             return new BlobLease
             {
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
                 LeaseId = response.Headers.LeaseId,
                 LeaseTime = response.GetRawResponse().Headers.ExtractLeaseTime()
@@ -1006,7 +1008,7 @@ namespace Azure.Storage.Blobs
 
             return new BlobLease
             {
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
                 LeaseId = response.Headers.LeaseId,
                 LeaseTime = response.GetRawResponse().Headers.ExtractLeaseTime()
@@ -1022,7 +1024,7 @@ namespace Azure.Storage.Blobs
 
             return new BlobLease
             {
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
                 LeaseId = response.Headers.LeaseId,
                 LeaseTime = response.GetRawResponse().Headers.ExtractLeaseTime()
@@ -1038,7 +1040,7 @@ namespace Azure.Storage.Blobs
 
             return new BlobLease
             {
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
                 LeaseId = response.Headers.LeaseId,
                 LeaseTime = response.GetRawResponse().Headers.ExtractLeaseTime()
@@ -1054,7 +1056,7 @@ namespace Azure.Storage.Blobs
 
             return new BlobLease
             {
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
                 LeaseId = response.Headers.LeaseId,
                 LeaseTime = response.GetRawResponse().Headers.ExtractLeaseTime()
@@ -1070,7 +1072,7 @@ namespace Azure.Storage.Blobs
 
             return new BlobLease
             {
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
                 // LeaseId is not returned on a broken lease.
                 LeaseTime = response.GetRawResponse().Headers.ExtractLeaseTime()
@@ -1086,7 +1088,7 @@ namespace Azure.Storage.Blobs
 
             return new BlobLease
             {
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
                 // LeaseId is not returned on a broken lease.
                 LeaseTime = response.GetRawResponse().Headers.ExtractLeaseTime()
@@ -1115,7 +1117,7 @@ namespace Azure.Storage.Blobs
             }
 
             return new ReleasedObjectInfo(
-                eTag: response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                eTag: response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 lastModified: response.Headers.LastModified.GetValueOrDefault());
         }
 
@@ -1127,7 +1129,7 @@ namespace Azure.Storage.Blobs
             }
 
             return new ReleasedObjectInfo(
-                eTag: response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                eTag: response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 lastModified: response.Headers.LastModified.GetValueOrDefault());
         }
         #endregion
@@ -1152,7 +1154,7 @@ namespace Azure.Storage.Blobs
 
             return new BlobItem
             {
-                Name = blobItemInternal.Name,
+                Name = blobItemInternal.Name.ToBlobNameString(),
                 Deleted = blobItemInternal.Deleted,
                 Snapshot = blobItemInternal.Snapshot,
                 VersionId = blobItemInternal.VersionId,
@@ -1162,11 +1164,25 @@ namespace Azure.Storage.Blobs
                     ? blobItemInternal.Metadata.ToMetadata()
                     : new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase),
                 Tags = blobItemInternal.BlobTags.ToTagDictionary(),
-                ObjectReplicationSourceProperties = blobItemInternal.ObjectReplicationMetadata?.Count > 0
-                    ? ParseObjectReplicationMetadata(blobItemInternal.ObjectReplicationMetadata)
+                ObjectReplicationSourceProperties = blobItemInternal.OrMetadata?.Count > 0
+                    ? ParseObjectReplicationMetadata(blobItemInternal.OrMetadata)
                     : null,
                 HasVersionsOnly = blobItemInternal.HasVersionsOnly
             };
+        }
+
+        internal static string ToBlobNameString(this BlobName blobName)
+        {
+            string blobNameString;
+            if (blobName.Encoded.GetValueOrDefault())
+            {
+                blobNameString = Uri.UnescapeDataString(blobName.Content);
+            }
+            else
+            {
+                blobNameString = blobName.Content;
+            }
+            return blobNameString;
         }
 
         internal static BlobItemProperties ToBlobItemProperties(this BlobPropertiesInternal blobPropertiesInternal)
@@ -1302,7 +1318,7 @@ namespace Azure.Storage.Blobs
                 PreventEncryptionScopeOverride = response.Headers.DenyEncryptionScopeOverride,
                 // Container Get Properties does not return DeletedOn.
                 // Container Get Properties does not return RemainingRetentionDays.
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 Metadata = response.Headers.Metadata.ToMetadata(),
                 HasImmutableStorageWithVersioning = response.Headers.IsImmutableStorageWithVersioningEnabled.GetValueOrDefault()
             };
@@ -1375,7 +1391,39 @@ namespace Azure.Storage.Blobs
         #endregion
 
         #region ValidateConditionsNotPresent
-        internal static void ValidateRequestConditionsNotPresent(
+        internal static void ValidateConditionsNotPresent(
+            this RequestConditions requestConditions,
+            BlobRequestConditionProperty invalidConditions,
+            string operationName,
+            string parameterName)
+        {
+            if (AppContextSwitchHelper.GetConfigValue(
+                Constants.DisableRequestConditionsValidationSwitchName,
+                Constants.DisableRequestConditionsValidationEnvVar))
+            {
+                return;
+            }
+
+            if (requestConditions == null)
+            {
+                return;
+            }
+
+            List<string> invalidList = null;
+            requestConditions.ValidateConditionsNotPresent(
+                invalidConditions,
+                ref invalidList);
+
+            if (invalidList?.Count > 0)
+            {
+                string unsupportedString = string.Join(", ", invalidList);
+                throw new ArgumentException(
+                    $"{operationName} does not support the {unsupportedString} condition(s).",
+                    parameterName);
+            }
+        }
+
+        internal static void ValidateConditionsNotPresent(
             this BlobRequestConditions requestConditions,
             BlobRequestConditionProperty invalidConditions,
             string operationName,
@@ -1435,75 +1483,6 @@ namespace Azure.Storage.Blobs
                 throw new ArgumentException(
                     $"{operationName} does not support the {unsupportedString} condition(s).",
                     parameterName);
-            }
-        }
-
-        internal static void ValidateConditionsNotPresent(
-            this BlobLeaseRequestConditions requestConditions,
-            BlobRequestConditionProperty invalidConditions,
-            ref List<string> invalidList)
-        {
-            if (requestConditions == null)
-            {
-                return;
-            }
-
-            if ((invalidConditions & BlobRequestConditionProperty.TagConditions) == BlobRequestConditionProperty.TagConditions
-                && requestConditions.TagConditions != null)
-            {
-                invalidList ??= new List<string>();
-                invalidList.Add(nameof(requestConditions.TagConditions));
-            }
-
-            if ((invalidConditions & BlobRequestConditionProperty.IfModifiedSince) == BlobRequestConditionProperty.IfModifiedSince
-                && requestConditions.IfModifiedSince != null)
-            {
-                invalidList ??= new List<string>();
-                invalidList.Add(nameof(BlobRequestConditions.IfModifiedSince));
-            }
-
-            if ((invalidConditions & BlobRequestConditionProperty.IfUnmodifiedSince) == BlobRequestConditionProperty.IfUnmodifiedSince
-                && requestConditions.IfUnmodifiedSince != null)
-            {
-                invalidList ??= new List<string>();
-                invalidList.Add(nameof(BlobRequestConditions.IfUnmodifiedSince));
-            }
-
-            if ((invalidConditions & BlobRequestConditionProperty.IfMatch) == BlobRequestConditionProperty.IfMatch
-                && requestConditions.IfMatch != null)
-            {
-                invalidList ??= new List<string>();
-                invalidList.Add(nameof(BlobRequestConditions.IfMatch));
-            }
-
-            if ((invalidConditions & BlobRequestConditionProperty.IfNoneMatch) == BlobRequestConditionProperty.IfNoneMatch
-                && requestConditions.IfNoneMatch != null)
-            {
-                invalidList ??= new List<string>();
-                invalidList.Add(nameof(BlobRequestConditions.IfNoneMatch));
-            }
-        }
-
-        internal static void ValidateConditionsNotPresent(
-            this BlobRequestConditions requestConditions,
-            BlobRequestConditionProperty invalidConditions,
-            ref List<string> invalidList)
-        {
-            if (requestConditions == null)
-            {
-                return;
-            }
-
-            // Validate BlobLeaseRequestConditions conditions.
-            ((BlobLeaseRequestConditions)requestConditions).ValidateConditionsNotPresent(
-                invalidConditions, ref invalidList);
-
-            // Validate BlobRequestConditions specific conditions.
-            if ((invalidConditions & BlobRequestConditionProperty.LeaseId) == BlobRequestConditionProperty.LeaseId
-                && requestConditions.LeaseId != null)
-            {
-                invalidList ??= new List<string>();
-                invalidList.Add(nameof(BlobRequestConditions.LeaseId));
             }
         }
 
@@ -1607,6 +1586,90 @@ namespace Azure.Storage.Blobs
                 throw new ArgumentException(
                     $"{operationName} does not support the {unsupportedString} condition(s).",
                     parameterName);
+            }
+        }
+
+        internal static void ValidateConditionsNotPresent(
+            this RequestConditions requestConditions,
+            BlobRequestConditionProperty invalidConditions,
+            ref List<string> invalidList)
+        {
+            if (requestConditions == null)
+            {
+                return;
+            }
+
+            if ((invalidConditions & BlobRequestConditionProperty.IfModifiedSince) == BlobRequestConditionProperty.IfModifiedSince
+                && requestConditions.IfModifiedSince != null)
+            {
+                invalidList ??= new List<string>();
+                invalidList.Add(nameof(BlobRequestConditions.IfModifiedSince));
+            }
+
+            if ((invalidConditions & BlobRequestConditionProperty.IfUnmodifiedSince) == BlobRequestConditionProperty.IfUnmodifiedSince
+                && requestConditions.IfUnmodifiedSince != null)
+            {
+                invalidList ??= new List<string>();
+                invalidList.Add(nameof(BlobRequestConditions.IfUnmodifiedSince));
+            }
+
+            if ((invalidConditions & BlobRequestConditionProperty.IfMatch) == BlobRequestConditionProperty.IfMatch
+                && requestConditions.IfMatch != null)
+            {
+                invalidList ??= new List<string>();
+                invalidList.Add(nameof(BlobRequestConditions.IfMatch));
+            }
+
+            if ((invalidConditions & BlobRequestConditionProperty.IfNoneMatch) == BlobRequestConditionProperty.IfNoneMatch
+                && requestConditions.IfNoneMatch != null)
+            {
+                invalidList ??= new List<string>();
+                invalidList.Add(nameof(BlobRequestConditions.IfNoneMatch));
+            }
+        }
+
+        internal static void ValidateConditionsNotPresent(
+            this BlobLeaseRequestConditions requestConditions,
+            BlobRequestConditionProperty invalidConditions,
+            ref List<string> invalidList)
+        {
+            if (requestConditions == null)
+            {
+                return;
+            }
+
+            if ((invalidConditions & BlobRequestConditionProperty.TagConditions) == BlobRequestConditionProperty.TagConditions
+                && requestConditions.TagConditions != null)
+            {
+                invalidList ??= new List<string>();
+                invalidList.Add(nameof(requestConditions.TagConditions));
+            }
+        }
+
+        internal static void ValidateConditionsNotPresent(
+            this BlobRequestConditions requestConditions,
+            BlobRequestConditionProperty invalidConditions,
+            ref List<string> invalidList)
+        {
+            if (requestConditions == null)
+            {
+                return;
+            }
+
+            // Validate BlobRequestConditions
+            ((RequestConditions)requestConditions).ValidateConditionsNotPresent(
+                invalidConditions, ref invalidList);
+
+            // Validate BlobLeaseRequestConditions conditions.
+            ((BlobLeaseRequestConditions)requestConditions).ValidateConditionsNotPresent(
+                invalidConditions, ref invalidList);
+
+            // Validate BlobRequestConditions specific conditions.
+            if ((invalidConditions & BlobRequestConditionProperty.LeaseId) == BlobRequestConditionProperty.LeaseId
+                && requestConditions.LeaseId != null)
+            {
+                invalidList ??= new List<string>();
+                invalidList.Add(nameof(BlobRequestConditions.LeaseId));
             }
         }
         #endregion

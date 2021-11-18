@@ -7,51 +7,53 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Analytics.Synapse.Monitoring.Models;
+using System.Linq;
 
-namespace Azure.Analytics.Synapse.Monitoring
+namespace Azure.Analytics.Synapse.Monitoring.Models
 {
     /// <summary> Model factory for read-only models. </summary>
     public static partial class MonitoringModelFactory
     {
-        /// <summary> Initializes new instance of SparkJobListViewResponse class. </summary>
-        /// <param name="nJobs"> . </param>
-        /// <param name="sparkJobs"> . </param>
+        /// <summary> Initializes a new instance of SparkJobListViewResponse. </summary>
+        /// <param name="nJobs"></param>
+        /// <param name="sparkJobs"></param>
         /// <returns> A new <see cref="Models.SparkJobListViewResponse"/> instance for mocking. </returns>
-        public static SparkJobListViewResponse SparkJobListViewResponse(int? nJobs = default, IReadOnlyList<SparkJob> sparkJobs = default)
+        public static SparkJobListViewResponse SparkJobListViewResponse(int? nJobs = null, IEnumerable<SparkJob> sparkJobs = null)
         {
             sparkJobs ??= new List<SparkJob>();
-            return new SparkJobListViewResponse(nJobs, sparkJobs);
+
+            return new SparkJobListViewResponse(nJobs, sparkJobs?.ToList());
         }
 
-        /// <summary> Initializes new instance of SparkJob class. </summary>
-        /// <param name="state"> . </param>
-        /// <param name="name"> . </param>
-        /// <param name="submitter"> . </param>
-        /// <param name="compute"> . </param>
-        /// <param name="sparkApplicationId"> . </param>
-        /// <param name="livyId"> . </param>
-        /// <param name="timing"> . </param>
-        /// <param name="sparkJobDefinition"> . </param>
-        /// <param name="pipeline"> . </param>
-        /// <param name="jobType"> . </param>
-        /// <param name="submitTime"> . </param>
-        /// <param name="endTime"> . </param>
-        /// <param name="queuedDuration"> . </param>
-        /// <param name="runningDuration"> . </param>
-        /// <param name="totalDuration"> . </param>
+        /// <summary> Initializes a new instance of SparkJob. </summary>
+        /// <param name="state"></param>
+        /// <param name="name"></param>
+        /// <param name="submitter"></param>
+        /// <param name="compute"></param>
+        /// <param name="sparkApplicationId"></param>
+        /// <param name="livyId"></param>
+        /// <param name="timing"></param>
+        /// <param name="sparkJobDefinition"></param>
+        /// <param name="pipeline"></param>
+        /// <param name="jobType"></param>
+        /// <param name="submitTime"></param>
+        /// <param name="endTime"></param>
+        /// <param name="queuedDuration"></param>
+        /// <param name="runningDuration"></param>
+        /// <param name="totalDuration"></param>
         /// <returns> A new <see cref="Models.SparkJob"/> instance for mocking. </returns>
-        public static SparkJob SparkJob(string state = default, string name = default, string submitter = default, string compute = default, string sparkApplicationId = default, string livyId = default, IReadOnlyList<string> timing = default, string sparkJobDefinition = default, IReadOnlyList<SparkJob> pipeline = default, string jobType = default, DateTimeOffset? submitTime = default, DateTimeOffset? endTime = default, string queuedDuration = default, string runningDuration = default, string totalDuration = default)
+        public static SparkJob SparkJob(string state = null, string name = null, string submitter = null, string compute = null, string sparkApplicationId = null, string livyId = null, IEnumerable<string> timing = null, string sparkJobDefinition = null, IEnumerable<SparkJob> pipeline = null, string jobType = null, DateTimeOffset? submitTime = null, DateTimeOffset? endTime = null, string queuedDuration = null, string runningDuration = null, string totalDuration = null)
         {
             timing ??= new List<string>();
             pipeline ??= new List<SparkJob>();
-            return new SparkJob(state, name, submitter, compute, sparkApplicationId, livyId, timing, sparkJobDefinition, pipeline, jobType, submitTime, endTime, queuedDuration, runningDuration, totalDuration);
+
+            return new SparkJob(state, name, submitter, compute, sparkApplicationId, livyId, timing?.ToList(), sparkJobDefinition, pipeline?.ToList(), jobType, submitTime, endTime, queuedDuration, runningDuration, totalDuration);
         }
 
-        /// <summary> Initializes new instance of SqlQueryStringDataModel class. </summary>
-        /// <param name="query"> . </param>
+        /// <summary> Initializes a new instance of SqlQueryStringDataModel. </summary>
+        /// <param name="query"></param>
         /// <returns> A new <see cref="Models.SqlQueryStringDataModel"/> instance for mocking. </returns>
-        public static SqlQueryStringDataModel SqlQueryStringDataModel(string query = default)
+        public static SqlQueryStringDataModel SqlQueryStringDataModel(string query = null)
         {
             return new SqlQueryStringDataModel(query);
         }

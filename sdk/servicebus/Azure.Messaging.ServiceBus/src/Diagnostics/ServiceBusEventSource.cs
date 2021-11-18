@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
+using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Azure.Core.Diagnostics;
@@ -23,7 +24,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
     ///   the CompleteEvent.Id must be exactly StartEvent.Id + 1.
     /// </remarks>
     [EventSource(Name = EventSourceName)]
-    internal class ServiceBusEventSource : EventSource
+    internal class ServiceBusEventSource : AzureEventSource
     {
         /// <summary>The name to use for the event source.</summary>
         private const string EventSourceName = "Azure-Messaging-ServiceBus";
@@ -32,19 +33,16 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         ///   Provides a singleton instance of the event source for callers to
         ///   use for logging.
         /// </summary>
-        public static ServiceBusEventSource Log { get; } = new ServiceBusEventSource(EventSourceName);
+        public static ServiceBusEventSource Log { get; } = new ServiceBusEventSource();
 
         /// <summary>
         ///   Prevents an instance of the <see cref="ServiceBusEventSource"/> class from being
         ///   created outside the scope of the <see cref="Log" /> instance, as well as setting up the
         ///   integration with AzureEventSourceListener.
         /// </summary>
-        private ServiceBusEventSource(string eventSourceName) : base(eventSourceName, EventSourceSettings.Default, AzureEventSourceListener.TraitName, AzureEventSourceListener.TraitValue)
+        protected ServiceBusEventSource() : base(EventSourceName)
         {
         }
-
-        // Parameterless constructor for mocking
-        internal ServiceBusEventSource() { }
 
         #region event constants
         // event constants should not be changed
@@ -174,10 +172,6 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         internal const int ProcessorErrorHandlerThrewExceptionEvent = 94;
         internal const int ScheduleTaskFailedEvent = 95;
 
-        internal const int PluginStartEvent = 96;
-        internal const int PluginCompleteEvent = 97;
-        internal const int PluginExceptionEvent = 98;
-
         internal const int MaxMessagesExceedsPrefetchEvent = 99;
         internal const int SendLinkClosedEvent = 100;
         internal const int ManagementLinkClosedEvent = 101;
@@ -265,14 +259,26 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             }
         }
 
-        [Event(ReceiveMessageCompleteEvent, Level = EventLevel.Informational, Message = "{0}: ReceiveBatchAsync done. Received '{1}' messages")]
+        [NonEvent]
         public virtual void ReceiveMessageComplete(
             string identifier,
-            int messageCount)
+            IReadOnlyList<ServiceBusReceivedMessage> messages)
         {
             if (IsEnabled())
             {
-                WriteEvent(ReceiveMessageCompleteEvent, identifier, messageCount);
+                ReceiveMessageCompleteCore(identifier, messages.Count, StringUtility.GetFormattedLockTokens(messages.Select(m => m.LockTokenGuid)));
+            }
+        }
+
+        [Event(ReceiveMessageCompleteEvent, Level = EventLevel.Informational, Message = "{0}: ReceiveBatchAsync done. Received '{1}' messages. LockTokens = {2}")]
+        private void ReceiveMessageCompleteCore(
+            string identifier,
+            int messageCount,
+            string lockTokens)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(ReceiveMessageCompleteEvent, identifier, messageCount, lockTokens);
             }
         }
 
@@ -812,30 +818,57 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             }
         }
 
-        [Event(ProcessorMessageHandlerStartEvent, Level = EventLevel.Informational, Message = "{0}: User message handler start: Message: SequenceNumber: {1}")]
-        public void ProcessorMessageHandlerStart(string identifier, long sequenceNumber)
+        [NonEvent]
+        public void ProcessorMessageHandlerStart(string identifier, long sequenceNumber, Guid lockToken)
         {
             if (IsEnabled())
             {
-                WriteEvent(ProcessorMessageHandlerStartEvent, identifier, sequenceNumber);
+                ProcessorMessageHandlerStartCore(identifier, sequenceNumber, lockToken.ToString());
             }
         }
 
-        [Event(ProcessorMessageHandlerCompleteEvent, Level = EventLevel.Informational, Message = "{0}: User message handler complete: Message: SequenceNumber: {1}")]
-        public void ProcessorMessageHandlerComplete(string identifier, long sequenceNumber)
+        [Event(ProcessorMessageHandlerStartEvent, Level = EventLevel.Informational, Message = "{0}: User message handler start: Message: SequenceNumber: {1}, LockToken: {2}")]
+        private void ProcessorMessageHandlerStartCore(string identifier, long sequenceNumber, string lockToken)
         {
             if (IsEnabled())
             {
-                WriteEvent(ProcessorMessageHandlerCompleteEvent, identifier, sequenceNumber);
+                WriteEvent(ProcessorMessageHandlerStartEvent, identifier, sequenceNumber, lockToken);
             }
         }
 
-        [Event(ProcessorMessageHandlerExceptionEvent, Level = EventLevel.Error, Message = "{0}: User message handler complete: Message: SequenceNumber: {1}, Exception: {2}")]
-        public void ProcessorMessageHandlerException(string identifier, long sequenceNumber, string exception)
+        [NonEvent]
+        public void ProcessorMessageHandlerComplete(string identifier, long sequenceNumber, Guid lockToken)
         {
             if (IsEnabled())
             {
-                WriteEvent(ProcessorMessageHandlerExceptionEvent, identifier, sequenceNumber, exception);
+                ProcessorMessageHandlerCompleteCore(identifier, sequenceNumber, lockToken.ToString());
+            }
+        }
+
+        [Event(ProcessorMessageHandlerCompleteEvent, Level = EventLevel.Informational, Message = "{0}: User message handler complete: Message: SequenceNumber: {1}, LockToken: {2}")]
+        private void ProcessorMessageHandlerCompleteCore(string identifier, long sequenceNumber, string lockToken)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(ProcessorMessageHandlerCompleteEvent, identifier, sequenceNumber, lockToken);
+            }
+        }
+
+        [NonEvent]
+        public void ProcessorMessageHandlerException(string identifier, long sequenceNumber, string exception, Guid lockToken)
+        {
+            if (IsEnabled())
+            {
+                ProcessorMessageHandlerExceptionCore(identifier, sequenceNumber, exception, lockToken.ToString());
+            }
+        }
+
+        [Event(ProcessorMessageHandlerExceptionEvent, Level = EventLevel.Error, Message = "{0}: User message handler complete: Message: SequenceNumber: {1}, Exception: {2}, LockToken: {3}")]
+        private void ProcessorMessageHandlerExceptionCore(string identifier, long sequenceNumber, string exception, string lockToken)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(ProcessorMessageHandlerExceptionEvent, identifier, sequenceNumber, exception, lockToken);
             }
         }
 
@@ -848,7 +881,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             }
         }
 
-        [Event(ProcessorStoppingReceiveCanceledEvent, Level = EventLevel.Verbose, Message = "A receive operation was cancelled while stopping the processor. (Identifier '{0}'). Error Message: '{1}'")]
+        [Event(ProcessorStoppingReceiveCanceledEvent, Level = EventLevel.Verbose, Message = "A receive operation was cancelled while stopping the processor or scaling down concurrency. (Identifier '{0}'). Error Message: '{1}'")]
         public void ProcessorStoppingReceiveCanceled(string identifier, string exception)
         {
             if (IsEnabled())
@@ -857,7 +890,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             }
         }
 
-        [Event(ProcessorStoppingAcceptSessionCanceledEvent, Level = EventLevel.Verbose, Message = "An accept session operation was cancelled while stopping the processor. (Namespace '{0}', Entity path '{1}'). Error Message: '{2}'")]
+        [Event(ProcessorStoppingAcceptSessionCanceledEvent, Level = EventLevel.Verbose, Message = "An accept session operation was cancelled while stopping the processor or scaling down concurrency. (Namespace '{0}', Entity path '{1}'). Error Message: '{2}'")]
         public void ProcessorStoppingAcceptSessionCanceled(string fullyQualifiedNamespace, string entityPath, string exception)
         {
             if (IsEnabled())
@@ -1500,35 +1533,6 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             if (IsEnabled())
             {
                 WriteEvent(CreateControllerExceptionEvent, connectionManager, exception);
-            }
-        }
-        #endregion
-
-        #region plugins
-        [Event(PluginStartEvent, Level = EventLevel.Verbose, Message = "User plugin {0} called on message {1}")]
-        public void PluginCallStarted(string pluginName, string messageId)
-        {
-            if (IsEnabled())
-            {
-                WriteEvent(PluginStartEvent, pluginName, messageId);
-            }
-        }
-
-        [Event(PluginCompleteEvent, Level = EventLevel.Verbose, Message = "User plugin {0} completed on message {1}")]
-        public void PluginCallCompleted(string pluginName, string messageId)
-        {
-            if (IsEnabled())
-            {
-                WriteEvent(PluginCompleteEvent, pluginName, messageId);
-            }
-        }
-
-        [Event(PluginExceptionEvent, Level = EventLevel.Error, Message = "Exception during {0} plugin execution. MessageId: {1}, Exception {2}")]
-        public void PluginCallException(string pluginName, string messageId, string exception)
-        {
-            if (IsEnabled())
-            {
-                WriteEvent(PluginExceptionEvent, pluginName, messageId, exception);
             }
         }
         #endregion

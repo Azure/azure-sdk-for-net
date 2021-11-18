@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using System.Net;
 using Xunit;
 
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
@@ -56,7 +57,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
             TelemetryPartA.InitRoleInfo(resource);
 
             Assert.StartsWith("unknown_service", TelemetryPartA.RoleName);
-            Assert.Null(TelemetryPartA.RoleInstance);
+            Assert.Equal(Dns.GetHostName(), TelemetryPartA.RoleInstance);
         }
 
         [Fact]
@@ -66,7 +67,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
             TelemetryPartA.InitRoleInfo(resource);
 
             Assert.Equal("my-service", TelemetryPartA.RoleName);
-            Assert.Null(TelemetryPartA.RoleInstance);
+            Assert.Equal(Dns.GetHostName(), TelemetryPartA.RoleInstance);
         }
 
         [Fact]
@@ -86,7 +87,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
             TelemetryPartA.InitRoleInfo(resource);
 
             Assert.StartsWith("my-namespace.unknown_service", TelemetryPartA.RoleName);
-            Assert.Null(TelemetryPartA.RoleInstance);
+            Assert.Equal(Dns.GetHostName(), TelemetryPartA.RoleInstance);
         }
 
         [Fact]
@@ -121,12 +122,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
 
             var resource = CreateTestResource();
 
-            var telemetryItem = TelemetryPartA.GetTelemetryItem(activity, resource, null);
+            var monitorTags = AzureMonitorConverter.EnumerateActivityTags(activity);
+
+            var telemetryItem = TelemetryPartA.GetTelemetryItem(activity, ref monitorTags, resource, null);
 
             Assert.Equal("RemoteDependency", telemetryItem.Name);
             Assert.Equal(TelemetryPartA.FormatUtcTimestamp(activity.StartTimeUtc), telemetryItem.Time);
             Assert.StartsWith("unknown_service", telemetryItem.Tags[ContextTagKeys.AiCloudRole.ToString()]);
-            Assert.Null(telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()]);
+            Assert.Equal(Dns.GetHostName(), telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()]);
             Assert.NotNull(telemetryItem.Tags[ContextTagKeys.AiOperationId.ToString()]);
             Assert.NotNull(telemetryItem.Tags[ContextTagKeys.AiInternalSdkVersion.ToString()]);
             Assert.Throws<KeyNotFoundException>(() => telemetryItem.Tags[ContextTagKeys.AiOperationParentId.ToString()]);
@@ -144,7 +147,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
 
             var resource = CreateTestResource(serviceName: "my-service", serviceInstance: "my-instance");
 
-            var telemetryItem = TelemetryPartA.GetTelemetryItem(activity, resource, null);
+            var monitorTags = AzureMonitorConverter.EnumerateActivityTags(activity);
+
+            var telemetryItem = TelemetryPartA.GetTelemetryItem(activity, ref monitorTags, resource, null);
 
             Assert.Equal("RemoteDependency", telemetryItem.Name);
             Assert.Equal(TelemetryPartA.FormatUtcTimestamp(activity.StartTimeUtc), telemetryItem.Time);
@@ -155,7 +160,268 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
             Assert.Throws<KeyNotFoundException>(() => telemetryItem.Tags[ContextTagKeys.AiOperationParentId.ToString()]);
         }
 
-        // TODO: GeneratePartAEnvelope_WithActivityParent
+        [Fact]
+        public void GeneratePartAEnvelope_Activity_WithParentSpanId()
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(
+                ActivityName,
+                ActivityKind.Client,
+                parentContext: new ActivityContext(ActivityTraceId.CreateRandom(), ActivitySpanId.CreateRandom(), ActivityTraceFlags.Recorded),
+                startTime: DateTime.UtcNow);
+            var resource = CreateTestResource();
+
+            var monitorTags = AzureMonitorConverter.EnumerateActivityTags(activity);
+
+            var telemetryItem = TelemetryPartA.GetTelemetryItem(activity, ref monitorTags, resource, null);
+
+            Assert.Equal("RemoteDependency", telemetryItem.Name);
+            Assert.Equal(TelemetryPartA.FormatUtcTimestamp(activity.StartTimeUtc), telemetryItem.Time);
+            Assert.StartsWith("unknown_service", telemetryItem.Tags[ContextTagKeys.AiCloudRole.ToString()]);
+            Assert.Equal(Dns.GetHostName(), telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()]);
+            Assert.NotNull(telemetryItem.Tags[ContextTagKeys.AiOperationId.ToString()]);
+            Assert.NotNull(telemetryItem.Tags[ContextTagKeys.AiInternalSdkVersion.ToString()]);
+            Assert.Equal(activity.ParentSpanId.ToHexString(), telemetryItem.Tags[ContextTagKeys.AiOperationParentId.ToString()]);
+        }
+
+        [Theory]
+        [InlineData("/route")]
+        [InlineData("{controller}/{action}/{id}")]
+        [InlineData(null)]
+        public void HttpMethodAndHttpRouteIsUsedForHttpRequestOperationName(string route)
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(
+                ActivityName,
+                ActivityKind.Server,
+                null,
+                startTime: DateTime.UtcNow);
+            var resource = CreateTestResource();
+
+            activity.DisplayName = "/getaction";
+
+            activity.SetTag(SemanticConventions.AttributeHttpMethod, "GET");
+            activity.SetTag(SemanticConventions.AttributeHttpRoute, route);
+            activity.SetTag(SemanticConventions.AttributeHttpUrl, "https://www.foo.bar/search");
+
+            string expectedOperationName;
+            if (route == "{controller}/{action}/{id}" || route == null)
+            {
+                expectedOperationName = "GET /search";
+            }
+            else
+            {
+                expectedOperationName = $"GET {route}";
+            }
+
+            var monitorTags = AzureMonitorConverter.EnumerateActivityTags(activity);
+
+            var telemetryItem = TelemetryPartA.GetTelemetryItem(activity, ref monitorTags, resource, null);
+
+            Assert.Equal(expectedOperationName, telemetryItem.Tags[ContextTagKeys.AiOperationName.ToString()]);
+        }
+
+        [Fact]
+        public void HttpMethodAndHttpUrlPathIsUsedForHttpRequestOperationName()
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(
+                ActivityName,
+                ActivityKind.Server,
+                null,
+                startTime: DateTime.UtcNow);
+            var resource = CreateTestResource();
+
+            activity.DisplayName = "displayname";
+
+            activity.SetTag(SemanticConventions.AttributeHttpMethod, "GET");
+            activity.SetTag(SemanticConventions.AttributeHttpUrl, "https://www.foo.bar/path?id=1");
+
+            var monitorTags = AzureMonitorConverter.EnumerateActivityTags(activity);
+
+            var telemetryItem = TelemetryPartA.GetTelemetryItem(activity, ref monitorTags, resource, null);
+
+            Assert.Equal("GET /path", telemetryItem.Tags[ContextTagKeys.AiOperationName.ToString()]);
+        }
+
+        [Fact]
+        public void ActivityNameIsUsedByDefaultForRequestOperationName()
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(
+                ActivityName,
+                ActivityKind.Server,
+                null,
+                startTime: DateTime.UtcNow);
+            var resource = CreateTestResource();
+
+            activity.DisplayName = "displayname";
+
+            var monitorTags = AzureMonitorConverter.EnumerateActivityTags(activity);
+
+            var telemetryItem = TelemetryPartA.GetTelemetryItem(activity, ref monitorTags, resource, null);
+
+            Assert.Equal("displayname", telemetryItem.Tags[ContextTagKeys.AiOperationName.ToString()]);
+        }
+
+        [Fact]
+        public void AiLocationIpisSetAsHttpClientIpforHttpServerSpans()
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(
+                ActivityName,
+                ActivityKind.Server,
+                null,
+                startTime: DateTime.UtcNow);
+            var resource = CreateTestResource();
+
+            activity.SetTag(SemanticConventions.AttributeHttpClientIP, "127.0.0.1");
+
+            var monitorTags = AzureMonitorConverter.EnumerateActivityTags(activity);
+
+            var telemetryItem = TelemetryPartA.GetTelemetryItem(activity, ref monitorTags, resource, null);
+
+            Assert.Equal("127.0.0.1", telemetryItem.Tags[ContextTagKeys.AiLocationIp.ToString()]);
+        }
+
+        [Fact]
+        public void AiLocationIpisSetAsNetPeerIpForServerSpans()
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(
+                ActivityName,
+                ActivityKind.Server,
+                null,
+                startTime: DateTime.UtcNow);
+            var resource = CreateTestResource();
+
+            activity.SetTag(SemanticConventions.AttributeNetPeerIp, "127.0.0.1");
+
+            var monitorTags = AzureMonitorConverter.EnumerateActivityTags(activity);
+
+            var telemetryItem = TelemetryPartA.GetTelemetryItem(activity, ref monitorTags, resource, null);
+
+            Assert.Equal("127.0.0.1", telemetryItem.Tags[ContextTagKeys.AiLocationIp.ToString()]);
+        }
+
+        [Fact]
+        public void AiUserAgentisSetAsHttpUserAgent()
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(
+                ActivityName,
+                ActivityKind.Server,
+                null,
+                startTime: DateTime.UtcNow);
+            var resource = CreateTestResource();
+
+            var userAgent = "Mozilla / 5.0(Windows NT 10.0;WOW64) AppleWebKit / 537.36(KHTML, like Gecko) Chrome / 91.0.4472.101 Safari / 537.36";
+            activity.SetTag(SemanticConventions.AttributeHttpUserAgent, userAgent);
+
+            var monitorTags = AzureMonitorConverter.EnumerateActivityTags(activity);
+
+            var telemetryItem = TelemetryPartA.GetTelemetryItem(activity, ref monitorTags, resource, null);
+
+            Assert.Equal(userAgent, telemetryItem.Tags["ai.user.userAgent"]);
+        }
+
+        [Fact]
+        public void AiLocationIpIsNullByDefault()
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(
+                ActivityName,
+                ActivityKind.Server,
+                null,
+                startTime: DateTime.UtcNow);
+            var resource = CreateTestResource();
+
+            var monitorTags = AzureMonitorConverter.EnumerateActivityTags(activity);
+
+            var telemetryItem = TelemetryPartA.GetTelemetryItem(activity, ref monitorTags, resource, null);
+
+            Assert.Null(telemetryItem.Tags[ContextTagKeys.AiLocationIp.ToString()]);
+        }
+
+        [Fact]
+        public void AiUserAgentIsNullByDefault()
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(
+                ActivityName,
+                ActivityKind.Server,
+                null,
+                startTime: DateTime.UtcNow);
+            var resource = CreateTestResource();
+
+            var monitorTags = AzureMonitorConverter.EnumerateActivityTags(activity);
+
+            var telemetryItem = TelemetryPartA.GetTelemetryItem(activity, ref monitorTags, resource, null);
+
+            Assert.Null(telemetryItem.Tags["ai.user.userAgent"]);
+        }
+
+        [Fact]
+        public void RoleInstanceIsSetToHostNameByDefault()
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(
+                ActivityName,
+                ActivityKind.Server,
+                null,
+                startTime: DateTime.UtcNow);
+            var resource = CreateTestResource();
+
+            var monitorTags = AzureMonitorConverter.EnumerateActivityTags(activity);
+
+            var telemetryItem = TelemetryPartA.GetTelemetryItem(activity, ref monitorTags, resource, null);
+
+            Assert.Equal(Dns.GetHostName(), telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()]);
+        }
+
+        [Fact]
+        public void RoleInstanceIsNotOverwrittenIfSetViaServiceInstanceId()
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(
+                ActivityName,
+                ActivityKind.Server,
+                null,
+                startTime: DateTime.UtcNow);
+            var resource = CreateTestResource(null, null, "serviceinstance");
+
+            var monitorTags = AzureMonitorConverter.EnumerateActivityTags(activity);
+
+            var telemetryItem = TelemetryPartA.GetTelemetryItem(activity, ref monitorTags, resource, null);
+
+            Assert.Equal("serviceinstance", telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()]);
+        }
+
+        [Theory]
+        [InlineData("GET")]
+        [InlineData(null)]
+        public void RequestNameMatchesOperationName(string httpMethod)
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(
+                ActivityName,
+                ActivityKind.Server,
+                null,
+                startTime: DateTime.UtcNow);
+            var resource = CreateTestResource();
+
+            activity.DisplayName = "displayname";
+            if (httpMethod != null)
+            {
+                activity.SetTag(SemanticConventions.AttributeHttpMethod, httpMethod);
+            }
+            var monitorTags = AzureMonitorConverter.EnumerateActivityTags(activity);
+
+            var telemetryItem = TelemetryPartA.GetTelemetryItem(activity, ref monitorTags, resource, null);
+            var requestData = TelemetryPartB.GetRequestData(activity, ref monitorTags);
+
+            Assert.Equal(requestData.Name, telemetryItem.Tags[ContextTagKeys.AiOperationName.ToString()]);
+        }
 
         /// <summary>
         /// If SERVICE.NAME is not defined, it will fall-back to "unknown_service".

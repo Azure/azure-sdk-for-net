@@ -2,31 +2,25 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity.Tests.Mock;
-using Moq;
+using Microsoft.Identity.Client;
 using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
-    public class ClientSecretCredentialTests : ClientTestBase
+    public class ClientSecretCredentialTests : CredentialTestBase
     {
         public ClientSecretCredentialTests(bool isAsync) : base(isAsync)
-        {
-        }
+        { }
 
         [Test]
         public void VerifyCtorParametersValidation()
         {
             var tenantId = Guid.NewGuid().ToString();
-
             var clientId = Guid.NewGuid().ToString();
-
             var secret = "secret";
 
             Assert.Throws<ArgumentNullException>(() => new ClientSecretCredential(null, clientId, secret));
@@ -35,20 +29,29 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        public async Task UsesTenantIdHint(
+            [Values(null, TenantIdHint)] string tenantId,
+            [Values(true)] bool allowMultiTenantAuthentication)
+        {
+            TestSetup();
+            var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
+            expectedTenantId = TenantIdResolver.Resolve(TenantId, context);
+            ClientSecretCredential client = InstrumentClient(new ClientSecretCredential(expectedTenantId, ClientId, "secret", options, null, mockConfidentialMsalClient));
+
+            var token = await client.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
+
+            Assert.AreEqual(token.Token, expectedToken, "Should be the expected token value");
+        }
+
+        [Test]
         public async Task VerifyClientSecretRequestFailedAsync()
         {
             var response = new MockResponse(400);
-
             response.SetContent($"{{ \"error_code\": \"InvalidSecret\", \"message\": \"The specified client_secret is incorrect\" }}");
-
             var mockTransport = new MockTransport(response);
-
             var options = new TokenCredentialOptions() { Transport = mockTransport };
-
             var expectedTenantId = Guid.NewGuid().ToString();
-
             var expectedClientId = Guid.NewGuid().ToString();
-
             var expectedClientSecret = "secret";
 
             ClientSecretCredential client = InstrumentClient(new ClientSecretCredential(expectedTenantId, expectedClientId, expectedClientSecret, options));
@@ -62,17 +65,14 @@ namespace Azure.Identity.Tests
         public async Task VerifyClientSecretCredentialExceptionAsync()
         {
             string expectedInnerExMessage = Guid.NewGuid().ToString();
-
             var mockMsalClient = new MockMsalConfidentialClient(new MockClientException(expectedInnerExMessage));
-
-            var credential = InstrumentClient(new ClientSecretCredential(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), default, default, mockMsalClient));
+            var credential = InstrumentClient(
+                new ClientSecretCredential(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), default, default, mockMsalClient));
 
             var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
             Assert.IsNotNull(ex.InnerException);
-
             Assert.IsInstanceOf(typeof(MockClientException), ex.InnerException);
-
             Assert.AreEqual(expectedInnerExMessage, ex.InnerException.Message);
 
             await Task.CompletedTask;

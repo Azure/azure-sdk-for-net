@@ -18,7 +18,7 @@ namespace Azure.AI.TextAnalytics.Models
         {
             Optional<PiiEntitiesResult> results = default;
             DateTimeOffset lastUpdateDateTime = default;
-            Optional<string> name = default;
+            Optional<string> taskName = default;
             TextAnalyticsOperationStatus status = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -37,9 +37,9 @@ namespace Azure.AI.TextAnalytics.Models
                     lastUpdateDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("taskName"))
                 {
-                    name = property.Value.GetString();
+                    taskName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("status"))
@@ -48,7 +48,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new EntityRecognitionPiiTasksItem(lastUpdateDateTime, name.Value, status, results.Value);
+            return new EntityRecognitionPiiTasksItem(lastUpdateDateTime, taskName.Value, status, results.Value);
         }
     }
 }

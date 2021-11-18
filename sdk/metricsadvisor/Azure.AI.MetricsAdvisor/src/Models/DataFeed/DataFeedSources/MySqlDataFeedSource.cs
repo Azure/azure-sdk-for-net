@@ -23,7 +23,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <exception cref="ArgumentNullException"><paramref name="connectionString"/> or <paramref name="query"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="connectionString"/> or <paramref name="query"/> is empty.</exception>
         public MySqlDataFeedSource(string connectionString, string query)
-            : base(DataFeedSourceType.MySql)
+            : base(DataFeedSourceKind.MySql)
         {
             Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
             Argument.AssertNotNullOrEmpty(query, nameof(query));
@@ -33,7 +33,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         internal MySqlDataFeedSource(SqlSourceParameter parameter)
-            : base(DataFeedSourceType.MySql)
+            : base(DataFeedSourceKind.MySql)
         {
             Argument.AssertNotNull(parameter, nameof(parameter));
 

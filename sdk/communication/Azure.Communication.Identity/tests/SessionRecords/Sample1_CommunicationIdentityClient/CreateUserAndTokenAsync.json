@@ -1,22 +1,21 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://smstestapp.communication.azure.com/identities?api-version=2021-03-31-preview1",
+      "RequestUri": "https://sanitized.communication.azure.net/identities?api-version=2021-10-31-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "34",
         "Content-Type": "application/json",
-        "Date": "Tue, 15 Jun 2021 21:17:20 GMT",
-        "traceparent": "00-d1e43ecf7140564598fa724efc241fa2-a96b9f3cbfdb3345-00",
+        "traceparent": "00-36fe908fb139d141944e29f984e8b42b-3fce57807d36aa4a-00",
         "User-Agent": [
-          "azsdk-net-Communication.Identity/1.1.0-alpha.20210615.1",
-          "(.NET Core 4.6.30015.01; Microsoft Windows 10.0.19043 )"
+          "azsdk-net-Communication.Identity/1.1.0-alpha.20211027.1",
+          "(.NET Core 3.1.20; Microsoft Windows 10.0.22488)"
         ],
-        "x-ms-client-request-id": "d69148ae72dcb1a586a90dbecba5cbab",
+        "x-ms-client-request-id": "44a1cc595fe75fee23c7e54129ba7b9a",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Tue, 15 Jun 2021 21:17:20 GMT",
+        "x-ms-date": "Wed, 27 Oct 2021 05:20:48 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -26,31 +25,31 @@
       },
       "StatusCode": 201,
       "ResponseHeaders": {
-        "api-supported-versions": "2020-07-20-preview2, 2021-02-22-preview1, 2021-03-07, 2021-03-31-preview1",
+        "api-supported-versions": "2020-07-20-preview2, 2021-02-22-preview1, 2021-03-07, 2021-03-31-preview1, 2021-10-31-preview",
+        "Content-Length": "185",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 15 Jun 2021 21:17:20 GMT",
-        "MS-CV": "G1HgeMQfGUGzjUmTS0pZ5w.0",
+        "Date": "Wed, 27 Oct 2021 05:20:48 GMT",
+        "MS-CV": "Fp\u002BD9mlB/Ea/Bmecs8D1MA.0",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
-        "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "04BjJYAAAAACFX7WJjsSKR4Vs5zki3HM9WVZSMzBFREdFMDMxNgA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Azure-Ref": "0sOF4YQAAAADkiTGujtS5SYRERyrIQ8RhUFJHMDFFREdFMDkxMABmMDlhNGMxMy0yMWYxLTQ4ZWMtOWNmNy02NjU0NTY4NGI2NDI=",
         "X-Cache": "CONFIG_NOCACHE",
-        "x-ms-client-request-id": "d69148ae72dcb1a586a90dbecba5cbab",
-        "X-Processing-Time": "256ms"
+        "x-ms-client-request-id": "44a1cc595fe75fee23c7e54129ba7b9a",
+        "X-Processing-Time": "176ms"
       },
       "ResponseBody": {
         "identity": {
-          "id": "8:acs:ac80d96a-85de-48b1-995d-a3a3fa3627c8_0000000a-b16a-d247-9806-113a0d00f14a"
+          "id": "8:acs:a5ba7870-ef05-4e2b-9901-7751faa29e20_0000000d-6013-3e00-83fe-084822003384"
         },
         "accessToken": {
           "token": "Sanitized",
-          "expiresOn": "2021-06-16T21:17:21.0782132\u002B00:00"
+          "expiresOn": "2021-10-28T05:20:48.7968983\u002B00:00"
         }
       }
     }
   ],
   "Variables": {
-    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=Kg==",
-    "RandomSeed": "754196073"
+    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://sanitized.communication.azure.net/;accesskey=Kg==",
+    "RandomSeed": "353724430"
   }
 }

@@ -83,7 +83,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Utility method that creates the name for the transfer dead letter receiver, specified by <paramref name="entityPath"/>
         /// </summary>
-        public static string Format​Transfer​Dead​Letter​Path(string entityPath)
+        public static string FormatTransferDeadLetterPath(string entityPath)
         {
             return string.Concat(entityPath, PathDelimiter, TransferDeadLetterQueueName);
         }

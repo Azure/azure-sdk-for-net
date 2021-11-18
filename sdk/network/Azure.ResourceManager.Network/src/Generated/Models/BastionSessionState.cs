@@ -8,22 +8,11 @@
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The session state detail for a target. </summary>
-    public partial class BastionSessionState
+    internal partial class BastionSessionState
     {
         /// <summary> Initializes a new instance of BastionSessionState. </summary>
         internal BastionSessionState()
         {
-        }
-
-        /// <summary> Initializes a new instance of BastionSessionState. </summary>
-        /// <param name="sessionId"> A unique id for the session. </param>
-        /// <param name="message"> Used for extra information. </param>
-        /// <param name="state"> The state of the session. Disconnected/Failed/NotFound. </param>
-        internal BastionSessionState(string sessionId, string message, string state)
-        {
-            SessionId = sessionId;
-            Message = message;
-            State = state;
         }
 
         /// <summary> A unique id for the session. </summary>

@@ -9,22 +9,30 @@ using NUnit.Framework;
 
 namespace Azure.AI.Translation.Document.Samples
 {
-    [LiveOnly]
-    public partial class DocumentTranslationSamples : SamplesBase<DocumentTranslationTestEnvironment>
+    public partial class DocumentTranslationSamples : DocumentTranslationLiveTestBase
     {
         [Test]
-        [Ignore("Samples not working yet")]
+        [SyncOnly]
         public void StartTranslation()
         {
+#if SNIPPET
+            string endpoint = "<Document Translator Resource Endpoint>";
+            string apiKey = "<Document Translator Resource API Key>";
+#else
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
+#endif
 
             var client = new DocumentTranslationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
             #region Snippet:StartTranslation
+#if SNIPPET
             Uri sourceUri = new Uri("<source SAS URI>");
             Uri targetUri = new Uri("<target SAS URI>");
-
+#else
+            Uri sourceUri = CreateSourceContainer(oneTestDocuments);
+            Uri targetUri = CreateTargetContainer();
+#endif
             var input = new DocumentTranslationInput(sourceUri, targetUri, "es");
 
             DocumentTranslationOperation operation = client.StartTranslation(input);
@@ -58,24 +66,24 @@ namespace Azure.AI.Translation.Document.Samples
                 }
             }
 
-            foreach (DocumentStatus document in operation.GetValues())
+            foreach (DocumentStatusResult document in operation.GetValues())
             {
                 Console.WriteLine($"Document with Id: {document.Id}");
                 Console.WriteLine($"  Status:{document.Status}");
                 if (document.Status == DocumentTranslationStatus.Succeeded)
                 {
                     Console.WriteLine($"  Translated Document Uri: {document.TranslatedDocumentUri}");
-                    Console.WriteLine($"  Translated to language: {document.TranslatedTo}.");
+                    Console.WriteLine($"  Translated to language code: {document.TranslatedToLanguageCode}.");
                     Console.WriteLine($"  Document source Uri: {document.SourceDocumentUri}");
                 }
                 else
                 {
                     Console.WriteLine($"  Document source Uri: {document.SourceDocumentUri}");
-                    Console.WriteLine($"  Error Code: {document.Error.ErrorCode}");
+                    Console.WriteLine($"  Error Code: {document.Error.Code}");
                     Console.WriteLine($"  Message: {document.Error.Message}");
                 }
             }
-            #endregion
+#endregion
         }
     }
 }

@@ -14,7 +14,7 @@ namespace Azure.Messaging.EventHubs.Perf.Scenarios
     ///
     /// <seealso cref="EventPublishPerfTest" />
     ///
-    public sealed class PublishEventsToGateway : EventPublishPerfTest
+    public sealed class PublishEventsToGateway : EventPublishPerfTest<EventHubsOptions>
     {
         /// <summary>
         ///   Initializes a new instance of the <see cref="PublishEventsToGateway"/> class.
@@ -22,7 +22,7 @@ namespace Azure.Messaging.EventHubs.Perf.Scenarios
         ///
         /// <param name="options">The set of options to consider for configuring the scenario.</param>
         ///
-        public PublishEventsToGateway(SizeCountOptions options) : base(options)
+        public PublishEventsToGateway(EventHubsOptions options) : base(options)
         {
         }
 

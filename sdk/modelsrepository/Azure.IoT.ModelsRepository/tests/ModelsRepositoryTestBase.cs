@@ -9,7 +9,7 @@ using System.Text.Json;
 namespace Azure.IoT.ModelsRepository.Tests
 {
     /// <summary>
-    /// This class will initialize all the settings and create and instance of the ModelsRepoClient.
+    /// This class will initialize settings for ModelsRepositoryClient tests.
     /// </summary>
     public abstract class ModelsRepositoryTestBase
     {
@@ -32,13 +32,39 @@ namespace Azure.IoT.ModelsRepository.Tests
             return dtmi;
         }
 
-        public static readonly string FallbackTestRemoteRepo = ModelsRepositoryConstants.DefaultModelsRepository;
+        public static void AddMetadataToLocalRepository(bool supportsExpanded = true)
+        {
+            var metadata = new ModelsRepositoryMetadata();
+            metadata.Features.Expanded = supportsExpanded;
+            string metadataFilePath = DtmiConventions.GetMetadataUri(new Uri(TestLocalModelsRepository)).LocalPath;
 
-        public static string TestDirectoryPath => Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            var options = new JsonSerializerOptions { WriteIndented = true };
+            string metadataJsonString = JsonSerializer.Serialize(metadata, options);
+            File.WriteAllText(metadataFilePath, metadataJsonString);
+        }
 
-        public static string TestLocalModelRepository => Path.Combine(TestDirectoryPath, "TestModelRepo");
+        public static void RemoveMetadataFromLocalRepository()
+        {
+            string metadataFilePath = DtmiConventions.GetMetadataUri(new Uri(TestLocalModelsRepository)).LocalPath;
+            if (File.Exists(metadataFilePath))
+            {
+                File.Delete(metadataFilePath);
+            }
+        }
 
-        public static string TestRemoteModelRepository => Environment.GetEnvironmentVariable("PNP_TEST_REMOTE_REPO") ?? FallbackTestRemoteRepo;
+        // The global endpoint contains metadata.
+        public static readonly string ProdRemoteModelsRepositoryCDN = ModelsRepositoryConstants.DefaultModelsRepository;
+
+        // The GitHub repo does not contain metadata.
+        public static readonly string ProdRemoteModelsRepositoryGithub = "https://raw.githubusercontent.com/Azure/iot-plugandplay-models/main/";
+
+        public static string TestDirectoryPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+
+        // Does not contain metadata.
+        public static string TestLocalModelsRepository = Path.Combine(TestDirectoryPath, "TestModelRepo");
+
+        // Contains metadata.
+        public static string TestLocalModelsRepositoryWithMetadata = Path.Combine(TestDirectoryPath, "TestModelRepo", "MetadataModelRepo");
 
         public enum ClientType
         {

@@ -25,7 +25,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Properties = properties;
         }
 
+        /// <summary> Initializes a new instance of DataFlowDebugResource. </summary>
+        /// <param name="name"> The resource name. </param>
+        /// <param name="properties"> Data flow properties. </param>
+        internal DataFlowDebugResource(string name, DataFlow properties) : base(name)
+        {
+            Properties = properties;
+        }
+
         /// <summary> Data flow properties. </summary>
-        public DataFlow Properties { get; }
+        public DataFlow Properties { get; set; }
     }
 }

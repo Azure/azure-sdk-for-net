@@ -17,19 +17,15 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="lowerBound">
         /// lower bound
         /// 
-        /// 
-        /// 
-        /// should be specified when anomalyDetectorDirection is Both or Down.
+        /// should be specified when anomalyDetectorDirection is Both or Down
         /// </param>
         /// <param name="upperBound">
         /// upper bound
         /// 
-        /// 
-        /// 
-        /// should be specified when anomalyDetectorDirection is Both or Up.
+        /// should be specified when anomalyDetectorDirection is Both or Up
         /// </param>
         /// <param name="anomalyDetectorDirection"> detection direction. </param>
-        /// <param name="suppressCondition"> . </param>
+        /// <param name="suppressCondition"></param>
         internal HardThresholdCondition(double? lowerBound, double? upperBound, AnomalyDetectorDirection anomalyDetectorDirection, SuppressCondition suppressCondition)
         {
             LowerBound = lowerBound;

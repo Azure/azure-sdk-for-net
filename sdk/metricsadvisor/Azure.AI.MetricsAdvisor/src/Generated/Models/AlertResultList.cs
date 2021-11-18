@@ -15,7 +15,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     internal partial class AlertResultList
     {
         /// <summary> Initializes a new instance of AlertResultList. </summary>
-        /// <param name="value"> . </param>
+        /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal AlertResultList(IEnumerable<AnomalyAlert> value)
         {
@@ -28,15 +28,17 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         /// <summary> Initializes a new instance of AlertResultList. </summary>
-        /// <param name="nextLink"> . </param>
-        /// <param name="value"> . </param>
+        /// <param name="nextLink"></param>
+        /// <param name="value"></param>
         internal AlertResultList(string nextLink, IReadOnlyList<AnomalyAlert> value)
         {
             NextLink = nextLink;
             Value = value;
         }
 
+        /// <summary> Gets the next link. </summary>
         public string NextLink { get; }
+        /// <summary> Gets the value. </summary>
         public IReadOnlyList<AnomalyAlert> Value { get; }
     }
 }

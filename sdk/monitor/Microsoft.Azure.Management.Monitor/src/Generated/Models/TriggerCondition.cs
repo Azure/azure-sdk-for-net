@@ -31,8 +31,9 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// Initializes a new instance of the TriggerCondition class.
         /// </summary>
         /// <param name="thresholdOperator">Evaluation operation for rule -
-        /// 'GreaterThan' or 'LessThan. Possible values include: 'GreaterThan',
-        /// 'LessThan', 'Equal'</param>
+        /// 'GreaterThan' or 'LessThan. Possible values include:
+        /// 'GreaterThanOrEqual', 'LessThanOrEqual', 'GreaterThan', 'LessThan',
+        /// 'Equal'</param>
         /// <param name="threshold">Result or count threshold based on which
         /// rule should be triggered.</param>
         /// <param name="metricTrigger">Trigger condition for metric query
@@ -52,8 +53,8 @@ namespace Microsoft.Azure.Management.Monitor.Models
 
         /// <summary>
         /// Gets or sets evaluation operation for rule - 'GreaterThan' or
-        /// 'LessThan. Possible values include: 'GreaterThan', 'LessThan',
-        /// 'Equal'
+        /// 'LessThan. Possible values include: 'GreaterThanOrEqual',
+        /// 'LessThanOrEqual', 'GreaterThan', 'LessThan', 'Equal'
         /// </summary>
         [JsonProperty(PropertyName = "thresholdOperator")]
         public string ThresholdOperator { get; set; }

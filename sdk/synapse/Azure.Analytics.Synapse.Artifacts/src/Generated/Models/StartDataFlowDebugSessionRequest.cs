@@ -16,6 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of StartDataFlowDebugSessionRequest. </summary>
         public StartDataFlowDebugSessionRequest()
         {
+            DataFlows = new ChangeTrackingList<DataFlowResource>();
             Datasets = new ChangeTrackingList<DatasetResource>();
             LinkedServices = new ChangeTrackingList<LinkedServiceResource>();
         }
@@ -23,15 +24,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of StartDataFlowDebugSessionRequest. </summary>
         /// <param name="sessionId"> The ID of data flow debug session. </param>
         /// <param name="dataFlow"> Data flow instance. </param>
+        /// <param name="dataFlows"> List of Data flows. </param>
         /// <param name="datasets"> List of datasets. </param>
         /// <param name="linkedServices"> List of linked services. </param>
         /// <param name="staging"> Staging info for debug session. </param>
         /// <param name="debugSettings"> Data flow debug settings. </param>
         /// <param name="incrementalDebug"> The type of new Databricks cluster. </param>
-        internal StartDataFlowDebugSessionRequest(string sessionId, DataFlowResource dataFlow, IList<DatasetResource> datasets, IList<LinkedServiceResource> linkedServices, object staging, object debugSettings, bool? incrementalDebug)
+        internal StartDataFlowDebugSessionRequest(string sessionId, DataFlowResource dataFlow, IList<DataFlowResource> dataFlows, IList<DatasetResource> datasets, IList<LinkedServiceResource> linkedServices, object staging, object debugSettings, bool? incrementalDebug)
         {
             SessionId = sessionId;
             DataFlow = dataFlow;
+            DataFlows = dataFlows;
             Datasets = datasets;
             LinkedServices = linkedServices;
             Staging = staging;
@@ -43,6 +46,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public string SessionId { get; set; }
         /// <summary> Data flow instance. </summary>
         public DataFlowResource DataFlow { get; set; }
+        /// <summary> List of Data flows. </summary>
+        public IList<DataFlowResource> DataFlows { get; }
         /// <summary> List of datasets. </summary>
         public IList<DatasetResource> Datasets { get; }
         /// <summary> List of linked services. </summary>

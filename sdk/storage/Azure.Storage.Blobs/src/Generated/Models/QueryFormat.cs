@@ -11,12 +11,14 @@ namespace Azure.Storage.Blobs.Models
     internal partial class QueryFormat
     {
         /// <summary> Initializes a new instance of QueryFormat. </summary>
-        public QueryFormat()
+        /// <param name="type"> The quick query format type. </param>
+        public QueryFormat(QueryFormatType type)
         {
+            Type = type;
         }
 
         /// <summary> The quick query format type. </summary>
-        public QueryFormatType? Type { get; set; }
+        public QueryFormatType Type { get; }
         /// <summary> Groups the settings used for interpreting the blob data if the blob is delimited text formatted. </summary>
         public DelimitedTextConfigurationInternal DelimitedTextConfiguration { get; set; }
         /// <summary> json text configuration. </summary>

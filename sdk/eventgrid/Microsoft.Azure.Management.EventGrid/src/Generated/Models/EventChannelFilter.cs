@@ -33,7 +33,8 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// </summary>
         /// <param name="enableAdvancedFilteringOnArrays">Allows advanced
         /// filters to be evaluated against an array of values instead of
-        /// expecting a singular value.</param>
+        /// expecting a singular value. The default value is either false or
+        /// null.</param>
         /// <param name="advancedFilters">An array of advanced filters that are
         /// used for filtering event channels.</param>
         public EventChannelFilter(bool? enableAdvancedFilteringOnArrays = default(bool?), IList<AdvancedFilter> advancedFilters = default(IList<AdvancedFilter>))
@@ -50,7 +51,8 @@ namespace Microsoft.Azure.Management.EventGrid.Models
 
         /// <summary>
         /// Gets or sets allows advanced filters to be evaluated against an
-        /// array of values instead of expecting a singular value.
+        /// array of values instead of expecting a singular value. The default
+        /// value is either false or null.
         /// </summary>
         [JsonProperty(PropertyName = "enableAdvancedFilteringOnArrays")]
         public bool? EnableAdvancedFilteringOnArrays { get; set; }

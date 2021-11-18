@@ -73,7 +73,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             }
             catch (Exception e)
             {
-                Exception exception = AmqpExceptionHelper.GetClientException(e, null);
+                Exception exception = AmqpExceptionHelper.GetClientException(e, true, null);
                 MessagingEventSource.Log.AmqpTransactionDischargeException(this.transactionId, this.AmqpTransactionId, exception);
                 singlePhaseEnlistment.InDoubt(exception);
             }
@@ -98,7 +98,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             }
             catch (Exception e)
             {
-                Exception exception = AmqpExceptionHelper.GetClientException(e, null);
+                Exception exception = AmqpExceptionHelper.GetClientException(e, true, null);
                 MessagingEventSource.Log.AmqpTransactionDischargeException(this.transactionId, this.AmqpTransactionId, exception);
                 singlePhaseEnlistment.Aborted(exception);
             }

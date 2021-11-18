@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using CommandLine;
+using System;
+using System.Collections.Generic;
 
 namespace Azure.Test.Perf
 {
@@ -9,9 +11,6 @@ namespace Azure.Test.Perf
     {
         [Option('d', "duration", Default = 10, HelpText = "Duration of test in seconds")]
         public int Duration { get; set; }
-
-        [Option("host", HelpText = "Host to redirect HTTP requests")]
-        public string Host { get; set; }
 
         [Option("insecure", HelpText = "Allow untrusted SSL certs")]
         public bool Insecure { get; set; }
@@ -43,9 +42,6 @@ namespace Azure.Test.Perf
         [Option('p', "parallel", Default = 1, HelpText = "Number of operations to execute in parallel")]
         public int Parallel { get; set; }
 
-        [Option("port", HelpText = "Port to redirect HTTP requests")]
-        public int? Port { get; set; }
-
         [Option('r', "rate", HelpText = "Target throughput (ops/sec)")]
         public int? Rate { get; set; }
 
@@ -54,6 +50,9 @@ namespace Azure.Test.Perf
 
         [Option("sync", HelpText = "Runs sync version of test")]
         public bool Sync { get; set; }
+
+        [Option('x', "test-proxies", Separator = ';', HelpText = "URIs of TestProxy Servers (separated by ';')")]
+        public IEnumerable<Uri> TestProxies { get; set; }
 
         [Option('w', "warmup", Default = 5, HelpText = "Duration of warmup in seconds")]
         public int Warmup { get; set; }

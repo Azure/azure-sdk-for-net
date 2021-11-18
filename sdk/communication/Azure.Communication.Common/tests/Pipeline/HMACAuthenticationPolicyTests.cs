@@ -22,7 +22,6 @@ namespace Azure.Communication.Pipeline
             await SendGetRequest(transport, authPolicy);
             var headers = transport.SingleRequest.Headers;
 
-            Assert.True(headers.Contains("Date"));
             Assert.True(headers.Contains("x-ms-date"));
             Assert.True(headers.Contains("Authorization"));
 

@@ -14,7 +14,7 @@ namespace Azure.Storage.Blobs.Models
     public static partial class BlobsModelFactory
     {
 
-        /// <summary> Initializes new instance of UserDelegationKey class. </summary>
+        /// <summary> Initializes a new instance of UserDelegationKey. </summary>
         /// <param name="signedObjectId"> The Azure Active Directory object ID in GUID format. </param>
         /// <param name="signedTenantId"> The Azure Active Directory tenant ID in GUID format. </param>
         /// <param name="signedStartsOn"> The date-time the key is active. </param>
@@ -23,7 +23,7 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="signedVersion"> The service version that created the key. </param>
         /// <param name="value"> The key as a base64 string. </param>
         /// <returns> A new <see cref="Models.UserDelegationKey"/> instance for mocking. </returns>
-        public static UserDelegationKey UserDelegationKey(string signedObjectId = default, string signedTenantId = default, DateTimeOffset signedStartsOn = default, DateTimeOffset signedExpiresOn = default, string signedService = default, string signedVersion = default, string value = default)
+        public static UserDelegationKey UserDelegationKey(string signedObjectId = null, string signedTenantId = null, DateTimeOffset signedStartsOn = default, DateTimeOffset signedExpiresOn = default, string signedService = null, string signedVersion = null, string value = null)
         {
             return new UserDelegationKey(signedObjectId, signedTenantId, signedStartsOn, signedExpiresOn, signedService, signedVersion, value);
         }

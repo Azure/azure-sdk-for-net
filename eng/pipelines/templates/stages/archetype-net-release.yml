@@ -36,9 +36,9 @@ stages:
                   artifact: ${{parameters.ArtifactName}}-signed
                   displayName: 'Store signed packages in ${{parameters.ArtifactName}}-signed artifact'
 
-  - ${{if and(eq(variables['Build.Reason'], 'Manual'), eq(variables['System.TeamProject'], 'internal'))}}:
+  - ${{if and(in(variables['Build.Reason'], 'Manual', ''), eq(variables['System.TeamProject'], 'internal'))}}:
     - ${{ each artifact in parameters.Artifacts }}:
-      - stage: Release_${{artifact.safeName}}
+      - stage:
         displayName: 'Release: ${{artifact.name}}'
         dependsOn: Signing
         condition: and(succeeded(), ne(variables['SetDevVersion'], 'true'), ne(variables['Skip.Release'], 'true'), ne(variables['Build.Repository.Name'], 'Azure/azure-sdk-for-net-pr'))
@@ -56,10 +56,9 @@ stages:
               runOnce:
                 deploy:
                   steps:
-                    - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
-                      parameters:
-                        Paths:
-                          - '${{ parameters.ServiceDirectory }}'
+                    - checkout: self
+                    - download: current
+                      artifact: ${{parameters.ArtifactName}}-signed
                     - template: /eng/common/pipelines/templates/steps/retain-run.yml
                     - template: /eng/common/pipelines/templates/steps/set-test-pipeline-version.yml
                       parameters:
@@ -71,6 +70,15 @@ stages:
                         PackageName: ${{artifact.name}}
                         ServiceName: ${{parameters.ServiceDirectory}}
                         ForRelease: true
+                    - task: PowerShell@2
+                      inputs:
+                        filePath: $(System.DefaultWorkingDirectory)/eng/scripts/InstallationCheck.ps1
+                        pwsh: true
+                        arguments: >
+                          -ArtifactsDirectory "$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed"
+                          -Artifact ${{artifact.name}}
+                      condition: and(succeeded(),ne('${{ artifact.skipPublishPackage }}', 'true'))
+                      displayName: Verify Package Installation
                     - template: /eng/common/pipelines/templates/steps/create-tags-and-git-release.yml
                       parameters:
                         ArtifactLocation: $(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}
@@ -86,8 +94,8 @@ stages:
               dependsOn: TagRepository
 
               pool:
-                name: azsdk-pool-mms-ubuntu-1804-general
-                vmImage: MMSUbuntu18.04
+                name: azsdk-pool-mms-ubuntu-2004-general
+                vmImage: MMSUbuntu20.04
 
               strategy:
                 runOnce:
@@ -142,12 +150,9 @@ stages:
               environment: githubio
               dependsOn: PublishPackage
 
-              variables:
-                CIConfigs: "{'targets':[{'path_to_config':'bundlepackages/azure-dotnet-preview.csv','Mode':'Preview','content_folder':'api/overview/azure', 'suffix':'-pre'},{'path_to_config':'bundlepackages/azure-dotnet.csv','mode':'Latest','content_folder':'api/overview/azure'}]}"
-
               pool:
-                name: azsdk-pool-mms-win-2019-general
-                vmImage: MMS2019
+                name: azsdk-pool-mms-ubuntu-2004-general
+                vmImage: MMSUbuntu20.04
 
               strategy:
                 runOnce:
@@ -155,32 +160,21 @@ stages:
                     steps:
                       - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
                         parameters:
-                          paths:
-                            - .github/CODEOWNERS
-                      - template: /eng/common/pipelines/templates/steps/get-pr-owners.yml
+                          SkipDefaultCheckout: true
+                          Paths:
+                            - sdk/**/*.md
+                      - download: current
+                      - template: /eng/common/pipelines/templates/steps/update-docsms-metadata.yml
                         parameters:
-                          TargetVariable: "OwningGHUser"
-                          ServiceDirectory: ${{parameters.ServiceDirectory}}
-                      - template: /eng/common/pipelines/templates/steps/docs-metadata-release.yml
-                        parameters:
-                          ArtifactLocation: $(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}
-                          PackageRepository: Nuget
-                          ReleaseSha: $(Build.SourceVersion)
-                          RepoId: Azure/azure-sdk-for-net
+                          PackageInfoLocations:
+                            - $(Pipeline.Workspace)/${{parameters.ArtifactName}}/PackageInfo/${{artifact.name}}.json
                           WorkingDirectory: $(System.DefaultWorkingDirectory)
                           TargetDocRepoOwner: ${{parameters.TargetDocRepoOwner}}
                           TargetDocRepoName: ${{parameters.TargetDocRepoName}}
-                          PRBranchName: onboarding-${{artifact.name}}-$(Build.BuildId)
-                          ArtifactName: ${{artifact.name}}
-                          Language: '.net'
-                          DocRepoDestinationPath: 'api/overview/azure/'
-                          GHReviewersVariable: 'OwningGHUser'
-                          CIConfigs: $(CIConfigs)
-                          OnboardingBranch: 'onboarding'
-                          CloseAfterOpenForTesting: '${{ parameters.TestPipeline }}'
+                          Language: 'dotnet'
                           SparseCheckoutPaths:
-                            - api
-
+                            - api/overview/azure/
+                            - metadata/
 
           - ${{if ne(artifact.skipPublishDocGithubIo, 'true')}}:
             - deployment: PublishDocs
@@ -236,15 +230,12 @@ stages:
                           PRLabels: "auto-merge"
                           CloseAfterOpenForTesting: '${{ parameters.TestPipeline }}'
 
-  - ${{if and(eq(variables['Build.Reason'], 'Manual'), eq(variables['System.TeamProject'], 'internal'))}}:
-    - stage: SmokeTest_Release_Packages
-      displayName: Smoke Test Release Packages
-      jobs:
-        - template: /eng/pipelines/templates/jobs/smoke.tests.yml
-          parameters:
-            Daily: false
-            Artifacts: ${{ parameters.Artifacts }}
-            ArtifactName: ${{ parameters.ArtifactName }}
+          - ${{if and(eq(variables['Build.Reason'], 'Manual'), eq(variables['System.TeamProject'], 'internal'))}}:
+            - template: /eng/pipelines/templates/jobs/smoke.tests.yml
+              parameters:
+                Daily: false
+                Artifact: ${{ artifact }}
+                ArtifactName: ${{ parameters.ArtifactName }}
 
   - stage: Integration
     dependsOn: Signing
@@ -252,8 +243,6 @@ stages:
     - job: PublishPackages
       condition: or(eq(variables['SetDevVersion'], 'true'), and(eq(variables['Build.Reason'],'Schedule'), eq(variables['System.TeamProject'], 'internal')))
       displayName: Publish package to daily feed
-      variables:
-        BlobFeedUrl: 'https://azuresdkartifacts.blob.core.windows.net/azure-sdk-for-net/index.json'
       pool:
         name: azsdk-pool-mms-win-2019-general
         vmImage: MMS2019
@@ -280,3 +269,33 @@ stages:
             command: push
             packagesToPush: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.nupkg;!$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.symbols.nupkg'
             publishVstsFeed: $(DevOpsFeedID)
+
+    - job: PublishDocsToNightlyBranch
+      dependsOn: PublishPackages
+      condition: or(eq(variables['SetDevVersion'], 'true'), and(eq(variables['Build.Reason'],'Schedule'), eq(variables['System.TeamProject'], 'internal')))
+      pool:
+        name: azsdk-pool-mms-ubuntu-2004-general
+        vmImage: MMSUbuntu20.04
+      steps:
+        - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
+          parameters:
+            SkipDefaultCheckout: true
+            Paths:
+              - sdk/**/*.md
+        - download: current
+        - pwsh: |
+            Get-ChildItem -Recurse $(Pipeline.Workspace)/${{parameters.ArtifactName}}/
+          displayName: Show visible artifacts
+        - template: /eng/common/pipelines/templates/steps/update-docsms-metadata.yml
+          parameters:
+            PackageInfoLocations:
+              - ${{ each artifact in parameters.Artifacts }}:
+                - $(Pipeline.Workspace)/${{parameters.ArtifactName}}/PackageInfo/${{artifact.name}}.json
+            WorkingDirectory: $(System.DefaultWorkingDirectory)
+            TargetDocRepoOwner: ${{parameters.TargetDocRepoOwner}}
+            TargetDocRepoName: ${{parameters.TargetDocRepoName}}
+            Language: 'dotnet'
+            DailyDocsBuild: true
+            SparseCheckoutPaths:
+              - api/overview/azure/
+              - metadata/

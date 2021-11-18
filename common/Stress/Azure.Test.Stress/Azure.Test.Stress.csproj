@@ -9,10 +9,11 @@
     <PackageReference Include="CommandLineParser" />
     <PackageReference Include="System.Reflection.Emit" />
     <PackageReference Include="System.Text.Json" />
+    <PackageReference Include="System.Text.Encodings.Web" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="..\..\PerfStressShared\PerfStressUtilities.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="..\..\PerfStressShared\PerfStressUtilities.cs" LinkBase="Shared" />
   </ItemGroup>
 
 </Project>

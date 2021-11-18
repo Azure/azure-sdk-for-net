@@ -101,7 +101,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                         eventHubName: eventHubName,
                         credential: info.TokenCredential,
                         options: _options.EventProcessorOptions,
-                        eventBatchMaximumCount: _options.MaxBatchSize,
+                        eventBatchMaximumCount: _options.MaxEventBatchSize,
                         exceptionHandler: _options.ExceptionHandler);
                 }
 
@@ -109,7 +109,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                     connectionString: NormalizeConnectionString(info.ConnectionString, eventHubName),
                     eventHubName: eventHubName,
                     options: _options.EventProcessorOptions,
-                    eventBatchMaximumCount: _options.MaxBatchSize,
+                    eventBatchMaximumCount: _options.MaxEventBatchSize,
                     exceptionHandler: _options.ExceptionHandler);
             }
 

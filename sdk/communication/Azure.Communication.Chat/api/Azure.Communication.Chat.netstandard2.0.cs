@@ -5,12 +5,6 @@ namespace Azure.Communication.Chat
         internal AddChatParticipantsResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Communication.Chat.ChatError> InvalidParticipants { get { throw null; } }
     }
-    public static partial class AzureCommunicationServicesModelFactory
-    {
-        public static Azure.Communication.Chat.AddChatParticipantsResult AddChatParticipantsResult(System.Collections.Generic.IReadOnlyList<Azure.Communication.Chat.ChatError> invalidParticipants = null) { throw null; }
-        public static Azure.Communication.Chat.ChatError ChatError(string code = null, string message = null, string target = null, System.Collections.Generic.IReadOnlyList<Azure.Communication.Chat.ChatError> details = null, Azure.Communication.Chat.ChatError innerError = null) { throw null; }
-        public static Azure.Communication.Chat.ChatThreadItem ChatThreadItem(string id = null, string topic = null, System.DateTimeOffset? deletedOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastMessageReceivedOn = default(System.DateTimeOffset?)) { throw null; }
-    }
     public partial class ChatClient
     {
         protected ChatClient() { }
@@ -25,11 +19,11 @@ namespace Azure.Communication.Chat
     }
     public partial class ChatClientOptions : Azure.Core.ClientOptions
     {
-        public ChatClientOptions(Azure.Communication.Chat.ChatClientOptions.ServiceVersion version = Azure.Communication.Chat.ChatClientOptions.ServiceVersion.V2021_04_05_preview6) { }
+        public ChatClientOptions(Azure.Communication.Chat.ChatClientOptions.ServiceVersion version = Azure.Communication.Chat.ChatClientOptions.ServiceVersion.V2021_09_07) { }
         public enum ServiceVersion
         {
             V2021_03_07 = 1,
-            V2021_04_05_preview6 = 2,
+            V2021_09_07 = 2,
         }
     }
     public partial class ChatError
@@ -94,6 +88,8 @@ namespace Azure.Communication.Chat
     }
     public static partial class ChatModelFactory
     {
+        public static Azure.Communication.Chat.AddChatParticipantsResult AddChatParticipantsResult(System.Collections.Generic.IEnumerable<Azure.Communication.Chat.ChatError> invalidParticipants = null) { throw null; }
+        public static Azure.Communication.Chat.ChatError ChatError(string code = null, string message = null, string target = null, System.Collections.Generic.IEnumerable<Azure.Communication.Chat.ChatError> details = null, Azure.Communication.Chat.ChatError innerError = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Communication.Chat.ChatMessage ChatMessage(string id, Azure.Communication.Chat.ChatMessageType type, string sequenceId, string version, Azure.Communication.Chat.ChatMessageContent content, string senderDisplayName, System.DateTimeOffset createdOn, string senderId, System.DateTimeOffset? deletedOn, System.DateTimeOffset? editedOn) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]

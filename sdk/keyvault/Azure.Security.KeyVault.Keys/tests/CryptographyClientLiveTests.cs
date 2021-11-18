@@ -7,6 +7,7 @@ using NUnit.Framework;
 using System;
 using System.IO;
 using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Azure.Security.KeyVault.Keys.Tests
@@ -363,6 +364,41 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.IsNotNull(decrypted.Plaintext);
 
             CollectionAssert.AreEqual(plaintext, decrypted.Plaintext);
+        }
+
+        [Test]
+        public async Task EncryptDecryptFromKeyClient()
+        {
+            KeyVaultKey key = await CreateTestKey(EncryptionAlgorithm.RsaOaep);
+            RegisterForCleanup(key.Name);
+
+            byte[] plaintext = Encoding.UTF8.GetBytes("A single block of plaintext");
+
+            // Make sure the same (instrumented) pipeline is used from the KeyClient.
+            CryptographyClient cryptoClient = Client.GetCryptographyClient(key.Name, key.Properties.Version);
+            EncryptResult encryptResult = await cryptoClient.EncryptAsync(EncryptionAlgorithm.RsaOaep, plaintext);
+            DecryptResult decryptResult = await cryptoClient.DecryptAsync(EncryptionAlgorithm.RsaOaep, encryptResult.Ciphertext);
+
+            Assert.AreEqual(plaintext, decryptResult.Plaintext);
+        }
+
+        [Test]
+        public async Task EncryptWithKeyNameReturnsFullKeyId()
+        {
+            KeyVaultKey key = await CreateTestKey(EncryptionAlgorithm.RsaOaep);
+            RegisterForCleanup(key.Name);
+
+            byte[] plaintext = Encoding.UTF8.GetBytes("A single block of plaintext");
+
+            Uri keyId = new UriBuilder(Client.VaultUri)
+            {
+                Path = KeyClient.KeysPath + key.Name,
+            }.Uri;
+
+            CryptographyClient client = GetCryptoClient(keyId, forceRemote: true);
+            EncryptResult encrypted = await client.EncryptAsync(EncryptionAlgorithm.RsaOaep, plaintext);
+
+            Assert.AreEqual(key.Id.ToString(), encrypted.KeyId);
         }
 
         private async Task<KeyVaultKey> CreateTestKey(EncryptionAlgorithm algorithm)

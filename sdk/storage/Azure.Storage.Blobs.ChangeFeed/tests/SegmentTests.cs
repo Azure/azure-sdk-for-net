@@ -130,6 +130,63 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             }
         }
 
+        [RecordedTest]
+        public async Task GetCursor_NoShards()
+        {
+            // Arrange
+            string manifestPath = "idx/segments/2020/03/25/0200/meta.json";
+
+            Mock<BlobContainerClient> containerClient = new Mock<BlobContainerClient>(MockBehavior.Strict);
+            Mock<BlobClient> blobClient = new Mock<BlobClient>(MockBehavior.Strict);
+            Mock<ShardFactory> shardFactory = new Mock<ShardFactory>(MockBehavior.Strict);
+
+            string segmentPath = "idx/segments/2020/03/25/0200/meta.json";
+
+            DateTimeOffset dateTime = new DateTimeOffset(2020, 3, 25, 2, 0, 0, TimeSpan.Zero);
+
+            containerClient.Setup(r => r.GetBlobClient(It.IsAny<string>())).Returns(blobClient.Object);
+
+            using FileStream stream = File.OpenRead(
+                $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}{Path.DirectorySeparatorChar}Resources{Path.DirectorySeparatorChar}{"SegmentManifestNoShards.json"}");
+            BlobDownloadStreamingResult blobDownloadStreamingResult = BlobsModelFactory.BlobDownloadStreamingResult(content: stream);
+            Response<BlobDownloadStreamingResult> downloadResponse = Response.FromValue(blobDownloadStreamingResult, new MockResponse(200));
+
+            if (IsAsync)
+            {
+                blobClient.Setup(r => r.DownloadStreamingAsync(default, default, default, default)).ReturnsAsync(downloadResponse);
+            }
+            else
+            {
+                blobClient.Setup(r => r.DownloadStreaming(default, default, default, default)).Returns(downloadResponse);
+            }
+
+            SegmentFactory segmentFactory = new SegmentFactory(
+                containerClient.Object,
+                shardFactory.Object);
+
+            Segment segment = await segmentFactory.BuildSegment(
+                IsAsync,
+                manifestPath);
+
+            // Act
+            SegmentCursor cursor = segment.GetCursor();
+
+            // Assert
+            Assert.AreEqual(segmentPath, cursor.SegmentPath);
+            Assert.AreEqual(0, cursor.ShardCursors.Count);
+
+            containerClient.Verify(r => r.GetBlobClient(manifestPath));
+
+            if (IsAsync)
+            {
+                blobClient.Verify(r => r.DownloadStreamingAsync(default, default, default, default));
+            }
+            else
+            {
+                blobClient.Verify(r => r.DownloadStreaming(default, default, default, default));
+            }
+        }
+
         /// <summary>
         /// In this test, the Segment has 3 Shards and 5 total Events.
         /// Shard index 0 and 1 have 2 Events, and Shard index 2 has 1 Event.
@@ -271,6 +328,94 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             shards[0].Verify(r => r.HasNext());
             shards[1].Verify(r => r.Next(IsAsync, default));
             shards[1].Verify(r => r.HasNext());
+        }
+
+        [RecordedTest]
+        public async Task GetPage_NoMoreEvents()
+        {
+            // Arrange
+            string manifestPath = "idx/segments/2020/03/25/0200/meta.json";
+            int shardCount = 3;
+
+            Mock<BlobContainerClient> containerClient = new Mock<BlobContainerClient>(MockBehavior.Strict);
+            Mock<BlobClient> blobClient = new Mock<BlobClient>(MockBehavior.Strict);
+            Mock<ShardFactory> shardFactory = new Mock<ShardFactory>(MockBehavior.Strict);
+
+            List<Mock<Shard>> shards = new List<Mock<Shard>>();
+
+            for (int i = 0; i < shardCount; i++)
+            {
+                shards.Add(new Mock<Shard>(MockBehavior.Strict));
+            }
+
+            containerClient.Setup(r => r.GetBlobClient(It.IsAny<string>())).Returns(blobClient.Object);
+
+            using FileStream stream = File.OpenRead(
+                $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}{Path.DirectorySeparatorChar}Resources{Path.DirectorySeparatorChar}{"SegmentManifest.json"}");
+            BlobDownloadStreamingResult blobDownloadStreamingResult = BlobsModelFactory.BlobDownloadStreamingResult(content: stream);
+            Response<BlobDownloadStreamingResult> downloadResponse = Response.FromValue(blobDownloadStreamingResult, new MockResponse(200));
+
+            if (IsAsync)
+            {
+                blobClient.Setup(r => r.DownloadStreamingAsync(default, default, default, default)).ReturnsAsync(downloadResponse);
+            }
+            else
+            {
+                blobClient.Setup(r => r.DownloadStreaming(default, default, default, default)).Returns(downloadResponse);
+            }
+
+            shardFactory.SetupSequence(r => r.BuildShard(
+                It.IsAny<bool>(),
+                It.IsAny<string>(),
+                It.IsAny<ShardCursor>()))
+                .ReturnsAsync(shards[0].Object)
+                .ReturnsAsync(shards[1].Object)
+                .ReturnsAsync(shards[2].Object);
+
+            // Set up Shards
+            shards[0].SetupSequence(r => r.HasNext())
+                .Returns(false);
+
+            shards[1].SetupSequence(r => r.HasNext())
+                .Returns(false);
+
+            shards[2].SetupSequence(r => r.HasNext())
+                .Returns(false);
+
+            SegmentFactory segmentFactory = new SegmentFactory(
+                containerClient.Object,
+                shardFactory.Object);
+            Segment segment = await segmentFactory.BuildSegment(
+                IsAsync,
+                manifestPath);
+
+            // Act
+            List<BlobChangeFeedEvent> events = await segment.GetPage(IsAsync, 25);
+
+            // Assert
+            Assert.AreEqual(0, events.Count);
+
+            containerClient.Verify(r => r.GetBlobClient(manifestPath));
+            if (IsAsync)
+            {
+                blobClient.Verify(r => r.DownloadStreamingAsync(default, default, default, default));
+            }
+            else
+            {
+                blobClient.Verify(r => r.DownloadStreaming(default, default, default, default));
+            }
+
+            for (int i = 0; i < shards.Count; i++)
+            {
+                shardFactory.Verify(r => r.BuildShard(
+                    IsAsync,
+                    $"log/0{i}/2020/03/25/0200/",
+                    default));
+            }
+
+            shards[0].Verify(r => r.HasNext());
+            shards[1].Verify(r => r.HasNext());
+            shards[2].Verify(r => r.HasNext());
         }
     }
 }

@@ -8,6 +8,8 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -66,7 +68,12 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(PublicIPPrefix))
             {
                 writer.WritePropertyName("publicIPPrefix");
-                writer.WriteObjectValue(PublicIPPrefix);
+                JsonSerializer.Serialize(writer, PublicIPPrefix);
+            }
+            if (Optional.IsDefined(GatewayLoadBalancer))
+            {
+                writer.WritePropertyName("gatewayLoadBalancer");
+                JsonSerializer.Serialize(writer, GatewayLoadBalancer);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -79,16 +86,17 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> type = default;
             Optional<IList<string>> zones = default;
             Optional<string> id = default;
-            Optional<IReadOnlyList<SubResource>> inboundNatRules = default;
-            Optional<IReadOnlyList<SubResource>> inboundNatPools = default;
-            Optional<IReadOnlyList<SubResource>> outboundRules = default;
-            Optional<IReadOnlyList<SubResource>> loadBalancingRules = default;
+            Optional<IReadOnlyList<WritableSubResource>> inboundNatRules = default;
+            Optional<IReadOnlyList<WritableSubResource>> inboundNatPools = default;
+            Optional<IReadOnlyList<WritableSubResource>> outboundRules = default;
+            Optional<IReadOnlyList<WritableSubResource>> loadBalancingRules = default;
             Optional<string> privateIPAddress = default;
             Optional<IPAllocationMethod> privateIPAllocationMethod = default;
             Optional<IPVersion> privateIPAddressVersion = default;
-            Optional<Subnet> subnet = default;
-            Optional<PublicIPAddress> publicIPAddress = default;
-            Optional<SubResource> publicIPPrefix = default;
+            Optional<SubnetData> subnet = default;
+            Optional<PublicIPAddressData> publicIPAddress = default;
+            Optional<WritableSubResource> publicIPPrefix = default;
+            Optional<WritableSubResource> gatewayLoadBalancer = default;
             Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -143,10 +151,10 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<SubResource> array = new List<SubResource>();
+                            List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeserializeSubResource(item));
+                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
                             }
                             inboundNatRules = array;
                             continue;
@@ -158,10 +166,10 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<SubResource> array = new List<SubResource>();
+                            List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeserializeSubResource(item));
+                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
                             }
                             inboundNatPools = array;
                             continue;
@@ -173,10 +181,10 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<SubResource> array = new List<SubResource>();
+                            List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeserializeSubResource(item));
+                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
                             }
                             outboundRules = array;
                             continue;
@@ -188,10 +196,10 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<SubResource> array = new List<SubResource>();
+                            List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeserializeSubResource(item));
+                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
                             }
                             loadBalancingRules = array;
                             continue;
@@ -228,7 +236,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            subnet = Subnet.DeserializeSubnet(property0.Value);
+                            subnet = SubnetData.DeserializeSubnetData(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("publicIPAddress"))
@@ -238,7 +246,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            publicIPAddress = PublicIPAddress.DeserializePublicIPAddress(property0.Value);
+                            publicIPAddress = PublicIPAddressData.DeserializePublicIPAddressData(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("publicIPPrefix"))
@@ -248,7 +256,17 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            publicIPPrefix = DeserializeSubResource(property0.Value);
+                            publicIPPrefix = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            continue;
+                        }
+                        if (property0.NameEquals("gatewayLoadBalancer"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            gatewayLoadBalancer = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -265,7 +283,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new FrontendIPConfiguration(id.Value, name.Value, etag.Value, type.Value, Optional.ToList(zones), Optional.ToList(inboundNatRules), Optional.ToList(inboundNatPools), Optional.ToList(outboundRules), Optional.ToList(loadBalancingRules), privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod), Optional.ToNullable(privateIPAddressVersion), subnet.Value, publicIPAddress.Value, publicIPPrefix.Value, Optional.ToNullable(provisioningState));
+            return new FrontendIPConfiguration(id.Value, name.Value, etag.Value, type.Value, Optional.ToList(zones), Optional.ToList(inboundNatRules), Optional.ToList(inboundNatPools), Optional.ToList(outboundRules), Optional.ToList(loadBalancingRules), privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod), Optional.ToNullable(privateIPAddressVersion), subnet.Value, publicIPAddress.Value, publicIPPrefix, gatewayLoadBalancer, Optional.ToNullable(provisioningState));
         }
     }
 }

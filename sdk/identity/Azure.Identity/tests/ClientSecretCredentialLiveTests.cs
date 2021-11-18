@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -95,6 +96,31 @@ namespace Azure.Identity.Tests
                 CacheUpdatedCount++;
                 Data = tokenCacheUpdatedArgs.UnsafeCacheData;
                 return Task.CompletedTask;
+            }
+        }
+
+        private static IEnumerable<TestCaseData> RegionalAuthorityTestData()
+        {
+            yield return new TestCaseData(null);
+            yield return new TestCaseData(RegionalAuthority.AutoDiscoverRegion);
+            yield return new TestCaseData(RegionalAuthority.USWest);
+        }
+
+        [Test]
+        public void VerifyMsalClientRegionalAuthority()
+        {
+            RegionalAuthority?[] authorities = {null, RegionalAuthority.AutoDiscoverRegion, RegionalAuthority.USWest};
+
+            foreach (RegionalAuthority? regionalAuthority in authorities)
+            {
+                var expectedTenantId = Guid.NewGuid().ToString();
+                var expectedClientId = Guid.NewGuid().ToString();
+                var expectedClientSecret = Guid.NewGuid().ToString();
+
+                var cred = new ClientSecretCredential(expectedTenantId, expectedClientId, expectedClientSecret,
+                    new ClientSecretCredentialOptions {RegionalAuthority = regionalAuthority});
+
+                Assert.AreEqual(regionalAuthority, cred.Client.RegionalAuthority);
             }
         }
     }

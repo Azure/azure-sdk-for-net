@@ -8,6 +8,7 @@ namespace Policy.Tests
     using System.Linq;
     using System.Net;
 
+    using Microsoft.Azure.Management.ManagedServiceIdentity;
     using Microsoft.Azure.Management.ManagementGroups;
     using Microsoft.Azure.Management.ManagementGroups.Models;
     using Microsoft.Azure.Management.ResourceManager;
@@ -49,13 +50,14 @@ namespace Policy.Tests
                 var thisTestName = TestUtilities.GetCurrentMethodName();
                 var policyDefinition = this.CreatePolicyDefinition($"{thisTestName} Policy Definition ${LivePolicyTests.NameTag}");
 
-                var result = client.PolicyDefinitions.CreateOrUpdate(policyDefinitionName: policyName, parameters: policyDefinition);
-                Assert.NotNull(result);
+                var putResult = client.PolicyDefinitions.CreateOrUpdate(policyDefinitionName: policyName, parameters: policyDefinition);
+                Assert.NotNull(putResult);
+                this.AssertValid(policyName, policyDefinition, putResult, isBuiltin: false);
+                this.AssertMinimal(putResult);
 
                 // Validate result
                 var getResult = client.PolicyDefinitions.Get(policyName);
-                this.AssertValid(policyName, policyDefinition, getResult, false);
-                this.AssertMinimal(getResult);
+                this.AssertEqual(putResult, getResult, isBuiltin: false);
 
                 var listResult = client.PolicyDefinitions.List();
                 this.AssertInList(client, policyName, policyDefinition, listResult);
@@ -67,15 +69,15 @@ namespace Policy.Tests
                 // Update with all properties
                 this.UpdatePolicyDefinition(policyDefinition);
 
-                result = client.PolicyDefinitions.CreateOrUpdate(policyDefinitionName: policyName, parameters: policyDefinition);
-                Assert.NotNull(result);
+                putResult = client.PolicyDefinitions.CreateOrUpdate(policyDefinitionName: policyName, parameters: policyDefinition);
+                Assert.NotNull(putResult);
+                this.AssertValid(policyName, policyDefinition, putResult, false);
+                Assert.Equal("All", putResult.Mode);
+                Assert.Null(putResult.Parameters);
 
                 // Validate result
                 getResult = client.PolicyDefinitions.Get(policyName);
-                this.AssertValid(policyName, policyDefinition, getResult, false);
-
-                Assert.Equal("All", getResult.Mode);
-                Assert.Null(getResult.Parameters);
+                this.AssertEqual(putResult, getResult, isBuiltin: false);
 
                 // Delete definition and validate
                 this.DeleteDefinitionAndValidate(client, policyName);
@@ -83,12 +85,13 @@ namespace Policy.Tests
                 // Create definition with parameters
                 policyDefinition = this.CreatePolicyDefinitionWithParameters(policyName);
 
-                result = client.PolicyDefinitions.CreateOrUpdate(policyDefinitionName: policyName, parameters: policyDefinition);
-                Assert.NotNull(result);
+                putResult = client.PolicyDefinitions.CreateOrUpdate(policyDefinitionName: policyName, parameters: policyDefinition);
+                Assert.NotNull(putResult);
+                this.AssertValid(policyName, policyDefinition, putResult, false);
 
                 // Validate result
                 getResult = client.PolicyDefinitions.Get(policyName);
-                this.AssertValid(policyName, policyDefinition, getResult, false);
+                this.AssertEqual(putResult, getResult, isBuiltin: false);
 
                 // Delete definition and validate
                 this.DeleteDefinitionAndValidate(client, policyName);
@@ -162,17 +165,18 @@ namespace Policy.Tests
                     PolicyDefinitions = new[] { new PolicyDefinitionReference(policyDefinitionId: definitionResult.Id) }
                 };
 
-                var result = client.PolicySetDefinitions.CreateOrUpdate(setName, policySet);
-                Assert.NotNull(result);
+                var putResult = client.PolicySetDefinitions.CreateOrUpdate(setName, policySet);
+                Assert.NotNull(putResult);
+                this.AssertValid(setName, policySet, putResult, false);
+                Assert.Single(putResult.PolicyDefinitions);
+                Assert.Null(putResult.Description);
+                this.AssertMetadataValid(putResult.Metadata);
+                Assert.Null(putResult.Parameters);
+                Assert.Equal("Custom", putResult.PolicyType);
 
                 // Validate result
                 var getResult = client.PolicySetDefinitions.Get(setName);
-                this.AssertValid(setName, policySet, getResult, false);
-                Assert.Single(getResult.PolicyDefinitions);
-                Assert.Null(getResult.Description);
-                AssertMetadataValid(getResult.Metadata);
-                Assert.Null(getResult.Parameters);
-                Assert.Equal("Custom", getResult.PolicyType);
+                this.AssertEqual(putResult, getResult, isBuiltin: false);
 
                 var listResult = client.PolicySetDefinitions.List();
                 this.AssertInList(client, setName, policySet, listResult);
@@ -188,41 +192,42 @@ namespace Policy.Tests
                 policySet.DisplayName = $"Updated {policySet.DisplayName}";
 
                 // Add another definition that can be referenced (must be distinct from the first one to pass validation)
-                const string refId = "refId2";
+                const string RefId = "refId2";
                 var definitionName2 = TestUtilities.GenerateName();
                 var definitionResult2 = client.PolicyDefinitions.CreateOrUpdate(policyDefinitionName: definitionName2, parameters: policyDefinition);
                 policySet.PolicyDefinitions = new[]
                 {
                     new PolicyDefinitionReference(policyDefinitionId: definitionResult.Id),
-                    new PolicyDefinitionReference(policyDefinitionId: definitionResult2.Id, policyDefinitionReferenceId: refId)
+                    new PolicyDefinitionReference(policyDefinitionId: definitionResult2.Id, policyDefinitionReferenceId: RefId)
                 };
 
-                result = client.PolicySetDefinitions.CreateOrUpdate(setName, policySet);
-                Assert.NotNull(result);
+                putResult = client.PolicySetDefinitions.CreateOrUpdate(setName, policySet);
+                Assert.NotNull(putResult);
+                this.AssertValid(setName, policySet, putResult, false);
+                Assert.Equal(2, putResult.PolicyDefinitions.Count);
+                Assert.Null(putResult.Parameters);
+                Assert.Equal("Custom", putResult.PolicyType);
+                Assert.Equal(1, putResult.PolicyDefinitions.Count(definition => RefId.Equals(definition.PolicyDefinitionReferenceId, StringComparison.Ordinal)));
 
                 // validate result
                 getResult = client.PolicySetDefinitions.Get(setName);
-                this.AssertValid(setName, policySet, getResult, false);
-                Assert.Equal(2, getResult.PolicyDefinitions.Count);
-                Assert.Null(getResult.Parameters);
-                Assert.Equal("Custom", getResult.PolicyType);
-                Assert.Equal(1, getResult.PolicyDefinitions.Count(definition => refId.Equals(definition.PolicyDefinitionReferenceId, StringComparison.Ordinal)));
+                this.AssertEqual(putResult, getResult, isBuiltin: false);
 
                 // Delete and validate
                 this.DeleteSetDefinitionAndValidate(client, setName);
 
                 // Create a policy set with groups
-                const string groupNameOne = "group1";
-                const string groupNameTwo = "group2";
-                policySet.PolicyDefinitionGroups = new List<PolicyDefinitionGroup> { new PolicyDefinitionGroup(groupNameOne), new PolicyDefinitionGroup(groupNameTwo) };
-                policySet.PolicyDefinitions[0].GroupNames = new[] { groupNameOne, groupNameTwo };
-                policySet.PolicyDefinitions[1].GroupNames = new[] { groupNameTwo };
-                result = client.PolicySetDefinitions.CreateOrUpdate(setName, policySet);
-                Assert.NotNull(result);
-                this.AssertValid(setName, policySet, result, false);
+                const string GroupNameOne = "group1";
+                const string GroupNameTwo = "group2";
+                policySet.PolicyDefinitionGroups = new List<PolicyDefinitionGroup> { new PolicyDefinitionGroup(GroupNameOne), new PolicyDefinitionGroup(GroupNameTwo) };
+                policySet.PolicyDefinitions[0].GroupNames = new[] { GroupNameOne, GroupNameTwo };
+                policySet.PolicyDefinitions[1].GroupNames = new[] { GroupNameTwo };
+                putResult = client.PolicySetDefinitions.CreateOrUpdate(setName, policySet);
+                Assert.NotNull(putResult);
+                this.AssertValid(setName, policySet, putResult, false);
 
                 getResult = client.PolicySetDefinitions.Get(setName);
-                this.AssertValid(setName, policySet, getResult, false);
+                this.AssertEqual(putResult, getResult, isBuiltin: false);
 
                 // Delete and validate everything
                 this.DeleteSetDefinitionAndValidate(client, setName);
@@ -247,13 +252,14 @@ namespace Policy.Tests
                     Parameters = policySetParameters
                 };
 
-                result = client.PolicySetDefinitions.CreateOrUpdate(setName, policySet);
-                Assert.NotNull(result);
+                putResult = client.PolicySetDefinitions.CreateOrUpdate(setName, policySet);
+                Assert.NotNull(putResult);
+                this.AssertValid(setName, policySet, putResult, false);
+                Assert.Single(putResult.PolicyDefinitions);
 
                 // validate result
                 getResult = client.PolicySetDefinitions.Get(setName);
-                this.AssertValid(setName, policySet, getResult, false);
-                Assert.Single(getResult.PolicyDefinitions);
+                this.AssertEqual(putResult, getResult, isBuiltin: false);
 
                 // Delete everything and validate
                 this.DeleteSetDefinitionAndValidate(client, setName);
@@ -285,26 +291,26 @@ namespace Policy.Tests
                     PolicyDefinitionId = definitionResult.Id,
                 };
 
-                var result = client.PolicyAssignments.Create(assignmentScope, assignmentName, policyAssignment);
-                Assert.NotNull(result);
-
-                // validate results
-                var getResult = client.PolicyAssignments.Get(assignmentScope, assignmentName);
+                var putResult = client.PolicyAssignments.Create(assignmentScope, assignmentName, policyAssignment);
+                Assert.NotNull(putResult);
 
                 // Default enforcement should be set even if not provided as input in PUT request.
                 policyAssignment.EnforcementMode = EnforcementMode.Default;
-                this.AssertValid(assignmentName, policyAssignment, getResult);
-                Assert.Null(getResult.NotScopes);
-                Assert.Null(getResult.Description);
-                AssertMetadataValid(getResult.Metadata);
-                Assert.Null(getResult.Parameters);
-                Assert.Equal(EnforcementMode.Default, getResult.EnforcementMode);
+                this.AssertValid(assignmentName, policyAssignment, putResult);
+                Assert.Null(putResult.NotScopes);
+                Assert.Null(putResult.Description);
+                this.AssertMetadataValid(putResult.Metadata);
+                Assert.Null(putResult.Parameters);
+
+                // validate results
+                var getResult = client.PolicyAssignments.Get(assignmentScope, assignmentName);
+                this.AssertEqual(putResult, getResult);
 
                 var listResult = client.PolicyAssignments.List();
                 this.AssertInList(client, assignmentName, policyAssignment, listResult);
 
                 // Validate pagination with page size 10
-                var assignmentQuery = new ODataQuery<PolicyAssignment>() { Top = 10 };
+                var assignmentQuery = new ODataQuery<PolicyAssignment> { Top = 10 };
                 listResult = client.PolicyAssignments.List(assignmentQuery);
                 this.AssertInList(client, assignmentName, policyAssignment, listResult);
 
@@ -316,12 +322,13 @@ namespace Policy.Tests
                 policyAssignment.Identity = new Identity(type: ResourceIdentityType.SystemAssigned);
                 policyAssignment.EnforcementMode = EnforcementMode.DoNotEnforce;
 
-                result = client.PolicyAssignments.Create(assignmentScope, assignmentName, policyAssignment);
-                Assert.NotNull(result);
+                putResult = client.PolicyAssignments.Create(assignmentScope, assignmentName, policyAssignment);
+                Assert.NotNull(putResult);
+                this.AssertValid(assignmentName, policyAssignment, putResult);
 
                 // validate results
-                getResult = client.PolicyAssignments.GetById(result.Id);
-                this.AssertValid(assignmentName, policyAssignment, getResult);
+                getResult = client.PolicyAssignments.GetById(putResult.Id);
+                this.AssertEqual(putResult, getResult);
 
                 // Delete policy assignment and validate
                 client.PolicyAssignments.Delete(assignmentScope, assignmentName);
@@ -331,12 +338,13 @@ namespace Policy.Tests
 
                 // Create brand new assignment with identity
                 assignmentName = TestUtilities.GenerateName();
-                result = client.PolicyAssignments.Create(assignmentScope, assignmentName, policyAssignment);
-                Assert.NotNull(result);
+                putResult = client.PolicyAssignments.Create(assignmentScope, assignmentName, policyAssignment);
+                Assert.NotNull(putResult);
+                this.AssertValid(assignmentName, policyAssignment, putResult);
 
                 // validate results
-                getResult = client.PolicyAssignments.GetById(result.Id);
-                this.AssertValid(assignmentName, policyAssignment, getResult);
+                getResult = client.PolicyAssignments.GetById(putResult.Id);
+                this.AssertEqual(putResult, getResult);
 
                 // Delete policy assignment and validate
                 client.PolicyAssignments.Delete(assignmentScope, assignmentName);
@@ -350,16 +358,24 @@ namespace Policy.Tests
         }
 
         [Fact]
-        public void CanCrudPolicyAssignmentAtResourceGroup()
+        public void CanPatchPolicyAssignment()
         {
             using (var context = MockContext.Start(this.GetType()))
             {
+                const string Region = "westus2";
+
                 var client = context.GetServiceClient<PolicyClient>();
                 var resourceGroupClient = context.GetServiceClient<ResourceManagementClient>();
+                var msiMgmtClient = context.GetServiceClient<ManagedServiceIdentityClient>();
 
                 // make a test resource group
                 var resourceGroupName = TestUtilities.GenerateName();
-                var resourceGroup = resourceGroupClient.ResourceGroups.CreateOrUpdate(resourceGroupName, new ResourceGroup("westus2"));
+                var resourceGroup = resourceGroupClient.ResourceGroups.CreateOrUpdate(resourceGroupName, new ResourceGroup(location: Region));
+
+                // make a test user-assigned identity
+                var testUserAssignedIdentityName = TestUtilities.GenerateName();
+                var identityParameters = new Microsoft.Azure.Management.ManagedServiceIdentity.Models.Identity(location: Region);
+                var userAssignedIdentity = msiMgmtClient.UserAssignedIdentities.CreateOrUpdate(resourceGroupName: resourceGroupName, resourceName: testUserAssignedIdentityName, parameters: identityParameters);
 
                 // make a test policy definition
                 var policyDefinitionName = TestUtilities.GenerateName();
@@ -373,22 +389,117 @@ namespace Policy.Tests
                 var policyAssignment = new PolicyAssignment
                 {
                     DisplayName = $"{thisTestName} Policy Assignment",
-                    PolicyDefinitionId = policyDefinition.Id
+                    PolicyDefinitionId = policyDefinition.Id,
+                    Location = Region
                 };
 
                 var assignment = client.PolicyAssignments.Create(assignmentScope, policyAssignmentName, policyAssignment);
-
-                // retrieve list of policies that apply to this resource group, validate exactly one matches the one we just created
-                var assignments = client.PolicyAssignments.ListForResourceGroup(resourceGroupName);
-                Assert.Single(assignments.Where(assign => assign.Name.Equals(assignment.Name)));
 
                 // get the same item at scope and ensure it matches
                 var getAssignment = client.PolicyAssignments.Get(assignmentScope, assignment.Name);
                 this.AssertEqual(assignment, getAssignment);
 
+                // patch the assignment by changing the identity to the test user-assigned identity
+                var policyUserAssignedIdentity = new Identity(type: ResourceIdentityType.UserAssigned, userAssignedIdentities: new Dictionary<string, IdentityUserAssignedIdentitiesValue> { { userAssignedIdentity.Id, new IdentityUserAssignedIdentitiesValue() } });
+                var policyAssignmentPatchRequest = new PolicyAssignmentUpdate { Location = Region, Identity = policyUserAssignedIdentity };
+                var patchAssignment = client.PolicyAssignments.Update(assignmentScope, policyAssignmentName, policyAssignmentPatchRequest);
+                Assert.NotNull(patchAssignment);
+                Assert.Equal(Region, patchAssignment.Location);
+                this.AssertValid(policyAssignmentPatchRequest.Identity, patchAssignment.Identity);
+
+                getAssignment = client.PolicyAssignments.Get(assignmentScope, assignment.Name);
+                this.AssertEqual(patchAssignment, getAssignment);
+
+                // patch the assignment by changing the identity to a system-assigned identity
+                policyAssignmentPatchRequest = new PolicyAssignmentUpdate { Location = Region, Identity = new Identity(type: ResourceIdentityType.SystemAssigned) };
+                patchAssignment = client.PolicyAssignments.UpdateById(getAssignment.Id, policyAssignmentPatchRequest);
+                Assert.NotNull(patchAssignment);
+                Assert.Equal(Region, patchAssignment.Location);
+                this.AssertValid(policyAssignmentPatchRequest.Identity, patchAssignment.Identity);
+
+                getAssignment = client.PolicyAssignments.Get(assignmentScope, assignment.Name);
+                this.AssertEqual(patchAssignment, getAssignment);
+
+                // remove identity via patch
+                policyAssignmentPatchRequest = new PolicyAssignmentUpdate { Identity = new Identity(type: ResourceIdentityType.None) };
+                patchAssignment = client.PolicyAssignments.Update(assignmentScope, policyAssignmentName, policyAssignmentPatchRequest);
+                Assert.NotNull(patchAssignment);
+                Assert.Equal(Region, patchAssignment.Location);
+                this.AssertValid(policyAssignmentPatchRequest.Identity, patchAssignment.Identity);
+
+                getAssignment = client.PolicyAssignments.Get(assignmentScope, assignment.Name);
+                this.AssertEqual(patchAssignment, getAssignment);
+
                 // clean up everything
                 client.PolicyAssignments.Delete(assignmentScope, assignment.Name);
                 client.PolicyDefinitions.Delete(policyDefinition.Name);
+                msiMgmtClient.UserAssignedIdentities.Delete(resourceGroupName: resourceGroupName, resourceName: testUserAssignedIdentityName);
+                resourceGroupClient.ResourceGroups.Delete(resourceGroupName);
+            }
+        }
+
+        [Fact]
+        public void CanCrudPolicyAssignmentAtResourceGroup()
+        {
+            using (var context = MockContext.Start(this.GetType()))
+            {
+                const string Region = "westus2";
+
+                var client = context.GetServiceClient<PolicyClient>();
+                var resourceGroupClient = context.GetServiceClient<ResourceManagementClient>();
+                var msiMgmtClient = context.GetServiceClient<ManagedServiceIdentityClient>();
+
+                // make a test resource group
+                var resourceGroupName = TestUtilities.GenerateName();
+                var resourceGroup = resourceGroupClient.ResourceGroups.CreateOrUpdate(resourceGroupName, new ResourceGroup(location: Region));
+
+                // make a test user-assigned identity
+                var testUserAssignedIdentityName = TestUtilities.GenerateName();
+                var identityParameters = new Microsoft.Azure.Management.ManagedServiceIdentity.Models.Identity(location: Region);
+                var userAssignedIdentity = msiMgmtClient.UserAssignedIdentities.CreateOrUpdate(resourceGroupName: resourceGroupName, resourceName: testUserAssignedIdentityName, parameters: identityParameters);
+
+                // make a test policy definition
+                var policyDefinitionName = TestUtilities.GenerateName();
+                var thisTestName = TestUtilities.GetCurrentMethodName();
+                var policyDefinitionModel = this.CreatePolicyDefinition($"{thisTestName} Policy Definition");
+                var policyDefinition = client.PolicyDefinitions.CreateOrUpdate(policyDefinitionName, policyDefinitionModel);
+
+                // assign the test policy definition to the test resource group
+                var policyAssignmentName = TestUtilities.GenerateName();
+                var assignmentScope = this.ResourceGroupScope(resourceGroup);
+                var policyAssignment = new PolicyAssignment
+                {
+                    DisplayName = $"{thisTestName} Policy Assignment",
+                    PolicyDefinitionId = policyDefinition.Id,
+                    EnforcementMode = EnforcementMode.Default
+                };
+
+                var putAssignment = client.PolicyAssignments.Create(assignmentScope, policyAssignmentName, policyAssignment);
+                Assert.NotNull(putAssignment);
+                this.AssertValid(policyAssignmentName, policyAssignment, putAssignment);
+
+                // retrieve list of policies that apply to this resource group, validate exactly one matches the one we just created
+                var assignments = client.PolicyAssignments.ListForResourceGroup(resourceGroupName);
+                Assert.Single(assignments.Where(assign => assign.Name.Equals(policyAssignmentName)));
+
+                // get the same item at scope and ensure it matches
+                var getAssignment = client.PolicyAssignments.Get(assignmentScope, policyAssignmentName);
+                this.AssertEqual(putAssignment, getAssignment);
+
+                // update assignment with user assigned identity
+                policyAssignment.Location = Region;
+                policyAssignment.Identity = new Identity(type: ResourceIdentityType.UserAssigned, userAssignedIdentities: new Dictionary<string, IdentityUserAssignedIdentitiesValue> { { userAssignedIdentity.Id, new IdentityUserAssignedIdentitiesValue() } });
+                putAssignment = client.PolicyAssignments.CreateById(getAssignment.Id, policyAssignment);
+                this.AssertValid(policyAssignmentName, policyAssignment, putAssignment);
+
+                // get the same item at scope and ensure it matches
+                getAssignment = client.PolicyAssignments.GetById(putAssignment.Id);
+                this.AssertEqual(putAssignment, getAssignment);
+
+                // clean up everything
+                client.PolicyAssignments.Delete(assignmentScope, policyAssignmentName);
+                client.PolicyDefinitions.Delete(policyDefinition.Name);
+                msiMgmtClient.UserAssignedIdentities.Delete(resourceGroupName: resourceGroupName, resourceName: testUserAssignedIdentityName);
                 resourceGroupClient.ResourceGroups.Delete(resourceGroupName);
             }
         }
@@ -1333,13 +1444,14 @@ namespace Policy.Tests
             Assert.Equal(expected.Description, result.Description);
             Assert.Equal(expected.DisplayName, result.DisplayName);
             Assert.Equal(expected.Id, result.Id);
-            AssertMetadataEqual(expected.Metadata, result.Metadata, isBuiltin);
-            AssertModeEqual(expected.Mode, result.Mode);
+            this.AssertMetadataEqual(expected.Metadata, result.Metadata, isBuiltin);
+            this.AssertModeEqual(expected.Mode, result.Mode);
             Assert.Equal(expected.Name, result.Name);
             Assert.Equal(expected.Parameters?.ToString(), result.Parameters?.ToString());
             Assert.Equal(expected.PolicyRule.ToString(), result.PolicyRule.ToString());
             Assert.Equal(expected.PolicyType, result.PolicyType);
             Assert.Equal(expected.Type, result.Type);
+            this.AssertEqual(expected.SystemData, result.SystemData);
         }
 
         // validate that the given list result contains exactly one policy definition that matches the given name and model
@@ -1454,7 +1566,8 @@ namespace Policy.Tests
             Assert.Equal(expected.Name, result.Name);
             Assert.Equal(expected.PolicyType, result.PolicyType);
             Assert.Equal(expected.Type, result.Type);
-            AssertValid(expected.Name, expected, result, isBuiltin);
+            this.AssertValid(expected.Name, expected, result, isBuiltin);
+            this.AssertEqual(expected.SystemData, result.SystemData);
         }
 
         // validate that the given list result contains exactly one policy set definition that matches the given name and model
@@ -1502,21 +1615,12 @@ namespace Policy.Tests
 
             Assert.Equal(model.DisplayName, result.DisplayName);
             Assert.Equal(model.Description, result.Description);
-            AssertMetadataValid(result.Metadata);
+            this.AssertMetadataValid(result.Metadata);
             Assert.Equal(model.Parameters?.ToString(), result.Parameters?.ToString());
             Assert.Equal(model.PolicyDefinitionId, result.PolicyDefinitionId);
             Assert.Equal(model.Location, result.Location);
             Assert.Equal(model.EnforcementMode, result.EnforcementMode);
-            if (model.Identity != null)
-            {
-                Assert.Equal(model.Identity.Type, result.Identity.Type);
-                Assert.NotNull(result.Identity.PrincipalId);
-                Assert.NotNull(result.Identity.TenantId);
-            }
-            else
-            {
-                Assert.Null(result.Identity);
-            }
+            this.AssertValid(model.Identity, result.Identity);
         }
 
         // validate that the given result policy assignment is equal to the expected one
@@ -1527,7 +1631,7 @@ namespace Policy.Tests
             Assert.Equal(expected.Description, result.Description);
             Assert.Equal(expected.DisplayName, result.DisplayName);
             Assert.Equal(expected.Id, result.Id);
-            AssertMetadataEqual(expected.Metadata, result.Metadata, false);
+            this.AssertMetadataEqual(expected.Metadata, result.Metadata, false);
             Assert.Equal(expected.Name, result.Name);
             if (expected.NotScopes == null)
             {
@@ -1547,9 +1651,108 @@ namespace Policy.Tests
             Assert.Equal(expected.Scope, result.Scope);
             Assert.Equal(expected.Type, result.Type);
             Assert.Equal(expected.Location, result.Location);
-            Assert.Equal(expected.Identity?.Type, result.Identity?.Type);
-            Assert.Equal(expected.Identity?.PrincipalId, result.Identity?.PrincipalId);
-            Assert.Equal(expected.Identity?.TenantId, result.Identity?.TenantId);
+
+            this.AssertEqual(expected.Identity, result.Identity);
+            this.AssertEqual(expected.SystemData, result.SystemData);
+        }
+
+        // validate that the given result identity is equal to the expected one
+        private void AssertEqual(Identity expected, Identity result)
+        {
+            if (expected != null)
+            {
+                Assert.NotNull(result);
+                Assert.Equal(expected.Type, result.Type);
+                Assert.Equal(expected.PrincipalId, result.PrincipalId);
+                Assert.Equal(expected.TenantId, result.TenantId);
+
+                if (expected.UserAssignedIdentities != null)
+                {
+                    Assert.NotNull(result.UserAssignedIdentities);
+                    Assert.Equal(expected.UserAssignedIdentities.Count, result.UserAssignedIdentities.Count);
+
+                    foreach (var expectedUserAssignedIdentity in expected.UserAssignedIdentities)
+                    {
+                        Assert.True(result.UserAssignedIdentities.TryGetValue(expectedUserAssignedIdentity.Key, out var resultUserAssignedIdentity));
+                        Assert.Equal(expectedUserAssignedIdentity.Value.ClientId, resultUserAssignedIdentity.ClientId);
+                        Assert.Equal(expectedUserAssignedIdentity.Value.PrincipalId, resultUserAssignedIdentity.PrincipalId);
+                    }
+                }
+                else
+                {
+                    Assert.Null(result.UserAssignedIdentities);
+                }
+            }
+            else
+            {
+                Assert.Null(result);
+            }
+        }
+
+        // validate that the given result identity matches the given model
+        private void AssertValid(Identity model, Identity result)
+        {
+            if (model != null)
+            {
+                Assert.Equal(model.Type, result.Type);
+
+                switch (model.Type)
+                {
+                    case ResourceIdentityType.SystemAssigned:
+                        Assert.NotNull(result.PrincipalId);
+                        Assert.NotNull(result.TenantId);
+                        Assert.Null(result.UserAssignedIdentities);
+                        break;
+
+                    case ResourceIdentityType.UserAssigned:
+                        Assert.Null(result.PrincipalId);
+                        Assert.Null(result.TenantId);
+                        Assert.NotNull(result.UserAssignedIdentities);
+                        Assert.NotNull(model.UserAssignedIdentities);
+                        Assert.Equal(model.UserAssignedIdentities.Count, result.UserAssignedIdentities.Count);
+
+                        foreach (var key in model.UserAssignedIdentities.Keys)
+                        {
+                            Assert.True(result.UserAssignedIdentities.TryGetValue(key, out var resultUserAssignedIdentity));
+                            Assert.NotNull(resultUserAssignedIdentity.ClientId);
+                            Assert.NotNull(resultUserAssignedIdentity.PrincipalId);
+                        }
+
+                        break;
+
+                    case ResourceIdentityType.None:
+                        Assert.Null(result.PrincipalId);
+                        Assert.Null(result.TenantId);
+                        Assert.Null(result.UserAssignedIdentities);
+                        break;
+
+                    default:
+                        throw new InvalidOperationException($"Unsupported Resource Identity Type: {model.Type}");
+                }
+            }
+            else
+            {
+                Assert.Null(result);
+            }
+        }
+
+        // validate that the given result system data is equal to the expected one
+        private void AssertEqual(SystemData expected, SystemData result)
+        {
+            if (expected != null)
+            {
+                Assert.NotNull(result);
+                Assert.Equal(expected.CreatedAt, result.CreatedAt);
+                Assert.Equal(expected.CreatedBy, result.CreatedBy);
+                Assert.Equal(expected.CreatedByType, result.CreatedByType);
+                Assert.Equal(expected.LastModifiedAt, result.LastModifiedAt);
+                Assert.Equal(expected.LastModifiedBy, result.LastModifiedBy);
+                Assert.Equal(expected.LastModifiedByType, result.LastModifiedByType);
+            }
+            else
+            {
+                Assert.Null(result);
+            }
         }
 
         // validate that the given list result contains exactly one policy assignment matching the given name and model

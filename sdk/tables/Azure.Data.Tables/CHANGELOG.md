@@ -1,17 +1,64 @@
 # Release History
 
-## 12.1.0-beta.1 (Unreleased)
+## 12.4.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 12.3.0 (2021-11-09)
+
+### Bugs Fixed
+- Table entities now support UInt64 (ulong) properties. ([#24750](https://github.com/Azure/azure-sdk-for-net/issues/24750))
+- Fixed an issue where `PartitionKey` and `RoKey` property values containing single quote characters are not properly escaped on `GetEntity` calls. See breaking changes section for more information.
+
+### Breaking Changes
+- The fix to escape`PartitionKey` and `RoKey` property values containing single quote characters are not properly escaped on `GetEntity` calls  may causes a breaking change for deployed applications that work around the previous behavior. For these situations, the new behavior can be overridden by either setting an AppContext switch named "Azure.Data.Tables.DisableEscapeSingleQuotesOnGetEntity" to `true` or by setting the environment variable "AZURE_DATA_TABLES_DISABLE_ESCAPESINGLEQUOTESONGETENTITY" to "true". Note: AppContext switches can also be configured via configuration like below:
+
+```xml  
+<ItemGroup>
+    <RuntimeHostConfigurationOption Include="Azure.Data.Tables.DisableEscapeSingleQuotesOnGetEntity" Value="true" />
+</ItemGroup> 
+  ```
+
+## 12.2.1 (2021-10-14)
+
+### Bugs Fixed
+- Handle the case where the Uri parameter to the `TableClient` constructor contains the table name. ([#24667](https://github.com/Azure/azure-sdk-for-net/issues/24667))
+
+## 12.2.0 (2021-09-07)
+
+### Bugs Fixed
+
+- Properly handle `GenerateSasUri` when the client is constructed with a connection string ([#23404](https://github.com/Azure/azure-sdk-for-net/issues/23404))
+- Fixed an exception when constructing the `TableClient` with a connection string where the table name is the same as the account name.
+
+## 12.2.0-beta.1 (2021-08-10)
+
+Thank you to our developer community members who helped to make Azure Tables better with their contributions to this release:
+
+- Yifan Bian _([yifanbian-msft](https://github.com/yifanbian-msft))_
+- David Gardiner _([flcdrg](https://github.com/flcdrg))_
+
+### Features Added
+
+- Added support for customization of how model properties are serialized. Decorating a model property with the `[IgnoreDataMember]` attribute will ignore it on serialization and the `[DataMember(Name = "some_new_name")]` will rename the property.
+- Added an extension method to the Builder extensions that accepts just the Table Uri. (A community contribution, courtesy of _[flcdrg](https://github.com/flcdrg))_.
+
+### Bugs Fixed
+
+- Fixed and issue with connection string parsing for Azure Storage Emulator connection strings. (A community contribution, courtesy of _[yifanbian-msft](https://github.com/yifanbian-msft))_.
+
+
+## 12.1.0 (2021-07-07)
 
 ### Features Added
 
 - Support for Azure Active Directory (AAD) authorization has been added to `TableServiceClient` and `TableClient`. This enables use of `TokenCredential` credentials. Note: Only Azure Storage API endpoints currently support AAD authorization.
-
-### Breaking Changes
-
-### Key Bugs Fixed
-
-### Fixed
-
 
 ## 12.0.1 (2021-06-10)
 

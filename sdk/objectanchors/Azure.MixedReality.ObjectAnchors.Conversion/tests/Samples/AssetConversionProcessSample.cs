@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -79,6 +79,13 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Tests.Samples
             ObjectAnchorsConversionClient client = new ObjectAnchorsConversionClient(accountId, accountDomain, credential);
 
             AssetConversionOperation operation = new AssetConversionOperation(jobId, client);
+
+            await operation.WaitForCompletionAsync();
+
+            if (!operation.HasCompletedSuccessfully)
+            {
+                throw new Exception("The asset conversion operation completed with an unsuccessful status");
+            }
 
             string localFileDownloadPath = modelDownloadLocalFilePath;
 

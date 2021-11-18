@@ -3,6 +3,7 @@
 
 using System;
 using System.Net;
+using System.Net.Http;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,83 +14,49 @@ namespace Azure.Identity
 {
     internal class ImdsManagedIdentitySource : ManagedIdentitySource
     {
-        // IMDS constants. Docs for IMDS are available here https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/how-to-use-vm-token#get-a-token-using-http
+        // IMDS constants. Docs for IMDS are available here https://docs.microsoft.com/azure/active-directory/managed-identities-azure-resources/how-to-use-vm-token#get-a-token-using-http
         private static readonly Uri s_imdsEndpoint = new Uri("http://169.254.169.254/metadata/identity/oauth2/token");
-        private static readonly IPAddress s_imdsHostIp = IPAddress.Parse("169.254.169.254");
-        private const int s_imdsPort = 80;
-        private const int ImdsAvailableTimeoutMs = 1000;
+        internal const string imddsTokenPath = "/metadata/identity/oauth2/token";
+
         private const string ImdsApiVersion = "2018-02-01";
 
         internal const string IdentityUnavailableError = "ManagedIdentityCredential authentication unavailable. The requested identity has not been assigned to this resource.";
+        internal const string NoResponseError = "ManagedIdentityCredential authentication unavailable. No response received from the managed identity endpoint.";
+        internal const string TimeoutError = "ManagedIdentityCredential authentication unavailable. The request to the managed identity endpoint timed out.";
+        internal const string GatewayError = "ManagedIdentityCredential authentication unavailable. The request failed due to a gateway error.";
+        internal const string AggregateError = "ManagedIdentityCredential authentication unavailable. Multiple attempts failed to obtain a token from the managed identity endpoint.";
 
         private readonly string _clientId;
+        private readonly Uri _imdsEndpoint;
 
-        private string _identityUnavailableErrorMessage;
+        private TimeSpan? _imdsNetworkTimeout;
 
-        public static async ValueTask<ManagedIdentitySource> TryCreateAsync(ManagedIdentityClientOptions options, bool async, CancellationToken cancellationToken)
+        internal ImdsManagedIdentitySource(ManagedIdentityClientOptions options) : base(options.Pipeline)
         {
-            AzureIdentityEventSource.Singleton.ProbeImdsEndpoint(s_imdsEndpoint);
+            _clientId = options.ClientId;
+            _imdsNetworkTimeout = options.InitialImdsConnectionTimeout;
 
-            bool available;
-            // try to create a TCP connection to the IMDS IP address. If the connection can be established
-            // we assume that IMDS is available. If connecting times out or fails to connect assume that
-            // IMDS is not available in this environment.
-            try
-            {
-                using var client = new TcpClient();
-                Task connectTask = client.ConnectAsync(s_imdsHostIp, s_imdsPort);
-
-                if (async)
-                {
-                    using var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-
-                    cts.CancelAfter(ImdsAvailableTimeoutMs);
-                    await connectTask.AwaitWithCancellation(cts.Token);
-                    available = client.Connected;
-                }
-                else
-                {
-                    available = connectTask.Wait(ImdsAvailableTimeoutMs, cancellationToken) && client.Connected;
-                }
-
-                if (available)
-                {
-                    AzureIdentityEventSource.Singleton.ImdsEndpointFound(s_imdsEndpoint);
-                }
-                else
-                {
-                    AzureIdentityEventSource.Singleton.ImdsEndpointUnavailable(s_imdsEndpoint, "Establishing a connection timed out or failed without exception." );
-                }
-            }
-            catch (Exception e)
-            {
-                AzureIdentityEventSource.Singleton.ImdsEndpointUnavailable(s_imdsEndpoint, e);
-
-                available = false;
-            }
-
-            return available ? new ImdsManagedIdentitySource(options.Pipeline, options.ClientId) : default;
-        }
-
-        internal ImdsManagedIdentitySource(CredentialPipeline pipeline, string clientId) : base(pipeline)
-        {
-            _clientId = clientId;
+            if (!string.IsNullOrEmpty(EnvironmentVariables.PodIdentityEndpoint))
+			{
+				var builder = new UriBuilder(EnvironmentVariables.PodIdentityEndpoint);
+            	builder.Path = imddsTokenPath;
+                _imdsEndpoint = builder.Uri;
+			}
+			else
+			{
+            	_imdsEndpoint = s_imdsEndpoint;
+			}
         }
 
         protected override Request CreateRequest(string[] scopes)
         {
-            if (_identityUnavailableErrorMessage != default)
-            {
-                throw new CredentialUnavailableException(_identityUnavailableErrorMessage);
-            }
-
             // covert the scopes to a resource string
             string resource = ScopeUtilities.ScopesToResource(scopes);
 
             Request request = Pipeline.HttpPipeline.CreateRequest();
             request.Method = RequestMethod.Get;
             request.Headers.Add("Metadata", "true");
-            request.Uri.Reset(s_imdsEndpoint);
+            request.Uri.Reset(_imdsEndpoint);
             request.Uri.AppendQuery("api-version", ImdsApiVersion);
 
             request.Uri.AppendQuery("resource", resource);
@@ -102,21 +69,60 @@ namespace Azure.Identity
             return request;
         }
 
+        protected override HttpMessage CreateHttpMessage(Request request)
+        {
+            HttpMessage message = base.CreateHttpMessage(request);
+
+            message.NetworkTimeout = _imdsNetworkTimeout;
+
+            return message;
+        }
+
+        public async override ValueTask<AccessToken> AuthenticateAsync(bool async, TokenRequestContext context, CancellationToken cancellationToken)
+        {
+            try
+            {
+                return await base.AuthenticateAsync(async, context, cancellationToken).ConfigureAwait(false);
+            }
+            catch (RequestFailedException e) when (e.Status == 0)
+            {
+                throw new CredentialUnavailableException(NoResponseError, e);
+            }
+            catch (TaskCanceledException e)
+            {
+                throw new CredentialUnavailableException(NoResponseError, e);
+            }
+            catch (AggregateException e)
+            {
+                throw new CredentialUnavailableException(AggregateError, e);
+            }
+        }
+
         protected override async ValueTask<AccessToken> HandleResponseAsync(bool async, TokenRequestContext context, Response response, CancellationToken cancellationToken)
         {
-            // 502 is typically due to the client dealing with a proxy configuration, which is not supported.
-            if (response.Status == 400 || response.Status == 502)
+            // if we got a response from IMDS we can stop limiting the network timeout
+            _imdsNetworkTimeout = null;
+
+            // handle error status codes indicating managed identity is not available
+            var baseMessage = response.Status switch
             {
-                string message = _identityUnavailableErrorMessage ?? await Pipeline.Diagnostics
-                    .CreateRequestFailedMessageAsync(response, IdentityUnavailableError, null, null, async)
-                    .ConfigureAwait(false);
+                400 => IdentityUnavailableError,
+                502 => GatewayError,
+                504 => GatewayError,
+                _ => default(string)
+            };
+
+            if (baseMessage != null)
+            {
+                string message = await Pipeline.Diagnostics.CreateRequestFailedMessageAsync(response, baseMessage, null, null, async).ConfigureAwait(false);
 
                 var errorContentMessage = await GetMessageFromResponse(response, async, cancellationToken).ConfigureAwait(false);
+
                 if (errorContentMessage != null)
                 {
                     message = message + Environment.NewLine + errorContentMessage;
                 }
-                Interlocked.CompareExchange(ref _identityUnavailableErrorMessage, message, null);
+
                 throw new CredentialUnavailableException(message);
             }
 

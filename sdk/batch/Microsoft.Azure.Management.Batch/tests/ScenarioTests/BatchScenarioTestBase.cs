@@ -28,10 +28,10 @@ namespace Batch.Tests.ScenarioTests
             string methodName = "")
         {
             MockContext context = MockContext.Start(type, methodName);
-            this.Location = FindLocation(context);
+            Location = FindLocation(context);
 
-            this.ResourceManagementClient = context.GetServiceClient<ResourceManagementClient>();
-            this.BatchManagementClient = context.GetServiceClient<BatchManagementClient>();
+            ResourceManagementClient = context.GetServiceClient<ResourceManagementClient>();
+            BatchManagementClient = context.GetServiceClient<BatchManagementClient>();
             return context;
         }
 
@@ -40,7 +40,7 @@ namespace Batch.Tests.ScenarioTests
             var resourceManagementClient = context.GetServiceClient<ResourceManagementClient>();
             Provider provider = resourceManagementClient.Providers.Get("Microsoft.Batch");
             IList <string> locations = provider.ResourceTypes.First(resType => resType.ResourceType == "batchAccounts").Locations;
-            return locations.First(location => location == "West Central US");
+            return locations.First(location => location == "West US");
         }
 
         // Can be used to find a region to test against, but probably shouldn't record tests that use this as it will leave your subscription account details in the 

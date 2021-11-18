@@ -36,12 +36,22 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
         protected int MaximumSamplesCount => 10;
 
+        protected int MaxPageSizeSamples => 1;
+
+        protected int SkipSamples => 1;
+
         protected DateTimeOffset SamplingStartTime => DateTimeOffset.Parse("2020-10-01T00:00:00Z");
 
         protected DateTimeOffset SamplingEndTime => DateTimeOffset.Parse("2020-10-31T00:00:00Z");
 
         public MetricsAdvisorAdministrationClient GetMetricsAdvisorAdministrationClient(bool useTokenCredential = false)
         {
+            // TODO: remove 'if' block when (https://github.com/Azure/azure-sdk-for-net/issues/23268) is solved
+            if (useTokenCredential)
+            {
+                Assert.Ignore();
+            }
+
             var endpoint = new Uri(TestEnvironment.MetricsAdvisorUri);
             var instrumentedOptions = GetInstrumentedOptions();
 
@@ -54,6 +64,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
         public MetricsAdvisorClient GetMetricsAdvisorClient(bool useTokenCredential = false)
         {
+            // TODO: remove 'if' block when (https://github.com/Azure/azure-sdk-for-net/issues/23268) is solved
+            if (useTokenCredential)
+            {
+                Assert.Ignore();
+            }
+
             var endpoint = new Uri(TestEnvironment.MetricsAdvisorUri);
             var instrumentedOptions = GetInstrumentedOptions();
 
@@ -82,58 +98,66 @@ namespace Azure.AI.MetricsAdvisor.Tests
             return await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeed);
         }
 
+        protected int Count(DimensionKey dimensionKey)
+        {
+            int count = 0;
+
+            foreach (var _ in dimensionKey)
+            {
+                count++;
+            }
+
+            return count;
+        }
+
         protected void ValidateSeriesKey(DimensionKey seriesKey)
         {
             Assert.That(seriesKey, Is.Not.Null);
 
-            Dictionary<string, string> dimensionColumns = seriesKey.AsDictionary();
+            Assert.That(Count(seriesKey), Is.EqualTo(2));
+            Assert.That(seriesKey.TryGetValue("city", out string city));
+            Assert.That(seriesKey.TryGetValue("category", out string category));
 
-            Assert.That(dimensionColumns.Count, Is.EqualTo(2));
-            Assert.That(dimensionColumns.ContainsKey("city"));
-            Assert.That(dimensionColumns.ContainsKey("category"));
-
-            Assert.That(dimensionColumns["city"], Is.Not.Null.And.Not.Empty);
-            Assert.That(dimensionColumns["category"], Is.Not.Null.And.Not.Empty);
+            Assert.That(city, Is.Not.Null.And.Not.Empty);
+            Assert.That(category, Is.Not.Null.And.Not.Empty);
         }
 
         protected void ValidateGroupKey(DimensionKey groupKey)
         {
             Assert.That(groupKey, Is.Not.Null);
 
-            Dictionary<string, string> dimensionColumns = groupKey.AsDictionary();
+            int count = 0;
 
-            Assert.That(dimensionColumns.Count, Is.GreaterThan(0));
-            Assert.That(dimensionColumns.Count, Is.LessThanOrEqualTo(2));
-
-            foreach (KeyValuePair<string, string> column in dimensionColumns)
+            foreach (KeyValuePair<string, string> dimension in groupKey)
             {
-                Assert.That(column.Key, Is.EqualTo("city").Or.EqualTo("category"));
-                Assert.That(column.Value, Is.Not.Null.And.Not.Empty);
+                Assert.That(dimension.Key, Is.EqualTo("city").Or.EqualTo("category"));
+                Assert.That(dimension.Value, Is.Not.Null.And.Not.Empty);
+
+                count++;
             }
+
+            Assert.That(count, Is.GreaterThan(0));
+            Assert.That(count, Is.LessThanOrEqualTo(2));
         }
 
         protected void ValidateTempDataFeedDimensionKey(DimensionKey dimensionKey, string expectedDimensionA)
         {
             Assert.That(dimensionKey, Is.Not.Null);
 
-            Dictionary<string, string> dimensionColumns = dimensionKey.AsDictionary();
-
-            Assert.That(dimensionColumns.Count, Is.EqualTo(1));
-            Assert.That(dimensionColumns.ContainsKey(TempDataFeedDimensionNameA));
-            Assert.That(dimensionColumns[TempDataFeedDimensionNameA], Is.EqualTo(expectedDimensionA));
+            Assert.That(Count(dimensionKey), Is.EqualTo(1));
+            Assert.That(dimensionKey.TryGetValue(TempDataFeedDimensionNameA, out string dimensionA));
+            Assert.That(dimensionA, Is.EqualTo(expectedDimensionA));
         }
 
         protected void ValidateTempDataFeedDimensionKey(DimensionKey dimensionKey, string expectedDimensionA, string expectedDimensionB)
         {
             Assert.That(dimensionKey, Is.Not.Null);
 
-            Dictionary<string, string> dimensionDictionary = dimensionKey.AsDictionary();
-
-            Assert.That(dimensionDictionary.Count, Is.EqualTo(2));
-            Assert.That(dimensionDictionary.ContainsKey(TempDataFeedDimensionNameA));
-            Assert.That(dimensionDictionary.ContainsKey(TempDataFeedDimensionNameB));
-            Assert.That(dimensionDictionary[TempDataFeedDimensionNameA], Is.EqualTo(expectedDimensionA));
-            Assert.That(dimensionDictionary[TempDataFeedDimensionNameB], Is.EqualTo(expectedDimensionB));
+            Assert.That(Count(dimensionKey), Is.EqualTo(2));
+            Assert.That(dimensionKey.TryGetValue(TempDataFeedDimensionNameA, out string dimensionA));
+            Assert.That(dimensionKey.TryGetValue(TempDataFeedDimensionNameB, out string dimensionB));
+            Assert.That(dimensionA, Is.EqualTo(expectedDimensionA));
+            Assert.That(dimensionB, Is.EqualTo(expectedDimensionB));
         }
 
         private MetricsAdvisorClientsOptions GetInstrumentedOptions()

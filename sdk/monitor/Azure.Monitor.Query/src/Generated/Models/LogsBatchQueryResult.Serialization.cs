@@ -13,28 +13,5 @@ namespace Azure.Monitor.Query.Models
 {
     public partial class LogsBatchQueryResult
     {
-        internal static LogsBatchQueryResult DeserializeLogsBatchQueryResult(JsonElement element)
-        {
-            Optional<IReadOnlyList<LogQueryResponse>> responses = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("responses"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<LogQueryResponse> array = new List<LogQueryResponse>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(LogQueryResponse.DeserializeLogQueryResponse(item));
-                    }
-                    responses = array;
-                    continue;
-                }
-            }
-            return new LogsBatchQueryResult(Optional.ToList(responses));
-        }
     }
 }

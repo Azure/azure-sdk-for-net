@@ -41,7 +41,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The pageable list <see cref="AsyncPageable{TimeSeriesHierarchy}"/> of Time Series hierarchies with the http response.</returns>
         /// <example>
-        /// <code snippet="Snippet:TimeSeriesInsightsSampleGetAllHierarchies">
+        /// <code snippet="Snippet:TimeSeriesInsightsSampleGetAllHierarchies" language="csharp">
         /// // Get all Time Series hierarchies in the environment
         /// AsyncPageable&lt;TimeSeriesHierarchy&gt; getAllHierarchies = hierarchiesClient.GetAsync();
         /// await foreach (TimeSeriesHierarchy hierarchy in getAllHierarchies)
@@ -173,7 +173,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// Hierarchy object is set when operation is successful and error object is set when operation is unsuccessful.
         /// </returns>
         /// <remarks>
-        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples">our repo samples</see>.
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples">our repo samples</see>.
         /// </remarks>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="timeSeriesHierarchyNames"/> is <c>null</c>.
@@ -276,7 +276,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// Hierarchy object is set when operation is successful and error object is set when operation is unsuccessful.
         /// </returns>
         /// <remarks>
-        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples">our repo samples</see>.
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples">our repo samples</see>.
         /// </remarks>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="timeSeriesHierarchyIds"/> is <c>null</c>.
@@ -285,7 +285,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// The exception is thrown when <paramref name="timeSeriesHierarchyIds"/> is empty.
         /// </exception>
         /// <example>
-        /// <code snippet="Snippet:TimeSeriesInsightsSampleGetHierarchiesById">
+        /// <code snippet="Snippet:TimeSeriesInsightsSampleGetHierarchiesById" language="csharp">
         /// var tsiHierarchyIds = new List&lt;string&gt;
         /// {
         ///     &quot;sampleHierarchyId&quot;
@@ -404,7 +404,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// An error object will be set when operation is unsuccessful.
         /// </returns>
         /// <remarks>
-        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples">our repo samples</see>.
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples">our repo samples</see>.
         /// </remarks>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="timeSeriesHierarchies"/> is <c>null</c>.
@@ -413,7 +413,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// The exception is thrown when <paramref name="timeSeriesHierarchies"/> is empty.
         /// </exception>
         /// <example>
-        /// <code snippet="Snippet:TimeSeriesInsightsSampleCreateHierarchies">
+        /// <code snippet="Snippet:TimeSeriesInsightsSampleCreateHierarchies" language="csharp">
         /// TimeSeriesInsightsHierarchies hierarchiesClient = client.GetHierarchiesClient();
         ///
         /// var hierarchySource = new TimeSeriesHierarchySource();
@@ -541,7 +541,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// List of error objects corresponding by position to the input array in the request. null when the operation is successful.
         /// </returns>
         /// <remarks>
-        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples">our repo samples</see>.
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples">our repo samples</see>.
         /// </remarks>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="timeSeriesHierarchyNames"/> is <c>null</c>.
@@ -642,7 +642,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// List of error objects corresponding by position to the input array in the request. null when the operation is successful.
         /// </returns>
         /// <remarks>
-        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples">our repo samples</see>.
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples">our repo samples</see>.
         /// </remarks>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="timeSeriesHierarchyIds"/> is <c>null</c>.
@@ -651,7 +651,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// The exception is thrown when <paramref name="timeSeriesHierarchyIds"/> is empty.
         /// </exception>
         /// <example>
-        /// <code snippet="Snippet:TimeSeriesInsightsSampleDeleteHierarchiesById">
+        /// <code snippet="Snippet:TimeSeriesInsightsSampleDeleteHierarchiesById" language="csharp">
         /// // Delete Time Series hierarchies with Ids
         /// var tsiHierarchyIdsToDelete = new List&lt;string&gt;
         /// {

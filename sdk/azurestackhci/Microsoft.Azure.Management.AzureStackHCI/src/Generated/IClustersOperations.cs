@@ -126,8 +126,8 @@ namespace Microsoft.Azure.Management.AzureStackHCI
         /// <param name='clusterName'>
         /// The name of the cluster.
         /// </param>
-        /// <param name='tags'>
-        /// Resource tags.
+        /// <param name='cluster'>
+        /// Details of the HCI cluster.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -144,7 +144,7 @@ namespace Microsoft.Azure.Management.AzureStackHCI
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Cluster>> UpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Cluster>> UpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, ClusterPatch cluster, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete an HCI cluster.
         /// </summary>

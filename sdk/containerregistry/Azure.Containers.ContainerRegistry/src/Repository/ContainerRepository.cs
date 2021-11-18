@@ -9,7 +9,14 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    /// <summary> A helper class that groups information and operations about a repository in this container registry. </summary>
+    /// <summary>
+    /// A `repository` in a container registry is a logical grouping of images or artifacts that share the same name.  For example,
+    /// different versions of a `hello-world` application could have tags `v1` and `v2`, and be grouped by the repository `hello-world`.
+    /// <para>
+    /// The <see cref="ContainerRepository"/> class is a helper class that groups information and operations about a repository in this
+    /// container registry.
+    /// </para>
+    /// </summary>
     public partial class ContainerRepository
     {
         private readonly ClientDiagnostics _clientDiagnostics;
@@ -45,7 +52,7 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary>
-        /// Create a new <see cref="RegistryArtifact"/> object for the specified artifact.
+        /// Create a new <see cref="RegistryArtifact"/> helper object for the artifact identified by <paramref name="tagOrDigest"/>.
         /// </summary>
         /// <param name="tagOrDigest"> Either a tag or a digest that uniquely identifies the artifact. </param>
         /// <returns> A new <see cref="RegistryArtifact"/> for the desired repository. </returns>
@@ -64,7 +71,7 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         #region Repository methods
-        /// <summary> Get repository properties. </summary>
+        /// <summary> Get the properties of the repository. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
         public virtual async Task<Response<ContainerRepositoryProperties>> GetPropertiesAsync(CancellationToken cancellationToken = default)
@@ -82,7 +89,7 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        /// <summary> Get repository properties. </summary>
+        /// <summary> Get the properties of the repository. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
         public virtual Response<ContainerRepositoryProperties> GetProperties(CancellationToken cancellationToken = default)
@@ -100,8 +107,8 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        /// <summary> Update the attribute identified by `name` where `reference` is the name of the repository. </summary>
-        /// <param name="value"> Repository attribute value. </param>
+        /// <summary> Update the properties of the repository. </summary>
+        /// <param name="value"> Repository properties object containing values to update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> Thrown when <paramref name="value"/> is null. </exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
@@ -130,12 +137,11 @@ namespace Azure.Containers.ContainerRegistry
                 CanList = value.CanList,
                 CanRead = value.CanRead,
                 CanWrite = value.CanWrite,
-                TeleportEnabled = value.TeleportEnabled
             };
         }
 
-        /// <summary>Update the repository properties.</summary>
-        /// <param name="value"> Repository properties to set. </param>
+        /// <summary> Update the properties of the repository. </summary>
+        /// <param name="value"> Repository properties object containing values to update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> Thrown when <paramref name="value"/> is null. </exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
@@ -156,7 +162,7 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        /// <summary> Delete the repository. </summary>
+        /// <summary> Delete the repository and all artifacts that are part of its logical group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
         public virtual async Task<Response> DeleteAsync(CancellationToken cancellationToken = default)
@@ -174,7 +180,7 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        /// <summary> Delete the repository. </summary>
+        /// <summary> Delete the repository and all artifacts that are part of its logical group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
         public virtual Response Delete(CancellationToken cancellationToken = default)
@@ -194,7 +200,9 @@ namespace Azure.Containers.ContainerRegistry
         #endregion
 
         #region Registry Artifact/Manifest methods
-        /// <summary> Get the collection of registry artifacts for a repository. </summary>
+
+        /// <summary> List the manifests associated with this repository and the properties of each.
+        /// This is useful for determining the collection of artifacts associated with this repository, as each artifact is uniquely identified by its manifest. </summary>
         /// <param name="orderBy"> Requested order of manifests in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
@@ -238,7 +246,8 @@ namespace Azure.Containers.ContainerRegistry
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Get the collection of tags for a repository. </summary>
+        /// <summary> List the manifests associated with this repository and the properties of each.
+        /// This is useful for determining the collection of artifacts associated with this repository, as each artifact is uniquely identified by its manifest. </summary>
         /// <param name="orderBy"> Requested order of manifests in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>

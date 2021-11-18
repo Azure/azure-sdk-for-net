@@ -141,6 +141,9 @@ namespace Azure.Messaging.ServiceBus.Administration
                     case "EnableExpress":
                         topicProperties.EnableExpress = bool.Parse(element.Value);
                         break;
+                    case "MaxMessageSizeInKilobytes":
+                        topicProperties.MaxMessageSizeInKilobytes = long.Parse(element.Value, CultureInfo.InvariantCulture);
+                        break;
                     case "AccessedAt":
                     case "CreatedAt":
                     case "MessageCount":
@@ -189,7 +192,8 @@ namespace Azure.Messaging.ServiceBus.Administration
                 description.AutoDeleteOnIdle != TimeSpan.MaxValue ? new XElement(XName.Get("AutoDeleteOnIdle", AdministrationClientConstants.ServiceBusNamespace), XmlConvert.ToString(description.AutoDeleteOnIdle)) : null,
                 new XElement(XName.Get("EnablePartitioning", AdministrationClientConstants.ServiceBusNamespace), XmlConvert.ToString(description.EnablePartitioning)),
                 new XElement(XName.Get("EnableSubscriptionPartitioning", AdministrationClientConstants.ServiceBusNamespace), XmlConvert.ToString(description.EnableSubscriptionPartitioning)),
-                new XElement(XName.Get("EnableExpress", AdministrationClientConstants.ServiceBusNamespace), XmlConvert.ToString(description.EnableExpress))
+                new XElement(XName.Get("EnableExpress", AdministrationClientConstants.ServiceBusNamespace), XmlConvert.ToString(description.EnableExpress)),
+                description.MaxMessageSizeInKilobytes.HasValue ? new XElement(XName.Get("MaxMessageSizeInKilobytes", AdministrationClientConstants.ServiceBusNamespace), XmlConvert.ToString(description.MaxMessageSizeInKilobytes.Value)) : null,
             };
 
             // Insert unknown properties in the exact order they were in the received xml.

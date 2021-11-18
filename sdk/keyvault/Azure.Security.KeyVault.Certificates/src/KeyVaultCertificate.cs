@@ -39,7 +39,7 @@ namespace Azure.Security.KeyVault.Certificates
         public Uri KeyId
         {
             get => new Uri(_keyId);
-            internal set => _keyId = value?.ToString();
+            internal set => _keyId = value?.AbsoluteUri;
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace Azure.Security.KeyVault.Certificates
         public Uri SecretId
         {
             get => new Uri(_secretId);
-            internal set => _secretId = value?.ToString();
+            internal set => _secretId = value?.AbsoluteUri;
         }
 
         /// <summary>

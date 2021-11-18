@@ -25,7 +25,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <exception cref="ArgumentNullException"><paramref name="connectionString"/>, <paramref name="sqlQuery"/>, <paramref name="database"/>, or <paramref name="collectionId"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="connectionString"/>, <paramref name="sqlQuery"/>, <paramref name="database"/>, or <paramref name="collectionId"/> is empty.</exception>
         public AzureCosmosDbDataFeedSource(string connectionString, string sqlQuery, string database, string collectionId)
-            : base(DataFeedSourceType.AzureCosmosDb)
+            : base(DataFeedSourceKind.AzureCosmosDb)
         {
             Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
             Argument.AssertNotNullOrEmpty(sqlQuery, nameof(sqlQuery));
@@ -39,7 +39,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         internal AzureCosmosDbDataFeedSource(AzureCosmosDBParameter parameter)
-            : base(DataFeedSourceType.AzureCosmosDb)
+            : base(DataFeedSourceKind.AzureCosmosDb)
         {
             Argument.AssertNotNull(parameter, nameof(parameter));
 

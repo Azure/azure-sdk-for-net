@@ -23,7 +23,7 @@ Include a **Prerequisites** line after the install command that details any requ
 
 ### Prerequisites
 
-You must have an [Azure subscription](https://azure.microsoft.com/free/), [Cosmos DB account](https://docs.microsoft.com/azure/cosmos-db/account-overview) (SQL API), and [Python 3.6+](https://www.python.org/downloads/) to use this package.
+You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/), [Cosmos DB account](https://docs.microsoft.com/azure/cosmos-db/account-overview) (SQL API), and [Python 3.6+](https://www.python.org/downloads/) to use this package.
 
 ### Authenticate the client
 

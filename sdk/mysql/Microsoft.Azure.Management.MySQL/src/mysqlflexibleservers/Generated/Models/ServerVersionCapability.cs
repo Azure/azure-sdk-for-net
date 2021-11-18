@@ -32,11 +32,11 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers.Models
         /// Initializes a new instance of the ServerVersionCapability class.
         /// </summary>
         /// <param name="name">server version</param>
-        /// <param name="supportedVcores">A list of supported Vcores</param>
-        public ServerVersionCapability(string name = default(string), IList<VcoreCapability> supportedVcores = default(IList<VcoreCapability>))
+        /// <param name="supportedSkus">A list of supported Skus</param>
+        public ServerVersionCapability(string name = default(string), IList<SkuCapability> supportedSkus = default(IList<SkuCapability>))
         {
             Name = name;
-            SupportedVcores = supportedVcores;
+            SupportedSkus = supportedSkus;
             CustomInit();
         }
 
@@ -52,10 +52,10 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers.Models
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets a list of supported Vcores
+        /// Gets a list of supported Skus
         /// </summary>
-        [JsonProperty(PropertyName = "supportedVcores")]
-        public IList<VcoreCapability> SupportedVcores { get; private set; }
+        [JsonProperty(PropertyName = "supportedSkus")]
+        public IList<SkuCapability> SupportedSkus { get; private set; }
 
     }
 }

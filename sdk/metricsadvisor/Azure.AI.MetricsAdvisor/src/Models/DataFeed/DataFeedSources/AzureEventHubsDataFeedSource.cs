@@ -23,7 +23,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <exception cref="ArgumentNullException"><paramref name="connectionString"/> or <paramref name="consumerGroup"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="connectionString"/> or <paramref name="consumerGroup"/> is empty.</exception>
         public AzureEventHubsDataFeedSource(string connectionString, string consumerGroup)
-            : base(DataFeedSourceType.AzureEventHubs)
+            : base(DataFeedSourceKind.AzureEventHubs)
         {
             Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
             Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
@@ -33,7 +33,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         internal AzureEventHubsDataFeedSource(AzureEventHubsParameter parameter)
-            : base(DataFeedSourceType.AzureEventHubs)
+            : base(DataFeedSourceKind.AzureEventHubs)
         {
             Argument.AssertNotNull(parameter, nameof(parameter));
 

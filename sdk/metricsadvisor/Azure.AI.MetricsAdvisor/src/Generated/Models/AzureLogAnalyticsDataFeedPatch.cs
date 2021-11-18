@@ -13,9 +13,10 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary> Initializes a new instance of AzureLogAnalyticsDataFeedPatch. </summary>
         public AzureLogAnalyticsDataFeedPatch()
         {
-            DataSourceType = DataFeedSourceType.LogAnalytics;
+            DataSourceType = DataFeedSourceKind.LogAnalytics;
         }
 
+        /// <summary> Gets or sets the data source parameter. </summary>
         public AzureLogAnalyticsParameterPatch DataSourceParameter { get; set; }
     }
 }

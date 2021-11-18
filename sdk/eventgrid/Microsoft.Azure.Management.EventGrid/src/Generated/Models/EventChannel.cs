@@ -59,8 +59,8 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// custom description for the customer partner topic.
         /// This will be helpful to remove any ambiguity of the origin of
         /// creation of the partner topic for the customer.</param>
-        /// <param name="systemData">The system metadata relating to this
-        /// resource.</param>
+        /// <param name="systemData">The system metadata relating to Event
+        /// Channel resource.</param>
         public EventChannel(string id = default(string), string name = default(string), string type = default(string), EventChannelSource source = default(EventChannelSource), EventChannelDestination destination = default(EventChannelDestination), string provisioningState = default(string), string partnerTopicReadinessState = default(string), System.DateTime? expirationTimeIfNotActivatedUtc = default(System.DateTime?), EventChannelFilter filter = default(EventChannelFilter), string partnerTopicFriendlyDescription = default(string), SystemData systemData = default(SystemData))
             : base(id, name, type)
         {
@@ -134,7 +134,7 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         public string PartnerTopicFriendlyDescription { get; set; }
 
         /// <summary>
-        /// Gets the system metadata relating to this resource.
+        /// Gets the system metadata relating to Event Channel resource.
         /// </summary>
         [JsonProperty(PropertyName = "systemData")]
         public SystemData SystemData { get; private set; }

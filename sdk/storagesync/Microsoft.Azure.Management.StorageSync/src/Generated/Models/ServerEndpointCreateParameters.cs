@@ -34,12 +34,12 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// Initializes a new instance of the ServerEndpointCreateParameters
         /// class.
         /// </summary>
-        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource. Ex-
-        /// Microsoft.Compute/virtualMachines or
-        /// Microsoft.Storage/storageAccounts.</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="serverLocalPath">Server Local path.</param>
         /// <param name="cloudTiering">Cloud Tiering. Possible values include:
         /// 'on', 'off'</param>
@@ -61,7 +61,10 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// business models: link local cache to cloud behavior to pre-populate
         /// before local access. Possible values include:
         /// 'DownloadNewAndModifiedFiles', 'UpdateLocallyCachedFiles'</param>
-        public ServerEndpointCreateParameters(string id = default(string), string name = default(string), string type = default(string), string serverLocalPath = default(string), string cloudTiering = default(string), int? volumeFreeSpacePercent = default(int?), int? tierFilesOlderThanDays = default(int?), string friendlyName = default(string), string serverResourceId = default(string), string offlineDataTransfer = default(string), string offlineDataTransferShareName = default(string), string initialDownloadPolicy = default(string), string localCacheMode = default(string))
+        /// <param name="initialUploadPolicy">Policy for how the initial upload
+        /// sync session is performed. Possible values include:
+        /// 'ServerAuthoritative', 'Merge'</param>
+        public ServerEndpointCreateParameters(string id = default(string), string name = default(string), string type = default(string), string serverLocalPath = default(string), string cloudTiering = default(string), int? volumeFreeSpacePercent = default(int?), int? tierFilesOlderThanDays = default(int?), string friendlyName = default(string), string serverResourceId = default(string), string offlineDataTransfer = default(string), string offlineDataTransferShareName = default(string), string initialDownloadPolicy = default(string), string localCacheMode = default(string), string initialUploadPolicy = default(string))
             : base(id, name, type)
         {
             ServerLocalPath = serverLocalPath;
@@ -74,6 +77,7 @@ namespace Microsoft.Azure.Management.StorageSync.Models
             OfflineDataTransferShareName = offlineDataTransferShareName;
             InitialDownloadPolicy = initialDownloadPolicy;
             LocalCacheMode = localCacheMode;
+            InitialUploadPolicy = initialUploadPolicy;
             CustomInit();
         }
 
@@ -148,6 +152,13 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.localCacheMode")]
         public string LocalCacheMode { get; set; }
+
+        /// <summary>
+        /// Gets or sets policy for how the initial upload sync session is
+        /// performed. Possible values include: 'ServerAuthoritative', 'Merge'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.initialUploadPolicy")]
+        public string InitialUploadPolicy { get; set; }
 
         /// <summary>
         /// Validate the object.

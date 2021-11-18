@@ -19,10 +19,26 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
-            writer.WriteStringValue(Type.ToString());
-            writer.WritePropertyName("name");
-            writer.WriteStringValue(Name);
+            if (Optional.IsDefined(Type))
+            {
+                writer.WritePropertyName("type");
+                writer.WriteStringValue(Type.Value.ToString());
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name");
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(PoolName))
+            {
+                writer.WritePropertyName("poolName");
+                writer.WriteStringValue(PoolName);
+            }
+            if (Optional.IsDefined(DatabaseName))
+            {
+                writer.WritePropertyName("databaseName");
+                writer.WriteStringValue(DatabaseName);
+            }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
@@ -33,14 +49,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static SqlConnection DeserializeSqlConnection(JsonElement element)
         {
-            SqlConnectionType type = default;
-            string name = default;
+            Optional<SqlConnectionType> type = default;
+            Optional<string> name = default;
+            Optional<string> poolName = default;
+            Optional<string> databaseName = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     type = new SqlConnectionType(property.Value.GetString());
                     continue;
                 }
@@ -49,10 +72,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     name = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("poolName"))
+                {
+                    poolName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("databaseName"))
+                {
+                    databaseName = property.Value.GetString();
+                    continue;
+                }
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SqlConnection(type, name, additionalProperties);
+            return new SqlConnection(Optional.ToNullable(type), name.Value, poolName.Value, databaseName.Value, additionalProperties);
         }
 
         internal partial class SqlConnectionConverter : JsonConverter<SqlConnection>

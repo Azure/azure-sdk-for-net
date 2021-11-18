@@ -10,7 +10,7 @@ The Azure Key Vault certificates client library enables programmatically managin
 ### Install the package
 Install the Azure Key Vault certificates client library for .NET with [NuGet][nuget]:
 
-```PowerShell
+```dotnetcli
 dotnet add package Azure.Security.KeyVault.Certificates
 ```
 
@@ -31,7 +31,7 @@ In order to interact with the Azure Key Vault service, you'll need to create an 
 Client secret credential authentication is being used in this getting started section but you can find more ways to authenticate with [Azure identity][azure_identity]. To use the [DefaultAzureCredential][DefaultAzureCredential] provider shown below,
 or other credential providers provided with the Azure SDK, you should install the Azure.Identity package:
 
-```PowerShell
+```dotnetcli
 dotnet add package Azure.Identity
 ```
 
@@ -70,16 +70,16 @@ Use the [Azure CLI][azure_cli] snippet below to create/get client secret credent
 
 * Use the above mentioned Azure Key Vault name to retrieve details of your Vault which also contains your Azure Key Vault URL:
     ```PowerShell
-    az keyvault show --name <your-key-vault-name>
+    az keyvault show --name <your-key-vault-name> --query properties.vaultUri --output tsv
     ```
 
 #### Create CertificateClient
-Once you've populated the **AZURE_CLIENT_ID**, **AZURE_CLIENT_SECRET** and **AZURE_TENANT_ID** environment variables and replaced **your-vault-url** with the above returned URI, you can create the [CertificateClient][certificate_client_class]:
+Once you've populated the **AZURE_CLIENT_ID**, **AZURE_CLIENT_SECRET**, and **AZURE_TENANT_ID** environment variables, replace **vaultUrl** with the output of `az keyvault show` in the example below to create the [CertificateClient][certificate_client_class]:
 
 ```C# Snippet:CreateCertificateClient
 // Create a new certificate client using the default credential from Azure.Identity using environment variables previously set,
 // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
-var client = new CertificateClient(vaultUri: new Uri(keyVaultUrl), credential: new DefaultAzureCredential());
+var client = new CertificateClient(vaultUri: new Uri(vaultUrl), credential: new DefaultAzureCredential());
 ```
 
 ## Key concepts
@@ -323,10 +323,10 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [keyvault_docs]: https://docs.microsoft.com/azure/key-vault/
 [certificate_client_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/keyvault/Azure.Security.KeyVault.Certificates/samples
 [nuget]: https://www.nuget.org/
-[azure_sub]: https://azure.microsoft.com/free/
+[azure_sub]: https://azure.microsoft.com/free/dotnet/
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [certificate_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Certificates/src/CertificateClient.cs
-[soft_delete]: https://docs.microsoft.com/azure/key-vault/key-vault-ovw-soft-delete
+[soft_delete]: https://docs.microsoft.com/azure/key-vault/general/soft-delete-overview
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity#defaultazurecredential
 [keyvault_rest]: https://docs.microsoft.com/rest/api/keyvault/
 [secrets_client_library]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/keyvault/Azure.Security.KeyVault.Secrets

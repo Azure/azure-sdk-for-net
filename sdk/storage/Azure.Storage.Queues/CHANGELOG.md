@@ -1,15 +1,21 @@
 # Release History
 
-## 12.8.0-beta.1 (Unreleased)
+## 12.9.0-beta.2 (Unreleased)
+- This release contains bug fixes to improve quality.
 
-### Features Added
+## 12.9.0-beta.1 (2021-11-03)
+- This release contains bug fixes to improve quality.
 
-### Breaking Changes
+## 12.8.0 (2021-09-08)
+- Includes all features from 12.8.0-beta.1 and 12.8.0-beta.2.
+- Fixed issue where QueueClient.ReceiveMessage() and .ReceiveMessageAsync() were creating two Diagnostic Scopes.
 
-### Key Bugs Fixed
+## 12.8.0-beta.2 (2021-07-23)
+- This release contains bug fixes to improve quality.
 
-### Fixed
-
+## 12.8.0-beta.1 (2021-07-22)
+- TenantId can now be discovered through the service challenge response, when using a TokenCredential for authorization.
+    - A new property is now available on the ClientOptions called `EnableTenantDiscovery`. If set to true, the client will attempt an initial unauthorized request to the service to prompt a challenge containing the tenantId hint.
 
 ## 12.7.0 (2021-06-08)
 - Includes all features from 12.7.0-beta.4.

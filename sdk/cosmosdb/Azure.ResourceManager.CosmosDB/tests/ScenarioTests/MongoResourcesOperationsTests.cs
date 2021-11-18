@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             if ((Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback) && !setupRun)
             {
-                InitializeClients();
+                await InitializeClients();
                 this.resourceGroupName = Recording.GenerateAssetName(CosmosDBTestUtilities.ResourceGroupPrefix);
                 await CosmosDBTestUtilities.TryRegisterResourceGroupAsync(ResourceGroupsOperations,
                     CosmosDBTestUtilities.Location,
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             }
             else if (setupRun)
             {
-                initNewRecord();
+                await initNewRecord();
             }
         }
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                     databaseAccountName,
                     databaseName,
                     new MongoDBDatabaseCreateUpdateParameters(
-                        new MongoDBDatabaseResource(databaseAccountName), new CreateUpdateOptions(sampleThroughput1, new AutoscaleSettings()))));
+                        new MongoDBDatabaseResource(databaseName), new CreateUpdateOptions(sampleThroughput1, new AutoscaleSettings()))));
             Assert.IsNotNull(mongoDBDatabaseGetResults1);
             Assert.AreEqual(databaseName, mongoDBDatabaseGetResults1.Resource.Id);
             ThroughputSettingsGetResults throughputSettingsGetResults1 =
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                     databaseAccountName,
                     databaseName,
                     new MongoDBDatabaseCreateUpdateParameters(
-                        new MongoDBDatabaseResource(databaseAccountName), new CreateUpdateOptions(sampleThroughput2, new AutoscaleSettings()))));
+                        new MongoDBDatabaseResource(databaseName), new CreateUpdateOptions(sampleThroughput2, new AutoscaleSettings()))));
             Assert.IsNotNull(mongoDBDatabaseGetResults2);
             Assert.AreEqual(databaseName, mongoDBDatabaseGetResults2.Resource.Id);
             ThroughputSettingsGetResults throughputSettingsGetResults2 =

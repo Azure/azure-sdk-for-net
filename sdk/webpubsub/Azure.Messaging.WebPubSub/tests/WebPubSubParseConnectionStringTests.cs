@@ -33,10 +33,11 @@ namespace Azure.Messaging.WebPubSub.Tests
         [TestCase("ab", new[] { "a", "a", "a" })]
         [TestCase("ab", new[] { "a", "b", "c" })]
         [TestCase("ab", new string[0])]
-        public void TestGenerateUriContainsExpectedPayloads(string userId, string[] roles)
+        public void TestGenerateUriContainsExpectedPayloadsDto(string userId, string[] roles)
         {
             var serviceClient = new WebPubSubServiceClient(string.Format("Endpoint=http://localhost;Port=8080;AccessKey={0};Version=1.0;", FakeAccessKey), "hub");
-            var uri = serviceClient.GenerateClientAccessUri(TimeSpan.FromMinutes(5), userId, roles);
+            var expiresAt = DateTimeOffset.UtcNow + TimeSpan.FromMinutes(5);
+            var uri = serviceClient.GetClientAccessUri(expiresAt, userId, roles);
             var token = HttpUtility.ParseQueryString(uri.Query).Get("access_token");
             Assert.NotNull(token);
             var jwt = JwtTokenHandler.ReadJwtToken(token);
@@ -50,7 +51,61 @@ namespace Azure.Messaging.WebPubSub.Tests
             var exp = jwt.Claims.FirstOrDefault(s => s.Type == "exp")?.Value;
             Assert.NotNull(exp);
             Assert.IsTrue(long.TryParse(exp, out var expireAt));
-            Assert.AreEqual(TimeSpan.FromMinutes(5).TotalSeconds, expireAt - issuedAt);
+
+            // default expire after should be ~5 minutes (~300 seconds)
+            var expireAfter = expireAt - issuedAt;
+            Assert.IsTrue(expireAfter > 295 && expireAfter < 305);
+
+            var sub = jwt.Claims.Where(s => s.Type == "sub").Select(s => s.Value).ToArray();
+
+            if (userId != null)
+            {
+                Assert.AreEqual(1, sub.Length);
+                Assert.AreEqual(userId, sub[0]);
+            }
+            else
+            {
+                Assert.IsEmpty(sub);
+            }
+
+            var roleClaims = jwt.Claims.Where(s => s.Type == "role").Select(s => s.Value).ToArray();
+            if (roles?.Length > 0)
+            {
+                Assert.AreEqual(roles, roleClaims);
+            }
+            else
+            {
+                Assert.IsEmpty(roleClaims);
+            }
+        }
+
+        [TestCase(null, null)]
+        [TestCase("ab", new[] { "a" })]
+        [TestCase("ab", new[] { "a", "a", "a" })]
+        [TestCase("ab", new[] { "a", "b", "c" })]
+        [TestCase("ab", new string[0])]
+        public void TestGenerateUriContainsExpectedPayloads(string userId, string[] roles)
+        {
+            var serviceClient = new WebPubSubServiceClient(string.Format("Endpoint=http://localhost;Port=8080;AccessKey={0};Version=1.0;", FakeAccessKey), "hub");
+            var uri = serviceClient.GetClientAccessUri(TimeSpan.FromMinutes(5), userId, roles);
+            var token = HttpUtility.ParseQueryString(uri.Query).Get("access_token");
+            Assert.NotNull(token);
+            var jwt = JwtTokenHandler.ReadJwtToken(token);
+
+            var audience = jwt.Claims.FirstOrDefault(s => s.Type == "aud");
+            Assert.NotNull(audience);
+            Assert.AreEqual("http://localhost:8080/client/hubs/hub", audience.Value);
+            var iat = jwt.Claims.FirstOrDefault(s => s.Type == "iat")?.Value;
+            Assert.NotNull(iat);
+            Assert.IsTrue(long.TryParse(iat, out var issuedAt));
+            var exp = jwt.Claims.FirstOrDefault(s => s.Type == "exp")?.Value;
+            Assert.NotNull(exp);
+            Assert.IsTrue(long.TryParse(exp, out var expireAt));
+
+            // default expire after should be ~5 minutes (~300 seconds)
+            var expireAfter = expireAt - issuedAt;
+            Assert.IsTrue(expireAfter > 295 && expireAfter < 305);
+
             var sub = jwt.Claims.Where(s => s.Type == "sub").Select(s => s.Value).ToArray();
 
             if (userId != null)
@@ -80,8 +135,8 @@ namespace Azure.Messaging.WebPubSub.Tests
         public void TestGenerateUriUseSameKidWithSameKey(string connectionString, string hub, string expectedUrl)
         {
             var serviceClient = new WebPubSubServiceClient(string.Format(connectionString, FakeAccessKey), hub);
-            var uri1 = serviceClient.GenerateClientAccessUri();
-            var uri2 = serviceClient.GenerateClientAccessUri();
+            var uri1 = serviceClient.GetClientAccessUri();
+            var uri2 = serviceClient.GetClientAccessUri();
             var urlBuilder = new UriBuilder(uri1);
             urlBuilder.Query = string.Empty;
             Assert.AreEqual(expectedUrl, urlBuilder.Uri.ToString());

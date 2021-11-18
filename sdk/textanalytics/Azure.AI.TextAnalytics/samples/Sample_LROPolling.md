@@ -1,9 +1,9 @@
 # Polling Long Running Operations
-This sample demonstrates the different ways to consume or poll the status of a Text Analytics client Long Running Operation.  It uses the (Analyze Operation)[https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics#run-analyze-operation-asynchronously] as an example
+This sample demonstrates the different ways to consume or poll the status of a Text Analytics client Long Running Operation.  It uses the [Analyze Healthcare Entities][analyze-healthcare-entities] functionality as an example.
 
 ## Creating a `TextAnalyticsClient`
 
-To create a new `TextAnalyticsClient` to run analyze operation for a document, you need a Text Analytics endpoint and credentials.  You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development.  In the sample below, however, you'll use a Text Analytics API key credential by creating an `AzureKeyCredential` object, that if needed, will allow you to update the API key without creating a new client.
+To create a new `TextAnalyticsClient` to analyze healthcare entities for a document, you need a Text Analytics endpoint and credentials.  You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development.  In the sample below, however, you'll use a Text Analytics API key credential by creating an `AzureKeyCredential` object, that if needed, will allow you to update the API key without creating a new client.
 
 You can set `endpoint` and `apiKey` based on an environment variable, a configuration setting, or any way that works for your application.
 
@@ -13,140 +13,89 @@ string apiKey = "<apiKey>";
 var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 ```
 
-## Polling using `WaitForCompletionAsync()`
+## Automatic polling
 
 In the below snippet the polling is happening by default when we call `WaitForCompletionAsync()` method.
 
-```C#
-		string document = @"We went to Contoso Steakhouse located at midtown NYC last week for a dinner party, 
-				and we adore the spot! They provide marvelous food and they have a great menu. The
-				chief cook happens to be the owner (I think his name is John Doe) and he is super 
-				nice, coming out of the kitchen and greeted us all. We enjoyed very much dining in 
-				the place! The Sirloin steak I ordered was tender and juicy, and the place was impeccably
-				clean. You can even pre-order from their online menu at www.contososteakhouse.com, 
-				call 312-555-0176 or send email to order@contososteakhouse.com! The only complaint 
-				I have is the food didn't come fast enough. Overall I highly recommend it!";
+```C# Snippet:TextAnalyticsAnalyzeHealthcareEntitiesConvenienceAsync
+// get input documents
+string document1 = @"RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS | \
+                    Admission Date: 5/22/2001 Report Status: Signed Discharge Date: 4/24/2001 ADMISSION DIAGNOSIS: CORONARY ARTERY DISEASE. \
+                    HISTORY OF PRESENT ILLNESS: The patient is a 54-year-old gentleman with a history of progressive angina over the past several months. \
+                    The patient had a cardiac catheterization in July of this year revealing total occlusion of the RCA and 50% left main disease ,\
+                    with a strong family history of coronary artery disease with a brother dying at the age of 52 from a myocardial infarction and \
+                    another brother who is status post coronary artery bypass grafting. The patient had a stress echocardiogram done on July , 2001 , \
+                    which showed no wall motion abnormalities , but this was a difficult study due to body habitus. The patient went for six minutes with \
+                    minimal ST depressions in the anterior lateral leads , thought due to fatigue and wrist pain , his anginal equivalent. Due to the patient's \
+                    increased symptoms and family history and history left main disease with total occasional of his RCA was referred for revascularization with open heart surgery.";
 
-		var batchDocuments = new List<string> { document };
+string document2 = "Prescribed 100mg ibuprofen, taken twice daily.";
 
-		AnalyzeOperationOptions operationOptions = new AnalyzeOperationOptions()
-		{
-				KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters(),
-				EntitiesTaskParameters = new EntitiesTaskParameters(),
-				PiiTaskParameters = new PiiTaskParameters(),
-				DisplayName = "AnalyzeOperationSample"
-		};
+// prepare analyze operation input
+List<string> batchInput = new List<string>()
+{
+    document1,
+    document2
+};
 
-		AnalyzeOperation operation = client.StartAnalyzeOperationBatch(batchDocuments, operationOptions);
-
-		await operation.WaitForCompletionAsync();
-
-		AnalyzeOperationResult resultCollection = operation.Value;
-
-		RecognizeEntitiesResultCollection entitiesResult = resultCollection.Tasks.EntityRecognitionTasks[0].Results;
-
-		ExtractKeyPhrasesResultCollection keyPhrasesResult = resultCollection.Tasks.KeyPhraseExtractionTasks[0].Results;
-
-		RecognizePiiEntitiesResultCollection piiResult = resultCollection.Tasks.EntityRecognitionPiiTasks[0].Results;
+// start analysis process
+AnalyzeHealthcareEntitiesOperation healthOperation = await client.StartAnalyzeHealthcareEntitiesAsync(batchInput);
+await healthOperation.WaitForCompletionAsync();
 ```
 
 By default the polling happens every 1 second when there is no `pollingInterval` sent.
 
+## Manual polling
 
-## Polling using `WaitForCompletionAsync(TimeSpan pollingInterval)`
+This method is for users who want to have intermittent code paths during the polling process, or want to stick to a sync behavior.
 
-For a custom `pollingInterval`, we will call `WaitForCompletionAsync()` method with `TimeSpan` object as an argument.
+```C# Snippet:TextAnalyticsAnalyzeHealthcareEntitiesConvenience
+// get input documents
+string document1 = @"RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS | \
+                    Admission Date: 5/22/2001 Report Status: Signed Discharge Date: 4/24/2001 ADMISSION DIAGNOSIS: CORONARY ARTERY DISEASE. \
+                    HISTORY OF PRESENT ILLNESS: The patient is a 54-year-old gentleman with a history of progressive angina over the past several months. \
+                    The patient had a cardiac catheterization in July of this year revealing total occlusion of the RCA and 50% left main disease ,\
+                    with a strong family history of coronary artery disease with a brother dying at the age of 52 from a myocardial infarction and \
+                    another brother who is status post coronary artery bypass grafting. The patient had a stress echocardiogram done on July , 2001 , \
+                    which showed no wall motion abnormalities , but this was a difficult study due to body habitus. The patient went for six minutes with \
+                    minimal ST depressions in the anterior lateral leads , thought due to fatigue and wrist pain , his anginal equivalent. Due to the patient's \
+                    increased symptoms and family history and history left main disease with total occasional of his RCA was referred for revascularization with open heart surgery.";
 
-```C#
-		string document = @"We went to Contoso Steakhouse located at midtown NYC last week for a dinner party, 
-				and we adore the spot! They provide marvelous food and they have a great menu. The
-				chief cook happens to be the owner (I think his name is John Doe) and he is super 
-				nice, coming out of the kitchen and greeted us all. We enjoyed very much dining in 
-				the place! The Sirloin steak I ordered was tender and juicy, and the place was impeccably
-				clean. You can even pre-order from their online menu at www.contososteakhouse.com, 
-				call 312-555-0176 or send email to order@contososteakhouse.com! The only complaint 
-				I have is the food didn't come fast enough. Overall I highly recommend it!";
+string document2 = "Prescribed 100mg ibuprofen, taken twice daily.";
 
-		var batchDocuments = new List<string> { document };
+// prepare analyze operation input
+List<string> batchInput = new List<string>()
+{
+    document1,
+    document2
+};
 
-		AnalyzeOperationOptions operationOptions = new AnalyzeOperationOptions()
-		{
-				KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters(),
-				EntitiesTaskParameters = new EntitiesTaskParameters(),
-				PiiTaskParameters = new PiiTaskParameters(),
-				DisplayName = "AnalyzeOperationSample"
-		};
+// start analysis process
+AnalyzeHealthcareEntitiesOperation healthOperation = client.StartAnalyzeHealthcareEntities(batchInput);
 
-		AnalyzeOperation operation = client.StartAnalyzeOperationBatch(batchDocuments, operationOptions);
+// wait for completion with manual polling
+TimeSpan pollingInterval = new TimeSpan(1000);
 
-		TimeSpan pollingInterval = new TimeSpan(1000);
+while (true)
+{
+    Console.WriteLine($"Status: {healthOperation.Status}");
+    healthOperation.UpdateStatus();
+    if (healthOperation.HasCompleted)
+    {
+        break;
+    }
 
-		await operation.WaitForCompletionAsync(pollingInterval);
+    Thread.Sleep(pollingInterval);
+}
 
-		AnalyzeOperationResult resultCollection = operation.Value;
-
-		RecognizeEntitiesResultCollection entitiesResult = resultCollection.Tasks.EntityRecognitionTasks[0].Results;
-
-		ExtractKeyPhrasesResultCollection keyPhrasesResult = resultCollection.Tasks.KeyPhraseExtractionTasks[0].Results;
-
-		RecognizePiiEntitiesResultCollection piiResult = resultCollection.Tasks.EntityRecognitionPiiTasks[0].Results;
-```
-
-## Polling using `UpdateStatusAsync()`
-
-This method is for users who want to have intermittent code paths during the polling process. 
-
-```C#
-		string document = @"We went to Contoso Steakhouse located at midtown NYC last week for a dinner party, 
-				and we adore the spot! They provide marvelous food and they have a great menu. The
-				chief cook happens to be the owner (I think his name is John Doe) and he is super 
-				nice, coming out of the kitchen and greeted us all. We enjoyed very much dining in 
-				the place! The Sirloin steak I ordered was tender and juicy, and the place was impeccably
-				clean. You can even pre-order from their online menu at www.contososteakhouse.com, 
-				call 312-555-0176 or send email to order@contososteakhouse.com! The only complaint 
-				I have is the food didn't come fast enough. Overall I highly recommend it!";
-
-		var batchDocuments = new List<string> { document };
-
-		AnalyzeOperationOptions operationOptions = new AnalyzeOperationOptions()
-		{
-				KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters(),
-				EntitiesTaskParameters = new EntitiesTaskParameters(),
-				PiiTaskParameters = new PiiTaskParameters(),
-				DisplayName = "AnalyzeOperationSample"
-		};
-
-		AnalyzeOperation operation = client.StartAnalyzeOperationBatch(batchDocuments, operationOptions);
-
-		TimeSpan pollingInterval = new TimeSpan(1000);
-
-		while (true)
-		{
-			await healthOperation.UpdateStatusAsync();
-			if (healthOperation.HasCompleted)
-			{
-				// TIP - Add logging, max wait time, or any other intermittent code path. 
-				break;
-			}
-
-			await Task.Delay(pollingInterval);
-		}
-
-		AnalyzeOperationResult resultCollection = operation.Value;
-
-		RecognizeEntitiesResultCollection entitiesResult = resultCollection.Tasks.EntityRecognitionTasks[0].Results;
-
-		ExtractKeyPhrasesResultCollection keyPhrasesResult = resultCollection.Tasks.KeyPhraseExtractionTasks[0].Results;
-
-		RecognizePiiEntitiesResultCollection piiResult = resultCollection.Tasks.EntityRecognitionPiiTasks[0].Results;
+Console.WriteLine($"AnalyzeHealthcareEntities operation was completed");
 ```
 
 To see the full example source files, see:
 
-* [Automatic Polling AnalyzeOperation ](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample_AnalyzeOperationAsync.cs)
-* [Manual Polling AnalyzeOperation ](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample_AnalyzeOperation.cs)
-* [Automatic Polling HealthcareOperation ](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample7_AnalyzeHealthcareEntitiesConvenienceAsync_AutomaticPolling.cs)
-* [Manual Polling HealthcareOperation ](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample7_AnalyzeHealthcareEntitiesConvenience_ManualPolling.cs)
+* [Asynchronous AnalyzeHealthcareEntities Convenience](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample7_AnalyzeHealthcareEntitiesConvenienceAsync.cs)
+* [Synchronous AnalyzeHealthcareEntities Convenience ](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample7_AnalyzeHealthcareEntitiesConvenience.cs)
 
+[analyze-healthcare-entities]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample7_AnalyzeHealthcareEntities.md
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
 [README]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/README.md

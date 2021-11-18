@@ -13,8 +13,10 @@ copy them locally in `/sdk/search/generate.ps1` and reference them here.
 ```yaml
 title: SearchServiceClient
 input-file:
-- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/d95c18e2d5fc678a1453c454d746fdce22d30122/specification/search/data-plane/Azure.Search/preview/2020-06-30-Preview/searchindex.json
-- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/d95c18e2d5fc678a1453c454d746fdce22d30122/specification/search/data-plane/Azure.Search/preview/2020-06-30-Preview/searchservice.json
+ - https://github.com/shmed/azure-rest-api-specs/blob/7a003b0aa0def1a454ff0844fa4c6a276bc1ee53/specification/search/data-plane/Azure.Search/preview/2021-04-30-Preview/searchindex.json
+ - https://github.com/shmed/azure-rest-api-specs/blob/7a003b0aa0def1a454ff0844fa4c6a276bc1ee53/specification/search/data-plane/Azure.Search/preview/2021-04-30-Preview/searchservice.json
+modelerfour:
+    seal-single-value-enum-by-default: true
 ```
 
 ## Release hacks
@@ -51,7 +53,7 @@ directive:
     }
 ```
 
-### Make Loookup Document behave a little friendlier
+### Make Lookup Document behave a little friendlier
 It's currently an empty object and adding Additional Properties will generate
 a more useful model.
 ``` yaml
@@ -198,6 +200,7 @@ directive:
   where: $.definitions.IndexerExecutionResult
   transform: >
     $.properties.endTime["x-nullable"] = true;
+    $.properties.statusDetail["x-nullable"] = true;
 ```
 
 ``` yaml

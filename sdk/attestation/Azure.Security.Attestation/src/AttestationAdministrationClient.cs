@@ -93,7 +93,7 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// Retrieves the attesttion policy for the specified <see cref="AttestationType"/>.
         /// </summary>
-        /// <param name="attestationType"><see cref="AttestationType"/> to retrive.</param>
+        /// <param name="attestationType"><see cref="AttestationType"/> to retrieve.</param>
         /// <param name="cancellationToken">Cancellation token used to cancel this operation.</param>
         /// <returns>An <see cref="AttestationResponse{String}"/> with the policy for the specified attestation type.</returns>
         /// <remarks>
@@ -108,7 +108,7 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// Retrieves the attesttion policy for the specified <see cref="AttestationType"/>.
         /// </summary>
-        /// <param name="attestationType">Attestation Type to retrive.</param>
+        /// <param name="attestationType">Attestation Type to retrieve.</param>
         /// <param name="cancellationToken">Cancellation token used to cancel this operation.</param>
         /// <returns>An <see cref="AttestationResponse{String}"/> with the policy for the specified attestation type.</returns>
         /// <remarks>
@@ -123,7 +123,7 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// Retrieves the attesttion policy for the specified <see cref="AttestationType"/>.
         /// </summary>
-        /// <param name="attestationType"><see cref="AttestationType"/> to retrive.</param>
+        /// <param name="attestationType"><see cref="AttestationType"/> to retrieve.</param>
         /// <param name="cancellationToken">Cancellation token used to cancel this operation.</param>
         /// <param name="async">True if the call should be asynchronous.</param>
         /// <returns>An <see cref="AttestationResponse{String}"/> with the policy for the specified attestation type.</returns>
@@ -198,7 +198,7 @@ namespace Azure.Security.Attestation
         /// </item>
         /// </list>
         /// To verify the hash, clients can generate an attestation token and verify the hash generated from that token:
-        /// <code snippet="Snippet:VerifySigningHash">
+        /// <code snippet="Snippet:VerifySigningHash" language="csharp">
         /// // The SetPolicyAsync API will create an AttestationToken signed with the TokenSigningKey to transmit the policy.
         /// // To verify that the policy specified by the caller was received by the service inside the enclave, we
         /// // verify that the hash of the policy document returned from the Attestation Service matches the hash
@@ -282,7 +282,7 @@ namespace Azure.Security.Attestation
         /// </item>
         /// </list>
         /// To verify the hash, clients can generate an attestation token and verify the hash generated from that token:
-        /// <code snippet="Snippet:VerifySigningHash">
+        /// <code snippet="Snippet:VerifySigningHash" language="csharp">
         /// // The SetPolicyAsync API will create an AttestationToken signed with the TokenSigningKey to transmit the policy.
         /// // To verify that the policy specified by the caller was received by the service inside the enclave, we
         /// // verify that the hash of the policy document returned from the Attestation Service matches the hash

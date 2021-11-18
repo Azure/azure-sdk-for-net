@@ -503,7 +503,37 @@ namespace Azure.Storage.Files.DataLake
             {
                 BufferSize = options.BufferSize,
                 Conditions = options.Conditions.ToBlobRequestConditions(),
-                Position = options.Position
+                Position = options.Position,
+                TransactionalHashingOptions = options.TransactionalHashingOptions
+            };
+        }
+
+        internal static BlobDownloadOptions ToBlobBaseDownloadOptions(this DataLakeFileReadOptions options)
+        {
+            if (options == null)
+            {
+                return null;
+            }
+
+            return new BlobDownloadOptions()
+            {
+                Range = options.Range,
+                Conditions = options.Conditions.ToBlobRequestConditions(),
+                TransactionalHashingOptions = options.TransactionalHashingOptions
+            };
+        }
+
+        internal static BlobDownloadToOptions ToBlobBaseDownloadToOptions(this DataLakeFileReadToOptions options)
+        {
+            if (options == null)
+            {
+                return null;
+            }
+            return new BlobDownloadToOptions()
+            {
+                Conditions = options.Conditions.ToBlobRequestConditions(),
+                TransferOptions = options.TransferOptions,
+                TransactionalHashingOptions = options.TransactionalHashingOptions
             };
         }
 
@@ -547,7 +577,7 @@ namespace Azure.Storage.Files.DataLake
         internal static PathInfo ToPathInfo(this ResponseWithHeaders<PathCreateHeaders> response)
             => new PathInfo
             {
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault()
             };
 
@@ -563,21 +593,21 @@ namespace Azure.Storage.Files.DataLake
         internal static PathInfo ToPathInfo(this ResponseWithHeaders<PathSetAccessControlHeaders> response)
             => new PathInfo
             {
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault()
             };
 
         internal static PathInfo ToPathInfo(this ResponseWithHeaders<PathFlushDataHeaders> response)
             => new PathInfo
             {
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault()
             };
 
         internal static PathInfo ToPathInfo(this ResponseWithHeaders<PathSetExpiryHeaders> response)
             => new PathInfo
             {
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault()
             };
 
@@ -831,5 +861,133 @@ namespace Azure.Storage.Files.DataLake
                 DefaultIndexDocumentPath = dataLakeStaticWebsite.DefaultIndexDocumentPath
             };
         }
+
+        #region ValidateConditionsNotPresent
+        internal static void ValidateConditionsNotPresent(
+            this RequestConditions requestConditions,
+            DataLakeRequestConditionProperty invalidConditions,
+            string operationName,
+            string parameterName)
+        {
+            if (AppContextSwitchHelper.GetConfigValue(
+                Constants.DisableRequestConditionsValidationSwitchName,
+                Constants.DisableRequestConditionsValidationEnvVar))
+            {
+                return;
+            }
+
+            if (requestConditions == null)
+            {
+                return;
+            }
+
+            List<string> invalidList = null;
+            requestConditions.ValidateConditionsNotPresent(
+                invalidConditions,
+                ref invalidList);
+
+            if (invalidList?.Count > 0)
+            {
+                string unsupportedString = string.Join(", ", invalidList);
+                throw new ArgumentException(
+                    $"{operationName} does not support the {unsupportedString} condition(s).",
+                    parameterName);
+            }
+        }
+
+        internal static void ValidateConditionsNotPresent(
+            this DataLakeRequestConditions requestConditions,
+            DataLakeRequestConditionProperty invalidConditions,
+            string operationName,
+            string parameterName)
+        {
+            if (AppContextSwitchHelper.GetConfigValue(
+                Constants.DisableRequestConditionsValidationSwitchName,
+                Constants.DisableRequestConditionsValidationEnvVar))
+            {
+                return;
+            }
+
+            if (requestConditions == null)
+            {
+                return;
+            }
+
+            List<string> invalidList = null;
+            requestConditions.ValidateConditionsNotPresent(
+                invalidConditions,
+                ref invalidList);
+
+            if (invalidList?.Count > 0)
+            {
+                string unsupportedString = string.Join(", ", invalidList);
+                throw new ArgumentException(
+                    $"{operationName} does not support the {unsupportedString} condition(s).",
+                    parameterName);
+            }
+        }
+
+        internal static void ValidateConditionsNotPresent(
+            this RequestConditions requestConditions,
+            DataLakeRequestConditionProperty invalidConditions,
+            ref List<string> invalidList)
+        {
+            if (requestConditions == null)
+            {
+                return;
+            }
+
+            if ((invalidConditions & DataLakeRequestConditionProperty.IfModifiedSince) == DataLakeRequestConditionProperty.IfModifiedSince
+                && requestConditions.IfModifiedSince != null)
+            {
+                invalidList ??= new List<string>();
+                invalidList.Add(nameof(BlobRequestConditions.IfModifiedSince));
+            }
+
+            if ((invalidConditions & DataLakeRequestConditionProperty.IfUnmodifiedSince) == DataLakeRequestConditionProperty.IfUnmodifiedSince
+                && requestConditions.IfUnmodifiedSince != null)
+            {
+                invalidList ??= new List<string>();
+                invalidList.Add(nameof(BlobRequestConditions.IfUnmodifiedSince));
+            }
+
+            if ((invalidConditions & DataLakeRequestConditionProperty.IfMatch) == DataLakeRequestConditionProperty.IfMatch
+                && requestConditions.IfMatch != null)
+            {
+                invalidList ??= new List<string>();
+                invalidList.Add(nameof(BlobRequestConditions.IfMatch));
+            }
+
+            if ((invalidConditions & DataLakeRequestConditionProperty.IfNoneMatch) == DataLakeRequestConditionProperty.IfNoneMatch
+                && requestConditions.IfNoneMatch != null)
+            {
+                invalidList ??= new List<string>();
+                invalidList.Add(nameof(BlobRequestConditions.IfNoneMatch));
+            }
+        }
+
+        internal static void ValidateConditionsNotPresent(
+            this DataLakeRequestConditions requestConditions,
+            DataLakeRequestConditionProperty invalidConditions,
+            ref List<string> invalidList)
+        {
+            if (requestConditions == null)
+            {
+                return;
+            }
+
+            // Validate RequestConditions
+            ((RequestConditions)requestConditions).ValidateConditionsNotPresent(
+                invalidConditions, ref invalidList);
+
+            // Validate BlobRequestConditions specific conditions.
+            if ((invalidConditions & DataLakeRequestConditionProperty.LeaseId) == DataLakeRequestConditionProperty.LeaseId
+                && requestConditions.LeaseId != null)
+            {
+                invalidList ??= new List<string>();
+                invalidList.Add(nameof(BlobRequestConditions.LeaseId));
+            }
+        }
+        #endregion
     }
 }

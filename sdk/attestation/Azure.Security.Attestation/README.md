@@ -23,7 +23,7 @@ Azure Attestation receives evidence from compute entities, turns them into a set
 
 Install the Microsoft Azure Attestation client library for .NET with [NuGet][nuget]:
 
-```PowerShell
+```dotnetcli
 dotnet add package Azure.Security.Attestation --prerelease
 ```
 
@@ -35,7 +35,7 @@ In order to interact with the Microsoft Azure Attestation service, you'll need t
 Client secret credential authentication is being used in this getting started section but you can find more ways to authenticate with [Azure identity][azure_identity]. To use the [DefaultAzureCredential][DefaultAzureCredential] provider shown below,
 or other credential providers provided with the Azure SDK, you should install the Azure.Identity package:
 
-```PowerShell
+```dotnetcli
 dotnet add package Azure.Identity
 ```
 
@@ -347,7 +347,7 @@ See [CONTRIBUTING.md][contributing] for details on building, testing, and contri
 [attestation_policy_modification_result_token_hash]: https://docs.microsoft.com/dotnet/api/azure.security.attestation.policymodificationresult.policytokenhash
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity
-[azure_sub]: https://azure.microsoft.com/free/
+[azure_sub]: https://azure.microsoft.com/free/dotnet/
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 [json_web_token]: https://tools.ietf.org/html/rfc7519
 [JWK]: https://tools.ietf.org/html/rfc7517

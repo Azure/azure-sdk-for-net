@@ -1,14 +1,32 @@
 # Release History
 
-## 1.0.0-preview.3 (Unreleased)
+## 1.0.0-beta.4 (Unreleased)
 
+### Features Added
 
-## 1.0.0-preview.2 (2020-09-23)
+### Breaking Changes
 
-- Accept header added to all requests.
-- Collections are now always initialized and collection properties are readonly by default.
+### Bugs Fixed
 
-## 1.0.0-preview.1
+### Other Changes
+
+## 1.0.0-beta.3 (2021-10-28)
+
+### Breaking Changes
+
+- Renamed [Resource]Container to [Resource]Collection and added the IEnumerable<T> and IAsyncEnumerable<T> interfaces to them making it easier to iterate over the list in the simple case.
+
+## 1.0.0-beta.2 (2021-09-14)
+
+### Features Added
+
+- Added ArmClient extension methods to support [start from the middle scenario](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/resourcemanager/Azure.ResourceManager#managing-existing-resources-by-id).
+
+### Bugs Fixed
+
+- Fixed bug when using `GetDeletedAccountsAsync` would cause error.
+
+## 1.0.0-beta.1 (2021-09-01)
 
 This package follows the [Azure SDK Design Guidelines for .NET](https://azure.github.io/azure-sdk/dotnet_introduction.html) which provide a number of core capabilities that are shared amongst all Azure SDKs, including the intuitive Azure Identity library, an HTTP Pipeline with custom policies, error-handling, distributed tracing, and much more.
 
@@ -23,8 +41,6 @@ This is a Public Preview version, so expect incompatible changes in subsequent r
     - Support uniform telemetry across all languages
 
 > NOTE: For more information about unified authentication, please refer to [Azure Identity documentation for .NET](https://docs.microsoft.com//dotnet/api/overview/azure/identity-readme?view=azure-dotnet)
-
-### Migration from Previous Version of Azure Management SDK
 
 #### Package Name
 The package name has been changed from `Microsoft.Azure.Management.Storage` to `Azure.ResourceManager.Storage`
@@ -58,24 +74,22 @@ storageManagementClient.StorageAccounts.Create(resourceGroupName, accountName, p
 ```
 
 After upgrade:
-```csharp
+```C# Snippet:Create_Storage_Account
+using System.Collections.Generic;
 using Azure.Identity;
-using Azure.ResourceManager.Storage;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Storage.Models;
-
-var storageManagementClient = new StorageManagementClient(subscriptionId, new DefaultAzureCredential());
-var storageAccountsOperations = storageManagementClient.StorageAccounts;
-
-var parameters = new StorageAccountCreateParameters(new Sku(SkuName.StandardGRS), Kind.Storage, "westus")
-    {
-        Tags = new Dictionary<string, string>
-            {
-                {"key1","value1"},
-                {"key2","value2"}
-            }
-    };
-var accountResponse = await storageAccountsOperations.StartCreateAsync(resourceGroupName, accountName, parameters);
-StorageAccount account = await accountResponse.WaitForCompletionAsync();
+string accountName = "myaccount";
+string resourceGroupName = "myResourceGroup";
+ArmClient client = new ArmClient(new DefaultAzureCredential());
+ResourceGroup resourceGroup = client.GetDefaultSubscription().GetResourceGroups().Get(resourceGroupName);
+StorageAccountCollection storageAccountCollection = resourceGroup.GetStorageAccounts();
+Sku sku = new Sku(SkuName.PremiumLRS);
+StorageAccountCreateParameters parameters = new StorageAccountCreateParameters(new Sku(SkuName.StandardGRS), Kind.Storage, Location.WestUS);
+parameters.Tags.Add("key1", "value1");
+parameters.Tags.Add("key2", "value2");
+StorageAccount account = storageAccountCollection.CreateOrUpdate(accountName, parameters).Value;
 ```
 
 #### Object Model Changes

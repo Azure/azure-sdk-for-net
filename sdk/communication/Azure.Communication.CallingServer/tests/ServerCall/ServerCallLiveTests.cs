@@ -4,6 +4,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Communication.Tests;
 using NUnit.Framework;
 
 namespace Azure.Communication.CallingServer.Tests
@@ -26,9 +27,17 @@ namespace Azure.Communication.CallingServer.Tests
         }
 
         [Test]
-        public async Task RunAllRecordingFunctionsScenarioTests()
+        [TestCase(AuthMethod.ConnectionString, TestName = "RunAllRecordingFunctionsWithConnectionString")]
+        [TestCase(AuthMethod.TokenCredential, TestName = "RunAllRecordingFunctionsWithTokenCredential")]
+        public async Task RunAllRecordingFunctionsScenarioTests(AuthMethod authMethod)
         {
-            CallingServerClient callingServerClient = CreateInstrumentedCallingServerClient();
+            CallingServerClient callingServerClient = authMethod switch
+            {
+                AuthMethod.ConnectionString => CreateInstrumentedCallingServerClientWithConnectionString(),
+                AuthMethod.TokenCredential => CreateInstrumentedCallingServerClientWithToken(),
+                _ => throw new ArgumentOutOfRangeException(nameof(authMethod)),
+            };
+
             var groupId = GetGroupId();
             try
             {
@@ -37,7 +46,7 @@ namespace Azure.Communication.CallingServer.Tests
                 var serverCall = callingServerClient.InitializeServerCall(groupId);
 
                 // Start Recording
-                StartCallRecordingResult startCallRecordingResult = await serverCall.StartRecordingAsync(new Uri(TestEnvironment.AppCallbackUrl)).ConfigureAwait(false);
+                StartRecordingResult startCallRecordingResult = await serverCall.StartRecordingAsync(new Uri(TestEnvironment.AppCallbackUrl)).ConfigureAwait(false);
                 var recordingId = startCallRecordingResult.RecordingId;
                 await ValidateCallRecordingStateAsync(serverCall, recordingId, CallRecordingState.Active).ConfigureAwait(false);
 
@@ -73,7 +82,7 @@ namespace Azure.Communication.CallingServer.Tests
         [Test]
         public async Task RunCreatePlayCancelHangupScenarioTests()
         {
-            CallingServerClient callingServerClient = CreateInstrumentedCallingServerClient();
+            CallingServerClient callingServerClient = CreateInstrumentedCallingServerClientWithConnectionString();
             var groupId = GetGroupId();
             try
             {
@@ -110,7 +119,7 @@ namespace Azure.Communication.CallingServer.Tests
             if (SkipCallingServerInteractionLiveTests)
                 Assert.Ignore("Skip callingserver interaction live tests flag is on.");
 
-            CallingServerClient callingServerClient = CreateInstrumentedCallingServerClient();
+            CallingServerClient callingServerClient = CreateInstrumentedCallingServerClientWithConnectionString();
             var groupId = GetGroupId();
             try
             {

@@ -4,12 +4,13 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Net.Http;
 using Azure.Core.Pipeline;
 
 namespace Azure.Core
 {
     /// <summary>
-    /// Represents an HTTP request. Use <see cref="HttpPipeline.CreateMessage"/> or <see cref="HttpPipeline.CreateRequest"/> to create an instance.
+    /// Represents an HTTP request. Use <see cref="HttpPipeline.CreateMessage()"/> or <see cref="HttpPipeline.CreateRequest"/> to create an instance.
     /// </summary>
 #pragma warning disable AZC0012 // Avoid single word type names
     public abstract class Request : IDisposable

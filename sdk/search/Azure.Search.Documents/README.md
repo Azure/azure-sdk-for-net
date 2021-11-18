@@ -34,7 +34,7 @@ Use the Azure.Search.Documents client library to:
 * Create and manage analyzers for advanced text analysis or multi-lingual content.
 * Optimize results through scoring profiles to factor in business logic or freshness.
 
-[Source code][source] | [Package (NuGet)][package] | [API reference documentation][docs] | [REST API documentation][rest_docs] | [Product documentation][product_docs]
+[Source code][source] | [Package (NuGet)][package] | [API reference documentation][docs] | [REST API documentation][rest_docs] | [Product documentation][product_docs] | [Samples][samples]
 
 ## Getting started
 
@@ -42,8 +42,8 @@ Use the Azure.Search.Documents client library to:
 
 Install the Azure Cognitive Search client library for .NET with [NuGet][nuget]:
 
-```Powershell
-dotnet add package Azure.Search.Documents --version 11.2.0-beta.1
+```dotnetcli
+dotnet add package Azure.Search.Documents
 ```
 
 ### Prerequisites
@@ -189,7 +189,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
-The following examples all use a simple [Hotel data set](https://docs.microsoft.com/samples/azure-samples/azure-search-sample-data/azure-search-sample-data/)
+The following examples all use a simple [Hotel data set](https://github.com/Azure-Samples/azure-search-sample-data)
 that you can [import into your own index from the Azure portal.](https://docs.microsoft.com/azure/search/search-get-started-portal#step-1---start-the-import-data-wizard-and-create-a-data-source)
 These are just a few of the basics - please [check out our Samples][samples] for
 much more.
@@ -211,6 +211,7 @@ Let's start by importing our namespaces.
 using Azure;
 using Azure.Search.Documents;
 using Azure.Search.Documents.Indexes;
+using Azure.Core.GeoJson;
 ```
 
 We'll then create a `SearchClient` to access our hotels search index.
@@ -243,6 +244,29 @@ public class Hotel
     [JsonPropertyName("HotelName")]
     [SearchableField(IsFilterable = true, IsSortable = true)]
     public string Name { get; set; }
+
+    [SimpleField(IsFilterable = true, IsSortable = true)]
+    public GeoPoint GeoLocation { get; set; }
+
+    // Complex fields are included automatically in an index if not ignored.
+    public HotelAddress Address { get; set; }
+}
+
+public class HotelAddress
+{
+    public string StreetAddress { get; set; }
+
+    [SimpleField(IsFilterable = true, IsSortable = true, IsFacetable = true)]
+    public string City { get; set; }
+
+    [SimpleField(IsFilterable = true, IsSortable = true, IsFacetable = true)]
+    public string StateProvince { get; set; }
+
+    [SimpleField(IsFilterable = true, IsSortable = true, IsFacetable = true)]
+    public string Country { get; set; }
+
+    [SimpleField(IsFilterable = true, IsSortable = true, IsFacetable = true)]
+    public string PostalCode { get; set; }
 }
 ```
 
@@ -299,7 +323,10 @@ SearchResults<Hotel> response = client.Search<Hotel>("luxury", options);
 
 You can use the `SearchIndexClient` to create a search index. Fields can be
 defined from a model class using `FieldBuilder`. Indexes can also define
-suggesters, lexical analyzers, and more:
+suggesters, lexical analyzers, and more.
+
+Using the [`Hotel` sample](#use-c-types-for-search-results) above,
+which defines both simple and complex fields:
 
 ```C# Snippet:Azure_Search_Tests_Samples_Readme_CreateIndex
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
@@ -462,7 +489,7 @@ additional questions or comments.
 [create_search_service_ps]: https://docs.microsoft.com/azure/search/search-manage-powershell#create-or-delete-a-service
 [create_search_service_cli]: https://docs.microsoft.com/cli/azure/search/service?view=azure-cli-latest#az-search-service-create
 [azure_cli]: https://docs.microsoft.com/cli/azure
-[azure_sub]: https://azure.microsoft.com/free/
+[azure_sub]: https://azure.microsoft.com/free/dotnet/
 [RequestFailedException]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core/src/RequestFailedException.cs
 [status_codes]: https://docs.microsoft.com/rest/api/searchservice/http-status-codes
 [samples]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/

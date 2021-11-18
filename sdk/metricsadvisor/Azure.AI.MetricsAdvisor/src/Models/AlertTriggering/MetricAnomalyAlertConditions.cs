@@ -4,7 +4,7 @@
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
-    /// Sets extra conditions that a data point must satisfy to be able to trigger alerts.
+    /// Sets extra conditions that an anomaly must satisfy to be included in an alert.
     /// </summary>
     public class MetricAnomalyAlertConditions
     {
@@ -16,13 +16,13 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         /// <summary>
-        /// Sets fixed upper and/or lower bounds to specify the range in which a data point must be
-        /// to be able to trigger alerts.
+        /// Sets fixed upper and/or lower bounds to specify the range in which the data point is allowed to be.
+        /// Points out the specified range can be included in an alert.
         /// </summary>
         public MetricBoundaryCondition MetricBoundaryCondition { get; set; }
 
         /// <summary>
-        /// Sets a range of severity levels in which an anomaly must be to be able to trigger alerts.
+        /// Sets a range of severity levels in which the anomaly must be to be included in an alert.
         /// </summary>
         public SeverityCondition SeverityCondition { get; set; }
     }

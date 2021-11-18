@@ -1,6 +1,19 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.2.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.1.0 (2021-09-15)
+Updated `Azure.Communication.Chat` version.
+
+## 1.1.0-beta.1 (2021-07-22)
 ### Added
 - Added support for metadata in messages.
 - Added new overloads for sendmessage and updatemessage operations with options : SendChatMessageOptions and UpdateChatMessageOptions. 

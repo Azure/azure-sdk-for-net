@@ -23,7 +23,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <exception cref="ArgumentNullException"><paramref name="connectionString"/> or <paramref name="query"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="connectionString"/> or <paramref name="query"/> is empty.</exception>
         public PostgreSqlDataFeedSource(string connectionString, string query)
-            : base(DataFeedSourceType.PostgreSql)
+            : base(DataFeedSourceKind.PostgreSql)
         {
             Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
             Argument.AssertNotNullOrEmpty(query, nameof(query));
@@ -33,7 +33,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         internal PostgreSqlDataFeedSource(SqlSourceParameter parameter)
-            : base(DataFeedSourceType.PostgreSql)
+            : base(DataFeedSourceKind.PostgreSql)
         {
             Argument.AssertNotNull(parameter, nameof(parameter));
 

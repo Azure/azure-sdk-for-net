@@ -12,12 +12,13 @@ namespace Azure.AI.MetricsAdvisor.Models
     public readonly partial struct DataFeedStatus
     {
         /// <summary>
-        /// The <see cref="DataFeed"/> is active.
+        /// The <see cref="DataFeed"/> is active and able to ingest data.
         /// </summary>
         public static DataFeedStatus Active { get; } = new DataFeedStatus(ActiveValue);
 
         /// <summary>
-        /// The <see cref="DataFeed"/> is paused.
+        /// The <see cref="DataFeed"/> is paused and data ingestion won't take place
+        /// until activated again.
         /// </summary>
         public static DataFeedStatus Paused { get; } = new DataFeedStatus(PausedValue);
     }

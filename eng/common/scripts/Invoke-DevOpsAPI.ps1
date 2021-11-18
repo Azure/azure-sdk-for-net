@@ -13,13 +13,14 @@ function Start-DevOpsBuild {
   param (
     $Organization="azure-sdk",
     $Project="internal",
-    [Parameter(Mandatory = $true)]
     $SourceBranch,
     [Parameter(Mandatory = $true)]
     $DefinitionId,
     [ValidateNotNullOrEmpty()]
     [Parameter(Mandatory = $true)]
-    $Base64EncodedAuthToken
+    $Base64EncodedAuthToken,
+    [Parameter(Mandatory = $false)]
+    [string]$BuildParametersJson
   )
 
   $uri = "$DevOpsAPIBaseURI" -F $Organization, $Project , "build" , "builds", ""
@@ -27,6 +28,7 @@ function Start-DevOpsBuild {
   $parameters = @{
     sourceBranch = $SourceBranch
     definition = @{ id = $DefinitionId }
+    parameters = $BuildParametersJson
   }
 
   return Invoke-RestMethod `

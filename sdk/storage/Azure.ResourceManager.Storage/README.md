@@ -9,46 +9,143 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 Install the Azure Storage management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```PowerShell
-Install-Package Azure.ResourceManager.Storage -Version 1.0.0-preview.2
+Install-Package Azure.ResourceManager.Storage -Version 1.0.0-beta.3
 ```
 
 ### Prerequisites
+Set up a way to authenticate to Azure with Azure Identity.
 
-* You must have an [Azure subscription](https://azure.microsoft.com/free/)
+Some options are:
+- Through the [Azure CLI Login](https://docs.microsoft.com/cli/azure/authenticate-azure-cli).
+- Via [Visual Studio](https://docs.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet#authenticating-via-visual-studio).
+- Setting [Environment Variables](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/docs/AuthUsingEnvironmentVariables.md).
+
+More information and different authentication approaches using Azure Identity can be found in [this document](https://docs.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet).
 
 ### Authenticate the Client
 
-To create an authenticated client and start interacting with Azure resources, please see the [quickstart guide here](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/mgmt_preview_quickstart.md)
+The default option to create an authenticated client is to use `DefaultAzureCredential`. Since all management APIs go through the same endpoint, in order to interact with resources, only one top-level `ArmClient` has to be created.
+
+To authenticate to Azure and create an `ArmClient`, do the following:
+
+```C# Snippet:Managing_StorageAccounts_AuthClient
+using Azure.Identity;
+using Azure.ResourceManager;
+
+ArmClient armClient = new ArmClient(new DefaultAzureCredential());
+```
+
+Additional documentation for the `Azure.Identity.DefaultAzureCredential` class can be found in [this document](https://docs.microsoft.com/dotnet/api/azure.identity.defaultazurecredential).
 
 ## Key concepts
 
-Key concepts of the Azure .NET SDK can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html)
-
-## Documentation
-
-Documentation is available to help you learn how to use this package
-
-- [Quickstart](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/mgmt_preview_quickstart.md)
-- [API References](https://docs.microsoft.com/dotnet/api/?view=azure-dotnet)
-- [Authentication](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md)
+Key concepts of the Azure .NET SDK can be found [here](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/README.md#key-concepts)
 
 ## Examples
 
-Code samples for using the management library for .NET can be found in the following locations
-- [.NET Management Library Code Samples](https://docs.microsoft.com/samples/browse/?branch=master&languages=csharp&term=managing%20using%20Azure%20.NET%20SDK)
+### Create a storage account
+
+Before creating a storage account, we need to have a resource group.
+
+```C# Snippet:Managing_StorageAccounts_DefaultSubscription
+ArmClient armClient = new ArmClient(new DefaultAzureCredential());
+Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
+```
+```C# Snippet:Managing_StorageAccounts_GetResourceGroupCollection
+string rgName = "myRgName";
+Location location = Location.WestUS2;
+ResourceGroupCreateOrUpdateOperation operation= await subscription.GetResourceGroups().CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
+ResourceGroup resourceGroup = operation.Value;
+```
+
+Then we can create a storage account inside this resource group.
+
+```C# Snippet:Managing_StorageAccounts_CreateStorageAccount
+//first we need to define the StorageAccountCreateParameters
+Sku sku = new Sku(SkuName.StandardGRS);
+Kind kind = Kind.Storage;
+string location = "westus2";
+StorageAccountCreateParameters parameters = new StorageAccountCreateParameters(sku, kind, location);
+//now we can create a storage account with defined account name and parameters
+StorageAccountCollection accountCollection = resourceGroup.GetStorageAccounts();
+string accountName = "myAccount";
+StorageAccountCreateOperation accountCreateOperation = await accountCollection.CreateOrUpdateAsync(accountName, parameters);
+StorageAccount storageAccount = accountCreateOperation.Value;
+```
+
+### Get all storage accounts in a resource group
+
+```C# Snippet:Managing_StorageAccounts_ListStorageAccounts
+StorageAccountCollection accountCollection = resourceGroup.GetStorageAccounts();
+AsyncPageable<StorageAccount> response = accountCollection.GetAllAsync();
+await foreach (StorageAccount storageAccount in response)
+{
+    Console.WriteLine(storageAccount.Id.Name);
+}
+```
+
+### Get a storage account
+
+```C# Snippet:Managing_StorageAccounts_GetStorageAccount
+StorageAccountCollection accountCollection = resourceGroup.GetStorageAccounts();
+StorageAccount storageAccount = await accountCollection.GetAsync("myAccount");
+Console.WriteLine(storageAccount.Id.Name);
+```
+
+### Try to get a storage account if it exists
+
+
+```C# Snippet:Managing_StorageAccounts_GetStorageAccountIfExists
+StorageAccountCollection accountCollection = resourceGroup.GetStorageAccounts();
+StorageAccount storageAccount = await accountCollection.GetIfExistsAsync("foo");
+if (storageAccount != null)
+{
+    Console.WriteLine(storageAccount.Id.Name);
+}
+if (await accountCollection.CheckIfExistsAsync("bar"))
+{
+    Console.WriteLine("storage account 'bar' exists");
+}
+```
+
+### Delete a storage account
+
+```C# Snippet:Managing_StorageAccounts_DeleteStorageAccount
+StorageAccountCollection accountCollection = resourceGroup.GetStorageAccounts();
+StorageAccount storageAccount = await accountCollection.GetAsync("myAccount");
+await storageAccount.DeleteAsync();
+```
+
+### Add a tag to the storage account
+
+```C# Snippet:Managing_StorageAccounts_AddTagStorageAccount
+StorageAccountCollection accountCollection = resourceGroup.GetStorageAccounts();
+StorageAccount storageAccount = await accountCollection.GetAsync("myAccount");
+// add a tag on this storage account
+await storageAccount.AddTagAsync("key", "value");
+```
+
+For more detailed examples, take a look at [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.ResourceManager.Storage/samples) we have available.
 
 ## Troubleshooting
 
--   File an issue via [Github
-    Issues](https://github.com/Azure/azure-sdk-for-net/issues)
--   Check [previous
+-   If you find a bug or have a suggestion, file an issue via [GitHub issues](https://github.com/Azure/azure-sdk-for-net/issues) and make sure you add the "Preview" label to the issue.
+-   If you need help, check [previous
     questions](https://stackoverflow.com/questions/tagged/azure+.net)
-    or ask new ones on Stack Overflow using azure and .net tags.
+    or ask new ones on StackOverflow using azure and .NET tags.
+-   If having trouble with authentication, go to [DefaultAzureCredential documentation](https://docs.microsoft.com/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet)
 
 
 ## Next steps
 
-For more information on Azure SDK, please refer to [this website](https://azure.github.io/azure-sdk/)
+### More sample code
+
+- [Managing Blob Containers](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.ResourceManager.Storage/samples/Sample1_ManagingBlobContainers.md)
+- [Managing File Shares](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.ResourceManager.Storage/samples/Sample2_ManagingFileShares.md)
+
+### Additional Documentation
+
+For more information on Azure SDK, please refer to [this website](https://azure.github.io/azure-sdk/).
 
 ## Contributing
 

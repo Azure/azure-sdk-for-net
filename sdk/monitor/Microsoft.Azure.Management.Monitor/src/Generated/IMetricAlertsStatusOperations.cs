@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// Retrieve an alert rule status.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='ruleName'>
         /// The name of the rule.
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// Retrieve an alert rule status.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='ruleName'>
         /// The name of the rule.

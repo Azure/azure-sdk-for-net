@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Net;
 using System.Net.Security;
 using System.Net.Sockets;
+using Azure.Core;
 
 namespace Azure.Messaging.EventHubs
 {
@@ -16,6 +17,9 @@ namespace Azure.Messaging.EventHubs
     ///
     public class EventHubConnectionOptions
     {
+        // <summary>The amount of time to allow a connection to have no observed traffic before considering it idle.</summary>
+        private TimeSpan _connectionIdleTimeout = TimeSpan.FromMinutes(1);
+
         /// <summary>
         ///   The type of protocol and transport that will be used for communicating with the Event Hubs
         ///   service.
@@ -24,6 +28,34 @@ namespace Azure.Messaging.EventHubs
         /// <value>The default transport is AMQP over TCP.</value>
         ///
         public EventHubsTransportType TransportType { get; set; } = EventHubsTransportType.AmqpTcp;
+
+        /// <summary>
+        ///   The amount of time to allow a connection to have no observed traffic before considering
+        ///   it idle and eligible to close.
+        /// </summary>
+        ///
+        /// <value>The default idle timeout is 60 seconds.  The timeout must be a positive value.</value>
+        ///
+        /// <remarks>
+        ///   If a connection is closed due to being idle, the Event Hubs clients will automatically
+        ///   reopen the connection when it is needed for a network operation.  An idle connection
+        ///   being closed does not cause client errors or interfere with normal operation.
+        ///
+        ///   It is recommended to use the default value unless your application has special needs and
+        ///   you've tested the impact of changing the idle timeout.
+        /// </remarks>
+        ///
+        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested timeout is negative.</exception>
+        ///
+        public TimeSpan ConnectionIdleTimeout
+        {
+            get => _connectionIdleTimeout;
+            set
+            {
+                Argument.AssertNotNegative(value, nameof(ConnectionIdleTimeout));
+                _connectionIdleTimeout = value;
+            }
+        }
 
         /// <summary>
         ///   The size of the buffer used for sending information via the active transport.

@@ -1,54 +1,78 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
-    [CodeGenModel("BatchResponse")]
-    public partial class LogsBatchQueryResult
+    [CodeGenModel("batchQueryResults")]
+    public partial class LogsBatchQueryResult: LogsQueryResult
     {
-        private IReadOnlyList<LogQueryResponse> Responses { get; }
-        internal RowBinder RowBinder { get; set; }
+        internal int StatusCode { get; set; }
 
         /// <summary>
-        /// Gets the result for the query that was a part of the batch.
+        /// Gets or sets the query id.
         /// </summary>
-        /// <param name="queryId">The query identifier returned from the <see cref="LogsBatchQuery.AddQuery"/>.</param>
-        /// <returns>The <see cref="LogsBatchQueryResult"/> with the query results.</returns>
-        /// <exception cref="ArgumentException">When the query with <paramref name="queryId"/> was not part of the batch.</exception>
-        /// <exception cref="RequestFailedException">When the query  <paramref name="queryId"/> failed.</exception>
-        public LogsQueryResult GetResult(string queryId)
-        {
-            LogQueryResponse result = Responses.SingleOrDefault(r => r.Id == queryId);
+        public string Id { get; internal set; }
 
-            if (result == null)
+        // TODO, remove after https://github.com/Azure/azure-sdk-for-net/issues/21655 is fixed
+        internal static LogsBatchQueryResult DeserializeLogsBatchQueryResult(JsonElement element)
+        {
+            Optional<JsonElement> error = default;
+            IReadOnlyList<LogsTable> tables = default;
+            Optional<JsonElement> statistics = default;
+            Optional<JsonElement> render = default;
+
+            // This is the workaround to remove the double-encoding
+            if (element.ValueKind == JsonValueKind.String)
             {
-                throw new ArgumentException($"Query with ID '{queryId}' wasn't part of the batch." +
-                                            $" Please use the return value of the {nameof(LogsBatchQuery)}.{nameof(LogsBatchQuery.AddQuery)} as the '{nameof(queryId)}' argument.", nameof(queryId));
+                try
+                {
+                    using var document = JsonDocument.Parse(element.GetString());
+                    element = document.RootElement.Clone();
+                }
+                catch
+                {
+                    // ignore
+                }
             }
 
-            if (result.Body.Error != null)
+            foreach (var property in element.EnumerateObject())
             {
-                throw new RequestFailedException(result.Status ?? 0, result.Body.Error.Message, result.Body.Error.Code, null);
+                if (property.NameEquals("error"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    error = property.Value.Clone();
+                    continue;
+                }
+                if (property.NameEquals("tables"))
+                {
+                    List<LogsTable> array = new List<LogsTable>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(LogsTable.DeserializeLogsTable(item));
+                    }
+                    tables = array;
+                    continue;
+                }
+                if (property.NameEquals("statistics"))
+                {
+                    statistics = property.Value.Clone();
+                    continue;
+                }
+                if (property.NameEquals("render"))
+                {
+                    render = property.Value.Clone();
+                    continue;
+                }
             }
-
-            return result.Body;
-        }
-
-        /// <summary>
-        /// Gets the result for the query that was a part of the batch.
-        /// </summary>
-        /// <param name="queryId">The query identifier returned from the <see cref="LogsBatchQuery.AddQuery"/>.</param>
-        /// <returns>Query results mapped to a type <typeparamref name="T"/>.</returns>
-        /// <exception cref="ArgumentException">When the query with <paramref name="queryId"/> was not part of the batch.</exception>
-        /// <exception cref="RequestFailedException">When the query <paramref name="queryId"/> failed.</exception>
-        public IReadOnlyList<T> GetResult<T>(string queryId)
-        {
-            return RowBinder.BindResults<T>(GetResult(queryId).Tables);
+            return new LogsBatchQueryResult(tables, statistics, render, error);
         }
     }
 }

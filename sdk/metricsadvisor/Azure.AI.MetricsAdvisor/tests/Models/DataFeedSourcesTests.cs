@@ -2,10 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.MetricsAdvisor.Administration;
 using Azure.AI.MetricsAdvisor.Models;
@@ -17,13 +14,15 @@ namespace Azure.AI.MetricsAdvisor.Tests
 {
     public class DataFeedSourcesTests : MockClientTestBase
     {
+        private const string NewSecret = "new_secret";
+
         private static object[] CreateDataSourceTestCases =
         {
             new object[] { new AzureApplicationInsightsDataFeedSource("mock", "secret", "mock", "mock"), "apiKey" },
             new object[] { new AzureBlobDataFeedSource("secret", "mock", "mock"), "connectionString" },
             new object[] { new AzureCosmosDbDataFeedSource("secret", "mock", "mock", "mock"), "connectionString" },
             new object[] { new AzureDataExplorerDataFeedSource("secret", "mock"), "connectionString" },
-            new object[] { new AzureDataLakeStorageGen2DataFeedSource("mock", "secret", "mock", "mock", "mock"), "accountKey" },
+            new object[] { new AzureDataLakeStorageDataFeedSource("mock", "secret", "mock", "mock", "mock"), "accountKey" },
             new object[] { new AzureEventHubsDataFeedSource("secret", "mock"), "connectionString" },
             new object[] { new AzureTableDataFeedSource("secret", "mock", "mock"), "connectionString" },
             new object[] { new InfluxDbDataFeedSource("secret", "mock", "mock", "mock", "mock"), "connectionString" },
@@ -41,7 +40,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             new object[] { new AzureBlobDataFeedSource("mock", "mock", "mock"), "connectionString" },
             new object[] { new AzureCosmosDbDataFeedSource("mock", "mock", "mock", "mock"), "connectionString" },
             new object[] { new AzureDataExplorerDataFeedSource("mock", "mock"), "connectionString" },
-            new object[] { new AzureDataLakeStorageGen2DataFeedSource("mock", "mock", "mock", "mock", "mock"), "accountKey" },
+            new object[] { new AzureDataLakeStorageDataFeedSource("mock", "mock", "mock", "mock", "mock"), "accountKey" },
             new object[] { new AzureEventHubsDataFeedSource("mock", "mock"), "connectionString" },
             new object[] { new AzureTableDataFeedSource("mock", "mock", "mock"), "connectionString" },
             new object[] { new InfluxDbDataFeedSource("mock", "mock", "mock", "mock", "mock"), "connectionString" },
@@ -65,6 +64,58 @@ namespace Azure.AI.MetricsAdvisor.Tests
             ""fillMissingPointType"": ""NoFilling""
         }
         ";
+
+        private string UnknownDataFeedContent => $@"
+        {{
+            ""dataFeedId"": ""{FakeGuid}"",
+            ""dataFeedName"": ""unknownDataFeedName"",
+            ""dataSourceType"": ""unknownType"",
+            ""fillMissingPointType"": ""NoFilling"",
+            ""dataFeedDescription"": ""unknown data feed description"",
+            ""metrics"": [
+                {{
+                    ""metricId"": ""{FakeGuid}"",
+                    ""metricName"": ""cost""
+                }}
+            ]
+        }}
+        ";
+
+        [Test]
+        public void AzureDataLakeStorageDataFeedSourceConstructorValidatesArguments()
+        {
+            Assert.That(() => new AzureDataLakeStorageDataFeedSource(null, "mock", "mock", "mock"), Throws.ArgumentNullException);
+            Assert.That(() => new AzureDataLakeStorageDataFeedSource("", "mock", "mock", "mock"), Throws.ArgumentException);
+            Assert.That(() => new AzureDataLakeStorageDataFeedSource("mock", null, "mock", "mock"), Throws.ArgumentNullException);
+            Assert.That(() => new AzureDataLakeStorageDataFeedSource("mock", "", "mock", "mock"), Throws.ArgumentException);
+            Assert.That(() => new AzureDataLakeStorageDataFeedSource("mock", "mock", null, "mock"), Throws.ArgumentNullException);
+            Assert.That(() => new AzureDataLakeStorageDataFeedSource("mock", "mock", "", "mock"), Throws.ArgumentException);
+            Assert.That(() => new AzureDataLakeStorageDataFeedSource("mock", "mock", "mock", null), Throws.ArgumentNullException);
+            Assert.That(() => new AzureDataLakeStorageDataFeedSource("mock", "mock", "mock", ""), Throws.ArgumentException);
+
+            Assert.That(() => new AzureDataLakeStorageDataFeedSource(null, "mock", "mock", "mock", "mock"), Throws.ArgumentNullException);
+            Assert.That(() => new AzureDataLakeStorageDataFeedSource("", "mock", "mock", "mock", "mock"), Throws.ArgumentException);
+            Assert.That(() => new AzureDataLakeStorageDataFeedSource("mock", null, "mock", "mock", "mock"), Throws.ArgumentNullException);
+            Assert.That(() => new AzureDataLakeStorageDataFeedSource("mock", "", "mock", "mock", "mock"), Throws.ArgumentException);
+            Assert.That(() => new AzureDataLakeStorageDataFeedSource("mock", "mock", null, "mock", "mock"), Throws.ArgumentNullException);
+            Assert.That(() => new AzureDataLakeStorageDataFeedSource("mock", "mock", "", "mock", "mock"), Throws.ArgumentException);
+            Assert.That(() => new AzureDataLakeStorageDataFeedSource("mock", "mock", "mock", null, "mock"), Throws.ArgumentNullException);
+            Assert.That(() => new AzureDataLakeStorageDataFeedSource("mock", "mock", "mock", "", "mock"), Throws.ArgumentException);
+            Assert.That(() => new AzureDataLakeStorageDataFeedSource("mock", "mock", "mock", "mock", null), Throws.ArgumentNullException);
+            Assert.That(() => new AzureDataLakeStorageDataFeedSource("mock", "mock", "mock", "mock", ""), Throws.ArgumentException);
+        }
+
+        [Test]
+        public void SqlServerDataFeedSourceConstructorValidatesArguments()
+        {
+            Assert.That(() => new SqlServerDataFeedSource(null), Throws.ArgumentNullException);
+            Assert.That(() => new SqlServerDataFeedSource(""), Throws.ArgumentException);
+
+            Assert.That(() => new SqlServerDataFeedSource(null, "mock"), Throws.ArgumentNullException);
+            Assert.That(() => new SqlServerDataFeedSource("", "mock"), Throws.ArgumentException);
+            Assert.That(() => new SqlServerDataFeedSource("mock", null), Throws.ArgumentNullException);
+            Assert.That(() => new SqlServerDataFeedSource("mock", ""), Throws.ArgumentException);
+        }
 
         [Test]
         [TestCaseSource(nameof(CreateDataSourceTestCases))]
@@ -93,9 +144,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             MockRequest request = mockTransport.Requests.First();
             string content = ReadContent(request);
-            string expectedSubstring = $"\"{secretPropertyName}\":\"secret\"";
 
-            Assert.That(content, Contains.Substring(expectedSubstring));
+            Assert.That(content, ContainsJsonString(secretPropertyName, "secret"));
         }
 
         [Test]
@@ -125,7 +175,56 @@ namespace Azure.AI.MetricsAdvisor.Tests
             MockRequest request = mockTransport.Requests.First();
             string content = ReadContent(request);
 
-            Assert.That(content, Contains.Substring($"\"{secretPropertyName}\":\"new_secret\""));
+            Assert.That(content, ContainsJsonString(secretPropertyName, NewSecret));
+        }
+
+        [Test]
+        public async Task DataFeedSourceGetsUnknownDataFeed()
+        {
+            MockResponse getResponse = new MockResponse(200);
+            getResponse.SetContent(UnknownDataFeedContent);
+
+            MetricsAdvisorAdministrationClient adminClient = CreateInstrumentedAdministrationClient(getResponse);
+            DataFeed dataFeed = await adminClient.GetDataFeedAsync(FakeGuid);
+
+            Assert.That(dataFeed.Id, Is.EqualTo(FakeGuid));
+            Assert.That(dataFeed.Name, Is.EqualTo("unknownDataFeedName"));
+            Assert.That(dataFeed.MissingDataPointFillSettings.FillType, Is.EqualTo(DataFeedMissingDataPointFillType.NoFilling));
+            Assert.That(dataFeed.Description, Is.EqualTo("unknown data feed description"));
+
+            DataFeedMetric metric = dataFeed.Schema.MetricColumns.Single();
+
+            Assert.That(metric.Id, Is.EqualTo(FakeGuid));
+            Assert.That(metric.Name, Is.EqualTo("cost"));
+        }
+
+        [Test]
+        public async Task DataFeedSourceUpdatesUnknownDataFeed()
+        {
+            MockResponse getResponse = new MockResponse(200);
+            getResponse.SetContent(UnknownDataFeedContent);
+
+            MockResponse updateResponse = new MockResponse(200);
+            updateResponse.SetContent(UnknownDataFeedContent);
+
+            MockTransport mockTransport = new MockTransport(getResponse, updateResponse);
+            MetricsAdvisorAdministrationClient adminClient = CreateInstrumentedAdministrationClient(mockTransport);
+            DataFeed dataFeed = await adminClient.GetDataFeedAsync(FakeGuid);
+
+            dataFeed.Name = "newDataFeedName";
+            dataFeed.MissingDataPointFillSettings = new DataFeedMissingDataPointFillSettings(DataFeedMissingDataPointFillType.PreviousValue);
+            dataFeed.Description = "new description";
+
+            await adminClient.UpdateDataFeedAsync(dataFeed);
+
+            MockRequest request = mockTransport.Requests.Last();
+            string content = ReadContent(request);
+
+            Assert.That(request.Uri.Path, Contains.Substring(FakeGuid));
+            Assert.That(content, ContainsJsonString("dataFeedName", "newDataFeedName"));
+            Assert.That(content, ContainsJsonString("dataSourceType", "unknownType"));
+            Assert.That(content, ContainsJsonString("fillMissingPointType", "PreviousValue"));
+            Assert.That(content, ContainsJsonString("dataFeedDescription", "new description"));
         }
 
         private void UpdateSecret(DataFeedSource dataSource, string secretPropertyName)
@@ -133,56 +232,48 @@ namespace Azure.AI.MetricsAdvisor.Tests
             switch (dataSource)
             {
                 case AzureApplicationInsightsDataFeedSource d:
-                    d.UpdateApiKey("new_secret");
+                    d.UpdateApiKey(NewSecret);
                     break;
                 case AzureBlobDataFeedSource d:
-                    d.UpdateConnectionString("new_secret");
+                    d.UpdateConnectionString(NewSecret);
                     break;
                 case AzureCosmosDbDataFeedSource d:
-                    d.UpdateConnectionString("new_secret");
+                    d.UpdateConnectionString(NewSecret);
                     break;
                 case AzureDataExplorerDataFeedSource d:
-                    d.UpdateConnectionString("new_secret");
+                    d.UpdateConnectionString(NewSecret);
                     break;
-                case AzureDataLakeStorageGen2DataFeedSource d:
-                    d.UpdateAccountKey("new_secret");
+                case AzureDataLakeStorageDataFeedSource d:
+                    d.UpdateAccountKey(NewSecret);
                     break;
                 case AzureEventHubsDataFeedSource d:
-                    d.UpdateConnectionString("new_secret");
+                    d.UpdateConnectionString(NewSecret);
                     break;
                 case AzureTableDataFeedSource d:
-                    d.UpdateConnectionString("new_secret");
+                    d.UpdateConnectionString(NewSecret);
                     break;
                 case InfluxDbDataFeedSource d:
-                    if (secretPropertyName == "connectionString") d.UpdateConnectionString("new_secret");
-                    else d.UpdatePassword("new_secret");
+                    if (secretPropertyName == "connectionString") d.UpdateConnectionString(NewSecret);
+                    else d.UpdatePassword(NewSecret);
                     break;
                 case LogAnalyticsDataFeedSource d:
-                    d.UpdateClientSecret("new_secret");
+                    d.UpdateClientSecret(NewSecret);
                     break;
                 case MongoDbDataFeedSource d:
-                    d.UpdateConnectionString("new_secret");
+                    d.UpdateConnectionString(NewSecret);
                     break;
                 case MySqlDataFeedSource d:
-                    d.UpdateConnectionString("new_secret");
+                    d.UpdateConnectionString(NewSecret);
                     break;
                 case PostgreSqlDataFeedSource d:
-                    d.UpdateConnectionString("new_secret");
+                    d.UpdateConnectionString(NewSecret);
                     break;
                 case SqlServerDataFeedSource d:
-                    d.UpdateConnectionString("new_secret");
+                    d.UpdateConnectionString(NewSecret);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException($"Unknown data source type: {dataSource.GetType()}");
             };
-        }
-
-        private string ReadContent(Request request)
-        {
-            using MemoryStream stream = new MemoryStream();
-            request.Content.WriteTo(stream, CancellationToken.None);
-
-            return Encoding.UTF8.GetString(stream.ToArray());
         }
     }
 }

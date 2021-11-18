@@ -4,8 +4,8 @@ This guide is intended to assist in the migration to the `Azure.Data.Tables` pac
 side-by-side comparisons for similar operations between the to versions.
 
 Familiarity with the `Microsoft.Azure.CosmosDB.Table` package is assumed. If you are new to the Azure Tables client library for .NET, please refer to the
-[README](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/tables/Azure.Data.Tables/README.md) and
-[samples](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/tables/Azure.Data.Tables/samples) rather than this guide.
+[README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tables/Azure.Data.Tables/README.md) and
+[samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/tables/Azure.Data.Tables/samples) rather than this guide.
 
 ## Migration benefits
 
@@ -306,4 +306,4 @@ for (int i = 0; i < batch.Count; i++)
 ```
 
 ## Additional Samples
-Additional samples can be found [here](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/tables/Azure.Data.Tables/samples).
+Additional samples can be found [here](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/tables/Azure.Data.Tables/samples).

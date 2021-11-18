@@ -2,6 +2,7 @@
   <PropertyGroup>
     <AssemblyTitle>Azure IoT Hub Service Client SDK</AssemblyTitle>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <EnableBannedApiAnalyzers>false</EnableBannedApiAnalyzers>
   </PropertyGroup>
 
   <!-- Nuget properties -->
@@ -18,6 +19,7 @@
 
   <!-- Common source from Azure.Core -->
   <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)AppContextSwitchHelper.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs">
       <LinkBase>Shared\Azure.Core</LinkBase>
     </Compile>

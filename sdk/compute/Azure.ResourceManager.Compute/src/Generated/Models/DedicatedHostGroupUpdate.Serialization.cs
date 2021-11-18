@@ -43,6 +43,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("platformFaultDomainCount");
                 writer.WriteNumberValue(PlatformFaultDomainCount.Value);
             }
+            if (Optional.IsDefined(SupportAutomaticPlacement))
+            {
+                writer.WritePropertyName("supportAutomaticPlacement");
+                writer.WriteBooleanValue(SupportAutomaticPlacement.Value);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }

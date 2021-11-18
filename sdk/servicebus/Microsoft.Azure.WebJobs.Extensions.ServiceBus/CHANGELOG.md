@@ -1,15 +1,38 @@
 # Release History
 
-## 5.0.0-beta.5 (Unreleased)
+## 5.2.0-beta.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
-### Key Bugs Fixed
+### Bugs Fixed
 
-### Fixed
+### Other Changes
 
+## 5.1.0 (2021-11-10)
+
+### Features Added
+- Added `EnableCrossEntityTransactions` option
+- Added ability to bind to `ServiceBusClient`
+
+## 5.0.0 (2021-10-21)
+
+### Features Added
+- Added DynamicConcurrency support.
+- General availability of Microsoft.Azure.WebJobs.Extensions.ServiceBus 5.0.0.
+
+## 5.0.0-beta.6 (2021-09-07)
+
+### Features Added
+- Support binding to `BinaryData` instances.
+
+## 5.0.0-beta.5 (2021-07-07)
+
+### Breaking Changes
+- Renamed `ServiceBusEntityType` property to `EntityType`.
+- Renamed `messageActions` and `sessionActions` parameters to `actions` in `MessageProcessor` and `SessionMessageProcessor`.
+- Renamed `MaxBatchSize` to `MaxMessageBatchSize` in `ServiceBusOptions`.
 
 ## 5.0.0-beta.4 (2021-06-22)
 

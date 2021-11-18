@@ -14,8 +14,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
     using System.Linq;
 
     /// <summary>
-    /// Error response indicates ServiceBus service is not able to process the
-    /// incoming request. The reason is provided in the error message.
+    /// The resource management error response.
     /// </summary>
     public partial class ErrorResponse
     {
@@ -30,13 +29,10 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// <summary>
         /// Initializes a new instance of the ErrorResponse class.
         /// </summary>
-        /// <param name="code">Error code.</param>
-        /// <param name="message">Error message indicating why the operation
-        /// failed.</param>
-        public ErrorResponse(string code = default(string), string message = default(string))
+        /// <param name="error">The error object.</param>
+        public ErrorResponse(ErrorResponseError error = default(ErrorResponseError))
         {
-            Code = code;
-            Message = message;
+            Error = error;
             CustomInit();
         }
 
@@ -46,16 +42,10 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets error code.
+        /// Gets or sets the error object.
         /// </summary>
-        [JsonProperty(PropertyName = "code")]
-        public string Code { get; set; }
-
-        /// <summary>
-        /// Gets or sets error message indicating why the operation failed.
-        /// </summary>
-        [JsonProperty(PropertyName = "message")]
-        public string Message { get; set; }
+        [JsonProperty(PropertyName = "error")]
+        public ErrorResponseError Error { get; set; }
 
     }
 }

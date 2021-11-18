@@ -26,7 +26,25 @@
     "*.log",
     "*.sln",
     "*.user",
-    ".vscode/cspell.json"
+    ".vscode/cspell.json",
+
+    // These services are opted out of public API surface spell checking.
+    // Spelling issues must be addressed before adding these back in.
+    "sdk/agrifood/*/api/*.cs",
+    "sdk/communication/*/api/*.cs",
+    "sdk/cosmosdb/*/api/*.cs",
+    "sdk/digitaltwins/*/api/*.cs",
+    "sdk/dns/*/api/*.cs",
+    "sdk/eventgrid/*/api/*.cs",
+    "sdk/insights/*/api/*.cs",
+    "sdk/machinelearningservices/*/api/*.cs",
+    "sdk/modelsrepository/*/api/*.cs",
+    "sdk/monitor/*/api/*.cs",
+    "sdk/objectanchors/*/api/*.cs",
+    "sdk/purview/*/api/*.cs",
+    "sdk/remoterendering/*/api/*.cs",
+    "sdk/synapse/*/api/*.cs",
+    "sdk/videoanalyzer/*/api/*.cs"
   ],
   // cspell is not case sensitive
   // Sort words alphabetically to make this list easier to use
@@ -35,13 +53,17 @@
     "azsdk",
     "blazor",
     "contoso",
+    "deduplication",
+    "deserializable",
     "deserializes",
     "diagnoser",
+    "dont",
     "dtmf",
     "epsg",
     "expando",
     "finalizer",
     "finalizers",
+    "illumos",
     "ints",
     "lucene",
     "mgmt",
@@ -62,16 +84,151 @@
     "unhold",
     "uninstrumented",
     "westus",
-    "xunit"
+    "xunit",
+    "vnet",
+    "unencrypted",
+    "personalizer"
   ],
   "overrides": [
+    {
+      "filename": "**/eng/pipelines/templates/jobs/ci.yml",
+      "words": ["warnaserror"]
+    },
+    {
+      "filename": "**/sdk/compute/**/*.cs",
+      "words": [
+        "reimage",
+        "skus",
+        "vmss",
+        "unattend",
+        "ssdlrs",
+        "vcpus",
+        "vmos",
+        "uefi",
+        "vhds",
+        "swappable",
+        "ssdzrs",
+        "dscp"
+      ]
+    },
+    {
+      "filename": "**/sdk/cognitivelanguage/**/*",
+      "words": [
+        "apim",
+        "nigiri"
+      ]
+    },
     {
       "filename": "**/sdk/formrecognizer/**/*.cs",
       "words": ["ZhHant"]
     },
     {
-      "filename": "**/eng/pipelines/templates/jobs/ci.yml",
-      "words": ["warnaserror"]
+      "filename": "**/sdk/network/**/*.cs",
+      "words": [
+        "Azfw",
+        "Conditon",
+        "Ddos",
+        "ddos",
+        "Dnat",
+        "Dscp",
+        "dscp",
+        "Eapmscha",
+        "Eaptls",
+        "Fqdns",
+        "Gcmaes",
+        "Ipconfiguration",
+        "Mbps",
+        "Nics",
+        "Owasp",
+        "Pfsmm",
+        "Snat",
+        "Skus",
+        "Sstp",
+        "TLSDHEDSS",
+        "TLSDHERSA",
+        "Unprepare",
+        "Vmss",
+        "vmssip",
+        "Vnets",
+        "Vxlan",
+        "WAFV",
+      ]
+    },
+    {
+      "filename": "**/sdk/keyvault/**/*.cs",
+      "words": [
+        "deletesas",
+        "getsas",
+        "listsas",
+        "oaep",
+        "setsas",
+        "mhsm",
+        "mhsmip"
+      ]
+    },
+    {
+      "filename": "**/sdk/resources/Azure.ResourceManager.Resources/api/*.cs",
+      "words": ["Puid"]
+    },
+    {
+      "filename": "**/sdk/sqlmanagement/**/*.cs",
+      "words": [
+        "Droppeded",
+        "CIAS",
+        "Vcores",
+        "Unrestorable"
+      ]
+    },
+    {
+      "filename": "**/sdk/search/**/*.cs",
+      "words": [
+        "Adls",
+        "Bangla",
+        "Beider",
+        "Bokmaal",
+        "Cyrl",
+        "Decompounder",
+        "Haase",
+        "Hant",
+        "Koelner",
+        "Latn",
+        "Lovins",
+        "Nysiis",
+        "Phonetik",
+        "Piqd",
+        "Reranker",
+        "Rslp",
+        "Soundex",
+        "Sorani",
+        "Unprocessable",
+        "Beider"
+      ]
+    },
+    {
+      "filename": "**/sdk/storage/**/*.cs",
+      "words": [
+        "Aadds",
+        "Deprovisioning",
+        "Gzrs",
+        "Ntfs",
+        "Posix",
+        "Ragrs",
+        "Ragzrs",
+        "Rehydrated",
+        "Skus",
+        "Undelete"
+      ]
+    },
+    {
+      "filename": "**/sdk/textanalytics/**/*.cs",
+      "words": [
+        "Brcpf",
+        "Idrg",
+        "Esdni",
+        "Eugps",
+        "Plregon",
+        "Usuk"
+      ]
     }
   ],
   "allowCompoundWords": true

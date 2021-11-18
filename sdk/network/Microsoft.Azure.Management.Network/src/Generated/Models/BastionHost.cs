@@ -46,15 +46,33 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="provisioningState">The provisioning state of the
         /// bastion host resource. Possible values include: 'Succeeded',
         /// 'Updating', 'Deleting', 'Failed'</param>
+        /// <param name="scaleUnits">The scale units for the Bastion Host
+        /// resource.</param>
+        /// <param name="disableCopyPaste">Enable/Disable Copy/Paste feature of
+        /// the Bastion Host resource.</param>
+        /// <param name="enableFileCopy">Enable/Disable File Copy feature of
+        /// the Bastion Host resource.</param>
+        /// <param name="enableIpConnect">Enable/Disable IP Connect feature of
+        /// the Bastion Host resource.</param>
+        /// <param name="enableShareableLink">Enable/Disable Shareable Link of
+        /// the Bastion Host resource.</param>
+        /// <param name="enableTunneling">Enable/Disable Tunneling feature of
+        /// the Bastion Host resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
         /// <param name="sku">The sku of this Bastion Host.</param>
-        public BastionHost(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<BastionHostIPConfiguration> ipConfigurations = default(IList<BastionHostIPConfiguration>), string dnsName = default(string), string provisioningState = default(string), string etag = default(string), Sku sku = default(Sku))
+        public BastionHost(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<BastionHostIPConfiguration> ipConfigurations = default(IList<BastionHostIPConfiguration>), string dnsName = default(string), string provisioningState = default(string), int? scaleUnits = default(int?), bool? disableCopyPaste = default(bool?), bool? enableFileCopy = default(bool?), bool? enableIpConnect = default(bool?), bool? enableShareableLink = default(bool?), bool? enableTunneling = default(bool?), string etag = default(string), Sku sku = default(Sku))
             : base(id, name, type, location, tags)
         {
             IpConfigurations = ipConfigurations;
             DnsName = dnsName;
             ProvisioningState = provisioningState;
+            ScaleUnits = scaleUnits;
+            DisableCopyPaste = disableCopyPaste;
+            EnableFileCopy = enableFileCopy;
+            EnableIpConnect = enableIpConnect;
+            EnableShareableLink = enableShareableLink;
+            EnableTunneling = enableTunneling;
             Etag = etag;
             Sku = sku;
             CustomInit();
@@ -86,6 +104,47 @@ namespace Microsoft.Azure.Management.Network.Models
         public string ProvisioningState { get; private set; }
 
         /// <summary>
+        /// Gets or sets the scale units for the Bastion Host resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.scaleUnits")]
+        public int? ScaleUnits { get; set; }
+
+        /// <summary>
+        /// Gets or sets enable/Disable Copy/Paste feature of the Bastion Host
+        /// resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.disableCopyPaste")]
+        public bool? DisableCopyPaste { get; set; }
+
+        /// <summary>
+        /// Gets or sets enable/Disable File Copy feature of the Bastion Host
+        /// resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.enableFileCopy")]
+        public bool? EnableFileCopy { get; set; }
+
+        /// <summary>
+        /// Gets or sets enable/Disable IP Connect feature of the Bastion Host
+        /// resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.enableIpConnect")]
+        public bool? EnableIpConnect { get; set; }
+
+        /// <summary>
+        /// Gets or sets enable/Disable Shareable Link of the Bastion Host
+        /// resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.enableShareableLink")]
+        public bool? EnableShareableLink { get; set; }
+
+        /// <summary>
+        /// Gets or sets enable/Disable Tunneling feature of the Bastion Host
+        /// resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.enableTunneling")]
+        public bool? EnableTunneling { get; set; }
+
+        /// <summary>
         /// Gets a unique read-only string that changes whenever the resource
         /// is updated.
         /// </summary>
@@ -98,5 +157,32 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "sku")]
         public Sku Sku { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (IpConfigurations != null)
+            {
+                foreach (var element in IpConfigurations)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
+            if (ScaleUnits > 50)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "ScaleUnits", 50);
+            }
+            if (ScaleUnits < 2)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "ScaleUnits", 2);
+            }
+        }
     }
 }

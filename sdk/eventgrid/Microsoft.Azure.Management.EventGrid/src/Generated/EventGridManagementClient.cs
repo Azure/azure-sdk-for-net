@@ -414,7 +414,7 @@ namespace Microsoft.Azure.Management.EventGrid
             ExtensionTopics = new ExtensionTopicsOperations(this);
             TopicTypes = new TopicTypesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2020-10-15-preview";
+            ApiVersion = "2021-06-01-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

@@ -15,7 +15,7 @@ namespace Azure.Storage.Files.Shares.Models
     internal partial class ListHandlesResponse
     {
         /// <summary> Initializes a new instance of ListHandlesResponse. </summary>
-        /// <param name="nextMarker"> . </param>
+        /// <param name="nextMarker"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextMarker"/> is null. </exception>
         internal ListHandlesResponse(string nextMarker)
         {
@@ -29,15 +29,17 @@ namespace Azure.Storage.Files.Shares.Models
         }
 
         /// <summary> Initializes a new instance of ListHandlesResponse. </summary>
-        /// <param name="handleList"> . </param>
-        /// <param name="nextMarker"> . </param>
+        /// <param name="handleList"></param>
+        /// <param name="nextMarker"></param>
         internal ListHandlesResponse(IReadOnlyList<ShareFileHandle> handleList, string nextMarker)
         {
             HandleList = handleList;
             NextMarker = nextMarker;
         }
 
+        /// <summary> Gets the handle list. </summary>
         public IReadOnlyList<ShareFileHandle> HandleList { get; }
+        /// <summary> Gets the next marker. </summary>
         public string NextMarker { get; }
     }
 }

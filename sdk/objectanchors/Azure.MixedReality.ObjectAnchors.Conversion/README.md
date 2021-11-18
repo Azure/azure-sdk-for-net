@@ -45,7 +45,7 @@ Add a package reference:
 
 ### Prerequisites
 
-- You must have an [Azure subscription](https://azure.microsoft.com/free/).
+- You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/).
 - You must have an [Azure Object Anchors](https://review.docs.microsoft.com/azure/object-anchors/) account.
 
 ### Authenticate the client

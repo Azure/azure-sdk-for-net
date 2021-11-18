@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -39,14 +40,14 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in FrontendIPConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(BackendAddressPool))
             {
                 writer.WritePropertyName("backendAddressPool");
-                writer.WriteObjectValue(BackendAddressPool);
+                JsonSerializer.Serialize(writer, BackendAddressPool);
             }
             if (Optional.IsDefined(Protocol))
             {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> type = default;
             Optional<string> id = default;
             Optional<int> allocatedOutboundPorts = default;
-            Optional<IList<SubResource>> frontendIPConfigurations = default;
-            Optional<SubResource> backendAddressPool = default;
+            Optional<IList<WritableSubResource>> frontendIPConfigurations = default;
+            Optional<WritableSubResource> backendAddressPool = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<LoadBalancerOutboundRuleProtocol> protocol = default;
             Optional<bool> enableTcpReset = default;
@@ -128,10 +129,10 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<SubResource> array = new List<SubResource>();
+                            List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeserializeSubResource(item));
+                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
                             }
                             frontendIPConfigurations = array;
                             continue;
@@ -143,7 +144,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            backendAddressPool = DeserializeSubResource(property0.Value);
+                            backendAddressPool = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -190,7 +191,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new OutboundRule(id.Value, name.Value, etag.Value, type.Value, Optional.ToNullable(allocatedOutboundPorts), Optional.ToList(frontendIPConfigurations), backendAddressPool.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(protocol), Optional.ToNullable(enableTcpReset), Optional.ToNullable(idleTimeoutInMinutes));
+            return new OutboundRule(id.Value, name.Value, etag.Value, type.Value, Optional.ToNullable(allocatedOutboundPorts), Optional.ToList(frontendIPConfigurations), backendAddressPool, Optional.ToNullable(provisioningState), Optional.ToNullable(protocol), Optional.ToNullable(enableTcpReset), Optional.ToNullable(idleTimeoutInMinutes));
         }
     }
 }

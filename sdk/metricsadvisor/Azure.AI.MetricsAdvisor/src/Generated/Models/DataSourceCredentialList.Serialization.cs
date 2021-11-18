@@ -17,7 +17,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         internal static DataSourceCredentialList DeserializeDataSourceCredentialList(JsonElement element)
         {
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<DataSourceCredential>> value = default;
+            Optional<IReadOnlyList<DataSourceCredentialEntity>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@nextLink"))
@@ -32,10 +32,10 @@ namespace Azure.AI.MetricsAdvisor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DataSourceCredential> array = new List<DataSourceCredential>();
+                    List<DataSourceCredentialEntity> array = new List<DataSourceCredentialEntity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataSourceCredential.DeserializeDataSourceCredential(item));
+                        array.Add(DataSourceCredentialEntity.DeserializeDataSourceCredentialEntity(item));
                     }
                     value = array;
                     continue;

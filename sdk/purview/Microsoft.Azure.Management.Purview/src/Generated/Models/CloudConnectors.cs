@@ -13,9 +13,6 @@ namespace Microsoft.Azure.Management.Purview.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    /// <summary>
-    /// Properties for configuring third party cloud connections.
-    /// </summary>
     public partial class CloudConnectors
     {
         /// <summary>

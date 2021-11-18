@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Security.Cryptography.X509Certificates;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -30,9 +32,26 @@ namespace Azure.Security.ConfidentialLedger
             }
             options ??= new ConfidentialLedgerClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
-            this.identityServiceUri = identityServiceUri;
-            apiVersion = options.Version;
+            _pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
+            _identityServiceUri = identityServiceUri;
+            _apiVersion = options.Version;
+        }
+
+        /// <summary>
+        /// Parses the response from <see cref="GetLedgerIdentity"/> or <see cref="GetLedgerIdentityAsync"/>.
+        /// </summary>
+        /// <param name="getIdentityResponse">The response from <see cref="GetLedgerIdentity"/> or <see cref="GetLedgerIdentityAsync"/>.</param>
+        /// <returns>The <see cref="X509Certificate2"/>.</returns>
+        public static X509Certificate2 ParseCertificate(Response getIdentityResponse)
+        {
+            var eccPem = JsonDocument.Parse(getIdentityResponse.Content)
+                .RootElement
+                .GetProperty("ledgerTlsCertificate")
+                .GetString();
+
+            // construct an X509Certificate2 with the ECC PEM value.
+            var span = new ReadOnlySpan<char>(eccPem.ToCharArray());
+            return PemReader.LoadCertificate(span, null, PemReader.KeyType.Auto, true);
         }
     }
 }

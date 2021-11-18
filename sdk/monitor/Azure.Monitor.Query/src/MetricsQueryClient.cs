@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -12,31 +12,44 @@ using Azure.Monitor.Query.Models;
 namespace Azure.Monitor.Query
 {
     /// <summary>
-    /// The <see cref="LogsQueryClient"/> allows to query the Azure Monitor Metrics service.
+    /// The <see cref="MetricsQueryClient"/> allows you to query the Azure Monitor Metrics service.
     /// </summary>
     public class MetricsQueryClient
     {
+        private static readonly Uri _defaultEndpoint = new Uri("https://management.azure.com");
+
         private readonly MetricDefinitionsRestClient _metricDefinitionsClient;
         private readonly MetricsRestClient _metricsRestClient;
         private readonly MetricNamespacesRestClient _namespacesRestClient;
         private readonly ClientDiagnostics _clientDiagnostics;
 
         /// <summary>
-        /// Initializes a new instance of <see cref="MetricsQueryClient"/>.
+        /// Initializes a new instance of <see cref="MetricsQueryClient"/>. Uses the default 'https://management.azure.com' endpoint.
+        /// <code snippet="Snippet:CreateMetricsClient" language="csharp">
+        /// var metricsClient = new MetricsQueryClient(new DefaultAzureCredential());
+        /// </code>
         /// </summary>
-        /// <param name="endpoint">The service endpoint to use.</param>
         /// <param name="credential">The <see cref="TokenCredential"/> instance to use for authentication.</param>
-        public MetricsQueryClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, null)
+        public MetricsQueryClient(TokenCredential credential) : this(credential, null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="MetricsQueryClient"/>. Uses the default 'https://management.azure.com' endpoint.
+        /// </summary>
+        /// <param name="credential">The <see cref="TokenCredential"/> instance to use for authentication.</param>
+        /// <param name="options">The <see cref="MetricsQueryClientOptions"/> instance to as client configuration.</param>
+        public MetricsQueryClient(TokenCredential credential, MetricsQueryClientOptions options) : this(_defaultEndpoint, credential, options)
         {
         }
 
         /// <summary>
         /// Initializes a new instance of <see cref="MetricsQueryClient"/>.
         /// </summary>
-        /// <param name="endpoint">The service endpoint to use.</param>
+        /// <param name="endpoint">The resource manager service endpoint to use. For example <c>https://management.azure.com/</c> for public cloud.</param>
         /// <param name="credential">The <see cref="TokenCredential"/> instance to use for authentication.</param>
         /// <param name="options">The <see cref="MetricsQueryClientOptions"/> instance to as client configuration.</param>
-        public MetricsQueryClient(Uri endpoint, TokenCredential credential, MetricsQueryClientOptions options)
+        public MetricsQueryClient(Uri endpoint, TokenCredential credential, MetricsQueryClientOptions options = null)
         {
             Argument.AssertNotNull(credential, nameof(credential));
 
@@ -44,7 +57,13 @@ namespace Azure.Monitor.Query
 
             _clientDiagnostics = new ClientDiagnostics(options);
 
-            var pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, "https://management.azure.com//.default"));
+            var scope = $"{endpoint.AbsoluteUri}/.default";
+
+            Endpoint = endpoint;
+
+            var pipeline = HttpPipelineBuilder.Build(options,
+                new BearerTokenAuthenticationPolicy(credential, scope));
+
             _metricDefinitionsClient = new MetricDefinitionsRestClient(_clientDiagnostics, pipeline, endpoint);
             _metricsRestClient = new MetricsRestClient(_clientDiagnostics, pipeline, endpoint);
             _namespacesRestClient = new MetricNamespacesRestClient(_clientDiagnostics, pipeline, endpoint);
@@ -58,25 +77,59 @@ namespace Azure.Monitor.Query
         }
 
         /// <summary>
+        /// Gets the endpoint used by the client.
+        /// </summary>
+        public Uri Endpoint { get; }
+
+        /// <summary>
         /// Queries metrics for a resource.
+        /// <code snippet="Snippet:QueryMetrics" language="csharp">
+        /// string resourceId =
+        ///     &quot;/subscriptions/&lt;subscription_id&gt;/resourceGroups/&lt;resource_group_name&gt;/providers/&lt;resource_provider&gt;/&lt;resource&gt;&quot;;
+        ///
+        /// var metricsClient = new MetricsQueryClient(new DefaultAzureCredential());
+        ///
+        /// Response&lt;MetricsQueryResult&gt; results = await metricsClient.QueryResourceAsync(
+        ///     resourceId,
+        ///     new[] {&quot;Microsoft.OperationalInsights/workspaces&quot;}
+        /// );
+        ///
+        /// foreach (var metric in results.Value.Metrics)
+        /// {
+        ///     Console.WriteLine(metric.Name);
+        ///     foreach (var element in metric.TimeSeries)
+        ///     {
+        ///         Console.WriteLine(&quot;Dimensions: &quot; + string.Join(&quot;,&quot;, element.Metadata));
+        ///
+        ///         foreach (var metricValue in element.Values)
+        ///         {
+        ///             Console.WriteLine(metricValue);
+        ///         }
+        ///     }
+        /// }
+        /// </code>
         /// </summary>
         /// <param name="resourceId">The resource name.
-        /// For example: <c>/subscriptions/[subscription_id]/resourceGroups/[resource_group_name]/providers/Microsoft.OperationalInsights/workspaces/[workspace_name]</c>.</param>
+        /// For example:
+        /// <c>/subscriptions/&lt;subscription_id&gt;/resourceGroups/&lt;resource_group_name&gt;/providers/&lt;resource_provider&gt;/&lt;resource&gt;</c>,<br/>
+        /// <c>/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/resource-group/providers/Microsoft.Storage/storageAccounts/mystorage</c>,<br/>
+        /// <c>/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/resource-group/providers/Microsoft.Compute/virtualMachines/myvm</c><br/>
+        /// </param>
         /// <param name="metrics">The list of metrics to query.</param>
         /// <param name="options">The additional request options.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
-        /// <returns>The <see cref="MetricQueryResult"/> instance containing the query results.</returns>
-        public virtual Response<MetricQueryResult> Query(string resourceId, IEnumerable<string> metrics, MetricsQueryOptions options = null, CancellationToken cancellationToken = default)
+        /// <returns>The <see cref="MetricsQueryResult"/> instance containing the query results.</returns>
+        public virtual Response<MetricsQueryResult> QueryResource(string resourceId, IEnumerable<string> metrics, MetricsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsQueryClient)}.{nameof(Query)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsQueryClient)}.{nameof(QueryResource)}");
             scope.Start();
             try
             {
                 return _metricsRestClient.List(resourceId,
-                    timespan: options?.TimeSpan?.ToString(),
-                    interval: options?.Interval,
+                    timespan: options?.TimeRange?.ToIsoString(),
+                    interval: options?.Granularity,
                     filter: options?.Filter,
-                    top: options?.Top,
+                    top: options?.Size,
                     aggregation: GetAggregation(options),
                     metricnames: string.Join(",", metrics),
                     orderby: options?.OrderBy,
@@ -92,24 +145,53 @@ namespace Azure.Monitor.Query
 
         /// <summary>
         /// Queries metrics for a resource.
+        /// <code snippet="Snippet:QueryMetrics" language="csharp">
+        /// string resourceId =
+        ///     &quot;/subscriptions/&lt;subscription_id&gt;/resourceGroups/&lt;resource_group_name&gt;/providers/&lt;resource_provider&gt;/&lt;resource&gt;&quot;;
+        ///
+        /// var metricsClient = new MetricsQueryClient(new DefaultAzureCredential());
+        ///
+        /// Response&lt;MetricsQueryResult&gt; results = await metricsClient.QueryResourceAsync(
+        ///     resourceId,
+        ///     new[] {&quot;Microsoft.OperationalInsights/workspaces&quot;}
+        /// );
+        ///
+        /// foreach (var metric in results.Value.Metrics)
+        /// {
+        ///     Console.WriteLine(metric.Name);
+        ///     foreach (var element in metric.TimeSeries)
+        ///     {
+        ///         Console.WriteLine(&quot;Dimensions: &quot; + string.Join(&quot;,&quot;, element.Metadata));
+        ///
+        ///         foreach (var metricValue in element.Values)
+        ///         {
+        ///             Console.WriteLine(metricValue);
+        ///         }
+        ///     }
+        /// }
+        /// </code>
         /// </summary>
         /// <param name="resourceId">The resource name.
-        /// For example: <c>/subscriptions/[subscription_id]/resourceGroups/[resource_group_name]/providers/Microsoft.OperationalInsights/workspaces/[workspace_name]</c>.</param>
+        /// For example:
+        /// <c>/subscriptions/&lt;subscription_id&gt;/resourceGroups/&lt;resource_group_name&gt;/providers/&lt;resource_provider&gt;/&lt;resource&gt;</c>,<br/>
+        /// <c>/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/resource-group/providers/Microsoft.Storage/storageAccounts/mystorage</c>,<br/>
+        /// <c>/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/resource-group/providers/Microsoft.Compute/virtualMachines/myvm</c><br/>
+        /// </param>
         /// <param name="metrics">The list of metrics to query.</param>
         /// <param name="options">The additional request options.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
-        /// <returns>The <see cref="MetricQueryResult"/> instance with query results.</returns>
-        public virtual async Task<Response<MetricQueryResult>> QueryAsync(string resourceId, IEnumerable<string> metrics, MetricsQueryOptions options = null, CancellationToken cancellationToken = default)
+        /// <returns>The <see cref="MetricsQueryResult"/> instance with query results.</returns>
+        public virtual async Task<Response<MetricsQueryResult>> QueryResourceAsync(string resourceId, IEnumerable<string> metrics, MetricsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsQueryClient)}.{nameof(Query)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsQueryClient)}.{nameof(QueryResource)}");
             scope.Start();
             try
             {
                 return await _metricsRestClient.ListAsync(resourceId,
-                    timespan: options?.TimeSpan?.ToString(),
-                    interval: options?.Interval,
+                    timespan: options?.TimeRange?.ToIsoString(),
+                    interval: options?.Granularity,
                     filter: options?.Filter,
-                    top: options?.Top,
+                    top: options?.Size,
                     aggregation: GetAggregation(options),
                     metricnames: string.Join(",", metrics),
                     orderby: options?.OrderBy,
@@ -127,76 +209,98 @@ namespace Azure.Monitor.Query
         /// Gets metric definitions for a particular resource and metric namespace.
         /// </summary>
         /// <param name="resourceId">The resource name.
-        /// For example: <c>/subscriptions/[subscription_id]/resourceGroups/[resource_group_name]/providers/Microsoft.OperationalInsights/workspaces/[workspace_name]</c>.</param>
+        /// For example:
+        /// <c>/subscriptions/&lt;subscription_id&gt;/resourceGroups/&lt;resource_group_name&gt;/providers/&lt;resource_provider&gt;/&lt;resource&gt;</c>,<br/>
+        /// <c>/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/resource-group/providers/Microsoft.Storage/storageAccounts/mystorage</c>,<br/>
+        /// <c>/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/resource-group/providers/Microsoft.Compute/virtualMachines/myvm</c><br/>
+        /// </param>
         /// <param name="metricsNamespace">The metric namespace.
         /// For example: <c>Microsoft.OperationalInsights/workspaces</c>.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
-        /// <returns>A list of metric definitions.</returns>
-        public virtual Response<IReadOnlyList<MetricDefinition>> GetMetrics(string resourceId, string metricsNamespace, CancellationToken cancellationToken = default)
+        /// <returns>A pageable collection of metric definitions.</returns>
+        public virtual Pageable<MetricDefinition> GetMetricDefinitions(string resourceId, string metricsNamespace, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsQueryClient)}.{nameof(GetMetrics)}");
-            scope.Start();
-            try
+            return PageResponseEnumerator.CreateEnumerable(_ =>
             {
-                var response = _metricDefinitionsClient.List(resourceId, metricsNamespace, cancellationToken);
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsQueryClient)}.{nameof(GetMetricDefinitions)}");
+                scope.Start();
+                try
+                {
+                    var response = _metricDefinitionsClient.List(resourceId, metricsNamespace, cancellationToken);
 
-                return Response.FromValue(response.Value.Value, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                    return Page<MetricDefinition>.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            });
         }
 
         /// <summary>
         /// Gets metric definitions for a particular resource and metric namespace.
         /// </summary>
         /// <param name="resourceId">The resource name.
-        /// For example: <c>/subscriptions/[subscription_id]/resourceGroups/[resource_group_name]/providers/Microsoft.OperationalInsights/workspaces/[workspace_name]</c>.</param>
+        ///
+        /// For example:
+        /// <c>/subscriptions/&lt;subscription_id&gt;/resourceGroups/&lt;resource_group_name&gt;/providers/&lt;resource_provider&gt;/&lt;resource&gt;</c>,<br/>
+        /// <c>/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/resource-group/providers/Microsoft.Storage/storageAccounts/mystorage</c>,<br/>
+        /// <c>/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/resource-group/providers/Microsoft.Compute/virtualMachines/myvm</c><br/>
+        /// </param>
         /// <param name="metricsNamespace">The metric namespace.
         /// For example: <c>Microsoft.OperationalInsights/workspaces</c>.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
-        /// <returns>A list of metric definitions.</returns>
-        public virtual async Task<Response<IReadOnlyList<MetricDefinition>>> GetMetricsAsync(string resourceId, string metricsNamespace, CancellationToken cancellationToken = default)
+        /// <returns>A pageable collection of metric definitions.</returns>
+        public virtual AsyncPageable<MetricDefinition> GetMetricDefinitionsAsync(string resourceId, string metricsNamespace, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsQueryClient)}.{nameof(GetMetrics)}");
-            scope.Start();
-            try
+            return PageResponseEnumerator.CreateAsyncEnumerable(async _ =>
             {
-                var response = await _metricDefinitionsClient.ListAsync(resourceId, metricsNamespace, cancellationToken).ConfigureAwait(false);
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsQueryClient)}.{nameof(GetMetricDefinitions)}");
+                scope.Start();
+                try
+                {
+                    var response = await _metricDefinitionsClient.ListAsync(resourceId, metricsNamespace, cancellationToken).ConfigureAwait(false);
 
-                return Response.FromValue(response.Value.Value, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                    return Page<MetricDefinition>.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            });
         }
 
         /// <summary>
         /// Gets metric namespaces for a particular resource.
         /// </summary>
         /// <param name="resourceId">The resource name.
-        /// For example: <c>/subscriptions/[subscription_id]/resourceGroups/[resource_group_name]/providers/Microsoft.OperationalInsights/workspaces/[workspace_name]</c>.</param>
+        /// For example:
+        /// <c>/subscriptions/&lt;subscription_id&gt;/resourceGroups/&lt;resource_group_name&gt;/providers/&lt;resource_provider&gt;/&lt;resource&gt;</c>,<br/>
+        /// <c>/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/resource-group/providers/Microsoft.Storage/storageAccounts/mystorage</c>,<br/>
+        /// <c>/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/resource-group/providers/Microsoft.Compute/virtualMachines/myvm</c><br/>
+        /// </param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
-        /// <returns>A list of metric namespaces.</returns>
-        public virtual Response<IReadOnlyList<MetricNamespace>> GetMetricNamespaces(string resourceId, CancellationToken cancellationToken = default)
+        /// <returns>A pageable collection of metric namespaces.</returns>
+        public virtual Pageable<MetricNamespace> GetMetricNamespaces(string resourceId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsQueryClient)}.{nameof(GetMetricNamespaces)}");
-            scope.Start();
-            try
+            return PageResponseEnumerator.CreateEnumerable(_ =>
             {
-                var response = _namespacesRestClient.List(resourceId, cancellationToken: cancellationToken);
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsQueryClient)}.{nameof(GetMetricNamespaces)}");
+                scope.Start();
+                try
+                {
+                    var response = _namespacesRestClient.List(resourceId, cancellationToken: cancellationToken);
 
-                return Response.FromValue(response.Value.Value, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                    return Page<MetricNamespace>.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            });
         }
 
         /// <summary>
@@ -204,22 +308,25 @@ namespace Azure.Monitor.Query
         /// </summary>
         /// <param name="resourceId">The resource name.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
-        /// <returns>A list of metric namespaces.</returns>
-        public virtual async Task<Response<IReadOnlyList<MetricNamespace>>> GetMetricNamespacesAsync(string resourceId, CancellationToken cancellationToken = default)
+        /// <returns>A pageable collection of metric namespaces.</returns>
+        public virtual AsyncPageable<MetricNamespace> GetMetricNamespacesAsync(string resourceId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsQueryClient)}.{nameof(GetMetricNamespaces)}");
-            scope.Start();
-            try
+            return PageResponseEnumerator.CreateAsyncEnumerable(async _ =>
             {
-                var response = await _namespacesRestClient.ListAsync(resourceId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsQueryClient)}.{nameof(GetMetricNamespaces)}");
+                scope.Start();
+                try
+                {
+                    var response = await _namespacesRestClient.ListAsync(resourceId, cancellationToken: cancellationToken).ConfigureAwait(false);
 
-                return Response.FromValue(response.Value.Value, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                    return Page<MetricNamespace>.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            });
         }
 
         private static string GetAggregation(MetricsQueryOptions options)

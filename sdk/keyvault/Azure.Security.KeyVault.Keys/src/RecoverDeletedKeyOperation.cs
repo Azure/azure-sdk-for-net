@@ -32,7 +32,7 @@ namespace Azure.Security.KeyVault.Keys
         protected RecoverDeletedKeyOperation() {}
 
         /// <inheritdoc/>
-        public override string Id => _value.Id.ToString();
+        public override string Id => _value.Id.AbsoluteUri;
 
         /// <summary>
         /// Gets the <see cref="KeyVaultKey"/> of the key being recovered.

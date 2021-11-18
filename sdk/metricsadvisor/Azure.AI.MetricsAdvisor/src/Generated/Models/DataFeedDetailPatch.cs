@@ -23,7 +23,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         /// <summary> data source type. </summary>
-        internal DataFeedSourceType DataSourceType { get; set; }
+        internal DataFeedSourceKind DataSourceType { get; set; }
         /// <summary> data feed name. </summary>
         public string DataFeedName { get; set; }
         /// <summary> data feed description. </summary>

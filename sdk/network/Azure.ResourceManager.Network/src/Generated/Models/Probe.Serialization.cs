@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -63,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> etag = default;
             Optional<string> type = default;
             Optional<string> id = default;
-            Optional<IReadOnlyList<SubResource>> loadBalancingRules = default;
+            Optional<IReadOnlyList<WritableSubResource>> loadBalancingRules = default;
             Optional<ProbeProtocol> protocol = default;
             Optional<int> port = default;
             Optional<int> intervalInSeconds = default;
@@ -108,10 +109,10 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<SubResource> array = new List<SubResource>();
+                            List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeserializeSubResource(item));
+                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
                             }
                             loadBalancingRules = array;
                             continue;

@@ -8,13 +8,13 @@ This library can be used to enable publishing CloudNative CloudEvents using the 
 
 Install the client library from [NuGet](https://www.nuget.org/):
 
-```PowerShell
-dotnet add package Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents --prerelease
+```dotnetcli
+dotnet add package Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents
 ```
 
 ### Prerequisites
 
-You must have an [Azure subscription](https://azure.microsoft.com/free/) and an Azure resource group with a custom Event Grid topic or domain. Follow this [step-by-step tutorial](https://docs.microsoft.com/azure/event-grid/custom-event-quickstart-portal) to register the Event Grid resource provider and create Event Grid topics using the [Azure portal](https://portal.azure.com/). There is a [similar tutorial](https://docs.microsoft.com/azure/event-grid/custom-event-quickstart) using [Azure CLI](https://docs.microsoft.com/cli/azure).
+You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) and an Azure resource group with a custom Event Grid topic or domain. Follow this [step-by-step tutorial](https://docs.microsoft.com/azure/event-grid/custom-event-quickstart-portal) to register the Event Grid resource provider and create Event Grid topics using the [Azure portal](https://portal.azure.com/). There is a [similar tutorial](https://docs.microsoft.com/azure/event-grid/custom-event-quickstart) using [Azure CLI](https://docs.microsoft.com/cli/azure).
 
 ### Authenticate the client
 
@@ -54,13 +54,14 @@ EventGridPublisherClient client = new EventGridPublisherClient(
         new AzureKeyCredential(TestEnvironment.CloudEventTopicKey));
 
 var cloudEvent =
-    new CloudEvent 
+    new CloudEvent
     {
+        Id = Guid.NewGuid().ToString(),
         Type = "record",
         Source = new Uri("http://www.contoso.com"),
         Data = "data"
     };
-await client.SendCloudEventAsync(cloudEvent);
+await client.SendCloudNativeCloudEventAsync(cloudEvent);
 ```
 
 ## Troubleshooting

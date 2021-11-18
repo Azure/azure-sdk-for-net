@@ -46,7 +46,10 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// files not syncing.</param>
         /// <param name="filesNotSyncingErrors">Array of per-item errors coming
         /// from the last sync session.</param>
-        public ServerEndpointSyncSessionStatus(int? lastSyncResult = default(int?), System.DateTime? lastSyncTimestamp = default(System.DateTime?), System.DateTime? lastSyncSuccessTimestamp = default(System.DateTime?), long? lastSyncPerItemErrorCount = default(long?), long? persistentFilesNotSyncingCount = default(long?), long? transientFilesNotSyncingCount = default(long?), IList<ServerEndpointFilesNotSyncingError> filesNotSyncingErrors = default(IList<ServerEndpointFilesNotSyncingError>))
+        /// <param name="lastSyncMode">Sync mode. Possible values include:
+        /// 'Regular', 'NamespaceDownload', 'InitialUpload', 'SnapshotUpload',
+        /// 'InitialFullDownload'</param>
+        public ServerEndpointSyncSessionStatus(int? lastSyncResult = default(int?), System.DateTime? lastSyncTimestamp = default(System.DateTime?), System.DateTime? lastSyncSuccessTimestamp = default(System.DateTime?), long? lastSyncPerItemErrorCount = default(long?), long? persistentFilesNotSyncingCount = default(long?), long? transientFilesNotSyncingCount = default(long?), IList<ServerEndpointFilesNotSyncingError> filesNotSyncingErrors = default(IList<ServerEndpointFilesNotSyncingError>), string lastSyncMode = default(string))
         {
             LastSyncResult = lastSyncResult;
             LastSyncTimestamp = lastSyncTimestamp;
@@ -55,6 +58,7 @@ namespace Microsoft.Azure.Management.StorageSync.Models
             PersistentFilesNotSyncingCount = persistentFilesNotSyncingCount;
             TransientFilesNotSyncingCount = transientFilesNotSyncingCount;
             FilesNotSyncingErrors = filesNotSyncingErrors;
+            LastSyncMode = lastSyncMode;
             CustomInit();
         }
 
@@ -104,6 +108,14 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// </summary>
         [JsonProperty(PropertyName = "filesNotSyncingErrors")]
         public IList<ServerEndpointFilesNotSyncingError> FilesNotSyncingErrors { get; private set; }
+
+        /// <summary>
+        /// Gets sync mode. Possible values include: 'Regular',
+        /// 'NamespaceDownload', 'InitialUpload', 'SnapshotUpload',
+        /// 'InitialFullDownload'
+        /// </summary>
+        [JsonProperty(PropertyName = "lastSyncMode")]
+        public string LastSyncMode { get; private set; }
 
         /// <summary>
         /// Validate the object.

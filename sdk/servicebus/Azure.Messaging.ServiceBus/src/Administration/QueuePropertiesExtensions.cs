@@ -37,7 +37,8 @@ namespace Azure.Messaging.ServiceBus.Administration
                 description.AutoDeleteOnIdle != TimeSpan.MaxValue ? new XElement(XName.Get("AutoDeleteOnIdle", AdministrationClientConstants.ServiceBusNamespace), XmlConvert.ToString(description.AutoDeleteOnIdle)) : null,
                 new XElement(XName.Get("EnablePartitioning", AdministrationClientConstants.ServiceBusNamespace), XmlConvert.ToString(description.EnablePartitioning)),
                 description.ForwardDeadLetteredMessagesTo != null ? new XElement(XName.Get("ForwardDeadLetteredMessagesTo", AdministrationClientConstants.ServiceBusNamespace), description.ForwardDeadLetteredMessagesTo) : null,
-                new XElement(XName.Get("EnableExpress", AdministrationClientConstants.ServiceBusNamespace), XmlConvert.ToString(description.EnableExpress))
+                new XElement(XName.Get("EnableExpress", AdministrationClientConstants.ServiceBusNamespace), XmlConvert.ToString(description.EnableExpress)),
+                description.MaxMessageSizeInKilobytes.HasValue ? new XElement(XName.Get("MaxMessageSizeInKilobytes", AdministrationClientConstants.ServiceBusNamespace), XmlConvert.ToString(description.MaxMessageSizeInKilobytes.Value)) : null,
             };
 
             // Insert unknown properties in the exact order they were in the received xml.
@@ -173,6 +174,9 @@ namespace Azure.Messaging.ServiceBus.Administration
                     case "SkippedUpdate":
                         // Ignore known properties
                         // Do nothing
+                        break;
+                    case "MaxMessageSizeInKilobytes":
+                        properties.MaxMessageSizeInKilobytes = long.Parse(element.Value, CultureInfo.InvariantCulture);
                         break;
                     default:
                         // For unknown properties, keep them as-is for forward proof.

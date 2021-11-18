@@ -153,6 +153,7 @@ known_content_issues:
   - ['sdk/eventgrid/README.md','azure-sdk-tools/issues/42']
   - ['sdk/eventgrid/Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents/README.md', '#15423']
   - ['sdk/eventhub/README.md','azure-sdk-tools/issues/42']
+  - ['sdk/eventhub/Azure.Messaging.EventHubs.Experimental/README.md', '#5499']
   - ['sdk/search/README.md','azure-sdk-tools/issues/42']
   - ['sdk/search/Azure.Search.Documents/README.md','Credscan cleanup']
   - ['sdk/formrecognizer/Azure.AI.FormRecognizer/README.md','#5499']
@@ -174,6 +175,9 @@ known_content_issues:
   - ['sdk/core/Microsoft.Azure.Core.Spatial/README.md', '#15423']
   - ['sdk/core/Microsoft.Azure.Core.Spatial.NewtonsoftJson/README.md', '#15423']
   - ['sdk/servicebus/Microsoft.Azure.WebJobs.Extensions.ServiceBus/README.md', '#15423']
+  - ['sdk/personalizer/README.md','azure-sdk-tools/issues/42']
+  - ['sdk/personalizer/Azure.AI.Personalizer/README.md','azure-sdk-tools/issues/42']
+  - ['sdk/webpubsub/Azure.Messaging.WebPubSub/README.md','azure-sdk-tools/issues/42']
 
 # .net climbs upwards. placing these to prevent assigning readmes to the wrong project
 package_indexing_exclusion_list:

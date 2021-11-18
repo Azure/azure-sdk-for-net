@@ -20,6 +20,9 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> address = default;
             Optional<string> resourceId = default;
             Optional<IReadOnlyList<string>> nextHopIds = default;
+            Optional<IReadOnlyList<string>> previousHopIds = default;
+            Optional<IReadOnlyList<HopLink>> links = default;
+            Optional<IReadOnlyList<HopLink>> previousLinks = default;
             Optional<IReadOnlyList<ConnectivityIssue>> issues = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -58,6 +61,51 @@ namespace Azure.ResourceManager.Network.Models
                     nextHopIds = array;
                     continue;
                 }
+                if (property.NameEquals("previousHopIds"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    previousHopIds = array;
+                    continue;
+                }
+                if (property.NameEquals("links"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<HopLink> array = new List<HopLink>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(HopLink.DeserializeHopLink(item));
+                    }
+                    links = array;
+                    continue;
+                }
+                if (property.NameEquals("previousLinks"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<HopLink> array = new List<HopLink>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(HopLink.DeserializeHopLink(item));
+                    }
+                    previousLinks = array;
+                    continue;
+                }
                 if (property.NameEquals("issues"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -74,7 +122,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ConnectivityHop(type.Value, id.Value, address.Value, resourceId.Value, Optional.ToList(nextHopIds), Optional.ToList(issues));
+            return new ConnectivityHop(type.Value, id.Value, address.Value, resourceId.Value, Optional.ToList(nextHopIds), Optional.ToList(previousHopIds), Optional.ToList(links), Optional.ToList(previousLinks), Optional.ToList(issues));
         }
     }
 }

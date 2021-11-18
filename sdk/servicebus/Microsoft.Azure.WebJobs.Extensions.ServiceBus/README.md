@@ -8,13 +8,13 @@ This extension provides functionality for accessing Azure Service Bus from an Az
 
 Install the Service Bus extension with [NuGet](https://www.nuget.org/packages/Microsoft.Azure.WebJobs.Extensions.ServiceBus/):
 
-```Powershell
+```dotnetcli
 dotnet add package Microsoft.Azure.WebJobs.Extensions.ServiceBus --version 5.0.0-beta.1
 ```
 
 ### Prerequisites
 
-- **Azure Subscription:**  To use Azure services, including Azure Service Bus, you'll need a subscription.  If you do not have an existing Azure account, you may sign up for a [free trial](https://azure.microsoft.com/free) or use your [Visual Studio Subscription](https://visualstudio.microsoft.com/subscriptions/) benefits when you [create an account](https://account.windowsazure.com/Home/Index).
+- **Azure Subscription:**  To use Azure services, including Azure Service Bus, you'll need a subscription.  If you do not have an existing Azure account, you may sign up for a [free trial](https://azure.microsoft.com/free/dotnet/) or use your [Visual Studio Subscription](https://visualstudio.microsoft.com/subscriptions/) benefits when you [create an account](https://account.windowsazure.com/Home/Index).
 
 - **Service Bus namespace:** To interact with Azure Service Bus, you'll also need to have a namespace available. If you are not familiar with creating Azure resources, you may wish to follow the step-by-step guide for creating a Service Bus namespace using the Azure portal. There, you can also find detailed instructions for using the Azure CLI, Azure PowerShell, or Azure Resource Manager (ARM) templates to create a Service bus entity.
 
@@ -198,6 +198,22 @@ public static async Task Run(
             await messageActions.CompleteMessageAsync(message);
         }
     }
+}
+```
+
+### Binding to ServiceBusClient
+
+There may be times when you want to bind to the same `ServiceBusClient` that the trigger is using. This can be useful if you need to dynamically create a sender based on the message that is received.
+
+```C# Snippet:ServiceBusBindingToClient
+[FunctionName("BindingToClient")]
+public static async Task Run(
+    [ServiceBus("<queue_or_topic_name>", Connection = "<connection_name>")] 
+    ServiceBusReceivedMessage message,
+    ServiceBusClient client)
+{
+    ServiceBusSender sender = client.CreateSender(message.To);
+    await sender.SendMessageAsync(new ServiceBusMessage(message));
 }
 ```
 

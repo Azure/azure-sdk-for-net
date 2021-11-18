@@ -35,6 +35,16 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("pauseTimeBetweenBatches");
                 writer.WriteStringValue(PauseTimeBetweenBatches);
             }
+            if (Optional.IsDefined(EnableCrossZoneUpgrade))
+            {
+                writer.WritePropertyName("enableCrossZoneUpgrade");
+                writer.WriteBooleanValue(EnableCrossZoneUpgrade.Value);
+            }
+            if (Optional.IsDefined(PrioritizeUnhealthyInstances))
+            {
+                writer.WritePropertyName("prioritizeUnhealthyInstances");
+                writer.WriteBooleanValue(PrioritizeUnhealthyInstances.Value);
+            }
             writer.WriteEndObject();
         }
 
@@ -44,6 +54,8 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<int> maxUnhealthyInstancePercent = default;
             Optional<int> maxUnhealthyUpgradedInstancePercent = default;
             Optional<string> pauseTimeBetweenBatches = default;
+            Optional<bool> enableCrossZoneUpgrade = default;
+            Optional<bool> prioritizeUnhealthyInstances = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxBatchInstancePercent"))
@@ -81,8 +93,28 @@ namespace Azure.ResourceManager.Compute.Models
                     pauseTimeBetweenBatches = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("enableCrossZoneUpgrade"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    enableCrossZoneUpgrade = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("prioritizeUnhealthyInstances"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    prioritizeUnhealthyInstances = property.Value.GetBoolean();
+                    continue;
+                }
             }
-            return new RollingUpgradePolicy(Optional.ToNullable(maxBatchInstancePercent), Optional.ToNullable(maxUnhealthyInstancePercent), Optional.ToNullable(maxUnhealthyUpgradedInstancePercent), pauseTimeBetweenBatches.Value);
+            return new RollingUpgradePolicy(Optional.ToNullable(maxBatchInstancePercent), Optional.ToNullable(maxUnhealthyInstancePercent), Optional.ToNullable(maxUnhealthyUpgradedInstancePercent), pauseTimeBetweenBatches.Value, Optional.ToNullable(enableCrossZoneUpgrade), Optional.ToNullable(prioritizeUnhealthyInstances));
         }
     }
 }

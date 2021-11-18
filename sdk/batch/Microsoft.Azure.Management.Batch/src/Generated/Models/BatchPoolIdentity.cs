@@ -36,10 +36,8 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// <param name="type">The type of identity used for the Batch Pool.
         /// Possible values include: 'UserAssigned', 'None'</param>
         /// <param name="userAssignedIdentities">The list of user identities
-        /// associated with the Batch pool. The user identity dictionary key
-        /// references will be ARM resource ids in the form:
-        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.</param>
-        public BatchPoolIdentity(PoolIdentityType type, IDictionary<string, BatchPoolIdentityUserAssignedIdentitiesValue> userAssignedIdentities = default(IDictionary<string, BatchPoolIdentityUserAssignedIdentitiesValue>))
+        /// associated with the Batch pool.</param>
+        public BatchPoolIdentity(PoolIdentityType type, IDictionary<string, UserAssignedIdentities> userAssignedIdentities = default(IDictionary<string, UserAssignedIdentities>))
         {
             Type = type;
             UserAssignedIdentities = userAssignedIdentities;
@@ -60,12 +58,10 @@ namespace Microsoft.Azure.Management.Batch.Models
 
         /// <summary>
         /// Gets or sets the list of user identities associated with the Batch
-        /// pool. The user identity dictionary key references will be ARM
-        /// resource ids in the form:
-        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.
+        /// pool.
         /// </summary>
         [JsonProperty(PropertyName = "userAssignedIdentities")]
-        public IDictionary<string, BatchPoolIdentityUserAssignedIdentitiesValue> UserAssignedIdentities { get; set; }
+        public IDictionary<string, UserAssignedIdentities> UserAssignedIdentities { get; set; }
 
         /// <summary>
         /// Validate the object.

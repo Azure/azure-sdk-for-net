@@ -45,29 +45,12 @@ namespace Management.HDInsight.Tests
             var cluster = HDInsightClient.Clusters.Create(CommonData.ResourceGroupName, clusterName, createParams);
             ValidateCluster(clusterName, createParams, cluster);
 
-            var hive = HDInsightClient.Configurations.Get(CommonData.ResourceGroupName, clusterName, ConfigurationKey.HiveSite);
-            Assert.Equal(hiveConfig, hive);
-
-            var mapred = HDInsightClient.Configurations.Get(CommonData.ResourceGroupName, clusterName, ConfigurationKey.MapRedSite);
-            Assert.Equal(mapredConfig, mapred);
-
-            var yarn = HDInsightClient.Configurations.Get(CommonData.ResourceGroupName, clusterName, ConfigurationKey.YarnSite);
-            Assert.Equal(yarnConfig, yarn);
-
-            var core = HDInsightClient.Configurations.Get(CommonData.ResourceGroupName, clusterName, ConfigurationKey.CoreSite);
-            Assert.Equal(2, core.Count);
-            Assert.True(core.ContainsKey(Constants.StorageConfigurations.DefaultFsKey));
-            Assert.Contains(core, c => c.Key.StartsWith("fs.azure.account.key."));
-
             var configs = HDInsightClient.Configurations.List(CommonData.ResourceGroupName, clusterName);
             Assert.NotNull(configs);
             Assert.Equal(hiveConfig, configs.Configurations[ConfigurationKey.HiveSite]);
             Assert.Equal(mapredConfig, configs.Configurations[ConfigurationKey.MapRedSite]);
             Assert.Equal(yarnConfig, configs.Configurations[ConfigurationKey.YarnSite]);
             Assert.Equal(configurations[ConfigurationKey.Gateway], configs.Configurations[ConfigurationKey.Gateway]);
-            Assert.Equal(2, core.Count);
-            Assert.True(core.ContainsKey(Constants.StorageConfigurations.DefaultFsKey));
-            Assert.Contains(core, c => c.Key.StartsWith("fs.azure.account.key."));
         }
     }
 }

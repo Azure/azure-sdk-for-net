@@ -43,8 +43,28 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// <param name="name">Azure resource name</param>
         /// <param name="type">Azure resource type</param>
         /// <param name="tags">Resource tags</param>
+        /// <param name="kind">Metadata used by portal/tooling/etc to render
+        /// different UX experiences for resources of the same type; e.g.
+        /// ApiApps are a kind of Microsoft.Web/sites type.  If supported, the
+        /// resource provider must validate and persist this value.</param>
+        /// <param name="etag">The etag field is *not* required. If it is
+        /// provided in the response body, it must also be provided as a header
+        /// per the normal etag convention.  Entity tags are used for comparing
+        /// two or more entities from the same requested resource. HTTP/1.1
+        /// uses entity tags in the etag (section 14.19), If-Match (section
+        /// 14.24), If-None-Match (section 14.26), and If-Range (section 14.27)
+        /// header fields. </param>
+        /// <param name="createdWithApiVersion">The api-version used when
+        /// creating this alert rule</param>
+        /// <param name="isLegacyLogAnalyticsRule">True if alert rule is legacy
+        /// Log Analytic rule</param>
         /// <param name="description">The description of the Log Search
         /// rule.</param>
+        /// <param name="displayName">The display name of the alert
+        /// rule</param>
+        /// <param name="autoMitigate">The flag that indicates whether the
+        /// alert should be automatically resolved or not. The default is
+        /// false.</param>
         /// <param name="enabled">The flag which indicates whether the Log
         /// Search rule is enabled. Value should be true or false. Possible
         /// values include: 'true', 'false'</param>
@@ -55,10 +75,14 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// 'Canceled', 'Failed'</param>
         /// <param name="schedule">Schedule (Frequency, Time Window) for rule.
         /// Required for action type - AlertingAction</param>
-        public LogSearchRuleResource(string location, Source source, Action action, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string description = default(string), string enabled = default(string), System.DateTime? lastUpdatedTime = default(System.DateTime?), string provisioningState = default(string), Schedule schedule = default(Schedule))
-            : base(location, id, name, type, tags)
+        public LogSearchRuleResource(string location, Source source, Action action, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string kind = default(string), string etag = default(string), string createdWithApiVersion = default(string), bool? isLegacyLogAnalyticsRule = default(bool?), string description = default(string), string displayName = default(string), bool? autoMitigate = default(bool?), string enabled = default(string), System.DateTime? lastUpdatedTime = default(System.DateTime?), string provisioningState = default(string), Schedule schedule = default(Schedule))
+            : base(location, id, name, type, tags, kind, etag)
         {
+            CreatedWithApiVersion = createdWithApiVersion;
+            IsLegacyLogAnalyticsRule = isLegacyLogAnalyticsRule;
             Description = description;
+            DisplayName = displayName;
+            AutoMitigate = autoMitigate;
             Enabled = enabled;
             LastUpdatedTime = lastUpdatedTime;
             ProvisioningState = provisioningState;
@@ -74,10 +98,35 @@ namespace Microsoft.Azure.Management.Monitor.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets the api-version used when creating this alert rule
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.createdWithApiVersion")]
+        public string CreatedWithApiVersion { get; private set; }
+
+        /// <summary>
+        /// Gets true if alert rule is legacy Log Analytic rule
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.isLegacyLogAnalyticsRule")]
+        public bool? IsLegacyLogAnalyticsRule { get; private set; }
+
+        /// <summary>
         /// Gets or sets the description of the Log Search rule.
         /// </summary>
         [JsonProperty(PropertyName = "properties.description")]
         public string Description { get; set; }
+
+        /// <summary>
+        /// Gets or sets the display name of the alert rule
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.displayName")]
+        public string DisplayName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the flag that indicates whether the alert should be
+        /// automatically resolved or not. The default is false.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.autoMitigate")]
+        public bool? AutoMitigate { get; set; }
 
         /// <summary>
         /// Gets or sets the flag which indicates whether the Log Search rule

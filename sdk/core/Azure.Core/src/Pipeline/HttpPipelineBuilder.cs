@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Azure.Core.Diagnostics;
 
 namespace Azure.Core.Pipeline
 {
@@ -32,8 +33,28 @@ namespace Azure.Core.Pipeline
         /// <param name="perRetryPolicies">Client provided per-retry policies.</param>
         /// <param name="responseClassifier">The client provided response classifier.</param>
         /// <returns>A new instance of <see cref="HttpPipeline"/></returns>
-        public static HttpPipeline Build(ClientOptions options, HttpPipelinePolicy[] perCallPolicies, HttpPipelinePolicy[] perRetryPolicies, ResponseClassifier responseClassifier)
+        public static HttpPipeline Build(
+            ClientOptions options,
+            HttpPipelinePolicy[] perCallPolicies,
+            HttpPipelinePolicy[] perRetryPolicies,
+            ResponseClassifier responseClassifier)
         {
+            return Build(options, perCallPolicies, perRetryPolicies, responseClassifier, null);
+        }
+
+        /// <summary>
+        /// Creates an instance of <see cref="HttpPipeline"/> populated with default policies, customer provided policies from <paramref name="options"/> and client provided per call policies.
+        /// </summary>
+        /// <param name="options">The customer provided client options object.</param>
+        /// <param name="perCallPolicies">Client provided per-call policies.</param>
+        /// <param name="perRetryPolicies">Client provided per-retry policies.</param>
+        /// <param name="responseClassifier">The client provided response classifier.</param>
+        /// <param name="defaultTransportOptions">The customer provided transport options which will be applied to the default transport.</param>
+        /// <returns>A new instance of <see cref="HttpPipeline"/></returns>
+        public static HttpPipeline Build(ClientOptions options, HttpPipelinePolicy[] perCallPolicies, HttpPipelinePolicy[] perRetryPolicies, ResponseClassifier responseClassifier, HttpPipelineTransportOptions? defaultTransportOptions)
+        {
+            int perCallIndex;
+            int perRetryIndex;
             if (perCallPolicies == null)
             {
                 throw new ArgumentNullException(nameof(perCallPolicies));
@@ -44,7 +65,28 @@ namespace Azure.Core.Pipeline
                 throw new ArgumentNullException(nameof(perRetryPolicies));
             }
 
-            var policies = new List<HttpPipelinePolicy>();
+            var policies = new List<HttpPipelinePolicy>(8 +
+                                                        (options.Policies?.Count ?? 0) +
+                                                        perCallPolicies.Length +
+                                                        perRetryPolicies.Length);
+
+            void AddCustomerPolicies(HttpPipelinePosition position)
+            {
+                if (options.Policies != null)
+                {
+                    foreach (var policy in options.Policies)
+                    {
+                        if (policy.Position == position)
+                        {
+                            policies.Add(policy.Policy);
+                        }
+                    }
+                }
+            }
+
+            DiagnosticsOptions diagnostics = options.Diagnostics;
+
+            var sanitizer = new HttpMessageSanitizer(diagnostics.LoggedHeaderNames.ToArray(), diagnostics.LoggedQueryParameters.ToArray());
 
             bool isDistributedTracingEnabled = options.Diagnostics.IsDistributedTracingEnabled;
 
@@ -52,11 +94,13 @@ namespace Azure.Core.Pipeline
 
             policies.AddRange(perCallPolicies);
 
-            policies.AddRange(options.PerCallPolicies);
+            AddCustomerPolicies(HttpPipelinePosition.PerCall);
+
+            policies.RemoveAll(static policy => policy == null);
+            perCallIndex = policies.Count;
 
             policies.Add(ClientRequestIdPolicy.Shared);
 
-            DiagnosticsOptions diagnostics = options.Diagnostics;
             if (diagnostics.IsTelemetryEnabled)
             {
                 policies.Add(CreateTelemetryPolicy(options));
@@ -65,25 +109,55 @@ namespace Azure.Core.Pipeline
             RetryOptions retryOptions = options.Retry;
             policies.Add(new RetryPolicy(retryOptions.Mode, retryOptions.Delay, retryOptions.MaxDelay, retryOptions.MaxRetries));
 
+            policies.Add(RedirectPolicy.Shared);
+
             policies.AddRange(perRetryPolicies);
 
-            policies.AddRange(options.PerRetryPolicies);
+            AddCustomerPolicies(HttpPipelinePosition.PerRetry);
+
+            policies.RemoveAll(static policy => policy == null);
+            perRetryIndex = policies.Count;
 
             if (diagnostics.IsLoggingEnabled)
             {
                 string assemblyName = options.GetType().Assembly!.GetName().Name!;
 
-                policies.Add(new LoggingPolicy(diagnostics.IsLoggingContentEnabled, diagnostics.LoggedContentSizeLimit,
-                    diagnostics.LoggedHeaderNames.ToArray(), diagnostics.LoggedQueryParameters.ToArray(), assemblyName));
+                policies.Add(new LoggingPolicy(diagnostics.IsLoggingContentEnabled, diagnostics.LoggedContentSizeLimit, sanitizer, assemblyName));
             }
 
             policies.Add(new ResponseBodyPolicy(options.Retry.NetworkTimeout));
 
-            policies.Add(new RequestActivityPolicy(isDistributedTracingEnabled, ClientDiagnostics.GetResourceProviderNamespace(options.GetType().Assembly)));
+            policies.Add(new RequestActivityPolicy(isDistributedTracingEnabled, ClientDiagnostics.GetResourceProviderNamespace(options.GetType().Assembly), sanitizer));
 
-            policies.RemoveAll(policy => policy == null);
+            AddCustomerPolicies(HttpPipelinePosition.BeforeTransport);
+            policies.RemoveAll(static policy => policy == null);
 
-            return new HttpPipeline(options.Transport,
+            // Override the provided Transport with the provided transport options if the transport has not been set after default construction and options are not null.
+            HttpPipelineTransport transport = options.Transport;
+            if (defaultTransportOptions != null)
+            {
+                if (options.IsCustomTransportSet)
+                {
+                    if (AzureCoreEventSource.Singleton.IsEnabled())
+                    {
+                        // Log that we were unable to override the custom transport
+                        AzureCoreEventSource.Singleton.PipelineTransportOptionsNotApplied(options?.GetType().FullName ?? String.Empty);
+                    }
+                }
+                else
+                {
+                    transport = HttpPipelineTransport.Create(defaultTransportOptions);
+                    return new DisposableHttpPipeline(transport,
+                        perCallIndex,
+                        perRetryIndex,
+                        policies.ToArray(),
+                        responseClassifier);
+                }
+            }
+
+            return new HttpPipeline(transport,
+                perCallIndex,
+                perRetryIndex,
                 policies.ToArray(),
                 responseClassifier);
         }

@@ -25,7 +25,6 @@ extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: formrecognizer
-    SpellCheckPublicApiSurface: true
     ArtifactName: packages
     Artifacts:
     - name: Azure.AI.FormRecognizer

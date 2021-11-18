@@ -66,22 +66,6 @@ namespace Azure.IoT.DeviceUpdate
             V2020_09_01 = 1,
         }
     }
-    public static partial class DeviceUpdateModelFactory
-    {
-        public static Azure.IoT.DeviceUpdate.Models.Compatibility Compatibility(string deviceManufacturer = null, string deviceModel = null) { throw null; }
-        public static Azure.IoT.DeviceUpdate.Models.DeploymentDeviceState DeploymentDeviceState(string deviceId = null, int retryCount = 0, bool movedOnToNewDeployment = false, Azure.IoT.DeviceUpdate.Models.DeviceDeploymentState deviceState = default(Azure.IoT.DeviceUpdate.Models.DeviceDeploymentState)) { throw null; }
-        public static Azure.IoT.DeviceUpdate.Models.DeploymentStatus DeploymentStatus(Azure.IoT.DeviceUpdate.Models.DeploymentState deploymentState = default(Azure.IoT.DeviceUpdate.Models.DeploymentState), int? totalDevices = default(int?), int? devicesIncompatibleCount = default(int?), int? devicesInProgressCount = default(int?), int? devicesCompletedFailedCount = default(int?), int? devicesCompletedSucceededCount = default(int?), int? devicesCanceledCount = default(int?)) { throw null; }
-        public static Azure.IoT.DeviceUpdate.Models.Device Device(string deviceId = null, string deviceClassId = null, string manufacturer = null, string model = null, string groupId = null, Azure.IoT.DeviceUpdate.Models.UpdateId lastAttemptedUpdateId = null, Azure.IoT.DeviceUpdate.Models.DeviceDeploymentState? deploymentStatus = default(Azure.IoT.DeviceUpdate.Models.DeviceDeploymentState?), Azure.IoT.DeviceUpdate.Models.UpdateId installedUpdateId = null, bool onLatestUpdate = false, string lastDeploymentId = null) { throw null; }
-        public static Azure.IoT.DeviceUpdate.Models.DeviceClass DeviceClass(string deviceClassId = null, string manufacturer = null, string model = null, Azure.IoT.DeviceUpdate.Models.UpdateId bestCompatibleUpdateId = null) { throw null; }
-        public static Azure.IoT.DeviceUpdate.Models.DeviceTag DeviceTag(string tagName = null, int deviceCount = 0) { throw null; }
-        public static Azure.IoT.DeviceUpdate.Models.Error Error(string code = null, string message = null, string target = null, System.Collections.Generic.IReadOnlyList<Azure.IoT.DeviceUpdate.Models.Error> details = null, Azure.IoT.DeviceUpdate.Models.InnerError innererror = null, System.DateTimeOffset? occurredDateTime = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.IoT.DeviceUpdate.Models.File File(string fileId = null, string fileName = null, long sizeInBytes = (long)0, System.Collections.Generic.IReadOnlyDictionary<string, string> hashes = null, string mimeType = null, string etag = null) { throw null; }
-        public static Azure.IoT.DeviceUpdate.Models.InnerError InnerError(string code = null, string message = null, string errorDetail = null, Azure.IoT.DeviceUpdate.Models.InnerError innerErrorValue = null) { throw null; }
-        public static Azure.IoT.DeviceUpdate.Models.Operation Operation(string operationId = null, Azure.IoT.DeviceUpdate.Models.OperationStatus status = default(Azure.IoT.DeviceUpdate.Models.OperationStatus), Azure.IoT.DeviceUpdate.Models.UpdateId updateId = null, string resourceLocation = null, Azure.IoT.DeviceUpdate.Models.Error error = null, string traceId = null, System.DateTimeOffset lastActionDateTime = default(System.DateTimeOffset), System.DateTimeOffset createdDateTime = default(System.DateTimeOffset), string etag = null) { throw null; }
-        public static Azure.IoT.DeviceUpdate.Models.UpdatableDevices UpdatableDevices(Azure.IoT.DeviceUpdate.Models.UpdateId updateId = null, int deviceCount = 0) { throw null; }
-        public static Azure.IoT.DeviceUpdate.Models.Update Update(Azure.IoT.DeviceUpdate.Models.UpdateId updateId = null, string updateType = null, string installedCriteria = null, System.Collections.Generic.IReadOnlyList<Azure.IoT.DeviceUpdate.Models.Compatibility> compatibility = null, string manifestVersion = null, System.DateTimeOffset importedDateTime = default(System.DateTimeOffset), System.DateTimeOffset createdDateTime = default(System.DateTimeOffset), string etag = null) { throw null; }
-        public static Azure.IoT.DeviceUpdate.Models.UpdateCompliance UpdateCompliance(int totalDeviceCount = 0, int onLatestUpdateDeviceCount = 0, int newUpdatesAvailableDeviceCount = 0, int updatesInProgressDeviceCount = 0) { throw null; }
-    }
     public partial class UpdatesClient
     {
         protected UpdatesClient() { }
@@ -260,6 +244,22 @@ namespace Azure.IoT.DeviceUpdate.Models
         internal DeviceTag() { }
         public int DeviceCount { get { throw null; } }
         public string TagName { get { throw null; } }
+    }
+    public static partial class DeviceUpdateModelFactory
+    {
+        public static Azure.IoT.DeviceUpdate.Models.Compatibility Compatibility(string deviceManufacturer = null, string deviceModel = null) { throw null; }
+        public static Azure.IoT.DeviceUpdate.Models.DeploymentDeviceState DeploymentDeviceState(string deviceId = null, int retryCount = 0, bool movedOnToNewDeployment = false, Azure.IoT.DeviceUpdate.Models.DeviceDeploymentState deviceState = default(Azure.IoT.DeviceUpdate.Models.DeviceDeploymentState)) { throw null; }
+        public static Azure.IoT.DeviceUpdate.Models.DeploymentStatus DeploymentStatus(Azure.IoT.DeviceUpdate.Models.DeploymentState deploymentState = default(Azure.IoT.DeviceUpdate.Models.DeploymentState), int? totalDevices = default(int?), int? devicesIncompatibleCount = default(int?), int? devicesInProgressCount = default(int?), int? devicesCompletedFailedCount = default(int?), int? devicesCompletedSucceededCount = default(int?), int? devicesCanceledCount = default(int?)) { throw null; }
+        public static Azure.IoT.DeviceUpdate.Models.Device Device(string deviceId = null, string deviceClassId = null, string manufacturer = null, string model = null, string groupId = null, Azure.IoT.DeviceUpdate.Models.UpdateId lastAttemptedUpdateId = null, Azure.IoT.DeviceUpdate.Models.DeviceDeploymentState? deploymentStatus = default(Azure.IoT.DeviceUpdate.Models.DeviceDeploymentState?), Azure.IoT.DeviceUpdate.Models.UpdateId installedUpdateId = null, bool onLatestUpdate = false, string lastDeploymentId = null) { throw null; }
+        public static Azure.IoT.DeviceUpdate.Models.DeviceClass DeviceClass(string deviceClassId = null, string manufacturer = null, string model = null, Azure.IoT.DeviceUpdate.Models.UpdateId bestCompatibleUpdateId = null) { throw null; }
+        public static Azure.IoT.DeviceUpdate.Models.DeviceTag DeviceTag(string tagName = null, int deviceCount = 0) { throw null; }
+        public static Azure.IoT.DeviceUpdate.Models.Error Error(string code = null, string message = null, string target = null, System.Collections.Generic.IEnumerable<Azure.IoT.DeviceUpdate.Models.Error> details = null, Azure.IoT.DeviceUpdate.Models.InnerError innererror = null, System.DateTimeOffset? occurredDateTime = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.IoT.DeviceUpdate.Models.File File(string fileId = null, string fileName = null, long sizeInBytes = (long)0, System.Collections.Generic.IReadOnlyDictionary<string, string> hashes = null, string mimeType = null, string etag = null) { throw null; }
+        public static Azure.IoT.DeviceUpdate.Models.InnerError InnerError(string code = null, string message = null, string errorDetail = null, Azure.IoT.DeviceUpdate.Models.InnerError innerErrorValue = null) { throw null; }
+        public static Azure.IoT.DeviceUpdate.Models.Operation Operation(string operationId = null, Azure.IoT.DeviceUpdate.Models.OperationStatus status = default(Azure.IoT.DeviceUpdate.Models.OperationStatus), Azure.IoT.DeviceUpdate.Models.UpdateId updateId = null, string resourceLocation = null, Azure.IoT.DeviceUpdate.Models.Error error = null, string traceId = null, System.DateTimeOffset lastActionDateTime = default(System.DateTimeOffset), System.DateTimeOffset createdDateTime = default(System.DateTimeOffset), string etag = null) { throw null; }
+        public static Azure.IoT.DeviceUpdate.Models.UpdatableDevices UpdatableDevices(Azure.IoT.DeviceUpdate.Models.UpdateId updateId = null, int deviceCount = 0) { throw null; }
+        public static Azure.IoT.DeviceUpdate.Models.Update Update(Azure.IoT.DeviceUpdate.Models.UpdateId updateId = null, string updateType = null, string installedCriteria = null, System.Collections.Generic.IEnumerable<Azure.IoT.DeviceUpdate.Models.Compatibility> compatibility = null, string manifestVersion = null, System.DateTimeOffset importedDateTime = default(System.DateTimeOffset), System.DateTimeOffset createdDateTime = default(System.DateTimeOffset), string etag = null) { throw null; }
+        public static Azure.IoT.DeviceUpdate.Models.UpdateCompliance UpdateCompliance(int totalDeviceCount = 0, int onLatestUpdateDeviceCount = 0, int newUpdatesAvailableDeviceCount = 0, int updatesInProgressDeviceCount = 0) { throw null; }
     }
     public partial class Error
     {

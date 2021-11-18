@@ -8,7 +8,7 @@ This package contains common code for Azure Communication Service libraries.
 ### Install the package
 Install the Azure Communication Common client library for .NET with [NuGet][nuget].
 
-```Powershell
+```dotnetcli
 dotnet add package Azure.Communication.Common --version 1.0.0
 ```
 
@@ -110,7 +110,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For m
 [coc]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [coc_contact]: mailto:opencode@microsoft.com
-[azure_sub]: https://azure.microsoft.com/free/
+[azure_sub]: https://azure.microsoft.com/free/dotnet/
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/communication/Azure.Communication.Common/src
 [package]: https://www.nuget.org/packages/Azure.Communication.Common/
 [product_docs]: https://docs.microsoft.com/azure/communication-services/overview

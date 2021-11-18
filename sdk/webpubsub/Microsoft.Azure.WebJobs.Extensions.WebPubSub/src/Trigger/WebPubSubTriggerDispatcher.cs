@@ -1,21 +1,17 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Security.Cryptography;
-using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-
 using Microsoft.Azure.WebJobs.Host.Executors;
+using Microsoft.Azure.WebPubSub.Common;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Primitives;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
@@ -23,10 +19,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
     {
         private readonly Dictionary<string, WebPubSubListener> _listeners = new(StringComparer.InvariantCultureIgnoreCase);
         private readonly ILogger _logger;
+        private readonly WebPubSubFunctionsOptions _options;
 
-        public WebPubSubTriggerDispatcher(ILogger logger)
+        public WebPubSubTriggerDispatcher(ILogger logger, WebPubSubFunctionsOptions options)
         {
             _logger = logger;
+            _options = options;
         }
 
         public void AddListener(string key, WebPubSubListener listener)
@@ -39,24 +37,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         }
 
         public async Task<HttpResponseMessage> ExecuteAsync(HttpRequestMessage req,
-            HashSet<string> allowedHosts,
-            HashSet<string> accessKeys,
             CancellationToken token = default)
         {
-            // Handle service abuse check.
-            if (RespondToServiceAbuseCheck(req, allowedHosts, out var abuseResponse))
+            if (req.IsValidationRequest(out var requestHosts))
             {
-                return abuseResponse;
+                return RespondToServiceAbuseCheck(requestHosts, new WebPubSubValidationOptions(_options.ConnectionString));
             }
 
-            if (!TryParseRequest(req, out var context))
+            if (!TryParseCloudEvents(req, out var context))
             {
                 return new HttpResponseMessage(HttpStatusCode.BadRequest);
-            }
-
-            if (!ValidateSignature(context.ConnectionId, context.Signature, accessKeys))
-            {
-                return new HttpResponseMessage(HttpStatusCode.Unauthorized);
             }
 
             var tcs = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -65,13 +55,25 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
             if (_listeners.TryGetValue(function, out var executor))
             {
-                BinaryData message = null;
-                MessageDataType dataType = MessageDataType.Text;
+                if (!context.IsValidSignature(executor.ValidationOptions))
+                {
+                    return new HttpResponseMessage(HttpStatusCode.Unauthorized);
+                }
+
+                // Upstream messaging is POST method
+                if (req.Method != HttpMethod.Post)
+                {
+                    return new HttpResponseMessage(HttpStatusCode.BadRequest);
+                }
+
+                BinaryData data = null;
+                WebPubSubDataType dataType = WebPubSubDataType.Text;
                 IDictionary<string, string[]> claims = null;
                 IDictionary<string, string[]> query = null;
-                string[] subprotocols = null;
-                ClientCertificateInfo[] certificates = null;
+                IList<string> subprotocols = null;
+                IList<WebPubSubClientCertificate> certificates = null;
                 string reason = null;
+                WebPubSubEventRequest eventRequest = null;
 
                 var requestType = Utilities.GetRequestType(context.EventType, context.EventName);
                 switch (requestType)
@@ -79,23 +81,20 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                     case RequestType.Connect:
                         {
                             var content = await req.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            var request = JsonConvert.DeserializeObject<ConnectEventRequest>(content);
-                            claims = request.Claims;
-                            subprotocols = request.Subprotocols;
-                            query = request.Query;
-                            certificates = request.ClientCertificates;
+                            var request = JsonSerializer.Deserialize<ConnectEventRequest>(content);
+                            eventRequest = new ConnectEventRequest(context, request.Claims, request.Query, request.Subprotocols, request.ClientCertificates);
                             break;
                         }
-                    case RequestType.Disconnect:
+                    case RequestType.Disconnected:
                         {
                             var content = await req.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            var request = JsonConvert.DeserializeObject<DisconnectEventRequest>(content);
-                            reason = request.Reason;
+                            var request = JsonSerializer.Deserialize<DisconnectedEventRequest>(content);
+                            eventRequest = new DisconnectedEventRequest(context, request.Reason);
                             break;
                         }
                     case RequestType.User:
                         {
-                            if (!ValidateContentType(req.Content.Headers.ContentType.MediaType, out dataType))
+                            if (!Utilities.ValidateMediaType(req.Content.Headers.ContentType.MediaType, out dataType))
                             {
                                 return new HttpResponseMessage(HttpStatusCode.BadRequest)
                                 {
@@ -104,7 +103,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                             }
 
                             var payload = await req.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
-                            message = BinaryData.FromBytes(payload);
+                            data = BinaryData.FromBytes(payload);
+                            eventRequest = new UserEventRequest(context, data, dataType);
+                            break;
+                        }
+                    case RequestType.Connected:
+                        {
+                            eventRequest = new ConnectedEventRequest(context);
                             break;
                         }
                     default:
@@ -114,13 +119,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 var triggerEvent = new WebPubSubTriggerEvent
                 {
                     ConnectionContext = context,
-                    Message = message,
+                    Data = data,
                     DataType = dataType,
                     Claims = claims,
                     Query = query,
                     Subprotocols = subprotocols,
                     ClientCertificates = certificates,
                     Reason = reason,
+                    Request = eventRequest,
                     TaskCompletionSource = tcs
                 };
                 await executor.Executor.TryExecuteAsync(new TriggeredFunctionData
@@ -140,7 +146,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                             // Skip no returns
                             if (response != null)
                             {
-                                var validResponse = BuildValidResponse(response, requestType);
+                                var validResponse = Utilities.BuildValidResponse(response, requestType, context);
 
                                 if (validResponse != null)
                                 {
@@ -152,7 +158,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                     }
                     catch (Exception ex)
                     {
-                        var error = new ErrorResponse(WebPubSubErrorCode.ServerError, ex.Message);
+                        var error = new EventErrorResponse(WebPubSubErrorCode.ServerError, ex.Message);
                         return Utilities.BuildErrorResponse(error);
                     }
                 }
@@ -163,172 +169,71 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             return new HttpResponseMessage(HttpStatusCode.NotFound);
         }
 
-        private static bool TryParseRequest(HttpRequestMessage request, out ConnectionContext context)
+        private static bool TryParseCloudEvents(HttpRequestMessage request, out WebPubSubConnectionContext context)
         {
-            // ConnectionId is required in upstream request, and method is POST.
-            if (!request.Headers.Contains(Constants.Headers.CloudEvents.ConnectionId)
-                || request.Method != HttpMethod.Post)
+            try
+            {
+                var connectionId = request.Headers.GetValues(Constants.Headers.CloudEvents.ConnectionId).SingleOrDefault();
+                var hub = request.Headers.GetValues(Constants.Headers.CloudEvents.Hub).SingleOrDefault();
+                var eventType = Utilities.GetEventType(request.Headers.GetValues(Constants.Headers.CloudEvents.Type).SingleOrDefault());
+                var eventName = request.Headers.GetValues(Constants.Headers.CloudEvents.EventName).SingleOrDefault();
+                var origin = request.Headers.GetValues(Constants.Headers.WebHookRequestOrigin).SingleOrDefault();
+                var headers = request.Headers.ToDictionary(x => x.Key, v => v.Value.ToArray(), StringComparer.OrdinalIgnoreCase);
+                string signature = null;
+                // Signature is optional and binding with validation parameter.
+                if (request.Headers.TryGetValues(Constants.Headers.CloudEvents.Signature, out var val))
+                {
+                    signature = val.SingleOrDefault();
+                }
+                string userId = null;
+                // UserId is optional, e.g. connect
+                if (request.Headers.TryGetValues(Constants.Headers.CloudEvents.UserId, out var values))
+                {
+                    userId = values.SingleOrDefault();
+                }
+                Dictionary<string, object> states = null;
+                if (request.Headers.TryGetValues(Constants.Headers.CloudEvents.State, out var connectionStates))
+                {
+                    states = connectionStates.SingleOrDefault().DecodeConnectionStates();
+                }
+
+                context = new WebPubSubConnectionContext(eventType, eventName, hub, connectionId, userId, signature, origin, states, headers);
+                return true;
+            }
+            catch (Exception)
             {
                 context = null;
                 return false;
             }
-
-            context = new ConnectionContext();
-            try
-            {
-                context.ConnectionId = request.Headers.GetValues(Constants.Headers.CloudEvents.ConnectionId).SingleOrDefault();
-                context.Hub = request.Headers.GetValues(Constants.Headers.CloudEvents.Hub).SingleOrDefault();
-                context.EventType = Utilities.GetEventType(request.Headers.GetValues(Constants.Headers.CloudEvents.Type).SingleOrDefault());
-                context.EventName = request.Headers.GetValues(Constants.Headers.CloudEvents.EventName).SingleOrDefault();
-                context.Signature = request.Headers.GetValues(Constants.Headers.CloudEvents.Signature).SingleOrDefault();
-                context.Headers = request.Headers.ToDictionary(x => x.Key, v => new StringValues(v.Value.ToArray()), StringComparer.OrdinalIgnoreCase);
-
-                // UserId is optional, e.g. connect
-                if (request.Headers.TryGetValues(Constants.Headers.CloudEvents.UserId, out var values))
-                {
-                    context.UserId = values.SingleOrDefault();
-                }
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-
-            return true;
         }
 
-        private static bool ValidateSignature(string connectionId, string signature, HashSet<string> accessKeys)
-        {
-            foreach (var accessKey in accessKeys)
-            {
-                var signatures = Utilities.GetSignatureList(signature);
-                if (signatures == null)
-                {
-                    continue;
-                }
-                using var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(accessKey));
-                var hashBytes = hmac.ComputeHash(Encoding.UTF8.GetBytes(connectionId));
-                var hash = "sha256=" + BitConverter.ToString(hashBytes).Replace("-", "");
-                if (signatures.Contains(hash, StringComparer.OrdinalIgnoreCase))
-                {
-                    return true;
-                }
-                else
-                {
-                    continue;
-                }
-            }
-            return false;
-        }
-
-        private static bool ValidateContentType(string mediaType, out MessageDataType dataType)
-        {
-            try
-            {
-                dataType = Utilities.GetDataType(mediaType);
-                return true;
-            }
-            catch (Exception)
-            {
-                dataType = MessageDataType.Binary;
-                return false;
-            }
-        }
-
-        private static string GetFunctionName(ConnectionContext context)
+        private static string GetFunctionName(WebPubSubConnectionContext context)
         {
             return $"{context.Hub}.{context.EventType}.{context.EventName}";
         }
 
-        private static bool RespondToServiceAbuseCheck(HttpRequestMessage req, HashSet<string> allowedHosts, out HttpResponseMessage response)
+        private static HttpResponseMessage RespondToServiceAbuseCheck(IList<string> requestHosts, WebPubSubValidationOptions options)
         {
-            response = new HttpResponseMessage();
-            // TODO: remove Get when function core is fully supported and AWPS service is updated.
-            if (req.Method == HttpMethod.Options || req.Method == HttpMethod.Get)
+            var response = new HttpResponseMessage();
+            // skip validation and allow all.
+            if (options == null || !options.ContainsHost())
             {
-                var hosts = req.Headers.GetValues(Constants.Headers.WebHookRequestOrigin);
-                if (hosts != null && hosts.Any())
+                response.Headers.Add(Constants.Headers.WebHookAllowedOrigin, Constants.AllowedAllOrigins);
+                return response;
+            }
+            else
+            {
+                foreach (var item in requestHosts)
                 {
-                    foreach (var item in allowedHosts)
+                    if (options.ContainsHost(item))
                     {
-                        if (hosts.Contains(item))
-                        {
-                            response.Headers.Add(Constants.Headers.WebHookAllowedOrigin, hosts);
-                            return true;
-                        }
+                        response.Headers.Add(Constants.Headers.WebHookAllowedOrigin, item);
+                        return response;
                     }
-                    response.StatusCode = HttpStatusCode.BadRequest;
-                }
-                return true;
-            }
-            return false;
-        }
-
-        private static bool TryConvertResponse<T>(JObject item, out T response)
-        {
-            try
-            {
-                response = item.ToObject<T>();
-                return true;
-            }
-            catch (JsonSerializationException)
-            {
-                // ignore invalid response
-            }
-            response = default;
-            return false;
-        }
-
-        internal static HttpResponseMessage BuildValidResponse(object response, RequestType requestType)
-        {
-            JObject converted = null;
-            bool needConvert = false;
-            if (response is JObject jObject)
-            {
-                converted = jObject;
-                needConvert = true;
-            }
-            else if (response is string str)
-            {
-                converted = JObject.Parse(str);
-                needConvert = true;
-            }
-
-            // Check error
-            if (needConvert && TryConvertResponse(converted, out ErrorResponse error))
-            {
-                return Utilities.BuildErrorResponse(error);
-            }
-            else if (response is ErrorResponse errorResponse)
-            {
-                return Utilities.BuildErrorResponse(errorResponse);
-            }
-
-            if (requestType == RequestType.Connect)
-            {
-                if (needConvert)
-                {
-                    return Utilities.BuildResponse(converted.ToString());
-                }
-                else if (response is ConnectResponse connectResponse)
-                {
-                    return Utilities.BuildResponse(connectResponse);
                 }
             }
-
-            if (requestType == RequestType.User)
-            {
-                if (needConvert && TryConvertResponse(converted, out MessageResponse msgResponse))
-                {
-                    return Utilities.BuildResponse(msgResponse);
-                }
-                else if (response is MessageResponse messageResponse)
-                {
-                    return Utilities.BuildResponse(messageResponse);
-                }
-            }
-
-            return null;
+            response.StatusCode = HttpStatusCode.BadRequest;
+            return response;
         }
     }
 }

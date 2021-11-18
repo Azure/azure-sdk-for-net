@@ -7,29 +7,33 @@ using System.Diagnostics.Tracing;
 namespace Azure.Core.Diagnostics
 {
     [EventSource(Name = EventSourceName)]
-    internal sealed class AzureCoreEventSource : EventSource
+    internal sealed class AzureCoreEventSource : AzureEventSource
     {
         private const string EventSourceName = "Azure-Core";
 
-        private const int BackgroundRefreshFailedEvent = 19;
         private const int RequestEvent = 1;
         private const int RequestContentEvent = 2;
-        private const int RequestContentTextEvent = 17;
         private const int ResponseEvent = 5;
         private const int ResponseContentEvent = 6;
         private const int ResponseDelayEvent = 7;
-        private const int ResponseContentTextEvent = 13;
-        private const int ResponseContentBlockEvent = 11;
-        private const int ResponseContentTextBlockEvent = 15;
         private const int ErrorResponseEvent = 8;
         private const int ErrorResponseContentEvent = 9;
-        private const int ErrorResponseContentTextEvent = 14;
-        private const int ErrorResponseContentBlockEvent = 12;
-        private const int ErrorResponseContentTextBlockEvent = 16;
         private const int RequestRetryingEvent = 10;
+        private const int ResponseContentBlockEvent = 11;
+        private const int ErrorResponseContentBlockEvent = 12;
+        private const int ResponseContentTextEvent = 13;
+        private const int ErrorResponseContentTextEvent = 14;
+        private const int ResponseContentTextBlockEvent = 15;
+        private const int ErrorResponseContentTextBlockEvent = 16;
+        private const int RequestContentTextEvent = 17;
         private const int ExceptionResponseEvent = 18;
+        private const int BackgroundRefreshFailedEvent = 19;
+        private const int RequestRedirectEvent = 20;
+        private const int RequestRedirectBlockedEvent = 21;
+        private const int RequestRedirectCountExceededEvent = 22;
+        private const int PipelineTransportOptionsNotAppliedEvent = 23;
 
-        private AzureCoreEventSource() : base(EventSourceName, EventSourceSettings.Default, AzureEventSourceListener.TraitName, AzureEventSourceListener.TraitValue) { }
+        private AzureCoreEventSource() : base(EventSourceName) { }
 
         public static AzureCoreEventSource Singleton { get; } = new AzureCoreEventSource();
 
@@ -133,6 +137,30 @@ namespace Azure.Core.Diagnostics
         public void ExceptionResponse(string requestId, string exception)
         {
             WriteEvent(ExceptionResponseEvent, requestId, exception);
+        }
+
+        [Event(RequestRedirectEvent, Level = EventLevel.Verbose, Message = "Request [{0}] Redirecting from {1} to {2} in response to status code {3}")]
+        public void RequestRedirect(string requestId, string from, string to, int status)
+        {
+            WriteEvent(RequestRedirectEvent, requestId, from, to, status);
+        }
+
+        [Event(RequestRedirectBlockedEvent, Level = EventLevel.Warning, Message = "Request [{0}] Insecure HTTPS to HTTP redirect from {1} to {2} was blocked.")]
+        public void RequestRedirectBlocked(string requestId, string from, string to)
+        {
+            WriteEvent(RequestRedirectBlockedEvent, requestId, from, to);
+        }
+
+        [Event(RequestRedirectCountExceededEvent, Level = EventLevel.Warning, Message = "Request [{0}] Exceeded max number of redirects. Redirect from {1} to {2} blocked.")]
+        public void RequestRedirectCountExceeded(string requestId, string from, string to)
+        {
+            WriteEvent(RequestRedirectCountExceededEvent, requestId, from, to);
+        }
+
+        [Event(PipelineTransportOptionsNotAppliedEvent, Level = EventLevel.Informational, Message = "The client requires transport configuration but it was not applied because custom transport was provided. Type: {0}")]
+        public void PipelineTransportOptionsNotApplied(string optionsType)
+        {
+            WriteEvent(PipelineTransportOptionsNotAppliedEvent, optionsType);
         }
     }
 }

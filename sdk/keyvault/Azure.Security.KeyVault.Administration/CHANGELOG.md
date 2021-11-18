@@ -1,15 +1,26 @@
 # Release History
 
-## 4.1.0-beta.1 (Unreleased)
+## 4.1.0-beta.3 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
-### Key Bugs Fixed
+### Bugs Fixed
+
+### Other Changes
+
+## 4.1.0-beta.2 (2021-10-14)
+
+### Features Added
+
+- Support multi-tenant authentication against Managed HSM when using Azure.Identity 1.5.0 or newer. ([#18359](https://github.com/Azure/azure-sdk-for-net/issues/18359))
+
+## 4.1.0-beta.1 (2021-08-10)
 
 ### Fixed
 
+- The default service version is now "7.3-preview".
 
 ## 4.0.0 (2021-06-15)
 

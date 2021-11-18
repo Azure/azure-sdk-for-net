@@ -16,7 +16,12 @@ namespace Azure.Data.Tables
 {
     internal partial class TableRestClient
     {
-        internal string endpoint => url;
+        internal string endpoint
+        {
+            get { return url; }
+            set { url = value; }
+        }
+
         internal string clientVersion => version;
 
         internal HttpMessage CreateBatchRequest(MultipartContent content, string requestId, ResponseFormat? responsePreference)
@@ -38,6 +43,7 @@ namespace Azure.Data.Tables
             {
                 request.Headers.Add("Prefer", responsePreference.Value.ToString());
             }
+            request.Headers.Add("Accept", "application/json");
 
             request.Content = content;
             content.ApplyToRequest(request);

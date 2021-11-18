@@ -740,6 +740,63 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
         }
     }
 
+    /// <summary>
+    /// An <see cref="IBatchRequest"/> for the ComputeNodeExtensionGet operation.
+    /// </summary>
+    public class ComputeNodeExtensionGetBatchRequest : Protocol.BatchRequest<
+        ComputeNodeExtensionGetOptions,
+        AzureOperationResponse<NodeVMExtension, ComputeNodeExtensionGetHeaders>>
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ComputeNodeExtensionGetBatchRequest" /> class.
+        /// </summary>
+        /// <param name="serviceClient">The service client to use.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        public ComputeNodeExtensionGetBatchRequest(
+            BatchServiceClient serviceClient,
+            CancellationToken cancellationToken) : base(serviceClient, cancellationToken)
+        {
+        }
+    }
+
+    /// <summary>
+    /// An <see cref="IBatchRequest"/> for the ComputeNodeExtensionList operation.
+    /// </summary>
+    public class ComputeNodeExtensionListBatchRequest : Protocol.BatchRequest<
+        ComputeNodeExtensionListOptions,
+        AzureOperationResponse<IPage<NodeVMExtension>, ComputeNodeExtensionListHeaders>>
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ComputeNodeExtensionListBatchRequest" /> class.
+        /// </summary>
+        /// <param name="serviceClient">The service client to use.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        public ComputeNodeExtensionListBatchRequest(
+            BatchServiceClient serviceClient,
+            CancellationToken cancellationToken) : base(serviceClient, cancellationToken)
+        {
+        }
+    }
+
+    /// <summary>
+    /// An <see cref="IBatchRequest"/> for the ComputeNodeExtensionListNext operation.
+    /// </summary>
+    public class ComputeNodeExtensionListNextBatchRequest : Protocol.BatchRequest<
+        ComputeNodeExtensionListNextOptions,
+        AzureOperationResponse<IPage<NodeVMExtension>, ComputeNodeExtensionListHeaders>>
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ComputeNodeExtensionListNextBatchRequest" /> class.
+        /// </summary>
+        /// <param name="serviceClient">The service client to use.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        public ComputeNodeExtensionListNextBatchRequest(
+            BatchServiceClient serviceClient,
+            CancellationToken cancellationToken) : base(serviceClient, cancellationToken)
+        {
+        }
+    }
+
     #endregion
 
     #region Job

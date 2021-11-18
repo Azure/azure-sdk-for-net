@@ -1,15 +1,26 @@
 # Release History
 
-## 5.0.0-beta.7 (Unreleased)
+## 5.1.0-beta.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
-### Key Bugs Fixed
+### Bugs Fixed
 
-### Fixed
+### Other Changes
 
+## 5.0.0 (2021-10-21)
+
+### Features Added
+
+- General availability of Microsoft.Azure.WebJobs.Extensions.EventHubs 5.0.0.
+
+## 5.0.0-beta.7 (2021-07-07)
+
+### Breaking Changes
+
+- Renamed `MaxBatchSize` to `MaxEventBatchSize` in `EventHubsOptions`.
 
 ## 5.0.0-beta.6 (2021-06-09)
 

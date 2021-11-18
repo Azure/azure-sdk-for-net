@@ -8,8 +8,8 @@ To create a new `DocumentTranslationClient` to run a translation operation for d
 You can set `endpoint` and `apiKey` based on an environment variable, a configuration setting, or any way that works for your application.
 
 ```C# Snippet:CreateDocumentTranslationClient
-string endpoint = "<endpoint>";
-string apiKey = "<apiKey>";
+string endpoint = "<Document Translator Resource Endpoint>";
+string apiKey = "<Document Translator Resource API Key>";
 var client = new DocumentTranslationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 ```
 
@@ -19,13 +19,11 @@ To Start a translation operation for documents in multiple blob containers, call
 
 To call `StartTranslationAsync` you need to initialize a list of `DocumentTranslationInput` which contains the information needed to translate the documents. Each `DocumentTranslationInput` contains a source container and a list of target containers. The `AddTarget` method is used to add targets to the input.
 
-- The `sourceUri` is a SAS URI with read access for the document to be translated or read and list access for the blob container holding the documents to be translated.
-- The `targetUri` is a SAS URI with read and write access for the blob container to which the translated documents will be written.
-
-More on generating SAS Tokens [here](https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/get-started-with-document-translation?tabs=csharp#create-sas-access-tokens-for-document-translation)
+> The `sourceUri` and the `targetUri` are SAS URI with permissions that allow the service to access the content on the container/blob.
+See the [service documentation][Sas_token_permissions] for the supported SAS permissions.
 
 ```C# Snippet:MultipleInputsAsync
-Uri source1SasUriUri = new Uri("<source1 SAS URI>");
+Uri source1SasUri = new Uri("<source1 SAS URI>");
 Uri source2SasUri = new Uri("<source2 SAS URI>");
 Uri frenchTargetSasUri = new Uri("<french target SAS URI>");
 Uri arabicTargetSasUri = new Uri("<arabic target SAS URI>");
@@ -34,7 +32,7 @@ Uri frenchGlossarySasUri = new Uri("<french glossary SAS URI>");
 
 var glossaryFormat = "TSV";
 
-var input1 = new DocumentTranslationInput(source1SasUriUri, frenchTargetSasUri, "fr", new TranslationGlossary(frenchGlossarySasUri, glossaryFormat));
+var input1 = new DocumentTranslationInput(source1SasUri, frenchTargetSasUri, "fr", new TranslationGlossary(frenchGlossarySasUri, glossaryFormat));
 input1.AddTarget(spanishTargetSasUri, "es");
 
 var input2 = new DocumentTranslationInput(source2SasUri, arabicTargetSasUri, "ar");
@@ -50,20 +48,20 @@ DocumentTranslationOperation operation = await client.StartTranslationAsync(inpu
 
 await operation.WaitForCompletionAsync();
 
-await foreach (DocumentStatus document in operation.GetValuesAsync())
+await foreach (DocumentStatusResult document in operation.GetValuesAsync())
 {
     Console.WriteLine($"Document with Id: {document.Id}");
     Console.WriteLine($"  Status:{document.Status}");
     if (document.Status == DocumentTranslationStatus.Succeeded)
     {
         Console.WriteLine($"  Translated Document Uri: {document.TranslatedDocumentUri}");
-        Console.WriteLine($"  Translated to language: {document.TranslatedTo}.");
+        Console.WriteLine($"  Translated to language code: {document.TranslatedToLanguageCode}.");
         Console.WriteLine($"  Document source Uri: {document.SourceDocumentUri}");
     }
     else
     {
         Console.WriteLine($"  Document source Uri: {document.SourceDocumentUri}");
-        Console.WriteLine($"  Error Code: {document.Error.ErrorCode}");
+        Console.WriteLine($"  Error Code: {document.Error.Code}");
         Console.WriteLine($"  Message: {document.Error.Message}");
     }
 }
@@ -74,5 +72,6 @@ To see the full example source files, see:
 * [Synchronously MultipleInputs ](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/translation/Azure.AI.Translation.Document/tests/samples/Sample_MultipleInputs.cs)
 * [Asynchronously MultipleInputs ](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/translation/Azure.AI.Translation.Document/tests/samples/Sample_MultipleInputsAsync.cs)
 
+[Sas_token_permissions]: https://aka.ms/azsdk/documenttranslation/sas-permissions
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
 [README]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/translation/Azure.AI.Translation.Document/README.md

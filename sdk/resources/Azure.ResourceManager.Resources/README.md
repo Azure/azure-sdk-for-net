@@ -9,12 +9,12 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 Install the Azure Resources management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```PowerShell
-Install-Package Azure.ResourceManager.Resources -Version 1.0.0-preview.2 
+Install-Package Azure.ResourceManager.Resources -Version 1.0.0-beta.3
 ```
 
 ### Prerequisites
 
-* You must have an [Azure subscription](https://azure.microsoft.com/free/)
+* You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/)
 
 ### Authenticate the Client
 

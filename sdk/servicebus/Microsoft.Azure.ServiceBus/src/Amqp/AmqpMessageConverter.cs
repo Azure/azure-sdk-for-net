@@ -27,6 +27,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
         const string PartitionIdName = "x-opt-partition-id";
         const string ViaPartitionKeyName = "x-opt-via-partition-key";
         const string DeadLetterSourceName = "x-opt-deadletter-source";
+        const string MessageStateName = "x-opt-message-state";
         const string TimeSpanName = AmqpConstants.Vendor + ":timespan";
         const string UriName = AmqpConstants.Vendor + ":uri";
         const string DateTimeOffsetName = AmqpConstants.Vendor + ":datetime-offset";
@@ -328,6 +329,13 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                             break;
                         case DeadLetterSourceName:
                             sbMessage.SystemProperties.DeadLetterSource = (string)pair.Value;
+                            break;
+                        case MessageStateName:
+                            if (Enum.IsDefined(typeof(MessageState), (int)pair.Value))
+                            {
+                                sbMessage.SystemProperties.State = (MessageState)(int)pair.Value;
+                            }
+                            
                             break;
                         default:
                             if (TryGetNetObjectFromAmqpObject(pair.Value, MappingType.ApplicationProperty, out var netObject))
