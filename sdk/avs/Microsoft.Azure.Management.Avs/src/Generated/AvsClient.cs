@@ -130,6 +130,16 @@ namespace Microsoft.Azure.Management.Avs
         public virtual IAddonsOperations Addons { get; private set; }
 
         /// <summary>
+        /// Gets the IVirtualMachinesOperations.
+        /// </summary>
+        public virtual IVirtualMachinesOperations VirtualMachines { get; private set; }
+
+        /// <summary>
+        /// Gets the IPlacementPoliciesOperations.
+        /// </summary>
+        public virtual IPlacementPoliciesOperations PlacementPolicies { get; private set; }
+
+        /// <summary>
         /// Gets the IScriptPackagesOperations.
         /// </summary>
         public virtual IScriptPackagesOperations ScriptPackages { get; private set; }
@@ -396,11 +406,13 @@ namespace Microsoft.Azure.Management.Avs
             WorkloadNetworks = new WorkloadNetworksOperations(this);
             CloudLinks = new CloudLinksOperations(this);
             Addons = new AddonsOperations(this);
+            VirtualMachines = new VirtualMachinesOperations(this);
+            PlacementPolicies = new PlacementPoliciesOperations(this);
             ScriptPackages = new ScriptPackagesOperations(this);
             ScriptCmdlets = new ScriptCmdletsOperations(this);
             ScriptExecutions = new ScriptExecutionsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2021-06-01";
+            ApiVersion = "2021-12-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -434,6 +446,8 @@ namespace Microsoft.Azure.Management.Avs
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<AddonProperties>("addonType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<WorkloadNetworkDhcpEntity>("dhcpType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<WorkloadNetworkDhcpEntity>("dhcpType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<PlacementPolicyProperties>("type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<PlacementPolicyProperties>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ScriptExecutionParameter>("type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ScriptExecutionParameter>("type"));
             CustomInitialize();

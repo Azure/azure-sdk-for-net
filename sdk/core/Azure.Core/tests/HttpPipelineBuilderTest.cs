@@ -234,6 +234,19 @@ namespace Azure.Core.Tests
             }
         }
 
+        [Test]
+        public void CanPassNullPolicies([Values(true, false)] bool isCustomTransportSet)
+        {
+            var pipeline = HttpPipelineBuilder.Build(
+                new TestOptions(),
+                new HttpPipelinePolicy[] { null },
+                new HttpPipelinePolicy[] { null },
+                null);
+
+            var message = pipeline.CreateMessage();
+            pipeline.SendAsync(message, message.CancellationToken);
+        }
+
         private class TestOptions : ClientOptions
         {
             public TestOptions()
