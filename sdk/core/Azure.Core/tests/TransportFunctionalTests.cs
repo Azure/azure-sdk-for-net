@@ -94,15 +94,14 @@ namespace Azure.Core.Tests
                 context =>
                 {
                     contentLength = context.Request.ContentLength.Value;
+                    context.Abort();
                 });
 
-            var requestContentLength = long.MaxValue;
             var transport = GetTransport();
             Request request = transport.CreateRequest();
             request.Method = RequestMethod.Post;
             request.Uri.Reset(testServer.Address);
-            request.Content = RequestContent.Create(new byte[10]);
-            request.Headers.Add("Content-Length", requestContentLength.ToString());
+            request.Content = RequestContent.Create(new InfiniteStream());
 
             try
             {
@@ -113,7 +112,7 @@ namespace Azure.Core.Tests
                 // Sending the request would fail because of length mismatch
             }
 
-            Assert.AreEqual(requestContentLength, requestContentLength);
+            Assert.AreEqual(long.MaxValue, contentLength);
         }
 
         [Test]
