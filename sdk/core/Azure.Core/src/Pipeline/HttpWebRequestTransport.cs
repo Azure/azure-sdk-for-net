@@ -129,6 +129,8 @@ namespace Azure.Core.Pipeline
                 request.Proxy = _environmentProxy;
             }
 
+            request.ServicePoint.Expect100Continue = false;
+
             _configureRequest(request);
 
             request.Method = messageRequest.Method.Method;
@@ -184,7 +186,14 @@ namespace Azure.Core.Pipeline
 
                 if (string.Equals(messageRequestHeader.Name, "Expect", StringComparison.OrdinalIgnoreCase))
                 {
-                    request.Expect = messageRequestHeader.Value;
+                    if (messageRequestHeader.Value == "100-continue")
+                    {
+                        request.ServicePoint.Expect100Continue = true;
+                    }
+                    else
+                    {
+                        request.Expect = messageRequestHeader.Value;
+                    }
                     continue;
                 }
 

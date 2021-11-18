@@ -219,7 +219,7 @@ namespace Azure.Core.Tests
                 new ResponseClassifier(),
                 new HttpPipelineTransportOptions());
 
-            HttpPipelineTransport transportField = pipeline.GetType().BaseType.GetField("_transport", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.GetField).GetValue(pipeline) as HttpPipelineTransport;
+            HttpPipelineTransport transportField = pipeline.GetType().GetField("_transport", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.GetField).GetValue(pipeline) as HttpPipelineTransport;
             if (isCustomTransportSet)
             {
                 Assert.That(transportField, Is.TypeOf<MockTransport>());
@@ -232,6 +232,19 @@ namespace Azure.Core.Tests
             {
                 Assert.That(transportField, Is.Not.TypeOf<MockTransport>());
             }
+        }
+
+        [Test]
+        public void CanPassNullPolicies([Values(true, false)] bool isCustomTransportSet)
+        {
+            var pipeline = HttpPipelineBuilder.Build(
+                new TestOptions(),
+                new HttpPipelinePolicy[] { null },
+                new HttpPipelinePolicy[] { null },
+                null);
+
+            var message = pipeline.CreateMessage();
+            pipeline.SendAsync(message, message.CancellationToken);
         }
 
         private class TestOptions : ClientOptions

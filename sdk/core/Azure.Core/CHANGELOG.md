@@ -6,11 +6,19 @@
 
 ### Breaking Changes
 
+- Added logging of `api-version` query parameter by default. In order to redact this, you can do the following:
+```c#
+options.Diagnostics.LoggedQueryParameters.Remove("api-version");
+```
+- Added `AddPolicies` method to `RequestContext`.  This allows policies to be added to the pipeline when calling protocol methods.
+
 ### Bugs Fixed
 
 ### Other Changes
 
 ## 1.21.0 (2021-11-03)
+
+### Features Added
 
 - Added `RequestContext` and `ErrorOptions` types to aid in configuring requests.
 - Added `ContentType` strongly-typed string to allow operation callers to specify the content type of a request.
@@ -29,10 +37,11 @@
 
 ## 1.19.0 (2021-09-07)
 
+### Features Added
+
 - Added `HttpAuthorization` to represent authentication information in Authorization, ProxyAuthorization, WWW-Authenticate, and Proxy-Authenticate header values.
 
 ## 1.18.0 (2021-08-18)
-
 
 ### Bugs Fixed
 
