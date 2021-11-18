@@ -19,7 +19,12 @@ namespace Microsoft.Azure.WebPubSub.Common
         [JsonPropertyName(ReasonProperty)]
         public string Reason { get; }
 
-        internal DisconnectedEventRequest(string reason) : base(null)
+        /// <summary>
+        /// The disconnected event request
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="reason"></param>
+        public DisconnectedEventRequest(WebPubSubConnectionContext context, string reason) : base(context)
         {
             Reason = reason;
         }

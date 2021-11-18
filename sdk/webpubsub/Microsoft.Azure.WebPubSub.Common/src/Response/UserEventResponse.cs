@@ -13,38 +13,43 @@ namespace Microsoft.Azure.WebPubSub.Common
     /// </summary>
     public class UserEventResponse : WebPubSubEventResponse
     {
-        internal Dictionary<string, object> States = new();
+        private Dictionary<string, object> _states = new();
+
+        /// <summary>
+        /// The connection states
+        /// </summary>
+        public IReadOnlyDictionary<string, object> States => _states;
 
         /// <summary>
         /// Message.
         /// </summary>
-        [JsonPropertyName("message"), JsonConverter(typeof(BinaryDataJsonConverter))]
-        public BinaryData Message { get; set; }
+        [JsonPropertyName("data"), JsonConverter(typeof(BinaryDataJsonConverter))]
+        public BinaryData Data { get; set; }
 
         /// <summary>
         /// Message data type.
         /// </summary>
         [JsonPropertyName("dataType"), JsonConverter(typeof(JsonStringEnumConverter))]
-        public MessageDataType DataType { get; set; }
+        public WebPubSubDataType DataType { get; set; }
 
         /// <summary>
         /// Initialize an instance of MessageResponse.
         /// </summary>
-        /// <param name="message">BinaryData type message.</param>
+        /// <param name="data">BinaryData type message.</param>
         /// <param name="dataType">Message data type.</param>
-        public UserEventResponse(BinaryData message, MessageDataType dataType)
+        public UserEventResponse(BinaryData data, WebPubSubDataType dataType)
         {
-            Message = message;
+            Data = data;
             DataType = dataType;
         }
 
         /// <summary>
         /// Initialize an instance of MessageResponse.
         /// </summary>
-        /// <param name="message">String type message.</param>
+        /// <param name="data">String type message.</param>
         /// <param name="dataType">Message data type. Default set to text.</param>
-        public UserEventResponse(string message, MessageDataType dataType = MessageDataType.Text)
-            : this(BinaryData.FromString(message), dataType)
+        public UserEventResponse(string data, WebPubSubDataType dataType = WebPubSubDataType.Text)
+            : this(BinaryData.FromString(data), dataType)
         { }
 
         /// <summary>
@@ -61,11 +66,11 @@ namespace Microsoft.Azure.WebPubSub.Common
         public void SetState(string key, object value)
         {
             // In case user cleared states.
-            if (States == null)
+            if (_states == null)
             {
-                States = new Dictionary<string, object>();
+                _states = new Dictionary<string, object>();
             }
-            States[key] = value;
+            _states[key] = value;
         }
 
         /// <summary>
@@ -73,7 +78,7 @@ namespace Microsoft.Azure.WebPubSub.Common
         /// </summary>
         public void ClearStates()
         {
-            States = null;
+            _states = null;
         }
     }
 }

@@ -228,6 +228,14 @@ namespace Microsoft.Azure.Batch
 
         #region Constructors
 
+        /// <summary>
+        /// Default constructor to support mocking the <see cref="CloudTask"/> class.
+        /// </summary>
+        protected CloudTask()
+        {
+            this.propertyContainer = new PropertyContainer();
+        }
+
         internal CloudTask(
             BatchClient parentBatchClient,
             string parentJobId,

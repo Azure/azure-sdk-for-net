@@ -2,7 +2,7 @@
   "Name": "UserIdentity",
   "ProtocolName": "Models.UserIdentity",
   "SummaryComment": "The definition of the user identity under which the task is run.",
-  "IsConstructorPublic": false,
+  "ConstructorAccess": "internal",
   "Properties": [
     {
       "Key": {

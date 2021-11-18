@@ -125,7 +125,7 @@ namespace Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents.Tests
             foreach (JsonElement property in requestDocument.RootElement.EnumerateArray())
             {
                 var bytes = JsonSerializer.SerializeToUtf8Bytes(property, typeof(JsonElement));
-                cloudEvents.Add(s_eventFormatter.DecodeStructuredModeMessage(bytes, new ContentType("application/json"), null));
+                cloudEvents.Add(s_eventFormatter.DecodeStructuredModeMessage(bytes, new System.Net.Mime.ContentType("application/json"), null));
             }
 
             return cloudEvents;

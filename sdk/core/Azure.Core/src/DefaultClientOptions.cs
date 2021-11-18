@@ -10,7 +10,7 @@ namespace Azure.Core
     {
         public DefaultClientOptions(): base(null)
         {
-            Transport = GetDefaultTransport();
+            Transport = HttpPipelineTransport.Create();
             Diagnostics.IsTelemetryEnabled = !EnvironmentVariableToBool(Environment.GetEnvironmentVariable("AZURE_TELEMETRY_DISABLED")) ?? true;
             Diagnostics.IsDistributedTracingEnabled = !EnvironmentVariableToBool(Environment.GetEnvironmentVariable("AZURE_TRACING_DISABLED")) ?? true;
         }
@@ -30,19 +30,6 @@ namespace Azure.Core
             }
 
             return null;
-        }
-
-        private static HttpPipelineTransport GetDefaultTransport()
-        {
-#if NETFRAMEWORK
-            if (!AppContextSwitchHelper.GetConfigValue(
-                "Azure.Core.Pipeline.DisableHttpWebRequestTransport",
-                "AZURE_CORE_DISABLE_HTTPWEBREQUESTTRANSPORT"))
-            {
-                return HttpWebRequestTransport.Shared;
-            }
-#endif
-            return HttpClientTransport.Shared;
         }
     }
 }

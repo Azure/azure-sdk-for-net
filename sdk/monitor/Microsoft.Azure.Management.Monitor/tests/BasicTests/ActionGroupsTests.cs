@@ -18,6 +18,42 @@ namespace Monitor.Tests.BasicTests
     {
         [Fact]
         [Trait("Category", "Mock")]
+        public void GetTestNotificationStatusTest()
+        {
+            TestNotificationDetailsResponse expectedActionGroup = GetTestNotificationStatusResponseBody();
+
+            var handler = new RecordedDelegatingHandler();
+            var insightsClient = GetMonitorManagementClient(handler);
+            var serializedObject = Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(expectedActionGroup, insightsClient.SerializationSettings);
+            var expectedResponse = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(serializedObject)
+            };
+
+            handler = new RecordedDelegatingHandler(expectedResponse);
+            insightsClient = GetMonitorManagementClient(handler);
+
+            TestNotificationDetailsResponse statusResponse = insightsClient.ActionGroups.GetTestNotificationsAsync("11000340935777").Result;
+
+            Assert.Equal(statusResponse.Context.ContextType, expectedActionGroup.Context.ContextType);
+            Assert.Equal(statusResponse.Context.NotificationSource, expectedActionGroup.Context.NotificationSource);
+            Assert.Equal(statusResponse.CreatedTime, expectedActionGroup.CreatedTime);
+            Assert.Equal(statusResponse.CompletedTime, expectedActionGroup.CompletedTime);
+            Assert.Equal(statusResponse.State, expectedActionGroup.State);
+
+            for (int i = 0; i < statusResponse.ActionDetails.Count; i++)
+            {
+                Assert.Equal(statusResponse.ActionDetails[i].MechanismType, expectedActionGroup.ActionDetails[i].MechanismType);
+                Assert.Equal(statusResponse.ActionDetails[i].Name, expectedActionGroup.ActionDetails[i].Name);
+                Assert.Equal(statusResponse.ActionDetails[i].SendTime, expectedActionGroup.ActionDetails[i].SendTime);
+                Assert.Equal(statusResponse.ActionDetails[i].Status, expectedActionGroup.ActionDetails[i].Status);
+                Assert.Equal(statusResponse.ActionDetails[i].SubState, expectedActionGroup.ActionDetails[i].SubState);
+                Assert.Equal(statusResponse.ActionDetails[i].Detail, expectedActionGroup.ActionDetails[i].Detail);
+            }
+        }
+
+        [Fact]
+        [Trait("Category", "Mock")]
         public void CreateOrUpdateActionGroupTest()
         {
             ActionGroupResource expectedParameters = GetCreateOrUpdateActionGroupParameter();
@@ -172,7 +208,7 @@ namespace Monitor.Tests.BasicTests
             monitorManagementClient = GetMonitorManagementClient(handler);
 
             AzureOperationResponse response = monitorManagementClient.ActionGroups.EnableReceiverWithHttpMessagesAsync(
-                resourceGroupName: "rg1", 
+                resourceGroupName: "rg1",
                 actionGroupName: "name1",
                 receiverName: "receiverName1").Result;
 
@@ -205,6 +241,7 @@ namespace Monitor.Tests.BasicTests
                 AreEqual(exp.ItsmReceivers, act.ItsmReceivers);
                 AreEqual(exp.AzureAppPushReceivers, act.AzureAppPushReceivers);
                 AreEqual(exp.AutomationRunbookReceivers, act.AutomationRunbookReceivers);
+                AreEqual(exp.EventHubReceivers, exp.EventHubReceivers);
             }
         }
 
@@ -285,6 +322,17 @@ namespace Monitor.Tests.BasicTests
             }
         }
 
+        private static void AreEqual(IList<EventHubReceiver> exp, IList<EventHubReceiver> act)
+        {
+            if (exp != null)
+            {
+                for (int i = 0; i < exp.Count; i++)
+                {
+                    AreEqual(exp[i], act[i]);
+                }
+            }
+        }
+
         private static void AreEqual(EmailReceiver exp, EmailReceiver act)
         {
             if (exp != null)
@@ -347,6 +395,92 @@ namespace Monitor.Tests.BasicTests
             }
         }
 
+        private static void AreEqual(EventHubReceiver exp, EventHubReceiver act)
+        {
+            if (exp != null)
+            {
+                Assert.Equal(exp.SubscriptionId, act.SubscriptionId);
+                Assert.Equal(exp.EventHubNameSpace, act.EventHubNameSpace);
+                Assert.Equal(exp.Name, act.Name);
+                Assert.Equal(exp.EventHubName, act.EventHubName);
+                Assert.Equal(exp.UseCommonAlertSchema, act.UseCommonAlertSchema);
+            }
+        }
+
+        private static NotificationRequestBody GetNotificationRequestBody()
+        {
+            return new NotificationRequestBody
+            {
+                AlertType = "budget",
+                SmsReceivers = new List<SmsReceiver>
+                {
+                    new SmsReceiver {
+                        CountryCode = "84",
+                        Name = "Just a name",
+                        PhoneNumber = "5555555555"
+                    }
+                },
+                EmailReceivers = new List<EmailReceiver>
+                {
+                    new EmailReceiver {
+                        EmailAddress = "example@test.me",
+                        UseCommonAlertSchema = false,
+                        Name = "email name"
+                    }
+                },
+                VoiceReceivers = new List<VoiceReceiver>
+                {
+                    new VoiceReceiver {
+                        CountryCode = "1",
+                        Name = "Voice name 1",
+                        PhoneNumber = "4444444444"
+                    }
+                }
+            };
+        }
+
+        private static TestNotificationDetailsResponse GetTestNotificationStatusResponseBody()
+        {
+            return new TestNotificationDetailsResponse
+            {
+                Context = new Context
+                {
+                    ContextType = "Microsoft.Insights/Budget",
+                    NotificationSource = "Microsoft.Insights/TestNotification"
+                },
+                CreatedTime = DateTime.UtcNow.ToString(),
+                CompletedTime = DateTime.UtcNow.ToString(),
+                State = "Completed",
+                ActionDetails = new List<ActionDetail>
+                {
+                    new ActionDetail {
+                        MechanismType = "Email",
+                        Name = "Email #1",
+                        Status = "Completed",
+                        SubState = "Default",
+                        SendTime = "2021-10-25T02:06:19.5340048+00:00",
+                        Detail = null
+                    },
+                    new ActionDetail {
+                        MechanismType = "Sms",
+                        Name = "Sms #1",
+                        Status = "Completed",
+                        SubState = "Default",
+                        SendTime = "2021-10-25T02:06:19.5340048+00:00",
+                        Detail = null
+                    },
+                    new ActionDetail {
+                        MechanismType = "Voice",
+                        Name = "Sms #1",
+                        Status = "Completed",
+                        SubState = "Default",
+                        SendTime = "2021-10-25T02:06:19.5340048+00:00",
+                        Detail = null
+                    }
+                }
+            };
+        }
+
         private static ActionGroupResource GetCreateOrUpdateActionGroupParameter(
             string name = "name1", 
             List<EmailReceiver> emailReceivers = null, 
@@ -354,7 +488,8 @@ namespace Monitor.Tests.BasicTests
             List<WebhookReceiver> webhookReceivers = null,
             List<AzureAppPushReceiver> azureAppPushReceivers = null,
             List<ItsmReceiver> itsmReceivers = null,
-            List<AutomationRunbookReceiver> automationRunbookReceivers = null)
+            List<AutomationRunbookReceiver> automationRunbookReceivers = null,
+            List<EventHubReceiver> eventHubReceivers = null)
         {
             // Name and id won't be serialized since they are readonly
             return new ActionGroupResource(
@@ -372,7 +507,8 @@ namespace Monitor.Tests.BasicTests
                 webhookReceivers: webhookReceivers,
                 azureAppPushReceivers: azureAppPushReceivers,
                 itsmReceivers: itsmReceivers,
-                automationRunbookReceivers: automationRunbookReceivers
+                automationRunbookReceivers: automationRunbookReceivers,
+                eventHubReceivers: eventHubReceivers
             );
         }
     }

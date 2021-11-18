@@ -1,17 +1,20 @@
 # Azure Web PubSub service client library for .NET
 
-[Azure Web PubSub Service](https://aka.ms/awps/doc) is a service that enables you to build real-time messaging web applications using WebSockets and the publish-subscribe pattern. Any platform supporting WebSocket APIs can connect to the service easily, e.g. web pages, mobile applications, edge devices, etc. The service manages the WebSocket connections for you and allows up to 100K **concurrent** connections. It provides powerful APIs for you to manage these clients and deliver real-time messages.
+[Azure Web PubSub Service](https://aka.ms/awps/doc) is an Azure-managed service that helps developers easily build web applications with real-time features and publish-subscribe pattern. Any scenario that requires real-time publish-subscribe messaging between server and clients or among clients can use Azure Web PubSub service. Traditional real-time features that often require polling from server or submitting HTTP requests can also use Azure Web PubSub service.
 
-Any scenario that requires real-time publish-subscribe messaging between server and clients or among clients, can use Azure Web PubSub service. Traditional real-time features that often require polling from server or submitting HTTP requests, can also use Azure Web PubSub service.
+You can use this library in your app server side to manage the WebSocket client connections, as shown in below diagram:
 
-This library can be used to do the following actions. Details about the terms used here are described in [Key concepts](#key-concepts) section.
+![overflow](https://user-images.githubusercontent.com/668244/140014067-25a00959-04dc-47e8-ac25-6957bd0a71ce.png)
 
+Use this library to:
 - Send messages to hubs and groups. 
 - Send messages to particular users and connections.
 - Organize users and connections into groups.
 - Close connections
 - Grant, revoke, and check permissions for an existing connection
 
+Details about the terms used here are described in [Key concepts](#key-concepts) section.
+ 
 [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/webpubsub/Azure.Messaging.WebPubSub/src) |
 [Package](https://www.nuget.org/packages/Azure.Messaging.WebPubSub) |
 [API reference documentation](https://aka.ms/awps/sdk/csharp) |
@@ -25,7 +28,7 @@ This library can be used to do the following actions. Details about the terms us
 Install the client library from [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.Messaging.WebPubSub --prerelease
+dotnet add package Azure.Messaging.WebPubSub
 ```
 
 ### Prerequisites
@@ -33,11 +36,9 @@ dotnet add package Azure.Messaging.WebPubSub --prerelease
 - An [Azure subscription][azure_sub].
 - An existing Azure Web PubSub service instance.
 
-### Authenticate the client
+### Create and authenticate a `WebPubSubServiceClient`
 
-In order to interact with the service, you'll need to create an instance of the WebPubSubServiceClient class. To make this possible, you'll need the connection string or a key, which you can access in the Azure portal.
-
-### Create a `WebPubSubServiceClient`
+In order to interact with the service, you'll need to create an instance of the `WebPubSubServiceClient` class. To make this possible, you'll need the connection string or a key, which you can access in the Azure portal.
 
 ```C# Snippet:WebPubSubAuthenticate
 var serviceClient = new WebPubSubServiceClient(new Uri(endpoint), "some_hub", new AzureKeyCredential(key));
@@ -47,15 +48,15 @@ var serviceClient = new WebPubSubServiceClient(new Uri(endpoint), "some_hub", ne
 
 ### Connection
 
-Connections, represented by a connection id, represent an individual websocket connection to the Web PubSub service. Connection id is always unique.
+A connection, also known as a client or a client connection, represents an individual WebSocket connection connected to the Web PubSub service. When successfully connected, a unique connection ID is assigned to this connection by the Web PubSub service.
 
 ### Hub
 
-Hub is a logical concept for a set of connections. Connections are always connected to a specific hub. Messages that are broadcast to the hub are dispatched to all connections to that hub. Hub can be used for different applications, different applications can share one Azure Web PubSub service by using different hub names.
+A hub is a logical concept for a set of client connections. Usually you use one hub for one purpose, for example, a chat hub, or a notification hub. When a client connection is created, it connects to a hub, and during its lifetime, it belongs to that hub. Different applications can share one Azure Web PubSub service by using different hub names.
 
 ### Group
 
-Group allow broadcast messages to a subset of connections to the hub. You can add and remove users and connections as needed. A client can join multiple groups, and a group can contain multiple clients.
+A group is a subset of connections to the hub. You can add a client connection to a group, or remove the client connection from the group, anytime you want. For example, when a client joins a chat room, or when a client leaves the chat room, this chat room can be considered to be a group. A client can join multiple groups, and a group can contain multiple clients.
 
 ### User
 
@@ -63,7 +64,7 @@ Connections to Web PubSub can belong to one user. A user might have multiple con
 
 ### Message
 
-Using this library, you can send messages to the client connections. A message can either be string text, JSON or binary payload.
+When a client is connected, it can send messages to the upstream application, or receive messages from the upstream application, through the WebSocket connection.
 
 ## Examples
 
@@ -107,7 +108,9 @@ You can also easily [enable console logging](https://github.com/Azure/azure-sdk-
 
 Please take a look at the
 [samples][samples_ref]
-directory for detailed examples on how to use this library.
+directory for detailed examples on how to use this library. 
+
+You can also find [more samples here][awps_sample].
 
 ## Contributing
 
@@ -126,3 +129,4 @@ For more information see the [Code of Conduct FAQ](https://opensource.microsoft.
 
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [samples_ref]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/webpubsub/Azure.Messaging.WebPubSub/tests/Samples/
+[awps_sample]: https://github.com/Azure/azure-webpubsub/tree/main/samples/csharp
