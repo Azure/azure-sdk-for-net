@@ -91,6 +91,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        [Retry(3)] // For flakiness
         public async Task CanSetContentLengthOverMaxInt()
         {
             long contentLength = 0;
