@@ -156,7 +156,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 foreach (var item in statesObj.RootElement.EnumerateObject())
                 {
                     // Use ToString() to set pure value without ValueKind.
-                    states.Add(item.Name, item.Value.ToString());
+                    states.Add(item.Name, item.Value);
                 }
                 return states;
             }

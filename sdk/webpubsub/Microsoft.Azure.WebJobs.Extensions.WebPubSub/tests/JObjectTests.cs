@@ -348,6 +348,35 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             Assert.AreEqual(url, json["url"].ToString());
         }
 
+        [Test]
+        public void TestEncodeAndDecodeState()
+        {
+            var customizeClass = new StateTestClass();
+            var state = new Dictionary<string, object>
+            {
+                { "string", "aaa" },
+                { "int", 123 },
+                { "customized", customizeClass }
+            };
+
+            var encoded = state.EncodeConnectionStates();
+
+            var decoded = encoded.DecodeConnectionStates();
+
+            Assert.NotNull(decoded);
+            Assert.AreEqual(3, decoded.Count);
+
+            // put to connectionContext for validation.
+            var connectionContext = new WebPubSubConnectionContext(eventType: WebPubSubEventType.System, null, null, null, states: decoded);
+
+            Assert.AreEqual("aaa", connectionContext.GetState<string>("string"));
+            Assert.AreEqual(123, connectionContext.GetState<int>("int"));
+            var resultClass = connectionContext.GetState<StateTestClass>("customized");
+            Assert.AreEqual(customizeClass.Timestamp, resultClass.Timestamp);
+            Assert.AreEqual(customizeClass.Title, resultClass.Title);
+            Assert.AreEqual(customizeClass.Version, resultClass.Version);
+        }
+
         private static HttpResponseMessage BuildResponse(string input, RequestType requestType, bool hasTestStates = false)
         {
             Dictionary<string, object> states = null;
@@ -360,6 +389,29 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             }
             var context = new WebPubSubConnectionContext(WebPubSubEventType.System, "connect", "testhub", "Connection-Id1", states: states);
             return Utilities.BuildValidResponse(input, requestType, context);
+        }
+
+        private sealed class StateTestClass
+        {
+            public DateTime Timestamp { get; set; }
+
+            public string Title { get; set; }
+
+            public int Version { get; set; }
+
+            public StateTestClass()
+            {
+                Timestamp = DateTime.Parse("2021-11-10");
+                Title = "GA";
+                Version = 1;
+            }
+
+            public StateTestClass(DateTime timestamp, string title, int version)
+            {
+                Timestamp = timestamp;
+                Title = title;
+                Version = version;
+            }
         }
     }
 }

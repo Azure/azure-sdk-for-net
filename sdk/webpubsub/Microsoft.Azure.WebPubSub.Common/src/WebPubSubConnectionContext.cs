@@ -1,8 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace Microsoft.Azure.WebPubSub.Common
@@ -87,8 +89,32 @@ namespace Microsoft.Azure.WebPubSub.Common
             UserId = userId;
             Signature = signature;
             Origin = origin;
-            States = states;
-            Headers = headers;
+            States = states ?? new Dictionary<string, object>();
+            Headers = headers ?? new Dictionary<string, string[]>();
+        }
+
+        /// <summary>
+        /// Method to deserialize state to customized type.
+        /// </summary>
+        /// <typeparam name="T">Customized type.</typeparam>
+        /// <param name="stateKey">State key.</param>
+        /// <returns>Connection state mapped to the key.</returns>
+        public T GetState<T>(string stateKey)
+        {
+            if (States.TryGetValue(stateKey, out var value))
+            {
+                if (value != null)
+                {
+                    // Should ensure in server SDK.
+                    if (value is not JsonElement)
+                    {
+                        throw new ArgumentException("States value should be inserted with type `JsonElement`.");
+                    }
+                    var element = (JsonElement)value;
+                    return JsonSerializer.Deserialize<T>(element.GetRawText());
+                }
+            }
+            return default(T);
         }
     }
 }
