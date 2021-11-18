@@ -1832,8 +1832,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         Assert.That(readEvent.GetRawAmqpMessage().GetPartitionKey(null), Is.Null, $"The partition key should not have been set for the event with body: [{ readEvent.EventBody }].");
                     }
 
-                    cancellationSource.Token.ThrowIfCancellationRequested();
-                    await Task.Delay(50);
+                    await Task.Delay(10, cancellationSource.Token);
                 }
 
                 Assert.That(readEventCount, Is.EqualTo(events.Length), "The number of events read should match the source length.");
@@ -1911,8 +1910,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         Assert.That(readEvent.GetRawAmqpMessage().GetPartitionKey(null), Is.EqualTo(partitionKey), $"The partition key should have been preserved for the event with body: [{ readEvent.EventBody }].");
                     }
 
-                    cancellationSource.Token.ThrowIfCancellationRequested();
-                    await Task.Delay(50);
+                    await Task.Delay(10, cancellationSource.Token);
                 }
 
                 Assert.That(readEventCount, Is.EqualTo(events.Length), "The number of events read should match the source length.");
@@ -1981,8 +1979,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         Assert.That(readEvent.GetRawAmqpMessage().GetPartitionKey(null), Is.Null, $"The partition key should not have been set for the event with body: [{ readEvent.EventBody }].");
                     }
 
-                    cancellationSource.Token.ThrowIfCancellationRequested();
-                    await Task.Delay(50);
+                    await Task.Delay(10, cancellationSource.Token);
                 }
 
                 Assert.That(readEventCount, Is.EqualTo(events.Length), "The number of events read should match the source length.");
@@ -2063,8 +2060,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         Assert.That(readEvent.GetRawAmqpMessage().GetPartitionKey(null), Is.Null, $"The partition key should not have been set for the event with body: [{ readEvent.EventBody }].");
                     }
 
-                    cancellationSource.Token.ThrowIfCancellationRequested();
-                    await Task.Delay(50);
+                    await Task.Delay(10, cancellationSource.Token);
                 }
 
                 await enqueueTask;
@@ -2581,6 +2577,13 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(producer => producer.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
                 .ReturnsAsync(partitions);
 
+            mockBufferedProducer
+                .Setup(producer => producer.PublishBatchToPartition(
+                    It.IsAny<EventHubBufferedProducerClient.PartitionPublishingState>(),
+                    It.IsAny<bool>(),
+                    It.IsAny<CancellationToken>()))
+                .Returns(Task.CompletedTask);
+
             mockBufferedProducer.Object.PartitionResolver = mockPartitionResolver.Object;
             mockBufferedProducer.Object.SendEventBatchFailedAsync += args => Task.CompletedTask;
 
@@ -2602,11 +2605,10 @@ namespace Azure.Messaging.EventHubs.Tests
                         ++readEventCount;
 
                         Assert.That(expectedEvent.EventBody.ToString(), Is.EqualTo(readEvent.EventBody.ToString()), $"The event with body: [{ readEvent.EventBody }] was not enqueued.");
-                    Assert.That(readEvent.GetRawAmqpMessage().GetPartitionKey(null), Is.Null, $"The partition key should not have been set for the event with body: [{ readEvent.EventBody }].");
+                        Assert.That(readEvent.GetRawAmqpMessage().GetPartitionKey(null), Is.Null, $"The partition key should not have been set for the event with body: [{ readEvent.EventBody }].");
                     }
 
-                    cancellationSource.Token.ThrowIfCancellationRequested();
-                    await Task.Delay(50);
+                    await Task.Delay(10, cancellationSource.Token);
                 }
 
                 Assert.That(readEventCount, Is.EqualTo(1), "A single event should have been enqueued.");
@@ -2684,8 +2686,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         Assert.That(readEvent.GetRawAmqpMessage().GetPartitionKey(null), Is.EqualTo(partitionKey), $"The partition key should have been preserved for the event with body: [{ readEvent.EventBody }].");
                     }
 
-                    cancellationSource.Token.ThrowIfCancellationRequested();
-                    await Task.Delay(50);
+                    await Task.Delay(10, cancellationSource.Token);
                 }
 
                 Assert.That(readEventCount, Is.EqualTo(1), "A single event should have been enqueued.");
@@ -2754,8 +2755,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         Assert.That(readEvent.GetRawAmqpMessage().GetPartitionKey(null), Is.Null, $"The partition key should not have been set for the event with body: [{ readEvent.EventBody }].");
                     }
 
-                    cancellationSource.Token.ThrowIfCancellationRequested();
-                    await Task.Delay(50);
+                    await Task.Delay(10, cancellationSource.Token);
                 }
 
                 Assert.That(readEventCount, Is.EqualTo(1), "A single event should have been enqueued.");
@@ -2837,8 +2837,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         Assert.That(readEvent.GetRawAmqpMessage().GetPartitionKey(null), Is.Null, $"The partition key should not have been set for the event with body: [{ readEvent.EventBody }].");
                     }
 
-                    cancellationSource.Token.ThrowIfCancellationRequested();
-                    await Task.Delay(50);
+                    await Task.Delay(10, cancellationSource.Token);
                 }
 
                 Assert.That(readEventCount, Is.EqualTo(1), "An event should have been available to read.");
