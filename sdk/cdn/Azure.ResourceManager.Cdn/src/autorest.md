@@ -158,11 +158,32 @@ directive:
     transform: $['x-nullable'] = true
   - from: swagger-document
     where: $.definitions.policySettings.properties.defaultCustomBlockResponseStatusCode
-    transform: $['x-nullable'] = true
+    transform: $['x-nullable'] = true  
   - from: swagger-document
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}'].put.parameters[3]
     transform: $['x-ms-client-name'] = 'endpointInput'
   - from: swagger-document
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}'].put.parameters[3]
     transform: $['x-ms-client-name'] = 'endpointInput'
+  - rename-operation:
+      from: Validate_Secret
+      to: Secret_Validate
+  - rename-operation:
+      from: LogAnalytics_GetLogAnalyticsMetrics
+      to: AFDProfiles_GetLogAnalyticsMetrics
+  - rename-operation:
+      from: LogAnalytics_GetLogAnalyticsRankings
+      to: AFDProfiles_GetLogAnalyticsRankings
+  - rename-operation:
+      from: LogAnalytics_GetLogAnalyticsLocations
+      to: AFDProfiles_GetLogAnalyticsLocations
+  - rename-operation:
+      from: LogAnalytics_GetLogAnalyticsResources
+      to: AFDProfiles_GetLogAnalyticsResources
+  - rename-operation:
+      from: LogAnalytics_GetWafLogAnalyticsMetrics
+      to: AFDProfiles_GetWafLogAnalyticsMetrics
+  - rename-operation:
+      from: LogAnalytics_GetWafLogAnalyticsRankings
+      to: AFDProfiles_GetWafLogAnalyticsRankings
 ```

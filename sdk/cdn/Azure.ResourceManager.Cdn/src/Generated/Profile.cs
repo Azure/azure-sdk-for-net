@@ -25,7 +25,6 @@ namespace Azure.ResourceManager.Cdn
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ProfilesRestOperations _profilesRestClient;
         private readonly AFDProfilesRestOperations _aFDProfilesRestClient;
-        private readonly LogAnalyticsRestOperations _logAnalyticsRestClient;
         private readonly ProfileData _data;
 
         /// <summary> Initializes a new instance of the <see cref="Profile"/> class for mocking. </summary>
@@ -43,7 +42,6 @@ namespace Azure.ResourceManager.Cdn
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _profilesRestClient = new ProfilesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
             _aFDProfilesRestClient = new AFDProfilesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _logAnalyticsRestClient = new LogAnalyticsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="Profile"/> class. </summary>
@@ -54,7 +52,6 @@ namespace Azure.ResourceManager.Cdn
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _profilesRestClient = new ProfilesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
             _aFDProfilesRestClient = new AFDProfilesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _logAnalyticsRestClient = new LogAnalyticsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="Profile"/> class. </summary>
@@ -68,7 +65,6 @@ namespace Azure.ResourceManager.Cdn
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _profilesRestClient = new ProfilesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
             _aFDProfilesRestClient = new AFDProfilesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _logAnalyticsRestClient = new LogAnalyticsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -708,7 +704,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="countryOrRegions"> The ArrayOfGet10ItemsItem to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metrics"/>, <paramref name="customDomains"/>, or <paramref name="protocols"/> is null. </exception>
-        public async virtual Task<Response<MetricsResponse>> GetLogAnalyticsMetricsLogAnalyticAsync(IEnumerable<LogMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, LogMetricsGranularity granularity, IEnumerable<string> customDomains, IEnumerable<string> protocols, IEnumerable<LogMetricsGroupBy> groupBy = null, IEnumerable<string> continents = null, IEnumerable<string> countryOrRegions = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<MetricsResponse>> GetLogAnalyticsMetricsAFDProfileAsync(IEnumerable<LogMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, LogMetricsGranularity granularity, IEnumerable<string> customDomains, IEnumerable<string> protocols, IEnumerable<LogMetricsGroupBy> groupBy = null, IEnumerable<string> continents = null, IEnumerable<string> countryOrRegions = null, CancellationToken cancellationToken = default)
         {
             if (metrics == null)
             {
@@ -723,11 +719,11 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(protocols));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Profile.GetLogAnalyticsMetricsLogAnalytic");
+            using var scope = _clientDiagnostics.CreateScope("Profile.GetLogAnalyticsMetricsAFDProfile");
             scope.Start();
             try
             {
-                var response = await _logAnalyticsRestClient.GetLogAnalyticsMetricsAsync(Id.ResourceGroupName, Id.Name, metrics, dateTimeBegin, dateTimeEnd, granularity, customDomains, protocols, groupBy, continents, countryOrRegions, cancellationToken).ConfigureAwait(false);
+                var response = await _aFDProfilesRestClient.GetLogAnalyticsMetricsAsync(Id.ResourceGroupName, Id.Name, metrics, dateTimeBegin, dateTimeEnd, granularity, customDomains, protocols, groupBy, continents, countryOrRegions, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -749,7 +745,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="countryOrRegions"> The ArrayOfGet10ItemsItem to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metrics"/>, <paramref name="customDomains"/>, or <paramref name="protocols"/> is null. </exception>
-        public virtual Response<MetricsResponse> GetLogAnalyticsMetricsLogAnalytic(IEnumerable<LogMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, LogMetricsGranularity granularity, IEnumerable<string> customDomains, IEnumerable<string> protocols, IEnumerable<LogMetricsGroupBy> groupBy = null, IEnumerable<string> continents = null, IEnumerable<string> countryOrRegions = null, CancellationToken cancellationToken = default)
+        public virtual Response<MetricsResponse> GetLogAnalyticsMetricsAFDProfile(IEnumerable<LogMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, LogMetricsGranularity granularity, IEnumerable<string> customDomains, IEnumerable<string> protocols, IEnumerable<LogMetricsGroupBy> groupBy = null, IEnumerable<string> continents = null, IEnumerable<string> countryOrRegions = null, CancellationToken cancellationToken = default)
         {
             if (metrics == null)
             {
@@ -764,11 +760,11 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(protocols));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Profile.GetLogAnalyticsMetricsLogAnalytic");
+            using var scope = _clientDiagnostics.CreateScope("Profile.GetLogAnalyticsMetricsAFDProfile");
             scope.Start();
             try
             {
-                var response = _logAnalyticsRestClient.GetLogAnalyticsMetrics(Id.ResourceGroupName, Id.Name, metrics, dateTimeBegin, dateTimeEnd, granularity, customDomains, protocols, groupBy, continents, countryOrRegions, cancellationToken);
+                var response = _aFDProfilesRestClient.GetLogAnalyticsMetrics(Id.ResourceGroupName, Id.Name, metrics, dateTimeBegin, dateTimeEnd, granularity, customDomains, protocols, groupBy, continents, countryOrRegions, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -787,7 +783,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="customDomains"> The ArrayOfString to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="rankings"/> or <paramref name="metrics"/> is null. </exception>
-        public async virtual Task<Response<RankingsResponse>> GetLogAnalyticsRankingsLogAnalyticAsync(IEnumerable<LogRanking> rankings, IEnumerable<LogRankingMetric> metrics, int maxRanking, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, IEnumerable<string> customDomains = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<RankingsResponse>> GetLogAnalyticsRankingsAFDProfileAsync(IEnumerable<LogRanking> rankings, IEnumerable<LogRankingMetric> metrics, int maxRanking, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, IEnumerable<string> customDomains = null, CancellationToken cancellationToken = default)
         {
             if (rankings == null)
             {
@@ -798,11 +794,11 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(metrics));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Profile.GetLogAnalyticsRankingsLogAnalytic");
+            using var scope = _clientDiagnostics.CreateScope("Profile.GetLogAnalyticsRankingsAFDProfile");
             scope.Start();
             try
             {
-                var response = await _logAnalyticsRestClient.GetLogAnalyticsRankingsAsync(Id.ResourceGroupName, Id.Name, rankings, metrics, maxRanking, dateTimeBegin, dateTimeEnd, customDomains, cancellationToken).ConfigureAwait(false);
+                var response = await _aFDProfilesRestClient.GetLogAnalyticsRankingsAsync(Id.ResourceGroupName, Id.Name, rankings, metrics, maxRanking, dateTimeBegin, dateTimeEnd, customDomains, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -821,7 +817,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="customDomains"> The ArrayOfString to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="rankings"/> or <paramref name="metrics"/> is null. </exception>
-        public virtual Response<RankingsResponse> GetLogAnalyticsRankingsLogAnalytic(IEnumerable<LogRanking> rankings, IEnumerable<LogRankingMetric> metrics, int maxRanking, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, IEnumerable<string> customDomains = null, CancellationToken cancellationToken = default)
+        public virtual Response<RankingsResponse> GetLogAnalyticsRankingsAFDProfile(IEnumerable<LogRanking> rankings, IEnumerable<LogRankingMetric> metrics, int maxRanking, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, IEnumerable<string> customDomains = null, CancellationToken cancellationToken = default)
         {
             if (rankings == null)
             {
@@ -832,11 +828,11 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(metrics));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Profile.GetLogAnalyticsRankingsLogAnalytic");
+            using var scope = _clientDiagnostics.CreateScope("Profile.GetLogAnalyticsRankingsAFDProfile");
             scope.Start();
             try
             {
-                var response = _logAnalyticsRestClient.GetLogAnalyticsRankings(Id.ResourceGroupName, Id.Name, rankings, metrics, maxRanking, dateTimeBegin, dateTimeEnd, customDomains, cancellationToken);
+                var response = _aFDProfilesRestClient.GetLogAnalyticsRankings(Id.ResourceGroupName, Id.Name, rankings, metrics, maxRanking, dateTimeBegin, dateTimeEnd, customDomains, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -848,13 +844,13 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Get all available location names for AFD log analytics report. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ContinentsResponse>> GetLogAnalyticsLocationsLogAnalyticAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response<ContinentsResponse>> GetLogAnalyticsLocationsAFDProfileAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Profile.GetLogAnalyticsLocationsLogAnalytic");
+            using var scope = _clientDiagnostics.CreateScope("Profile.GetLogAnalyticsLocationsAFDProfile");
             scope.Start();
             try
             {
-                var response = await _logAnalyticsRestClient.GetLogAnalyticsLocationsAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _aFDProfilesRestClient.GetLogAnalyticsLocationsAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -866,13 +862,13 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Get all available location names for AFD log analytics report. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ContinentsResponse> GetLogAnalyticsLocationsLogAnalytic(CancellationToken cancellationToken = default)
+        public virtual Response<ContinentsResponse> GetLogAnalyticsLocationsAFDProfile(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Profile.GetLogAnalyticsLocationsLogAnalytic");
+            using var scope = _clientDiagnostics.CreateScope("Profile.GetLogAnalyticsLocationsAFDProfile");
             scope.Start();
             try
             {
-                var response = _logAnalyticsRestClient.GetLogAnalyticsLocations(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _aFDProfilesRestClient.GetLogAnalyticsLocations(Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -884,13 +880,13 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Get all endpoints and custom domains available for AFD log report. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ResourcesResponse>> GetLogAnalyticsResourcesLogAnalyticAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response<ResourcesResponse>> GetLogAnalyticsResourcesAFDProfileAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Profile.GetLogAnalyticsResourcesLogAnalytic");
+            using var scope = _clientDiagnostics.CreateScope("Profile.GetLogAnalyticsResourcesAFDProfile");
             scope.Start();
             try
             {
-                var response = await _logAnalyticsRestClient.GetLogAnalyticsResourcesAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _aFDProfilesRestClient.GetLogAnalyticsResourcesAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -902,13 +898,13 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Get all endpoints and custom domains available for AFD log report. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ResourcesResponse> GetLogAnalyticsResourcesLogAnalytic(CancellationToken cancellationToken = default)
+        public virtual Response<ResourcesResponse> GetLogAnalyticsResourcesAFDProfile(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Profile.GetLogAnalyticsResourcesLogAnalytic");
+            using var scope = _clientDiagnostics.CreateScope("Profile.GetLogAnalyticsResourcesAFDProfile");
             scope.Start();
             try
             {
-                var response = _logAnalyticsRestClient.GetLogAnalyticsResources(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _aFDProfilesRestClient.GetLogAnalyticsResources(Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -928,18 +924,18 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="ruleTypes"> The ArrayOfWafRuleType to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metrics"/> is null. </exception>
-        public async virtual Task<Response<WafMetricsResponse>> GetWafLogAnalyticsMetricsLogAnalyticAsync(IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, WafGranularity granularity, IEnumerable<WafAction> actions = null, IEnumerable<WafRankingGroupBy> groupBy = null, IEnumerable<WafRuleType> ruleTypes = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<WafMetricsResponse>> GetWafLogAnalyticsMetricsAFDProfileAsync(IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, WafGranularity granularity, IEnumerable<WafAction> actions = null, IEnumerable<WafRankingGroupBy> groupBy = null, IEnumerable<WafRuleType> ruleTypes = null, CancellationToken cancellationToken = default)
         {
             if (metrics == null)
             {
                 throw new ArgumentNullException(nameof(metrics));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Profile.GetWafLogAnalyticsMetricsLogAnalytic");
+            using var scope = _clientDiagnostics.CreateScope("Profile.GetWafLogAnalyticsMetricsAFDProfile");
             scope.Start();
             try
             {
-                var response = await _logAnalyticsRestClient.GetWafLogAnalyticsMetricsAsync(Id.ResourceGroupName, Id.Name, metrics, dateTimeBegin, dateTimeEnd, granularity, actions, groupBy, ruleTypes, cancellationToken).ConfigureAwait(false);
+                var response = await _aFDProfilesRestClient.GetWafLogAnalyticsMetricsAsync(Id.ResourceGroupName, Id.Name, metrics, dateTimeBegin, dateTimeEnd, granularity, actions, groupBy, ruleTypes, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -959,18 +955,18 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="ruleTypes"> The ArrayOfWafRuleType to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metrics"/> is null. </exception>
-        public virtual Response<WafMetricsResponse> GetWafLogAnalyticsMetricsLogAnalytic(IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, WafGranularity granularity, IEnumerable<WafAction> actions = null, IEnumerable<WafRankingGroupBy> groupBy = null, IEnumerable<WafRuleType> ruleTypes = null, CancellationToken cancellationToken = default)
+        public virtual Response<WafMetricsResponse> GetWafLogAnalyticsMetricsAFDProfile(IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, WafGranularity granularity, IEnumerable<WafAction> actions = null, IEnumerable<WafRankingGroupBy> groupBy = null, IEnumerable<WafRuleType> ruleTypes = null, CancellationToken cancellationToken = default)
         {
             if (metrics == null)
             {
                 throw new ArgumentNullException(nameof(metrics));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Profile.GetWafLogAnalyticsMetricsLogAnalytic");
+            using var scope = _clientDiagnostics.CreateScope("Profile.GetWafLogAnalyticsMetricsAFDProfile");
             scope.Start();
             try
             {
-                var response = _logAnalyticsRestClient.GetWafLogAnalyticsMetrics(Id.ResourceGroupName, Id.Name, metrics, dateTimeBegin, dateTimeEnd, granularity, actions, groupBy, ruleTypes, cancellationToken);
+                var response = _aFDProfilesRestClient.GetWafLogAnalyticsMetrics(Id.ResourceGroupName, Id.Name, metrics, dateTimeBegin, dateTimeEnd, granularity, actions, groupBy, ruleTypes, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -990,7 +986,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="ruleTypes"> The ArrayOfWafRuleType to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metrics"/> or <paramref name="rankings"/> is null. </exception>
-        public async virtual Task<Response<WafRankingsResponse>> GetWafLogAnalyticsRankingsLogAnalyticAsync(IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, int maxRanking, IEnumerable<WafRankingType> rankings, IEnumerable<WafAction> actions = null, IEnumerable<WafRuleType> ruleTypes = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<WafRankingsResponse>> GetWafLogAnalyticsRankingsAFDProfileAsync(IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, int maxRanking, IEnumerable<WafRankingType> rankings, IEnumerable<WafAction> actions = null, IEnumerable<WafRuleType> ruleTypes = null, CancellationToken cancellationToken = default)
         {
             if (metrics == null)
             {
@@ -1001,11 +997,11 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(rankings));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Profile.GetWafLogAnalyticsRankingsLogAnalytic");
+            using var scope = _clientDiagnostics.CreateScope("Profile.GetWafLogAnalyticsRankingsAFDProfile");
             scope.Start();
             try
             {
-                var response = await _logAnalyticsRestClient.GetWafLogAnalyticsRankingsAsync(Id.ResourceGroupName, Id.Name, metrics, dateTimeBegin, dateTimeEnd, maxRanking, rankings, actions, ruleTypes, cancellationToken).ConfigureAwait(false);
+                var response = await _aFDProfilesRestClient.GetWafLogAnalyticsRankingsAsync(Id.ResourceGroupName, Id.Name, metrics, dateTimeBegin, dateTimeEnd, maxRanking, rankings, actions, ruleTypes, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1025,7 +1021,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="ruleTypes"> The ArrayOfWafRuleType to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metrics"/> or <paramref name="rankings"/> is null. </exception>
-        public virtual Response<WafRankingsResponse> GetWafLogAnalyticsRankingsLogAnalytic(IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, int maxRanking, IEnumerable<WafRankingType> rankings, IEnumerable<WafAction> actions = null, IEnumerable<WafRuleType> ruleTypes = null, CancellationToken cancellationToken = default)
+        public virtual Response<WafRankingsResponse> GetWafLogAnalyticsRankingsAFDProfile(IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, int maxRanking, IEnumerable<WafRankingType> rankings, IEnumerable<WafAction> actions = null, IEnumerable<WafRuleType> ruleTypes = null, CancellationToken cancellationToken = default)
         {
             if (metrics == null)
             {
@@ -1036,11 +1032,11 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(rankings));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Profile.GetWafLogAnalyticsRankingsLogAnalytic");
+            using var scope = _clientDiagnostics.CreateScope("Profile.GetWafLogAnalyticsRankingsAFDProfile");
             scope.Start();
             try
             {
-                var response = _logAnalyticsRestClient.GetWafLogAnalyticsRankings(Id.ResourceGroupName, Id.Name, metrics, dateTimeBegin, dateTimeEnd, maxRanking, rankings, actions, ruleTypes, cancellationToken);
+                var response = _aFDProfilesRestClient.GetWafLogAnalyticsRankings(Id.ResourceGroupName, Id.Name, metrics, dateTimeBegin, dateTimeEnd, maxRanking, rankings, actions, ruleTypes, cancellationToken);
                 return response;
             }
             catch (Exception e)

@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.Cdn
             return new ResourceUsageRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
-        private static ValidateRestOperations GetValidateRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
+        private static SecretRestOperations GetSecretRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new ValidateRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
+            return new SecretRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         private static ManagedRuleSetsRestOperations GetManagedRuleSetsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="validateSecretInput"> The Secret source. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="validateSecretInput"/> is null. </exception>
-        public static async Task<Response<ValidateSecretOutput>> SecretValidateAsync(this Subscription subscription, ValidateSecretInput validateSecretInput, CancellationToken cancellationToken = default)
+        public static async Task<Response<ValidateSecretOutput>> ValidateSecretAsync(this Subscription subscription, ValidateSecretInput validateSecretInput, CancellationToken cancellationToken = default)
         {
             if (validateSecretInput == null)
             {
@@ -398,12 +398,12 @@ namespace Azure.ResourceManager.Cdn
             return await subscription.UseClientContext(async (baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.SecretValidate");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.ValidateSecret");
                 scope.Start();
                 try
                 {
-                    var restOperations = GetValidateRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                    var response = await restOperations.SecretAsync(validateSecretInput, cancellationToken).ConfigureAwait(false);
+                    var restOperations = GetSecretRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                    var response = await restOperations.ValidateAsync(validateSecretInput, cancellationToken).ConfigureAwait(false);
                     return response;
                 }
                 catch (Exception e)
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="validateSecretInput"> The Secret source. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="validateSecretInput"/> is null. </exception>
-        public static Response<ValidateSecretOutput> SecretValidate(this Subscription subscription, ValidateSecretInput validateSecretInput, CancellationToken cancellationToken = default)
+        public static Response<ValidateSecretOutput> ValidateSecret(this Subscription subscription, ValidateSecretInput validateSecretInput, CancellationToken cancellationToken = default)
         {
             if (validateSecretInput == null)
             {
@@ -430,12 +430,12 @@ namespace Azure.ResourceManager.Cdn
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.SecretValidate");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.ValidateSecret");
                 scope.Start();
                 try
                 {
-                    var restOperations = GetValidateRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                    var response = restOperations.Secret(validateSecretInput, cancellationToken);
+                    var restOperations = GetSecretRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                    var response = restOperations.Validate(validateSecretInput, cancellationToken);
                     return response;
                 }
                 catch (Exception e)

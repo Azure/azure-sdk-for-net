@@ -17,7 +17,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Cdn
 {
-    internal partial class ValidateRestOperations
+    internal partial class SecretRestOperations
     {
         private string subscriptionId;
         private Uri endpoint;
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Cdn
         private HttpPipeline _pipeline;
         private readonly string _userAgent;
 
-        /// <summary> Initializes a new instance of ValidateRestOperations. </summary>
+        /// <summary> Initializes a new instance of SecretRestOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="options"> The client options used to construct the current client. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
-        public ValidateRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null, string apiVersion = "2020-09-01")
+        public SecretRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null, string apiVersion = "2020-09-01")
         {
             this.subscriptionId = subscriptionId ?? throw new ArgumentNullException(nameof(subscriptionId));
             this.endpoint = endpoint ?? new Uri("https://management.azure.com");
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Cdn
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateSecretRequest(ValidateSecretInput validateSecretInput)
+        internal HttpMessage CreateValidateRequest(ValidateSecretInput validateSecretInput)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -69,14 +69,14 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="validateSecretInput"> The Secret source. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="validateSecretInput"/> is null. </exception>
-        public async Task<Response<ValidateSecretOutput>> SecretAsync(ValidateSecretInput validateSecretInput, CancellationToken cancellationToken = default)
+        public async Task<Response<ValidateSecretOutput>> ValidateAsync(ValidateSecretInput validateSecretInput, CancellationToken cancellationToken = default)
         {
             if (validateSecretInput == null)
             {
                 throw new ArgumentNullException(nameof(validateSecretInput));
             }
 
-            using var message = CreateSecretRequest(validateSecretInput);
+            using var message = CreateValidateRequest(validateSecretInput);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -96,14 +96,14 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="validateSecretInput"> The Secret source. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="validateSecretInput"/> is null. </exception>
-        public Response<ValidateSecretOutput> Secret(ValidateSecretInput validateSecretInput, CancellationToken cancellationToken = default)
+        public Response<ValidateSecretOutput> Validate(ValidateSecretInput validateSecretInput, CancellationToken cancellationToken = default)
         {
             if (validateSecretInput == null)
             {
                 throw new ArgumentNullException(nameof(validateSecretInput));
             }
 
-            using var message = CreateSecretRequest(validateSecretInput);
+            using var message = CreateValidateRequest(validateSecretInput);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
