@@ -3,7 +3,7 @@
 
 using Azure.Core.TestFramework;
 
-namespace Azure.Template.LLC.Tests
+namespace Azure.Template.Generated.Tests
 {
     public class TemplateServiceTestEnvironment : TestEnvironment
     {
