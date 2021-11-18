@@ -95,6 +95,7 @@ namespace Compute.Tests
                     RestorePoint getRP = GetRP(rgName, rpcName, rpName);
                     VerifyRestorePointDetails(createdRP, rpName, osDisk, 1,
                         excludeDiskId: dataDiskId, vmSize: vmSize);
+                    VerifyDiskRestorePoint(rgName, rpcName, rpName);
 
                     // get RPC without $expand=restorePoints
                     RestorePointCollection returnedRpc = GetRpc(rgName, rpcName);
@@ -258,6 +259,17 @@ namespace Compute.Tests
             Assert.Equal(excludeDiskId, restorePoint.ExcludeDisks[0].Id, ignoreCase: true);
             Assert.NotNull(restorePoint.SourceMetadata.VmId);
             Assert.Equal(vmSize, restorePoint.SourceMetadata.HardwareProfile.VmSize);
+        }
+
+        // Verify disk restore points.
+        private void VerifyDiskRestorePoint(string rgName, string rpcName, string rpName)
+        {
+            var listDiskRestorePoint = m_CrpClient.DiskRestorePoint.ListByRestorePoint(rgName, rpcName, rpName);
+            foreach (var diskRestorePoint in listDiskRestorePoint)
+            {
+                var getDrp = m_CrpClient.DiskRestorePoint.Get(rgName, rpcName, rpName, diskRestorePoint.Name);
+                Assert.NotNull(getDrp);
+            }
         }
 
         private RestorePointCollection CreateRpc(string sourceVMId, string rpcName,
