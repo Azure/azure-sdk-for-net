@@ -623,14 +623,14 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Starts a virtual machine in a VM scale set. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VirtualMachineScaleSetVMPowerOnOperation> PowerOnAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<VirtualMachineScaleSetVMStartOperation> PowerOnAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetVM.PowerOn");
             scope.Start();
             try
             {
-                var response = await _virtualMachineScaleSetVMsRestClient.PowerOnAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualMachineScaleSetVMPowerOnOperation(_clientDiagnostics, Pipeline, _virtualMachineScaleSetVMsRestClient.CreatePowerOnRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = await _virtualMachineScaleSetVMsRestClient.StartAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new VirtualMachineScaleSetVMStartOperation(_clientDiagnostics, Pipeline, _virtualMachineScaleSetVMsRestClient.CreateStartRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -645,14 +645,14 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Starts a virtual machine in a VM scale set. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VirtualMachineScaleSetVMPowerOnOperation PowerOn(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual VirtualMachineScaleSetVMStartOperation PowerOn(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetVM.PowerOn");
             scope.Start();
             try
             {
-                var response = _virtualMachineScaleSetVMsRestClient.PowerOn(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new VirtualMachineScaleSetVMPowerOnOperation(_clientDiagnostics, Pipeline, _virtualMachineScaleSetVMsRestClient.CreatePowerOnRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = _virtualMachineScaleSetVMsRestClient.Start(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new VirtualMachineScaleSetVMStartOperation(_clientDiagnostics, Pipeline, _virtualMachineScaleSetVMsRestClient.CreateStartRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

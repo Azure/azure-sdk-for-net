@@ -22,6 +22,11 @@ list-exception:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{restorePointName}
 - /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsVersions/{osVersionName}
 - /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsFamilies/{osFamilyName}
+override-operation-name:
+  VirtualMachineScaleSets_Start: PowerOn
+  VirtualMachineScaleSetVMs_Start: PowerOn
+  CloudServices_Start: PowerOn
+
 directive:
   - from: compute.json
     where: $.definitions.VirtualMachineImageProperties.properties.dataDiskImages
@@ -44,16 +49,4 @@ directive:
   - rename-model:
       from: RestorePointCollection
       to: RestorePointGroup
-  - rename-operation:
-      from: VirtualMachines_Start
-      to: VirtualMachines_PowerOn
-  - rename-operation:
-      from: VirtualMachineScaleSets_Start
-      to: VirtualMachineScaleSets_PowerOn
-  - rename-operation:
-      from: VirtualMachineScaleSetVMs_Start
-      to: VirtualMachineScaleSetVMs_PowerOn
-  - rename-operation:
-      from: CloudServices_Start
-      to: CloudServices_PowerOn
 ```

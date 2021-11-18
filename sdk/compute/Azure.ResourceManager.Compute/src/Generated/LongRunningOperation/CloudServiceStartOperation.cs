@@ -15,18 +15,18 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Starts the cloud service. </summary>
-    public partial class CloudServicePowerOnOperation : Operation
+    public partial class CloudServiceStartOperation : Operation
     {
         private readonly OperationInternals _operation;
 
-        /// <summary> Initializes a new instance of CloudServicePowerOnOperation for mocking. </summary>
-        protected CloudServicePowerOnOperation()
+        /// <summary> Initializes a new instance of CloudServiceStartOperation for mocking. </summary>
+        protected CloudServiceStartOperation()
         {
         }
 
-        internal CloudServicePowerOnOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal CloudServiceStartOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "CloudServicePowerOnOperation");
+            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "CloudServiceStartOperation");
         }
 
         /// <inheritdoc />
