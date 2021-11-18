@@ -12,6 +12,8 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -20,14 +22,17 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly OperationInternals<ServiceEndpointPolicyDefinition> _operation;
 
+        private readonly ArmResource _operationBase;
+
         /// <summary> Initializes a new instance of ServiceEndpointPolicyDefinitionCreateOrUpdateOperation for mocking. </summary>
         protected ServiceEndpointPolicyDefinitionCreateOrUpdateOperation()
         {
         }
 
-        internal ServiceEndpointPolicyDefinitionCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ServiceEndpointPolicyDefinitionCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<ServiceEndpointPolicyDefinition>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "ServiceEndpointPolicyDefinitionCreateOrUpdateOperation");
+            _operationBase = operationsBase;
         }
 
         /// <inheritdoc />
@@ -60,13 +65,13 @@ namespace Azure.ResourceManager.Network.Models
         ServiceEndpointPolicyDefinition IOperationSource<ServiceEndpointPolicyDefinition>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return ServiceEndpointPolicyDefinition.DeserializeServiceEndpointPolicyDefinition(document.RootElement);
+            return new ServiceEndpointPolicyDefinition(_operationBase, ServiceEndpointPolicyDefinitionData.DeserializeServiceEndpointPolicyDefinitionData(document.RootElement));
         }
 
         async ValueTask<ServiceEndpointPolicyDefinition> IOperationSource<ServiceEndpointPolicyDefinition>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return ServiceEndpointPolicyDefinition.DeserializeServiceEndpointPolicyDefinition(document.RootElement);
+            return new ServiceEndpointPolicyDefinition(_operationBase, ServiceEndpointPolicyDefinitionData.DeserializeServiceEndpointPolicyDefinitionData(document.RootElement));
         }
     }
 }

@@ -10,25 +10,32 @@ namespace: Azure.ResourceManager.Network
 require: https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/readme.md
 tag: package-track2-preview
 
+skip-csproj: true
 output-folder: Generated/
 clear-output-folder: true
 
 modelerfour:
-    lenient-model-deduplication: true
+  lenient-model-deduplication: true
 model-namespace: true
 public-clients: false
 head-as-boolean: false
 flatten-payloads: false
+
+resource-model-requires-type: false
 #TODO: remove after we resolve why DdosCustomPolicy has no list
 list-exception:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosCustomPolicies/{ddosCustomPolicyName}
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/vpnConnections/{connectionName}/vpnLinkConnections/{linkConnectionName}
-# singleton-resource: ConnectionSharedKey
+
+request-path-to-resource-name:
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}/securityRules/{securityRuleName}: SecurityRule
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}/defaultSecurityRules/{defaultSecurityRuleName}: DefaultSecurityRule
+
+override-operation-name:
+  ApplicationGateways_ListAvailableWafRuleSets: GetApplicationGatewayAvailableWafRuleSetsAsync
+  VirtualNetworkGateways_VpnDeviceConfigurationScript: VpnDeviceConfigurationScript
+
 directive:
-  # rename Operation to RestApi
-  - rename-model:
-      from: Operation
-      to: RestApi
 #   networkWatcher.json:
   - rename-model:
       from: ConnectionMonitor
@@ -42,84 +49,11 @@ directive:
   - rename-model:
       from: PacketCaptureResult
       to: PacketCapture
-# applicationgateway.json
-#   - from: swagger-document
-#     where: $.paths["/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableServerVariables"].get.operationId
-#     transform: return "ApplicationGatewayAvailableServiceVariables_List"
-#   - from: swagger-document
-#     where: $.paths["/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableRequestHeaders"].get.operationId
-#     transform: return "ApplicationGatewayAvailableRequestHeaders_List"
-#   - from: swagger-document
-#     where: $.paths["/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableResponseHeaders"].get.operationId
-#     transform: return "AppicationGatewayAvailableResponseHeaders_List"
-#   - from: swagger-document
-#     where: $.paths["/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableWafRuleSets"].get.operationId
-#     transform: return "ApplicationGatewayAvailableWafRuleSets_List"
-#   - from: swagger-document
-#     where: $.paths["/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default"].get.operationId
-#     transform: return "ApplicationGatewayAvailableSslOptions_List"
-#   - from: swagger-document
-#     where: $.paths["/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies"].get.operationId
-#     transform: return "ApplicationGatewayAvailableSslPredefinedPolicies_List"
-#   - from: swagger-document
-#     where: $.paths["/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies/{predefinedPolicyName}"].get.operationId
-#     transform: return "ApplicationGatewayAvailableSslPredefinedPolicies_Get"
-# TODO: ADO 6044
-#  - from: swagger-document
-#    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/bastionHosts/{bastionHostName}/createShareableLinks"].post.operationId
-#    transform: return "BastionHosts_CreateShareableLinks"
-#    reason: Original 'operationId' doesn't follow pattern
-#  - from: swagger-document
-#    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/bastionHosts/{bastionHostName}/deleteShareableLinks"].post.operationId
-#    transform: return "BastionHosts_DeleteShareableLinks"
-#    reason: Original 'operationId' doesn't follow pattern
-#  - from: swagger-document
-#    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/bastionHosts/{bastionHostName}/getShareableLinks"].post.operationId
-#    transform: return "BastionHosts_GetShareableLinks"
-#    reason: Original 'operationId' doesn't follow pattern
-#  - from: swagger-document
-#    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/bastionHosts/{bastionHostName}/getActiveSessions"].post.operationId
-#    transform: return "BastionHosts_GetActiveSessions"
-#    reason: Original 'operationId' doesn't follow pattern
-#  - from: swagger-document
-#    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/bastionHosts/{bastionHostName}/disconnectActiveSessions"].post.operationId
-#    transform: return "BastionHosts_DisconnectActiveSessions"
-#    reason: Original 'operationId' doesn't follow pattern
   - remove-operation: "PutBastionShareableLink"
   - remove-operation: "DeleteBastionShareableLink"
   - remove-operation: "GetBastionShareableLink"
   - remove-operation: "GetActiveSessions"
   - remove-operation: "DisconnectActiveSessions"
-#   - from: swagger-document
-#     where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/availableDelegations"].get.operationId
-#     transform: return "AvailableDelegations_ListByResourceGroup"
-#     reason: Original 'operationId' is not good, it's actually returned the same type resource but under different context
-# # checkDnsAvailability.json
-#   - from: swagger-document
-#     where: $.paths["/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/CheckDnsNameAvailability"].get.operationId
-#     transform: return "DnsNameAvailabilities_Check"
-#     reason: Original 'operationId' doesn't follow pattern
-# # virtualWan.json
-#   - from: swagger-document
-#     where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}/supportedSecurityProviders"].get.operationId
-#     transform: return "SupportedSecurityProviders_List"
-#     reason: Original 'operationId' doesn't follow pattern
-#   - from: swagger-document
-#     where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}/GenerateVpnProfile"].post.operationId
-#     transform: return "VirtualWanVpnServerConfigurationVpnProfiles_Generate"
-#     reason: Original 'operationId' doesn't follow pattern
-#   - from: swagger-document
-#     where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/bgpConnections/{connectionName}"].get.operationId
-#     transform: return "VirtualHubBgpConnections_Get"
-#     reason: Original 'operationId' doesn't follow pattern
-#   - from: swagger-document
-#     where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/bgpConnections/{connectionName}"].put.operationId
-#     transform: return "VirtualHubBgpConnections_CreateOrUpdate"
-#     reason: Original 'operationId' doesn't follow pattern
-#   - from: swagger-document
-#     where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/bgpConnections/{connectionName}"].delete.operationId
-#     transform: return "VirtualHubBgpConnections_Delete"
-#     reason: Original 'operationId' doesn't follow pattern
 ```
 
 ### Tag: package-track2-preview

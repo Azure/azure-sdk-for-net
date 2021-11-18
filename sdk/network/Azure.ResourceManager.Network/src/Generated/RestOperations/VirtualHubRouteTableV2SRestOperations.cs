@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="routeTableName"> The name of the VirtualHubRouteTableV2. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualHubName"/>, or <paramref name="routeTableName"/> is null. </exception>
-        public async Task<Response<VirtualHubRouteTableV2>> GetAsync(string resourceGroupName, string virtualHubName, string routeTableName, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualHubRouteTableV2Data>> GetAsync(string resourceGroupName, string virtualHubName, string routeTableName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -93,11 +93,13 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        VirtualHubRouteTableV2 value = default;
+                        VirtualHubRouteTableV2Data value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = VirtualHubRouteTableV2.DeserializeVirtualHubRouteTableV2(document.RootElement);
+                        value = VirtualHubRouteTableV2Data.DeserializeVirtualHubRouteTableV2Data(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((VirtualHubRouteTableV2Data)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -109,7 +111,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="routeTableName"> The name of the VirtualHubRouteTableV2. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualHubName"/>, or <paramref name="routeTableName"/> is null. </exception>
-        public Response<VirtualHubRouteTableV2> Get(string resourceGroupName, string virtualHubName, string routeTableName, CancellationToken cancellationToken = default)
+        public Response<VirtualHubRouteTableV2Data> Get(string resourceGroupName, string virtualHubName, string routeTableName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -130,17 +132,19 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        VirtualHubRouteTableV2 value = default;
+                        VirtualHubRouteTableV2Data value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = VirtualHubRouteTableV2.DeserializeVirtualHubRouteTableV2(document.RootElement);
+                        value = VirtualHubRouteTableV2Data.DeserializeVirtualHubRouteTableV2Data(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((VirtualHubRouteTableV2Data)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string virtualHubName, string routeTableName, VirtualHubRouteTableV2 virtualHubRouteTableV2Parameters)
+        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string virtualHubName, string routeTableName, VirtualHubRouteTableV2Data virtualHubRouteTableV2Parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -173,7 +177,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualHubRouteTableV2Parameters"> Parameters supplied to create or update VirtualHubRouteTableV2. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualHubName"/>, <paramref name="routeTableName"/>, or <paramref name="virtualHubRouteTableV2Parameters"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string virtualHubName, string routeTableName, VirtualHubRouteTableV2 virtualHubRouteTableV2Parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string virtualHubName, string routeTableName, VirtualHubRouteTableV2Data virtualHubRouteTableV2Parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -211,7 +215,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualHubRouteTableV2Parameters"> Parameters supplied to create or update VirtualHubRouteTableV2. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualHubName"/>, <paramref name="routeTableName"/>, or <paramref name="virtualHubRouteTableV2Parameters"/> is null. </exception>
-        public Response CreateOrUpdate(string resourceGroupName, string virtualHubName, string routeTableName, VirtualHubRouteTableV2 virtualHubRouteTableV2Parameters, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string resourceGroupName, string virtualHubName, string routeTableName, VirtualHubRouteTableV2Data virtualHubRouteTableV2Parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

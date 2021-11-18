@@ -562,7 +562,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                 Location = location,
                 Tags = { { "key", "value" } },
                 IpConfigurations = {
-                    new NetworkInterfaceIPConfiguration()
+                    new NetworkInterfaceIPConfigurationData()
                     {
                          Name = ipConfigName,
                          PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
@@ -598,7 +598,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                 Location = location,
                 Tags = { { "key", "value" } },
                 IpConfigurations = {
-                    new NetworkInterfaceIPConfiguration()
+                    new NetworkInterfaceIPConfigurationData()
                     {
                          Name = ipConfigName,
                          PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,

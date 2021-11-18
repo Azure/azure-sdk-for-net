@@ -236,23 +236,23 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        #region NetworkSecurityGroupSecurityRule
+        #region SecurityRule
 
-        /// <summary> Gets a collection of NetworkSecurityGroupSecurityRules in the NetworkSecurityGroup. </summary>
-        /// <returns> An object representing collection of NetworkSecurityGroupSecurityRules and their operations over a NetworkSecurityGroup. </returns>
-        public NetworkSecurityGroupSecurityRuleCollection GetNetworkSecurityGroupSecurityRules()
+        /// <summary> Gets a collection of SecurityRules in the NetworkSecurityGroup. </summary>
+        /// <returns> An object representing collection of SecurityRules and their operations over a NetworkSecurityGroup. </returns>
+        public SecurityRuleCollection GetSecurityRules()
         {
-            return new NetworkSecurityGroupSecurityRuleCollection(this);
+            return new SecurityRuleCollection(this);
         }
         #endregion
 
-        #region NetworkSecurityGroupDefaultSecurityRule
+        #region DefaultSecurityRule
 
-        /// <summary> Gets a collection of NetworkSecurityGroupDefaultSecurityRules in the NetworkSecurityGroup. </summary>
-        /// <returns> An object representing collection of NetworkSecurityGroupDefaultSecurityRules and their operations over a NetworkSecurityGroup. </returns>
-        public NetworkSecurityGroupDefaultSecurityRuleCollection GetNetworkSecurityGroupDefaultSecurityRules()
+        /// <summary> Gets a collection of DefaultSecurityRules in the NetworkSecurityGroup. </summary>
+        /// <returns> An object representing collection of DefaultSecurityRules and their operations over a NetworkSecurityGroup. </returns>
+        public DefaultSecurityRuleCollection GetDefaultSecurityRules()
         {
-            return new NetworkSecurityGroupDefaultSecurityRuleCollection(this);
+            return new DefaultSecurityRuleCollection(this);
         }
         #endregion
     }

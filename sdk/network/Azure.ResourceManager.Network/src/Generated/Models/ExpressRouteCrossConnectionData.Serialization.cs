@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network
             Optional<ServiceProviderProvisioningState> serviceProviderProvisioningState = default;
             Optional<string> serviceProviderNotes = default;
             Optional<ProvisioningState> provisioningState = default;
-            Optional<IList<ExpressRouteCrossConnectionPeering>> peerings = default;
+            Optional<IList<ExpressRouteCrossConnectionPeeringData>> peerings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
@@ -216,10 +216,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ExpressRouteCrossConnectionPeering> array = new List<ExpressRouteCrossConnectionPeering>();
+                            List<ExpressRouteCrossConnectionPeeringData> array = new List<ExpressRouteCrossConnectionPeeringData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ExpressRouteCrossConnectionPeering.DeserializeExpressRouteCrossConnectionPeering(item));
+                                array.Add(ExpressRouteCrossConnectionPeeringData.DeserializeExpressRouteCrossConnectionPeeringData(item));
                             }
                             peerings = array;
                             continue;

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of VirtualHubData. </summary>
         public VirtualHubData()
         {
-            VirtualHubRouteTableV2S = new ChangeTrackingList<VirtualHubRouteTableV2>();
+            VirtualHubRouteTableV2S = new ChangeTrackingList<VirtualHubRouteTableV2Data>();
             BgpConnections = new ChangeTrackingList<WritableSubResource>();
             IpConfigurations = new ChangeTrackingList<WritableSubResource>();
             VirtualRouterIps = new ChangeTrackingList<string>();
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualRouterIps"> VirtualRouter IPs. </param>
         /// <param name="allowBranchToBranchTraffic"> Flag to control transit for VirtualRouter hub. </param>
         /// <param name="preferredRoutingGateway"> The preferred gateway to route on-prem traffic. </param>
-        internal VirtualHubData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, WritableSubResource virtualWan, WritableSubResource vpnGateway, WritableSubResource p2SVpnGateway, WritableSubResource expressRouteGateway, WritableSubResource azureFirewall, WritableSubResource securityPartnerProvider, string addressPrefix, VirtualHubRouteTable routeTable, ProvisioningState? provisioningState, string securityProviderName, IList<VirtualHubRouteTableV2> virtualHubRouteTableV2S, string sku, RoutingState? routingState, IReadOnlyList<WritableSubResource> bgpConnections, IReadOnlyList<WritableSubResource> ipConfigurations, long? virtualRouterAsn, IList<string> virtualRouterIps, bool? allowBranchToBranchTraffic, PreferredRoutingGateway? preferredRoutingGateway) : base(id, name, type, location, tags)
+        internal VirtualHubData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, WritableSubResource virtualWan, WritableSubResource vpnGateway, WritableSubResource p2SVpnGateway, WritableSubResource expressRouteGateway, WritableSubResource azureFirewall, WritableSubResource securityPartnerProvider, string addressPrefix, VirtualHubRouteTable routeTable, ProvisioningState? provisioningState, string securityProviderName, IList<VirtualHubRouteTableV2Data> virtualHubRouteTableV2S, string sku, RoutingState? routingState, IReadOnlyList<WritableSubResource> bgpConnections, IReadOnlyList<WritableSubResource> ipConfigurations, long? virtualRouterAsn, IList<string> virtualRouterIps, bool? allowBranchToBranchTraffic, PreferredRoutingGateway? preferredRoutingGateway) : base(id, name, type, location, tags)
         {
             Etag = etag;
             VirtualWan = virtualWan;
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> The Security Provider name. </summary>
         public string SecurityProviderName { get; set; }
         /// <summary> List of all virtual hub route table v2s associated with this VirtualHub. </summary>
-        public IList<VirtualHubRouteTableV2> VirtualHubRouteTableV2S { get; }
+        public IList<VirtualHubRouteTableV2Data> VirtualHubRouteTableV2S { get; }
         /// <summary> The sku of this VirtualHub. </summary>
         public string Sku { get; set; }
         /// <summary> The routing state. </summary>

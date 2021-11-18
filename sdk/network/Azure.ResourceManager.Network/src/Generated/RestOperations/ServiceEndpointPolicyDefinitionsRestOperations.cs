@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="serviceEndpointPolicyDefinitionName"> The name of the service endpoint policy definition name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serviceEndpointPolicyName"/>, or <paramref name="serviceEndpointPolicyDefinitionName"/> is null. </exception>
-        public async Task<Response<ServiceEndpointPolicyDefinition>> GetAsync(string resourceGroupName, string serviceEndpointPolicyName, string serviceEndpointPolicyDefinitionName, CancellationToken cancellationToken = default)
+        public async Task<Response<ServiceEndpointPolicyDefinitionData>> GetAsync(string resourceGroupName, string serviceEndpointPolicyName, string serviceEndpointPolicyDefinitionName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -183,11 +183,13 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        ServiceEndpointPolicyDefinition value = default;
+                        ServiceEndpointPolicyDefinitionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ServiceEndpointPolicyDefinition.DeserializeServiceEndpointPolicyDefinition(document.RootElement);
+                        value = ServiceEndpointPolicyDefinitionData.DeserializeServiceEndpointPolicyDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((ServiceEndpointPolicyDefinitionData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -199,7 +201,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="serviceEndpointPolicyDefinitionName"> The name of the service endpoint policy definition name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serviceEndpointPolicyName"/>, or <paramref name="serviceEndpointPolicyDefinitionName"/> is null. </exception>
-        public Response<ServiceEndpointPolicyDefinition> Get(string resourceGroupName, string serviceEndpointPolicyName, string serviceEndpointPolicyDefinitionName, CancellationToken cancellationToken = default)
+        public Response<ServiceEndpointPolicyDefinitionData> Get(string resourceGroupName, string serviceEndpointPolicyName, string serviceEndpointPolicyDefinitionName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -220,17 +222,19 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        ServiceEndpointPolicyDefinition value = default;
+                        ServiceEndpointPolicyDefinitionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ServiceEndpointPolicyDefinition.DeserializeServiceEndpointPolicyDefinition(document.RootElement);
+                        value = ServiceEndpointPolicyDefinitionData.DeserializeServiceEndpointPolicyDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((ServiceEndpointPolicyDefinitionData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string serviceEndpointPolicyName, string serviceEndpointPolicyDefinitionName, ServiceEndpointPolicyDefinition serviceEndpointPolicyDefinitions)
+        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string serviceEndpointPolicyName, string serviceEndpointPolicyDefinitionName, ServiceEndpointPolicyDefinitionData serviceEndpointPolicyDefinitions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -263,7 +267,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="serviceEndpointPolicyDefinitions"> Parameters supplied to the create or update service endpoint policy operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serviceEndpointPolicyName"/>, <paramref name="serviceEndpointPolicyDefinitionName"/>, or <paramref name="serviceEndpointPolicyDefinitions"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string serviceEndpointPolicyName, string serviceEndpointPolicyDefinitionName, ServiceEndpointPolicyDefinition serviceEndpointPolicyDefinitions, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string serviceEndpointPolicyName, string serviceEndpointPolicyDefinitionName, ServiceEndpointPolicyDefinitionData serviceEndpointPolicyDefinitions, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -301,7 +305,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="serviceEndpointPolicyDefinitions"> Parameters supplied to the create or update service endpoint policy operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serviceEndpointPolicyName"/>, <paramref name="serviceEndpointPolicyDefinitionName"/>, or <paramref name="serviceEndpointPolicyDefinitions"/> is null. </exception>
-        public Response CreateOrUpdate(string resourceGroupName, string serviceEndpointPolicyName, string serviceEndpointPolicyDefinitionName, ServiceEndpointPolicyDefinition serviceEndpointPolicyDefinitions, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string resourceGroupName, string serviceEndpointPolicyName, string serviceEndpointPolicyDefinitionName, ServiceEndpointPolicyDefinitionData serviceEndpointPolicyDefinitions, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

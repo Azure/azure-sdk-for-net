@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network
             Optional<string> location = default;
             Optional<IDictionary<string, string>> tags = default;
             Optional<ExpressRouteGatewayPropertiesAutoScaleConfiguration> autoScaleConfiguration = default;
-            Optional<IReadOnlyList<ExpressRouteConnection>> expressRouteConnections = default;
+            Optional<IReadOnlyList<ExpressRouteConnectionData>> expressRouteConnections = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<WritableSubResource> virtualHub = default;
             foreach (var property in element.EnumerateObject())
@@ -135,10 +135,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ExpressRouteConnection> array = new List<ExpressRouteConnection>();
+                            List<ExpressRouteConnectionData> array = new List<ExpressRouteConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ExpressRouteConnection.DeserializeExpressRouteConnection(item));
+                                array.Add(ExpressRouteConnectionData.DeserializeExpressRouteConnectionData(item));
                             }
                             expressRouteConnections = array;
                             continue;

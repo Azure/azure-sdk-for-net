@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Network
             Optional<VirtualHubRouteTable> routeTable = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<string> securityProviderName = default;
-            Optional<IList<VirtualHubRouteTableV2>> virtualHubRouteTableV2s = default;
+            Optional<IList<VirtualHubRouteTableV2Data>> virtualHubRouteTableV2s = default;
             Optional<string> sku = default;
             Optional<RoutingState> routingState = default;
             Optional<IReadOnlyList<WritableSubResource>> bgpConnections = default;
@@ -305,10 +305,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<VirtualHubRouteTableV2> array = new List<VirtualHubRouteTableV2>();
+                            List<VirtualHubRouteTableV2Data> array = new List<VirtualHubRouteTableV2Data>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VirtualHubRouteTableV2.DeserializeVirtualHubRouteTableV2(item));
+                                array.Add(VirtualHubRouteTableV2Data.DeserializeVirtualHubRouteTableV2Data(item));
                             }
                             virtualHubRouteTableV2s = array;
                             continue;

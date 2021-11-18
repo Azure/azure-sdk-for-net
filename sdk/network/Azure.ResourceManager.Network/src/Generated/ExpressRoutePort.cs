@@ -24,7 +24,6 @@ namespace Azure.ResourceManager.Network
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ExpressRoutePortsRestOperations _expressRoutePortsRestClient;
-        private readonly ExpressRouteLinksRestOperations _expressRouteLinksRestClient;
         private readonly ExpressRoutePortData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ExpressRoutePort"/> class for mocking. </summary>
@@ -41,7 +40,6 @@ namespace Azure.ResourceManager.Network
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _expressRoutePortsRestClient = new ExpressRoutePortsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _expressRouteLinksRestClient = new ExpressRouteLinksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="ExpressRoutePort"/> class. </summary>
@@ -51,7 +49,6 @@ namespace Azure.ResourceManager.Network
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _expressRoutePortsRestClient = new ExpressRoutePortsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _expressRouteLinksRestClient = new ExpressRouteLinksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="ExpressRoutePort"/> class. </summary>
@@ -64,7 +61,6 @@ namespace Azure.ResourceManager.Network
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _expressRoutePortsRestClient = new ExpressRoutePortsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _expressRouteLinksRestClient = new ExpressRouteLinksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -288,130 +284,14 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Retrieves the specified ExpressRouteLink resource. </summary>
-        /// <param name="linkName"> The name of the ExpressRouteLink resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkName"/> is null. </exception>
-        public async virtual Task<Response<ExpressRouteLink>> GetExpressRouteLinkAsync(string linkName, CancellationToken cancellationToken = default)
+        #region ExpressRouteLink
+
+        /// <summary> Gets a collection of ExpressRouteLinks in the ExpressRoutePort. </summary>
+        /// <returns> An object representing collection of ExpressRouteLinks and their operations over a ExpressRoutePort. </returns>
+        public ExpressRouteLinkCollection GetExpressRouteLinks()
         {
-            if (linkName == null)
-            {
-                throw new ArgumentNullException(nameof(linkName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("ExpressRoutePort.GetExpressRouteLink");
-            scope.Start();
-            try
-            {
-                var response = await _expressRouteLinksRestClient.GetAsync(Id.ResourceGroupName, Id.Name, linkName, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new ExpressRouteLinkCollection(this);
         }
-
-        /// <summary> Retrieves the specified ExpressRouteLink resource. </summary>
-        /// <param name="linkName"> The name of the ExpressRouteLink resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkName"/> is null. </exception>
-        public virtual Response<ExpressRouteLink> GetExpressRouteLink(string linkName, CancellationToken cancellationToken = default)
-        {
-            if (linkName == null)
-            {
-                throw new ArgumentNullException(nameof(linkName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("ExpressRoutePort.GetExpressRouteLink");
-            scope.Start();
-            try
-            {
-                var response = _expressRouteLinksRestClient.Get(Id.ResourceGroupName, Id.Name, linkName, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Retrieve the ExpressRouteLink sub-resources of the specified ExpressRoutePort resource. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ExpressRouteLink" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ExpressRouteLink> GetExpressRouteLinksAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<ExpressRouteLink>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("ExpressRoutePort.GetExpressRouteLinks");
-                scope.Start();
-                try
-                {
-                    var response = await _expressRouteLinksRestClient.ListAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ExpressRouteLink>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("ExpressRoutePort.GetExpressRouteLinks");
-                scope.Start();
-                try
-                {
-                    var response = await _expressRouteLinksRestClient.ListNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Retrieve the ExpressRouteLink sub-resources of the specified ExpressRoutePort resource. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ExpressRouteLink" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ExpressRouteLink> GetExpressRouteLinks(CancellationToken cancellationToken = default)
-        {
-            Page<ExpressRouteLink> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("ExpressRoutePort.GetExpressRouteLinks");
-                scope.Start();
-                try
-                {
-                    var response = _expressRouteLinksRestClient.List(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ExpressRouteLink> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("ExpressRoutePort.GetExpressRouteLinks");
-                scope.Start();
-                try
-                {
-                    var response = _expressRouteLinksRestClient.ListNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
+        #endregion
     }
 }

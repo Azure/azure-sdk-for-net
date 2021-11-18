@@ -1261,7 +1261,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="predefinedPolicyName"> Name of Ssl predefined policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="predefinedPolicyName"/> is null. </exception>
-        public async Task<Response<ApplicationGatewaySslPredefinedPolicy>> GetSslPredefinedPolicyAsync(string predefinedPolicyName, CancellationToken cancellationToken = default)
+        public async Task<Response<ApplicationGatewaySslPredefinedPolicyData>> GetSslPredefinedPolicyAsync(string predefinedPolicyName, CancellationToken cancellationToken = default)
         {
             if (predefinedPolicyName == null)
             {
@@ -1274,11 +1274,13 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        ApplicationGatewaySslPredefinedPolicy value = default;
+                        ApplicationGatewaySslPredefinedPolicyData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ApplicationGatewaySslPredefinedPolicy.DeserializeApplicationGatewaySslPredefinedPolicy(document.RootElement);
+                        value = ApplicationGatewaySslPredefinedPolicyData.DeserializeApplicationGatewaySslPredefinedPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((ApplicationGatewaySslPredefinedPolicyData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -1288,7 +1290,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="predefinedPolicyName"> Name of Ssl predefined policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="predefinedPolicyName"/> is null. </exception>
-        public Response<ApplicationGatewaySslPredefinedPolicy> GetSslPredefinedPolicy(string predefinedPolicyName, CancellationToken cancellationToken = default)
+        public Response<ApplicationGatewaySslPredefinedPolicyData> GetSslPredefinedPolicy(string predefinedPolicyName, CancellationToken cancellationToken = default)
         {
             if (predefinedPolicyName == null)
             {
@@ -1301,11 +1303,13 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        ApplicationGatewaySslPredefinedPolicy value = default;
+                        ApplicationGatewaySslPredefinedPolicyData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ApplicationGatewaySslPredefinedPolicy.DeserializeApplicationGatewaySslPredefinedPolicy(document.RootElement);
+                        value = ApplicationGatewaySslPredefinedPolicyData.DeserializeApplicationGatewaySslPredefinedPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((ApplicationGatewaySslPredefinedPolicyData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }

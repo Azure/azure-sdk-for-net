@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of ServiceEndpointPolicyData. </summary>
         public ServiceEndpointPolicyData()
         {
-            ServiceEndpointPolicyDefinitions = new ChangeTrackingList<ServiceEndpointPolicyDefinition>();
+            ServiceEndpointPolicyDefinitions = new ChangeTrackingList<ServiceEndpointPolicyDefinitionData>();
             Subnets = new ChangeTrackingList<SubnetData>();
         }
 
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="subnets"> A collection of references to subnets. </param>
         /// <param name="resourceGuid"> The resource GUID property of the service endpoint policy resource. </param>
         /// <param name="provisioningState"> The provisioning state of the service endpoint policy resource. </param>
-        internal ServiceEndpointPolicyData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, string kind, IList<ServiceEndpointPolicyDefinition> serviceEndpointPolicyDefinitions, IReadOnlyList<SubnetData> subnets, string resourceGuid, ProvisioningState? provisioningState) : base(id, name, type, location, tags)
+        internal ServiceEndpointPolicyData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, string kind, IList<ServiceEndpointPolicyDefinitionData> serviceEndpointPolicyDefinitions, IReadOnlyList<SubnetData> subnets, string resourceGuid, ProvisioningState? provisioningState) : base(id, name, type, location, tags)
         {
             Etag = etag;
             Kind = kind;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Kind of service endpoint policy. This is metadata used for the Azure portal experience. </summary>
         public string Kind { get; }
         /// <summary> A collection of service endpoint policy definitions of the service endpoint policy. </summary>
-        public IList<ServiceEndpointPolicyDefinition> ServiceEndpointPolicyDefinitions { get; }
+        public IList<ServiceEndpointPolicyDefinitionData> ServiceEndpointPolicyDefinitions { get; }
         /// <summary> A collection of references to subnets. </summary>
         public IReadOnlyList<SubnetData> Subnets { get; }
         /// <summary> The resource GUID property of the service endpoint policy resource. </summary>

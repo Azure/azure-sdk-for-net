@@ -12,6 +12,8 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -20,14 +22,17 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly OperationInternals<VirtualHubRouteTableV2> _operation;
 
+        private readonly ArmResource _operationBase;
+
         /// <summary> Initializes a new instance of VirtualHubRouteTableV2CreateOrUpdateOperation for mocking. </summary>
         protected VirtualHubRouteTableV2CreateOrUpdateOperation()
         {
         }
 
-        internal VirtualHubRouteTableV2CreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal VirtualHubRouteTableV2CreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<VirtualHubRouteTableV2>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "VirtualHubRouteTableV2CreateOrUpdateOperation");
+            _operationBase = operationsBase;
         }
 
         /// <inheritdoc />
@@ -60,13 +65,13 @@ namespace Azure.ResourceManager.Network.Models
         VirtualHubRouteTableV2 IOperationSource<VirtualHubRouteTableV2>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return VirtualHubRouteTableV2.DeserializeVirtualHubRouteTableV2(document.RootElement);
+            return new VirtualHubRouteTableV2(_operationBase, VirtualHubRouteTableV2Data.DeserializeVirtualHubRouteTableV2Data(document.RootElement));
         }
 
         async ValueTask<VirtualHubRouteTableV2> IOperationSource<VirtualHubRouteTableV2>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return VirtualHubRouteTableV2.DeserializeVirtualHubRouteTableV2(document.RootElement);
+            return new VirtualHubRouteTableV2(_operationBase, VirtualHubRouteTableV2Data.DeserializeVirtualHubRouteTableV2Data(document.RootElement));
         }
     }
 }
