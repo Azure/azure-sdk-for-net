@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider "securityinsights/resource-manager" -AutoRestVersion "v2"
+Start-AutoRestCodeGeneration -ResourceProvider "securityinsights/resource-manager" -AutoRestVersion "v2" -SpecsRepoBranch "Microsoft.SecurityInsights-2021-09-01-preview-rebased" -AutoRestCodeGenerationFlags "--tag=package-preview-2021-09"

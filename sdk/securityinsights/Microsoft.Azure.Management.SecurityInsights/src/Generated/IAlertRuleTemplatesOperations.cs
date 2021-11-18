@@ -27,8 +27,11 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// Gets all alert rule templates.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user's subscription. The
-        /// name is case insensitive.
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='operationalInsightsResourceProvider'>
+        /// The namespace of workspaces resource provider-
+        /// Microsoft.OperationalInsights.
         /// </param>
         /// <param name='workspaceName'>
         /// The name of the workspace.
@@ -39,7 +42,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -48,13 +51,16 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<AlertRuleTemplate>>> ListWithHttpMessagesAsync(string resourceGroupName, string workspaceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<AlertRuleTemplate>>> ListWithHttpMessagesAsync(string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the alert rule template.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user's subscription. The
-        /// name is case insensitive.
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='operationalInsightsResourceProvider'>
+        /// The namespace of workspaces resource provider-
+        /// Microsoft.OperationalInsights.
         /// </param>
         /// <param name='workspaceName'>
         /// The name of the workspace.
@@ -68,7 +74,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -77,7 +83,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<AlertRuleTemplate>> GetWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string alertRuleTemplateId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<AlertRuleTemplate>> GetWithHttpMessagesAsync(string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string alertRuleTemplateId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets all alert rule templates.
         /// </summary>
@@ -90,7 +96,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">

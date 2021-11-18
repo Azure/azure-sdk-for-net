@@ -19,24 +19,48 @@ namespace Microsoft.Azure.Management.SecurityInsights
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("OperationalInsights", "Actions", "2020-01-01"),
-                new Tuple<string, string, string>("OperationalInsights", "AlertRuleTemplates", "2020-01-01"),
-                new Tuple<string, string, string>("OperationalInsights", "AlertRules", "2020-01-01"),
-                new Tuple<string, string, string>("OperationalInsights", "Bookmarks", "2020-01-01"),
-                new Tuple<string, string, string>("OperationalInsights", "DataConnectors", "2020-01-01"),
-                new Tuple<string, string, string>("OperationalInsights", "IncidentComments", "2020-01-01"),
-                new Tuple<string, string, string>("OperationalInsights", "Incidents", "2020-01-01"),
-                new Tuple<string, string, string>("SecurityInsights", "Operations", "2020-01-01"),
+                new Tuple<string, string, string>("SecurityInsights", "Actions", "2021-09-01-preview"),
+                new Tuple<string, string, string>("SecurityInsights", "AlertRuleTemplates", "2021-09-01-preview"),
+                new Tuple<string, string, string>("SecurityInsights", "AlertRules", "2021-09-01-preview"),
+                new Tuple<string, string, string>("SecurityInsights", "AutomationRules", "2021-09-01-preview"),
+                new Tuple<string, string, string>("SecurityInsights", "Bookmark", "2021-09-01-preview"),
+                new Tuple<string, string, string>("SecurityInsights", "BookmarkRelations", "2021-09-01-preview"),
+                new Tuple<string, string, string>("SecurityInsights", "Bookmarks", "2021-09-01-preview"),
+                new Tuple<string, string, string>("SecurityInsights", "DataConnectors", "2021-09-01-preview"),
+                new Tuple<string, string, string>("SecurityInsights", "DataConnectorsCheckRequirements", "2021-09-01-preview"),
+                new Tuple<string, string, string>("SecurityInsights", "DomainWhois", "2021-09-01-preview"),
+                new Tuple<string, string, string>("SecurityInsights", "Entities", "2021-09-01-preview"),
+                new Tuple<string, string, string>("SecurityInsights", "EntitiesGetTimeline", "2021-09-01-preview"),
+                new Tuple<string, string, string>("SecurityInsights", "EntitiesRelations", "2021-09-01-preview"),
+                new Tuple<string, string, string>("SecurityInsights", "EntityQueries", "2021-09-01-preview"),
+                new Tuple<string, string, string>("SecurityInsights", "EntityQueryTemplates", "2021-09-01-preview"),
+                new Tuple<string, string, string>("SecurityInsights", "EntityRelations", "2021-09-01-preview"),
+                new Tuple<string, string, string>("SecurityInsights", "IPGeodata", "2021-09-01-preview"),
+                new Tuple<string, string, string>("SecurityInsights", "IncidentComments", "2021-09-01-preview"),
+                new Tuple<string, string, string>("SecurityInsights", "IncidentRelations", "2021-09-01-preview"),
+                new Tuple<string, string, string>("SecurityInsights", "Incidents", "2021-09-01-preview"),
+                new Tuple<string, string, string>("SecurityInsights", "Metadata", "2021-09-01-preview"),
+                new Tuple<string, string, string>("SecurityInsights", "OfficeConsents", "2021-09-01-preview"),
+                new Tuple<string, string, string>("SecurityInsights", "Operations", "2021-09-01-preview"),
+                new Tuple<string, string, string>("SecurityInsights", "ProductSettings", "2021-09-01-preview"),
+                new Tuple<string, string, string>("SecurityInsights", "SentinelOnboardingStates", "2021-09-01-preview"),
+                new Tuple<string, string, string>("SecurityInsights", "SourceControl", "2021-09-01-preview"),
+                new Tuple<string, string, string>("SecurityInsights", "SourceControls", "2021-09-01-preview"),
+                new Tuple<string, string, string>("SecurityInsights", "ThreatIntelligenceIndicator", "2021-09-01-preview"),
+                new Tuple<string, string, string>("SecurityInsights", "ThreatIntelligenceIndicatorMetrics", "2021-09-01-preview"),
+                new Tuple<string, string, string>("SecurityInsights", "ThreatIntelligenceIndicators", "2021-09-01-preview"),
+                new Tuple<string, string, string>("SecurityInsights", "WatchlistItems", "2021-09-01-preview"),
+                new Tuple<string, string, string>("SecurityInsights", "Watchlists", "2021-09-01-preview"),
               }.AsEnumerable();
           }
       }
       // BEGIN: Code Generation Metadata Section
       public static readonly String AutoRestVersion = "v2";
       public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/securityinsights/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=E:\\azure-sdk-for-net\\sdk";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/Microsoft.SecurityInsights-2021-09-01-preview-rebased/specification/securityinsights/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --tag=package-preview-2021-09 --csharp-sdks-folder=E:\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
-      public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "fb680afc380cccb44a59ed277232ad4224ac809b";
+      public static readonly String GithubBranchName = "Microsoft.SecurityInsights-2021-09-01-preview-rebased";
+      public static readonly String GithubCommidId = "80e48ba1352d8b222c9165db019d3e70eb0c32fb";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
