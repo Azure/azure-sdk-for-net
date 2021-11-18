@@ -106,11 +106,10 @@ namespace Microsoft.Azure.WebPubSub.Common
                 if (value != null)
                 {
                     // Should ensure in server SDK.
-                    if (value is not JsonElement)
+                    if (value is not JsonElement element)
                     {
                         throw new ArgumentException("States value should be inserted with type `JsonElement`.");
                     }
-                    var element = (JsonElement)value;
                     return JsonSerializer.Deserialize<T>(element.GetRawText());
                 }
             }

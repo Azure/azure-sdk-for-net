@@ -152,7 +152,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             {
                 var states = new Dictionary<string, object>();
                 var parsedStates = Encoding.UTF8.GetString(Convert.FromBase64String(connectionStates));
-                var statesObj = JsonDocument.Parse(parsedStates);
+                using var statesObj = JsonDocument.Parse(parsedStates);
                 foreach (var item in statesObj.RootElement.EnumerateObject())
                 {
                     states.Add(item.Name, item.Value);
