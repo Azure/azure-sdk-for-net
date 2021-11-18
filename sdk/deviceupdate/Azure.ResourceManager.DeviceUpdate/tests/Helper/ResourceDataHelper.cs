@@ -67,11 +67,12 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests.Helper
 
         public static void AssertAccountUpdate(Account updatedAccount, AccountUpdate updateParameters)
         {
-            Assert.AreEqual(updatedAccount.Data.Tags.Count, updateParameters.Tags.Count);
-            foreach (var kv in updatedAccount.Data.Tags)
+            Assert.AreEqual(updatedAccount.Data.Location, updateParameters.Location);
+            if (updatedAccount.Data.Identity != null || updateParameters.Identity != null)
             {
-                Assert.True(updateParameters.Tags.ContainsKey(kv.Key));
-                Assert.AreEqual(kv.Value, updateParameters.Tags[kv.Key]);
+                Assert.NotNull(updatedAccount.Data.Identity);
+                Assert.NotNull(updateParameters.Identity);
+                Assert.AreEqual(updatedAccount.Data.Identity.Type, updateParameters.Identity.Type);
             }
         }
 
