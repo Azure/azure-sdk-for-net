@@ -546,6 +546,7 @@ namespace Azure.ResourceManager.Storage.Tests
 
         [Test]
         [RecordedTest]
+        [Ignore("can pass locally, cost too much time on pipeline")]
         public async Task PITR()
         {
             //update storage account to v2
