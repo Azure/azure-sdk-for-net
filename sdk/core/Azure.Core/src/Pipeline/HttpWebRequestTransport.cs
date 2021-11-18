@@ -83,7 +83,10 @@ namespace Azure.Core.Pipeline
                 }
                 else
                 {
-                    request.ContentLength = 0;
+                    if (message.Request.Method == RequestMethod.Put || message.Request.Method == RequestMethod.Post)
+                    {
+                        request.ContentLength = 0;
+                    }
                 }
 
                 WebResponse webResponse;
