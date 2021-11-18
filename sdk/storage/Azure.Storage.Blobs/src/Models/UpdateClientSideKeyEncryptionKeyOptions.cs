@@ -6,7 +6,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// Optional parameters for updating a client-side key encryption key on a blob.
     /// </summary>
-    public class UpdateClientSideEncryptionKeyOptions
+    public class UpdateClientSideKeyEncryptionKeyOptions
     {
         /// <summary>
         /// Optional conditions for accessing the blob.

@@ -1191,8 +1191,8 @@ namespace Azure.Storage.Blobs.Test
             // update will take a while thanks to delay on mockKey2
             if (IsAsync)
             {
-                updateResult = blob.UpdateClientSideEncryptionKeyAsync(
-                    new UpdateClientSideEncryptionKeyOptions
+                updateResult = blob.UpdateClientSideKeyEncryptionKeyAsync(
+                    new UpdateClientSideKeyEncryptionKeyOptions
                     {
                         EncryptionOptionsOverride = new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
                         {
@@ -1205,8 +1205,8 @@ namespace Azure.Storage.Blobs.Test
             }
             else
             {
-                updateResult = Task.Run(() => blob.UpdateClientSideEncryptionKey(
-                    new UpdateClientSideEncryptionKeyOptions
+                updateResult = Task.Run(() => blob.UpdateClientSideKeyEncryptionKey(
+                    new UpdateClientSideKeyEncryptionKeyOptions
                     {
                         EncryptionOptionsOverride = new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
                         {
@@ -1294,8 +1294,8 @@ namespace Azure.Storage.Blobs.Test
                 // have to actually switch on IsAsync for extension methods
                 if (IsAsync)
                 {
-                    await blob.UpdateClientSideEncryptionKeyAsync(
-                        new UpdateClientSideEncryptionKeyOptions
+                    await blob.UpdateClientSideKeyEncryptionKeyAsync(
+                        new UpdateClientSideKeyEncryptionKeyOptions
                         {
                             EncryptionOptionsOverride = new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
                             {
@@ -1308,8 +1308,8 @@ namespace Azure.Storage.Blobs.Test
                 }
                 else
                 {
-                    blob.UpdateClientSideEncryptionKey(
-                        new UpdateClientSideEncryptionKeyOptions
+                    blob.UpdateClientSideKeyEncryptionKey(
+                        new UpdateClientSideKeyEncryptionKeyOptions
                         {
                             EncryptionOptionsOverride = new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
                             {
@@ -1334,11 +1334,11 @@ namespace Azure.Storage.Blobs.Test
                 // have to actually switch on IsAsync for extension methods
                 if (IsAsync)
                 {
-                    await blob.UpdateClientSideEncryptionKeyAsync(cancellationToken: s_cancellationToken);
+                    await blob.UpdateClientSideKeyEncryptionKeyAsync(cancellationToken: s_cancellationToken);
                 }
                 else
                 {
-                    blob.UpdateClientSideEncryptionKey(cancellationToken: s_cancellationToken);
+                    blob.UpdateClientSideKeyEncryptionKey(cancellationToken: s_cancellationToken);
                 }
             }
         }

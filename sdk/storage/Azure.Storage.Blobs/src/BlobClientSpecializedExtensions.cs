@@ -32,11 +32,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="cancellationToken">
         /// Cancellation token for the operation.
         /// </param>
-        public static void UpdateClientSideEncryptionKey(
+        public static void UpdateClientSideKeyEncryptionKey(
             this BlobClient client,
-            UpdateClientSideEncryptionKeyOptions options = default,
+            UpdateClientSideKeyEncryptionKeyOptions options = default,
             CancellationToken cancellationToken = default)
-            => UpdateClientsideEncryptionKeyInternal(
+            => UpdateClientsideKeyEncryptionKeyInternal(
                 client,
                 options,
                 async: false,
@@ -55,19 +55,19 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="cancellationToken">
         /// Cancellation token for the operation.
         /// </param>
-        public static async Task UpdateClientSideEncryptionKeyAsync(
+        public static async Task UpdateClientSideKeyEncryptionKeyAsync(
             this BlobClient client,
-            UpdateClientSideEncryptionKeyOptions options = default,
+            UpdateClientSideKeyEncryptionKeyOptions options = default,
             CancellationToken cancellationToken = default)
-            => await UpdateClientsideEncryptionKeyInternal(
+            => await UpdateClientsideKeyEncryptionKeyInternal(
                 client,
                 options,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
 
-        private static async Task UpdateClientsideEncryptionKeyInternal(
+        private static async Task UpdateClientsideKeyEncryptionKeyInternal(
             BlobClient client,
-            UpdateClientSideEncryptionKeyOptions options,
+            UpdateClientSideKeyEncryptionKeyOptions options,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -88,7 +88,7 @@ namespace Azure.Storage.Blobs.Specialized
                         $"{nameof(Uri)}: {client.Uri}\n" +
                         $"{nameof(options.Conditions)}: {options?.Conditions}");
 
-                DiagnosticScope scope = client.ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobClient)}.{nameof(UpdateClientSideEncryptionKey)}");
+                DiagnosticScope scope = client.ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobClient)}.{nameof(UpdateClientSideKeyEncryptionKey)}");
 
                 try
                 {
