@@ -301,10 +301,10 @@ namespace System.Tests
             AssertData(new BinaryData(payload, type: null));
             AssertData(new BinaryData(payload, options: null, typeof(TestModel)));
 
-#pragma warning disable CS0618 // IgnoreNullValues is obsolete
+#pragma warning disable CS0618, SYSLIB0020 // IgnoreNullValues is obsolete
             AssertData(BinaryData.FromObjectAsJson(payload, new Text.Json.JsonSerializerOptions { IgnoreNullValues = true }));
             AssertData(new BinaryData(payload, new Text.Json.JsonSerializerOptions() { IgnoreNullValues = true }, typeof(TestModel)));
-#pragma warning restore CS0618
+#pragma warning restore CS0618, SYSLIB0020
 
             void AssertData(BinaryData data)
             {
