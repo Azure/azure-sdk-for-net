@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.Template.Generation.Tests
+namespace Azure.Template.Generated.Tests
 {
     public class TemplateServiceLiveTests: RecordedTestBase<TemplateServiceTestEnvironment>
     {

@@ -4,7 +4,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Template.Generation.Tests
+namespace Azure.Template.Generated.Tests
 {
     internal class SerializationHelpers
     {

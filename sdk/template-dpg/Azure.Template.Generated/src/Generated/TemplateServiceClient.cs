@@ -14,7 +14,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.Template.Generation
+namespace Azure.Template.Generated
 {
     /// <summary> The TemplateService service client. </summary>
     public partial class TemplateServiceClient

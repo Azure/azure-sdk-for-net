@@ -8,7 +8,7 @@
 using System;
 using Azure.Core;
 
-namespace Azure.Template.Generation
+namespace Azure.Template.Generated
 {
     /// <summary> Client options for TemplateServiceClient. </summary>
     public partial class TemplateServiceClientOptions : ClientOptions

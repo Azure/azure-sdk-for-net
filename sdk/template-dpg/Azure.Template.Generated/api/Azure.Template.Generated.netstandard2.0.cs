@@ -1,9 +1,9 @@
-namespace Azure.Template.Generation
+namespace Azure.Template.Generated
 {
     public partial class TemplateServiceClient
     {
         protected TemplateServiceClient() { }
-        public TemplateServiceClient(Azure.Core.TokenCredential credential, System.Uri endpoint = null, Azure.Template.Generation.TemplateServiceClientOptions options = null) { }
+        public TemplateServiceClient(Azure.Core.TokenCredential credential, System.Uri endpoint = null, Azure.Template.Generated.TemplateServiceClientOptions options = null) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response Create(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
@@ -16,7 +16,7 @@ namespace Azure.Template.Generation
     }
     public partial class TemplateServiceClientOptions : Azure.Core.ClientOptions
     {
-        public TemplateServiceClientOptions(Azure.Template.Generation.TemplateServiceClientOptions.ServiceVersion version = Azure.Template.Generation.TemplateServiceClientOptions.ServiceVersion.V1_0_0) { }
+        public TemplateServiceClientOptions(Azure.Template.Generated.TemplateServiceClientOptions.ServiceVersion version = Azure.Template.Generated.TemplateServiceClientOptions.ServiceVersion.V1_0_0) { }
         public enum ServiceVersion
         {
             V1_0_0 = 1,
