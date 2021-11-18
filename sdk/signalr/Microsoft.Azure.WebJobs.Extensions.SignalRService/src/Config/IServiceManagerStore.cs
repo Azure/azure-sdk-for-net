@@ -5,7 +5,7 @@ using System;
 
 namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 {
-    internal interface IServiceManagerStore : IAsyncDisposable
+    internal interface IServiceManagerStore : IAsyncDisposable, IDisposable
     {
         IInternalServiceHubContextStore GetOrAddByConnectionStringKey(string connectionStringKey);
     }

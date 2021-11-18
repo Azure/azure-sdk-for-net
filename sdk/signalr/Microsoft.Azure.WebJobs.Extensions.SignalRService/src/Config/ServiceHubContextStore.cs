@@ -94,5 +94,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
                 }
             }
         }
+
+        public void Dispose()
+        {
+            DisposeAsync().AsTask().Wait();
+        }
     }
 }

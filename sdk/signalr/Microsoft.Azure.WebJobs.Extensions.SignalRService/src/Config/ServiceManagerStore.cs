@@ -78,5 +78,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
                 await hubContextStore.DisposeAsync().ConfigureAwait(false);
             }
         }
+
+        public void Dispose()
+        {
+            DisposeAsync().AsTask().Wait();
+        }
     }
 }
