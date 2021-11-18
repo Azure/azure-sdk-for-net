@@ -358,6 +358,7 @@ namespace Microsoft.Azure.ServiceBus
             DateTime enqueuedTimeUtc;
             Guid lockTokenGuid;
             string deadLetterSource;
+            MessageState state;
 
             /// <summary>
             /// Specifies whether or not there is a lock token set on the current message.
@@ -496,6 +497,24 @@ namespace Microsoft.Azure.ServiceBus
                 }
 
                 internal set => this.enqueuedTimeUtc = value;
+            }
+
+            /// <summary>Gets or sets the state of the message.</summary>
+            /// <value>The state of the message. </value>
+            /// <remarks>
+            ///    State of the message can be Active or Deferred or Scheduled. Deferred messages have Deferred state,
+            ///    scheduled messages have Scheduled state, all other messages have Active state.
+            ///    This property is read-only.
+            /// </remarks>
+            public MessageState State
+            {
+                get
+                {
+                    this.ThrowIfNotReceived();
+                    return this.state;
+                }
+
+                internal set => this.state = value;
             }
 
             internal Guid LockTokenGuid

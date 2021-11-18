@@ -84,11 +84,13 @@ if (!$PSBoundParameters.ContainsKey('ErrorAction')) {
     $ErrorActionPreference = 'Stop'
 }
 
-function Log($Message) {
+function Log($Message)
+{
     Write-Host ('{0} - {1}' -f [DateTime]::Now.ToLongTimeString(), $Message)
 }
 
-function Retry([scriptblock] $Action, [int] $Attempts = 5) {
+function Retry([scriptblock] $Action, [int] $Attempts = 5)
+{
     $attempt = 0
     $sleep = 5
 
@@ -109,7 +111,20 @@ function Retry([scriptblock] $Action, [int] $Attempts = 5) {
     }
 }
 
-function MergeHashes([hashtable] $source, [psvariable] $dest) {
+function LoadCloudConfig([string] $env)
+{
+    $configPath = "$PSScriptRoot/clouds/$env.json"
+    if (!(Test-Path $configPath)) {
+        Write-Warning "Could not find cloud configuration for environment '$env'"
+        return @{}
+    }
+
+    $config = Get-Content $configPath | ConvertFrom-Json -AsHashtable
+    return $config
+}
+
+function MergeHashes([hashtable] $source, [psvariable] $dest)
+{
     foreach ($key in $source.Keys) {
         if ($dest.Value.ContainsKey($key) -and $dest.Value[$key] -ne $source[$key]) {
             Write-Warning ("Overwriting '$($dest.Name).$($key)' with value '$($dest.Value[$key])' " +
@@ -119,7 +134,8 @@ function MergeHashes([hashtable] $source, [psvariable] $dest) {
     }
 }
 
-function BuildBicepFile([System.IO.FileSystemInfo] $file) {
+function BuildBicepFile([System.IO.FileSystemInfo] $file)
+{
     if (!(Get-Command bicep -ErrorAction Ignore)) {
         Write-Error "A bicep file was found at '$($file.FullName)' but the Azure Bicep CLI is not installed. See https://aka.ms/install-bicep-pwsh"
         throw
@@ -492,6 +508,8 @@ try {
         $templateParameters.Add('testApplicationSecret', $TestApplicationSecret)
     }
 
+    $defaultCloudParameters = LoadCloudConfig $Environment
+    MergeHashes $defaultCloudParameters $(Get-Variable templateParameters)
     MergeHashes $ArmTemplateParameters $(Get-Variable templateParameters)
     MergeHashes $AdditionalParameters $(Get-Variable templateParameters)
 

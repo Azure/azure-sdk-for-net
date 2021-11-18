@@ -137,7 +137,6 @@ namespace Azure.Containers.ContainerRegistry
                 CanList = value.CanList,
                 CanRead = value.CanRead,
                 CanWrite = value.CanWrite,
-                TeleportEnabled = value.TeleportEnabled
             };
         }
 

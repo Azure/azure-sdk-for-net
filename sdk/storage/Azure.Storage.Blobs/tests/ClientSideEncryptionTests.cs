@@ -543,6 +543,55 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
+        [Test]
+        [LiveOnly] // cannot seed content encryption key
+        public async Task RoundtripWithMetadata()
+        {
+            // Arrange
+
+            var data = GetRandomBuffer(Constants.KB);
+            var metadata = new Dictionary<string, string>
+            {
+                { "foo", "bar" },
+                { "fizz", "buzz" }
+            };
+            var mockKey = GetIKeyEncryptionKey();
+            var mockKeyResolver = GetIKeyEncryptionKeyResolver(mockKey.Object).Object;
+            await using (var disposable = await GetTestContainerEncryptionAsync(
+                new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+                {
+                    KeyEncryptionKey = mockKey.Object,
+                    KeyResolver = mockKeyResolver,
+                    KeyWrapAlgorithm = s_algorithmName
+                }))
+            {
+                var blob = InstrumentClient(disposable.Container.GetBlobClient(GetNewBlobName()));
+
+                // Act
+
+                await blob.UploadAsync(new MemoryStream(data), metadata: metadata, cancellationToken: s_cancellationToken);
+
+                // Assert
+
+                // caller-provided metadata unchanged after upload
+                Assert.AreEqual(2, metadata.Count);
+                Assert.AreEqual("bar", metadata["foo"]);
+                Assert.AreEqual("buzz", metadata["fizz"]);
+
+                // downloaded content and metadata as expected
+                var result = await blob.DownloadContentAsync(cancellationToken: s_cancellationToken);
+                Assert.AreEqual(data, result.Value.Content.ToArray());
+                IDictionary<string, string> downloadedMetadata = result.Value.Details.Metadata;
+                Assert.AreEqual(metadata.Count + 1, downloadedMetadata.Count);
+                foreach (var kvp in metadata)
+                {
+                    Assert.IsTrue(downloadedMetadata.ContainsKey(kvp.Key));
+                    Assert.AreEqual(metadata[kvp.Key], downloadedMetadata[kvp.Key]);
+                }
+                Assert.IsTrue(downloadedMetadata.ContainsKey(Constants.ClientSideEncryption.EncryptionDataKey));
+            }
+        }
+
         [RecordedTest] // multiple unalligned blocks
         [LiveOnly] // cannot seed content encryption key
         public async Task KeyResolverKicksIn()
