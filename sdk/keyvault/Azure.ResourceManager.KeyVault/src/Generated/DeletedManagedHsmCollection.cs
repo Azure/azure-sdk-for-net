@@ -16,23 +16,23 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.KeyVault
 {
-    /// <summary> A class representing collection of DeletedVault and their operations over its parent. </summary>
-    public partial class DeletedVaultCollection : ArmCollection
+    /// <summary> A class representing collection of DeletedManagedHsm and their operations over its parent. </summary>
+    public partial class DeletedManagedHsmCollection : ArmCollection
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly VaultsRestOperations _vaultsRestClient;
+        private readonly ManagedHsmsRestOperations _managedHsmsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="DeletedVaultCollection"/> class for mocking. </summary>
-        protected DeletedVaultCollection()
+        /// <summary> Initializes a new instance of the <see cref="DeletedManagedHsmCollection"/> class for mocking. </summary>
+        protected DeletedManagedHsmCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of DeletedVaultCollection class. </summary>
+        /// <summary> Initializes a new instance of DeletedManagedHsmCollection class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal DeletedVaultCollection(ArmResource parent) : base(parent)
+        internal DeletedManagedHsmCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _vaultsRestClient = new VaultsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _managedHsmsRestClient = new ManagedHsmsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -40,30 +40,30 @@ namespace Azure.ResourceManager.KeyVault
 
         // Collection level operations.
 
-        /// <summary> Gets the deleted Azure key vault. </summary>
-        /// <param name="location"> The location of the deleted vault. </param>
-        /// <param name="vaultName"> The name of the vault. </param>
+        /// <summary> Gets the specified deleted managed HSM. </summary>
+        /// <param name="location"> The location of the deleted managed HSM. </param>
+        /// <param name="name"> The name of the deleted managed HSM. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="vaultName"/> is null. </exception>
-        public virtual Response<DeletedVault> Get(string location, string vaultName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="name"/> is null. </exception>
+        public virtual Response<DeletedManagedHsm> Get(string location, string name, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
             }
-            if (vaultName == null)
+            if (name == null)
             {
-                throw new ArgumentNullException(nameof(vaultName));
+                throw new ArgumentNullException(nameof(name));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DeletedVaultCollection.Get");
+            using var scope = _clientDiagnostics.CreateScope("DeletedManagedHsmCollection.Get");
             scope.Start();
             try
             {
-                var response = _vaultsRestClient.GetDeleted(location, vaultName, cancellationToken);
+                var response = _managedHsmsRestClient.GetDeleted(location, name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DeletedVault(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DeletedManagedHsm(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -72,30 +72,30 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        /// <summary> Gets the deleted Azure key vault. </summary>
-        /// <param name="location"> The location of the deleted vault. </param>
-        /// <param name="vaultName"> The name of the vault. </param>
+        /// <summary> Gets the specified deleted managed HSM. </summary>
+        /// <param name="location"> The location of the deleted managed HSM. </param>
+        /// <param name="name"> The name of the deleted managed HSM. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="vaultName"/> is null. </exception>
-        public async virtual Task<Response<DeletedVault>> GetAsync(string location, string vaultName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="name"/> is null. </exception>
+        public async virtual Task<Response<DeletedManagedHsm>> GetAsync(string location, string name, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
             }
-            if (vaultName == null)
+            if (name == null)
             {
-                throw new ArgumentNullException(nameof(vaultName));
+                throw new ArgumentNullException(nameof(name));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DeletedVaultCollection.Get");
+            using var scope = _clientDiagnostics.CreateScope("DeletedManagedHsmCollection.Get");
             scope.Start();
             try
             {
-                var response = await _vaultsRestClient.GetDeletedAsync(location, vaultName, cancellationToken).ConfigureAwait(false);
+                var response = await _managedHsmsRestClient.GetDeletedAsync(location, name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new DeletedVault(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DeletedManagedHsm(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -105,29 +105,29 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="location"> The location of the deleted vault. </param>
-        /// <param name="vaultName"> The name of the vault. </param>
+        /// <param name="location"> The location of the deleted managed HSM. </param>
+        /// <param name="name"> The name of the deleted managed HSM. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="vaultName"/> is null. </exception>
-        public virtual Response<DeletedVault> GetIfExists(string location, string vaultName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="name"/> is null. </exception>
+        public virtual Response<DeletedManagedHsm> GetIfExists(string location, string name, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
             }
-            if (vaultName == null)
+            if (name == null)
             {
-                throw new ArgumentNullException(nameof(vaultName));
+                throw new ArgumentNullException(nameof(name));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DeletedVaultCollection.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("DeletedManagedHsmCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _vaultsRestClient.GetDeleted(location, vaultName, cancellationToken: cancellationToken);
+                var response = _managedHsmsRestClient.GetDeleted(location, name, cancellationToken: cancellationToken);
                 return response.Value == null
-                    ? Response.FromValue<DeletedVault>(null, response.GetRawResponse())
-                    : Response.FromValue(new DeletedVault(this, response.Value), response.GetRawResponse());
+                    ? Response.FromValue<DeletedManagedHsm>(null, response.GetRawResponse())
+                    : Response.FromValue(new DeletedManagedHsm(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -137,29 +137,29 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="location"> The location of the deleted vault. </param>
-        /// <param name="vaultName"> The name of the vault. </param>
+        /// <param name="location"> The location of the deleted managed HSM. </param>
+        /// <param name="name"> The name of the deleted managed HSM. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="vaultName"/> is null. </exception>
-        public async virtual Task<Response<DeletedVault>> GetIfExistsAsync(string location, string vaultName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="name"/> is null. </exception>
+        public async virtual Task<Response<DeletedManagedHsm>> GetIfExistsAsync(string location, string name, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
             }
-            if (vaultName == null)
+            if (name == null)
             {
-                throw new ArgumentNullException(nameof(vaultName));
+                throw new ArgumentNullException(nameof(name));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DeletedVaultCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DeletedManagedHsmCollection.GetIfExistsAsync");
             scope.Start();
             try
             {
-                var response = await _vaultsRestClient.GetDeletedAsync(location, vaultName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _managedHsmsRestClient.GetDeletedAsync(location, name, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
-                    ? Response.FromValue<DeletedVault>(null, response.GetRawResponse())
-                    : Response.FromValue(new DeletedVault(this, response.Value), response.GetRawResponse());
+                    ? Response.FromValue<DeletedManagedHsm>(null, response.GetRawResponse())
+                    : Response.FromValue(new DeletedManagedHsm(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -169,26 +169,26 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="location"> The location of the deleted vault. </param>
-        /// <param name="vaultName"> The name of the vault. </param>
+        /// <param name="location"> The location of the deleted managed HSM. </param>
+        /// <param name="name"> The name of the deleted managed HSM. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="vaultName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string location, string vaultName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="name"/> is null. </exception>
+        public virtual Response<bool> CheckIfExists(string location, string name, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
             }
-            if (vaultName == null)
+            if (name == null)
             {
-                throw new ArgumentNullException(nameof(vaultName));
+                throw new ArgumentNullException(nameof(name));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DeletedVaultCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("DeletedManagedHsmCollection.CheckIfExists");
             scope.Start();
             try
             {
-                var response = GetIfExists(location, vaultName, cancellationToken: cancellationToken);
+                var response = GetIfExists(location, name, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,26 +199,26 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="location"> The location of the deleted vault. </param>
-        /// <param name="vaultName"> The name of the vault. </param>
+        /// <param name="location"> The location of the deleted managed HSM. </param>
+        /// <param name="name"> The name of the deleted managed HSM. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="vaultName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string location, string vaultName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="name"/> is null. </exception>
+        public async virtual Task<Response<bool>> CheckIfExistsAsync(string location, string name, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
             }
-            if (vaultName == null)
+            if (name == null)
             {
-                throw new ArgumentNullException(nameof(vaultName));
+                throw new ArgumentNullException(nameof(name));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DeletedVaultCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DeletedManagedHsmCollection.CheckIfExistsAsync");
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(location, vaultName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await GetIfExistsAsync(location, name, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        /// <summary> Filters the list of <see cref="DeletedVault" /> for this subscription represented as generic resources. </summary>
+        /// <summary> Filters the list of <see cref="DeletedManagedHsm" /> for this subscription represented as generic resources. </summary>
         /// <param name="nameFilter"> The filter used in this operation. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>
@@ -236,11 +236,11 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DeletedVaultCollection.GetAllAsGenericResources");
+            using var scope = _clientDiagnostics.CreateScope("DeletedManagedHsmCollection.GetAllAsGenericResources");
             scope.Start();
             try
             {
-                var filters = new ResourceFilterCollection(DeletedVault.ResourceType);
+                var filters = new ResourceFilterCollection(DeletedManagedHsm.ResourceType);
                 filters.SubstringFilter = nameFilter;
                 return ResourceListOperations.GetAtContext(Parent as Subscription, filters, expand, top, cancellationToken);
             }
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        /// <summary> Filters the list of <see cref="DeletedVault" /> for this subscription represented as generic resources. </summary>
+        /// <summary> Filters the list of <see cref="DeletedManagedHsm" /> for this subscription represented as generic resources. </summary>
         /// <param name="nameFilter"> The filter used in this operation. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>
@@ -259,11 +259,11 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DeletedVaultCollection.GetAllAsGenericResources");
+            using var scope = _clientDiagnostics.CreateScope("DeletedManagedHsmCollection.GetAllAsGenericResources");
             scope.Start();
             try
             {
-                var filters = new ResourceFilterCollection(DeletedVault.ResourceType);
+                var filters = new ResourceFilterCollection(DeletedManagedHsm.ResourceType);
                 filters.SubstringFilter = nameFilter;
                 return ResourceListOperations.GetAtContextAsync(Parent as Subscription, filters, expand, top, cancellationToken);
             }
@@ -275,6 +275,6 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, DeletedVault, DeletedVaultData> Construct() { }
+        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, DeletedManagedHsm, DeletedManagedHsmData> Construct() { }
     }
 }
