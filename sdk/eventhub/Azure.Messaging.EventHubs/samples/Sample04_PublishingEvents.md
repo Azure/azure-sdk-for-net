@@ -21,7 +21,7 @@ When events are published, they will continue to exist in the Event Hub and be a
 
 ## Publishing size constraints
 
-There is a limit to the size (in bytes) that can be published in a single operation.  To accurately determine the size of an event, it must be measured in the format used by the active protocol and account for overhead.  The size limit is controlled by the Event Hubs service and differs for different types of Event Hub instances.  
+There is a limit to the size (in bytes) that can be published in a single operation.  To accurately determine the size of an event, it must be measured in the format used by the active protocol in order to properly account for overhead.  The size limit is controlled by the Event Hubs service and differs for different types of Event Hub instances.  
 
 Applications using the `EventHubBufferedProducerClient` do not need to track size limitations; the producer will ensure that batches are correctly sized when publishing.
 
