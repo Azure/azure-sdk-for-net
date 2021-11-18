@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of PrivateLinkServiceData. </summary>
         public PrivateLinkServiceData()
         {
-            LoadBalancerFrontendIpConfigurations = new ChangeTrackingList<FrontendIPConfiguration>();
+            LoadBalancerFrontendIpConfigurations = new ChangeTrackingList<FrontendIPConfigurationData>();
             IpConfigurations = new ChangeTrackingList<PrivateLinkServiceIpConfiguration>();
             NetworkInterfaces = new ChangeTrackingList<NetworkInterfaceData>();
-            PrivateEndpointConnections = new ChangeTrackingList<PrivateEndpointConnection>();
+            PrivateEndpointConnections = new ChangeTrackingList<PrivateEndpointConnectionData>();
             Fqdns = new ChangeTrackingList<string>();
         }
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="fqdns"> The list of Fqdn. </param>
         /// <param name="alias"> The alias of the private link service. </param>
         /// <param name="enableProxyProtocol"> Whether the private link service is enabled for proxy protocol or not. </param>
-        internal PrivateLinkServiceData(string id, string name, string type, string location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, string etag, IList<FrontendIPConfiguration> loadBalancerFrontendIpConfigurations, IList<PrivateLinkServiceIpConfiguration> ipConfigurations, IReadOnlyList<NetworkInterfaceData> networkInterfaces, ProvisioningState? provisioningState, IReadOnlyList<PrivateEndpointConnection> privateEndpointConnections, PrivateLinkServicePropertiesVisibility visibility, PrivateLinkServicePropertiesAutoApproval autoApproval, IList<string> fqdns, string @alias, bool? enableProxyProtocol) : base(id, name, type, location, tags)
+        internal PrivateLinkServiceData(string id, string name, string type, string location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, string etag, IList<FrontendIPConfigurationData> loadBalancerFrontendIpConfigurations, IList<PrivateLinkServiceIpConfiguration> ipConfigurations, IReadOnlyList<NetworkInterfaceData> networkInterfaces, ProvisioningState? provisioningState, IReadOnlyList<PrivateEndpointConnectionData> privateEndpointConnections, PrivateLinkServicePropertiesVisibility visibility, PrivateLinkServicePropertiesAutoApproval autoApproval, IList<string> fqdns, string @alias, bool? enableProxyProtocol) : base(id, name, type, location, tags)
         {
             ExtendedLocation = extendedLocation;
             Etag = etag;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> An array of references to the load balancer IP configurations. </summary>
-        public IList<FrontendIPConfiguration> LoadBalancerFrontendIpConfigurations { get; }
+        public IList<FrontendIPConfigurationData> LoadBalancerFrontendIpConfigurations { get; }
         /// <summary> An array of private link service IP configurations. </summary>
         public IList<PrivateLinkServiceIpConfiguration> IpConfigurations { get; }
         /// <summary> An array of references to the network interfaces created for this private link service. </summary>
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> The provisioning state of the private link service resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> An array of list about connections to the private endpoint. </summary>
-        public IReadOnlyList<PrivateEndpointConnection> PrivateEndpointConnections { get; }
+        public IReadOnlyList<PrivateEndpointConnectionData> PrivateEndpointConnections { get; }
         /// <summary> The visibility list of the private link service. </summary>
         public PrivateLinkServicePropertiesVisibility Visibility { get; set; }
         /// <summary> The auto-approval list of the private link service. </summary>

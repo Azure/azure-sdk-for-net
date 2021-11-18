@@ -23,7 +23,8 @@ namespace Azure.ResourceManager.Network
     public partial class NetworkWatcher : ArmResource
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly NetworkWatchersRestOperations _restClient;
+        private readonly NetworkWatchersRestOperations _networkWatchersRestClient;
+        private readonly PacketCapturesRestOperations _packetCapturesRestClient;
         private readonly NetworkWatcherData _data;
 
         /// <summary> Initializes a new instance of the <see cref="NetworkWatcher"/> class for mocking. </summary>
@@ -39,7 +40,8 @@ namespace Azure.ResourceManager.Network
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new NetworkWatchersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _networkWatchersRestClient = new NetworkWatchersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _packetCapturesRestClient = new PacketCapturesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="NetworkWatcher"/> class. </summary>
@@ -48,7 +50,8 @@ namespace Azure.ResourceManager.Network
         internal NetworkWatcher(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new NetworkWatchersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _networkWatchersRestClient = new NetworkWatchersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _packetCapturesRestClient = new PacketCapturesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="NetworkWatcher"/> class. </summary>
@@ -60,7 +63,8 @@ namespace Azure.ResourceManager.Network
         internal NetworkWatcher(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new NetworkWatchersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _networkWatchersRestClient = new NetworkWatchersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _packetCapturesRestClient = new PacketCapturesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -92,7 +96,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _networkWatchersRestClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new NetworkWatcher(this, response.Value), response.GetRawResponse());
@@ -112,7 +116,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _networkWatchersRestClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new NetworkWatcher(this, response.Value), response.GetRawResponse());
@@ -149,8 +153,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkWatcherDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = await _networkWatchersRestClient.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkWatcherDeleteOperation(_clientDiagnostics, Pipeline, _networkWatchersRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -171,8 +175,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new NetworkWatcherDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = _networkWatchersRestClient.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new NetworkWatcherDeleteOperation(_clientDiagnostics, Pipeline, _networkWatchersRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -183,22 +187,23 @@ namespace Azure.ResourceManager.Network
                 throw;
             }
         }
+
         /// <summary> Updates a network watcher tags. </summary>
         /// <param name="parameters"> Parameters supplied to update network watcher tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<Response<NetworkWatcher>> UpdateTagsAsync(TagsObject parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<NetworkWatcher>> UpdateAsync(TagsObject parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.UpdateTags");
+            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.Update");
             scope.Start();
             try
             {
-                var response = await _restClient.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var response = await _networkWatchersRestClient.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new NetworkWatcher(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -212,18 +217,18 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters supplied to update network watcher tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual Response<NetworkWatcher> UpdateTags(TagsObject parameters, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkWatcher> Update(TagsObject parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.UpdateTags");
+            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.Update");
             scope.Start();
             try
             {
-                var response = _restClient.UpdateTags(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                var response = _networkWatchersRestClient.UpdateTags(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
                 return Response.FromValue(new NetworkWatcher(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -237,7 +242,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that define the representation of topology. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<Response<Topology>> GetTopologyAsync(TopologyParameters parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<Topology>> GetTopologyAsync(TopologyParameters parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -248,7 +253,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.GetTopologyAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var response = await _networkWatchersRestClient.GetTopologyAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -273,7 +278,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.GetTopology(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                var response = _networkWatchersRestClient.GetTopology(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -299,8 +304,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.VerifyIPFlowAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkWatcherVerifyIPFlowOperation(_clientDiagnostics, Pipeline, _restClient.CreateVerifyIPFlowRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var response = await _networkWatchersRestClient.VerifyIPFlowAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkWatcherVerifyIPFlowOperation(_clientDiagnostics, Pipeline, _networkWatchersRestClient.CreateVerifyIPFlowRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -328,8 +333,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.VerifyIPFlow(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new NetworkWatcherVerifyIPFlowOperation(_clientDiagnostics, Pipeline, _restClient.CreateVerifyIPFlowRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var response = _networkWatchersRestClient.VerifyIPFlow(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                var operation = new NetworkWatcherVerifyIPFlowOperation(_clientDiagnostics, Pipeline, _networkWatchersRestClient.CreateVerifyIPFlowRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -357,8 +362,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.GetNextHopAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkWatcherGetNextHopOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetNextHopRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var response = await _networkWatchersRestClient.GetNextHopAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkWatcherGetNextHopOperation(_clientDiagnostics, Pipeline, _networkWatchersRestClient.CreateGetNextHopRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -386,8 +391,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.GetNextHop(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new NetworkWatcherGetNextHopOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetNextHopRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var response = _networkWatchersRestClient.GetNextHop(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                var operation = new NetworkWatcherGetNextHopOperation(_clientDiagnostics, Pipeline, _networkWatchersRestClient.CreateGetNextHopRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -415,8 +420,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.GetVMSecurityRulesAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkWatcherGetVMSecurityRulesOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetVMSecurityRulesRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var response = await _networkWatchersRestClient.GetVMSecurityRulesAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkWatcherGetVMSecurityRulesOperation(_clientDiagnostics, Pipeline, _networkWatchersRestClient.CreateGetVMSecurityRulesRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -444,8 +449,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.GetVMSecurityRules(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new NetworkWatcherGetVMSecurityRulesOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetVMSecurityRulesRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var response = _networkWatchersRestClient.GetVMSecurityRules(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                var operation = new NetworkWatcherGetVMSecurityRulesOperation(_clientDiagnostics, Pipeline, _networkWatchersRestClient.CreateGetVMSecurityRulesRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -473,8 +478,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.GetTroubleshootingAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkWatcherGetTroubleshootingOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetTroubleshootingRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var response = await _networkWatchersRestClient.GetTroubleshootingAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkWatcherGetTroubleshootingOperation(_clientDiagnostics, Pipeline, _networkWatchersRestClient.CreateGetTroubleshootingRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -502,8 +507,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.GetTroubleshooting(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new NetworkWatcherGetTroubleshootingOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetTroubleshootingRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var response = _networkWatchersRestClient.GetTroubleshooting(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                var operation = new NetworkWatcherGetTroubleshootingOperation(_clientDiagnostics, Pipeline, _networkWatchersRestClient.CreateGetTroubleshootingRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -531,8 +536,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.GetTroubleshootingResultAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkWatcherGetTroubleshootingResultOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetTroubleshootingResultRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var response = await _networkWatchersRestClient.GetTroubleshootingResultAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkWatcherGetTroubleshootingResultOperation(_clientDiagnostics, Pipeline, _networkWatchersRestClient.CreateGetTroubleshootingResultRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -560,8 +565,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.GetTroubleshootingResult(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new NetworkWatcherGetTroubleshootingResultOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetTroubleshootingResultRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var response = _networkWatchersRestClient.GetTroubleshootingResult(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                var operation = new NetworkWatcherGetTroubleshootingResultOperation(_clientDiagnostics, Pipeline, _networkWatchersRestClient.CreateGetTroubleshootingResultRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -589,8 +594,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.SetFlowLogConfigurationAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkWatcherSetFlowLogConfigurationOperation(_clientDiagnostics, Pipeline, _restClient.CreateSetFlowLogConfigurationRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var response = await _networkWatchersRestClient.SetFlowLogConfigurationAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkWatcherSetFlowLogConfigurationOperation(_clientDiagnostics, Pipeline, _networkWatchersRestClient.CreateSetFlowLogConfigurationRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -618,8 +623,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.SetFlowLogConfiguration(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new NetworkWatcherSetFlowLogConfigurationOperation(_clientDiagnostics, Pipeline, _restClient.CreateSetFlowLogConfigurationRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var response = _networkWatchersRestClient.SetFlowLogConfiguration(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                var operation = new NetworkWatcherSetFlowLogConfigurationOperation(_clientDiagnostics, Pipeline, _networkWatchersRestClient.CreateSetFlowLogConfigurationRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -647,8 +652,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.GetFlowLogStatusAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkWatcherGetFlowLogStatusOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetFlowLogStatusRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var response = await _networkWatchersRestClient.GetFlowLogStatusAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkWatcherGetFlowLogStatusOperation(_clientDiagnostics, Pipeline, _networkWatchersRestClient.CreateGetFlowLogStatusRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -676,8 +681,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.GetFlowLogStatus(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new NetworkWatcherGetFlowLogStatusOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetFlowLogStatusRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var response = _networkWatchersRestClient.GetFlowLogStatus(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                var operation = new NetworkWatcherGetFlowLogStatusOperation(_clientDiagnostics, Pipeline, _networkWatchersRestClient.CreateGetFlowLogStatusRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -705,8 +710,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.CheckConnectivityAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkWatcherCheckConnectivityOperation(_clientDiagnostics, Pipeline, _restClient.CreateCheckConnectivityRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var response = await _networkWatchersRestClient.CheckConnectivityAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkWatcherCheckConnectivityOperation(_clientDiagnostics, Pipeline, _networkWatchersRestClient.CreateCheckConnectivityRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -734,8 +739,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.CheckConnectivity(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new NetworkWatcherCheckConnectivityOperation(_clientDiagnostics, Pipeline, _restClient.CreateCheckConnectivityRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var response = _networkWatchersRestClient.CheckConnectivity(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                var operation = new NetworkWatcherCheckConnectivityOperation(_clientDiagnostics, Pipeline, _networkWatchersRestClient.CreateCheckConnectivityRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -763,8 +768,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.GetAzureReachabilityReportAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkWatcherGetAzureReachabilityReportOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetAzureReachabilityReportRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var response = await _networkWatchersRestClient.GetAzureReachabilityReportAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkWatcherGetAzureReachabilityReportOperation(_clientDiagnostics, Pipeline, _networkWatchersRestClient.CreateGetAzureReachabilityReportRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -792,8 +797,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.GetAzureReachabilityReport(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new NetworkWatcherGetAzureReachabilityReportOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetAzureReachabilityReportRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var response = _networkWatchersRestClient.GetAzureReachabilityReport(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                var operation = new NetworkWatcherGetAzureReachabilityReportOperation(_clientDiagnostics, Pipeline, _networkWatchersRestClient.CreateGetAzureReachabilityReportRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -810,7 +815,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<NetworkWatcherGetAvailableProvidersOperation> GetAvailableProvidersAsync(AvailableProvidersListParameters parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<NetworkWatcherListAvailableProvidersOperation> GetAvailableProvidersAsync(AvailableProvidersListParameters parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -821,8 +826,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.GetAvailableProvidersAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkWatcherGetAvailableProvidersOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetAvailableProvidersRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var response = await _networkWatchersRestClient.ListAvailableProvidersAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkWatcherListAvailableProvidersOperation(_clientDiagnostics, Pipeline, _networkWatchersRestClient.CreateListAvailableProvidersRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -839,7 +844,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual NetworkWatcherGetAvailableProvidersOperation GetAvailableProviders(AvailableProvidersListParameters parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual NetworkWatcherListAvailableProvidersOperation GetAvailableProviders(AvailableProvidersListParameters parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -850,8 +855,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.GetAvailableProviders(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new NetworkWatcherGetAvailableProvidersOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetAvailableProvidersRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var response = _networkWatchersRestClient.ListAvailableProviders(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                var operation = new NetworkWatcherListAvailableProvidersOperation(_clientDiagnostics, Pipeline, _networkWatchersRestClient.CreateListAvailableProvidersRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -879,8 +884,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.GetNetworkConfigurationDiagnosticAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkWatcherGetNetworkConfigurationDiagnosticOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetNetworkConfigurationDiagnosticRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var response = await _networkWatchersRestClient.GetNetworkConfigurationDiagnosticAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkWatcherGetNetworkConfigurationDiagnosticOperation(_clientDiagnostics, Pipeline, _networkWatchersRestClient.CreateGetNetworkConfigurationDiagnosticRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -908,8 +913,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.GetNetworkConfigurationDiagnostic(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new NetworkWatcherGetNetworkConfigurationDiagnosticOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetNetworkConfigurationDiagnosticRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var response = _networkWatchersRestClient.GetNetworkConfigurationDiagnostic(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                var operation = new NetworkWatcherGetNetworkConfigurationDiagnosticOperation(_clientDiagnostics, Pipeline, _networkWatchersRestClient.CreateGetNetworkConfigurationDiagnosticRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -921,25 +926,362 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets a list of PacketCaptures in the NetworkWatcher. </summary>
-        /// <returns> An object representing collection of PacketCaptures and their operations over a NetworkWatcher. </returns>
-        public PacketCaptureCollection GetPacketCaptures()
+        /// <summary> Create and start a packet capture on the specified VM. </summary>
+        /// <param name="packetCaptureName"> The name of the packet capture session. </param>
+        /// <param name="parameters"> Parameters that define the create packet capture operation. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="packetCaptureName"/> or <paramref name="parameters"/> is null. </exception>
+        public async virtual Task<PacketCaptureCreateOperation> CreatePacketCaptureAsync(string packetCaptureName, PacketCaptureInput parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            return new PacketCaptureCollection(this);
+            if (packetCaptureName == null)
+            {
+                throw new ArgumentNullException(nameof(packetCaptureName));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.CreatePacketCapture");
+            scope.Start();
+            try
+            {
+                var response = await _packetCapturesRestClient.CreateAsync(Id.ResourceGroupName, Id.Name, packetCaptureName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new PacketCaptureCreateOperation(_clientDiagnostics, Pipeline, _packetCapturesRestClient.CreateCreateRequest(Id.ResourceGroupName, Id.Name, packetCaptureName, parameters).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary> Gets a list of ConnectionMonitors in the NetworkWatcher. </summary>
+        /// <summary> Create and start a packet capture on the specified VM. </summary>
+        /// <param name="packetCaptureName"> The name of the packet capture session. </param>
+        /// <param name="parameters"> Parameters that define the create packet capture operation. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="packetCaptureName"/> or <paramref name="parameters"/> is null. </exception>
+        public virtual PacketCaptureCreateOperation CreatePacketCapture(string packetCaptureName, PacketCaptureInput parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            if (packetCaptureName == null)
+            {
+                throw new ArgumentNullException(nameof(packetCaptureName));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.CreatePacketCapture");
+            scope.Start();
+            try
+            {
+                var response = _packetCapturesRestClient.Create(Id.ResourceGroupName, Id.Name, packetCaptureName, parameters, cancellationToken);
+                var operation = new PacketCaptureCreateOperation(_clientDiagnostics, Pipeline, _packetCapturesRestClient.CreateCreateRequest(Id.ResourceGroupName, Id.Name, packetCaptureName, parameters).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets a packet capture session by name. </summary>
+        /// <param name="packetCaptureName"> The name of the packet capture session. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="packetCaptureName"/> is null. </exception>
+        public async virtual Task<Response<PacketCapture>> GetPacketCaptureAsync(string packetCaptureName, CancellationToken cancellationToken = default)
+        {
+            if (packetCaptureName == null)
+            {
+                throw new ArgumentNullException(nameof(packetCaptureName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.GetPacketCapture");
+            scope.Start();
+            try
+            {
+                var response = await _packetCapturesRestClient.GetAsync(Id.ResourceGroupName, Id.Name, packetCaptureName, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets a packet capture session by name. </summary>
+        /// <param name="packetCaptureName"> The name of the packet capture session. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="packetCaptureName"/> is null. </exception>
+        public virtual Response<PacketCapture> GetPacketCapture(string packetCaptureName, CancellationToken cancellationToken = default)
+        {
+            if (packetCaptureName == null)
+            {
+                throw new ArgumentNullException(nameof(packetCaptureName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.GetPacketCapture");
+            scope.Start();
+            try
+            {
+                var response = _packetCapturesRestClient.Get(Id.ResourceGroupName, Id.Name, packetCaptureName, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes the specified packet capture session. </summary>
+        /// <param name="packetCaptureName"> The name of the packet capture session. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="packetCaptureName"/> is null. </exception>
+        public async virtual Task<PacketCaptureDeleteOperation> DeletePacketCaptureAsync(string packetCaptureName, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            if (packetCaptureName == null)
+            {
+                throw new ArgumentNullException(nameof(packetCaptureName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.DeletePacketCapture");
+            scope.Start();
+            try
+            {
+                var response = await _packetCapturesRestClient.DeleteAsync(Id.ResourceGroupName, Id.Name, packetCaptureName, cancellationToken).ConfigureAwait(false);
+                var operation = new PacketCaptureDeleteOperation(_clientDiagnostics, Pipeline, _packetCapturesRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name, packetCaptureName).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes the specified packet capture session. </summary>
+        /// <param name="packetCaptureName"> The name of the packet capture session. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="packetCaptureName"/> is null. </exception>
+        public virtual PacketCaptureDeleteOperation DeletePacketCapture(string packetCaptureName, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            if (packetCaptureName == null)
+            {
+                throw new ArgumentNullException(nameof(packetCaptureName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.DeletePacketCapture");
+            scope.Start();
+            try
+            {
+                var response = _packetCapturesRestClient.Delete(Id.ResourceGroupName, Id.Name, packetCaptureName, cancellationToken);
+                var operation = new PacketCaptureDeleteOperation(_clientDiagnostics, Pipeline, _packetCapturesRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name, packetCaptureName).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Stops a specified packet capture session. </summary>
+        /// <param name="packetCaptureName"> The name of the packet capture session. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="packetCaptureName"/> is null. </exception>
+        public async virtual Task<PacketCaptureStopOperation> StopPacketCaptureAsync(string packetCaptureName, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            if (packetCaptureName == null)
+            {
+                throw new ArgumentNullException(nameof(packetCaptureName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.StopPacketCapture");
+            scope.Start();
+            try
+            {
+                var response = await _packetCapturesRestClient.StopAsync(Id.ResourceGroupName, Id.Name, packetCaptureName, cancellationToken).ConfigureAwait(false);
+                var operation = new PacketCaptureStopOperation(_clientDiagnostics, Pipeline, _packetCapturesRestClient.CreateStopRequest(Id.ResourceGroupName, Id.Name, packetCaptureName).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Stops a specified packet capture session. </summary>
+        /// <param name="packetCaptureName"> The name of the packet capture session. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="packetCaptureName"/> is null. </exception>
+        public virtual PacketCaptureStopOperation StopPacketCapture(string packetCaptureName, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            if (packetCaptureName == null)
+            {
+                throw new ArgumentNullException(nameof(packetCaptureName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.StopPacketCapture");
+            scope.Start();
+            try
+            {
+                var response = _packetCapturesRestClient.Stop(Id.ResourceGroupName, Id.Name, packetCaptureName, cancellationToken);
+                var operation = new PacketCaptureStopOperation(_clientDiagnostics, Pipeline, _packetCapturesRestClient.CreateStopRequest(Id.ResourceGroupName, Id.Name, packetCaptureName).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Query the status of a running packet capture session. </summary>
+        /// <param name="packetCaptureName"> The name given to the packet capture session. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="packetCaptureName"/> is null. </exception>
+        public async virtual Task<PacketCaptureGetStatusOperation> GetStatusPacketCaptureAsync(string packetCaptureName, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            if (packetCaptureName == null)
+            {
+                throw new ArgumentNullException(nameof(packetCaptureName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.GetStatusPacketCapture");
+            scope.Start();
+            try
+            {
+                var response = await _packetCapturesRestClient.GetStatusAsync(Id.ResourceGroupName, Id.Name, packetCaptureName, cancellationToken).ConfigureAwait(false);
+                var operation = new PacketCaptureGetStatusOperation(_clientDiagnostics, Pipeline, _packetCapturesRestClient.CreateGetStatusRequest(Id.ResourceGroupName, Id.Name, packetCaptureName).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Query the status of a running packet capture session. </summary>
+        /// <param name="packetCaptureName"> The name given to the packet capture session. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="packetCaptureName"/> is null. </exception>
+        public virtual PacketCaptureGetStatusOperation GetStatusPacketCapture(string packetCaptureName, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            if (packetCaptureName == null)
+            {
+                throw new ArgumentNullException(nameof(packetCaptureName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.GetStatusPacketCapture");
+            scope.Start();
+            try
+            {
+                var response = _packetCapturesRestClient.GetStatus(Id.ResourceGroupName, Id.Name, packetCaptureName, cancellationToken);
+                var operation = new PacketCaptureGetStatusOperation(_clientDiagnostics, Pipeline, _packetCapturesRestClient.CreateGetStatusRequest(Id.ResourceGroupName, Id.Name, packetCaptureName).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Lists all packet capture sessions within the specified resource group. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="PacketCapture" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PacketCapture> GetPacketCapturesAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<PacketCapture>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.GetPacketCaptures");
+                scope.Start();
+                try
+                {
+                    var response = await _packetCapturesRestClient.ListAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary> Lists all packet capture sessions within the specified resource group. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PacketCapture" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PacketCapture> GetPacketCaptures(CancellationToken cancellationToken = default)
+        {
+            Page<PacketCapture> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.GetPacketCaptures");
+                scope.Start();
+                try
+                {
+                    var response = _packetCapturesRestClient.List(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+        }
+
+        #region ConnectionMonitor
+
+        /// <summary> Gets a collection of ConnectionMonitors in the NetworkWatcher. </summary>
         /// <returns> An object representing collection of ConnectionMonitors and their operations over a NetworkWatcher. </returns>
         public ConnectionMonitorCollection GetConnectionMonitors()
         {
             return new ConnectionMonitorCollection(this);
         }
+        #endregion
 
-        /// <summary> Gets a list of FlowLogs in the NetworkWatcher. </summary>
+        #region FlowLog
+
+        /// <summary> Gets a collection of FlowLogs in the NetworkWatcher. </summary>
         /// <returns> An object representing collection of FlowLogs and their operations over a NetworkWatcher. </returns>
         public FlowLogCollection GetFlowLogs()
         {
             return new FlowLogCollection(this);
         }
+        #endregion
     }
 }

@@ -23,6 +23,17 @@ namespace Azure.ResourceManager.Network
         }
         #endregion
 
+        #region ApplicationGatewayAvailableSslOptions
+        /// <summary> Gets an object representing a ApplicationGatewayAvailableSslOptions along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ApplicationGatewayAvailableSslOptions" /> object. </returns>
+        public static ApplicationGatewayAvailableSslOptions GetApplicationGatewayAvailableSslOptions(this ArmClient armClient, ResourceIdentifier id)
+        {
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ApplicationGatewayAvailableSslOptions(clientOptions, credential, uri, pipeline, id));
+        }
+        #endregion
+
         #region ApplicationGatewayPrivateEndpointConnection
         /// <summary> Gets an object representing a ApplicationGatewayPrivateEndpointConnection along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -53,6 +64,17 @@ namespace Azure.ResourceManager.Network
         public static AzureFirewall GetAzureFirewall(this ArmClient armClient, ResourceIdentifier id)
         {
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new AzureFirewall(clientOptions, credential, uri, pipeline, id));
+        }
+        #endregion
+
+        #region AzureWebCategory
+        /// <summary> Gets an object representing a AzureWebCategory along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AzureWebCategory" /> object. </returns>
+        public static AzureWebCategory GetAzureWebCategory(this ArmClient armClient, ResourceIdentifier id)
+        {
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new AzureWebCategory(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
@@ -144,6 +166,17 @@ namespace Azure.ResourceManager.Network
         }
         #endregion
 
+        #region PeerExpressRouteCircuitConnection
+        /// <summary> Gets an object representing a PeerExpressRouteCircuitConnection along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PeerExpressRouteCircuitConnection" /> object. </returns>
+        public static PeerExpressRouteCircuitConnection GetPeerExpressRouteCircuitConnection(this ArmClient armClient, ResourceIdentifier id)
+        {
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new PeerExpressRouteCircuitConnection(clientOptions, credential, uri, pipeline, id));
+        }
+        #endregion
+
         #region ExpressRouteCircuit
         /// <summary> Gets an object representing a ExpressRouteCircuit along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -166,14 +199,14 @@ namespace Azure.ResourceManager.Network
         }
         #endregion
 
-        #region ExpressRouteCrossConnectionPeering
-        /// <summary> Gets an object representing a ExpressRouteCrossConnectionPeering along with the instance operations that can be performed on it but with no data. </summary>
+        #region ExpressRoutePortsLocation
+        /// <summary> Gets an object representing a ExpressRoutePortsLocation along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ExpressRouteCrossConnectionPeering" /> object. </returns>
-        public static ExpressRouteCrossConnectionPeering GetExpressRouteCrossConnectionPeering(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ExpressRoutePortsLocation" /> object. </returns>
+        public static ExpressRoutePortsLocation GetExpressRoutePortsLocation(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ExpressRouteCrossConnectionPeering(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ExpressRoutePortsLocation(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
@@ -254,6 +287,17 @@ namespace Azure.ResourceManager.Network
         }
         #endregion
 
+        #region FrontendIPConfiguration
+        /// <summary> Gets an object representing a FrontendIPConfiguration along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="FrontendIPConfiguration" /> object. </returns>
+        public static FrontendIPConfiguration GetFrontendIPConfiguration(this ArmClient armClient, ResourceIdentifier id)
+        {
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new FrontendIPConfiguration(clientOptions, credential, uri, pipeline, id));
+        }
+        #endregion
+
         #region InboundNatRule
         /// <summary> Gets an object representing a InboundNatRule along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -262,6 +306,39 @@ namespace Azure.ResourceManager.Network
         public static InboundNatRule GetInboundNatRule(this ArmClient armClient, ResourceIdentifier id)
         {
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new InboundNatRule(clientOptions, credential, uri, pipeline, id));
+        }
+        #endregion
+
+        #region LoadBalancingRule
+        /// <summary> Gets an object representing a LoadBalancingRule along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="LoadBalancingRule" /> object. </returns>
+        public static LoadBalancingRule GetLoadBalancingRule(this ArmClient armClient, ResourceIdentifier id)
+        {
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new LoadBalancingRule(clientOptions, credential, uri, pipeline, id));
+        }
+        #endregion
+
+        #region OutboundRule
+        /// <summary> Gets an object representing a OutboundRule along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="OutboundRule" /> object. </returns>
+        public static OutboundRule GetOutboundRule(this ArmClient armClient, ResourceIdentifier id)
+        {
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new OutboundRule(clientOptions, credential, uri, pipeline, id));
+        }
+        #endregion
+
+        #region Probe
+        /// <summary> Gets an object representing a Probe along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="Probe" /> object. </returns>
+        public static Probe GetProbe(this ArmClient armClient, ResourceIdentifier id)
+        {
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new Probe(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
@@ -284,6 +361,17 @@ namespace Azure.ResourceManager.Network
         public static NetworkInterface GetNetworkInterface(this ArmClient armClient, ResourceIdentifier id)
         {
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new NetworkInterface(clientOptions, credential, uri, pipeline, id));
+        }
+        #endregion
+
+        #region NetworkInterfaceIPConfiguration
+        /// <summary> Gets an object representing a NetworkInterfaceIPConfiguration along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="NetworkInterfaceIPConfiguration" /> object. </returns>
+        public static NetworkInterfaceIPConfiguration GetNetworkInterfaceIPConfiguration(this ArmClient armClient, ResourceIdentifier id)
+        {
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new NetworkInterfaceIPConfiguration(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
@@ -320,14 +408,25 @@ namespace Azure.ResourceManager.Network
         }
         #endregion
 
-        #region SecurityRule
-        /// <summary> Gets an object representing a SecurityRule along with the instance operations that can be performed on it but with no data. </summary>
+        #region NetworkSecurityGroupSecurityRule
+        /// <summary> Gets an object representing a NetworkSecurityGroupSecurityRule along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityRule" /> object. </returns>
-        public static SecurityRule GetSecurityRule(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkSecurityGroupSecurityRule" /> object. </returns>
+        public static NetworkSecurityGroupSecurityRule GetNetworkSecurityGroupSecurityRule(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new SecurityRule(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new NetworkSecurityGroupSecurityRule(clientOptions, credential, uri, pipeline, id));
+        }
+        #endregion
+
+        #region NetworkSecurityGroupDefaultSecurityRule
+        /// <summary> Gets an object representing a NetworkSecurityGroupDefaultSecurityRule along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="NetworkSecurityGroupDefaultSecurityRule" /> object. </returns>
+        public static NetworkSecurityGroupDefaultSecurityRule GetNetworkSecurityGroupDefaultSecurityRule(this ArmClient armClient, ResourceIdentifier id)
+        {
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new NetworkSecurityGroupDefaultSecurityRule(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
@@ -353,6 +452,17 @@ namespace Azure.ResourceManager.Network
         }
         #endregion
 
+        #region NetworkVirtualApplianceSku
+        /// <summary> Gets an object representing a NetworkVirtualApplianceSku along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="NetworkVirtualApplianceSku" /> object. </returns>
+        public static NetworkVirtualApplianceSku GetNetworkVirtualApplianceSku(this ArmClient armClient, ResourceIdentifier id)
+        {
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new NetworkVirtualApplianceSku(clientOptions, credential, uri, pipeline, id));
+        }
+        #endregion
+
         #region NetworkWatcher
         /// <summary> Gets an object representing a NetworkWatcher along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -361,17 +471,6 @@ namespace Azure.ResourceManager.Network
         public static NetworkWatcher GetNetworkWatcher(this ArmClient armClient, ResourceIdentifier id)
         {
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new NetworkWatcher(clientOptions, credential, uri, pipeline, id));
-        }
-        #endregion
-
-        #region PacketCapture
-        /// <summary> Gets an object representing a PacketCapture along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PacketCapture" /> object. </returns>
-        public static PacketCapture GetPacketCapture(this ArmClient armClient, ResourceIdentifier id)
-        {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new PacketCapture(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
@@ -408,17 +507,6 @@ namespace Azure.ResourceManager.Network
         }
         #endregion
 
-        #region PrivateDnsZoneGroup
-        /// <summary> Gets an object representing a PrivateDnsZoneGroup along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateDnsZoneGroup" /> object. </returns>
-        public static PrivateDnsZoneGroup GetPrivateDnsZoneGroup(this ArmClient armClient, ResourceIdentifier id)
-        {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new PrivateDnsZoneGroup(clientOptions, credential, uri, pipeline, id));
-        }
-        #endregion
-
         #region PrivateLinkService
         /// <summary> Gets an object representing a PrivateLinkService along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -427,6 +515,17 @@ namespace Azure.ResourceManager.Network
         public static PrivateLinkService GetPrivateLinkService(this ArmClient armClient, ResourceIdentifier id)
         {
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new PrivateLinkService(clientOptions, credential, uri, pipeline, id));
+        }
+        #endregion
+
+        #region PrivateEndpointConnection
+        /// <summary> Gets an object representing a PrivateEndpointConnection along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PrivateEndpointConnection" /> object. </returns>
+        public static PrivateEndpointConnection GetPrivateEndpointConnection(this ArmClient armClient, ResourceIdentifier id)
+        {
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new PrivateEndpointConnection(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
@@ -460,17 +559,6 @@ namespace Azure.ResourceManager.Network
         public static RouteFilter GetRouteFilter(this ArmClient armClient, ResourceIdentifier id)
         {
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new RouteFilter(clientOptions, credential, uri, pipeline, id));
-        }
-        #endregion
-
-        #region RouteFilterRule
-        /// <summary> Gets an object representing a RouteFilterRule along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RouteFilterRule" /> object. </returns>
-        public static RouteFilterRule GetRouteFilterRule(this ArmClient armClient, ResourceIdentifier id)
-        {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new RouteFilterRule(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
@@ -515,17 +603,6 @@ namespace Azure.ResourceManager.Network
         public static ServiceEndpointPolicy GetServiceEndpointPolicy(this ArmClient armClient, ResourceIdentifier id)
         {
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ServiceEndpointPolicy(clientOptions, credential, uri, pipeline, id));
-        }
-        #endregion
-
-        #region ServiceEndpointPolicyDefinition
-        /// <summary> Gets an object representing a ServiceEndpointPolicyDefinition along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceEndpointPolicyDefinition" /> object. </returns>
-        public static ServiceEndpointPolicyDefinition GetServiceEndpointPolicyDefinition(this ArmClient armClient, ResourceIdentifier id)
-        {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ServiceEndpointPolicyDefinition(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
@@ -661,6 +738,17 @@ namespace Azure.ResourceManager.Network
         }
         #endregion
 
+        #region VpnSiteLink
+        /// <summary> Gets an object representing a VpnSiteLink along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="VpnSiteLink" /> object. </returns>
+        public static VpnSiteLink GetVpnSiteLink(this ArmClient armClient, ResourceIdentifier id)
+        {
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new VpnSiteLink(clientOptions, credential, uri, pipeline, id));
+        }
+        #endregion
+
         #region VpnServerConfiguration
         /// <summary> Gets an object representing a VpnServerConfiguration along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -683,17 +771,6 @@ namespace Azure.ResourceManager.Network
         }
         #endregion
 
-        #region HubVirtualNetworkConnection
-        /// <summary> Gets an object representing a HubVirtualNetworkConnection along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HubVirtualNetworkConnection" /> object. </returns>
-        public static HubVirtualNetworkConnection GetHubVirtualNetworkConnection(this ArmClient armClient, ResourceIdentifier id)
-        {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new HubVirtualNetworkConnection(clientOptions, credential, uri, pipeline, id));
-        }
-        #endregion
-
         #region VpnGateway
         /// <summary> Gets an object representing a VpnGateway along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -705,14 +782,14 @@ namespace Azure.ResourceManager.Network
         }
         #endregion
 
-        #region VpnConnection
-        /// <summary> Gets an object representing a VpnConnection along with the instance operations that can be performed on it but with no data. </summary>
+        #region VpnSiteLinkConnection
+        /// <summary> Gets an object representing a VpnSiteLinkConnection along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VpnConnection" /> object. </returns>
-        public static VpnConnection GetVpnConnection(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VpnSiteLinkConnection" /> object. </returns>
+        public static VpnSiteLinkConnection GetVpnSiteLinkConnection(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new VpnConnection(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new VpnSiteLinkConnection(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
@@ -738,17 +815,6 @@ namespace Azure.ResourceManager.Network
         }
         #endregion
 
-        #region VirtualHubRouteTableV2
-        /// <summary> Gets an object representing a VirtualHubRouteTableV2 along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VirtualHubRouteTableV2" /> object. </returns>
-        public static VirtualHubRouteTableV2 GetVirtualHubRouteTableV2(this ArmClient armClient, ResourceIdentifier id)
-        {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new VirtualHubRouteTableV2(clientOptions, credential, uri, pipeline, id));
-        }
-        #endregion
-
         #region ExpressRouteGateway
         /// <summary> Gets an object representing a ExpressRouteGateway along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -757,17 +823,6 @@ namespace Azure.ResourceManager.Network
         public static ExpressRouteGateway GetExpressRouteGateway(this ArmClient armClient, ResourceIdentifier id)
         {
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ExpressRouteGateway(clientOptions, credential, uri, pipeline, id));
-        }
-        #endregion
-
-        #region ExpressRouteConnection
-        /// <summary> Gets an object representing a ExpressRouteConnection along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ExpressRouteConnection" /> object. </returns>
-        public static ExpressRouteConnection GetExpressRouteConnection(this ArmClient armClient, ResourceIdentifier id)
-        {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ExpressRouteConnection(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 

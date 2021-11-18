@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -17,17 +16,17 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of PacketCaptureListResult. </summary>
         internal PacketCaptureListResult()
         {
-            Value = new ChangeTrackingList<PacketCaptureData>();
+            Value = new ChangeTrackingList<PacketCapture>();
         }
 
         /// <summary> Initializes a new instance of PacketCaptureListResult. </summary>
         /// <param name="value"> Information about packet capture sessions. </param>
-        internal PacketCaptureListResult(IReadOnlyList<PacketCaptureData> value)
+        internal PacketCaptureListResult(IReadOnlyList<PacketCapture> value)
         {
             Value = value;
         }
 
         /// <summary> Information about packet capture sessions. </summary>
-        public IReadOnlyList<PacketCaptureData> Value { get; }
+        public IReadOnlyList<PacketCapture> Value { get; }
     }
 }

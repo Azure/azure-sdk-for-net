@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -16,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ListHubVirtualNetworkConnectionsResult DeserializeListHubVirtualNetworkConnectionsResult(JsonElement element)
         {
-            Optional<IReadOnlyList<HubVirtualNetworkConnectionData>> value = default;
+            Optional<IReadOnlyList<HubVirtualNetworkConnection>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +26,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<HubVirtualNetworkConnectionData> array = new List<HubVirtualNetworkConnectionData>();
+                    List<HubVirtualNetworkConnection> array = new List<HubVirtualNetworkConnection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HubVirtualNetworkConnectionData.DeserializeHubVirtualNetworkConnectionData(item));
+                        array.Add(HubVirtualNetworkConnection.DeserializeHubVirtualNetworkConnection(item));
                     }
                     value = array;
                     continue;

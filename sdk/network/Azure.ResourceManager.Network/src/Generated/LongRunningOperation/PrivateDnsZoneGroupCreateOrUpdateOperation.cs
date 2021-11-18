@@ -12,8 +12,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -22,17 +20,14 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly OperationInternals<PrivateDnsZoneGroup> _operation;
 
-        private readonly ArmResource _operationBase;
-
         /// <summary> Initializes a new instance of PrivateDnsZoneGroupCreateOrUpdateOperation for mocking. </summary>
         protected PrivateDnsZoneGroupCreateOrUpdateOperation()
         {
         }
 
-        internal PrivateDnsZoneGroupCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal PrivateDnsZoneGroupCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<PrivateDnsZoneGroup>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "PrivateDnsZoneGroupCreateOrUpdateOperation");
-            _operationBase = operationsBase;
         }
 
         /// <inheritdoc />
@@ -65,13 +60,13 @@ namespace Azure.ResourceManager.Network.Models
         PrivateDnsZoneGroup IOperationSource<PrivateDnsZoneGroup>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new PrivateDnsZoneGroup(_operationBase, PrivateDnsZoneGroupData.DeserializePrivateDnsZoneGroupData(document.RootElement));
+            return PrivateDnsZoneGroup.DeserializePrivateDnsZoneGroup(document.RootElement);
         }
 
         async ValueTask<PrivateDnsZoneGroup> IOperationSource<PrivateDnsZoneGroup>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new PrivateDnsZoneGroup(_operationBase, PrivateDnsZoneGroupData.DeserializePrivateDnsZoneGroupData(document.RootElement));
+            return PrivateDnsZoneGroup.DeserializePrivateDnsZoneGroup(document.RootElement);
         }
     }
 }

@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Network
             Optional<string> type = default;
             Optional<string> location = default;
             Optional<IDictionary<string, string>> tags = default;
-            Optional<IList<ServiceEndpointPolicyDefinitionData>> serviceEndpointPolicyDefinitions = default;
+            Optional<IList<ServiceEndpointPolicyDefinition>> serviceEndpointPolicyDefinitions = default;
             Optional<IReadOnlyList<SubnetData>> subnets = default;
             Optional<string> resourceGuid = default;
             Optional<ProvisioningState> provisioningState = default;
@@ -130,10 +130,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ServiceEndpointPolicyDefinitionData> array = new List<ServiceEndpointPolicyDefinitionData>();
+                            List<ServiceEndpointPolicyDefinition> array = new List<ServiceEndpointPolicyDefinition>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ServiceEndpointPolicyDefinitionData.DeserializeServiceEndpointPolicyDefinitionData(item));
+                                array.Add(ServiceEndpointPolicyDefinition.DeserializeServiceEndpointPolicyDefinition(item));
                             }
                             serviceEndpointPolicyDefinitions = array;
                             continue;
