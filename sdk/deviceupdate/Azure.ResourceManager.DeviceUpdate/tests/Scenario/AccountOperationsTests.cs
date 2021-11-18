@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests
     public class AccountOperationsTests : DeviceUpdateManagementTestBase
     {
         public AccountOperationsTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
