@@ -8,16 +8,7 @@ param (
   [string]$VsoVariable = "" # Option of write code owners into devop variable
 )
 
-$LocalCodeOwnerPath = ".github/CODEOWNERS"
 $ToolCommandName = "retrieve-codeowners"
-$ToolName = "Azure.Sdk.Tools.RetrieveCodeOwners"
-function New-TemporaryDirectory {
-  $parent = [System.IO.Path]::GetTempPath()
-  [string] $name = [System.Guid]::NewGuid()
-  [string] $newPath = Join-Path $parent $name
-  New-Item -ItemType Directory -Path $newPath | Out-Null
-  return $newPath
-}
 
 function Get-CodeOwnersTool()
 {
@@ -26,26 +17,26 @@ function Get-CodeOwnersTool()
     return "$ToolPath/$ToolCommandName"
   }
   if (!$ToolPath -or !(Test-Path $ToolPath)) {
-    $ToolPath = New-TemporaryDirectory
+    $ToolPath  = (Join-Path ([System.IO.Path]::GetTempPath()) ([System.IO.Path]::GetRandomFileName()))
+    New-Item -ItemType Directory -Path $newPath | Out-Null
   }
   Write-Warning "Installing the ToolCommandName tool under $ToolPath... "
-  dotnet tool install --tool-path $ToolPath --add-source $DevOpsFeed --version $ToolVersion $ToolName | Out-Null
+  dotnet tool install --tool-path $ToolPath --add-source $DevOpsFeed --version $ToolVersion "Azure.Sdk.Tools.RetrieveCodeOwners" | Out-Null
 
+  # Test to see if the tool properly installed.
+  if (!(Get-Command $Command -errorAction SilentlyContinue)) {
+    Write-Error "The ToolCommandName tool is not properly installed. Please check your tool path. $ToolPath"
+    return ""
+  }
   return Join-Path $ToolPath $ToolCommandName
 }
 
 function Get-CodeOwners ([string] $Command)
 {
-  # Run code owner tools to retrieve code owners.
-  if (!(Get-Command $Command -errorAction SilentlyContinue)) {
-    Write-Error "The ToolCommandName tool is not properly installed. Please check your tool path. $ToolPath"
-    return ""
-  }
-  
   # Params $RootDirectory is already in use in cpp release pipeline. 
   # Will use $CodeOwnerFileLocation and deprecate $RootDirectory once it is ready to retire $RootDirectory.
   if ($RootDirectory -and !(Test-Path $CodeOwnerFileLocation)) {
-    $CodeOwnerFileLocation = Join-Path $RootDirectory $LocalCodeOwnerPath
+    $CodeOwnerFileLocation = Join-Path $RootDirectory ".github/CODEOWNERS"
   }
   
   $codeOwnersString = & $Command --target-directory "$TargetDirectory" --code-owner-file-path "$CodeOwnerFileLocation" 
@@ -60,11 +51,12 @@ function Get-CodeOwners ([string] $Command)
     return ""
   }
   
-  $codeOwners = $codeOwnersJson.Owners -join ","
-  Write-Host "Code owners are $codeOwners"
   if ($VsoVariable) {
+    $codeOwners = $codeOwnersJson.Owners -join ","
     Write-Host "##vso[task.setvariable variable=$VsoVariable;]$codeOwners"
   }
+  
+  return $codeOwnersJson.Owners
 }
 
 # Install the tool first
