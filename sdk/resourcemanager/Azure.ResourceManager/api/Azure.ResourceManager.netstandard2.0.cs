@@ -60,6 +60,9 @@ namespace Azure.ResourceManager
         public abstract string GetFilterString();
         public override string ToString() { throw null; }
     }
+    public static partial class ManagementGroupExtensions
+    {
+    }
     public sealed partial class ResourceFilterCollection
     {
         public ResourceFilterCollection() { }
@@ -168,6 +171,9 @@ namespace Azure.ResourceManager
         public override int GetHashCode() { throw null; }
     }
     public static partial class SubscriptionExtensions
+    {
+    }
+    public static partial class TenantExtensions
     {
     }
 }
