@@ -1,33 +1,36 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://js-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/enrichment/anomalyDetection/configurations/fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c/anomalies/query",
+      "RequestUri": "https://ga-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/enrichment/anomalyDetection/configurations/efaee305-f049-43ec-9f9b-76026d55c14a/anomalies/query",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "235",
+        "Content-Length": "239",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-892d3dc873a411479733ce28897ed044-aebad2a6a4678f48-00",
-        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20210512.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "traceparent": "00-02bc4dbafb2d19479e110e31f301628f-84c945b622e61943-00",
+        "User-Agent": [
+          "azsdk-net-AI.MetricsAdvisor/1.2.0-alpha.20211118.1",
+          "(.NET 5.0.12; Microsoft Windows 10.0.22000)"
+        ],
         "x-api-key": "Sanitized",
         "x-ms-client-request-id": "803c867e50dbe8e94e1c971d3ecdea77",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "startTime": "2020-10-01T00:00:00Z",
-        "endTime": "2020-10-31T00:00:00Z",
+        "startTime": "2021-10-01T00:00:00Z",
+        "endTime": "2021-10-31T00:00:00Z",
         "filter": {
           "dimensionFilter": [
             {
               "dimension": {
-                "city": "Delhi",
+                "region": "Delhi",
                 "category": "Handmade"
               }
             },
             {
               "dimension": {
-                "city": "Kolkata"
+                "region": "Kolkata"
               }
             }
           ],
@@ -39,255 +42,159 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "c1c92615-fc3c-465c-a634-c18b255a643f",
-        "Content-Length": "3775",
+        "apim-request-id": "94068b9f-5f9c-4cb0-a740-0838da0e498c",
+        "Content-Length": "2187",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 12 May 2021 23:59:15 GMT",
+        "Date": "Thu, 18 Nov 2021 17:48:27 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "154",
-        "x-request-id": "c1c92615-fc3c-465c-a634-c18b255a643f"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "131",
+        "X-Request-ID": "94068b9f-5f9c-4cb0-a740-0838da0e498c"
       },
       "ResponseBody": {
         "value": [
           {
-            "timestamp": "2020-10-30T00:00:00Z",
+            "timestamp": "2021-10-30T00:00:00Z",
             "dimension": {
-              "city": "Delhi",
+              "region": "Delhi",
               "category": "Handmade"
             },
             "property": {
               "anomalySeverity": "Medium",
-              "value": 503106.4,
-              "expectedValue": 548623.43471338938
+              "value": 403239.4,
+              "expectedValue": 371195.56461037876
             }
           },
           {
-            "timestamp": "2020-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00Z",
             "dimension": {
-              "city": "Delhi",
+              "region": "Delhi",
+              "category": "Handmade"
+            },
+            "property": {
+              "anomalySeverity": "Medium",
+              "value": 1006212.8,
+              "expectedValue": 561840.9682265673
+            }
+          },
+          {
+            "timestamp": "2021-10-28T00:00:00Z",
+            "dimension": {
+              "region": "Delhi",
               "category": "Handmade"
             },
             "property": {
               "anomalySeverity": "Medium",
               "value": 513455.6,
-              "expectedValue": 596967.90257180436
+              "expectedValue": 611853.7043958702
             }
           },
           {
-            "timestamp": "2020-10-28T00:00:00Z",
+            "timestamp": "2021-10-27T00:00:00Z",
             "dimension": {
-              "city": "Delhi",
+              "region": "Delhi",
               "category": "Handmade"
             },
             "property": {
               "anomalySeverity": "Medium",
               "value": 545699.2,
-              "expectedValue": 594737.42482575425
+              "expectedValue": 605699.0817151875
             }
           },
           {
-            "timestamp": "2020-10-28T00:00:00Z",
+            "timestamp": "2021-10-26T00:00:00Z",
             "dimension": {
-              "city": "Kolkata",
-              "category": "Office Products"
-            },
-            "property": {
-              "anomalySeverity": "Medium",
-              "value": 16421.2,
-              "expectedValue": 21204.543526424892
-            }
-          },
-          {
-            "timestamp": "2020-10-27T00:00:00Z",
-            "dimension": {
-              "city": "Delhi",
+              "region": "Delhi",
               "category": "Handmade"
             },
             "property": {
               "anomalySeverity": "Medium",
               "value": 543222.8,
-              "expectedValue": 602399.09709896054
+              "expectedValue": 616237.7238113593
             }
           },
           {
-            "timestamp": "2020-10-27T00:00:00Z",
+            "timestamp": "2021-10-25T00:00:00Z",
             "dimension": {
-              "city": "Kolkata",
-              "category": "Office Products"
-            },
-            "property": {
-              "anomalySeverity": "Medium",
-              "value": 16483.0,
-              "expectedValue": 23894.711895819302
-            }
-          },
-          {
-            "timestamp": "2020-10-26T00:00:00Z",
-            "dimension": {
-              "city": "Delhi",
+              "region": "Delhi",
               "category": "Handmade"
             },
             "property": {
               "anomalySeverity": "Medium",
               "value": 527925.6,
-              "expectedValue": 598760.19567730289
+              "expectedValue": 602818.4000873395
             }
           },
           {
-            "timestamp": "2020-10-25T00:00:00Z",
+            "timestamp": "2021-10-24T00:00:00Z",
             "dimension": {
-              "city": "Kolkata",
-              "category": "Electronics (Consumer)"
-            },
-            "property": {
-              "anomalySeverity": "Medium",
-              "value": 10214.6,
-              "expectedValue": 5814.5345982604567
-            }
-          },
-          {
-            "timestamp": "2020-10-25T00:00:00Z",
-            "dimension": {
-              "city": "Delhi",
+              "region": "Delhi",
               "category": "Handmade"
             },
             "property": {
               "anomalySeverity": "Medium",
               "value": 391302.2,
-              "expectedValue": 411264.18596229109
+              "expectedValue": 409011.77294836467
             }
           },
           {
-            "timestamp": "2020-10-24T00:00:00Z",
+            "timestamp": "2021-10-23T00:00:00Z",
             "dimension": {
-              "city": "Kolkata",
-              "category": "Electronics (Consumer)"
-            },
-            "property": {
-              "anomalySeverity": "Medium",
-              "value": 10627.4,
-              "expectedValue": 6053.3799953486205
-            }
-          },
-          {
-            "timestamp": "2020-10-24T00:00:00Z",
-            "dimension": {
-              "city": "Delhi",
+              "region": "Delhi",
               "category": "Handmade"
             },
             "property": {
               "anomalySeverity": "Medium",
               "value": 385288.2,
-              "expectedValue": 345875.75775733317
+              "expectedValue": 347576.2969520082
             }
           },
           {
-            "timestamp": "2020-10-23T00:00:00Z",
+            "timestamp": "2021-10-22T00:00:00Z",
             "dimension": {
-              "city": "Kolkata",
-              "category": "Electronics (Consumer)"
-            },
-            "property": {
-              "anomalySeverity": "Medium",
-              "value": 10585.6,
-              "expectedValue": 6241.9352917782044
-            }
-          },
-          {
-            "timestamp": "2020-10-22T00:00:00Z",
-            "dimension": {
-              "city": "Kolkata",
-              "category": "Electronics (Consumer)"
-            },
-            "property": {
-              "anomalySeverity": "Medium",
-              "value": 10031.4,
-              "expectedValue": 8311.78399381909
-            }
-          },
-          {
-            "timestamp": "2020-10-21T00:00:00Z",
-            "dimension": {
-              "city": "Kolkata",
-              "category": "Electronics (Consumer)"
-            },
-            "property": {
-              "anomalySeverity": "Medium",
-              "value": 9835.8,
-              "expectedValue": 8074.0853592633985
-            }
-          },
-          {
-            "timestamp": "2020-10-20T00:00:00Z",
-            "dimension": {
-              "city": "Kolkata",
-              "category": "Electronics (Consumer)"
-            },
-            "property": {
-              "anomalySeverity": "Medium",
-              "value": 9534.6,
-              "expectedValue": 7836.3867247077069
-            }
-          },
-          {
-            "timestamp": "2020-10-19T00:00:00Z",
-            "dimension": {
-              "city": "Kolkata",
-              "category": "Electronics (Consumer)"
-            },
-            "property": {
-              "anomalySeverity": "Medium",
-              "value": 9074.8,
-              "expectedValue": 7598.6880901520153
-            }
-          },
-          {
-            "timestamp": "2020-10-16T00:00:00Z",
-            "dimension": {
-              "city": "Kolkata",
-              "category": "Electronics (Consumer)"
-            },
-            "property": {
-              "anomalySeverity": "Medium",
-              "value": 12700.0,
-              "expectedValue": 6455.5325031346383
-            }
-          },
-          {
-            "timestamp": "2020-10-15T00:00:00Z",
-            "dimension": {
-              "city": "Kolkata",
-              "category": "Electronics (Consumer)"
-            },
-            "property": {
-              "anomalySeverity": "Medium",
-              "value": 14035.2,
-              "expectedValue": 5874.202401374966
-            }
-          },
-          {
-            "timestamp": "2020-10-07T00:00:00Z",
-            "dimension": {
-              "city": "Kolkata",
-              "category": "Shoes Handbags \u0026 Sunglasses"
-            },
-            "property": {
-              "anomalySeverity": "Medium",
-              "value": 606448.2,
-              "expectedValue": 556953.98523267184
-            }
-          },
-          {
-            "timestamp": "2020-10-05T00:00:00Z",
-            "dimension": {
-              "city": "Delhi",
+              "region": "Delhi",
               "category": "Handmade"
             },
             "property": {
               "anomalySeverity": "Medium",
-              "value": 671330.0,
-              "expectedValue": 642187.698892426
+              "value": 535243.2,
+              "expectedValue": 538221.7005681967
+            }
+          },
+          {
+            "timestamp": "2021-10-20T00:00:00Z",
+            "dimension": {
+              "region": "Delhi",
+              "category": "Handmade"
+            },
+            "property": {
+              "anomalySeverity": "Medium",
+              "value": 585573.4,
+              "expectedValue": 588198.1834146369
+            }
+          },
+          {
+            "timestamp": "2021-10-19T00:00:00Z",
+            "dimension": {
+              "region": "Delhi",
+              "category": "Handmade"
+            },
+            "property": {
+              "anomalySeverity": "Medium",
+              "value": 591052.6,
+              "expectedValue": 608241.7305675618
+            }
+          },
+          {
+            "timestamp": "2021-10-04T00:00:00Z",
+            "dimension": {
+              "region": "Delhi",
+              "category": "Handmade"
+            },
+            "property": {
+              "anomalySeverity": "Medium",
+              "value": 1342660.0,
+              "expectedValue": 763534.6945065033
             }
           }
         ]
@@ -295,7 +202,7 @@
     }
   ],
   "Variables": {
-    "METRICSADVISOR_ACCOUNT_NAME": "js-metrics-advisor",
+    "METRICSADVISOR_ACCOUNT_NAME": "ga-metrics-advisor",
     "METRICSADVISOR_ENDPOINT_SUFFIX": null,
     "METRICSADVISOR_PRIMARY_API_KEY": "Sanitized",
     "METRICSADVISOR_SUBSCRIPTION_KEY": "Sanitized",
