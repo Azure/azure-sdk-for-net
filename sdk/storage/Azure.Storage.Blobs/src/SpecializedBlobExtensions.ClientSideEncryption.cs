@@ -17,7 +17,7 @@ namespace Azure.Storage.Blobs.Specialized
     /// <summary>
     /// Specialized extensions for <see cref="BlobClient"/>.
     /// </summary>
-    public static class BlobClientSpecializedExtensions
+    public static partial class SpecializedBlobExtensions
     {
         /// <summary>
         /// Rotates the Key Encryption Key (KEK) for a client-side encrypted blob without
