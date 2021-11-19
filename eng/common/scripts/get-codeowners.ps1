@@ -3,7 +3,7 @@ param (
   [string]$RootDirectory = "$env:SYSTEM_DEFAULTWORKINGDIRECTORY", # The repo contains CODEOWNER file.
   [string]$CodeOwnerFileLocation = "$PSSCriptRoot/../../../.github/CODEOWNERS", # The absolute path of CODEOWNERS file. 
   [string]$ToolVersion = "1.0.0-dev.20211118.20", # Placeholder. Will update in next PR
-  [string]$ToolPath = "$env:AGENT_TOOLSDIRECTORY", # The place to check the tool existence. Put $(Agent.ToolsDirectory) as default
+  [string]$ToolPath = (Join-Path [System.IO.Path]::GetTempPath(), "codeowners-tool-path"), # The place to check the tool existence. Put temp path as default
   [string]$DevOpsFeed = "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json", # DevOp tool feeds.
   [string]$VsoVariable = "", # Option of write code owners into devop variable
   [switch]$Test  #Run test functions against the script logic
@@ -17,9 +17,8 @@ function Get-CodeOwnersTool()
   if (Get-Command "$ToolPath/$ToolCommandName" -errorAction SilentlyContinue) {
     return "$ToolPath/$ToolCommandName"
   }
-  if (!$ToolPath -or !(Test-Path $ToolPath)) {
-    $ToolPath  = (Join-Path ([System.IO.Path]::GetTempPath()) ([System.IO.Path]::GetRandomFileName()))
-    New-Item -ItemType Directory -Path $newPath | Out-Null
+  if (!(Test-Path $ToolPath)) {
+    New-Item -ItemType Directory -Path $ToolPath | Out-Null
   }
   Write-Warning "Installing the ToolCommandName tool under $ToolPath... "
   dotnet tool install --tool-path $ToolPath --add-source $DevOpsFeed --version $ToolVersion "Azure.Sdk.Tools.RetrieveCodeOwners" | Out-Null
