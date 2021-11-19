@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>This is a LLC template project to demonstrate how to create a package that uses code generation as well as use for testing our build and release pipelines</Description>
-    <AssemblyTitle>Azure SDK LLC Template</AssemblyTitle>
+    <Description>This is a template project to demonstrating how to create a package that uses Azure SDK code generation to create a library for a data plane Azure service.  It includes basic templates for setting up build and release pipelines, live and recorded tests, as well as Samples, README, and Changelog files.</Description>
+    <AssemblyTitle>Azure SDK Code Generation Template for Azure Data Plane</AssemblyTitle>
     <Version>1.0.0-beta.1</Version>
     <PackageTags>Azure Template</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>

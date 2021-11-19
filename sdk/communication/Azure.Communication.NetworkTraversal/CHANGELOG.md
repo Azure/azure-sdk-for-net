@@ -1,5 +1,15 @@
 # Release History
 
+## 1.0.0-beta.4 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.0.0-beta.3 (2021-11-18)
 
 ### Features Added
@@ -8,12 +18,6 @@
   requested RelayConfiguration
 - Introducing GetRelayConfigurationOptions which contains the optional parameters UserIdentity and RouteType
   when calling the methods GetRelayConfiguration and GetRelayConfigurationAsync. 
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.0.0-beta.2 (2021-07-14)
 
