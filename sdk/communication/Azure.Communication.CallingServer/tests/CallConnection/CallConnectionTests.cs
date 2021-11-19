@@ -110,6 +110,24 @@ namespace Azure.Communication.CallingServer.Tests
                                                                 "\"audioRoutingGroupId\": \"dummyAudioRoutingGroupId\"" +
                                                             "}";
 
+        private const string GetAudioRoutingGroupsResultPayload = "{" +
+                                                                "\"targets\": [" +
+                                                                   "{" +
+                                                                        "\"rawId\": \"dummyRawId\"," +
+                                                                        "\"communicationUser\": {" +
+                                                                            "\"id\": \"a795d01f-f9ad-45e6-99c4-14bf8449ad4b\"" +
+                                                                            "}" +
+                                                                    "}," +
+                                                                   "{" +
+                                                                        "\"rawId\": \"dummyRawId1\"," +
+                                                                        "\"phoneNumber\": {" +
+                                                                            "\"value\": \"+1555123456\"" +
+                                                                            "}" +
+                                                                    "}" +
+                                                                "]," +
+                                                                "\"audioRoutingMode\": \"oneToOne\"" +
+                                                            "}";
+
         [TestCaseSource(nameof(TestData_CallConnectionId))]
         public async Task HangupCallAsync_Passes(string callConnectionId)
         {
@@ -1060,6 +1078,44 @@ namespace Azure.Communication.CallingServer.Tests
             Assert.AreEqual(ex?.Status, 404);
         }
 
+        [TestCaseSource(nameof(TestData_GetAudioRoutingGroups))]
+        public async Task GetAudioRoutingGroupsAsync_Passes(string callConnectionId, string audioRoutingGroupId)
+        {
+            var callConnection = CreateMockCallConnection(200, GetAudioRoutingGroupsResultPayload, callConnectionId: callConnectionId);
+
+            var result = await callConnection.GetAudioRoutingGroupsAsync(audioRoutingGroupId).ConfigureAwait(false);
+            VerifyGetAudioRoutingGroupsResult(result);
+        }
+
+        [TestCaseSource(nameof(TestData_GetAudioRoutingGroups))]
+        public void GetAudioRoutingGroups_Passes(string callConnectionId, string audioRoutingGroupId)
+        {
+            var callConnection = CreateMockCallConnection(200, GetAudioRoutingGroupsResultPayload, callConnectionId: callConnectionId);
+
+            var result = callConnection.GetAudioRoutingGroups(audioRoutingGroupId);
+            VerifyGetAudioRoutingGroupsResult(result);
+        }
+
+        [TestCaseSource(nameof(TestData_GetAudioRoutingGroups))]
+        public void GetAudioRoutingGroupsAsync_Failed(string callConnectionId, string audioRoutingGroupId)
+        {
+            var callConnection = CreateMockCallConnection(404);
+
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.GetAudioRoutingGroupsAsync(audioRoutingGroupId).ConfigureAwait(false));
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
+        }
+
+        [TestCaseSource(nameof(TestData_GetAudioRoutingGroups))]
+        public void GetAudioRoutingGroups_Failed(string callConnectionId, string audioRoutingGroupId)
+        {
+            var callConnection = CreateMockCallConnection(404);
+
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.GetAudioRoutingGroups(audioRoutingGroupId));
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
+        }
+
         [TestCaseSource(nameof(TestData_DeleteAudioRoutingGroup))]
         public async Task DeleteAudioRoutingGroupAsync_Passes(string callConnectionId, string audioRoutingGroupId)
         {
@@ -1137,6 +1193,16 @@ namespace Azure.Communication.CallingServer.Tests
             Assert.AreEqual(2, result.Count);
             Assert.True(result[0].Identifier is CommunicationUserIdentifier);
             Assert.True(result[1].Identifier is PhoneNumberIdentifier);
+        }
+
+        private void VerifyGetAudioRoutingGroupsResult(AudioRoutingGroupResult result)
+        {
+            Assert.NotNull(result);
+            Assert.AreEqual(AudioRoutingMode.OneToOne, result.AudioRoutingMode);
+            Assert.NotNull(result.Targets);
+            Assert.AreEqual(2, result.Targets.ToList().Count);
+            Assert.True(result.Targets.ElementAt(0) is CommunicationUserIdentifier);
+            Assert.True(result.Targets.ElementAt(1) is PhoneNumberIdentifier);
         }
 
         private CallConnection CreateMockCallConnection(int responseCode, string? responseContent = null, string callConnectionId = "9ec7da16-30be-4e74-a941-285cfc4bffc5")
@@ -1264,6 +1330,18 @@ namespace Azure.Communication.CallingServer.Tests
                         new CommunicationUserIdentifier("8:acs:resource_target"),
                         new PhoneNumberIdentifier("+14255550123")
                     },
+                },
+            };
+        }
+
+        private static IEnumerable<object?[]> TestData_GetAudioRoutingGroups()
+        {
+            return new[]
+            {
+                new object?[]
+                {
+                    "d09038e7-38f7-4aa1-9c5c-4bb07a65aa17",
+                    "dummyAudioRoutingGroupId",
                 },
             };
         }

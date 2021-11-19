@@ -981,17 +981,19 @@ namespace Azure.Communication.CallingServer
         /// <param name="audioRoutingGroupId"> The audio routing group id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<AudioRoutingGroupResult>> GetAudioRoutingGroupsAsync(String audioRoutingGroupId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AudioRoutingGroupResult>> GetAudioRoutingGroupsAsync(string audioRoutingGroupId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(CreateAudioRoutingGroupAsync)}");
             scope.Start();
             try
             {
-                return await RestClient.GetAudioRoutingGroupsAsync(
+                Response<AudioRoutingGroupResultInternal> audioRoutingGroupResultInternal = await RestClient.GetAudioRoutingGroupsAsync(
                                         callConnectionId: CallConnectionId,
                                         audioRoutingGroupId: audioRoutingGroupId,
                                         cancellationToken: cancellationToken
                                         ).ConfigureAwait(false);
+
+                return Response.FromValue(new AudioRoutingGroupResult(audioRoutingGroupResultInternal.Value), audioRoutingGroupResultInternal.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -1004,27 +1006,19 @@ namespace Azure.Communication.CallingServer
         /// <param name="audioRoutingGroupId"> The audio routing group id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<CreateAudioRoutingGroupResult> GetAudioRoutingGroups(AudioRoutingMode audioRoutingMode, IEnumerable<CommunicationIdentifier> targets, CancellationToken cancellationToken = default)
+        public virtual Response<AudioRoutingGroupResult> GetAudioRoutingGroups(string audioRoutingGroupId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(CreateAudioRoutingGroup)}");
             scope.Start();
             try
             {
-                var count = targets.Count();
-                if (audioRoutingMode == AudioRoutingMode.OneToOne)
-                {
-                    if (count != 1)
-                    {
-                        throw new ArgumentOutOfRangeException(nameof(targets), "count should be one when using AudioRoutingMode.OneToOne");
-                    }
-                }
+                Response<AudioRoutingGroupResultInternal> audioRoutingGroupResultInternal = RestClient.GetAudioRoutingGroups(
+                    callConnectionId: CallConnectionId,
+                    audioRoutingGroupId: audioRoutingGroupId,
+                    cancellationToken: cancellationToken
+                    );
 
-                return RestClient.CreateAudioRoutingGroup(
-                                        callConnectionId: CallConnectionId,
-                                        audioRoutingMode: audioRoutingMode,
-                                        targets: targets.Select(t => CommunicationIdentifierSerializer.Serialize(t)),
-                                        cancellationToken: cancellationToken
-                                        );
+                return Response.FromValue(new AudioRoutingGroupResult(audioRoutingGroupResultInternal.Value), audioRoutingGroupResultInternal.GetRawResponse());
             }
             catch (Exception ex)
             {

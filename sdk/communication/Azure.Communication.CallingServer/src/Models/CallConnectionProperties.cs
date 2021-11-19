@@ -10,7 +10,7 @@ namespace Azure.Communication.CallingServer
     /// <summary> The call connection properties. </summary>
     public class CallConnectionProperties
     {
-        /// <summary> Initializes a new instance of CallConnectionPropertiesInternal. </summary>
+        /// <summary> Initializes a new instance of CallConnectionProperties. </summary>
         /// <param name="callConnectionPropertiesInternal">The call connection properties internal.</param>
         internal CallConnectionProperties(CallConnectionPropertiesInternal callConnectionPropertiesInternal)
         {
