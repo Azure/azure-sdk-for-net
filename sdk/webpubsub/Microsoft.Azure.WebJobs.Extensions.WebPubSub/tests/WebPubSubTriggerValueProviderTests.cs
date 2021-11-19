@@ -30,7 +30,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
                 }
                 else if (parameter.ParameterType == typeof(JObject))
                 {
-                    Assert.AreEqual(result, JObject.FromObject(triggerEvent.ConnectionContext));
+                    Assert.AreEqual(result, JObject.FromObject(triggerEvent.ConnectionContext, WebPubSubJsonSerializer.Serializer));
                 }
             }
             else if (parameter.Name == "data")

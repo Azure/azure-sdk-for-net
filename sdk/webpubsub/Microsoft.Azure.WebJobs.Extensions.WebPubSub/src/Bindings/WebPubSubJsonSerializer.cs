@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
-using System.Collections.Generic;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
@@ -14,11 +14,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             new JsonSerializerSettings
             {
                 Converters = new List<JsonConverter>
-                    {
-                        new StringEnumConverter(),
-                        new BinaryDataJsonConverter(),
-                        new JsonElementJsonConverter(),
-                    },
+                {
+                    new StringEnumConverter(),
+                    new BinaryDataJsonConverter(),
+                    new JsonElementJsonConverter(),
+                },
                 ContractResolver = new CamelCasePropertyNamesContractResolver()
             });
     }
