@@ -149,6 +149,44 @@ namespace Azure.Communication.CallingServer.Tests
         }
 
         [TestCaseSource(nameof(TestData_CallConnectionId))]
+        public async Task DeleteCallAsync_Passes(string callConnectionId)
+        {
+            var callConnection = CreateMockCallConnection(202, callConnectionId: callConnectionId);
+
+            var response = await callConnection.DeleteAsync().ConfigureAwait(false);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, response.Status);
+        }
+
+        [TestCaseSource(nameof(TestData_CallConnectionId))]
+        public void DeleteCall_Passes(string callConnectionId)
+        {
+            var callConnection = CreateMockCallConnection(202, callConnectionId: callConnectionId);
+
+            var response = callConnection.Delete();
+            Assert.AreEqual((int)HttpStatusCode.Accepted, response.Status);
+        }
+
+        [TestCaseSource(nameof(TestData_CallConnectionId))]
+        public void DeleteCallAsync_Failed(string callConnectionId)
+        {
+            var callConnection = CreateMockCallConnection(404);
+
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.DeleteAsync().ConfigureAwait(false));
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
+        }
+
+        [TestCaseSource(nameof(TestData_CallConnectionId))]
+        public void DeleteCall_Failed(string callConnectionId)
+        {
+            var callConnection = CreateMockCallConnection(404);
+
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.Delete());
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
+        }
+
+        [TestCaseSource(nameof(TestData_CallConnectionId))]
         public async Task CancelAllMediaOperationsAsync_Passes(string callConnectionId)
         {
             var callConnection = CreateMockCallConnection(200, CancelAllMediaOperaionsResponsePayload, callConnectionId: callConnectionId);
