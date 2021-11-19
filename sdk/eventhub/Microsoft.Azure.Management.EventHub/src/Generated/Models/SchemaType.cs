@@ -12,11 +12,11 @@ namespace Microsoft.Azure.Management.EventHub.Models
 {
 
     /// <summary>
-    /// Defines values for KeyType.
+    /// Defines values for SchemaType.
     /// </summary>
-    public static class KeyType
+    public static class SchemaType
     {
-        public const string PrimaryKey = "PrimaryKey";
-        public const string SecondaryKey = "SecondaryKey";
+        public const string Unknown = "Unknown";
+        public const string Avro = "Avro";
     }
 }

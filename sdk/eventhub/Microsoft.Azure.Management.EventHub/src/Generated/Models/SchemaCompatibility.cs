@@ -12,11 +12,12 @@ namespace Microsoft.Azure.Management.EventHub.Models
 {
 
     /// <summary>
-    /// Defines values for KeyType.
+    /// Defines values for SchemaCompatibility.
     /// </summary>
-    public static class KeyType
+    public static class SchemaCompatibility
     {
-        public const string PrimaryKey = "PrimaryKey";
-        public const string SecondaryKey = "SecondaryKey";
+        public const string None = "None";
+        public const string Backward = "Backward";
+        public const string Forward = "Forward";
     }
 }
