@@ -18,6 +18,7 @@
         1. DiskRP API calls updated with 2021-04-01 version.
       ]]>
     </PackageReleaseNotes>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>

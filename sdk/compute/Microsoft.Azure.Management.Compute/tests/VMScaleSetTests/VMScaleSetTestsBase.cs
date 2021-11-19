@@ -90,7 +90,7 @@ namespace Compute.Tests
 
             string protectedSettings = string.Format("\"AADClientSecret\": \"{0}\"", aadClientSecret);
 
-            var vmExtension = new VirtualMachineScaleSetExtension
+            var vmExtension = new VirtualMachineScaleSetExtension  
             {
                 Name = "adeext1",
                 Publisher = "Microsoft.Azure.Security",
