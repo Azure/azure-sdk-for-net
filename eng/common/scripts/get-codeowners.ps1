@@ -70,8 +70,12 @@ function TestGetCodeOwner([string] $command) {
   }
   $actualReturn = Get-CodeOwners -command $command 
   $expectReturn = @("person1", "person2")
+  if ($actualReturn.Length -ne $expectReturn.Length) {
+    Write-Error "The length of actual result is not as expected. Expected length: $expectReturn.Length, Actual length: $actualReturn.Length."
+    exit 1
+  }
   for ($i = 0; $i -lt $expectReturn.Length; $i++) {
-    if ($actualReturn[$i] -ne $expectReturn[$i]) {
+    if ($expectReturn[$i] -ne $actualReturn[$i]) {
       Write-Error "Expect result $expectReturn[$i] is different than actual result $actualReturn[$i]."
       exit 1
     }
