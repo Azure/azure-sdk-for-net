@@ -336,24 +336,6 @@ namespace Azure.ResourceManager.Sql.Tests
             return collection.GetAllAsync(filter);
         }
 
-        public static async Task<Sql.Models.DatabaseVulnerabilityAssessmentRuleBaselineCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(ServerDatabaseVulnerabilityAssessmentRuleBaselineCollection collection, string ruleId)
-        {
-            // Example: Creates or updates a database's vulnerability assessment rule baseline.
-            var baselineName = VulnerabilityAssessmentPolicyBaselineName.Default;
-            var parameters = new Sql.DatabaseVulnerabilityAssessmentRuleBaselineData();
-
-            return await collection.CreateOrUpdateAsync(ruleId, baselineName, parameters);
-        }
-
-        public static async Task<Sql.Models.ManagedDatabaseVulnerabilityAssessmentRuleBaselineCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(ManagedInstanceDatabaseVulnerabilityAssessmentRuleBaselineCollection collection, string ruleId)
-        {
-            // Example: Creates or updates a database's vulnerability assessment rule baseline.
-            var baselineName = VulnerabilityAssessmentPolicyBaselineName.Default;
-            var parameters = new Sql.DatabaseVulnerabilityAssessmentRuleBaselineData();
-
-            return await collection.CreateOrUpdateAsync(ruleId, baselineName, parameters);
-        }
-
         public static async Task<Sql.Models.DatabaseVulnerabilityAssessmentCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(ServerDatabaseVulnerabilityAssessmentCollection collection)
         {
             // Example: Create a database's vulnerability assessment with all parameters
@@ -454,24 +436,6 @@ namespace Azure.ResourceManager.Sql.Tests
             return collection.GetAllAsync();
         }
 
-        public static async Task<Sql.Models.FailoverGroupCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(FailoverGroupCollection collection, string failoverGroupName)
-        {
-            // Example: Create failover group
-            var parameters = new Sql.FailoverGroupData()
-            {
-                ReadWriteEndpoint = new Sql.Models.FailoverGroupReadWriteEndpoint(new Sql.Models.ReadWriteEndpointFailoverPolicy("Automatic"))
-                {
-                    FailoverWithDataLossGracePeriodMinutes = 480,
-                },
-                ReadOnlyEndpoint = new Sql.Models.FailoverGroupReadOnlyEndpoint()
-                {
-                    FailoverPolicy = new Sql.Models.ReadOnlyEndpointFailoverPolicy("Disabled"),
-                },
-            };
-
-            return await collection.CreateOrUpdateAsync(failoverGroupName, parameters);
-        }
-
         public static AsyncPageable<Sql.FailoverGroup> GetAllExampleInstanceAsync(FailoverGroupCollection collection)
         {
             // Example: List failover group
@@ -496,24 +460,6 @@ namespace Azure.ResourceManager.Sql.Tests
             // Example: List Firewall Rules
 
             return collection.GetAllAsync();
-        }
-
-        public static async Task<Sql.Models.InstanceFailoverGroupCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(InstanceFailoverGroupCollection collection, string locationName, string failoverGroupName)
-        {
-            // Example: Create failover group
-            var parameters = new Sql.InstanceFailoverGroupData()
-            {
-                ReadWriteEndpoint = new Sql.Models.InstanceFailoverGroupReadWriteEndpoint(new Sql.Models.ReadWriteEndpointFailoverPolicy("Automatic"))
-                {
-                    FailoverWithDataLossGracePeriodMinutes = 480,
-                },
-                ReadOnlyEndpoint = new Sql.Models.InstanceFailoverGroupReadOnlyEndpoint()
-                {
-                    FailoverPolicy = new Sql.Models.ReadOnlyEndpointFailoverPolicy("Disabled"),
-                },
-            };
-
-            return await collection.CreateOrUpdateAsync(locationName, failoverGroupName, parameters);
         }
 
         public static AsyncPageable<Sql.InstanceFailoverGroup> GetAllExampleInstanceAsync(InstanceFailoverGroupCollection collection, string locationName)
@@ -585,14 +531,6 @@ namespace Azure.ResourceManager.Sql.Tests
             return collection.GetAllAsync();
         }
 
-        public static async Task<Sql.Models.JobExecutionCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(ServerJobAgentJobExecutionCollection collection)
-        {
-            // Example: Create job execution.
-            var jobExecutionId = Guid.Parse("5555-6666-7777-8888-999999999999");
-
-            return await collection.CreateOrUpdateAsync(jobExecutionId);
-        }
-
         public static AsyncPageable<Sql.ServerJobAgentJobExecution> GetAllExampleInstanceAsync(ServerJobAgentJobExecutionCollection collection)
         {
             // Example: List a job's executions.
@@ -607,38 +545,9 @@ namespace Azure.ResourceManager.Sql.Tests
             return collection.GetAllAsync(createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top);
         }
 
-        public static AsyncPageable<Sql.ServerJobAgentJobExecution> GetJobTargetExecutionsExampleInstanceAsync(ServerJobAgentJobExecutionCollection collection)
-        {
-            // Example: List job step target executions
-            var jobExecutionId = Guid.Parse("5555-6666-7777-8888-999999999999");
-            DateTimeOffset? createTimeMin = null;
-            DateTimeOffset? createTimeMax = null;
-            DateTimeOffset? endTimeMin = null;
-            DateTimeOffset? endTimeMax = null;
-            bool? isActive = null;
-            int? skip = null;
-            int? top = null;
-
-            return collection.GetJobTargetExecutionsAsync(jobExecutionId, createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top);
-        }
-
         public static AsyncPageable<Sql.ServerJobAgentJobExecutionStep> GetAllExampleInstanceAsync(ServerJobAgentJobExecutionStepCollection collection)
         {
             // Example: List job step executions
-            DateTimeOffset? createTimeMin = null;
-            DateTimeOffset? createTimeMax = null;
-            DateTimeOffset? endTimeMin = null;
-            DateTimeOffset? endTimeMax = null;
-            bool? isActive = null;
-            int? skip = null;
-            int? top = null;
-
-            return collection.GetAllAsync(createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top);
-        }
-
-        public static AsyncPageable<Sql.ServerJobAgentJobExecutionStepTarget> GetAllExampleInstanceAsync(ServerJobAgentJobExecutionStepTargetCollection collection)
-        {
-            // Example: List job step target executions
             DateTimeOffset? createTimeMin = null;
             DateTimeOffset? createTimeMax = null;
             DateTimeOffset? endTimeMin = null;
@@ -723,14 +632,6 @@ namespace Azure.ResourceManager.Sql.Tests
             return collection.GetAllAsync();
         }
 
-        public static async Task<Sql.Models.JobTargetGroupCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(JobTargetGroupCollection collection, string targetGroupName)
-        {
-            // Example: Create or update a target group with all properties.
-            var parameters = new Sql.JobTargetGroupData();
-
-            return await collection.CreateOrUpdateAsync(targetGroupName, parameters);
-        }
-
         public static AsyncPageable<Sql.JobTargetGroup> GetAllExampleInstanceAsync(JobTargetGroupCollection collection)
         {
             // Example: Get all target groups in an agent.
@@ -801,18 +702,6 @@ namespace Azure.ResourceManager.Sql.Tests
             // Example: Get the long term retention policy for the database.
 
             return collection.GetAllAsync();
-        }
-
-        public static async Task<Sql.Models.ManagedBackupShortTermRetentionPolicyCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(ManagedInstanceDatabaseBackupShortTermRetentionPolicyCollection collection)
-        {
-            // Example: Update the short term retention policy for the database.
-            var policyName = new Sql.Models.ManagedShortTermRetentionPolicyName("default");
-            var parameters = new Sql.ManagedBackupShortTermRetentionPolicyData()
-            {
-                RetentionDays = 14,
-            };
-
-            return await collection.CreateOrUpdateAsync(policyName, parameters);
         }
 
         public static AsyncPageable<Sql.ManagedInstanceDatabaseBackupShortTermRetentionPolicy> GetAllExampleInstanceAsync(ManagedInstanceDatabaseBackupShortTermRetentionPolicyCollection collection)
@@ -1294,14 +1183,6 @@ namespace Azure.ResourceManager.Sql.Tests
             return collection.GetAllAsync();
         }
 
-        public static async Task<Sql.Models.ServerTrustGroupCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(ServerTrustGroupCollection collection, string locationName, string serverTrustGroupName)
-        {
-            // Example: Create server trust group
-            var parameters = new Sql.ServerTrustGroupData();
-
-            return await collection.CreateOrUpdateAsync(locationName, serverTrustGroupName, parameters);
-        }
-
         public static AsyncPageable<Sql.ServerTrustGroup> GetAllExampleInstanceAsync(ServerTrustGroupCollection collection, string locationName)
         {
             // Example: List server trust groups
@@ -1500,26 +1381,6 @@ namespace Azure.ResourceManager.Sql.Tests
         public static AsyncPageable<Sql.LogicalDatabaseTransparentDataEncryption> GetAllExampleInstanceAsync(LogicalDatabaseTransparentDataEncryptionCollection collection)
         {
             // Example: Get a list of the database's transparent data encryption
-
-            return collection.GetAllAsync();
-        }
-
-        public static async Task<Sql.Models.BackupShortTermRetentionPolicyCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(BackupShortTermRetentionPolicyCollection collection)
-        {
-            // Example: Update the short term retention policy for the database.
-            var policyName = new Sql.Models.ShortTermRetentionPolicyName("default");
-            var parameters = new Sql.BackupShortTermRetentionPolicyData()
-            {
-                RetentionDays = 7,
-                DiffBackupIntervalInHours = new Sql.Models.DiffBackupIntervalInHours(24),
-            };
-
-            return await collection.CreateOrUpdateAsync(policyName, parameters);
-        }
-
-        public static AsyncPageable<Sql.BackupShortTermRetentionPolicy> GetAllExampleInstanceAsync(BackupShortTermRetentionPolicyCollection collection)
-        {
-            // Example: Get the short term retention policy for the database.
 
             return collection.GetAllAsync();
         }

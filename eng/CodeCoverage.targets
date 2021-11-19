@@ -39,7 +39,7 @@
       <_CoverageFiles Include="$(_TestResultsDirectory)\**\coverage.cobertura.xml" />
     </ItemGroup>
     <PropertyGroup>
-      <_CoverageCollected>true</_CoverageCollected>
+      <_CoverageCollected Condition="'@(_CoverageFiles)' != ''">true</_CoverageCollected>
     </PropertyGroup>
 
     <!-- Indicate to the pipeline a report can be generated. -->
