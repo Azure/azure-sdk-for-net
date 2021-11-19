@@ -68,7 +68,7 @@ function TestGetCodeOwner([string] $command) {
   if (!$command) {
     exit 1
   }
-  $actualReturn = GetCodeOwners -command $command 
+  $actualReturn = Get-CodeOwners -command $command 
   $expectReturn = @("person1", "person2")
   for ($i = 0; $i -lt $expectReturn.Length; $i++) {
     if ($actualReturn[$i] -ne $expectReturn[$i]) {
