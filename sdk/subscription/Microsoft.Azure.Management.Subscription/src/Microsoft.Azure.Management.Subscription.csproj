@@ -1,23 +1,29 @@
 <Project Sdk="Microsoft.NET.Sdk">
+	<!-- Please do not move/edit code below this line -->
+	<Import Project="$(RepoEngPath)/mgmt/AzSdk.reference.props" />
+	<!-- Please do not move/edit code below this line -->
 
-  <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <Nullable>annotations</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<PackageId>Microsoft.Azure.Management.Subscription</PackageId>
+		<Description>Provides subscription management capabilities for Microsoft Azure.</Description>
+		<AssemblyName>Microsoft.Azure.Management.Subscription</AssemblyName>
+		<Version>2.0.0</Version>
+		<PackageTags>Microsoft Alias Subscription;</PackageTags>
+		<PackageReleaseNotes>
+            <![CDATA[
+                Breaking changes:
+                * This is the new release of Microsoft.Subscription
+                * SDK structure has been updated to make it more consistent and user-friendly:
+								  1. Put Subscription Alias Api has been added to support subscription creation
+                  2. Post CreateSubscription APIs have been removed as new subscription alias API provides the same functionality.
+            ]]>
+     </PackageReleaseNotes>
+	</PropertyGroup>
+	<PropertyGroup>
+		<TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
+	</PropertyGroup>
 
-  <PropertyGroup>
-    <LangVersion>8.0</LangVersion>
-    <IncludeGeneratorSharedCode>true</IncludeGeneratorSharedCode>
-    <RestoreAdditionalProjectSources>https://azuresdkartifacts.blob.core.windows.net/azure-sdk-tools/index.json</RestoreAdditionalProjectSources>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20211110.2" PrivateAssets="All" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Azure.Core" Version="1.21.0-alpha.20211029.1" />
-  </ItemGroup>
-
+	<!-- Please do not move/edit code below this line -->
+	<Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+	<!-- Please do not move/edit code above this line -->
 </Project>
