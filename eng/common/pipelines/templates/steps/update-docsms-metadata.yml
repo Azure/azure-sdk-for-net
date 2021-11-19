@@ -26,7 +26,14 @@ parameters:
     type: object
     default:
       - '**'
-
+  - name: PackageSourceOverride
+    type: string
+    default:
+      - ''
+  - name: DocValidationImageId
+    type: string
+    default:
+      - ''
 steps:
 - template: /eng/common/pipelines/templates/steps/enable-long-path-support.yml
 
@@ -75,13 +82,15 @@ steps:
       DefaultBranchVariableName: TargetBranchName
 
 - pwsh: |
-    $packageInfoJson = '${{ convertToJson(parameters.PackageInfoLocations) }}'.Trim('"').Replace("\\", "/")
-    $packageInfoLocations = ConvertFrom-Json $packageInfoJson
+    # $packageInfoJson = '${{ convertToJson(parameters.PackageInfoLocations) }}'.Trim('"').Replace("\\", "/")
+    $packageInfoLocations = ConvertFrom-Json $packageLocation
     ${{ parameters.ScriptDirectory }}/Update-DocsMsMetadata.ps1 `
       -PackageInfoJsonLocations $packageInfoLocations `
       -DocRepoLocation "$(DocRepoLocation)" `
       -Language '${{parameters.Language}}' `
       -RepoId '${{ parameters.RepoId }}'
+      -DocValidationImageId '${{ parameters.DocValidationImageId }}'
+      -PackageSourceOverride '${{ parameters.PackageSourceOverride }}'
   displayName: Apply Documentation Updates
 
 - template: /eng/common/pipelines/templates/steps/git-push-changes.yml

@@ -13,7 +13,7 @@ and other information needed to release reference docs:
   repository. This enables the Docs CI build to onboard packages which have not
   shipped and for which there are no entries in the metadata CSV files.
 
-.PARAMETER PackageInfoJsonLocations
+.PARAMETER PackageInfo
 List of locations of the artifact information .json file. This is usually stored
 in build artifacts under packages/PackageInfo/<package-name>.json. Can also be
 a single item.
@@ -26,13 +26,22 @@ path information is provided by $GetDocsMsMetadataForPackageFn
 Programming language to supply to metadata
 
 .PARAMETER RepoId
-GitHub repository ID of the SDK. Typically of the form: 'Azure/azure-sdk-for-js'
+GitHub repository ID of the SDK. Typically of the form: 'Azure/azure-sdk-for-js' 
 
+.PARAMETER DocValidationImageId
+The docker image id in format of '$containerRegistry/$imageName:$tag'
+e.g. azuresdkimages.azurecr.io/jsrefautocr:latest
+
+.PARAMETER PackageSourceOverride
+Optional parameter to supply a different package source (useful for daily dev
+docs generation from pacakges which are not published to the default feed). This
+variable is meant to be used in the domain-specific business logic in
+&$ValidateDocsMsPackagesFn
 #>
 
 param(
   [Parameter(Mandatory = $true)]
-  [array]$PackageInfoJsonLocations,
+  [array]$PackageInfo,
   
   [Parameter(Mandatory = $true)]
   [string]$DocRepoLocation, 
@@ -41,7 +50,13 @@ param(
   [string]$Language,
 
   [Parameter(Mandatory = $true)]
-  [string]$RepoId
+  [string]$RepoId,
+
+  [Parameter(Mandatory = $false)]
+  [string]$DocValidationImageId,
+
+  [Parameter(Mandatory = $false)]
+  [string]$PackageSourceOverride
 )
 
 . (Join-Path $PSScriptRoot common.ps1)
@@ -165,5 +180,12 @@ function UpdateDocsMsMetadataForPackage($packageInfoJsonLocation) {
 
 foreach ($packageInfo in $PackageInfoJsonLocations) {
   Write-Host "Updating metadata for package: $packageInfo"
+  # Add validation step for daily update and release
+  if ($ValidateDocsMsPackagesFn -and (Test-Path "Function:$ValidateDocsMsPackagesFn")) {
+    &$ValidateDocsMsPackagesFn -PackageInfo $packageInfo -PackageSourceOverride $PackageSourceOverride
+    if ($LASTEXITCODE -ne 0) {
+      LogError "The package failed Doc.Ms validation. Please fixed the doc and republish to Doc.Ms."
+    }
+  }
   UpdateDocsMsMetadataForPackage $packageInfo
 }
