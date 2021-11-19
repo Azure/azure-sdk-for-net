@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -82,19 +83,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [Test]
-        public async Task ClientThrowsWithNonExistingResourceEndpoint()
+        public void ClientThrowsWithNonExistingResourceEndpoint()
         {
             var client = CreateInstrumentedClient();
-
-            try
-            {
-                await client.GetAccountPropertiesAsync();
-            }
-            catch (AggregateException ex)
-            {
-                var innerExceptions = ex.InnerExceptions.ToList();
-                Assert.IsTrue(innerExceptions.All(ex => ex is RequestFailedException));
-            }
+            Assert.CatchAsync<JsonException>(async () => await client.GetAccountPropertiesAsync());
         }
 
         [Test]
