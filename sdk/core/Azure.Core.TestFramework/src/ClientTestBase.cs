@@ -20,7 +20,6 @@ namespace Azure.Core.TestFramework
         private static readonly IInterceptor s_avoidSyncInterceptor = new UseSyncMethodsInterceptor(forceSync: false);
         private static readonly IInterceptor s_diagnosticScopeValidatingInterceptor = new DiagnosticScopeValidatingInterceptor();
         private static Dictionary<Type, Exception> s_clientValidation = new Dictionary<Type, Exception>();
-        private static FieldInfo executionContextField = typeof(TestContext).GetField("_testExecutionContext", BindingFlags.Instance | BindingFlags.NonPublic);
         private const int GLOBAL_TEST_TIMEOUT_IN_SECONDS = 5;
         public bool IsAsync { get; }
 
@@ -34,8 +33,7 @@ namespace Azure.Core.TestFramework
         [TearDown]
         public virtual void GlobalTimeoutTearDown()
         {
-            var context = TestContext.CurrentContext;
-            var executionContext = executionContextField.GetValue(context) as TestExecutionContext;
+            var executionContext = TestExecutionContext.CurrentContext;
             var duration = DateTime.UtcNow - executionContext.StartTime;
             if (duration > TimeSpan.FromSeconds(GLOBAL_TEST_TIMEOUT_IN_SECONDS))
             {

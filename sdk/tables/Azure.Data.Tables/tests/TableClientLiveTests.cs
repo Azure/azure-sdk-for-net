@@ -828,6 +828,7 @@ namespace Azure.Data.Tables.Tests
         [RecordedTest]
         public async Task CreatedCustomEntitiesCanBeQueriedWithFilters()
         {
+            await Task.Delay(6000);
             List<TestEntity> entityResults;
             var entitiesToCreate = CreateCustomTableEntities(PartitionKeyValue, 20);
 

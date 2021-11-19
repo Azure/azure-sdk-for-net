@@ -10,7 +10,6 @@ using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
-    [Timeout(30000)]
     public class AsyncLockWithValueTests
     {
         [Test]

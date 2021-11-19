@@ -14,7 +14,6 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-    [Timeout(30000)]
     public class BearerTokenAuthenticationPolicyTests : SyncAsyncPolicyTestBase
     {
         public BearerTokenAuthenticationPolicyTests(bool isAsync) : base(isAsync) { }
