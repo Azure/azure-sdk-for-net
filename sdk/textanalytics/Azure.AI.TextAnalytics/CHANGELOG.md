@@ -2,10 +2,10 @@
 
 ## 5.1.1 (2021-11-19)
 ### Breaking changes
-- Enum `EntityCategory.IPAddress` now uses the underlying string `IPAddress` value instead of `IP` to align with the Text Analytics service behavior
+- Enum `EntityCategory.IPAddress` now uses the underlying string `IPAddress` value instead of `IP` to align with the Text Analytics service behavior.
 
 ### Bug Fixes
-- Long-Running operation hydration has been patched to stop throwing a `NullReferenceException` and ignoring properties set for the user when starting an operation. Issue [24692](https://github.com/Azure/azure-sdk-for-net/issues/24692).
+- Long-Running operation rehydration has been patched to stop throwing a `NullReferenceException`. Issue [24692](https://github.com/Azure/azure-sdk-for-net/issues/24692).
 
 ## 5.1.0 (2021-07-07)
 ### New features
