@@ -14,14 +14,6 @@ modelerfour:
   lenient-model-deduplication: true
 model-namespace: false
 no-property-type-replacement: PrivateEndpoint
-# operation-group-to-resource-type:
-#     Usages: Microsoft.SignalRService/locations/usages
-#     WebPubSubPrivateLinkResources: Microsoft.SignalRService/webPubSub/privateLinkResources
-# operation-group-to-parent:
-#   WebPubSubHubs: webPubSub
-# operation-group-to-singleton-resource:
-#     WebPubSubHubs: hubs/hubName
-#     WebPubSubEventHandlers: eventHandlers/eventHandlerName
-mgmt-debug:
-  suppress-list-exception: true
+list-exception:
+  - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/hubs/{hubName}/eventHandlers/eventHandlerName
 ```
