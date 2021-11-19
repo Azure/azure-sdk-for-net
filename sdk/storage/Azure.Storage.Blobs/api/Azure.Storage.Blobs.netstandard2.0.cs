@@ -1379,6 +1379,12 @@ namespace Azure.Storage.Blobs.Models
         public string BlobName { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
+    public partial class UpdateClientSideKeyEncryptionKeyOptions
+    {
+        public UpdateClientSideKeyEncryptionKeyOptions() { }
+        public Azure.Storage.Blobs.Models.BlobRequestConditions Conditions { get { throw null; } set { } }
+        public Azure.Storage.ClientSideEncryptionOptions EncryptionOptionsOverride { get { throw null; } set { } }
+    }
     public partial class UserDelegationKey
     {
         internal UserDelegationKey() { }
@@ -1707,6 +1713,8 @@ namespace Azure.Storage.Blobs.Specialized
         public static Azure.Storage.Blobs.Specialized.PageBlobClient GetPageBlobClient(this Azure.Storage.Blobs.BlobContainerClient client, string blobName) { throw null; }
         public static Azure.Storage.Blobs.BlobContainerClient GetParentBlobContainerClient(this Azure.Storage.Blobs.Specialized.BlobBaseClient client) { throw null; }
         public static Azure.Storage.Blobs.BlobServiceClient GetParentBlobServiceClient(this Azure.Storage.Blobs.BlobContainerClient client) { throw null; }
+        public static void UpdateClientSideKeyEncryptionKey(this Azure.Storage.Blobs.BlobClient client, Azure.Storage.Blobs.Models.UpdateClientSideKeyEncryptionKeyOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
+        public static System.Threading.Tasks.Task UpdateClientSideKeyEncryptionKeyAsync(this Azure.Storage.Blobs.BlobClient client, Azure.Storage.Blobs.Models.UpdateClientSideKeyEncryptionKeyOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Storage.Blobs.BlobClient WithClientSideEncryptionOptions(this Azure.Storage.Blobs.BlobClient client, Azure.Storage.ClientSideEncryptionOptions clientSideEncryptionOptions) { throw null; }
     }
 }

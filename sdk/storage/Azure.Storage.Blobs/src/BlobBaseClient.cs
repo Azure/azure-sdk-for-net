@@ -4831,7 +4831,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<BlobInfo>> SetMetadataInternal(
+        internal async Task<Response<BlobInfo>> SetMetadataInternal(
             Metadata metadata,
             BlobRequestConditions conditions,
             bool async,
