@@ -537,25 +537,63 @@ namespace Azure.Core.Tests
             Assert.AreEqual(10*1024, requestBytes.Length);
         }
 
+        public static object[][] RequestMethods => new[]
+        {
+            new object[] { RequestMethod.Delete },
+            new object[] { RequestMethod.Get },
+            new object[] { RequestMethod.Patch },
+            new object[] { RequestMethod.Post },
+            new object[] { RequestMethod.Put },
+            new object[] { RequestMethod.Head },
+            new object[] { new RequestMethod("custom") },
+        };
+
         [Test]
-        public async Task ContentLength0WhenNoContent()
+        [TestCaseSource(nameof(RequestMethods))]
+        public async Task ContentLengthSetCorrectlyWhenNoContent(RequestMethod method)
         {
             StringValues contentLengthHeader = default;
+            var transport = GetTransport();
+
             using TestServer testServer = new TestServer(
                 context =>
                 {
-                    Assert.True(context.Request.Headers.TryGetValue("Content-Length", out contentLengthHeader));
+                    // for NET461, HttpClient will include zero content-length for DELETEs
+#if NET461
+                    if (transport is HttpClientTransport)
+                    {
+                        if (context.Request.Method == RequestMethod.Get.ToString() ||
+                            context.Request.Method == RequestMethod.Head.ToString())
+                        {
+                            Assert.False(context.Request.Headers.TryGetValue("Content-Length", out _));
+                        }
+                        else
+                        {
+                            Assert.True(context.Request.Headers.TryGetValue("Content-Length", out contentLengthHeader));
+                            Assert.AreEqual(contentLengthHeader.ToString(), "0");
+                        }
+                    }
+#else
+                    if (context.Request.Method == RequestMethod.Delete.ToString() ||
+                        context.Request.Method == RequestMethod.Get.ToString() ||
+                        context.Request.Method == RequestMethod.Head.ToString())
+                    {
+                        Assert.False(context.Request.Headers.TryGetValue("Content-Length", out _));
+                    }
+                    else
+                    {
+                        Assert.True(context.Request.Headers.TryGetValue("Content-Length", out contentLengthHeader));
+                        Assert.AreEqual(contentLengthHeader.ToString(), "0");
+                    }
+#endif
                 });
 
-            var transport = GetTransport();
+                Request request = transport.CreateRequest();
+                request.Method = method;
+                request.Content = null;
+                request.Uri.Reset(testServer.Address);
 
-            Request request = transport.CreateRequest();
-            request.Method = RequestMethod.Post;
-            request.Uri.Reset(testServer.Address);
-
-            await ExecuteRequest(request, transport);
-
-            Assert.AreEqual(contentLengthHeader.ToString(), "0");
+                await ExecuteRequest(request, transport);
         }
 
         [Test]

@@ -81,12 +81,11 @@ namespace Azure.Core.Pipeline
                         message.Request.Content.WriteTo(requestStream, message.CancellationToken);
                     }
                 }
-                else
+                else if (message.Request.Method != RequestMethod.Head &&
+                         message.Request.Method != RequestMethod.Get &&
+                         message.Request.Method != RequestMethod.Delete)
                 {
-                    if (message.Request.Method == RequestMethod.Put || message.Request.Method == RequestMethod.Post)
-                    {
-                        request.ContentLength = 0;
-                    }
+                    request.ContentLength = 0;
                 }
 
                 WebResponse webResponse;
