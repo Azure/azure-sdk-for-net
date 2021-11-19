@@ -43,7 +43,7 @@ namespace Azure.Core.Experimental.Tests.Models
             {
                 // TODO: When we move this functionality out of Experimental into Core, it will be replaced by
                 // > throw new RequestFailedException(response);
-                throw response.CreateRequestFailedException();
+                throw new RequestFailedException(response);
             }
 
             return DeserializePet(JsonDocument.Parse(response.Content.ToMemory()));
