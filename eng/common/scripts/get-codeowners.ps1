@@ -13,9 +13,10 @@ $ToolCommandName = "retrieve-codeowners"
 
 function Get-CodeOwnersTool()
 {
+  $command = Join-Path $ToolPath $ToolCommandName
   # Check if the retrieve-codeowners tool exsits or not.
-  if (Get-Command "$ToolPath/$ToolCommandName" -errorAction SilentlyContinue) {
-    return "$ToolPath/$ToolCommandName"
+  if (Get-Command $command -errorAction SilentlyContinue) {
+    return $command
   }
   if (!(Test-Path $ToolPath)) {
     New-Item -ItemType Directory -Path $ToolPath | Out-Null
@@ -23,7 +24,6 @@ function Get-CodeOwnersTool()
   Write-Warning "Installing the ToolCommandName tool under $ToolPath... "
   dotnet tool install --tool-path $ToolPath --add-source $DevOpsFeed --version $ToolVersion "Azure.Sdk.Tools.RetrieveCodeOwners" | Out-Null
 
-  $command = Join-Path $ToolPath $ToolCommandName
   # Test to see if the tool properly installed.
   if (!(Get-Command $command -errorAction SilentlyContinue)) {
     Write-Error "The retrieve-codeowners tool is not properly installed. Please check your tool path. $ToolPath"
@@ -32,27 +32,25 @@ function Get-CodeOwnersTool()
   return $command
 }
 
-function Get-CodeOwners ([string] $command)
+function Get-CodeOwners ([string]$targetDirectory = $TargetDirectory, [string]$codeOwnerFileLocation = $CodeOwnerFileLocation)
 {
-  if (!$command) {
-    return @()
-  }
+  $command = Get-CodeOwnersTool
   # Params $RootDirectory is already in use in cpp release pipeline. 
-  # Will use $CodeOwnerFileLocation and deprecate $RootDirectory once it is ready to retire $RootDirectory.
-  if ($RootDirectory -and !(Test-Path $CodeOwnerFileLocation)) {
-    $CodeOwnerFileLocation = Join-Path $RootDirectory ".github/CODEOWNERS"
+  # Will use $codeOwnerFileLocation and deprecate $RootDirectory once it is ready to retire $RootDirectory.
+  if ($RootDirectory -and !(Test-Path $codeOwnerFileLocation)) {
+    $codeOwnerFileLocation = Join-Path $RootDirectory ".github/CODEOWNERS"
   }
   
-  $codeOwnersString = & $command --target-directory $targetDirectory --code-owner-file-path $CodeOwnerFileLocation
+  $codeOwnersString = & $command --target-directory $targetDirectory --code-owner-file-path $codeOwnerFileLocation
   # Failed at the command of fetching code owners.
   if ($LASTEXITCODE -ne 0) {
-    return @()
+    return ,@()
   }
   
   $codeOwnersJson = $codeOwnersString | ConvertFrom-Json
   if (!$codeOwnersJson) {
     Write-Host "No code owners returned from the path: $targetDirectory"
-    return @()
+    return ,@()
   }
   
   if ($VsoVariable) {
@@ -63,13 +61,9 @@ function Get-CodeOwners ([string] $command)
   return $codeOwnersJson.Owners
 }
 
+function TestGetCodeOwner([string]$targetDirectory, [string]$codeOwnerFileLocation, [string[]]$expectReturn) {
+  $actualReturn = Get-CodeOwners -targetDirectory "sdk" -codeOwnerFileLocation $testFile
 
-function TestGetCodeOwner([string] $command) {
-  if (!$command) {
-    exit 1
-  }
-  $actualReturn = Get-CodeOwners -command $command 
-  $expectReturn = @("person1", "person2")
   if ($actualReturn.Length -ne $expectReturn.Length) {
     Write-Error "The length of actual result is not as expected. Expected length: $expectReturn.Length, Actual length: $actualReturn.Length."
     exit 1
@@ -83,12 +77,13 @@ function TestGetCodeOwner([string] $command) {
   exit 0
 }
 
-# Install the tool first
-$output = Get-CodeOwnersTool
-
 if($Test) {
-  TestGetCodeOwner -command $output
+  $testFile = "$PSSCriptRoot\..\..\..\tools\code-owners-parser\Azure.Sdk.Tools.RetrieveCodeOwners.Tests\CODEOWNERS"
+  TestGetCodeOwner -targetDirectory "sdk" -codeOwnerFileLocation $testFile -expectResult @("person1", "person2")
+  TestGetCodeOwner -targetDirectory "sdk/noPath" -codeOwnerFileLocation $testFile -expectResult @("person1", "person2")
+  TestGetCodeOwner -targetDirectory "/sdk/azconfig/" -codeOwnerFileLocation $testFile -expectResult @("person3", "person4")
+  TestGetCodeOwner -targetDirectory "/sd" -codeOwnerFileLocation $testFile -expectResult @()
 }
 else {
-  return GetCodeOwners -command $output
+  return Get-CodeOwners 
 }
