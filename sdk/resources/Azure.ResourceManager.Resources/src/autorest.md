@@ -43,6 +43,18 @@ override-operation-name:
   Deployments_CheckExistenceAtScope: CheckExistence
   JitRequests_ListBySubscription: GetJitRequestDefinitions
 
+override-operation-name:
+  DeploymentOperations_ListAtScope: GetDeploymentOperations
+  DeploymentOperations_GetAtScope: GetDeploymentOperation
+  Deployments_CancelAtScope: Cancel
+  Deployments_ValidateAtScope: Validate
+  Deployments_ExportTemplateAtScope: ExportTemplate
+  Deployments_WhatIf: WhatIf
+  Deployments_WhatIfAtManagementGroupScope: WhatIf
+  Deployments_WhatIfAtSubscriptionScope: WhatIf
+  Deployments_WhatIfAtTenantScope: WhatIf
+  Deployments_CheckExistenceAtScope: CheckExistence
+
 operation-groups-to-omit:
    Providers;ProviderResourceTypes;Resources;ResourceGroups;Tags;Subscriptions;Tenants
 directive:
