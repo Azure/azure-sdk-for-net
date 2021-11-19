@@ -53,6 +53,8 @@ namespace Azure.Core.Pipeline
         /// <returns>A new instance of <see cref="HttpPipeline"/></returns>
         public static HttpPipeline Build(ClientOptions options, HttpPipelinePolicy[] perCallPolicies, HttpPipelinePolicy[] perRetryPolicies, ResponseClassifier responseClassifier, HttpPipelineTransportOptions? defaultTransportOptions)
         {
+            int perCallIndex;
+            int perRetryIndex;
             if (perCallPolicies == null)
             {
                 throw new ArgumentNullException(nameof(perCallPolicies));
@@ -94,6 +96,9 @@ namespace Azure.Core.Pipeline
 
             AddCustomerPolicies(HttpPipelinePosition.PerCall);
 
+            policies.RemoveAll(static policy => policy == null);
+            perCallIndex = policies.Count;
+
             policies.Add(ClientRequestIdPolicy.Shared);
 
             if (diagnostics.IsTelemetryEnabled)
@@ -110,6 +115,9 @@ namespace Azure.Core.Pipeline
 
             AddCustomerPolicies(HttpPipelinePosition.PerRetry);
 
+            policies.RemoveAll(static policy => policy == null);
+            perRetryIndex = policies.Count;
+
             if (diagnostics.IsLoggingEnabled)
             {
                 string assemblyName = options.GetType().Assembly!.GetName().Name!;
@@ -122,7 +130,6 @@ namespace Azure.Core.Pipeline
             policies.Add(new RequestActivityPolicy(isDistributedTracingEnabled, ClientDiagnostics.GetResourceProviderNamespace(options.GetType().Assembly), sanitizer));
 
             AddCustomerPolicies(HttpPipelinePosition.BeforeTransport);
-
             policies.RemoveAll(static policy => policy == null);
 
             // Override the provided Transport with the provided transport options if the transport has not been set after default construction and options are not null.
@@ -141,12 +148,16 @@ namespace Azure.Core.Pipeline
                 {
                     transport = HttpPipelineTransport.Create(defaultTransportOptions);
                     return new DisposableHttpPipeline(transport,
+                        perCallIndex,
+                        perRetryIndex,
                         policies.ToArray(),
                         responseClassifier);
                 }
             }
 
             return new HttpPipeline(transport,
+                perCallIndex,
+                perRetryIndex,
                 policies.ToArray(),
                 responseClassifier);
         }
