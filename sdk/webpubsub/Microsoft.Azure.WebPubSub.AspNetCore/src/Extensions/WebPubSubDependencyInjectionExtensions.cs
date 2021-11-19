@@ -17,7 +17,7 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <param name="services">The <see cref="IServiceCollection"/>.</param>
         /// <param name="configure">A callback to configure the <see cref="WebPubSubOptions"/>.</param>
         /// <returns>The same instance of the <see cref="IServiceCollection"/>.</returns>
-        public static IWebPubSubServerBuilder AddWebPubSub(this IServiceCollection services, Action<WebPubSubOptions> configure)
+        public static IWebPubSubServerBuilder AddWebPubSub(this IServiceCollection services, Action<WebPubSubOptions> configure = null)
         {
             if (services == null)
             {
@@ -31,9 +31,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
             services.Configure(configure);
 
-            var builder = services.AddWebPubSub();
-
-            return builder;
+            return services.AddWebPubSubCore();
         }
 
         /// <summary>
@@ -48,12 +46,10 @@ namespace Microsoft.Extensions.DependencyInjection
                 throw new ArgumentNullException(nameof(services));
             }
 
-            services.AddSingleton<ServiceRequestHandlerAdapter>()
-                .AddSingleton<WebPubSubMarkerService>()
-                .AddSingleton<WebPubSubServiceClientFactory>();
+            // Add a default option to avoid null.
+            services.Configure<WebPubSubOptions>(o => o = new());
 
-            var builder = new WebPubSubServerBuilder(services);
-            return builder;
+            return services.AddWebPubSubCore();
         }
 
         /// <summary>
@@ -69,6 +65,16 @@ namespace Microsoft.Extensions.DependencyInjection
                 var factory = sp.GetRequiredService<WebPubSubServiceClientFactory>();
                 return factory.Create<THub>();
             });
+            return builder;
+        }
+
+        private static IWebPubSubServerBuilder AddWebPubSubCore(this IServiceCollection services)
+        {
+            services.AddSingleton<ServiceRequestHandlerAdapter>()
+                .AddSingleton<WebPubSubMarkerService>()
+                .AddSingleton<WebPubSubServiceClientFactory>();
+
+            var builder = new WebPubSubServerBuilder(services);
             return builder;
         }
     }

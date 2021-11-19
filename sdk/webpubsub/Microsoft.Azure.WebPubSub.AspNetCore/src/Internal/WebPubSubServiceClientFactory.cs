@@ -17,6 +17,11 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
 
         public WebPubSubServiceClient<THub> Create<THub>() where THub : WebPubSubHub
         {
+            if (_options == null || _options.ServiceEndpoint == null)
+            {
+                throw new ArgumentException($"Not able to create the WebPubSubServiceClient without a valid WebPubSubOptions.ServiceEndpoint. Please configure the ServiceEndpoint when DI the WebPubSub.");
+            }
+
             if (!string.IsNullOrEmpty(_options.ServiceEndpoint.ConnectionString))
             {
                 return new WebPubSubServiceClient<THub>(_options.ServiceEndpoint.ConnectionString, _options.ServiceEndpoint.ClientOptions);
@@ -30,7 +35,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                 return new WebPubSubServiceClient<THub>(_options.ServiceEndpoint.Endpoint, _options.ServiceEndpoint.TokenCredential, _options.ServiceEndpoint.ClientOptions);
             }
 
-            throw new ArgumentException($"Not able to create the WebPubSubServiceClient without a valid WebPubSubOptions.ServiceEndpoint. Please configure the ServiceEndpoint when DI the WebPubSub.");
+            return null;
         }
     }
 }

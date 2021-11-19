@@ -40,10 +40,10 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
             // Handle Abuse Protection
             if (context.Request.IsPreflightRequest(out var requestHosts))
             {
-                var validationOptions = _options.ServiceEndpoint.GetValidationOptions();
+                var validationOptions = _options?.ServiceEndpoint?.GetValidationOptions();
                 Log.ReceivedAbuseProtectionRequest(_logger);
                 var isValid = false;
-                if (_options == null || !validationOptions.ContainsHost())
+                if (validationOptions == null || !validationOptions.ContainsHost())
                 {
                     isValid = true;
                 }
