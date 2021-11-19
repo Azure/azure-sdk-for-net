@@ -13,7 +13,7 @@ and other information needed to release reference docs:
   repository. This enables the Docs CI build to onboard packages which have not
   shipped and for which there are no entries in the metadata CSV files.
 
-.PARAMETER PackageInfo
+.PARAMETER PackageInfoJsonLocations
 List of locations of the artifact information .json file. This is usually stored
 in build artifacts under packages/PackageInfo/<package-name>.json. Can also be
 a single item.
@@ -41,7 +41,7 @@ variable is meant to be used in the domain-specific business logic in
 
 param(
   [Parameter(Mandatory = $true)]
-  [array]$PackageInfo,
+  [array]$PackageInfoJsonLocations,
   
   [Parameter(Mandatory = $true)]
   [string]$DocRepoLocation, 

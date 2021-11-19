@@ -82,7 +82,7 @@ steps:
       DefaultBranchVariableName: TargetBranchName
 
 - pwsh: |
-    # $packageInfoJson = '${{ convertToJson(parameters.PackageInfoLocations) }}'.Trim('"').Replace("\\", "/")
+    $packageInfoJson = '${{ convertToJson(parameters.PackageInfoLocations) }}'.Trim('"').Replace("\\", "/")
     $packageInfoLocations = ConvertFrom-Json $packageLocation
     ${{ parameters.ScriptDirectory }}/Update-DocsMsMetadata.ps1 `
       -PackageInfoJsonLocations $packageInfoLocations `
