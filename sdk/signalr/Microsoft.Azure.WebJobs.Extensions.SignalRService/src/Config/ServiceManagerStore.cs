@@ -81,7 +81,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 
         public void Dispose()
         {
-            DisposeAsync().AsTask().Wait();
+#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
+            DisposeAsync().GetAwaiter().GetResult();
+#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
         }
     }
 }
