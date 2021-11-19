@@ -45,7 +45,6 @@ namespace Azure.Core.TestFramework
                     services.AddSingleton<IStartup>(this);
                 })
                 .UseSetting(WebHostDefaults.ApplicationKey, typeof(TestServer).GetTypeInfo().Assembly.FullName)
-                .UseShutdownTimeout(TimeSpan.FromMilliseconds(100))
                 .Build();
             _host.Start();
         }
