@@ -181,17 +181,17 @@ namespace Azure.Quantum.Jobs.Samples
     OutputDataUri: {myJob.OutputDataUri}
 ");
 
-            //Console.WriteLine($@"Getting list of Quantum jobs...");
+            Console.WriteLine($@"Getting list of Quantum jobs...");
 
-            //#region Snippet:Azure_Quantum_Jobs_GetJobs
-            //foreach (JobDetails job in quantumJobClient.GetJobs())
-            //{
-            //    Console.WriteLine($"{job.Name}");
-            //}
-            //#endregion
+            #region Snippet:Azure_Quantum_Jobs_GetJobs
+            foreach (JobDetails job in quantumJobClient.GetJobs())
+            {
+               Console.WriteLine($"{job.Name}");
+            }
+            #endregion
 
-            //Console.WriteLine("Press [Enter] to exit...");
-            //Console.ReadLine();
+            Console.WriteLine("Press [Enter] to exit...");
+            Console.ReadLine();
         }
     }
 }
