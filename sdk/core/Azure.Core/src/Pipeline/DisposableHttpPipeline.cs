@@ -14,11 +14,14 @@ namespace Azure.Core.Pipeline
         /// Creates a new instance of <see cref="HttpPipeline"/> with the provided transport, policies and response classifier.
         /// </summary>
         /// <param name="transport">The <see cref="HttpPipelineTransport"/> to use for sending the requests.</param>
+        /// <param name="perCallIndex"></param>
+        /// <param name="perRetryIndex"></param>
         /// <param name="policies">Policies to be invoked as part of the pipeline in order.</param>
         /// <param name="responseClassifier">The response classifier to be used in invocations.</param>
-        internal DisposableHttpPipeline(HttpPipelineTransport transport, HttpPipelinePolicy[]? policies = null, ResponseClassifier? responseClassifier = null)
-            : base(transport, policies, responseClassifier)
-        { }
+        internal DisposableHttpPipeline(HttpPipelineTransport transport, int perCallIndex, int perRetryIndex, HttpPipelinePolicy[]? policies = null, ResponseClassifier? responseClassifier = null)
+            : base(transport, perCallIndex, perRetryIndex, policies, responseClassifier)
+        {
+        }
 
         /// <summary>
         /// Calls Dispose on the underlying <see cref="HttpPipelineTransport"/>.
