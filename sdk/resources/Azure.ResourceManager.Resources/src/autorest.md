@@ -45,6 +45,7 @@ override-operation-name:
   Deployments_WhatIfAtSubscriptionScope: WhatIf
   Deployments_WhatIfAtTenantScope: WhatIf
   Deployments_CheckExistenceAtScope: CheckExistence
+  JitRequests_ListBySubscription: GetJitRequestDefinitions
 
 operation-groups-to-omit:
    Providers;ProviderResourceTypes;Resources;ResourceGroups;Tags;Subscriptions;Tenants

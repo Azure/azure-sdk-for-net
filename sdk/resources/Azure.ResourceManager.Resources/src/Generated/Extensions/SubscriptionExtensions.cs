@@ -173,12 +173,12 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Retrieves all JIT requests within the subscription. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<IReadOnlyList<JitRequestDefinition>>> GetJitRequestsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static async Task<Response<IReadOnlyList<JitRequestDefinition>>> GetJitRequestDefinitionsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return await subscription.UseClientContext(async (baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetJitRequests");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetJitRequestDefinitions");
                 scope.Start();
                 try
                 {
@@ -198,12 +198,12 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Retrieves all JIT requests within the subscription. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<IReadOnlyList<JitRequestDefinition>> GetJitRequests(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static Response<IReadOnlyList<JitRequestDefinition>> GetJitRequestDefinitions(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetJitRequests");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetJitRequestDefinitions");
                 scope.Start();
                 try
                 {
