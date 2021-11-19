@@ -10,6 +10,7 @@ using NUnit.Framework;
 using System.Linq;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
+using Azure.Communication.CallingServer.Models;
 
 namespace Azure.Communication.CallingServer.Tests.ContentDownloadTests
 {

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Communication.CallingServer.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 

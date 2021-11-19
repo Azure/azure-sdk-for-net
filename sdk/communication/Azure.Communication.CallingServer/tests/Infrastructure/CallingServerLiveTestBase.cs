@@ -11,6 +11,7 @@ using Azure.Communication.Identity;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using NUnit.Framework;
+using Azure.Communication.CallingServer.Models;
 
 namespace Azure.Communication.CallingServer.Tests
 {

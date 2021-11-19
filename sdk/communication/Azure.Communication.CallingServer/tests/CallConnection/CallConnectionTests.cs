@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using Azure.Communication.CallingServer.Models;
 using NUnit.Framework;
 
 namespace Azure.Communication.CallingServer.Tests

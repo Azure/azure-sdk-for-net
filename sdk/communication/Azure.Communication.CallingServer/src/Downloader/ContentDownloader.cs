@@ -5,6 +5,7 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Communication.CallingServer.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Linq;
+using Azure.Communication.CallingServer.Models;
 using NUnit.Framework;
 
 namespace Azure.Communication.CallingServer.Tests.Events
