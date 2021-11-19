@@ -27,13 +27,16 @@ function Get-CodeOwnersTool()
   # Test to see if the tool properly installed.
   if (!(Get-Command $Command -errorAction SilentlyContinue)) {
     Write-Error "The ToolCommandName tool is not properly installed. Please check your tool path. $ToolPath"
-    return ""
+    return 
   }
   return Join-Path $ToolPath $ToolCommandName
 }
 
-function Get-CodeOwners ([string] $Command)
+function Get-CodeOwners ([string] $command)
 {
+  if (!$command) {
+    return @()
+  }
   # Params $RootDirectory is already in use in cpp release pipeline. 
   # Will use $CodeOwnerFileLocation and deprecate $RootDirectory once it is ready to retire $RootDirectory.
   if ($RootDirectory -and !(Test-Path $CodeOwnerFileLocation)) {
@@ -43,13 +46,13 @@ function Get-CodeOwners ([string] $Command)
   $codeOwnersString = & $command --target-directory $targetDirectory --code-owner-file-path $CodeOwnerFileLocation
   # Failed at the command of fetching code owners.
   if ($LASTEXITCODE -ne 0) {
-    return ""
+    return @()
   }
   
   $codeOwnersJson = $codeOwnersString | ConvertFrom-Json
   if (!$codeOwnersJson) {
     Write-Host "No code owners returned from the path: $targetDirectory"
-    return ""
+    return @()
   }
   
   if ($VsoVariable) {
@@ -61,9 +64,10 @@ function Get-CodeOwners ([string] $Command)
 }
 
 
-function TestGetCodeOwner() {
-  # Install the tool first
-  $output = InstallRetrieveCodeOwnersTool
+function TestGetCodeOwner([string] $command) {
+  if (!$output) {
+    exit
+  }
   $actualReturn = GetCodeOwners -command $output 
   $expectReturn = @("person1", "person2")
   for ($i = 0; $i -lt $expectReturn.Length; $i++) {
@@ -74,11 +78,13 @@ function TestGetCodeOwner() {
   }
 }
 
+# Install the tool first
+$output = Get-CodeOwnersTool
+
 if($Test) {
-  TestGetCodeOwner
+  TestGetCodeOwner -command $output
 }
 else {
-  # Install the tool first
-  $output = InstallRetrieveCodeOwnersTool
+
   return GetCodeOwners -command $output
 }
