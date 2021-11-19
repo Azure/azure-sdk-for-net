@@ -238,16 +238,17 @@ namespace Azure.Core.TestFramework
         /// get processed.
         /// </param>
         /// <returns>A task that will (optionally) delay.</returns>
-        public static async Task Delay(RecordedTestMode mode, int milliseconds = 1000, int? playbackDelayMilliseconds = null)
+        public static Task Delay(RecordedTestMode mode, int milliseconds = 1000, int? playbackDelayMilliseconds = null)
         {
             if (mode != RecordedTestMode.Playback)
             {
-                await Task.Delay(milliseconds);
+                return Task.Delay(milliseconds);
             }
             else if (playbackDelayMilliseconds != null)
             {
-                await Task.Delay(playbackDelayMilliseconds.Value);
+                return Task.Delay(playbackDelayMilliseconds.Value);
             }
+            return Task.CompletedTask;
         }
 
         protected TestRetryHelper TestRetryHelper => new TestRetryHelper(Mode == RecordedTestMode.Playback);
