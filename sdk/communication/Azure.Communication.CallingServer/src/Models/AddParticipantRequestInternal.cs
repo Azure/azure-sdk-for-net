@@ -3,7 +3,7 @@
 
 using Azure.Core;
 
-namespace Azure.Communication.CallingServer
+namespace Azure.Communication.CallingServer.Models
 {
     [CodeGenModel("AddParticipantRequest")]
     internal partial class AddParticipantRequestInternal

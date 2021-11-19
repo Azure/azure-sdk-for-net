@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Communication.CallingServer.Models;
 
 namespace Azure.Communication.CallingServer
 {

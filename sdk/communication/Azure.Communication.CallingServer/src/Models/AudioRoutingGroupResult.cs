@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.Communication.CallingServer
+namespace Azure.Communication.CallingServer.Models
 {
     using System.Collections.Generic;
     using System.Linq;

@@ -9,8 +9,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Communication;
+using Azure.Communication.CallingServer;
 
-namespace Azure.Communication.CallingServer
+namespace Azure.Communication.CallingServer.Models
 {
     /// <summary> The audio routing group request. </summary>
     internal partial class AudioRoutingGroupRequestInternal

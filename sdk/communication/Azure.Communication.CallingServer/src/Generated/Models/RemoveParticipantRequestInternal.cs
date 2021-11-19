@@ -8,7 +8,7 @@
 using System;
 using Azure.Communication;
 
-namespace Azure.Communication.CallingServer
+namespace Azure.Communication.CallingServer.Models
 {
     /// <summary> The remove participant by identifier request. </summary>
     internal partial class RemoveParticipantRequestInternal

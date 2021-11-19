@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Communication.CallingServer.Models;
+
 namespace Azure.Communication.CallingServer
 {
     /// <summary> The call connection state changed event. </summary>

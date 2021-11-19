@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Azure.Communication.CallingServer
+namespace Azure.Communication.CallingServer.Models
 {
     /// <summary> Options for start hold music. </summary>
     public class StartHoldMusicOptions

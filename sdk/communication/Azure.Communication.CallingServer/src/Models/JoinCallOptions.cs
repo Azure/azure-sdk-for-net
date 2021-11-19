@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
 
-namespace Azure.Communication.CallingServer
+namespace Azure.Communication.CallingServer.Models
 {
     /// <summary> The options for joining a call. </summary>
     public class JoinCallOptions

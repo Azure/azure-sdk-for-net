@@ -8,7 +8,7 @@
 using System;
 using Azure.Communication;
 
-namespace Azure.Communication.CallingServer
+namespace Azure.Communication.CallingServer.Models
 {
     /// <summary> A participant in a call. </summary>
     internal partial class CallParticipantInternal

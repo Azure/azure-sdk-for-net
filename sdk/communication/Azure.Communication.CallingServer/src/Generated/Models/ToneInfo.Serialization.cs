@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Communication.CallingServer
+namespace Azure.Communication.CallingServer.Models
 {
     public partial class ToneInfo
     {

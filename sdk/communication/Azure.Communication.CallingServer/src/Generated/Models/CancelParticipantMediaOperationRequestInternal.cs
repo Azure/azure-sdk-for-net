@@ -8,7 +8,7 @@
 using System;
 using Azure.Communication;
 
-namespace Azure.Communication.CallingServer
+namespace Azure.Communication.CallingServer.Models
 {
     /// <summary> The request payload for stopping a media operation for a participant. </summary>
     internal partial class CancelParticipantMediaOperationRequestInternal

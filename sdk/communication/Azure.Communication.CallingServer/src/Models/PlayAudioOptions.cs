@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Azure.Communication.CallingServer
+namespace Azure.Communication.CallingServer.Models
 {
     /// <summary> Options for playing audio. </summary>
     public class PlayAudioOptions

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Communication.CallingServer
+namespace Azure.Communication.CallingServer.Models
 {
     /// <summary> The response payload of the create call operation. </summary>
     internal partial class CreateCallResultInternal

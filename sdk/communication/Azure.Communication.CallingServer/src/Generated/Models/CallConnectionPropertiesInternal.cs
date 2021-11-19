@@ -7,9 +7,10 @@
 
 using System.Collections.Generic;
 using Azure.Communication;
+using Azure.Communication.CallingServer;
 using Azure.Core;
 
-namespace Azure.Communication.CallingServer
+namespace Azure.Communication.CallingServer.Models
 {
     /// <summary> The CallConnectionProperties. </summary>
     internal partial class CallConnectionPropertiesInternal

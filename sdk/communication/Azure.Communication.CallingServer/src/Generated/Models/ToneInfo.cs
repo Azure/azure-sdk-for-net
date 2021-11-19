@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Communication.CallingServer
+namespace Azure.Communication.CallingServer.Models
 {
     /// <summary> The information about the tone. </summary>
     public partial class ToneInfo

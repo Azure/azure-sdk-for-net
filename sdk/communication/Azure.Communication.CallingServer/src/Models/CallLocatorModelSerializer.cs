@@ -4,7 +4,7 @@
 using System;
 using System.Text.Json;
 
-namespace Azure.Communication.CallingServer
+namespace Azure.Communication.CallingServer.Models
 {
     internal class CallLocatorModelSerializer
     {

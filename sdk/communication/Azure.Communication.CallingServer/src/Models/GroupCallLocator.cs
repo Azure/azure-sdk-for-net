@@ -3,7 +3,7 @@
 
 using Azure.Core;
 
-namespace Azure.Communication.CallingServer
+namespace Azure.Communication.CallingServer.Models
 {
     /// <summary> The group call locator. </summary>
     public class GroupCallLocator : CallLocator

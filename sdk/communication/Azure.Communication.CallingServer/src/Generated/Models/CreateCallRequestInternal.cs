@@ -9,9 +9,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Communication;
+using Azure.Communication.CallingServer;
 using Azure.Core;
 
-namespace Azure.Communication.CallingServer
+namespace Azure.Communication.CallingServer.Models
 {
     /// <summary> The request payload for create call. </summary>
     internal partial class CreateCallRequestInternal

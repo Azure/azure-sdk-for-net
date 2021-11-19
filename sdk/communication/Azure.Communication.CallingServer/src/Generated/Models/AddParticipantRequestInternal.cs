@@ -8,7 +8,7 @@
 using System;
 using Azure.Communication;
 
-namespace Azure.Communication.CallingServer
+namespace Azure.Communication.CallingServer.Models
 {
     /// <summary> The add participant request. </summary>
     internal partial class AddParticipantRequestInternal

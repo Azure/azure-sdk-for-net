@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Communication.CallingServer
+namespace Azure.Communication.CallingServer.Models
 {
     /// <summary> The tone value. </summary>
     public readonly partial struct ToneValue : IEquatable<ToneValue>

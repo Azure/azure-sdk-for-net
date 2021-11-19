@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Communication.CallingServer.Models;
 using Azure.Core;
 
 namespace Azure.Communication.CallingServer

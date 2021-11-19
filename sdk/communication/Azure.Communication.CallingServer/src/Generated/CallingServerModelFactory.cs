@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Communication.CallingServer.Models;
 
 namespace Azure.Communication.CallingServer
 {
@@ -137,7 +138,7 @@ namespace Azure.Communication.CallingServer
         /// <summary> Initializes a new instance of ToneInfo. </summary>
         /// <param name="sequenceId"> The sequence id which can be used to determine if the same tone was played multiple times or if any tones were missed. </param>
         /// <param name="tone"> The tone value. </param>
-        /// <returns> A new <see cref="CallingServer.ToneInfo"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.ToneInfo"/> instance for mocking. </returns>
         public static ToneInfo ToneInfo(int sequenceId = default, ToneValue tone = default)
         {
             return new ToneInfo(sequenceId, tone);
