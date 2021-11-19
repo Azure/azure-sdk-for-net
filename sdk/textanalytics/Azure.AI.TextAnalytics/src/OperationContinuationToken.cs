@@ -58,9 +58,12 @@ namespace Azure.AI.TextAnalytics
             return token;
         }
 
-        public static string Serialize(string jobId, IDictionary<string, int> inputDocumentOrder, bool? showStats)
+        public static string Serialize(string jobId, IDictionary<string, int> inputDocumentOrder, bool? showStats) =>
+            new OperationContinuationToken(jobId, inputDocumentOrder, showStats).Serialize();
+
+        public string Serialize()
         {
-            string plainOperationId = JsonSerializer.Serialize(new OperationContinuationToken(jobId, inputDocumentOrder, showStats));
+            string plainOperationId = JsonSerializer.Serialize(this);
             byte[] plainTextBytes = Encoding.UTF8.GetBytes(plainOperationId);
 
             return Convert.ToBase64String(plainTextBytes);

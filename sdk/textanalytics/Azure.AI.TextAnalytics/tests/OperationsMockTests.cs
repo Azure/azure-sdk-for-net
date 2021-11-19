@@ -124,7 +124,23 @@ namespace Azure.AI.TextAnalytics.Tests
         {
             var client = CreateTestClient(new MockTransport());
 
-            Assert.Throws<ArgumentException>(() => new AnalyzeActionsOperation("2a96a91f-7edf-4931-a880-3fdee1d56f15", client));
+            var ex = Assert.Throws<ArgumentException>(() => new AnalyzeActionsOperation("2a96a91f-7edf-4931-a880-3fdee1d56f15", client));
+            Assert.IsInstanceOf<FormatException>(ex.InnerException);
+        }
+
+        [Test]
+        public void CreateAnalyzeOperationWrongTokenVersion()
+        {
+            var client = CreateTestClient(new MockTransport());
+            var order = new Dictionary<string, int>() { { "0", 0 } };
+
+            var token = new OperationContinuationToken("2a96a91f-7edf-4931-a880-3fdee1d56f15", order, null);
+            token.Version = "wrong-version";
+
+            string operationId = token.Serialize();
+
+            var ex = Assert.Throws<ArgumentException>(() => new AnalyzeActionsOperation(operationId, client));
+            Assert.IsInstanceOf<ArgumentException>(ex.InnerException);
         }
 
         #endregion Analyze
@@ -210,7 +226,23 @@ namespace Azure.AI.TextAnalytics.Tests
         {
             var client = CreateTestClient(new MockTransport());
 
-            Assert.Throws<ArgumentException>(() => new AnalyzeHealthcareEntitiesOperation("2a96a91f-7edf-4931-a880-3fdee1d56f15", client));
+            var ex = Assert.Throws<ArgumentException>(() => new AnalyzeHealthcareEntitiesOperation("2a96a91f-7edf-4931-a880-3fdee1d56f15", client));
+            Assert.IsInstanceOf<FormatException>(ex.InnerException);
+        }
+
+        [Test]
+        public void CreateHealthcareOperationWrongTokenVersion()
+        {
+            var client = CreateTestClient(new MockTransport());
+            var order = new Dictionary<string, int>() { { "0", 0 } };
+
+            var token = new OperationContinuationToken("2a96a91f-7edf-4931-a880-3fdee1d56f15", order, null);
+            token.Version = "wrong-version";
+
+            string operationId = token.Serialize();
+
+            var ex = Assert.Throws<ArgumentException>(() => new AnalyzeHealthcareEntitiesOperation(operationId, client));
+            Assert.IsInstanceOf<ArgumentException>(ex.InnerException);
         }
 
         #endregion Healthcare
