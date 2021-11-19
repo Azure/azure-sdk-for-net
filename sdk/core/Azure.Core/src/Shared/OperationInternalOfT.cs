@@ -1,8 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable enable
+
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -38,9 +41,9 @@ namespace Azure.Core
 
         private readonly ClientDiagnostics _diagnostics;
 
-        private T _value;
+        private T? _value;
 
-        private RequestFailedException _operationFailedException;
+        private RequestFailedException? _operationFailedException;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OperationInternal{T}"/> class.
@@ -64,8 +67,8 @@ namespace Azure.Core
         /// parameter <paramref name="operation"/>.
         /// </param>
         /// <param name="scopeAttributes">The attributes to use during diagnostic scope creation.</param>
-        public OperationInternal(ClientDiagnostics clientDiagnostics, IOperation<T> operation, Response rawResponse, string operationTypeName = null, IEnumerable<KeyValuePair<string, string>> scopeAttributes = null)
-        : base(clientDiagnostics, null, rawResponse, operationTypeName ?? operation.GetType().Name, scopeAttributes)
+        public OperationInternal(ClientDiagnostics clientDiagnostics, IOperation<T> operation, Response rawResponse, string? operationTypeName = null, IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null)
+            : base(clientDiagnostics, null, rawResponse, operationTypeName ?? operation.GetType().Name, scopeAttributes)
         {
             _operation = operation;
             _diagnostics = clientDiagnostics;
@@ -98,7 +101,7 @@ namespace Azure.Core
             {
                 if (HasValue)
                 {
-                    return _value;
+                    return _value!;
                 }
                 if (_operationFailedException != null)
                 {
@@ -176,7 +179,7 @@ namespace Azure.Core
             {
                 if (state.HasSucceeded)
                 {
-                    Value = state.Value;
+                    Value = state.Value!;
                     HasCompleted = true;
                 }
                 else
@@ -245,7 +248,7 @@ namespace Azure.Core
     /// <typeparam name="T">The final result of the long-running operation. Must match the type used in <see cref="Operation{T}"/>.</typeparam>
     internal readonly struct OperationState<T>
     {
-        private OperationState(Response rawResponse, bool hasCompleted, bool hasSucceeded, T value, RequestFailedException operationFailedException)
+        private OperationState(Response rawResponse, bool hasCompleted, bool hasSucceeded, T? value, RequestFailedException? operationFailedException)
         {
             RawResponse = rawResponse;
             HasCompleted = hasCompleted;
@@ -260,9 +263,9 @@ namespace Azure.Core
 
         public bool HasSucceeded { get; }
 
-        public T Value { get; }
+        public T? Value { get; }
 
-        public RequestFailedException OperationFailedException { get; }
+        public RequestFailedException? OperationFailedException { get; }
 
         /// <summary>
         /// Instantiates an <see cref="OperationState{T}"/> indicating the operation has completed successfully.
@@ -294,7 +297,7 @@ namespace Azure.Core
         /// </param>
         /// <returns>A new <see cref="OperationState{T}"/> instance.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="rawResponse"/> is <c>null</c>.</exception>
-        public static OperationState<T> Failure(Response rawResponse, RequestFailedException operationFailedException = null)
+        public static OperationState<T> Failure(Response rawResponse, RequestFailedException? operationFailedException = null)
         {
             Argument.AssertNotNull(rawResponse, nameof(rawResponse));
             return new OperationState<T>(rawResponse, true, false, default, operationFailedException);

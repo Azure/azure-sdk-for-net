@@ -31,7 +31,7 @@ namespace Azure.Core
     /// </summary>
     internal class OperationInternal
     {
-        private readonly IOperation _operation;
+        private readonly IOperation? _operation;
         private readonly ClientDiagnostics _diagnostics;
         private readonly string _updateStatusScopeName;
         private readonly IReadOnlyDictionary<string, string>? _scopeAttributes;
@@ -64,12 +64,12 @@ namespace Azure.Core
         /// <param name="scopeAttributes">The attributes to use during diagnostic scope creation.</param>
         public OperationInternal(
             ClientDiagnostics clientDiagnostics,
-            IOperation operation,
+            IOperation? operation,
             Response rawResponse,
             string? operationTypeName = null,
             IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null)
         {
-            operationTypeName ??= operation.GetType().Name;
+            operationTypeName ??= operation?.GetType().Name;
 
             _operation = operation;
             _diagnostics = clientDiagnostics;
@@ -228,7 +228,7 @@ namespace Azure.Core
 
         protected virtual async ValueTask<Response> UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
-            OperationState state = await _operation.UpdateStateAsync(async, cancellationToken).ConfigureAwait(false);
+            OperationState state = await _operation!.UpdateStateAsync(async, cancellationToken).ConfigureAwait(false);
 
             RawResponse = state.RawResponse;
 
