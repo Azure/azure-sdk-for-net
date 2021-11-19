@@ -80,7 +80,13 @@ In Visual Studio:
 
 **Learn more:** see the [.NET Guidelines on Namespace Naming](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-namespace-naming) for more information on naming Azure SDK packages. This name diverges from approved Azure SDK namespaces, since it is intended to be used just for this tutorial.
 
-#### 4. Save and commit your changes to your branch
+#### 4. Update the Assembly Info
+
+You'll notice that the `Azure.<group>.<service>` project has `properties/AssemblyInfo.cs` file in it. Replace `Microsoft.Test` namespace with the correct resource provider namepace for your service.
+
+**Learn more:** see the [Azure Services Resource Providers](https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/azure-services-resource-providers) for the list of possible namespaces.
+
+#### 5. Save and commit your changes to your branch
 
 This will make it easier to see the changes you make when you generate code in the clean solution.
 
@@ -89,7 +95,7 @@ This will make it easier to see the changes you make when you generate code in t
 % git commit -m "initial commit for <service-name>"
 ```
 
-### Create the generated layer
+### Create the generated client
 
 In this section, we'll create a generated API layer built on Azure Core. We'll use a small swagger file containing a REST API definition for Azure Messaging WebPubSub.
 
