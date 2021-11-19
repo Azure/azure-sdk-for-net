@@ -30,8 +30,6 @@ namespace Azure.Containers.ContainerRegistry
             Optional<bool> writeEnabled = default;
             Optional<bool> listEnabled = default;
             Optional<bool> readEnabled = default;
-            Optional<string> quarantineState = default;
-            Optional<string> quarantineDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("registry"))
@@ -177,16 +175,6 @@ namespace Azure.Containers.ContainerRegistry
                                     readEnabled = property1.Value.GetBoolean();
                                     continue;
                                 }
-                                if (property1.NameEquals("quarantineState"))
-                                {
-                                    quarantineState = property1.Value.GetString();
-                                    continue;
-                                }
-                                if (property1.NameEquals("quarantineDetails"))
-                                {
-                                    quarantineDetails = property1.Value.GetString();
-                                    continue;
-                                }
                             }
                             continue;
                         }
@@ -194,7 +182,7 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new ArtifactManifestProperties(registry.Value, imageName.Value, digest, Optional.ToNullable(imageSize), createdTime, lastUpdateTime, Optional.ToNullable(architecture), Optional.ToNullable(os), Optional.ToList(references), Optional.ToList(tags), Optional.ToNullable(deleteEnabled), Optional.ToNullable(writeEnabled), Optional.ToNullable(listEnabled), Optional.ToNullable(readEnabled), quarantineState.Value, quarantineDetails.Value);
+            return new ArtifactManifestProperties(registry.Value, imageName.Value, digest, Optional.ToNullable(imageSize), createdTime, lastUpdateTime, Optional.ToNullable(architecture), Optional.ToNullable(os), Optional.ToList(references), Optional.ToList(tags), Optional.ToNullable(deleteEnabled), Optional.ToNullable(writeEnabled), Optional.ToNullable(listEnabled), Optional.ToNullable(readEnabled));
         }
     }
 }

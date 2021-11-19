@@ -49,7 +49,10 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// <param name="peerExpressRouteCircuit">Identifier of the
         /// ExpressRoute Circuit to peer with in the global reach
         /// connection</param>
-        public GlobalReachConnection(string id = default(string), string name = default(string), string type = default(string), string provisioningState = default(string), string addressPrefix = default(string), string authorizationKey = default(string), string circuitConnectionStatus = default(string), string peerExpressRouteCircuit = default(string))
+        /// <param name="expressRouteId">The ID of the Private Cloud's
+        /// ExpressRoute Circuit that is participating in the global reach
+        /// connection</param>
+        public GlobalReachConnection(string id = default(string), string name = default(string), string type = default(string), string provisioningState = default(string), string addressPrefix = default(string), string authorizationKey = default(string), string circuitConnectionStatus = default(string), string peerExpressRouteCircuit = default(string), string expressRouteId = default(string))
             : base(id, name, type)
         {
             ProvisioningState = provisioningState;
@@ -57,6 +60,7 @@ namespace Microsoft.Azure.Management.Avs.Models
             AuthorizationKey = authorizationKey;
             CircuitConnectionStatus = circuitConnectionStatus;
             PeerExpressRouteCircuit = peerExpressRouteCircuit;
+            ExpressRouteId = expressRouteId;
             CustomInit();
         }
 
@@ -100,6 +104,13 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.peerExpressRouteCircuit")]
         public string PeerExpressRouteCircuit { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ID of the Private Cloud's ExpressRoute Circuit
+        /// that is participating in the global reach connection
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.expressRouteId")]
+        public string ExpressRouteId { get; set; }
 
     }
 }

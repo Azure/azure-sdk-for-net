@@ -40,7 +40,7 @@ A configuration is returned for the user. Each configuration consists of a URL f
 Every relay configuration has an expiry date and time stamped on it, indicating when the set of TURN credentials will no longer be accepted. Once the credentials have expired, you can renew the token by calling the same method.
 
 ```C# Snippet:GetRelayConfiguration
-Response<CommunicationRelayConfiguration> relayConfiguration = client.GetRelayConfiguration(user);
+Response<CommunicationRelayConfiguration> relayConfiguration = client.GetRelayConfiguration();
 DateTimeOffset turnTokenExpiresOn = relayConfiguration.Value.ExpiresOn;
 IReadOnlyList<CommunicationIceServer> iceServers = relayConfiguration.Value.IceServers;
 Console.WriteLine($"Expires On: {turnTokenExpiresOn}");
@@ -52,6 +52,7 @@ foreach (CommunicationIceServer iceServer in iceServers)
     }
     Console.WriteLine($"ICE Server Username: {iceServer.Username}");
     Console.WriteLine($"ICE Server Credential: {iceServer.Credential}");
+    Console.WriteLine($"ICE Server RouteType: {iceServer.RouteType}");
 }
 ```
 

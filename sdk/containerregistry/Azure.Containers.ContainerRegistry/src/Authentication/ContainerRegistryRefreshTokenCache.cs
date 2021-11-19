@@ -220,11 +220,13 @@ namespace Azure.Containers.ContainerRegistry
 
         private async ValueTask<RefreshTokenInfo> GetRefreshTokenFromCredentialAsync(TokenRequestContext context, string service, bool async, CancellationToken cancellationToken)
         {
-            AccessToken aadAccessToken = async ? await _aadTokenCredential.GetTokenAsync(context, cancellationToken).ConfigureAwait(false) :
+            AccessToken aadAccessToken = async ?
+                await _aadTokenCredential.GetTokenAsync(context, cancellationToken).ConfigureAwait(false) :
                 _aadTokenCredential.GetToken(context, cancellationToken);
 
-            AcrRefreshToken acrRefreshToken = async ? await _authenticationRestClient.ExchangeAadAccessTokenForAcrRefreshTokenAsync(service, aadAccessToken.Token, cancellationToken).ConfigureAwait(false) :
-                _authenticationRestClient.ExchangeAadAccessTokenForAcrRefreshToken(service, aadAccessToken.Token, cancellationToken);
+            AcrRefreshToken acrRefreshToken = async ?
+                await _authenticationRestClient.ExchangeAadAccessTokenForAcrRefreshTokenAsync(PostContentSchemaGrantType.AccessToken, service, null, null, aadAccessToken.Token, cancellationToken).ConfigureAwait(false) :
+                _authenticationRestClient.ExchangeAadAccessTokenForAcrRefreshToken(PostContentSchemaGrantType.AccessToken, service, null, null, aadAccessToken.Token, cancellationToken);
 
             DateTimeOffset expiresOn = GetTokenExpiryTime(acrRefreshToken);
 
