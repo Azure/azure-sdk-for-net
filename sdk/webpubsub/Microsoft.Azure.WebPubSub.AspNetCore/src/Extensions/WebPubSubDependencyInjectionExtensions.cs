@@ -58,7 +58,7 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <typeparam name="THub">User implemented <see cref="WebPubSubHub"/>.</typeparam>
         /// <param name="builder">The <see cref="IWebPubSubServerBuilder"/>.</param>
         /// <returns>The same instance of the <see cref="IWebPubSubServerBuilder"/>.</returns>
-        public static IWebPubSubServerBuilder AddServiceHub<THub>(this IWebPubSubServerBuilder builder) where THub : WebPubSubHub
+        public static IWebPubSubServerBuilder AddWebPubSubServiceClient<THub>(this IWebPubSubServerBuilder builder) where THub : WebPubSubHub
         {
             builder.Services.AddSingleton(typeof(WebPubSubServiceClient<THub>), sp =>
             {

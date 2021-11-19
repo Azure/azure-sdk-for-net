@@ -21,7 +21,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             var services = new ServiceCollection();
             var serviceProvider = services
                 .AddWebPubSub(o => o.ServiceEndpoint = new ServiceEndpoint($"Endpoint=https://{testHost};AccessKey=7aab239577fd4f24bc919802fb629f5f;Version=1.0;"))
-                .AddServiceHub<TestHub>()
+                .AddWebPubSubServiceClient<TestHub>()
                 .Services.BuildServiceProvider();
             var wpsOptions = serviceProvider.GetRequiredService<IOptions<WebPubSubOptions>>().Value;
 
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
         {
             var serviceProvider = new ServiceCollection()
                 .AddWebPubSub()
-                .AddServiceHub<TestHub>()
+                .AddWebPubSubServiceClient<TestHub>()
                 .Services
                 .BuildServiceProvider();
             var clientFactory = serviceProvider.GetRequiredService<WebPubSubServiceClientFactory>();

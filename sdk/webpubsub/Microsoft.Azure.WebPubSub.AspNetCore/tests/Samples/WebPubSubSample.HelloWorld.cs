@@ -18,7 +18,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests.Samples
             services.AddWebPubSub(o =>
             {
                 o.ServiceEndpoint = new("<connection-string>");
-            }).AddServiceHub<SampleHub>();
+            }).AddWebPubSubServiceClient<SampleHub>();
         }
         #endregion
 
