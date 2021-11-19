@@ -1,5 +1,5 @@
 param (
-  [string]$TargetDirectory, # Code path to code owners. e.g sdk/core/azure-amqp
+  [string]$TargetDirectory = "", # Code path to code owners. e.g sdk/core/azure-amqp
   [string]$RootDirectory = "$env:SYSTEM_DEFAULTWORKINGDIRECTORY", # The repo contains CODEOWNER file.
   [string]$CodeOwnerFileLocation = "$PSSCriptRoot/../../../.github/CODEOWNERS", # The absolute path of CODEOWNERS file. 
   [string]$ToolVersion = "1.0.0-dev.20211118.20", # Placeholder. Will update in next PR
