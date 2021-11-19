@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.TextAnalytics.Models;
@@ -121,17 +122,20 @@ namespace Azure.AI.TextAnalytics
         /// <param name="client">The client used to check for completion.</param>
         public AnalyzeHealthcareEntitiesOperation(string operationId, TextAnalyticsClient client)
         {
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+            Argument.AssertNotNull(client, nameof(client));
+
             try
             {
-                OperationIdInformation idInformation = OperationIdInformation.Decode(operationId);
+                OperationContinuationToken token = OperationContinuationToken.Deserialize(operationId);
 
-                _jobId = idInformation.JobId;
-                _showStats = idInformation.ShowStats;
-                _idToIndexMap = idInformation.InputDocumentOrder;
+                _jobId = token.JobId;
+                _showStats = token.ShowStats;
+                _idToIndexMap = token.InputDocumentOrder;
             }
-            catch
+            catch (Exception e) when (e is JsonException || e is ArgumentException || e is FormatException)
             {
-                throw new ArgumentException($"Invalid value. Please use the {nameof(AnalyzeHealthcareEntitiesOperation)}.{nameof(Id)} property value.", nameof(operationId));
+                throw new ArgumentException($"Invalid value. Please use the {nameof(AnalyzeHealthcareEntitiesOperation)}.{nameof(Id)} property value.", nameof(operationId), e);
             }
 
             Id = operationId;
@@ -160,7 +164,7 @@ namespace Azure.AI.TextAnalytics
             // https://github.com/Azure/azure-sdk-for-net/issues/11505
             _jobId = operationLocation.Split('/').Last();
 
-            Id = OperationIdInformation.Encode(_jobId, idToIndexMap, showStats);
+            Id = OperationContinuationToken.Serialize(_jobId, idToIndexMap, showStats);
         }
 
         /// <summary>

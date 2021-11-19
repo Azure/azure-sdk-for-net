@@ -55,14 +55,14 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(documents, batchActions);
 
-            OperationIdInformation idInformation = OperationIdInformation.Decode(operation.Id);
+            OperationContinuationToken continuationToken = OperationContinuationToken.Deserialize(operation.Id);
 
-            Assert.IsNull(idInformation.ShowStats);
-            Assert.AreEqual("2a96a91f-7edf-4931-a880-3fdee1d56f15", idInformation.JobId);
-            Assert.AreEqual(3, idInformation.InputDocumentOrder.Count);
-            Assert.AreEqual(0, idInformation.InputDocumentOrder["0"]);
-            Assert.AreEqual(1, idInformation.InputDocumentOrder["1"]);
-            Assert.AreEqual(2, idInformation.InputDocumentOrder["2"]);
+            Assert.IsNull(continuationToken.ShowStats);
+            Assert.AreEqual("2a96a91f-7edf-4931-a880-3fdee1d56f15", continuationToken.JobId);
+            Assert.AreEqual(3, continuationToken.InputDocumentOrder.Count);
+            Assert.AreEqual(0, continuationToken.InputDocumentOrder["0"]);
+            Assert.AreEqual(1, continuationToken.InputDocumentOrder["1"]);
+            Assert.AreEqual(2, continuationToken.InputDocumentOrder["2"]);
         }
 
         [Test]
@@ -93,13 +93,13 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(documents, batchActions);
 
-            OperationIdInformation idInformation = OperationIdInformation.Decode(operation.Id);
+            OperationContinuationToken continuationToken = OperationContinuationToken.Deserialize(operation.Id);
 
-            Assert.IsNull(idInformation.ShowStats);
-            Assert.AreEqual("2a96a91f-7edf-4931-a880-3fdee1d56f15", idInformation.JobId);
-            Assert.AreEqual(2, idInformation.InputDocumentOrder.Count);
-            Assert.AreEqual(0, idInformation.InputDocumentOrder["134234"]);
-            Assert.AreEqual(1, idInformation.InputDocumentOrder["324232"]);
+            Assert.IsNull(continuationToken.ShowStats);
+            Assert.AreEqual("2a96a91f-7edf-4931-a880-3fdee1d56f15", continuationToken.JobId);
+            Assert.AreEqual(2, continuationToken.InputDocumentOrder.Count);
+            Assert.AreEqual(0, continuationToken.InputDocumentOrder["134234"]);
+            Assert.AreEqual(1, continuationToken.InputDocumentOrder["324232"]);
         }
 
         [Test]
@@ -113,7 +113,7 @@ namespace Azure.AI.TextAnalytics.Tests
             var client = CreateTestClient(mockTransport);
 
             var inputOrder = new Dictionary<string, int>(1) { { "0", 0 } };
-            string operationId = OperationIdInformation.Encode(jobId, inputOrder, true);
+            string operationId = OperationContinuationToken.Serialize(jobId, inputOrder, true);
 
             var operation = new AnalyzeActionsOperation(operationId, client);
             Assert.AreEqual(operationId, operation.Id);
@@ -147,13 +147,13 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(documents);
 
-            OperationIdInformation idInformation = OperationIdInformation.Decode(operation.Id);
+            OperationContinuationToken continuationToken = OperationContinuationToken.Deserialize(operation.Id);
 
-            Assert.IsFalse(idInformation.ShowStats);
-            Assert.AreEqual("2a96a91f-7edf-4931-a880-3fdee1d56f15", idInformation.JobId);
-            Assert.AreEqual(2, idInformation.InputDocumentOrder.Count);
-            Assert.AreEqual(0, idInformation.InputDocumentOrder["0"]);
-            Assert.AreEqual(1, idInformation.InputDocumentOrder["1"]);
+            Assert.IsFalse(continuationToken.ShowStats);
+            Assert.AreEqual("2a96a91f-7edf-4931-a880-3fdee1d56f15", continuationToken.JobId);
+            Assert.AreEqual(2, continuationToken.InputDocumentOrder.Count);
+            Assert.AreEqual(0, continuationToken.InputDocumentOrder["0"]);
+            Assert.AreEqual(1, continuationToken.InputDocumentOrder["1"]);
         }
 
         [Test]
@@ -179,13 +179,13 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(documents);
 
-            OperationIdInformation idInformation = OperationIdInformation.Decode(operation.Id);
+            OperationContinuationToken continuationToken = OperationContinuationToken.Deserialize(operation.Id);
 
-            Assert.IsFalse(idInformation.ShowStats);
-            Assert.AreEqual("2a96a91f-7edf-4931-a880-3fdee1d56f15", idInformation.JobId);
-            Assert.AreEqual(2, idInformation.InputDocumentOrder.Count);
-            Assert.AreEqual(0, idInformation.InputDocumentOrder["134234"]);
-            Assert.AreEqual(1, idInformation.InputDocumentOrder["324232"]);
+            Assert.IsFalse(continuationToken.ShowStats);
+            Assert.AreEqual("2a96a91f-7edf-4931-a880-3fdee1d56f15", continuationToken.JobId);
+            Assert.AreEqual(2, continuationToken.InputDocumentOrder.Count);
+            Assert.AreEqual(0, continuationToken.InputDocumentOrder["134234"]);
+            Assert.AreEqual(1, continuationToken.InputDocumentOrder["324232"]);
         }
 
         [Test]
@@ -199,7 +199,7 @@ namespace Azure.AI.TextAnalytics.Tests
             var client = CreateTestClient(mockTransport);
 
             var inputOrder = new Dictionary<string, int>(1) { { "0", 0 } };
-            string operationId = OperationIdInformation.Encode(jobId, inputOrder, true);
+            string operationId = OperationContinuationToken.Serialize(jobId, inputOrder, true);
 
             var operation = new AnalyzeHealthcareEntitiesOperation(operationId, client);
             Assert.AreEqual(operationId, operation.Id);

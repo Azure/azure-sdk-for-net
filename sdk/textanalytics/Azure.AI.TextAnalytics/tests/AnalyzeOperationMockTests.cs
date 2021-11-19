@@ -915,7 +915,7 @@ namespace Azure.AI.TextAnalytics.Tests
         private AnalyzeActionsOperation CreateOperation(TextAnalyticsClient client)
         {
             var inputOrder = new Dictionary<string, int>(1) { { "0", 0 } };
-            var operationId = OperationIdInformation.Encode("75d521bc-c2aa-4d8a-aabe-713e72d53a2d", inputOrder, null);
+            var operationId = OperationContinuationToken.Serialize("75d521bc-c2aa-4d8a-aabe-713e72d53a2d", inputOrder, null);
 
             return new AnalyzeActionsOperation(operationId, client);
         }
