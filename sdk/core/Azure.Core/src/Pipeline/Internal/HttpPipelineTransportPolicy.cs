@@ -22,7 +22,8 @@ namespace Azure.Core.Pipeline
 
             await _transport.ProcessAsync(message).ConfigureAwait(false);
 
-            message.Response.EvaluateError(message);
+            message.Response.IsError = message.ResponseClassifier.IsErrorResponse(message);
+            message.Response.ResponseClassifier = message.ResponseClassifier;
         }
 
         public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
@@ -31,7 +32,8 @@ namespace Azure.Core.Pipeline
 
             _transport.Process(message);
 
-            message.Response.EvaluateError(message);
+            message.Response.IsError = message.ResponseClassifier.IsErrorResponse(message);
+            message.Response.ResponseClassifier = message.ResponseClassifier;
         }
     }
 }

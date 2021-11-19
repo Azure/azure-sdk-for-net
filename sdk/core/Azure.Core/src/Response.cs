@@ -83,16 +83,12 @@ namespace Azure
         public abstract void Dispose();
 
         /// <summary>
+        /// Indicates whether the message's <see cref="ResponseClassifier"/> considers this
+        /// response an error.
         /// </summary>
         public bool IsError { get; internal set; }
 
         internal ResponseClassifier? ResponseClassifier { get; set; }
-
-        internal void EvaluateError(HttpMessage message)
-        {
-            IsError = message.ResponseClassifier.IsErrorResponse(message);
-            ResponseClassifier = message.ResponseClassifier;
-        }
 
         /// <summary>
         /// Returns header value if the header is stored in the collection. If header has multiple values they are going to be joined with a comma.

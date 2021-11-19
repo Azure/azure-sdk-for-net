@@ -88,8 +88,7 @@ namespace Azure.Core.Pipeline
 
             var sanitizer = new HttpMessageSanitizer(diagnostics.LoggedHeaderNames.ToArray(), diagnostics.LoggedQueryParameters.ToArray());
 
-            responseClassifier ??= new ResponseClassifier();
-            responseClassifier.MessageSanitizer = sanitizer;
+            responseClassifier ??= new ResponseClassifier() { MessageSanitizer = sanitizer };
 
             bool isDistributedTracingEnabled = options.Diagnostics.IsDistributedTracingEnabled;
 
