@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Tests.Samples
 
             #region Snippet:Create_NetworkInterface
             string nicName = vmName + "_nic";
-            NetworkInterfaceIPConfiguration nicIPConfig = new NetworkInterfaceIPConfiguration()
+            NetworkInterfaceIPConfigurationData nicIPConfig = new NetworkInterfaceIPConfigurationData()
             {
                 Name = "Primary",
                 Primary = true,
