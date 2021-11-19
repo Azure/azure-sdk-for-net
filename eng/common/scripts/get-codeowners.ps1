@@ -33,7 +33,8 @@ function InstallRetrieveCodeOwnersTool() {
   return Join-Path $ToolPath $ToolCommandName
 }
 
-function GetCodeOwners ([string] $Command) {
+function Get-CodeOwners ([string] $Command)
+{
   # Run code owner tools to retrieve code owners.
   if (!(Get-Command $Command -errorAction SilentlyContinue)) {
     Write-Error "The ToolCommandName tool is not properly installed. Please check your tool path. $ToolPath"
