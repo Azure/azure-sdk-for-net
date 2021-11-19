@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+
 using System;
 using Microsoft.Azure.WebPubSub.AspNetCore;
 
@@ -16,7 +17,7 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <param name="services">The <see cref="IServiceCollection"/>.</param>
         /// <param name="configure">A callback to configure the <see cref="WebPubSubOptions"/>.</param>
         /// <returns>The same instance of the <see cref="IServiceCollection"/>.</returns>
-        public static IServiceCollection AddWebPubSub(this IServiceCollection services, Action<WebPubSubOptions> configure)
+        public static IWebPubSubServerBuilder AddWebPubSub(this IServiceCollection services, Action<WebPubSubOptions> configure)
         {
             if (services == null)
             {
@@ -30,9 +31,9 @@ namespace Microsoft.Extensions.DependencyInjection
 
             services.Configure(configure);
 
-            services.AddWebPubSub();
+            var builder = services.AddWebPubSub();
 
-            return services;
+            return builder;
         }
 
         /// <summary>
@@ -40,15 +41,35 @@ namespace Microsoft.Extensions.DependencyInjection
         /// </summary>
         /// <param name="services">The <see cref="IServiceCollection"/>.</param>
         /// <returns>The same instance of the <see cref="IServiceCollection"/>.</returns>
-        public static IServiceCollection AddWebPubSub(this IServiceCollection services)
+        public static IWebPubSubServerBuilder AddWebPubSub(this IServiceCollection services)
         {
             if (services == null)
             {
                 throw new ArgumentNullException(nameof(services));
             }
 
-            return services.AddSingleton<ServiceRequestHandlerAdapter>()
-                .AddSingleton<WebPubSubMarkerService>();
+            services.AddSingleton<ServiceRequestHandlerAdapter>()
+                .AddSingleton<WebPubSubMarkerService>()
+                .AddSingleton<WebPubSubServiceClientFactory>();
+
+            var builder = new WebPubSubServerBuilder(services);
+            return builder;
+        }
+
+        /// <summary>
+        /// Adds the Web PubSub service clients to be able to inject in <see cref="WebPubSubHub"/> and invoke service.
+        /// </summary>
+        /// <typeparam name="THub">User implemented <see cref="WebPubSubHub"/>.</typeparam>
+        /// <param name="builder">The <see cref="IWebPubSubServerBuilder"/>.</param>
+        /// <returns>The same instance of the <see cref="IWebPubSubServerBuilder"/>.</returns>
+        public static IWebPubSubServerBuilder AddServiceHub<THub>(this IWebPubSubServerBuilder builder) where THub : WebPubSubHub
+        {
+            builder.Services.AddSingleton(typeof(WebPubSubServiceClient<THub>), sp =>
+            {
+                var factory = sp.GetRequiredService<WebPubSubServiceClientFactory>();
+                return factory.Create<THub>();
+            });
+            return builder;
         }
     }
 }

@@ -30,7 +30,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns>Deserialize <see cref="WebPubSubEventRequest"/></returns>
-        internal static async Task<WebPubSubEventRequest> ReadWebPubSubEventAsync(this HttpRequest request, WebPubSubValidationOptions options = null, CancellationToken cancellationToken = default)
+        internal static async Task<WebPubSubEventRequest> ReadWebPubSubEventAsync(this HttpRequest request, ValidationOptions options = null, CancellationToken cancellationToken = default)
         {
             if (request == null)
             {
@@ -118,7 +118,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
             return false;
         }
 
-        internal static bool IsValidSignature(this WebPubSubConnectionContext connectionContext, WebPubSubValidationOptions options)
+        internal static bool IsValidSignature(this WebPubSubConnectionContext connectionContext, ValidationOptions options)
         {
             // no options skip validation.
             if (options == null || !options.ContainsHost())
@@ -156,12 +156,10 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
             if (!string.IsNullOrEmpty(connectionStates))
             {
                 var states = new Dictionary<string, object>();
-                var parsedStates = Encoding.UTF8.GetString(Convert.FromBase64String(connectionStates));
-                var statesObj = JsonDocument.Parse(parsedStates);
+                var statesObj = JsonDocument.Parse(Convert.FromBase64String(connectionStates));
                 foreach (var item in statesObj.RootElement.EnumerateObject())
                 {
-                    // Use ToString() to set pure value without ValueKind.
-                    states.Add(item.Name, item.Value.ToString());
+                    states.Add(item.Name, item.Value);
                 }
                 return states;
             }

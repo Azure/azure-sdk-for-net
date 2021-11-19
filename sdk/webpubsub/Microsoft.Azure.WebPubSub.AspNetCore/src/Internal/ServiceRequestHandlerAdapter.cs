@@ -76,7 +76,8 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
 
             try
             {
-                var serviceRequest = await request.ReadWebPubSubEventAsync(_options.ValidationOptions, context.RequestAborted).ConfigureAwait(false);
+                var validationOptions = _options.ServiceEndpoint.GetValidationOptions();
+                var serviceRequest = await request.ReadWebPubSubEventAsync(validationOptions, context.RequestAborted).ConfigureAwait(false);
                 Log.StartToHandleRequest(_logger, serviceRequest.ConnectionContext);
 
                 switch (serviceRequest)

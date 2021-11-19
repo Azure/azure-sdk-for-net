@@ -4,13 +4,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Microsoft.Azure.WebPubSub.AspNetCore
 {
     /// <summary>
     /// Validation options when using Web PubSub service.
     /// </summary>
-    public class WebPubSubValidationOptions
+    internal class ValidationOptions
     {
         private const string EndpointPropertyName = "Endpoint";
         private const string AccessKeyPropertyName = "AccessKey";
@@ -23,7 +24,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         /// Init the ValidationOptions based on a set of allowed connection strings.
         /// </summary>
         /// <param name="connectionStrings">The upstream connection strings for validation.</param>
-        public WebPubSubValidationOptions(params string[] connectionStrings)
+        public ValidationOptions(params string[] connectionStrings)
         {
             foreach (var item in connectionStrings)
             {
@@ -40,7 +41,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         /// Init the ValidationOptions based on a set of allowed connection strings.
         /// </summary>
         /// <param name="connectionStrings">The upstream connection strings for validation.</param>
-        public WebPubSubValidationOptions(IEnumerable<string> connectionStrings)
+        public ValidationOptions(IEnumerable<string> connectionStrings)
             : this(connectionStrings.ToArray())
         {
         }
@@ -60,13 +61,17 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
             _hostKeyMappings.Add(host.Host, accessKey);
         }
 
-        internal bool ContainsHost()
+        public void Add(Uri endpoint)
         {
-            return _hostKeyMappings.Count > 0;
+            _hostKeyMappings.Add(endpoint.Host, null);
         }
 
-        internal bool ContainsHost(string host)
+        internal bool ContainsHost(string host = null)
         {
+            if (host == null)
+            {
+                return _hostKeyMappings.Count > 0;
+            }
             return _hostKeyMappings.ContainsKey(host);
         }
 
