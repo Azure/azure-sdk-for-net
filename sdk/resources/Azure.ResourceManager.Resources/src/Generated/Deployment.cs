@@ -190,9 +190,9 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> You can cancel a deployment only if the provisioningState is Accepted or Running. After the deployment is canceled, the provisioningState is set to Canceled. Canceling a template deployment stops the currently running template deployment and leaves the resources partially deployed. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> CancelAtScopeAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response> CancelAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Deployment.CancelAtScope");
+            using var scope = _clientDiagnostics.CreateScope("Deployment.Cancel");
             scope.Start();
             try
             {
@@ -208,9 +208,9 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> You can cancel a deployment only if the provisioningState is Accepted or Running. After the deployment is canceled, the provisioningState is set to Canceled. Canceling a template deployment stops the currently running template deployment and leaves the resources partially deployed. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response CancelAtScope(CancellationToken cancellationToken = default)
+        public virtual Response Cancel(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Deployment.CancelAtScope");
+            using var scope = _clientDiagnostics.CreateScope("Deployment.Cancel");
             scope.Start();
             try
             {
@@ -229,14 +229,14 @@ namespace Azure.ResourceManager.Resources
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<DeploymentValidateAtScopeOperation> ValidateAtScopeAsync(DeploymentInput parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<DeploymentValidateAtScopeOperation> ValidateAsync(DeploymentInput parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Deployment.ValidateAtScope");
+            using var scope = _clientDiagnostics.CreateScope("Deployment.Validate");
             scope.Start();
             try
             {
@@ -258,14 +258,14 @@ namespace Azure.ResourceManager.Resources
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual DeploymentValidateAtScopeOperation ValidateAtScope(DeploymentInput parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual DeploymentValidateAtScopeOperation Validate(DeploymentInput parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Deployment.ValidateAtScope");
+            using var scope = _clientDiagnostics.CreateScope("Deployment.Validate");
             scope.Start();
             try
             {
@@ -284,9 +284,9 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Exports the template used for specified deployment. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<DeploymentExportResult>> ExportTemplateAtScopeAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response<DeploymentExportResult>> ExportTemplateAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Deployment.ExportTemplateAtScope");
+            using var scope = _clientDiagnostics.CreateScope("Deployment.ExportTemplate");
             scope.Start();
             try
             {
@@ -302,9 +302,9 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Exports the template used for specified deployment. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DeploymentExportResult> ExportTemplateAtScope(CancellationToken cancellationToken = default)
+        public virtual Response<DeploymentExportResult> ExportTemplate(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Deployment.ExportTemplateAtScope");
+            using var scope = _clientDiagnostics.CreateScope("Deployment.ExportTemplate");
             scope.Start();
             try
             {
@@ -318,14 +318,18 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Returns changes that will be made by the deployment if executed at the scope of the resource group. </summary>
-        /// <param name="properties"> The deployment properties. </param>
+        /// <summary> Returns changes that will be made by the deployment if executed at the scope of the tenant group. </summary>
         /// <param name="location"> The location to store the deployment data. </param>
+        /// <param name="properties"> The deployment properties. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public async virtual Task<DeploymentWhatIfOperation> WhatIfAsync(DeploymentWhatIfProperties properties, string location = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="properties"/> is null. </exception>
+        public async virtual Task<DeploymentWhatIfAtTenantScopeOperation> WhatIfAsync(string location, DeploymentWhatIfProperties properties, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
             if (properties == null)
             {
                 throw new ArgumentNullException(nameof(properties));
@@ -335,10 +339,10 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                if (Id.Parent.ResourceType == ResourceGroup.ResourceType)
+                if (Id.Parent.ResourceType == Tenant.ResourceType)
                 {
-                    var response = await _deploymentsRestClient.WhatIfAsync(Id.ResourceGroupName, Id.Name, properties, location, cancellationToken).ConfigureAwait(false);
-                    var operation = new DeploymentWhatIfOperation(_clientDiagnostics, Pipeline, _deploymentsRestClient.CreateWhatIfRequest(Id.ResourceGroupName, Id.Name, properties, location).Request, response);
+                    var response = await _deploymentsRestClient.WhatIfAtTenantScopeAsync(Id.Name, location, properties, cancellationToken).ConfigureAwait(false);
+                    var operation = new DeploymentWhatIfAtTenantScopeOperation(_clientDiagnostics, Pipeline, _deploymentsRestClient.CreateWhatIfAtTenantScopeRequest(Id.Name, location, properties).Request, response);
                     if (waitForCompletion)
                         await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                     return operation;
@@ -346,7 +350,7 @@ namespace Azure.ResourceManager.Resources
                 else if (Id.Parent.ResourceType == ManagementGroup.ResourceType)
                 {
                     var response = await _deploymentsRestClient.WhatIfAtManagementGroupScopeAsync(Id.Parent.Name, Id.Name, location, properties, cancellationToken).ConfigureAwait(false);
-                    var operation = new DeploymentWhatIfOperation(_clientDiagnostics, Pipeline, _deploymentsRestClient.CreateWhatIfAtManagementGroupScopeRequest(Id.Parent.Name, Id.Name, location, properties).Request, response);
+                    var operation = new DeploymentWhatIfAtTenantScopeOperation(_clientDiagnostics, Pipeline, _deploymentsRestClient.CreateWhatIfAtManagementGroupScopeRequest(Id.Parent.Name, Id.Name, location, properties).Request, response);
                     if (waitForCompletion)
                         await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                     return operation;
@@ -354,15 +358,15 @@ namespace Azure.ResourceManager.Resources
                 else if (Id.Parent.ResourceType == Subscription.ResourceType)
                 {
                     var response = await _deploymentsRestClient.WhatIfAtSubscriptionScopeAsync(Id.Name, properties, location, cancellationToken).ConfigureAwait(false);
-                    var operation = new DeploymentWhatIfOperation(_clientDiagnostics, Pipeline, _deploymentsRestClient.CreateWhatIfAtSubscriptionScopeRequest(Id.Name, properties, location).Request, response);
+                    var operation = new DeploymentWhatIfAtTenantScopeOperation(_clientDiagnostics, Pipeline, _deploymentsRestClient.CreateWhatIfAtSubscriptionScopeRequest(Id.Name, properties, location).Request, response);
                     if (waitForCompletion)
                         await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                     return operation;
                 }
-                else if (Id.Parent.ResourceType == Tenant.ResourceType)
+                else if (Id.Parent.ResourceType == ResourceGroup.ResourceType)
                 {
-                    var response = await _deploymentsRestClient.WhatIfAtTenantScopeAsync(Id.Name, location, properties, cancellationToken).ConfigureAwait(false);
-                    var operation = new DeploymentWhatIfOperation(_clientDiagnostics, Pipeline, _deploymentsRestClient.CreateWhatIfAtTenantScopeRequest(Id.Name, location, properties).Request, response);
+                    var response = await _deploymentsRestClient.WhatIfAsync(Id.ResourceGroupName, Id.Name, properties, location, cancellationToken).ConfigureAwait(false);
+                    var operation = new DeploymentWhatIfAtTenantScopeOperation(_clientDiagnostics, Pipeline, _deploymentsRestClient.CreateWhatIfRequest(Id.ResourceGroupName, Id.Name, properties, location).Request, response);
                     if (waitForCompletion)
                         await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                     return operation;
@@ -379,14 +383,18 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Returns changes that will be made by the deployment if executed at the scope of the resource group. </summary>
-        /// <param name="properties"> The deployment properties. </param>
+        /// <summary> Returns changes that will be made by the deployment if executed at the scope of the tenant group. </summary>
         /// <param name="location"> The location to store the deployment data. </param>
+        /// <param name="properties"> The deployment properties. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public virtual DeploymentWhatIfOperation WhatIf(DeploymentWhatIfProperties properties, string location = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="properties"/> is null. </exception>
+        public virtual DeploymentWhatIfAtTenantScopeOperation WhatIf(string location, DeploymentWhatIfProperties properties, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
             if (properties == null)
             {
                 throw new ArgumentNullException(nameof(properties));
@@ -396,10 +404,10 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                if (Id.Parent.ResourceType == ResourceGroup.ResourceType)
+                if (Id.Parent.ResourceType == Tenant.ResourceType)
                 {
-                    var response = _deploymentsRestClient.WhatIf(Id.ResourceGroupName, Id.Name, properties, location, cancellationToken);
-                    var operation = new DeploymentWhatIfOperation(_clientDiagnostics, Pipeline, _deploymentsRestClient.CreateWhatIfRequest(Id.ResourceGroupName, Id.Name, properties, location).Request, response);
+                    var response = _deploymentsRestClient.WhatIfAtTenantScope(Id.Name, location, properties, cancellationToken);
+                    var operation = new DeploymentWhatIfAtTenantScopeOperation(_clientDiagnostics, Pipeline, _deploymentsRestClient.CreateWhatIfAtTenantScopeRequest(Id.Name, location, properties).Request, response);
                     if (waitForCompletion)
                         operation.WaitForCompletion(cancellationToken);
                     return operation;
@@ -407,7 +415,7 @@ namespace Azure.ResourceManager.Resources
                 else if (Id.Parent.ResourceType == ManagementGroup.ResourceType)
                 {
                     var response = _deploymentsRestClient.WhatIfAtManagementGroupScope(Id.Parent.Name, Id.Name, location, properties, cancellationToken);
-                    var operation = new DeploymentWhatIfOperation(_clientDiagnostics, Pipeline, _deploymentsRestClient.CreateWhatIfAtManagementGroupScopeRequest(Id.Parent.Name, Id.Name, location, properties).Request, response);
+                    var operation = new DeploymentWhatIfAtTenantScopeOperation(_clientDiagnostics, Pipeline, _deploymentsRestClient.CreateWhatIfAtManagementGroupScopeRequest(Id.Parent.Name, Id.Name, location, properties).Request, response);
                     if (waitForCompletion)
                         operation.WaitForCompletion(cancellationToken);
                     return operation;
@@ -415,15 +423,15 @@ namespace Azure.ResourceManager.Resources
                 else if (Id.Parent.ResourceType == Subscription.ResourceType)
                 {
                     var response = _deploymentsRestClient.WhatIfAtSubscriptionScope(Id.Name, properties, location, cancellationToken);
-                    var operation = new DeploymentWhatIfOperation(_clientDiagnostics, Pipeline, _deploymentsRestClient.CreateWhatIfAtSubscriptionScopeRequest(Id.Name, properties, location).Request, response);
+                    var operation = new DeploymentWhatIfAtTenantScopeOperation(_clientDiagnostics, Pipeline, _deploymentsRestClient.CreateWhatIfAtSubscriptionScopeRequest(Id.Name, properties, location).Request, response);
                     if (waitForCompletion)
                         operation.WaitForCompletion(cancellationToken);
                     return operation;
                 }
-                else if (Id.Parent.ResourceType == Tenant.ResourceType)
+                else if (Id.Parent.ResourceType == ResourceGroup.ResourceType)
                 {
-                    var response = _deploymentsRestClient.WhatIfAtTenantScope(Id.Name, location, properties, cancellationToken);
-                    var operation = new DeploymentWhatIfOperation(_clientDiagnostics, Pipeline, _deploymentsRestClient.CreateWhatIfAtTenantScopeRequest(Id.Name, location, properties).Request, response);
+                    var response = _deploymentsRestClient.WhatIf(Id.ResourceGroupName, Id.Name, properties, location, cancellationToken);
+                    var operation = new DeploymentWhatIfAtTenantScopeOperation(_clientDiagnostics, Pipeline, _deploymentsRestClient.CreateWhatIfRequest(Id.ResourceGroupName, Id.Name, properties, location).Request, response);
                     if (waitForCompletion)
                         operation.WaitForCompletion(cancellationToken);
                     return operation;
@@ -444,14 +452,14 @@ namespace Azure.ResourceManager.Resources
         /// <param name="operationId"> The ID of the operation to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public async virtual Task<Response<DeploymentOperation>> GetAtScopeDeploymentOperationAsync(string operationId, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<DeploymentOperation>> GetDeploymentOperationAsync(string operationId, CancellationToken cancellationToken = default)
         {
             if (operationId == null)
             {
                 throw new ArgumentNullException(nameof(operationId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Deployment.GetAtScopeDeploymentOperation");
+            using var scope = _clientDiagnostics.CreateScope("Deployment.GetDeploymentOperation");
             scope.Start();
             try
             {
@@ -469,14 +477,14 @@ namespace Azure.ResourceManager.Resources
         /// <param name="operationId"> The ID of the operation to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public virtual Response<DeploymentOperation> GetAtScopeDeploymentOperation(string operationId, CancellationToken cancellationToken = default)
+        public virtual Response<DeploymentOperation> GetDeploymentOperation(string operationId, CancellationToken cancellationToken = default)
         {
             if (operationId == null)
             {
                 throw new ArgumentNullException(nameof(operationId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Deployment.GetAtScopeDeploymentOperation");
+            using var scope = _clientDiagnostics.CreateScope("Deployment.GetDeploymentOperation");
             scope.Start();
             try
             {
@@ -494,11 +502,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DeploymentOperation" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DeploymentOperation> GetAtScopeDeploymentOperationsAsync(int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DeploymentOperation> GetDeploymentOperationsAsync(int? top = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<DeploymentOperation>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Deployment.GetAtScopeDeploymentOperations");
+                using var scope = _clientDiagnostics.CreateScope("Deployment.GetDeploymentOperations");
                 scope.Start();
                 try
                 {
@@ -513,7 +521,7 @@ namespace Azure.ResourceManager.Resources
             }
             async Task<Page<DeploymentOperation>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Deployment.GetAtScopeDeploymentOperations");
+                using var scope = _clientDiagnostics.CreateScope("Deployment.GetDeploymentOperations");
                 scope.Start();
                 try
                 {
@@ -533,11 +541,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DeploymentOperation" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DeploymentOperation> GetAtScopeDeploymentOperations(int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<DeploymentOperation> GetDeploymentOperations(int? top = null, CancellationToken cancellationToken = default)
         {
             Page<DeploymentOperation> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Deployment.GetAtScopeDeploymentOperations");
+                using var scope = _clientDiagnostics.CreateScope("Deployment.GetDeploymentOperations");
                 scope.Start();
                 try
                 {
@@ -552,7 +560,7 @@ namespace Azure.ResourceManager.Resources
             }
             Page<DeploymentOperation> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Deployment.GetAtScopeDeploymentOperations");
+                using var scope = _clientDiagnostics.CreateScope("Deployment.GetDeploymentOperations");
                 scope.Start();
                 try
                 {
@@ -570,9 +578,9 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Checks whether the deployment exists. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> CheckExistenceAtScopeAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response> CheckExistenceAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Deployment.CheckExistenceAtScope");
+            using var scope = _clientDiagnostics.CreateScope("Deployment.CheckExistence");
             scope.Start();
             try
             {
@@ -588,9 +596,9 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Checks whether the deployment exists. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response CheckExistenceAtScope(CancellationToken cancellationToken = default)
+        public virtual Response CheckExistence(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Deployment.CheckExistenceAtScope");
+            using var scope = _clientDiagnostics.CreateScope("Deployment.CheckExistence");
             scope.Start();
             try
             {

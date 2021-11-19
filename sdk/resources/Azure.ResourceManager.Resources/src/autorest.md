@@ -34,6 +34,18 @@ request-path-to-parent:
   /providers/Microsoft.Management/managementGroups/{groupId}/providers/Microsoft.Resources/deployments/{deploymentName}/whatIf: /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}
   /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deployments/{deploymentName}/whatIf: /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}
 
+override-operation-name:
+  DeploymentOperations_ListAtScope: GetDeploymentOperations
+  DeploymentOperations_GetAtScope: GetDeploymentOperation
+  Deployments_CancelAtScope: Cancel
+  Deployments_ValidateAtScope: Validate
+  Deployments_ExportTemplateAtScope: ExportTemplate
+  Deployments_WhatIf: WhatIf
+  Deployments_WhatIfAtManagementGroupScope: WhatIf
+  Deployments_WhatIfAtSubscriptionScope: WhatIf
+  Deployments_WhatIfAtTenantScope: WhatIf
+  Deployments_CheckExistenceAtScope: CheckExistence
+
 operation-groups-to-omit:
    Providers;ProviderResourceTypes;Resources;ResourceGroups;Tags;Subscriptions;Tenants
 directive:
