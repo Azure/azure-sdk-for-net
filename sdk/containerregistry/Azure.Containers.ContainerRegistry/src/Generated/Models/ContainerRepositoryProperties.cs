@@ -50,7 +50,8 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="canWrite"> Write enabled. </param>
         /// <param name="canList"> List enabled. </param>
         /// <param name="canRead"> Read enabled. </param>
-        internal ContainerRepositoryProperties(string registryLoginServer, string name, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, int manifestCount, int tagCount, bool? canDelete, bool? canWrite, bool? canList, bool? canRead)
+        /// <param name="teleportEnabled"> Enables Teleport functionality on new images in the repository improving Container startup performance. </param>
+        internal ContainerRepositoryProperties(string registryLoginServer, string name, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, int manifestCount, int tagCount, bool? canDelete, bool? canWrite, bool? canList, bool? canRead, bool? teleportEnabled)
         {
             RegistryLoginServer = registryLoginServer;
             Name = name;
@@ -62,6 +63,7 @@ namespace Azure.Containers.ContainerRegistry
             CanWrite = canWrite;
             CanList = canList;
             CanRead = canRead;
+            TeleportEnabled = teleportEnabled;
         }
 
         /// <summary> Registry login server name. This is likely to be similar to {registry-name}.azurecr.io. </summary>

@@ -210,11 +210,12 @@ var producer = new EventHubProducerClient(connectionString, eventHubName);
 
 try
 {
-    using EventDataBatch eventBatch = await producer.CreateBatchAsync();
+    using var eventBatch = await producer.CreateBatchAsync();
 
     for (var index = 0; index < 5; ++index)
     {
-        var eventData = new EventData($"Event #{ index }");
+        var eventBody = new BinaryData($"Event #{ index }");
+        var eventData = new EventData(eventBody);
 
         if (!eventBatch.TryAdd(eventData))
         {
@@ -285,11 +286,12 @@ try
         PartitionKey = "Any Value Will Do..."
     };
 
-    using EventDataBatch eventBatch = await producer.CreateBatchAsync(batchOptions);
+    using var eventBatch = await producer.CreateBatchAsync(batchOptions);
 
     for (var index = 0; index < 5; ++index)
     {
-        var eventData = new EventData($"Event #{ index }");
+        var eventBody = new BinaryData($"Event #{ index }");
+        var eventData = new EventData(eventBody);
 
         if (!eventBatch.TryAdd(eventData))
         {
@@ -362,11 +364,12 @@ try
         PartitionId = firstPartition
     };
 
-    using EventDataBatch eventBatch = await producer.CreateBatchAsync(batchOptions);
+    using var eventBatch = await producer.CreateBatchAsync(batchOptions);
 
     for (var index = 0; index < 5; ++index)
     {
-        var eventData = new EventData($"Event #{ index }");
+        var eventBody = new BinaryData($"Event #{ index }");
+        var eventData = new EventData(eventBody);
 
         if (!eventBatch.TryAdd(eventData))
         {

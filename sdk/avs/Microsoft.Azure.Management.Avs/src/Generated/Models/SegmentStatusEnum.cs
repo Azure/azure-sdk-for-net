@@ -16,7 +16,6 @@ namespace Microsoft.Azure.Management.Avs.Models
     /// </summary>
     public static class SegmentStatusEnum
     {
-        public const string SUCCESS = "SUCCESS";
-        public const string FAILURE = "FAILURE";
+        public const string SUCCESSFAILURE = "SUCCESS, FAILURE";
     }
 }

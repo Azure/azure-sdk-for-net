@@ -3,7 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Producer;
@@ -19,6 +19,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
     [TestFixture]
     [Category(TestCategory.Live)]
     [Category(TestCategory.DisallowVisualStudioLiveUnitTesting)]
+    [SuppressMessage("Style", "IDE0059:Unnecessary assignment of a value", Justification = "Example assignments needed for snippet output content.")]
     public class Sample04_PublishingEventsLiveTests
     {
         /// <summary>
@@ -44,9 +45,10 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             try
             {
-                using EventDataBatch eventBatch = await producer.CreateBatchAsync();
+                using var eventBatch = await producer.CreateBatchAsync();
 
-                var eventData = new EventData("This is an event body");
+                var eventBody = new BinaryData("This is an event body");
+                var eventData = new EventData(eventBody);
 
                 if (!eventBatch.TryAdd(eventData))
                 {
@@ -84,11 +86,12 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             try
             {
-                using EventDataBatch eventBatch = await producer.CreateBatchAsync();
+                using var eventBatch = await producer.CreateBatchAsync();
 
                 for (var index = 0; index < 5; ++index)
                 {
-                    var eventData = new EventData($"Event #{ index }");
+                    var eventBody = new BinaryData($"Event #{ index }");
+                    var eventData = new EventData(eventBody);
 
                     if (!eventBatch.TryAdd(eventData))
                     {
@@ -100,63 +103,6 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             }
             finally
             {
-                await producer.CloseAsync();
-            }
-
-            #endregion
-        }
-
-        /// <summary>
-        ///   Performs basic smoke test validation of the contained snippet.
-        /// </summary>
-        ///
-        [Test]
-        public async Task AutomaticRoutingBuffered()
-        {
-            await using var scope = await EventHubScope.CreateAsync(1);
-
-            #region Snippet:EventHubs_Sample04_AutomaticRoutingBuffered
-
-#if SNIPPET
-            var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
-            var eventHubName = "<< NAME OF THE EVENT HUB >>";
-#else
-            var connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            var eventHubName = scope.EventHubName;
-#endif
-
-            var producer = new EventHubBufferedProducerClient(connectionString, eventHubName);
-
-            // The failure handler is required and invoked after all allowable
-            // retries were applied.
-
-            producer.SendEventBatchFailedAsync += args =>
-            {
-                Debug.WriteLine($"Publishing failed for { args.EventBatch.Count } events.  Error: '{ args.Exception.Message }'");
-                return Task.CompletedTask;
-            };
-
-            // The success handler is optional.
-
-            producer.SendEventBatchSucceededAsync += args =>
-            {
-               Debug.WriteLine($"{ args.EventBatch.Count } events were published to partition: '{ args.PartitionId }.");
-               return Task.CompletedTask;
-            };
-
-            try
-            {
-                for (var index = 0; index < 5; ++index)
-                {
-                    var eventData = new EventData($"Event #{ index }");
-                    await producer.EnqueueEventAsync(eventData);
-                }
-            }
-            finally
-            {
-                // Closing the producer will flush any
-                // enqueued events that have not been published.
-
                 await producer.CloseAsync();
             }
 
@@ -191,11 +137,12 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                     PartitionKey = "Any Value Will Do..."
                 };
 
-                using EventDataBatch eventBatch = await producer.CreateBatchAsync(batchOptions);
+                using var eventBatch = await producer.CreateBatchAsync(batchOptions);
 
                 for (var index = 0; index < 5; ++index)
                 {
-                    var eventData = new EventData($"Event #{ index }");
+                    var eventBody = new BinaryData($"Event #{ index }");
+                    var eventData = new EventData(eventBody);
 
                     if (!eventBatch.TryAdd(eventData))
                     {
@@ -207,68 +154,6 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             }
             finally
             {
-                await producer.CloseAsync();
-            }
-
-            #endregion
-        }
-
-        /// <summary>
-        ///   Performs basic smoke test validation of the contained snippet.
-        /// </summary>
-        ///
-        [Test]
-        public async Task PartitionKeyBuffered()
-        {
-            await using var scope = await EventHubScope.CreateAsync(1);
-
-            #region Snippet:EventHubs_Sample04_PartitionKeyBuffered
-
-#if SNIPPET
-            var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
-            var eventHubName = "<< NAME OF THE EVENT HUB >>";
-#else
-            var connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            var eventHubName = scope.EventHubName;
-#endif
-
-            var producer = new EventHubBufferedProducerClient(connectionString, eventHubName);
-
-            // The failure handler is required and invoked after all allowable
-            // retries were applied.
-
-            producer.SendEventBatchFailedAsync += args =>
-            {
-                Debug.WriteLine($"Publishing failed for { args.EventBatch.Count } events.  Error: '{ args.Exception.Message }'");
-                return Task.CompletedTask;
-            };
-
-            // The success handler is optional.
-
-            producer.SendEventBatchSucceededAsync += args =>
-            {
-               Debug.WriteLine($"{ args.EventBatch.Count } events were published to partition: '{ args.PartitionId }.");
-               return Task.CompletedTask;
-            };
-
-            try
-            {
-                var enqueueOptions = new EnqueueEventOptions
-                {
-                    PartitionKey = "Any Value Will Do..."
-                };
-
-                for (var index = 0; index < 5; ++index)
-                {
-                    var eventData = new EventData($"Event #{ index }");
-                    await producer.EnqueueEventAsync(eventData, enqueueOptions);
-                }
-            }
-            finally
-            {
-                // Closing the producer will flush any
-                // enqueued events that have not been published.
-
                 await producer.CloseAsync();
             }
 
@@ -305,11 +190,12 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                     PartitionId = firstPartition
                 };
 
-                using EventDataBatch eventBatch = await producer.CreateBatchAsync(batchOptions);
+                using var eventBatch = await producer.CreateBatchAsync(batchOptions);
 
                 for (var index = 0; index < 5; ++index)
                 {
-                    var eventData = new EventData($"Event #{ index }");
+                    var eventBody = new BinaryData($"Event #{ index }");
+                    var eventData = new EventData(eventBody);
 
                     if (!eventBatch.TryAdd(eventData))
                     {
@@ -321,70 +207,6 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             }
             finally
             {
-                await producer.CloseAsync();
-            }
-
-            #endregion
-        }
-
-        /// <summary>
-        ///   Performs basic smoke test validation of the contained snippet.
-        /// </summary>
-        ///
-        [Test]
-        public async Task PartitionIdBuffered()
-        {
-            await using var scope = await EventHubScope.CreateAsync(1);
-
-            #region Snippet:EventHubs_Sample04_PartitionIdBuffered
-
-#if SNIPPET
-            var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
-            var eventHubName = "<< NAME OF THE EVENT HUB >>";
-#else
-            var connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            var eventHubName = scope.EventHubName;
-#endif
-
-            var producer = new EventHubBufferedProducerClient(connectionString, eventHubName);
-
-            // The failure handler is required and invoked after all allowable
-            // retries were applied.
-
-            producer.SendEventBatchFailedAsync += args =>
-            {
-                Debug.WriteLine($"Publishing failed for { args.EventBatch.Count } events.  Error: '{ args.Exception.Message }'");
-                return Task.CompletedTask;
-            };
-
-            // The success handler is optional.
-
-            producer.SendEventBatchSucceededAsync += args =>
-            {
-               Debug.WriteLine($"{ args.EventBatch.Count } events were published to partition: '{ args.PartitionId }.");
-               return Task.CompletedTask;
-            };
-
-            try
-            {
-                string firstPartition = (await producer.GetPartitionIdsAsync()).First();
-
-                var enqueueOptions = new EnqueueEventOptions
-                {
-                    PartitionId = firstPartition
-                };
-
-                for (var index = 0; index < 5; ++index)
-                {
-                    var eventData = new EventData($"Event #{ index }");
-                    await producer.EnqueueEventAsync(eventData, enqueueOptions);
-                }
-            }
-            finally
-            {
-                // Closing the producer will flush any
-                // enqueued events that have not been published.
-
                 await producer.CloseAsync();
             }
 
@@ -410,121 +232,38 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var eventHubName = scope.EventHubName;
 #endif
 
-            var producer = new EventHubBufferedProducerClient(connectionString, eventHubName);
-
-            // The failure handler is required and invoked after all allowable
-            // retries were applied.
-
-            producer.SendEventBatchFailedAsync += args =>
-            {
-                Debug.WriteLine($"Publishing failed for { args.EventBatch.Count } events.  Error: '{ args.Exception.Message }'");
-                return Task.CompletedTask;
-            };
-
-            // The success handler is optional.
-
-            producer.SendEventBatchSucceededAsync += args =>
-            {
-               Debug.WriteLine($"{ args.EventBatch.Count } events were published to partition: '{ args.PartitionId }.");
-               return Task.CompletedTask;
-            };
+            var producer = new EventHubProducerClient(connectionString, eventHubName);
 
             try
             {
-                var eventData = new EventData("Hello, Event Hubs!")
-                {
-                   MessageId = "H1",
-                   ContentType = "application/json"
-                };
+                using var eventBatch = await producer.CreateBatchAsync();
 
+                var eventBody = new BinaryData("Hello, Event Hubs!");
+                var eventData = new EventData(eventBody);
                 eventData.Properties.Add("EventType", "com.microsoft.samples.hello-event");
                 eventData.Properties.Add("priority", 1);
                 eventData.Properties.Add("score", 9.0);
 
-                await producer.EnqueueEventAsync(eventData);
-
-                eventData = new EventData("Goodbye, Event Hubs!")
+                if (!eventBatch.TryAdd(eventData))
                 {
-                   MessageId = "G1",
-                   ContentType = "application/json"
-                };
+                    throw new Exception("The first event could not be added.");
+                }
 
+                eventBody = new BinaryData("Goodbye, Event Hubs!");
+                eventData = new EventData(eventBody);
                 eventData.Properties.Add("EventType", "com.microsoft.samples.goodbye-event");
                 eventData.Properties.Add("priority", "17");
                 eventData.Properties.Add("blob", true);
 
-                await producer.EnqueueEventAsync(eventData);
-            }
-            finally
-            {
-                // Closing the producer will flush any
-                // enqueued events that have not been published.
-
-                await producer.CloseAsync();
-            }
-
-            #endregion
-        }
-
-        /// <summary>
-        ///   Performs basic smoke test validation of the contained snippet.
-        /// </summary>
-        ///
-        [Test]
-        public async Task BufferedConfiguration()
-        {
-            await using var scope = await EventHubScope.CreateAsync(1);
-
-            #region Snippet:EventHubs_Sample04_BufferedConfiguration
-
-#if SNIPPET
-            var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
-            var eventHubName = "<< NAME OF THE EVENT HUB >>";
-#else
-            var connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            var eventHubName = scope.EventHubName;
-#endif
-
-            var options = new EventHubBufferedProducerClientOptions
-            {
-                MaximumWaitTime = TimeSpan.FromSeconds(1),
-                MaximumConcurrentSends = 5,
-                MaximumConcurrentSendsPerPartition = 1,
-                MaximumEventBufferLengthPerPartition = 5000
-            };
-
-            var producer = new EventHubBufferedProducerClient(connectionString, eventHubName, options);
-
-            // The failure handler is required and invoked after all allowable
-            // retries were applied.
-
-            producer.SendEventBatchFailedAsync += args =>
-            {
-                Debug.WriteLine($"Publishing failed for { args.EventBatch.Count } events.  Error: '{ args.Exception.Message }'");
-                return Task.CompletedTask;
-            };
-
-            // The success handler is optional.
-
-            producer.SendEventBatchSucceededAsync += args =>
-            {
-               Debug.WriteLine($"{ args.EventBatch.Count } events were published to partition: '{ args.PartitionId }.");
-               return Task.CompletedTask;
-            };
-
-            try
-            {
-                for (var index = 0; index < 5; ++index)
+                if (!eventBatch.TryAdd(eventData))
                 {
-                    var eventData = new EventData($"Event #{ index }");
-                    await producer.EnqueueEventAsync(eventData);
+                    throw new Exception("The second event could not be added.");
                 }
+
+                await producer.SendAsync(eventBatch);
             }
             finally
             {
-                // Closing the producer will flush any
-                // enqueued events that have not been published.
-
                 await producer.CloseAsync();
             }
 
@@ -558,7 +297,9 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
                 for (var index = 0; index < 10; ++index)
                 {
-                    var eventData = new EventData("Hello, Event Hubs!");
+                    var eventBody = new BinaryData("Hello, Event Hubs!");
+                    var eventData = new EventData(eventBody);
+
                     eventsToSend.Add(eventData);
                 }
 
@@ -605,7 +346,6 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                 }
 
                 batches = await BuildBatchesAsync(eventsToSend, producer);
-
 #if !SNIPPET
                 batchEventCount = batches.Sum(batch => batch.Count);
 #endif
@@ -660,11 +400,12 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                     MaximumSizeInBytes = 350
                 };
 
-                using EventDataBatch eventBatch = await producer.CreateBatchAsync(batchOptions);
+                using var eventBatch = await producer.CreateBatchAsync(batchOptions);
 
                 for (var index = 0; index < 5; ++index)
                 {
-                    var eventData = new EventData($"Event #{ index }");
+                    var eventBody = new BinaryData($"Event #{ index }");
+                    var eventData = new EventData(eventBody);
 
                     if (!eventBatch.TryAdd(eventData))
                     {

@@ -29,13 +29,13 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             var dimensions = new Dictionary<string, string>()
             {
-                { "region", "Bengaluru" }
+                { "city", "Bengaluru" }
             };
             var groupKey1 = new DimensionKey(dimensions);
 
             dimensions = new Dictionary<string, string>()
             {
-                { "region", "Hong Kong" },
+                { "city", "Hong Kong" },
                 { "category", "Industrial & Scientific" }
             };
             var groupKey2 = new DimensionKey(dimensions);

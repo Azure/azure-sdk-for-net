@@ -21,5 +21,7 @@ namespace Azure.Containers.ContainerRegistry
 
         /// <summary> List of manifest attributes details. </summary>
         public IReadOnlyList<ArtifactManifestPlatform> References { get; }
+        /// <summary> Quarantine tag name. </summary>
+        public string QuarantineTag { get; }
     }
 }

@@ -16,8 +16,6 @@ namespace Microsoft.Azure.Management.Avs.Models
     /// </summary>
     public static class VMTypeEnum
     {
-        public const string REGULAR = "REGULAR";
-        public const string EDGE = "EDGE";
-        public const string SERVICE = "SERVICE";
+        public const string REGULAREDGESERVICE = "REGULAR, EDGE, SERVICE";
     }
 }

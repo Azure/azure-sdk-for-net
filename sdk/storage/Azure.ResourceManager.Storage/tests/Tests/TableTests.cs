@@ -7,12 +7,13 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.Storage.Models;
 using Azure.ResourceManager.Storage.Tests.Helpers;
 
-namespace Azure.ResourceManager.Storage.Tests
+namespace Azure.ResourceManager.Storage.Tests.Tests
 {
     public class TableTests : StorageTestBase
     {
         private ResourceGroup _resourceGroup;
         private StorageAccount _storageAccount;
+        private TableServiceCollection _tableServiceCollection;
         private TableService _tableService;
         private TableCollection _tableCollection;
         public TableTests(bool async) : base(async)
@@ -26,8 +27,8 @@ namespace Azure.ResourceManager.Storage.Tests
             string accountName = await CreateValidAccountNameAsync("teststoragemgmt");
             StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
             _storageAccount = (await storageAccountCollection.CreateOrUpdateAsync(accountName, GetDefaultStorageAccountParameters())).Value;
-            _tableService = _storageAccount.GetTableService();
-            _tableService = await _tableService.GetAsync();
+            _tableServiceCollection = _storageAccount.GetTableServices();
+            _tableService = await _tableServiceCollection.GetAsync("default");
             _tableCollection = _tableService.GetTables();
         }
 
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.Storage.Tests
             {
                 Cors = cors,
             };
-            _tableService = (await _tableService.CreateOrUpdateAsync(parameter)).Value;
+            _tableService = await _tableService.SetServicePropertiesAsync(parameter);
 
             //validate
             Assert.AreEqual(_tableService.Data.Cors.CorsRulesValue.Count, 1);

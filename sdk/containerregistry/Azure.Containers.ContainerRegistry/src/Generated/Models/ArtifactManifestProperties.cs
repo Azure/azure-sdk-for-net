@@ -48,7 +48,9 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="canWrite"> Write enabled. </param>
         /// <param name="canList"> List enabled. </param>
         /// <param name="canRead"> Read enabled. </param>
-        internal ArtifactManifestProperties(string registryLoginServer, string repositoryName, string digest, long? size, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, ArtifactArchitecture? architecture, ArtifactOperatingSystem? operatingSystem, IReadOnlyList<ArtifactManifestPlatform> relatedArtifacts, IReadOnlyList<string> tags, bool? canDelete, bool? canWrite, bool? canList, bool? canRead)
+        /// <param name="quarantineState"> Quarantine state. </param>
+        /// <param name="quarantineDetails"> Quarantine details. </param>
+        internal ArtifactManifestProperties(string registryLoginServer, string repositoryName, string digest, long? size, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, ArtifactArchitecture? architecture, ArtifactOperatingSystem? operatingSystem, IReadOnlyList<ArtifactManifestPlatform> relatedArtifacts, IReadOnlyList<string> tags, bool? canDelete, bool? canWrite, bool? canList, bool? canRead, string quarantineState, string quarantineDetails)
         {
             RegistryLoginServer = registryLoginServer;
             RepositoryName = repositoryName;
@@ -64,6 +66,8 @@ namespace Azure.Containers.ContainerRegistry
             CanWrite = canWrite;
             CanList = canList;
             CanRead = canRead;
+            QuarantineState = quarantineState;
+            QuarantineDetails = quarantineDetails;
         }
 
         /// <summary> Registry login server name. This is likely to be similar to {registry-name}.azurecr.io. </summary>

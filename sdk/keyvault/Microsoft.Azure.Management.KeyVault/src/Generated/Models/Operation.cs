@@ -39,15 +39,12 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// <param name="origin">The origin of operations.</param>
         /// <param name="serviceSpecification">One property of operation,
         /// include metric specifications.</param>
-        /// <param name="isDataAction">Property to specify whether the action
-        /// is a data action.</param>
-        public Operation(string name = default(string), OperationDisplay display = default(OperationDisplay), string origin = default(string), ServiceSpecification serviceSpecification = default(ServiceSpecification), bool? isDataAction = default(bool?))
+        public Operation(string name = default(string), OperationDisplay display = default(OperationDisplay), string origin = default(string), ServiceSpecification serviceSpecification = default(ServiceSpecification))
         {
             Name = name;
             Display = display;
             Origin = origin;
             ServiceSpecification = serviceSpecification;
-            IsDataAction = isDataAction;
             CustomInit();
         }
 
@@ -80,13 +77,6 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.serviceSpecification")]
         public ServiceSpecification ServiceSpecification { get; set; }
-
-        /// <summary>
-        /// Gets or sets property to specify whether the action is a data
-        /// action.
-        /// </summary>
-        [JsonProperty(PropertyName = "isDataAction")]
-        public bool? IsDataAction { get; set; }
 
     }
 }

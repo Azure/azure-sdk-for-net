@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider vmware/resource-manager -AutoRestVersion v2 -SpecsRepoBranch main
+Start-AutoRestCodeGeneration -ResourceProvider "vmware/resource-manager" -AutoRestVersion "v2" -SpecsRepoBranch "AVS/dotnet"

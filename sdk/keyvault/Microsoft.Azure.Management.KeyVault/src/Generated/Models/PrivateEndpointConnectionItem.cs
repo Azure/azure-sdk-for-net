@@ -34,9 +34,6 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// Initializes a new instance of the PrivateEndpointConnectionItem
         /// class.
         /// </summary>
-        /// <param name="id">Id of private endpoint connection.</param>
-        /// <param name="etag">Modified whenever there is a change in the state
-        /// of private endpoint connection.</param>
         /// <param name="privateEndpoint">Properties of the private endpoint
         /// object.</param>
         /// <param name="privateLinkServiceConnectionState">Approval state of
@@ -45,10 +42,8 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// endpoint connection. Possible values include: 'Succeeded',
         /// 'Creating', 'Updating', 'Deleting', 'Failed',
         /// 'Disconnected'</param>
-        public PrivateEndpointConnectionItem(string id = default(string), string etag = default(string), PrivateEndpoint privateEndpoint = default(PrivateEndpoint), PrivateLinkServiceConnectionState privateLinkServiceConnectionState = default(PrivateLinkServiceConnectionState), string provisioningState = default(string))
+        public PrivateEndpointConnectionItem(PrivateEndpoint privateEndpoint = default(PrivateEndpoint), PrivateLinkServiceConnectionState privateLinkServiceConnectionState = default(PrivateLinkServiceConnectionState), string provisioningState = default(string))
         {
-            Id = id;
-            Etag = etag;
             PrivateEndpoint = privateEndpoint;
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
             ProvisioningState = provisioningState;
@@ -59,19 +54,6 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets id of private endpoint connection.
-        /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
-
-        /// <summary>
-        /// Gets or sets modified whenever there is a change in the state of
-        /// private endpoint connection.
-        /// </summary>
-        [JsonProperty(PropertyName = "etag")]
-        public string Etag { get; set; }
 
         /// <summary>
         /// Gets or sets properties of the private endpoint object.

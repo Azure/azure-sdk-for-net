@@ -55,11 +55,6 @@ namespace Microsoft.Azure.Management.KeyVault
         public string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Client Api Version.
-        /// </summary>
-        public string ApiVersion { get; private set; }
-
-        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
@@ -78,11 +73,6 @@ namespace Microsoft.Azure.Management.KeyVault
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
-        /// Gets the IKeysOperations.
-        /// </summary>
-        public virtual IKeysOperations Keys { get; private set; }
-
-        /// <summary>
         /// Gets the IVaultsOperations.
         /// </summary>
         public virtual IVaultsOperations Vaults { get; private set; }
@@ -98,29 +88,14 @@ namespace Microsoft.Azure.Management.KeyVault
         public virtual IPrivateLinkResourcesOperations PrivateLinkResources { get; private set; }
 
         /// <summary>
-        /// Gets the IManagedHsmsOperations.
-        /// </summary>
-        public virtual IManagedHsmsOperations ManagedHsms { get; private set; }
-
-        /// <summary>
-        /// Gets the IMHSMPrivateEndpointConnectionsOperations.
-        /// </summary>
-        public virtual IMHSMPrivateEndpointConnectionsOperations MHSMPrivateEndpointConnections { get; private set; }
-
-        /// <summary>
-        /// Gets the IMHSMPrivateLinkResourcesOperations.
-        /// </summary>
-        public virtual IMHSMPrivateLinkResourcesOperations MHSMPrivateLinkResources { get; private set; }
-
-        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         public virtual IOperations Operations { get; private set; }
 
         /// <summary>
-        /// Gets the ISecretsOperations.
+        /// Gets the IManagedHsmsOperations.
         /// </summary>
-        public virtual ISecretsOperations Secrets { get; private set; }
+        public virtual IManagedHsmsOperations ManagedHsms { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the KeyVaultManagementClient class.
@@ -363,17 +338,12 @@ namespace Microsoft.Azure.Management.KeyVault
         /// </summary>
         private void Initialize()
         {
-            Keys = new KeysOperations(this);
             Vaults = new VaultsOperations(this);
             PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
             PrivateLinkResources = new PrivateLinkResourcesOperations(this);
-            ManagedHsms = new ManagedHsmsOperations(this);
-            MHSMPrivateEndpointConnections = new MHSMPrivateEndpointConnectionsOperations(this);
-            MHSMPrivateLinkResources = new MHSMPrivateLinkResourcesOperations(this);
             Operations = new Operations(this);
-            Secrets = new SecretsOperations(this);
+            ManagedHsms = new ManagedHsmsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2021-06-01-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

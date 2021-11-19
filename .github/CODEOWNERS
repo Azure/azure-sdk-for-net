@@ -327,7 +327,7 @@
 #/<NotInRepo>/            @madhurinms
 
 # PRLabel: %Iot
-/sdk/iot/                               @drwill-ms @timtay-microsoft @abhipsaMisra @azabbasi @jamdavi @andykwong-ms @brycewang-microsoft
+/sdk/iot/                               @drwill-ms @timtay-microsoft @abhipsaMisra @azabbasi @jamdavi @andykwong-ms
 
 # ServiceLabel: %IotCentral %Service Attention
 /sdk/iotcentral/Microsoft.Azure.Management.IotCentral/           @iluican @jlian
@@ -337,7 +337,7 @@
 
 # PRLabel: %IotHub
 # ServiceLabel: %IotHub %Service Attention
-/sdk/iothub/                            @drwill-ms @timtay-microsoft @abhipsaMisra @azabbasi @jamdavi @andykwong-ms @brycewang-microsoft
+/sdk/iothub/                            @drwill-ms @timtay-microsoft @abhipsaMisra @azabbasi @jamdavi @andykwong-ms
 
 # ServiceLabel: %IotHub %Service Attention
 /sdk/iothub/Microsoft.Azure.Management.IotHub/            @rkmanda @chieftn
@@ -584,10 +584,10 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 /sdk/storage/                                   @tg-msft
 
 # PRLabel: %Storage
-/sdk/storage/Azure.Storage.*/                   @amishra-dev @seanmcc-msft @amnguye @tg-msft
+/sdk/storage/Azure.Storage.*/                   @amishra-dev @seanmcc-msft @amnguye @kasobol-msft @tg-msft
 
 # PRLabel: %Storage
-/sdk/storage/Microsoft.Azure.WebJobs.*/         @amishra-dev @seanmcc-msft @amnguye @tg-msft @fabiocav @mathewc
+/sdk/storage/Microsoft.Azure.WebJobs.*/         @amishra-dev @seanmcc-msft @amnguye @kasobol-msft @tg-msft @fabiocav @mathewc
 
 # ServiceLabel: %Storage %Service Attention
 #/<NotInRepo>/                                   @xgithubtriage

@@ -50,7 +50,8 @@ StorageAccount storageAccount = accountCreateOperation.Value;
 Then we need to get the blob service, which is a singleton resource and the name is "default"
 
 ```C# Snippet:Managing_BlobContainers_GetBlobService
-BlobService blobService = storageAccount.GetBlobService();
+BlobServiceCollection blobServiceCollection = storageAccount.GetBlobServices();
+BlobService blobService =await blobServiceCollection.GetAsync("default");
 ```
 
 
@@ -61,7 +62,7 @@ Now that we have the blob service, we can manage the blob containers inside this
 ```C# Snippet:Managing_BlobContainers_CreateBlobContainer
 BlobContainerCollection blobContainerCollection = blobService.GetBlobContainers();
 string blobContainerName = "myBlobContainer";
-BlobContainerData blobContainerData = new BlobContainerData();
+BlobContainerData blobContainerData= new BlobContainerData();
 BlobContainerCreateOperation blobContainerCreateOperation = await blobContainerCollection.CreateOrUpdateAsync(blobContainerName, blobContainerData);
 BlobContainer blobContainer = blobContainerCreateOperation.Value;
 ```
@@ -81,7 +82,7 @@ await foreach (BlobContainer blobContainer in response)
 
 ```C# Snippet:Managing_BlobContainers_GetBlobContainer
 BlobContainerCollection blobContainerCollection = blobService.GetBlobContainers();
-BlobContainer blobContainer = await blobContainerCollection.GetAsync("myBlobContainer");
+BlobContainer blobContainer =await blobContainerCollection.GetAsync("myBlobContainer");
 Console.WriteLine(blobContainer.Id.Name);
 ```
 

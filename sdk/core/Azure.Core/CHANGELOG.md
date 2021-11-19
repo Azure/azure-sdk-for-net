@@ -10,7 +10,6 @@
 ```c#
 options.Diagnostics.LoggedQueryParameters.Remove("api-version");
 ```
-- Added `AddPolicies` method to `RequestContext`.  This allows policies to be added to the pipeline when calling protocol methods.
 
 ### Bugs Fixed
 

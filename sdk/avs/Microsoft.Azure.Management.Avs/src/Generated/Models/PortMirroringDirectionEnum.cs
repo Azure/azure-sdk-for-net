@@ -16,8 +16,6 @@ namespace Microsoft.Azure.Management.Avs.Models
     /// </summary>
     public static class PortMirroringDirectionEnum
     {
-        public const string INGRESS = "INGRESS";
-        public const string EGRESS = "EGRESS";
-        public const string BIDIRECTIONAL = "BIDIRECTIONAL";
+        public const string INGRESSEGRESSBIDIRECTIONAL = "INGRESS, EGRESS, BIDIRECTIONAL";
     }
 }

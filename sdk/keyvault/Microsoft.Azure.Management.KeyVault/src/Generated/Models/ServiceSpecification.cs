@@ -33,12 +33,9 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// </summary>
         /// <param name="logSpecifications">Log specifications of
         /// operation.</param>
-        /// <param name="metricSpecifications">Metric specifications of
-        /// operation.</param>
-        public ServiceSpecification(IList<LogSpecification> logSpecifications = default(IList<LogSpecification>), IList<MetricSpecification> metricSpecifications = default(IList<MetricSpecification>))
+        public ServiceSpecification(IList<LogSpecification> logSpecifications = default(IList<LogSpecification>))
         {
             LogSpecifications = logSpecifications;
-            MetricSpecifications = metricSpecifications;
             CustomInit();
         }
 
@@ -52,12 +49,6 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// </summary>
         [JsonProperty(PropertyName = "logSpecifications")]
         public IList<LogSpecification> LogSpecifications { get; set; }
-
-        /// <summary>
-        /// Gets or sets metric specifications of operation.
-        /// </summary>
-        [JsonProperty(PropertyName = "metricSpecifications")]
-        public IList<MetricSpecification> MetricSpecifications { get; set; }
 
     }
 }

@@ -35,6 +35,16 @@ namespace Azure.Containers.ContainerRegistry
                 writer.WritePropertyName("readEnabled");
                 writer.WriteBooleanValue(CanRead.Value);
             }
+            if (Optional.IsDefined(QuarantineState))
+            {
+                writer.WritePropertyName("quarantineState");
+                writer.WriteStringValue(QuarantineState);
+            }
+            if (Optional.IsDefined(QuarantineDetails))
+            {
+                writer.WritePropertyName("quarantineDetails");
+                writer.WriteStringValue(QuarantineDetails);
+            }
             writer.WriteEndObject();
         }
     }

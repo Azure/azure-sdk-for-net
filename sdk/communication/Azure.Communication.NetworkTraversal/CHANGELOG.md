@@ -1,13 +1,15 @@
 # Release History
 
-## 1.0.0-beta.3 (2021-11-18)
+## 1.0.0-beta.3 (Unreleased)
 
 ### Features Added
+- Making user identity an optional argument when calling GetRelayConfiguration and GetRelayConfigurationAsync
 
-- RouteType is a new added parameter that allows the user to specify the desired routing protocol for the 
-  requested RelayConfiguration
-- Introducing GetRelayConfigurationOptions which contains the optional parameters UserIdentity and RouteType
-  when calling the methods GetRelayConfiguration and GetRelayConfigurationAsync. 
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
 
 ## 1.0.0-beta.2 (2021-07-14)
 

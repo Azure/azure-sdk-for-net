@@ -71,10 +71,10 @@ namespace Microsoft.Azure.Management.Avs.Models
         public int? ClusterId { get; private set; }
 
         /// <summary>
-        /// Gets or sets the hosts
+        /// Gets the hosts
         /// </summary>
         [JsonProperty(PropertyName = "hosts")]
-        public IList<string> Hosts { get; set; }
+        public IList<string> Hosts { get; private set; }
 
     }
 }
