@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
@@ -60,7 +61,7 @@ namespace Azure.Storage.Blobs.Test
         public void SetUp()
         {
             _containerName = Recording.GetVariable(nameof(_containerName), _containerName);
-            _containerClient = GetServiceClient_OAuthAccount_SharedKey().GetBlobContainerClient(_containerName);
+            _containerClient = BlobsClientBuilder.GetServiceClient_OAuthAccount_SharedKey().GetBlobContainerClient(_containerName);
         }
 
         [OneTimeTearDown]
@@ -70,9 +71,9 @@ namespace Azure.Storage.Blobs.Test
             {
                 var configuration = TestConfigurations.DefaultTargetOAuthTenant;
                 var containerClient = new BlobServiceClient(
-                    new Uri(TestConfigOAuth.BlobServiceEndpoint),
-                    new StorageSharedKeyCredential(TestConfigOAuth.AccountName,
-                    TestConfigOAuth.AccountKey))
+                    new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint),
+                    new StorageSharedKeyCredential(Tenants.TestConfigOAuth.AccountName,
+                    Tenants.TestConfigOAuth.AccountKey))
                     .GetBlobContainerClient(_containerName);
                 await foreach (BlobItem blobItem in containerClient.GetBlobsAsync(BlobTraits.ImmutabilityPolicy | BlobTraits.LegalHold))
                 {
@@ -244,7 +245,7 @@ namespace Azure.Storage.Blobs.Test
             BlobBaseClient blob = await GetNewBlobClient(_containerClient, GetNewBlobName());
 
             BlobServiceClient sharedKeyServiceClient = InstrumentClient(
-                GetServiceClient_OAuthAccount_SharedKey());
+                BlobsClientBuilder.GetServiceClient_OAuthAccount_SharedKey());
             Uri serviceSasUri = sharedKeyServiceClient.GenerateAccountSasUri(
                 sasPermissions,
                 Recording.UtcNow.AddDays(1),
@@ -287,7 +288,7 @@ namespace Azure.Storage.Blobs.Test
             BlobBaseClient blob = await GetNewBlobClient(_containerClient, GetNewBlobName());
 
             BlobContainerClient sharedKeyContainer = InstrumentClient(
-                GetServiceClient_OAuthAccount_SharedKey().GetBlobContainerClient(_containerClient.Name));
+                BlobsClientBuilder.GetServiceClient_OAuthAccount_SharedKey().GetBlobContainerClient(_containerClient.Name));
             Uri containerSasUri = sharedKeyContainer.GenerateSasUri(sasPermissions, Recording.UtcNow.AddDays(1));
             BlobBaseClient sasBlobClient = InstrumentClient(new BlobContainerClient(containerSasUri, GetOptions()).GetBlobBaseClient(blob.Name));
 
@@ -325,7 +326,7 @@ namespace Azure.Storage.Blobs.Test
             BlobBaseClient blob = await GetNewBlobClient(_containerClient, GetNewBlobName());
 
             BlobBaseClient sharedKeyBlob = InstrumentClient(
-                GetServiceClient_OAuthAccount_SharedKey()
+                BlobsClientBuilder.GetServiceClient_OAuthAccount_SharedKey()
                     .GetBlobContainerClient(_containerClient.Name)
                     .GetBlobBaseClient(blob.Name));
             Uri blobSasUri = sharedKeyBlob.GenerateSasUri(sasPermissions, Recording.UtcNow.AddDays(1));
@@ -374,7 +375,7 @@ namespace Azure.Storage.Blobs.Test
                 Snapshot = snapshotResponse.Value.Snapshot
             };
             blobSasBuilder.SetPermissions(sasPermissions);
-            StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(TestConfigOAuth.AccountName, TestConfigOAuth.AccountKey);
+            StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(Tenants.TestConfigOAuth.AccountName, Tenants.TestConfigOAuth.AccountKey);
             BlobUriBuilder uriBuilder = new BlobUriBuilder(blob.Uri)
             {
                 Snapshot = snapshotResponse.Value.Snapshot,
@@ -432,7 +433,7 @@ namespace Azure.Storage.Blobs.Test
                 Version = metadataResponse.Value.VersionId
             };
             blobSasBuilder.SetPermissions(sasPermissions);
-            StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(TestConfigOAuth.AccountName, TestConfigOAuth.AccountKey);
+            StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(Tenants.TestConfigOAuth.AccountName, Tenants.TestConfigOAuth.AccountKey);
             BlobUriBuilder uriBuilder = new BlobUriBuilder(blob.Uri)
             {
                 VersionId = metadataResponse.Value.VersionId,

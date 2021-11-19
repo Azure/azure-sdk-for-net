@@ -253,7 +253,7 @@ To see the full example source files, see:
 
 [businessCard_fields]: https://aka.ms/azsdk/formrecognizer/businesscardfieldschema
 [idDocument_fields]: https://aka.ms/azsdk/formrecognizer/iddocumentfieldschema
-[invoice_fieds]: https://aka.ms/azsdk/formrecognizer/invoicefieldschema
+[invoice_fields]: https://aka.ms/azsdk/formrecognizer/invoicefieldschema
 [receipt_fields]: https://aka.ms/azsdk/formrecognizer/receiptfieldschema
 
 [formreco_models]: https://aka.ms/azsdk/formrecognizer/models

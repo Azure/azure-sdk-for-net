@@ -35,7 +35,8 @@ namespace Azure.ResourceManager.Tests
         [SyncOnly]
         public void ConstructWithInvalidSubscription()
         {
-            var ex = Assert.Throws<RequestFailedException>(() => new ArmClient(Guid.NewGuid().ToString(), TestEnvironment.Credential));
+            var client = new ArmClient(Guid.NewGuid().ToString(), TestEnvironment.Credential);
+            var ex = Assert.Throws<RequestFailedException>(() => client.GetDefaultSubscription());
             Assert.AreEqual(404, ex.Status);
         }
 
@@ -215,6 +216,7 @@ namespace Azure.ResourceManager.Tests
         private static ReadOnlyMemory<HttpPipelinePolicy> GetPoliciesFromPipeline(HttpPipeline pipeline)
         {
             var policyField = pipeline.GetType().GetField("_pipeline", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.GetField);
+            policyField ??= pipeline.GetType().BaseType.GetField("_pipeline", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.GetField);
             return (ReadOnlyMemory<HttpPipelinePolicy>)policyField.GetValue(pipeline);
         }
     }

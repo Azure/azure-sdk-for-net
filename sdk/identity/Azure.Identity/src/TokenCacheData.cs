@@ -11,8 +11,17 @@ namespace Azure.Identity
     public struct TokenCacheData
     {
         /// <summary>
+        /// Constructs a new <see cref="TokenCacheData"/> instance with the specified cache bytes.
+        /// </summary>
+        /// <param name="cacheBytes">The serialized content of the token cache.</param>
+        public TokenCacheData(ReadOnlyMemory<byte> cacheBytes)
+        {
+            CacheBytes = cacheBytes;
+        }
+
+        /// <summary>
         /// The bytes representing the state of the token cache.
         /// </summary>
-        public ReadOnlyMemory<byte> CacheBytes { get; set; }
+        public ReadOnlyMemory<byte> CacheBytes { get; }
     }
 }

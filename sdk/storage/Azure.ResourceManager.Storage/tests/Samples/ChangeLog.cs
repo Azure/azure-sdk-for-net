@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
 string accountName = "myaccount";
 string resourceGroupName = "myResourceGroup";
 ArmClient client = new ArmClient(new DefaultAzureCredential());
-ResourceGroup resourceGroup = client.DefaultSubscription.GetResourceGroups().Get(resourceGroupName);
-StorageAccountContainer storageAccountContainer = resourceGroup.GetStorageAccounts();
+ResourceGroup resourceGroup = client.GetDefaultSubscription().GetResourceGroups().Get(resourceGroupName);
+StorageAccountCollection storageAccountCollection = resourceGroup.GetStorageAccounts();
 Sku sku = new Sku(SkuName.PremiumLRS);
 StorageAccountCreateParameters parameters = new StorageAccountCreateParameters(new Sku(SkuName.StandardGRS), Kind.Storage, Location.WestUS);
 parameters.Tags.Add("key1", "value1");
 parameters.Tags.Add("key2", "value2");
-StorageAccount account = storageAccountContainer.CreateOrUpdate(accountName, parameters).Value;
+StorageAccount account = storageAccountCollection.CreateOrUpdate(accountName, parameters).Value;
             #endregion
         }
     }

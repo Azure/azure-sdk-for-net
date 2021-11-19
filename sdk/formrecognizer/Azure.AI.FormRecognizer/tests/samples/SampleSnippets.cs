@@ -31,7 +31,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
         }
 
         [Test]
-        [Ignore("AAD not working yet")]
         public void CreateDocumentAnalysisClientTokenCredential()
         {
             #region Snippet:CreateDocumentAnalysisClientTokenCredential

@@ -87,11 +87,11 @@ namespace Azure.Storage.Blobs.Test
         public void Ctor_TokenAuth_Http()
         {
             // Arrange
-            Uri httpUri = new Uri(TestConfigOAuth.BlobServiceEndpoint).ToHttp();
+            Uri httpUri = new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint).ToHttp();
 
             // Act
             TestHelper.AssertExpectedException(
-                () => new PageBlobClient(httpUri, GetOAuthCredential()),
+                () => new PageBlobClient(httpUri, Tenants.GetOAuthCredential()),
                  new ArgumentException("Cannot use TokenCredential without HTTPS."));
         }
 
@@ -157,6 +157,8 @@ namespace Azure.Storage.Blobs.Test
             Response<BlobContentInfo> response = await blob.CreateAsync(Constants.KB);
 
             // Assert
+            // Ensure that we grab the whole ETag value from the service without removing the quotes
+            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
         }
 
@@ -503,22 +505,28 @@ namespace Azure.Storage.Blobs.Test
             PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
             var data = GetRandomBuffer(Constants.KB);
 
+            Response<PageInfo> response;
             using (var stream = new MemoryStream(data))
             {
                 // Act
-                await blob.UploadPagesAsync(
+                response = await blob.UploadPagesAsync(
                     content: stream,
                     offset: Constants.KB);
             }
 
             // Assert
+
+            // Ensure that we grab the whole ETag value from the service without removing the quotes
+            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+
+            // Ensure we uploaded the pages correctly by downloading and checking the content against the upload content
             var expectedData = new byte[4 * Constants.KB];
             data.CopyTo(expectedData, Constants.KB);
-            Response<BlobDownloadInfo> response = await blob.DownloadAsync(range: new HttpRange(0, 4 * Constants.KB));
+            Response<BlobDownloadInfo> downloadRepsonse = await blob.DownloadAsync(range: new HttpRange(0, 4 * Constants.KB));
 
             var actualData = new byte[4 * Constants.KB];
             using var actualStream = new MemoryStream(actualData);
-            await response.Value.Content.CopyToAsync(actualStream);
+            await downloadRepsonse.Value.Content.CopyToAsync(actualStream);
             TestHelper.AssertSequenceEqual(expectedData, actualData);
         }
 
@@ -911,9 +919,14 @@ namespace Azure.Storage.Blobs.Test
             }
 
             // Act
-            await blob.ClearPagesAsync(range: new HttpRange(Constants.KB, Constants.KB));
+            Response<PageInfo> response = await blob.ClearPagesAsync(range: new HttpRange(Constants.KB, Constants.KB));
 
             // Assert
+
+            // Ensure that we grab the whole ETag value from the service without removing the quotes
+            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+
+            // Ensure the correct pages are cleared by downloading the blob
             var expectedData = new byte[4 * Constants.KB];
             Array.Copy(data, expectedData, 4 * Constants.KB);
             Array.Clear(expectedData, Constants.KB, Constants.KB);
@@ -1112,6 +1125,10 @@ namespace Azure.Storage.Blobs.Test
             Response<PageRangesInfo> result = await blob.GetPageRangesAsync(range: new HttpRange(0, 4 * Constants.KB));
 
             // Assert
+
+            // Ensure that we grab the whole ETag value from the service without removing the quotes
+            Assert.AreEqual(result.Value.ETag.ToString(), $"\"{result.GetRawResponse().Headers.ETag.ToString()}\"");
+
             Assert.AreEqual(2, result.Value.PageRanges.Count());
             HttpRange range1 = result.Value.PageRanges.First();
             Assert.AreEqual(0, range1.Offset);
@@ -1371,6 +1388,10 @@ namespace Azure.Storage.Blobs.Test
                 prevSnapshot);
 
             // Assert
+
+            // Ensure that we grab the whole ETag value from the service without removing the quotes
+            Assert.AreEqual(result.Value.ETag.ToString(), $"\"{result.GetRawResponse().Headers.ETag.ToString()}\"");
+
             Assert.AreEqual(1, result.Value.PageRanges.Count());
             HttpRange range = result.Value.PageRanges.First();
 
@@ -1633,6 +1654,11 @@ namespace Azure.Storage.Blobs.Test
             Response<PageBlobInfo> result = await blob.ResizeAsync(size: newSize);
 
             // Assert
+
+            // Ensure that we grab the whole ETag value from the service without removing the quotes
+            Assert.AreEqual(result.Value.ETag.ToString(), $"\"{result.GetRawResponse().Headers.ETag.ToString()}\"");
+
+            // Ensure we correctly resized properly by doing a GetProperties call
             Response<BlobProperties> response = await blob.GetPropertiesAsync();
             Assert.AreEqual(newSize, response.Value.ContentLength);
         }
@@ -1849,13 +1875,18 @@ namespace Azure.Storage.Blobs.Test
             long sequenceAccessNumber = 5;
 
             // Act
-            await blob.UpdateSequenceNumberAsync(
+            Response<PageBlobInfo> response = await blob.UpdateSequenceNumberAsync(
                 action: SequenceNumberAction.Update,
                 sequenceNumber: sequenceAccessNumber);
 
             // Assert
-            Response<BlobProperties> response = await blob.GetPropertiesAsync();
-            Assert.AreEqual(sequenceAccessNumber, response.Value.BlobSequenceNumber);
+
+            // Ensure that we grab the whole ETag value from the service without removing the quotes
+            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+
+            // Ensure that the correct BlobSequence was set by doing a GetProperties
+            Response<BlobProperties> propertiesResponse = await blob.GetPropertiesAsync();
+            Assert.AreEqual(sequenceAccessNumber, propertiesResponse.Value.BlobSequenceNumber);
         }
 
         [RecordedTest]
@@ -2354,7 +2385,7 @@ namespace Azure.Storage.Blobs.Test
         [RecordedTest]
         public async Task StartCopyIncrementalAsync_AccessTier()
         {
-            BlobServiceClient premiumService = GetServiceClient_PremiumBlobAccount_SharedKey();
+            BlobServiceClient premiumService = BlobsClientBuilder.GetServiceClient_PremiumBlobAccount_SharedKey();
             await using DisposingContainer test = await GetTestContainerAsync(service: premiumService, premium: true);
             // Arrange
             var data = GetRandomBuffer(Constants.KB);
@@ -2394,7 +2425,7 @@ namespace Azure.Storage.Blobs.Test
         [RecordedTest]
         public async Task StartCopyIncrementalAsync_AccessTierFail()
         {
-            BlobServiceClient premiumService = GetServiceClient_PremiumBlobAccount_SharedKey();
+            BlobServiceClient premiumService = BlobsClientBuilder.GetServiceClient_PremiumBlobAccount_SharedKey();
             await using DisposingContainer test = await GetTestContainerAsync(service: premiumService, premium: true);
 
             // Arrange
@@ -2429,7 +2460,7 @@ namespace Azure.Storage.Blobs.Test
         [RecordedTest]
         public async Task SetTierAsync_AccessTier()
         {
-            BlobServiceClient premiumService = GetServiceClient_PremiumBlobAccount_SharedKey();
+            BlobServiceClient premiumService = BlobsClientBuilder.GetServiceClient_PremiumBlobAccount_SharedKey();
             await using DisposingContainer test = await GetTestContainerAsync(service: premiumService, premium: true);
 
             // Arrange
@@ -2446,7 +2477,7 @@ namespace Azure.Storage.Blobs.Test
         [RecordedTest]
         public async Task SetTierAsync_AccessTierFail()
         {
-            BlobServiceClient premiumService = GetServiceClient_PremiumBlobAccount_SharedKey();
+            BlobServiceClient premiumService = BlobsClientBuilder.GetServiceClient_PremiumBlobAccount_SharedKey();
             await using DisposingContainer test = await GetTestContainerAsync(service: premiumService, premium: true);
             // Arrange
             PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, Constants.KB);
@@ -2478,10 +2509,13 @@ namespace Azure.Storage.Blobs.Test
                 var range = new HttpRange(0, Constants.KB);
 
                 // Act
-                await destBlob.UploadPagesFromUriAsync(
+                Response<PageInfo> response = await destBlob.UploadPagesFromUriAsync(
                     sourceUri: sourceBlob.Uri,
                     sourceRange: range,
                     range: range);
+
+                // Ensure that we grab the whole ETag value from the service without removing the quotes
+                Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
             }
         }
 
@@ -2966,7 +3000,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task UploadPagesFromUriAsync_SourceBearerToken()
         {
             // Arrange
-            BlobServiceClient serviceClient = GetServiceClient_OauthAccount();
+            BlobServiceClient serviceClient = BlobsClientBuilder.GetServiceClient_OAuth();
             await using DisposingContainer test = await GetTestContainerAsync(
                 service: serviceClient,
                 publicAccessType: PublicAccessType.None);
@@ -3006,7 +3040,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task UploadPagesFromUriAsync_SourceBearerTokenFail()
         {
             // Arrange
-            BlobServiceClient serviceClient = GetServiceClient_OauthAccount();
+            BlobServiceClient serviceClient = BlobsClientBuilder.GetServiceClient_OAuth();
             await using DisposingContainer test = await GetTestContainerAsync(
                 service: serviceClient,
                 publicAccessType: PublicAccessType.None);
@@ -3342,7 +3376,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task OpenWriteAsync_Error()
         {
             // Arrange
-            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobServiceClient service = BlobsClientBuilder.GetServiceClient_SharedKey();
             BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
             PageBlobClient blob = InstrumentClient(container.GetPageBlobClient(GetNewBlobName()));
 
@@ -3663,9 +3697,9 @@ namespace Azure.Storage.Blobs.Test
             var mock = new Mock<PageBlobClient>(TestConfigDefault.ConnectionString, "name", "name", new BlobClientOptions()).Object;
             mock = new Mock<PageBlobClient>(TestConfigDefault.ConnectionString, "name", "name").Object;
             mock = new Mock<PageBlobClient>(new Uri("https://test/test"), new BlobClientOptions()).Object;
-            mock = new Mock<PageBlobClient>(new Uri("https://test/test"), GetNewSharedKeyCredentials(), new BlobClientOptions()).Object;
+            mock = new Mock<PageBlobClient>(new Uri("https://test/test"), Tenants.GetNewSharedKeyCredentials(), new BlobClientOptions()).Object;
             mock = new Mock<PageBlobClient>(new Uri("https://test/test"), new AzureSasCredential("foo"), new BlobClientOptions()).Object;
-            mock = new Mock<PageBlobClient>(new Uri("https://test/test"), GetOAuthCredential(TestConfigHierarchicalNamespace), new BlobClientOptions()).Object;
+            mock = new Mock<PageBlobClient>(new Uri("https://test/test"), Tenants.GetOAuthCredential(Tenants.TestConfigHierarchicalNamespace), new BlobClientOptions()).Object;
         }
 
         public static PageBlobRequestConditions BuildAccessConditions(

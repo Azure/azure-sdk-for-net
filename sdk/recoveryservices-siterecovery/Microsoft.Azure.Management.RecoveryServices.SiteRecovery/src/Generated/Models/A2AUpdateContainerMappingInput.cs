@@ -37,10 +37,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// 'Enabled'</param>
         /// <param name="automationAccountArmId">The automation account arm
         /// id.</param>
-        public A2AUpdateContainerMappingInput(string agentAutoUpdateStatus = default(string), string automationAccountArmId = default(string))
+        /// <param name="automationAccountAuthenticationType">A value
+        /// indicating the type authentication to use for automation Account.
+        /// Possible values include: 'RunAsAccount',
+        /// 'SystemAssignedIdentity'</param>
+        public A2AUpdateContainerMappingInput(string agentAutoUpdateStatus = default(string), string automationAccountArmId = default(string), string automationAccountAuthenticationType = default(string))
         {
             AgentAutoUpdateStatus = agentAutoUpdateStatus;
             AutomationAccountArmId = automationAccountArmId;
+            AutomationAccountAuthenticationType = automationAccountAuthenticationType;
             CustomInit();
         }
 
@@ -61,6 +66,14 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "automationAccountArmId")]
         public string AutomationAccountArmId { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating the type authentication to use for
+        /// automation Account. Possible values include: 'RunAsAccount',
+        /// 'SystemAssignedIdentity'
+        /// </summary>
+        [JsonProperty(PropertyName = "automationAccountAuthenticationType")]
+        public string AutomationAccountAuthenticationType { get; set; }
 
     }
 }

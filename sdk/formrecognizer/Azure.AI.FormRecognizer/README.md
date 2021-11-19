@@ -1,4 +1,5 @@
 # Azure Cognitive Services Form Recognizer client library for .NET
+
 Azure Cognitive Services Form Recognizer is a cloud service that uses machine learning to analyze text and structured data from your documents. It includes the following main features:
 
 - Layout - Extract text, selection marks, and table structures, along with their bounding region coordinates, from documents.
@@ -23,7 +24,7 @@ This table shows the relationship between SDK versions and supported API version
 
 |SDK version|Supported API version of service
 |-|-
-|4.0.0-beta.1 | 2.0, 2.1, 2021-09-30-preview
+|4.0.0-beta.X | 2.0, 2.1, 2021-09-30-preview
 |3.1.X        | 2.0, 2.1
 |3.0.X        | 2.0
 
@@ -37,17 +38,15 @@ This table shows the relationship between SDK versions and supported API version
 
 ### Prerequisites
 * An [Azure subscription][azure_sub].
-* An existing Cognitive Services or Form Recognizer resource.
+* A [Cognitive Services or Form Recognizer resource][cognitive_resource] to use this package.
 
 #### Create a Cognitive Services or Form Recognizer resource
 Form Recognizer supports both [multi-service and single-service access][cognitive_resource_portal]. Create a Cognitive Services resource if you plan to access multiple cognitive services under a single endpoint/key. For Form Recognizer access only, create a Form Recognizer resource. Please note that you will need a single-service resource if you intend to use [Azure Active Directory authentication](#create-formrecognizerclient-with-azure-active-directory-credential).
 
 You can create either resource using: 
 
-**Option 1:** [Azure Portal][cognitive_resource_portal].
-
-**Option 2:** [Azure CLI][cognitive_resource_cli]. 
-
+* Option 1: [Azure Portal][cognitive_resource_portal].
+* Option 2: [Azure CLI][cognitive_resource_cli]. 
 
 Below is an example of how you can create a Form Recognizer resource using the CLI:
 
@@ -60,8 +59,8 @@ az group create --name <your-resource-name> --location <location>
 ```PowerShell
 # Create form recognizer 
 az cognitiveservices account create \
-    --name <your-resource-name> \
-    --resource-group <your-resource-group-name> \
+    --name <resource-name> \
+    --resource-group <resource-group-name> \
     --kind FormRecognizer \
     --sku <sku> \
     --location <location> \
@@ -70,11 +69,19 @@ az cognitiveservices account create \
 For more information about creating the resource or how to get the location and sku information see [here][cognitive_resource_cli].
 
 ### Authenticate the client
-In order to interact with the Form Recognizer service, you'll need to create an instance of the [`DocumentAnalysisClient`][doc_analysis_client_class] class.  You will need an **endpoint** and an **API key** to instantiate a client object.
+In order to interact with the Form Recognizer service, you'll need to create an instance of the [`DocumentAnalysisClient`][doc_analysis_client_class] class.
+An **endpoint** and **credential** are necessary to instantiate the client object.
 
 #### Get the endpoint
 
-You can obtain the endpoint from the resource information in the [Azure Portal][azure_portal].
+You can find the endpoint for your Form Recognizer resource using the
+[Azure Portal][azure_portal_get_endpoint]
+or [Azure CLI][azure_cli_endpoint_lookup]:
+
+```PowerShell
+# Get the endpoint for the form recognizer resource
+az cognitiveservices account show --name "<resource-name>" --resource-group "<resource-group-name>" --query "properties.endpoint"
+```
 
 Either a regional endpoint or a custom subdomain can be used for authentication. They are formatted as follows:
 
@@ -87,14 +94,12 @@ A regional endpoint is the same for every resource in a region. A complete list 
 
 A custom subdomain, on the other hand, is a name that is unique to the Form Recognizer resource. They can only be used by [single-service resources][cognitive_resource_portal].
 
-#### Get API Key
+#### Get the API Key
 
-You can obtain the API key from the resource information in the [Azure Portal][azure_portal].
-
-Alternatively, you can use the [Azure CLI][azure_cli] snippet below to get the API key from the Form Recognizer resource.
+The API key can be found in the [Azure Portal][azure_portal] or by running the following Azure CLI command:
 
 ```PowerShell
-az cognitiveservices account keys list --resource-group <your-resource-group-name> --name <your-resource-name>
+az cognitiveservices account keys list --name "<resource-name>" --resource-group "<resource-group-name>"
 ```
 
 #### Create DocumentAnalysisClient with AzureKeyCredential
@@ -130,7 +135,7 @@ var client = new DocumentAnalysisClient(new Uri(endpoint), new DefaultAzureCrede
 
 ### DocumentAnalysisClient
 
-`DocumentAnalysisClient` provides operations for analyzing input documents using custom and prebuilt models through the `StartAnalyzeDocument` and `StartAnalyzeDocumentFromUri` APIs. Use the `modelId` parameter to select the type of model for analysis.
+`DocumentAnalysisClient` provides operations for analyzing input documents using prebuilt and custom models through the `StartAnalyzeDocument` and `StartAnalyzeDocumentFromUri` APIs. Use the `modelId` parameter to select the type of model for analysis.
 
 |Model ID|Features
 |-|-
@@ -142,19 +147,21 @@ var client = new DocumentAnalysisClient(new Uri(endpoint), new DefaultAzureCrede
 |`prebuilt-receipt`| Text extraction and pre-trained fields and values pertaining to sales receipts
 |`{custom-model-id}`| Text extraction, selection marks, tables, labeled fields and values from your custom documents
 
-More information about analyzing documents, including supported features, locales, and which types of documents are supported can be found in the [service documentation][formreco_models].
+Sample code snippets are provided to illustrate using a DocumentAnalysisClient [here](#examples).
+More information about analyzing documents, including supported features, locales, and document types can be found in the [service documentation][formreco_models].
 
 ### DocumentModelAdministrationClient
 
 `DocumentModelAdministrationClient` provides operations for:
 
-- Building custom models to analyze specific fields you specify by labeling your custom documents. A `DocumentModel` is returned indicating the document type(s) the model can analyze, the fields it can analyze for each document type, and the estimated confidence for each field.
-- Managing models created in your account.
-- Copying a custom model from one Form Recognizer resource to another.
+- Building custom models to analyze specific fields you specify by labeling your custom documents. A `DocumentModel` is returned indicating the document type(s) the model can analyze, the fields it can analyze for each document type,
+as well as the estimated confidence for each field. See the [service documentation][formreco_build_model] for a more detailed explanation.
 - Creating a composed model from a collection of existing models.
+- Managing models created in your account.
 - Listing document model operations or getting a specific model operation created within the last 24 hours.
+- Copying a custom model from one Form Recognizer resource to another.
 
-See examples for [Build a Model](#build-a-model) and [Manage Models](#manage-models).
+See examples for [Build a Custom Model](#build-a-custom-model) and [Manage Models](#manage-models).
 
 Please note that models can also be built using a graphical user interface such as the [Form Recognizer Labeling Tool][labeling_tool].
 
@@ -182,10 +189,10 @@ The following section provides several code snippets illustrating common pattern
 
 ### Async examples
 * [Extract Layout](#extract-layout)
-* [Use the Prebuilt Document Model](#use-the-prebuilt-document-model)
-* [Analyze Custom Documents](#analyze-custom-documents)
+* [Use the General Prebuilt Document Model](#use-the-general-prebuilt-document-model)
 * [Use Prebuilt Models](#use-prebuilt-models)
-* [Build a Model](#build-a-model)
+* [Build a Custom Model](#build-a-custom-model)
+* [Analyze Custom Documents](#analyze-custom-documents)
 * [Manage Models](#manage-models)
 
 ### Sync examples
@@ -269,7 +276,7 @@ for (int i = 0; i < result.Tables.Count; i++)
 
 For more information and samples see [here][extract_layout].
 
-### Use the Prebuilt Document Model
+### Use the General Prebuilt Document Model
 Analyze key-value pairs, entities, tables, and selection marks from documents using the general prebuilt document model.
 
 ```C# Snippet:FormRecognizerAnalyzePrebuiltDocumentFromUriAsync
@@ -373,39 +380,7 @@ for (int i = 0; i < result.Tables.Count; i++)
 
 For more information and samples see [here][analyze_prebuilt_document].
 
-### Analyze Custom Documents
-Analyze text, field values, selection marks, and table data from custom documents, using models you build with your own document types.
 
-```C# Snippet:FormRecognizerAnalyzeWithCustomModelFromUriAsync
-string modelId = "<modelId>";
-string fileUri = "<fileUri>";
-
-AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync(modelId, fileUri);
-
-await operation.WaitForCompletionAsync();
-
-AnalyzeResult result = operation.Value;
-
-Console.WriteLine($"Document was analyzed with model with ID: {result.ModelId}");
-
-foreach (AnalyzedDocument document in result.Documents)
-{
-    Console.WriteLine($"Document of type: {document.DocType}");
-
-    foreach (KeyValuePair<string, DocumentField> fieldKvp in document.Fields)
-    {
-        string fieldName = fieldKvp.Key;
-        DocumentField field = fieldKvp.Value;
-
-        Console.WriteLine($"Field '{fieldName}': ");
-
-        Console.WriteLine($"  Content: '{field.Content}'");
-        Console.WriteLine($"  Confidence: '{field.Confidence}'");
-    }
-}
-```
-
-For more information and samples see [here][analyze_custom].
 
 ### Use Prebuilt Models
 Analyze data from certain types of common documents using pre-trained models provided by the Form Recognizer service.
@@ -524,7 +499,7 @@ You are not limited to invoices! There are a few prebuilt models to choose from,
 
 For more samples and information about which types of documents are supported, see [here][analyze_prebuilt].
 
-### Build a Model
+### Build a Custom Model
 Build a custom model on your own document type. The resulting model can be used to analyze values from the types of documents it was built on.
 
 ```C# Snippet:FormRecognizerSampleBuildModel
@@ -555,7 +530,41 @@ foreach (KeyValuePair<string, DocTypeInfo> docType in model.DocTypes)
 }
 ```
 
-For more information and samples see [here][build_a_model].
+For more information and samples see [here][build_a_custom_model].
+
+### Analyze Custom Documents
+Analyze text, field values, selection marks, and table data from custom documents, using models you build with your own document types.
+
+```C# Snippet:FormRecognizerAnalyzeWithCustomModelFromUriAsync
+string modelId = "<modelId>";
+string fileUri = "<fileUri>";
+
+AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync(modelId, fileUri);
+
+await operation.WaitForCompletionAsync();
+
+AnalyzeResult result = operation.Value;
+
+Console.WriteLine($"Document was analyzed with model with ID: {result.ModelId}");
+
+foreach (AnalyzedDocument document in result.Documents)
+{
+    Console.WriteLine($"Document of type: {document.DocType}");
+
+    foreach (KeyValuePair<string, DocumentField> fieldKvp in document.Fields)
+    {
+        string fieldName = fieldKvp.Key;
+        DocumentField field = fieldKvp.Value;
+
+        Console.WriteLine($"Field '{fieldName}': ");
+
+        Console.WriteLine($"  Content: '{field.Content}'");
+        Console.WriteLine($"  Confidence: '{field.Confidence}'");
+    }
+}
+```
+
+For more information and samples see [here][analyze_custom].
 
 ### Manage Models
 Manage the models stored in your account.
@@ -710,11 +719,11 @@ Samples showing how to use the Cognitive Services Form Recognizer library are av
 - [Analyze with the prebuilt document model][analyze_prebuilt_document]
 - [Analyze a document with a custom model][analyze_custom]
 - [Analyze a document with a prebuilt model][analyze_prebuilt]
-- [Build a model][build_a_model]
+- [Build a custom model][build_a_custom_model]
 - [Manage models][manage_models]
-- [Copy a custom model between Form Recognizer resources][copy_custom_models]
-- [Create a composed model][composed_model]
 - [Get and List document model operations][get_and_list]
+- [Create a composed model][composed_model]
+- [Copy a custom model between Form Recognizer resources][copy_custom_models]
 
 > Note that these samples use SDK `V4.0.0-beta.X`. For lower versions of the SDK, please see [Form Recognizer Samples for V3.1.X][formrecov3_samples].
 
@@ -740,6 +749,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [formreco_rest_api]: https://aka.ms/azsdk/formrecognizer/restapi
 [formreco_models]: https://aka.ms/azsdk/formrecognizer/models
 [formreco_errors]: https://aka.ms/azsdk/formrecognizer/errors
+[formreco_build_model]: https://aka.ms/azsdk/formrecognizer/buildmodel
 [migration_guide]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/MigrationGuide.md
 [cognitive_resource]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account
 
@@ -753,6 +763,8 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [cognitive_resource_portal]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account
 [cognitive_resource_cli]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account-cli
 [regional_endpoints]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-custom-subdomains#is-there-a-list-of-regional-endpoints
+[azure_cli_endpoint_lookup]: https://docs.microsoft.com/cli/azure/cognitiveservices/account?view=azure-cli-latest#az-cognitiveservices-account-show
+[azure_portal_get_endpoint]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account?tabs=multiservice%2Cwindows#get-the-keys-for-your-resource
 
 
 [labeling_tool]: https://aka.ms/azsdk/formrecognizer/labelingtool
@@ -768,7 +780,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [analyze_prebuilt_document]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample_AnalyzePrebuiltDocument.md
 [analyze_custom]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample_AnalyzeWithCustomModel.md
 [analyze_prebuilt]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample_AnalyzeWithPrebuiltModel.md
-[build_a_model]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample_BuildModel.md
+[build_a_custom_model]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample_BuildCustomModel.md
 [manage_models]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample_ManageModels.md
 [copy_custom_models]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample_CopyCustomModel.md
 [composed_model]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample_ModelCompose.md

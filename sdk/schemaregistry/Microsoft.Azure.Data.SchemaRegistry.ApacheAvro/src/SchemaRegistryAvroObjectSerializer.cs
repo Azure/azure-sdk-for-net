@@ -176,11 +176,11 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
             string schemaContent;
             if (async)
             {
-                schemaContent = (await _client.GetSchemaAsync(schemaId, cancellationToken).ConfigureAwait(false)).Value.Content;
+                schemaContent = (await _client.GetSchemaAsync(schemaId, cancellationToken).ConfigureAwait(false)).Value.Definition;
             }
             else
             {
-                schemaContent = _client.GetSchema(schemaId, cancellationToken).Value.Content;
+                schemaContent = _client.GetSchema(schemaId, cancellationToken).Value.Definition;
             }
             var schema = Schema.Parse(schemaContent);
             _idToSchemaMap.TryAdd(schemaId, schema);

@@ -10,7 +10,7 @@ namespace Azure.Messaging.EventHubs.Producer
     ///   are published to the Event Hubs service.
     /// </summary>
     ///
-    internal class EnqueueEventOptions : SendEventOptions
+    public class EnqueueEventOptions : SendEventOptions
     {
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.
@@ -40,5 +40,38 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => base.ToString();
+
+        /// <summary>
+        ///   Deconstructs the instance into its component attributes.
+        /// </summary>
+        ///
+        /// <param name="partitionId">The partition identifier specified by the options.</param>
+        /// <param name="partitionKey">The partition key specified by the options.</param>
+        ///
+        internal void Deconstruct(out string partitionId,
+                                  out string partitionKey)
+        {
+            partitionId = PartitionId;
+            partitionKey = PartitionKey;
+        }
+
+        /// <summary>
+        ///   The set of default attributes for the options, intended to be
+        ///   used as alternative to <see cref="Deconstruct" /> when no options
+        ///   were specified.
+        /// </summary>
+        ///
+        /// <returns>A tuple of the default values for the options attributes.</returns>
+        ///
+        internal static (string PartitionId, string PartitionKey) DeconstructOrUseDefaultAttributes(EnqueueEventOptions options = default)
+        {
+            if (options != null)
+            {
+                (var partitionId, var partitionKey) = options;
+                return (partitionId, partitionKey);
+            }
+
+            return (null, null);
+        }
     }
 }

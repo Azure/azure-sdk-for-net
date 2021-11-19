@@ -32,21 +32,17 @@
     // Spelling issues must be addressed before adding these back in.
     "sdk/agrifood/*/api/*.cs",
     "sdk/communication/*/api/*.cs",
-    "sdk/compute/*/api/*.cs",
-    "sdk/containerregistry/*/api/*.cs",
     "sdk/cosmosdb/*/api/*.cs",
     "sdk/digitaltwins/*/api/*.cs",
     "sdk/dns/*/api/*.cs",
     "sdk/eventgrid/*/api/*.cs",
     "sdk/insights/*/api/*.cs",
-    "sdk/keyvault/*/api/*.cs",
     "sdk/machinelearningservices/*/api/*.cs",
     "sdk/modelsrepository/*/api/*.cs",
     "sdk/monitor/*/api/*.cs",
     "sdk/objectanchors/*/api/*.cs",
     "sdk/purview/*/api/*.cs",
     "sdk/remoterendering/*/api/*.cs",
-    "sdk/sqlmanagement/*/api/*.cs",
     "sdk/synapse/*/api/*.cs",
     "sdk/videoanalyzer/*/api/*.cs"
   ],
@@ -67,6 +63,7 @@
     "expando",
     "finalizer",
     "finalizers",
+    "illumos",
     "ints",
     "lucene",
     "mgmt",
@@ -98,6 +95,23 @@
       "words": ["warnaserror"]
     },
     {
+      "filename": "**/sdk/compute/**/*.cs",
+      "words": [
+        "reimage",
+        "skus",
+        "vmss",
+        "unattend",
+        "ssdlrs",
+        "vcpus",
+        "vmos",
+        "uefi",
+        "vhds",
+        "swappable",
+        "ssdzrs",
+        "dscp"
+      ]
+    },
+    {
       "filename": "**/sdk/cognitivelanguage/**/*",
       "words": [
         "apim",
@@ -111,29 +125,33 @@
     {
       "filename": "**/sdk/network/**/*.cs",
       "words": [
+        "Azfw",
+        "Conditon",
         "Ddos",
         "ddos",
+        "Dnat",
         "Dscp",
         "dscp",
-        "Mbps",
-        "Snat",
-        "Nics",
-        "Fqdns",
-        "Unprepare",
-        "Skus",
-        "WAFV",
         "Eapmscha",
         "Eaptls",
-        "TLSDHEDSS", 
-        "TLSDHERSA",
-        "Dnat",
-        "Azfw",
-        "Vxlan",
+        "Fqdns",
+        "Gcmaes",
         "Ipconfiguration",
+        "Mbps",
+        "Nics",
         "Owasp",
-        "Conditon",
         "Pfsmm",
-        "Sstp"
+        "Snat",
+        "Skus",
+        "Sstp",
+        "TLSDHEDSS",
+        "TLSDHERSA",
+        "Unprepare",
+        "Vmss",
+        "vmssip",
+        "Vnets",
+        "Vxlan",
+        "WAFV",
       ]
     },
     {
@@ -143,7 +161,9 @@
         "getsas",
         "listsas",
         "oaep",
-        "setsas"
+        "setsas",
+        "mhsm",
+        "mhsmip"
       ]
     },
     {
@@ -151,10 +171,20 @@
       "words": ["Puid"]
     },
     {
+      "filename": "**/sdk/sqlmanagement/**/*.cs",
+      "words": [
+        "Droppeded",
+        "CIAS",
+        "Vcores",
+        "Unrestorable"
+      ]
+    },
+    {
       "filename": "**/sdk/search/**/*.cs",
       "words": [
         "Adls",
         "Bangla",
+        "Beider",
         "Bokmaal",
         "Cyrl",
         "Decompounder",
@@ -170,7 +200,8 @@
         "Rslp",
         "Soundex",
         "Sorani",
-        "Unprocessable"
+        "Unprocessable",
+        "Beider"
       ]
     },
     {

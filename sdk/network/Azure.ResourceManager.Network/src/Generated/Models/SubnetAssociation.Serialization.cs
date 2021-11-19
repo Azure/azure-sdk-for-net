@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
@@ -17,10 +16,15 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static SubnetAssociation DeserializeSubnetAssociation(JsonElement element)
         {
+            Optional<string> id = default;
             Optional<IReadOnlyList<SecurityRuleData>> securityRules = default;
-            ResourceIdentifier id = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("securityRules"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -36,13 +40,8 @@ namespace Azure.ResourceManager.Network.Models
                     securityRules = array;
                     continue;
                 }
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
             }
-            return new SubnetAssociation(id, Optional.ToList(securityRules));
+            return new SubnetAssociation(id.Value, Optional.ToList(securityRules));
         }
     }
 }

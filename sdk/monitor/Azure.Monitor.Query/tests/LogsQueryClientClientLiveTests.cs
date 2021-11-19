@@ -626,8 +626,7 @@ namespace Azure.Monitor.Query.Tests
                 {
                     await client.QueryWorkspaceAsync(TestEnvironment.WorkspaceId, $"range x from 1 to {cnt} step 1 | count", _logsTestData.DataTimeRange, options: new LogsQueryOptions()
                     {
-                        ServerTimeout = TimeSpan.FromSeconds(1),
-                        AllowPartialErrors = false
+                        ServerTimeout = TimeSpan.FromSeconds(1)
                     });
                 }
                 catch (AggregateException)
@@ -635,9 +634,23 @@ namespace Azure.Monitor.Query.Tests
                     // The client cancelled, retry.
                     continue;
                 }
+                catch (TaskCanceledException)
+                {
+                    // The client cancelled, retry.
+                    continue;
+                }
                 catch (RequestFailedException exception)
                 {
-                    Assert.AreEqual(504, exception.Status);
+                    // Cancellation can be observed as either 504 response code from the gateway
+                    // or a partial failure 200 response
+                    if (exception.Status == 200)
+                    {
+                        StringAssert.Contains("Query cancelled by the user's request", exception.Message);
+                    }
+                    else
+                    {
+                        Assert.AreEqual(504, exception.Status);
+                    }
                     return;
                 }
             }
@@ -739,6 +752,23 @@ namespace Azure.Monitor.Query.Tests
             public TimeSpan? Timespan { get; set; }
             public Decimal? Decimal { get; set; }
             public BinaryData Dynamic { get; set; }
+        }
+
+        [Test]
+        public async Task ValidateNanAndInfResultsDoubleAsync()
+        {
+            var client = CreateClient();
+            var results = await client.QueryWorkspaceAsync(TestEnvironment.WorkspaceId, "print real(nan), real(+inf), real(-inf), real(null), real(123)", TimeSpan.FromMinutes(1));
+
+            var resultTable = results.Value.Table;
+            CollectionAssert.IsNotEmpty(resultTable.Columns);
+
+            Assert.AreEqual(LogsQueryResultStatus.Success, results.Value.Status);
+            Assert.AreEqual(double.NaN, resultTable.Rows[0][0]);
+            Assert.AreEqual(double.PositiveInfinity, resultTable.Rows[0][1]);
+            Assert.AreEqual(double.NegativeInfinity, resultTable.Rows[0][2]);
+            Assert.AreEqual(null, resultTable.Rows[0][3]);
+            Assert.AreEqual(123, resultTable.Rows[0][4]);
         }
     }
 }

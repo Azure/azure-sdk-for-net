@@ -72,5 +72,10 @@ namespace Azure.AI.TextAnalytics
         /// Filters the response entities to entities that match the <see cref="PiiEntityCategory"/> specified.
         /// </summary>
         public IList<PiiEntityCategory> CategoriesFilter { get; internal set; } = new List<PiiEntityCategory>();
+
+        /// <summary>
+        /// Gets or sets a name for this action. If not provided, the service will generate one.
+        /// </summary>
+        public string ActionName { get; set; }
     }
 }

@@ -1,6 +1,6 @@
 # Azure Video Analyzer Edge client library for .NET
 
-Azure Video Analyzer provides a platform to build intelligent video applications that span the edge and the cloud. The platform offers the capability to capture, record, and analyze live video along with publishing the results, video and video analytics, to Azure services in the cloud or the edge. It is designed to be an extensible platform, enabling you to connect different video analysis edge modules such as Cognitive services containers, custom edge modules built by you with open source machine learning models or custom models trained with your own data. You can then use them to analyze live video without worrying about the complexity of building and running a live video pipeline.
+Azure Video Analyzer is an [Azure Applied AI Service][applied-ai-service] that provides a platform for you to build intelligent video applications that can span both edge and cloud infrastructures. The platform offers the capability to capture, record, and analyze live video along with publishing the results, video and video analytics, to Azure services at the edge or in the cloud. It is designed to be an extensible platform, enabling you to connect different video inferencing edge modules such as Cognitive services modules, or custom inferencing modules that have been trained with your own data using either open-source machine learning or [Azure Machine Learning][machine-learning].
 
 Use the client library for Video Analyzer Edge to:
 
@@ -18,8 +18,8 @@ This is a models-only SDK. All client operations are done using the [Microsoft A
 The client is coming from Azure IoT SDK. You will need to obtain an IoT device connection string in order to authenticate the Azure IoT SDK. For more information please visit: https://github.com/Azure/azure-iot-sdk-csharp.
 
 ```C# Snippet:Azure_VideoAnalyzerSamples_ConnectionString
-String connectionString = "connectionString";
-ServiceClient serviceClient = ServiceClient.CreateFromConnectionString(connectionString);
+string connectionString = System.Environment.GetEnvironmentVariable("iothub_connectionstring", EnvironmentVariableTarget.User);
+var serviceClient = ServiceClient.CreateFromConnectionString(connectionString);
 ```
 
 ### Install the package
@@ -43,7 +43,11 @@ dotnet add package Microsoft.Azure.Devices
 
     | SDK          | Video Analyzer edge module |
     | ------------ | -------------------------- |
-    | 1.0.0-beta.x | 1.0                        |
+    | 1.0.0-beta.5 | 1.1                        |
+    | 1.0.0-beta.4 | 1.0                        |
+    | 1.0.0-beta.3 | 1.0                        |
+    | 1.0.0-beta.2 | 1.0                        |
+    | 1.0.0-beta.1 | 1.0                        |
 
 ### Creating a pipeline topology and making requests
 
@@ -104,10 +108,6 @@ pipelineTopologyProperties.Parameters.Add(new ParameterDeclaration("rtspUrl", Pa
 {
     Description = "rtsp Url"
 });
-pipelineTopologyProperties.Parameters.Add(new ParameterDeclaration("hubSinkOutputName", ParameterType.String)
-{
-    Description = "hub sink output"
-});
 ```
 
 ### Define a Source
@@ -127,7 +127,7 @@ var nodeInput = new List<NodeInput>
 {
     new NodeInput("rtspSource")
 };
-pipelineTopologyProps.Sinks.Add(new IotHubMessageSink("msgSink", nodeInput, "${hubSinkOutputName}"));
+pipelineTopologyProps.Sinks.Add(new VideoSink("videoSink", nodeInput, "video", "/var/lib/videoanalyzer/tmp/", "1024"));
 ```
 
 ### Set the topology properties and create a topology
@@ -175,7 +175,7 @@ var setPipelineTopRequest = new PipelineTopologySetRequest(pipelineTopology);
 var directMethod = new CloudToDeviceMethod(setPipelineTopRequest.MethodName);
 directMethod.SetPayloadJson(setPipelineTopRequest.GetPayloadAsJson());
 
-var setPipelineTopResponse = await serviceClient.InvokeDeviceMethodAsync(deviceId, moduleId, directMethod);
+var setPipelineTopResponse = await _serviceClient.InvokeDeviceMethodAsync(_deviceId, _moduleId, directMethod);
 ```
 
 To try different pipeline topologies with the SDK, please see the official [Samples][samples].
@@ -219,12 +219,14 @@ additional questions or comments.
 [coc_contact]: mailto:opencode@microsoft.com
 [package]: https://aka.ms/ava/sdk/client/net
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/videoanalyzer/Azure.Media.VideoAnalyzer.Edge/src
-[samples]: https://github.com/Azure-Samples/live-video-analytics-iot-edge-csharp
+[samples]: https://go.microsoft.com/fwlink/?linkid=2162276
 [doc_direct_methods]: https://docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/direct-methods
 [doc_pipelines]: https://docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/pipeline
 [doc_product]: https://docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/
 [iot-device-sdk]: https://www.nuget.org/packages/Microsoft.Azure.Devices.Client/
 [iot-hub-sdk]: https://www.nuget.org/packages/Microsoft.Azure.Devices/
 [github-page-issues]: https://github.com/Azure/azure-sdk-for-net/issues
+[applied-ai-service]: https://azure.microsoft.com/product-categories/applied-ai-services/#services
+[machine-learning]: https://azure.microsoft.com/services/machine-learning
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fvideoanalyzer%2Fazure-media-videoanalyzer-edge%2FREADME.png)

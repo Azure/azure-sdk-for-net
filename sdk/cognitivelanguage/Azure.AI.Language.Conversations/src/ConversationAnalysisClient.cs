@@ -4,7 +4,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.Language.Conversations.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -75,34 +74,28 @@ namespace Azure.AI.Language.Conversations
         private protected virtual HttpPipeline Pipeline { get; }
 
         /// <summary>Analyzes a conversational utterance.</summary>
-        /// <param name="projectName">The name of the project to use.</param>
-        /// <param name="deploymentName">The deployment name of the project to use, such as "test" or "production".</param>
-        /// <param name="query">The conversation utterance to be analyzed.</param>
+        /// <param name="utterance">The conversation utterance to be analyzed.</param>
+        /// <param name="project">The <see cref="ConversationsProject"/> used for conversation analysis.</param>
+        /// <param name="options">Optional <see cref="AnalyzeConversationOptions"/> with additional query options.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="projectName"/>, <paramref name="deploymentName"/>, or <paramref name="query"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="project"/> or <paramref name="utterance"/> is null.</exception>
         /// <exception cref="RequestFailedException">The service returned an error. The exception contains details of the service error.</exception>
-        public virtual Task<Response<AnalyzeConversationResult>> AnalyzeConversationAsync(string projectName, string deploymentName, string query, CancellationToken cancellationToken = default) =>
-            AnalyzeConversationAsync(new AnalyzeConversationOptions(projectName, deploymentName, query), cancellationToken);
-
-        /// <summary>Analyzes a conversational utterance.</summary>
-        /// <param name="options">
-        /// An <see cref="AnalyzeConversationOptions"/> containing the <see cref="AnalyzeConversationOptions.ProjectName"/>,
-        /// <see cref="AnalyzeConversationOptions.DeploymentName"/>, <see cref="AnalyzeConversationOptions.Query"/>, and other options to analyze.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
-        /// <exception cref="RequestFailedException">The service returned an error. The exception contains details of the service error.</exception>
-        public virtual async Task<Response<AnalyzeConversationResult>> AnalyzeConversationAsync(AnalyzeConversationOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AnalyzeConversationResult>> AnalyzeConversationAsync(string utterance, ConversationsProject project, AnalyzeConversationOptions options = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(project, nameof(project));
+            Argument.AssertNotNull(utterance, nameof(utterance));
+
+            options = options ?? new();
+            options.Utterance = utterance;
 
             using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(ConversationAnalysisClient)}.{nameof(AnalyzeConversation)}");
-            scope.AddAttribute("projectName", options.ProjectName);
-            scope.AddAttribute("deploymentName", options.DeploymentName);
+            scope.AddAttribute("projectName", project.ProjectName);
+            scope.AddAttribute("deploymentName", project.DeploymentName);
             scope.Start();
 
             try
             {
-                return await _analysisRestClient.AnalyzeConversationAsync(options.ProjectName, options.DeploymentName, options, cancellationToken).ConfigureAwait(false);
+                return await _analysisRestClient.AnalyzeConversationAsync(project.ProjectName, project.DeploymentName, options, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -112,34 +105,28 @@ namespace Azure.AI.Language.Conversations
         }
 
         /// <summary>Analyzes a conversational utterance.</summary>
-        /// <param name="projectName">The name of the project to use.</param>
-        /// <param name="deploymentName">The deployment name of the project to use, such as "test" or "production".</param>
-        /// <param name="query">The conversation utterance to be analyzed.</param>
+        /// <param name="utterance">The conversation utterance to be analyzed.</param>
+        /// <param name="project">The <see cref="ConversationsProject"/> used for conversation analysis.</param>
+        /// <param name="options">Optional <see cref="AnalyzeConversationOptions"/> with additional query options.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="projectName"/>, <paramref name="deploymentName"/>, or <paramref name="query"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="project"/> or <paramref name="utterance"/> is null.</exception>
         /// <exception cref="RequestFailedException">The service returned an error. The exception contains details of the service error.</exception>
-        public virtual Response<AnalyzeConversationResult> AnalyzeConversation(string projectName, string deploymentName, string query, CancellationToken cancellationToken = default) =>
-            AnalyzeConversation(new AnalyzeConversationOptions(projectName, deploymentName, query), cancellationToken);
-
-        /// <summary>Analyzes a conversational utterance.</summary>
-        /// <param name="options">
-        /// An <see cref="AnalyzeConversationOptions"/> containing the <see cref="AnalyzeConversationOptions.ProjectName"/>,
-        /// <see cref="AnalyzeConversationOptions.DeploymentName"/>, <see cref="AnalyzeConversationOptions.Query"/>, and other options to analyze.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
-        /// <exception cref="RequestFailedException">The service returned an error. The exception contains details of the service error.</exception>
-        public virtual Response<AnalyzeConversationResult> AnalyzeConversation(AnalyzeConversationOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<AnalyzeConversationResult> AnalyzeConversation(string utterance, ConversationsProject project, AnalyzeConversationOptions options = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(project, nameof(project));
+            Argument.AssertNotNull(utterance, nameof(utterance));
+
+            options = options ?? new();
+            options.Utterance = utterance;
 
             using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(ConversationAnalysisClient)}.{nameof(AnalyzeConversation)}");
-            scope.AddAttribute("projectName", options.ProjectName);
-            scope.AddAttribute("deploymentName", options.DeploymentName);
+            scope.AddAttribute("projectName", project.ProjectName);
+            scope.AddAttribute("deploymentName", project.DeploymentName);
             scope.Start();
 
             try
             {
-                return _analysisRestClient.AnalyzeConversation(options.ProjectName, options.DeploymentName, options, cancellationToken);
+                return _analysisRestClient.AnalyzeConversation(project.ProjectName, project.DeploymentName, options, cancellationToken);
             }
             catch (Exception ex)
             {
