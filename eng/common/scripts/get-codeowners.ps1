@@ -65,10 +65,10 @@ function Get-CodeOwners ([string] $command)
 
 
 function TestGetCodeOwner([string] $command) {
-  if (!$output) {
+  if (!$command) {
     exit
   }
-  $actualReturn = GetCodeOwners -command $output 
+  $actualReturn = GetCodeOwners -command $command 
   $expectReturn = @("person1", "person2")
   for ($i = 0; $i -lt $expectReturn.Length; $i++) {
     if ($actualReturn[$i] -ne $expectReturn[$i]) {
