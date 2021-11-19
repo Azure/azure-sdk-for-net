@@ -88,11 +88,20 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [Test]
-        public void DocumentAnalysisClientThrowsWithNonExistingResourceEndpoint()
+        public async Task DocumentAnalysisClientThrowsWithNonExistingResourceEndpoint()
         {
             var client = CreateInstrumentedClient();
-            using var stream = new MemoryStream(Array.Empty<byte>());
-            Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartAnalyzeDocumentAsync("modelId", stream));
+
+            try
+            {
+                using var stream = new MemoryStream(Array.Empty<byte>());
+                await client.StartAnalyzeDocumentAsync("modelId", stream);
+            }
+            catch (AggregateException ex)
+            {
+                var innerExceptions = ex.InnerExceptions.ToList();
+                Assert.IsTrue(innerExceptions.All(ex => ex is RequestFailedException));
+            }
         }
 
         #endregion

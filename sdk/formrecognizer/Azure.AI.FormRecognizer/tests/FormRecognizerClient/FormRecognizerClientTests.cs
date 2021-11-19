@@ -102,11 +102,20 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
-        public void FormRecognizerClientThrowsWithNonExistingResourceEndpoint()
+        public async Task FormRecognizerClientThrowsWithNonExistingResourceEndpoint()
         {
             var client = CreateInstrumentedClient();
-            var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.Form1);
-            Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeContentFromUriAsync(uri));
+
+            try
+            {
+                var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.Form1);
+                await client.StartRecognizeContentFromUriAsync(uri);
+            }
+            catch (AggregateException ex)
+            {
+                var innerExceptions = ex.InnerExceptions.ToList();
+                Assert.IsTrue(innerExceptions.All(ex => ex is RequestFailedException));
+            }
         }
 
         #endregion
