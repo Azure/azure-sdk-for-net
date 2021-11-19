@@ -3,7 +3,6 @@
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IsTestProject>true</IsTestProject>
-    <IsOptOutOfGlobalTestTimeout>true</IsOptOutOfGlobalTestTimeout>
   </PropertyGroup>
   
   <ItemGroup>
