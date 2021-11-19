@@ -22,7 +22,7 @@ function New-TemporaryDirectory {
 function InstallRetrieveCodeOwnersTool() {
   # Check if the retrieve-codeowners tool exsits or not.
   if (Get-Command "$ToolPath/$ToolCommandName" -errorAction SilentlyContinue) {
-    return
+    return "$ToolPath/$ToolCommandName"
   }
   if (!$ToolPath -or !(Test-Path $ToolPath)) {
     $ToolPath = New-TemporaryDirectory
