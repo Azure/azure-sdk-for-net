@@ -1714,6 +1714,72 @@ namespace Azure.Storage.Blobs
         }
         #endregion Upload
 
+        #region OpenWrite
+        /// <summary>
+        /// Opens a stream for writing to the blob.
+        /// </summary>
+        /// <param name="overwrite">
+        /// Whether an existing blob should be deleted and recreated.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A stream to write to the Append Blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual Stream OpenWrite(
+#pragma warning restore AZC0015 // Unexpected client method return type.
+            bool overwrite,
+            BlobOpenWriteOptions options = default,
+            CancellationToken cancellationToken = default)
+            => BlockBlobClient.OpenWrite(
+                overwrite: overwrite,
+                options: options.ToBlockBlobOpenWriteOptions(),
+                cancellationToken: cancellationToken);
+
+        /// <summary>
+        /// Opens a stream for writing to the blob.  If the blob exists,
+        /// it will be overwritten.
+        /// </summary>
+        /// <param name="overwrite">
+        /// Whether an existing blob should be deleted and recreated.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A stream to write to the Append Blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual async Task<Stream> OpenWriteAsync(
+#pragma warning restore AZC0015 // Unexpected client method return type.
+            bool overwrite,
+            BlobOpenWriteOptions options = default,
+            CancellationToken cancellationToken = default)
+            => await BlockBlobClient.OpenWriteAsync(
+                overwrite: overwrite,
+                options: options.ToBlockBlobOpenWriteOptions(),
+                cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
+        #endregion
+
         private BlockBlobClient _blockBlobClient;
 
         private BlockBlobClient BlockBlobClient
