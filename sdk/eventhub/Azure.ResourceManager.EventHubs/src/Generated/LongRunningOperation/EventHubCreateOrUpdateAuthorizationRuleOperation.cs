@@ -16,9 +16,9 @@ using Azure.ResourceManager.EventHubs;
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> Creates or updates an AuthorizationRule for the specified Event Hub. Creation/update of the AuthorizationRule will take a few seconds to take effect. </summary>
-    public partial class EventHubCreateOrUpdateAuthorizationRuleOperation : Operation<NamespaceEventhubAuthorizationRule>
+    public partial class EventHubCreateOrUpdateAuthorizationRuleOperation : Operation<EventHubAuthorizationRule>
     {
-        private readonly OperationOrResponseInternals<NamespaceEventhubAuthorizationRule> _operation;
+        private readonly OperationOrResponseInternals<EventHubAuthorizationRule> _operation;
 
         /// <summary> Initializes a new instance of EventHubCreateOrUpdateAuthorizationRuleOperation for mocking. </summary>
         protected EventHubCreateOrUpdateAuthorizationRuleOperation()
@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         internal EventHubCreateOrUpdateAuthorizationRuleOperation(ArmResource operationsBase, Response<AuthorizationRuleData> response)
         {
-            _operation = new OperationOrResponseInternals<NamespaceEventhubAuthorizationRule>(Response.FromValue(new NamespaceEventhubAuthorizationRule(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<EventHubAuthorizationRule>(Response.FromValue(new EventHubAuthorizationRule(operationsBase, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override NamespaceEventhubAuthorizationRule Value => _operation.Value;
+        public override EventHubAuthorizationRule Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.EventHubs.Models
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<NamespaceEventhubAuthorizationRule>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<EventHubAuthorizationRule>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<NamespaceEventhubAuthorizationRule>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<EventHubAuthorizationRule>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
     }
 }

@@ -184,13 +184,13 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        #region NamespaceEventhubAuthorizationRule
+        #region EventHubAuthorizationRule
 
-        /// <summary> Gets a collection of NamespaceEventhubAuthorizationRules in the EventHub. </summary>
-        /// <returns> An object representing collection of NamespaceEventhubAuthorizationRules and their operations over a EventHub. </returns>
-        public NamespaceEventhubAuthorizationRuleCollection GetNamespaceEventhubAuthorizationRules()
+        /// <summary> Gets a collection of EventHubAuthorizationRules in the EventHub. </summary>
+        /// <returns> An object representing collection of EventHubAuthorizationRules and their operations over a EventHub. </returns>
+        public EventHubAuthorizationRuleCollection GetEventHubAuthorizationRules()
         {
-            return new NamespaceEventhubAuthorizationRuleCollection(this);
+            return new EventHubAuthorizationRuleCollection(this);
         }
         #endregion
 

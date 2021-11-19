@@ -167,12 +167,12 @@ namespace Azure.ResourceManager.EventHubs.Tests
 
             //create an authorization rule
             string ruleName = Recording.GenerateAssetName("authorizationrule");
-            NamespaceEventhubAuthorizationRuleCollection ruleCollection = eventHub.GetNamespaceEventhubAuthorizationRules();
+            EventHubAuthorizationRuleCollection ruleCollection = eventHub.GetEventHubAuthorizationRules();
             AuthorizationRuleData parameter = new AuthorizationRuleData()
             {
                 Rights = { AccessRights.Listen, AccessRights.Send }
             };
-            NamespaceEventhubAuthorizationRule authorizationRule = (await ruleCollection.CreateOrUpdateAsync(ruleName, parameter)).Value;
+            EventHubAuthorizationRule authorizationRule = (await ruleCollection.CreateOrUpdateAsync(ruleName, parameter)).Value;
             Assert.NotNull(authorizationRule);
             Assert.AreEqual(authorizationRule.Data.Rights.Count, parameter.Rights.Count);
 
@@ -183,12 +183,12 @@ namespace Azure.ResourceManager.EventHubs.Tests
             Assert.AreEqual(authorizationRule.Data.Rights.Count, parameter.Rights.Count);
 
             //get all authorization rules
-            List<NamespaceEventhubAuthorizationRule> rules = await ruleCollection.GetAllAsync().ToEnumerableAsync();
+            List<EventHubAuthorizationRule> rules = await ruleCollection.GetAllAsync().ToEnumerableAsync();
 
             //validate
             Assert.True(rules.Count == 1);
             bool isContainAuthorizationRuleName = false;
-            foreach (NamespaceEventhubAuthorizationRule rule in rules)
+            foreach (EventHubAuthorizationRule rule in rules)
             {
                 if (rule.Id.Name == ruleName)
                 {
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             //create eventhub
             string eventhubName = Recording.GenerateAssetName("eventhub");
             EventHub eventHub = (await _eventHubCollection.CreateOrUpdateAsync(eventhubName, new EventHubData())).Value;
-            NamespaceEventhubAuthorizationRuleCollection ruleCollection = eventHub.GetNamespaceEventhubAuthorizationRules();
+            EventHubAuthorizationRuleCollection ruleCollection = eventHub.GetEventHubAuthorizationRules();
 
             //create authorization rule
             string ruleName = Recording.GenerateAssetName("authorizationrule");
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             {
                 Rights = { AccessRights.Listen, AccessRights.Send }
             };
-            NamespaceEventhubAuthorizationRule authorizationRule = (await ruleCollection.CreateOrUpdateAsync(ruleName, parameter)).Value;
+            EventHubAuthorizationRule authorizationRule = (await ruleCollection.CreateOrUpdateAsync(ruleName, parameter)).Value;
             Assert.NotNull(authorizationRule);
             Assert.AreEqual(authorizationRule.Data.Rights.Count, parameter.Rights.Count);
 

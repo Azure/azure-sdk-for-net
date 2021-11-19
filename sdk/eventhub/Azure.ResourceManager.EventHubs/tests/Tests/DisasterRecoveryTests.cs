@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.EventHubs.Tests
             CheckNameAvailabilityResult nameAvailability = await eHNamespace1.CheckNameAvailabilityDisasterRecoveryConfigAsync(new CheckNameAvailabilityParameter(disasterRecoveryName));
             Assert.IsFalse(nameAvailability.NameAvailable);
 
-            List<NamespaceDisasterRecoveryConfigAuthorizationRule> rules = await armDisasterRecovery.GetNamespaceDisasterRecoveryConfigAuthorizationRules().GetAllAsync().ToEnumerableAsync();
+            List<DisasterRecoveryAuthorizationRule> rules = await armDisasterRecovery.GetDisasterRecoveryAuthorizationRules().GetAllAsync().ToEnumerableAsync();
             Assert.IsTrue(rules.Count > 0);
 
             //get access keys of the authorization rule
-            NamespaceDisasterRecoveryConfigAuthorizationRule rule = rules.First();
+            DisasterRecoveryAuthorizationRule rule = rules.First();
             AccessKeys keys = await rule.GetKeysAsync();
             Assert.NotNull(keys);
 

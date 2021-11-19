@@ -56,25 +56,25 @@ namespace Azure.ResourceManager.EventHubs
         }
         #endregion
 
-        #region NamespaceEventhubAuthorizationRule
-        /// <summary> Gets an object representing a NamespaceEventhubAuthorizationRule along with the instance operations that can be performed on it but with no data. </summary>
+        #region EventHubAuthorizationRule
+        /// <summary> Gets an object representing a EventHubAuthorizationRule along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NamespaceEventhubAuthorizationRule" /> object. </returns>
-        public static NamespaceEventhubAuthorizationRule GetNamespaceEventhubAuthorizationRule(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EventHubAuthorizationRule" /> object. </returns>
+        public static EventHubAuthorizationRule GetEventHubAuthorizationRule(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new NamespaceEventhubAuthorizationRule(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new EventHubAuthorizationRule(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
-        #region NamespaceDisasterRecoveryConfigAuthorizationRule
-        /// <summary> Gets an object representing a NamespaceDisasterRecoveryConfigAuthorizationRule along with the instance operations that can be performed on it but with no data. </summary>
+        #region DisasterRecoveryAuthorizationRule
+        /// <summary> Gets an object representing a DisasterRecoveryAuthorizationRule along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NamespaceDisasterRecoveryConfigAuthorizationRule" /> object. </returns>
-        public static NamespaceDisasterRecoveryConfigAuthorizationRule GetNamespaceDisasterRecoveryConfigAuthorizationRule(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DisasterRecoveryAuthorizationRule" /> object. </returns>
+        public static DisasterRecoveryAuthorizationRule GetDisasterRecoveryAuthorizationRule(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new NamespaceDisasterRecoveryConfigAuthorizationRule(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DisasterRecoveryAuthorizationRule(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
