@@ -182,7 +182,7 @@ foreach ($packageInfo in $PackageInfoJsonLocations) {
   Write-Host "Updating metadata for package: $packageInfo"
   # Add validation step for daily update and release
   if ($ValidateDocsMsPackagesFn -and (Test-Path "Function:$ValidateDocsMsPackagesFn")) {
-    &$ValidateDocsMsPackagesFn -PackageInfo $packageInfo -PackageSourceOverride $PackageSourceOverride
+    &$ValidateDocsMsPackagesFn -PackageInfo $packageInfo 
     if ($LASTEXITCODE -ne 0) {
       LogError "The package failed Doc.Ms validation. Please fixed the doc and republish to Doc.Ms."
     }

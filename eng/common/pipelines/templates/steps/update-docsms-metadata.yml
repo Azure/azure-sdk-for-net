@@ -28,12 +28,10 @@ parameters:
       - '**'
   - name: PackageSourceOverride
     type: string
-    default:
-      - ''
+    default: ''
   - name: DocValidationImageId
     type: string
-    default:
-      - ''
+    default: ''
 steps:
 - template: /eng/common/pipelines/templates/steps/enable-long-path-support.yml
 
