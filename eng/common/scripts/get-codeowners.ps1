@@ -23,12 +23,13 @@ function Get-CodeOwnersTool()
   Write-Warning "Installing the ToolCommandName tool under $ToolPath... "
   dotnet tool install --tool-path $ToolPath --add-source $DevOpsFeed --version $ToolVersion "Azure.Sdk.Tools.RetrieveCodeOwners" | Out-Null
 
+  $command = Join-Path $ToolPath $ToolCommandName
   # Test to see if the tool properly installed.
-  if (!(Get-Command $Command -errorAction SilentlyContinue)) {
+  if (!(Get-Command $command -errorAction SilentlyContinue)) {
     Write-Error "The ToolCommandName tool is not properly installed. Please check your tool path. $ToolPath"
     return 
   }
-  return Join-Path $ToolPath $ToolCommandName
+  return $command
 }
 
 function Get-CodeOwners ([string] $command)
@@ -65,16 +66,17 @@ function Get-CodeOwners ([string] $command)
 
 function TestGetCodeOwner([string] $command) {
   if (!$command) {
-    exit
+    exit 1
   }
   $actualReturn = GetCodeOwners -command $command 
   $expectReturn = @("person1", "person2")
   for ($i = 0; $i -lt $expectReturn.Length; $i++) {
     if ($actualReturn[$i] -ne $expectReturn[$i]) {
       Write-Error "Expect result $expectReturn[$i] is different than actual result $actualReturn[$i]."
-      exit
+      exit 1
     }
   }
+  exit 0
 }
 
 # Install the tool first
@@ -84,6 +86,5 @@ if($Test) {
   TestGetCodeOwner -command $output
 }
 else {
-
   return GetCodeOwners -command $output
 }
