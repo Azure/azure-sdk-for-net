@@ -5,7 +5,6 @@ using System;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using NUnit.Framework.Internal;
-using NUnit.Framework.Internal.Commands;
 
 namespace Azure.Core.TestFramework
 {
@@ -13,21 +12,8 @@ namespace Azure.Core.TestFramework
     /// Attribute on test assemblies, classes, or methods that run only against live resources.
     /// </summary>
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class | AttributeTargets.Assembly, AllowMultiple = false, Inherited = true)]
-    public class LiveOnlyAttribute : NUnitAttribute, IApplyToTest, IWrapSetUpTearDown
+    public class LiveOnlyAttribute : NUnitAttribute, IApplyToTest
     {
-        public TestCommand Wrap(TestCommand command)
-        {
-            ITest test = command.Test;
-            while (test.Fixture == null && test.Parent != null)
-            {
-                test = test.Parent;
-            }
-
-            // Global Timeout should be cleared for LiveOnly tests
-            TestTimeoutHelper.ZeroTestsTimeoutProperty(test.Tests);
-            return command;
-        }
-
         private readonly bool _alwaysRunLocally;
 
         /// <summary>

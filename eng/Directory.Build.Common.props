@@ -20,7 +20,6 @@
     <IsTestSupportProject Condition="'$(IsTestSupportProject)' == '' and '$(IsTestProject)' != 'true' and ($(MSBuildProjectDirectory.Contains('/tests/')) or $(MSBuildProjectDirectory.Contains('\tests\')))">true</IsTestSupportProject>
     <IsShippingLibrary Condition="'$(IsShippingLibrary)' == '' and '$(IsTestProject)' != 'true' and '$(IsTestSupportProject)' != 'true' and '$(IsPerfProject)' != 'true' and '$(IsSamplesProject)' != 'true' and '$(IsStressProject)' != 'true'">true</IsShippingLibrary>
     <IsShippingClientLibrary Condition="'$(IsClientLibrary)' == 'true' and '$(IsShippingLibrary)' == 'true'">true</IsShippingClientLibrary>
-    <IsOptOutOfGlobalTestTimeout Condition="'$(IsOptOutOfGlobalTestTimeout)' == ''">false</IsOptOutOfGlobalTestTimeout>
   </PropertyGroup>
 
   <!-- Setup default project properties -->
@@ -243,14 +242,6 @@
     <DocumentationFile></DocumentationFile>
     <RunSettingsFilePath Condition="'$(AZURE_SKIP_DEFAULT_RUN_SETTINGS)' != 'true'">$(RepoEngPath)\nunit.runsettings</RunSettingsFilePath>
   </PropertyGroup>
-
-  <!-- Set global test timeout of 5 seconds -->
-  <ItemGroup Condition="'$(IsTestProject)' == 'true' and '$(IsClientLibrary)' == 'true' and '$(IsOptOutOfGlobalTestTimeout)' != 'true'">
-    <AssemblyAttribute Include="NUnit.Framework.Timeout">
-      <_Parameter1>10000</_Parameter1>
-      <_Parameter1_TypeName>System.Int32</_Parameter1_TypeName>
-    </AssemblyAttribute>
-  </ItemGroup>
 
   <PropertyGroup Condition="'$(IsPerfProject)' == 'true' or '$(IsStressProject)' == 'true'">
     <ServerGarbageCollection>true</ServerGarbageCollection>
