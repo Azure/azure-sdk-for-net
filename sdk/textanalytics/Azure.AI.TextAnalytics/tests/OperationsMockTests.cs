@@ -143,6 +143,33 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.IsInstanceOf<ArgumentException>(ex.InnerException);
         }
 
+        [Test]
+        public void CreateAnalyzeOperationMissingJobId()
+        {
+            var client = CreateTestClient(new MockTransport());
+            var order = new Dictionary<string, int>() { { "0", 0 } };
+
+            string operationId = OperationContinuationToken.Serialize(null, order, null);
+
+            var ex = Assert.Throws<ArgumentException>(() => new AnalyzeActionsOperation(operationId, client));
+            Assert.IsInstanceOf<ArgumentNullException>(ex.InnerException);
+        }
+
+        [Test]
+        public void CreateAnalyzeOperationMissingDocumentOrder()
+        {
+            var client = CreateTestClient(new MockTransport());
+            var order = new Dictionary<string, int>();
+
+            var token = new OperationContinuationToken("2a96a91f-7edf-4931-a880-3fdee1d56f15", order, null);
+            token.InputDocumentOrder = null;
+
+            string operationId = token.Serialize();
+
+            var ex = Assert.Throws<ArgumentException>(() => new AnalyzeActionsOperation(operationId, client));
+            Assert.IsInstanceOf<ArgumentNullException>(ex.InnerException);
+        }
+
         #endregion Analyze
 
         #region Healthcare
@@ -243,6 +270,33 @@ namespace Azure.AI.TextAnalytics.Tests
 
             var ex = Assert.Throws<ArgumentException>(() => new AnalyzeHealthcareEntitiesOperation(operationId, client));
             Assert.IsInstanceOf<ArgumentException>(ex.InnerException);
+        }
+
+        [Test]
+        public void CreateHealthcareOperationMissingJobId()
+        {
+            var client = CreateTestClient(new MockTransport());
+            var order = new Dictionary<string, int>() { { "0", 0 } };
+
+            string operationId = OperationContinuationToken.Serialize(null, order, null);
+
+            var ex = Assert.Throws<ArgumentException>(() => new AnalyzeHealthcareEntitiesOperation(operationId, client));
+            Assert.IsInstanceOf<ArgumentNullException>(ex.InnerException);
+        }
+
+        [Test]
+        public void CreateHealthcareOperationMissingDocumentOrder()
+        {
+            var client = CreateTestClient(new MockTransport());
+            var order = new Dictionary<string, int>();
+
+            var token = new OperationContinuationToken("2a96a91f-7edf-4931-a880-3fdee1d56f15", order, null);
+            token.InputDocumentOrder = null;
+
+            string operationId = token.Serialize();
+
+            var ex = Assert.Throws<ArgumentException>(() => new AnalyzeHealthcareEntitiesOperation(operationId, client));
+            Assert.IsInstanceOf<ArgumentNullException>(ex.InnerException);
         }
 
         #endregion Healthcare
