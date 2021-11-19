@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core.TestFramework;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using NUnit.Framework.Internal;
@@ -24,10 +23,10 @@ namespace Azure.Security.KeyVault.Keys.Tests
             {
                 t.RunState = RunState.Skipped;
                 test.Properties.Set(PropertyNames.SkipReason, $"This test can only run on Key Vault.");
-                // Timeout cannot be set on SkipCommands
-                TestTimeoutHelper.ZeroTestsTimeoutProperty(test.Tests);
+
                 return new SkipCommand(t);
             }
+
             return new CheckSupportedCommand(command);
         }
 
