@@ -79,6 +79,8 @@ param (
     [switch] $OutFile
 )
 
+. $PSScriptRoot/config-functions.ps1
+
 # By default stop for any error.
 if (!$PSBoundParameters.ContainsKey('ErrorAction')) {
     $ErrorActionPreference = 'Stop'
@@ -186,42 +188,6 @@ function BuildDeploymentOutputs([string]$serviceDirectoryPrefix, [object]$azCont
     return $deploymentOutputs
 }
 
-function ShouldMarkValueAsSecret([string]$serviceDirectoryPrefix, [string]$key, [string]$value, [array]$allowedValues) {
-    $logOutputNonSecret = @(
-        # Environment Variables
-        "RESOURCEGROUP_NAME",
-        # Deployment Outputs
-        "CLIENT_ID",
-        "TENANT_ID",
-        "SUBSCRIPTION_ID",
-        "RESOURCE_GROUP",
-        "LOCATION",
-        "ENVIRONMENT",
-        "AZURE_AUTHORITY_HOST",
-        "RESOURCE_MANAGER_URL",
-        "SERVICE_MANAGEMENT_URL"
-    )
-
-    $suffix1 = $key -replace $serviceDirectoryPrefix, ""
-    $suffix2 = $key -replace "AZURE_", ""
-    $variants = @($key, $suffix1, $suffix2)
-    Write-Host "non secret"
-    Write-Host "$serviceDirectoryPrefix"
-    Write-Host "$key $suffix1 $suffix2"
-    Write-Host "$($allowedValues | ConvertTo-Json)"
-    if ($variants | Where-Object { $logOutputNonSecret -contains $_ }) {
-        Write-Host "false for variant"
-        return $false
-    }
-
-    if ($allowedValues -contains $value) {
-        Write-Host "false for allowed"
-        return $false
-    }
-
-    return $true
-}
-
 function SetDeploymentOutputs([string]$serviceName, [object]$azContext, [object]$deployment, [object]$templateFile) {
     $serviceDirectoryPrefix = $serviceName.ToUpperInvariant() + "_"
     $deploymentOutputs = BuildDeploymentOutputs $serviceDirectoryPrefix $azContext $deployment
@@ -258,8 +224,8 @@ function SetDeploymentOutputs([string]$serviceName, [object]$azContext, [object]
                 if (ShouldMarkValueAsSecret $serviceDirectoryPrefix $key $value $notSecretValues) {
                     # Treat all ARM template output variables as secrets since "SecureString" variables do not set values.
                     # In order to mask secrets but set environment variables for any given ARM template, we set variables twice as shown below.
-                    Write-Host "Setting variable as secret '$key': $value"
                     Write-Host "##vso[task.setvariable variable=_$key;issecret=true;]$value"
+                    Write-Host "Setting variable as secret '$key': $value"
                 } else {
                     Write-Host "Setting variable '$key': $value"
                     $notSecretValues += $value
