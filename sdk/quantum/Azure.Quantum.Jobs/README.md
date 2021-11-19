@@ -110,24 +110,6 @@ Note that we need to compress the json input data before uploading it to the blo
 This contains the parameters to be used with [Quantum Inspired Optimizations](https://docs.microsoft.com/azure/quantum/optimization-overview-introduction)
 
 ```C# Snippet:Azure_Quantum_Jobs_UploadInputData
-// Get container Uri with SAS key
-var containerUri = (quantumJobClient.GetStorageSasUri(
-    new BlobDetails(storageContainerName))).Value.SasUri;
-#endregion
-
-Console.WriteLine($@"Container Uri with SAS key:
-{containerUri}
-");
-
-Console.WriteLine($@"Creating Container if not exist...");
-
-// Create container if not exists
-var containerClient = new BlobContainerClient(new Uri(containerUri));
-containerClient.CreateIfNotExists();
-
-Console.WriteLine($@"Uploading data into a blob...");
-
-#region Snippet:Azure_Quantum_Jobs_UploadInputData
 string problemFilePath = "./problem.json";
 
 // Get input data blob Uri with SAS key
@@ -219,7 +201,7 @@ To enumerate all the jobs in the workspace, use the `GetJobs` method.
 ```C# Snippet:Azure_Quantum_Jobs_GetJobs
 foreach (JobDetails job in quantumJobClient.GetJobs())
 {
-    Console.WriteLine($"{job.Name}");
+   Console.WriteLine($"{job.Name}");
 }
 ```
 
