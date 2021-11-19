@@ -43,7 +43,9 @@ namespace Azure.AI.TextAnalytics
         public static OperationContinuationToken Deserialize(string base64OperationId)
         {
             byte[] plainTextBytes = Convert.FromBase64String(base64OperationId);
-            OperationContinuationToken token = JsonSerializer.Deserialize<OperationContinuationToken>(plainTextBytes);
+
+            var options = new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+            OperationContinuationToken token = JsonSerializer.Deserialize<OperationContinuationToken>(plainTextBytes, options);
 
             string currentTokenVersion = TextAnalyticsClientOptions.GetVersionString(ContinuationTokenVersion);
 
@@ -63,7 +65,8 @@ namespace Azure.AI.TextAnalytics
 
         public string Serialize()
         {
-            string plainOperationId = JsonSerializer.Serialize(this);
+            var options = new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+            string plainOperationId = JsonSerializer.Serialize(this, options);
             byte[] plainTextBytes = Encoding.UTF8.GetBytes(plainOperationId);
 
             return Convert.ToBase64String(plainTextBytes);

@@ -133,7 +133,7 @@ namespace Azure.AI.TextAnalytics
                 _showStats = token.ShowStats;
                 _idToIndexMap = token.InputDocumentOrder;
             }
-            catch (Exception e) when (e is JsonException || e is ArgumentException || e is FormatException)
+            catch (Exception e)
             {
                 throw new ArgumentException($"Invalid value. Please use the {nameof(AnalyzeHealthcareEntitiesOperation)}.{nameof(Id)} property value.", nameof(operationId), e);
             }
