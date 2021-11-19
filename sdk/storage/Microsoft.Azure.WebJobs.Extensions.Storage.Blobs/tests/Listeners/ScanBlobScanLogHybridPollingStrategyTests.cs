@@ -25,7 +25,6 @@ using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 {
-    [NonParallelizable]
     public class ScanBlobScanLogHybridPollingStrategyTests
     {
         private const string ContainerName = "fakecontainer";

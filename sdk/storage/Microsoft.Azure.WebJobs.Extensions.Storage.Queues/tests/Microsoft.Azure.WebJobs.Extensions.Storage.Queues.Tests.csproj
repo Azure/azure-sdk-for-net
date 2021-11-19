@@ -14,7 +14,4 @@
     <ProjectReference Include="..\..\Microsoft.Azure.WebJobs.Extensions.Storage.Common\tests\Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests.csproj" />
     <ProjectReference Include="..\src\Microsoft.Azure.WebJobs.Extensions.Storage.Queues.csproj" />
   </ItemGroup>
-  <PropertyGroup>
-    <IsOptOutOfGlobalTestTimeout>true</IsOptOutOfGlobalTestTimeout>
-  </PropertyGroup>
 </Project>

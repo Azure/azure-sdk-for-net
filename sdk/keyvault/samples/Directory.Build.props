@@ -20,7 +20,4 @@
     <InheritDocEnabled>false</InheritDocEnabled>
     <IsShippingLibrary>false</IsShippingLibrary>
   </PropertyGroup>
-  <PropertyGroup>
-    <IsOptOutOfGlobalTestTimeout>true</IsOptOutOfGlobalTestTimeout>
-  </PropertyGroup>
 </Project>

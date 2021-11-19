@@ -36,7 +36,4 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <PropertyGroup>
-    <IsOptOutOfGlobalTestTimeout>true</IsOptOutOfGlobalTestTimeout>
-  </PropertyGroup>
 </Project>

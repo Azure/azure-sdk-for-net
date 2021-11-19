@@ -9,11 +9,11 @@ using NUnit.Framework.Internal.Commands;
 
 namespace Azure.Core.TestFramework
 {
+    [AttributeUsage(AttributeTargets.Method)]
     /// <summary>
     /// This attribute replaces the [Test] attribute and will dynamically re-record recorded tests on failure.
     /// Tests that are re-recorded will complete with a error status and indicate that copying the updated recording to SessionRecords is needed.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Method)]
     public class RecordedTestAttribute : TestAttribute, IWrapSetUpTearDown
     {
         public TestCommand Wrap(TestCommand command)
@@ -23,16 +23,14 @@ namespace Azure.Core.TestFramework
             {
                 test = test.Parent;
             }
-            if (test.Fixture is RecordedTestBase fixture )
+            if (test.Fixture is RecordedTestBase fixture && fixture.Mode == RecordedTestMode.Playback)
             {
-                if (fixture.Mode == RecordedTestMode.Playback)
-                {
-                    return new FallbackCommand(command);
-                }
-                // For any Live modes, zero out the Timeout.
-                TestTimeoutHelper.ZeroTestsTimeoutProperty(test.Tests);
+                return new FallbackCommand(command);
             }
-            return command;
+            else
+            {
+                return command;
+            }
         }
 
         private class FallbackCommand : DelegatingTestCommand

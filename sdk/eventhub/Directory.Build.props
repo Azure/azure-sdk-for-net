@@ -11,21 +11,6 @@
     <IsSamplesProject>true</IsSamplesProject>
     <IsTestSupportProject>true</IsTestSupportProject>
   </PropertyGroup>
-  
-  <!-- 
-    OptOut of the global NUnit test timeout for all Event Hubs libraries.
-    
-    The approach that NUnit uses to measure timing for tests does not play well with parallel execution
-    and highly asynchronous code.  Many of the Event Hubs tests run against non-deterministic background
-    operations where timing is longer than normal unit tests and the exact timing is difficult to pin down.
-    
-    Tests currently use an environment variable with cancellation-based timeout control, which allows for
-    more generous timeouts in the CI environments, where resources are often more constrained and 
-    continuations take longer to be scheduled.    
-  -->
-  <PropertyGroup>
-        <IsOptOutOfGlobalTestTimeout>true</IsOptOutOfGlobalTestTimeout>
-  </PropertyGroup>
 
   <!-- Import the common SDK build properties. -->
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., Directory.Build.props))\Directory.Build.props" />
