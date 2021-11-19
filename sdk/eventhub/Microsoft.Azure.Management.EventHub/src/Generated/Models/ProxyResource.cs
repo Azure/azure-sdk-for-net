@@ -22,30 +22,33 @@ namespace Microsoft.Azure.Management.EventHub.Models
     /// Common fields that are returned in the response for all Azure Resource
     /// Manager resources
     /// </remarks>
-    public partial class Resource : IResource
+    public partial class ProxyResource : IResource
     {
         /// <summary>
-        /// Initializes a new instance of the Resource class.
+        /// Initializes a new instance of the ProxyResource class.
         /// </summary>
-        public Resource()
+        public ProxyResource()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Resource class.
+        /// Initializes a new instance of the ProxyResource class.
         /// </summary>
         /// <param name="id">Fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
         /// <param name="type">The type of the resource. E.g.
-        /// "Microsoft.Compute/virtualMachines" or
-        /// "Microsoft.Storage/storageAccounts"</param>
-        public Resource(string id = default(string), string name = default(string), string type = default(string))
+        /// "Microsoft.EventHub/Namespaces" or
+        /// "Microsoft.EventHub/Namespaces/EventHubs"</param>
+        /// <param name="location">The geo-location where the resource
+        /// lives</param>
+        public ProxyResource(string id = default(string), string name = default(string), string type = default(string), string location = default(string))
         {
             Id = id;
             Name = name;
             Type = type;
+            Location = location;
             CustomInit();
         }
 
@@ -68,12 +71,17 @@ namespace Microsoft.Azure.Management.EventHub.Models
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets the type of the resource. E.g.
-        /// "Microsoft.Compute/virtualMachines" or
-        /// "Microsoft.Storage/storageAccounts"
+        /// Gets the type of the resource. E.g. "Microsoft.EventHub/Namespaces"
+        /// or "Microsoft.EventHub/Namespaces/EventHubs"
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }
+
+        /// <summary>
+        /// Gets the geo-location where the resource lives
+        /// </summary>
+        [JsonProperty(PropertyName = "location")]
+        public string Location { get; private set; }
 
     }
 }
