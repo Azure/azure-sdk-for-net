@@ -19,7 +19,8 @@ function New-TemporaryDirectory {
   return $newPath
 }
 
-function InstallRetrieveCodeOwnersTool() {
+function Get-CodeOwnersTool()
+{
   # Check if the retrieve-codeowners tool exsits or not.
   if (Get-Command "$ToolPath/$ToolCommandName" -errorAction SilentlyContinue) {
     return "$ToolPath/$ToolCommandName"
