@@ -221,6 +221,42 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
+        /// <summary> Gets deployment script logs for a given deployment script name. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response<IReadOnlyList<ScriptLogData>>> GetLogsAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("DeploymentScript.GetLogs");
+            scope.Start();
+            try
+            {
+                var response = await _deploymentScriptsRestClient.GetLogsAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value.Value, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets deployment script logs for a given deployment script name. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<IReadOnlyList<ScriptLogData>> GetLogs(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("DeploymentScript.GetLogs");
+            scope.Start();
+            try
+            {
+                var response = _deploymentScriptsRestClient.GetLogs(Id.ResourceGroupName, Id.Name, cancellationToken);
+                return Response.FromValue(response.Value.Value, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         #region ScriptLog
 
         /// <summary> Gets an object representing a ScriptLog along with the instance operations that can be performed on it in the DeploymentScript. </summary>
