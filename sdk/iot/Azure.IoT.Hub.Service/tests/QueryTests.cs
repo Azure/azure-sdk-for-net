@@ -64,11 +64,8 @@ namespace Azure.IoT.Hub.Service.Tests
 
                     tryCount++;
 
-                    if (Mode != RecordedTestMode.Playback)
-                    {
-                        // Adding a delay to account for query cache sync.
-                        await Task.Delay(TimeSpan.FromSeconds(5)).ConfigureAwait(false);
-                    }
+                    // Adding a delay to account for query cache sync.
+                    await Delay(5000);
                 }
 
                 twinsFound.Count.Should().Be(1);
@@ -131,11 +128,8 @@ namespace Azure.IoT.Hub.Service.Tests
 
                     tryCount++;
 
-                    if (Mode != RecordedTestMode.Playback)
-                    {
-                        // Adding a delay to account for query cache sync.
-                        await Task.Delay(TimeSpan.FromSeconds(5)).ConfigureAwait(false);
-                    }
+                    // Adding a delay to account for query cache sync.
+                    await Delay(5000);
                 }
 
                 twinsFound.Count.Should().Be(1);
