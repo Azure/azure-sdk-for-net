@@ -100,12 +100,12 @@ namespace Azure.Core.TestFramework
                 fileName);
         }
 
-        public override void TearDown()
+        public override void GlobalTimeoutTearDown()
         {
             // Only enforce the timeout on playback.
             if (Mode == RecordedTestMode.Playback)
             {
-                base.TearDown();
+                base.GlobalTimeoutTearDown();
             }
         }
 

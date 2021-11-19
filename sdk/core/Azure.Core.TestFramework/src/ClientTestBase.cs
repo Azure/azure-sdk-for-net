@@ -32,7 +32,7 @@ namespace Azure.Core.TestFramework
         }
 
         [TearDown]
-        public virtual void TearDown()
+        public virtual void GlobalTimeoutTearDown()
         {
             var context = TestContext.CurrentContext;
             var executionContext = executionContextField.GetValue(context) as TestExecutionContext;
