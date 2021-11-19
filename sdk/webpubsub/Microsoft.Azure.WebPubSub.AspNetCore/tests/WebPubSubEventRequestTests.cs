@@ -56,17 +56,39 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
         [Test]
         public void TestEncodeAndDecodeState()
         {
+            var customizeClass = new StateTestClass();
             var state = new Dictionary<string, object>
             {
-                { "aaa", "aaa" },
-                { "bbb", "bbb" }
+                { "string", "aaa" },
+                { "int", 123 },
+                { "customized", customizeClass }
             };
 
             var encoded = state.EncodeConnectionStates();
 
             var decoded = encoded.DecodeConnectionStates();
 
-            Assert.AreEqual(state, decoded);
+            Assert.NotNull(decoded);
+            Assert.AreEqual(3, decoded.Count);
+
+            // put to connectionContext for validation.
+            var connectionContext = new WebPubSubConnectionContext(eventType: WebPubSubEventType.System, null, null, null, states: decoded);
+
+            JsonElement element;
+            Assert.True(connectionContext.States["string"] is JsonElement);
+            element = (JsonElement)connectionContext.States["string"];
+            Assert.AreEqual("aaa", JsonSerializer.Deserialize<string>(element.GetRawText()));
+
+            Assert.True(connectionContext.States["int"] is JsonElement);
+            element = (JsonElement)connectionContext.States["int"];
+            Assert.AreEqual(123, JsonSerializer.Deserialize<int>(element.GetRawText()));
+
+            Assert.True(connectionContext.States["customized"] is JsonElement);
+            element = (JsonElement)connectionContext.States["customized"];
+            var resultClass = JsonSerializer.Deserialize<StateTestClass>(element.GetRawText());
+            Assert.AreEqual(customizeClass.Timestamp, resultClass.Timestamp);
+            Assert.AreEqual(customizeClass.Title, resultClass.Title);
+            Assert.AreEqual(customizeClass.Version, resultClass.Version);
         }
 
         [Test]
@@ -356,6 +378,29 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             return type == WebPubSubEventType.User ?
                 $"{Constants.Headers.CloudEvents.TypeUserPrefix}{eventName}" :
                 $"{Constants.Headers.CloudEvents.TypeSystemPrefix}{eventName}";
+        }
+
+        private sealed class StateTestClass
+        {
+            public DateTime Timestamp { get; set; }
+
+            public string Title { get; set; }
+
+            public int Version { get; set; }
+
+            public StateTestClass()
+            {
+                Timestamp = DateTime.Parse("2021-11-10");
+                Title = "GA";
+                Version = 1;
+            }
+
+            public StateTestClass(DateTime timestamp, string title, int version)
+            {
+                Timestamp = timestamp;
+                Title = title;
+                Version = version;
+            }
         }
     }
 }

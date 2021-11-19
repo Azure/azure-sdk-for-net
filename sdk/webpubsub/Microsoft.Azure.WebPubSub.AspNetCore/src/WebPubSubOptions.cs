@@ -9,7 +9,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
     public class WebPubSubOptions
     {
         /// <summary>
-        /// An service endpoint represents the Web PubSub service.
+        /// A service endpoint represents the Web PubSub service.
         /// </summary>
         public ServiceEndpoint ServiceEndpoint { get; set; }
     }

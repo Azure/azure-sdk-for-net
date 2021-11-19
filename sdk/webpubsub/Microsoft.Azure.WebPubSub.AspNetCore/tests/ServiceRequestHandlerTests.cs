@@ -106,7 +106,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             Assert.NotNull(states);
             var updated = states[0].DecodeConnectionStates();
             Assert.AreEqual(1, updated.Count);
-            Assert.AreEqual("10", updated["counter"]);
+            Assert.AreEqual("10", updated["counter"].ToString());
 
             // 2 to add a new state.
             context = PrepareHttpContext(httpMethod: HttpMethods.Post, type: WebPubSubEventType.User, eventName: "message", body: "2", connectionState: initState);
@@ -117,7 +117,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             Assert.NotNull(states);
             updated = states[0].DecodeConnectionStates();
             Assert.AreEqual(2, updated.Count);
-            Assert.AreEqual("new", updated["new"]);
+            Assert.AreEqual("new", updated["new"].ToString());
 
             // 3 to clear states
             context = PrepareHttpContext(httpMethod: HttpMethods.Post, type: WebPubSubEventType.User, eventName: "message", body: "3", connectionState: initState);
@@ -134,7 +134,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             Assert.NotNull(states);
             updated = states[0].DecodeConnectionStates();
             Assert.AreEqual(2, updated.Count);
-            Assert.AreEqual("new1", updated["new1"]);
+            Assert.AreEqual("new1", updated["new1"].ToString());
         }
 
         [Test]

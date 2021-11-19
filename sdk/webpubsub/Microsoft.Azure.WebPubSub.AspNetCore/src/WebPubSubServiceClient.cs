@@ -22,13 +22,11 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
 
         internal WebPubSubServiceClient(string connectionString, WebPubSubServiceClientOptions options)
             : base(connectionString, typeof(THub).Name, options)
-        {
-        }
+        { }
 
         internal WebPubSubServiceClient(Uri endpoint, TokenCredential credential, WebPubSubServiceClientOptions options)
             : base(endpoint, typeof(THub).Name, credential, options)
-        {
-        }
+        { }
 
         internal WebPubSubServiceClient(Uri endpoint, AzureKeyCredential credential, WebPubSubServiceClientOptions options)
             : base(endpoint, typeof(THub).Name, credential, options)
