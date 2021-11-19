@@ -5,7 +5,8 @@ param (
   [string]$ToolVersion = "1.0.0-dev.20211118.20", # Placeholder. Will update in next PR
   [string]$ToolPath = "$env:AGENT_TOOLSDIRECTORY", # The place to check the tool existence. Put $(Agent.ToolsDirectory) as default
   [string]$DevOpsFeed = "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json", # DevOp tool feeds.
-  [string]$VsoVariable = "" # Option of write code owners into devop variable
+  [string]$VsoVariable = "", # Option of write code owners into devop variable
+  [switch]$Test  #Run test functions against the script logic
 )
 
 $ToolCommandName = "retrieve-codeowners"
@@ -39,7 +40,7 @@ function Get-CodeOwners ([string] $Command)
     $CodeOwnerFileLocation = Join-Path $RootDirectory ".github/CODEOWNERS"
   }
   
-  $codeOwnersString = & $Command --target-directory "$TargetDirectory" --code-owner-file-path "$CodeOwnerFileLocation" 
+  $codeOwnersString = & $command --target-directory $targetDirectory --code-owner-file-path $CodeOwnerFileLocation
   # Failed at the command of fetching code owners.
   if ($LASTEXITCODE -ne 0) {
     return ""
@@ -47,7 +48,7 @@ function Get-CodeOwners ([string] $Command)
   
   $codeOwnersJson = $codeOwnersString | ConvertFrom-Json
   if (!$codeOwnersJson) {
-    Write-Host "No code owners returned from the path: $TargetDirectory"
+    Write-Host "No code owners returned from the path: $targetDirectory"
     return ""
   }
   
@@ -55,11 +56,29 @@ function Get-CodeOwners ([string] $Command)
     $codeOwners = $codeOwnersJson.Owners -join ","
     Write-Host "##vso[task.setvariable variable=$VsoVariable;]$codeOwners"
   }
-  
+
   return $codeOwnersJson.Owners
 }
 
-# Install the tool first
-$output = InstallRetrieveCodeOwnersTool
 
-return GetCodeOwners -Command $output
+function TestGetCodeOwner() {
+  # Install the tool first
+  $output = InstallRetrieveCodeOwnersTool
+  $actualReturn = GetCodeOwners -command $output 
+  $expectReturn = @("person1", "person2")
+  for ($i = 0; $i -lt $expectReturn.Length; $i++) {
+    if ($actualReturn[$i] -ne $expectReturn[$i]) {
+      Write-Error "Expect result $expectReturn[$i] is different than actual result $actualReturn[$i]."
+      exit
+    }
+  }
+}
+
+if($Test) {
+  TestGetCodeOwner
+}
+else {
+  # Install the tool first
+  $output = InstallRetrieveCodeOwnersTool
+  return GetCodeOwners -command $output
+}
