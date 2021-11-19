@@ -19,7 +19,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 {
     public class JObjectTests
     {
-        private readonly JsonSerializer _serializer = new WebPubSubJsonSerializer().Serializer;
+        private readonly JsonSerializer _serializer = WebPubSubJsonSerializer.Serializer;
 
         [TestCase(nameof(SendToAllAction))]
         [TestCase(nameof(SendToConnectionAction))]

@@ -24,7 +24,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         public override void WriteJson(JsonWriter writer, WebPubSubContext value, JsonSerializer serializer)
         {
             // overwrite customers json converter.
-            serializer = new WebPubSubJsonSerializer().Serializer;
+            serializer = WebPubSubJsonSerializer.Serializer;
             serializer.Converters.Add(new HttpResponseMessageJsonConverter());
             // Request is using System.Json, use string as bridge to convert.
             var request = ConvertString(value.Request);

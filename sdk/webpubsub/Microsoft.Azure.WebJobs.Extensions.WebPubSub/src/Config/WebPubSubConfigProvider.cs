@@ -42,7 +42,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             _nameResolver = nameResolver;
             _configuration = configuration;
             _dispatcher = new WebPubSubTriggerDispatcher(_logger, _options);
-            _serializer = new WebPubSubJsonSerializer().Serializer;
+            _serializer = WebPubSubJsonSerializer.Serializer;
         }
 
         public void Initialize(ExtensionConfigContext context)

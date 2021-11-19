@@ -151,8 +151,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             if (!string.IsNullOrEmpty(connectionStates))
             {
                 var states = new Dictionary<string, object>();
-                var parsedStates = Encoding.UTF8.GetString(Convert.FromBase64String(connectionStates));
-                using var statesObj = JsonDocument.Parse(parsedStates);
+                var statesObj = JsonDocument.Parse(Convert.FromBase64String(connectionStates));
                 foreach (var item in statesObj.RootElement.EnumerateObject())
                 {
                     states.Add(item.Name, item.Value);

@@ -149,7 +149,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             {
                 _parameter = parameter ?? throw new ArgumentNullException(nameof(parameter));
                 _triggerEvent = triggerEvent ?? throw new ArgumentNullException(nameof(triggerEvent));
-                _serializer = new WebPubSubJsonSerializer().Serializer;
+                _serializer = WebPubSubJsonSerializer.Serializer;
             }
 
             public Task<object> GetValueAsync()

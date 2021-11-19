@@ -10,23 +10,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
     internal class WebPubSubJsonSerializer
     {
-        private readonly JsonSerializer _serializer;
-
-        public JsonSerializer Serializer => _serializer;
-
-        public WebPubSubJsonSerializer()
-        {
-            var settings = new JsonSerializerSettings
+        public static JsonSerializer Serializer = JsonSerializer.Create(
+            new JsonSerializerSettings
             {
                 Converters = new List<JsonConverter>
-                {
-                    new StringEnumConverter(),
-                    new BinaryDataJsonConverter(),
-                    new StateDictionaryJsonConverter(),
-                },
+                    {
+                        new StringEnumConverter(),
+                        new BinaryDataJsonConverter(),
+                        new JsonElementJsonConverter(),
+                    },
                 ContractResolver = new CamelCasePropertyNamesContractResolver()
-            };
-            _serializer = JsonSerializer.Create(settings);
-        }
+            });
     }
 }
