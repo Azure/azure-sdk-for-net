@@ -13,7 +13,7 @@ $ToolCommandName = "retrieve-codeowners"
 
 function Get-CodeOwnersTool()
 {
-  $command = Join-Path $ToolPath $ToolCommandName
+  $command = Join-Path $ToolPath "retrieve-codeowners"
   # Check if the retrieve-codeowners tool exsits or not.
   if (Get-Command $command -errorAction SilentlyContinue) {
     return $command
