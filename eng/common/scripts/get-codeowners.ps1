@@ -9,8 +9,6 @@ param (
   [switch]$Test  #Run test functions against the script logic
 )
 
-$ToolCommandName = "retrieve-codeowners"
-
 function Get-CodeOwnersTool()
 {
   $command = Join-Path $ToolPath "retrieve-codeowners"
@@ -74,7 +72,6 @@ function TestGetCodeOwner([string]$targetDirectory, [string]$codeOwnerFileLocati
       exit 1
     }
   }
-  exit 0
 }
 
 if($Test) {
