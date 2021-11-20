@@ -21,7 +21,7 @@ function Get-CodeOwnersTool()
   if (!(Test-Path $ToolPath)) {
     New-Item -ItemType Directory -Path $ToolPath | Out-Null
   }
-  Write-Warning "Installing the ToolCommandName tool under $ToolPath... "
+  Write-Host "Installing the retrieve-codeowners tool under $ToolPath... "
   dotnet tool install --tool-path $ToolPath --add-source $DevOpsFeed --version $ToolVersion "Azure.Sdk.Tools.RetrieveCodeOwners" | Out-Null
 
   # Test to see if the tool properly installed.
