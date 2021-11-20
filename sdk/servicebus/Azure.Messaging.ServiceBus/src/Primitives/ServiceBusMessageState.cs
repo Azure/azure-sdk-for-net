@@ -4,7 +4,7 @@
 namespace Azure.Messaging.ServiceBus
 {
     /// <summary>Represents the message state of the <see cref="ServiceBusReceivedMessage"/></summary>
-    public enum MessageState
+    public enum ServiceBusMessageState
     {
         /// <summary>Specifies an active message state.</summary>
         Active = 0,

@@ -471,9 +471,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
                             break;
                         case AmqpMessageConstants.MessageStateName:
                             int enumValue = (int)pair.Value;
-                            if (Enum.IsDefined(typeof(MessageState), enumValue))
+                            if (Enum.IsDefined(typeof(ServiceBusMessageState), enumValue))
                             {
-                                annotatedMessage.MessageAnnotations[AmqpMessageConstants.MessageStateName] = (MessageState)enumValue;
+                                annotatedMessage.MessageAnnotations[AmqpMessageConstants.MessageStateName] = (ServiceBusMessageState)enumValue;
                             }
                             break;
                         default:

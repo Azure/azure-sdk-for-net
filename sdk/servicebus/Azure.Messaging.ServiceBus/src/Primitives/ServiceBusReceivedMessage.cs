@@ -414,7 +414,7 @@ namespace Azure.Messaging.ServiceBus
         ///    State of the message can be Active or Deferred or Scheduled. Deferred messages have Deferred state,
         ///    scheduled messages have Scheduled state, all other messages have Active state.
         /// </remarks>
-        public MessageState State
+        public ServiceBusMessageState State
         {
             get
             {
@@ -422,7 +422,7 @@ namespace Azure.Messaging.ServiceBus
                     AmqpMessageConstants.MessageStateName,
                     out object val))
                 {
-                    return (MessageState)val;
+                    return (ServiceBusMessageState)val;
                 }
 
                 return default;
