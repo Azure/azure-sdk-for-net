@@ -76,7 +76,7 @@ namespace Azure
         /// with an error message, HTTP status code, error code obtained from the specified response.</summary>
         /// <param name="response">The response to obtain error details from.</param>
         public RequestFailedException(Response response)
-            : this(response.Status, response.ResponseClassifier!.GetErrorDetails(response))
+            : this(response.Status, ResponseClassifier.GetErrorDetails(response))
         {
         }
 

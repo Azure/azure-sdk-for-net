@@ -61,12 +61,10 @@ namespace Azure.Core
             return statusKind == 4 || statusKind == 5;
         }
 
-        internal (string Message, string? ErrorCode) GetErrorDetails(Response response)
+        internal static (string Message, string? ErrorCode) GetErrorDetails(Response response)
         {
             string? message = null;
             string? errorCode = null;
-
-            MessageSanitizer ??= ClientDiagnostics.CreateMessageSanitizer(new DiagnosticsOptions());
 
             string? content = ClientDiagnostics.ReadContentAsync(response, false).EnsureCompleted();
             ClientDiagnostics.ExtractAzureErrorContent(content, ref message, ref errorCode);
@@ -76,7 +74,7 @@ namespace Azure.Core
                 content,
                 errorCode,
                 null,
-                MessageSanitizer);
+                response.Sanitizer!);
 
             return (exceptionMessage, errorCode);
         }

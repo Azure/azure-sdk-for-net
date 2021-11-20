@@ -88,7 +88,7 @@ namespace Azure
         /// </summary>
         public bool IsError { get; internal set; }
 
-        internal ResponseClassifier? ResponseClassifier { get; set; }
+        internal HttpMessageSanitizer? Sanitizer { get; set; }
 
         /// <summary>
         /// Returns header value if the header is stored in the collection. If header has multiple values they are going to be joined with a comma.

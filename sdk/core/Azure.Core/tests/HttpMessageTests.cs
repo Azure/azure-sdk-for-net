@@ -11,7 +11,7 @@ namespace Azure.Core.Tests
         [Test]
         public void TryGetPropertyReturnsFalseIfNotExist()
         {
-            HttpMessage message = new HttpMessage(new MockRequest(), new ResponseClassifier());
+            HttpMessage message = new HttpMessage(new MockRequest(), ResponseClassifier.Shared);
 
             Assert.False(message.TryGetProperty("someName", out _));
         }
@@ -19,7 +19,7 @@ namespace Azure.Core.Tests
         [Test]
         public void TryGetPropertyReturnsValueIfSet()
         {
-            HttpMessage message = new HttpMessage(new MockRequest(), new ResponseClassifier());
+            HttpMessage message = new HttpMessage(new MockRequest(), ResponseClassifier.Shared);
             message.SetProperty("someName", "value");
 
             Assert.True(message.TryGetProperty("someName", out object value));
@@ -29,7 +29,7 @@ namespace Azure.Core.Tests
         [Test]
         public void TryGetPropertyIsCaseSensitive()
         {
-            HttpMessage message = new HttpMessage(new MockRequest(), new ResponseClassifier());
+            HttpMessage message = new HttpMessage(new MockRequest(), ResponseClassifier.Shared);
             message.SetProperty("someName", "value");
 
             Assert.False(message.TryGetProperty("SomeName", out _));
