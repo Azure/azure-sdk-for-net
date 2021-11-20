@@ -114,11 +114,11 @@
           "groupCallId": "f8c9bb0a-25ec-408d-b335-266dcc0c0c9a",
           "kind": "groupCallLocator"
         },
+        "callbackUri": "https://dummy.ngrok.io/api/incident/callback?SecretKey=helloworld",
         "audioFileUri": "https://dummy.ngrok.io/audio/sample-message.wav",
         "loop": false,
         "operationContext": "de346f03-7f8d-41ab-a232-cc5e14990769",
-        "audioFileId": "ebb1d98d-fd86-4204-800c-f7bdfc2e515c",
-        "callbackUri": "https://dummy.ngrok.io/api/incident/callback?SecretKey=helloworld"
+        "audioFileId": "ebb1d98d-fd86-4204-800c-f7bdfc2e515c"
       },
       "StatusCode": 202,
       "ResponseHeaders": {

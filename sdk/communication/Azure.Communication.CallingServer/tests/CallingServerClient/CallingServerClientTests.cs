@@ -26,7 +26,7 @@ namespace Azure.Communication.CallingServer.Tests
                                                 "\"operationId\": \"dummyId\"," +
                                                 "\"status\": \"running\"," +
                                                 "\"operationContext\": \"dummyOperationContext\"," +
-                                                "\"resultInfo\": {" +
+                                                "\"resultDetails\": {" +
                                                 "\"code\": 200," +
                                                 "\"subcode\": 200," +
                                                 "\"message\": \"dummyMessage\"" +
@@ -62,7 +62,17 @@ namespace Azure.Communication.CallingServer.Tests
                                                 "}" +
                                                 "]";
 
-        private const string GetParticipantResultPayload = GetParticipantsResultPayload;
+        private const string GetParticipantResultPayload =
+                                                "{" +
+                                                    "\"identifier\": {" +
+                                                        "\"rawId\": \"dummyRawId\"," +
+                                                        "\"communicationUser\": {" +
+                                                                "\"id\": \"0000000d-5a5f-2db9-ccd7-44482200049a\"" +
+                                                            "}" +
+                                                    "}," +
+                                                    "\"participantId\": \"dummyParticipantId\"," +
+                                                    "\"isMuted\": false" +
+                                                "}";
 
         private static CallLocator CallLocator = new ServerCallLocator(ServerCallId);
 
@@ -803,7 +813,7 @@ namespace Azure.Communication.CallingServer.Tests
             CallingServerClient serverCallRestClient = CreateMockCallingServerClient(200, responseContent: GetParticipantResultPayload);
 
             var result = await serverCallRestClient.GetParticipantAsync(CallLocator, participant);
-            VerifyGetParticipantsResult(result.Value.ToList());
+            VerifyGetParticipantResult(result.Value);
         }
 
         [TestCaseSource(nameof(TestData_Participant))]
@@ -812,7 +822,7 @@ namespace Azure.Communication.CallingServer.Tests
             CallingServerClient serverCallRestClient = CreateMockCallingServerClient(200, responseContent: GetParticipantResultPayload);
 
             var result = serverCallRestClient.GetParticipant(CallLocator, participant);
-            VerifyGetParticipantsResult(result.Value.ToList());
+            VerifyGetParticipantResult(result.Value);
         }
 
         [TestCaseSource(nameof(TestData_Participant))]
@@ -843,20 +853,20 @@ namespace Azure.Communication.CallingServer.Tests
         }
 
         [TestCaseSource(nameof(TestData_RedirectCall))]
-        public async Task RedirectCallAsync_Return200OK(string incomingCallContext, IEnumerable<CommunicationIdentifier> targets, Uri callbackUri, int timeoutInSeconds)
+        public async Task RedirectCallAsync_Return200OK(string incomingCallContext, CommunicationIdentifier target)
         {
             CallingServerClient serverCallRestClient = CreateMockCallingServerClient(202);
 
-            var response = await serverCallRestClient.RedirectCallAsync(incomingCallContext, targets, callbackUri, timeoutInSeconds);
+            var response = await serverCallRestClient.RedirectCallAsync(incomingCallContext, target);
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.Status);
         }
 
         [TestCaseSource(nameof(TestData_RedirectCall))]
-        public void RedirectCall_Return200OK(string incomingCallContext, IEnumerable<CommunicationIdentifier> targets, Uri callbackUri, int timeoutInSeconds)
+        public void RedirectCall_Return200OK(string incomingCallContext, CommunicationIdentifier target)
         {
             CallingServerClient serverCallRestClient = CreateMockCallingServerClient(202);
 
-            var response = serverCallRestClient.RedirectCall(incomingCallContext, targets, callbackUri, timeoutInSeconds);
+            var response = serverCallRestClient.RedirectCall(incomingCallContext, target);
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.Status);
         }
 
@@ -879,15 +889,13 @@ namespace Azure.Communication.CallingServer.Tests
         }
 
         [TestCaseSource(nameof(TestData_RedirectCall))]
-        public void RedirectCallAsync_Returns404NotFound(string incomingCallContext, IEnumerable<CommunicationIdentifier> targets, Uri callbackUri, int timeoutInSeconds)
+        public void RedirectCallAsync_Returns404NotFound(string incomingCallContext, CommunicationIdentifier target)
         {
             CallingServerClient serverCallRestClient = CreateMockCallingServerClient(404);
 
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await serverCallRestClient.RedirectCallAsync(
                 incomingCallContext,
-                targets,
-                callbackUri,
-                timeoutInSeconds
+                target
                 ).ConfigureAwait(false));
 
             Assert.NotNull(ex);
@@ -895,15 +903,13 @@ namespace Azure.Communication.CallingServer.Tests
         }
 
         [TestCaseSource(nameof(TestData_RedirectCall))]
-        public void RedirectCall_Returns404NotFound(string incomingCallContext, IEnumerable<CommunicationIdentifier> targets, Uri callbackUri, int timeoutInSeconds)
+        public void RedirectCall_Returns404NotFound(string incomingCallContext, CommunicationIdentifier target)
         {
             CallingServerClient serverCallRestClient = CreateMockCallingServerClient(404);
 
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => serverCallRestClient.RedirectCall(
                 incomingCallContext,
-                targets,
-                callbackUri,
-                timeoutInSeconds
+                target
                 ));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
@@ -1001,8 +1007,14 @@ namespace Azure.Communication.CallingServer.Tests
             Assert.AreEqual("dummyId", response.OperationId);
             Assert.AreEqual(CallingOperationStatus.Running, response.Status);
             Assert.AreEqual("dummyOperationContext", response.OperationContext);
-            Assert.AreEqual(200, response.ResultInfo.Code);
-            Assert.AreEqual("dummyMessage", response.ResultInfo.Message);
+            Assert.AreEqual(200, response.ResultDetails.Code);
+            Assert.AreEqual("dummyMessage", response.ResultDetails.Message);
+        }
+
+        private void VerifyGetParticipantResult(CallParticipant result)
+        {
+            Assert.NotNull(result);
+            Assert.True(result.Identifier is CommunicationUserIdentifier);
         }
 
         private void VerifyGetParticipantsResult(List<CallParticipant> result)
@@ -1166,7 +1178,7 @@ namespace Azure.Communication.CallingServer.Tests
                 new object?[]
                 {
                     new CommunicationUserIdentifier("8:acs:acsuserid"),
-                },
+                }
             };
         }
 
@@ -1177,13 +1189,7 @@ namespace Azure.Communication.CallingServer.Tests
                 new object?[]
                 {
                     "dummyIincomingCallContext",
-                    new CommunicationIdentifier[]
-                    {
-                        new CommunicationUserIdentifier("8:acs:acsuserid"),
-                        new PhoneNumberIdentifier("+14255550123")
-                    },
-                    new Uri("https://bot.contoso.com/callback"),
-                    3,
+                    new CommunicationUserIdentifier("8:acs:acsuserid"),
                 },
             };
         }

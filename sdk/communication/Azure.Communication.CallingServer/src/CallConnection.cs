@@ -185,7 +185,6 @@ namespace Azure.Communication.CallingServer
                     audioFileUri: audioFileUri.AbsoluteUri,
                     loop: options?.Loop ?? false,
                     audioFileId: options?.AudioFileId ?? Guid.NewGuid().ToString(),
-                    callbackUri: options?.CallbackUri?.AbsoluteUri,
                     operationContext: options?.OperationContext ?? Guid.NewGuid().ToString(),
                     cancellationToken: cancellationToken
                     ).ConfigureAwait(false);
@@ -214,7 +213,6 @@ namespace Azure.Communication.CallingServer
                     audioFileUri: audioFileUri.AbsoluteUri,
                     loop: options?.Loop ?? false,
                     audioFileId: options?.AudioFileId ?? Guid.NewGuid().ToString(),
-                    callbackUri: options?.CallbackUri?.AbsoluteUri,
                     operationContext: options?.OperationContext ?? Guid.NewGuid().ToString(),
                     cancellationToken: cancellationToken
                     );
@@ -244,7 +242,6 @@ namespace Azure.Communication.CallingServer
                     participant: CommunicationIdentifierSerializer.Serialize(participant),
                     alternateCallerId: alternateCallerId == null ? null : new PhoneNumberIdentifierModel(alternateCallerId),
                     operationContext: operationContext,
-                    callbackUri: null,
                     cancellationToken: cancellationToken
                     ).ConfigureAwait(false);
             }
@@ -273,7 +270,6 @@ namespace Azure.Communication.CallingServer
                     participant: CommunicationIdentifierSerializer.Serialize(participant),
                     alternateCallerId: alternateCallerId == null ? null : new PhoneNumberIdentifierModel(alternateCallerId),
                     operationContext: operationContext,
-                    callbackUri: null,
                     cancellationToken: cancellationToken
                     );
             }
@@ -484,19 +480,19 @@ namespace Azure.Communication.CallingServer
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>The <see cref="CallParticipant"/>.</returns>
-        public virtual async Task<Response<IEnumerable<CallParticipant>>> GetParticipantAsync(CommunicationIdentifier participant, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CallParticipant>> GetParticipantAsync(CommunicationIdentifier participant, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(GetParticipantAsync)}");
             scope.Start();
             try
             {
-                Response<IReadOnlyList<CallParticipantInternal>> callParticipantsInternal = await RestClient.GetParticipantAsync(
+                Response<CallParticipantInternal> callParticipantsInternal = await RestClient.GetParticipantAsync(
                                         callConnectionId: CallConnectionId,
                                         identifier: CommunicationIdentifierSerializer.Serialize(participant),
                                         cancellationToken: cancellationToken
                                         ).ConfigureAwait(false);
 
-                return Response.FromValue(callParticipantsInternal.Value.Select(c => new CallParticipant(c)), callParticipantsInternal.GetRawResponse());
+                return Response.FromValue(new CallParticipant(callParticipantsInternal.Value), callParticipantsInternal.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -510,18 +506,18 @@ namespace Azure.Communication.CallingServer
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>The <see cref="CallParticipant"/>.</returns>
-        public virtual Response<IEnumerable<CallParticipant>> GetParticipant(CommunicationIdentifier participant, CancellationToken cancellationToken = default)
+        public virtual Response<CallParticipant> GetParticipant(CommunicationIdentifier participant, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(GetParticipant)}");
             scope.Start();
             try
             {
-                Response<IReadOnlyList<CallParticipantInternal>> callParticipantsInternal = RestClient.GetParticipant(
+                Response<CallParticipantInternal> callParticipantsInternal = RestClient.GetParticipant(
                                         callConnectionId: CallConnectionId,
                                         identifier: CommunicationIdentifierSerializer.Serialize(participant),
                                         cancellationToken: cancellationToken);
 
-                return Response.FromValue(callParticipantsInternal.Value.Select(c => new CallParticipant(c)), callParticipantsInternal.GetRawResponse());
+                return Response.FromValue(new CallParticipant(callParticipantsInternal.Value), callParticipantsInternal.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -590,7 +586,6 @@ namespace Azure.Communication.CallingServer
                                         audioFileUri: audioFileUri.AbsoluteUri,
                                         loop: options?.Loop ?? false,
                                         audioFileId: options?.AudioFileId,
-                                        callbackUri: options?.CallbackUri?.AbsoluteUri,
                                         operationContext: options?.OperationContext,
                                         cancellationToken: cancellationToken
                                         ).ConfigureAwait(false);
@@ -620,7 +615,6 @@ namespace Azure.Communication.CallingServer
                                         audioFileUri: audioFileUri.AbsoluteUri,
                                         loop: options?.Loop ?? false,
                                         audioFileId: options?.AudioFileId,
-                                        callbackUri: options?.CallbackUri?.AbsoluteUri,
                                         operationContext: options?.OperationContext,
                                         cancellationToken: cancellationToken);
             }

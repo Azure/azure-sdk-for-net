@@ -27,11 +27,6 @@ namespace Azure.Communication.CallingServer.Models
                 writer.WritePropertyName("operationContext");
                 writer.WriteStringValue(OperationContext);
             }
-            if (Optional.IsDefined(CallbackUri))
-            {
-                writer.WritePropertyName("callbackUri");
-                writer.WriteStringValue(CallbackUri);
-            }
             writer.WriteEndObject();
         }
     }

@@ -22,7 +22,7 @@ namespace Azure.Communication.CallingServer.Tests
                                                 "\"operationId\": \"dummyId\"," +
                                                 "\"status\": \"running\"," +
                                                 "\"operationContext\": \"dummyOperationContext\"," +
-                                                "\"resultInfo\": {" +
+                                                "\"resultDetails\": {" +
                                                 "\"code\": 200," +
                                                 "\"subcode\": 200," +
                                                 "\"message\": \"dummyMessage\"" +
@@ -37,7 +37,7 @@ namespace Azure.Communication.CallingServer.Tests
                                                 "\"operationId\": \"dummyId\"," +
                                                 "\"status\": \"running\"," +
                                                 "\"operationContext\": \"dummyOperationContext\"," +
-                                                "\"resultInfo\": {" +
+                                                "\"resultDetails\": {" +
                                                 "\"code\": 200," +
                                                 "\"subcode\": 200," +
                                                 "\"message\": \"dummyMessage\"" +
@@ -105,7 +105,17 @@ namespace Azure.Communication.CallingServer.Tests
                                                 "}" +
                                                 "]";
 
-        private const string GetParticipantResultPayload = GetParticipantsResultPayload;
+        private const string GetParticipantResultPayload =
+                                                "{" +
+                                                    "\"identifier\": {" +
+                                                        "\"rawId\": \"dummyRawId\"," +
+                                                        "\"communicationUser\": {" +
+                                                                "\"id\": \"0000000d-5a5f-2db9-ccd7-44482200049a\"" +
+                                                            "}" +
+                                                    "}," +
+                                                    "\"participantId\": \"dummyParticipantId\"," +
+                                                    "\"isMuted\": false" +
+                                                "}";
 
         private const string CreateAudioRoutingGroupResultPayload = "{" +
                                                                 "\"audioRoutingGroupId\": \"dummyAudioRoutingGroupId\"" +
@@ -774,7 +784,7 @@ namespace Azure.Communication.CallingServer.Tests
             var participant = new CommunicationUserIdentifier(participantUserId);
 
             var result = await callConnection.GetParticipantAsync(participant).ConfigureAwait(false);
-            VerifyGetParticipantsResult(result.Value.ToList());
+            VerifyGetParticipantResult(result.Value);
         }
 
         [TestCaseSource(nameof(TestData_ParticipantId))]
@@ -784,7 +794,7 @@ namespace Azure.Communication.CallingServer.Tests
             var participant = new CommunicationUserIdentifier(participantUserId);
 
             var result = callConnection.GetParticipant(participant);
-            VerifyGetParticipantsResult(result.Value.ToList());
+            VerifyGetParticipantResult(result.Value);
         }
 
         [TestCaseSource(nameof(TestData_ParticipantId))]
@@ -1160,16 +1170,16 @@ namespace Azure.Communication.CallingServer.Tests
             Assert.AreEqual("dummyId", result.OperationId);
             Assert.AreEqual(CallingOperationStatus.Running, result.Status);
             Assert.AreEqual("dummyOperationContext", result.OperationContext);
-            Assert.AreEqual(200, result.ResultInfo.Code);
-            Assert.AreEqual("dummyMessage", result.ResultInfo.Message);
+            Assert.AreEqual(200, result.ResultDetails.Code);
+            Assert.AreEqual("dummyMessage", result.ResultDetails.Message);
         }
         private void VerifyTransferCallResult(TransferCallResult result)
         {
             Assert.AreEqual("dummyId", result.OperationId);
             Assert.AreEqual(CallingOperationStatus.Running, result.Status);
             Assert.AreEqual("dummyOperationContext", result.OperationContext);
-            Assert.AreEqual(200, result.ResultInfo.Code);
-            Assert.AreEqual("dummyMessage", result.ResultInfo.Message);
+            Assert.AreEqual(200, result.ResultDetails.Code);
+            Assert.AreEqual("dummyMessage", result.ResultDetails.Message);
         }
 
         private void VerifyGetCallResult(CallConnectionProperties result)
@@ -1183,9 +1193,10 @@ namespace Azure.Communication.CallingServer.Tests
             Assert.True(result.CallLocator is ServerCallLocator);
         }
 
-        private void VerifyGetParticipantResult(List<CallParticipant> result)
+        private void VerifyGetParticipantResult(CallParticipant result)
         {
-            VerifyGetParticipantsResult(result);
+            Assert.NotNull(result);
+            Assert.True(result.Identifier is CommunicationUserIdentifier);
         }
 
         private void VerifyGetParticipantsResult(List<CallParticipant> result)
