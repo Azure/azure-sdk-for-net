@@ -12,7 +12,7 @@ namespace Azure.Core
     /// </summary>
     public class ResponseClassifier
     {
-        internal HttpMessageSanitizer? MessageSanitizer { get; set; }
+        internal static ResponseClassifier Shared { get; } = new();
 
         /// <summary>
         /// Specifies if the request contained in the <paramref name="message"/> should be retried.

@@ -1,5 +1,7 @@
 # Add 'AzsdkResourceType' member to outputs since actual output types have changed over the years.
 
+#Requires -Modules @{ModuleName='Az.KeyVault'; ModuleVersion='3.4.1'}
+
 function Get-PurgeableGroupResources {
   param (
     [Parameter(Mandatory=$true, Position=0)]
