@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using Azure.Communication;
 
 namespace Azure.Communication.CallingServer
@@ -17,30 +15,26 @@ namespace Azure.Communication.CallingServer
     {
         /// <summary> Initializes a new instance of RedirectCallRequest. </summary>
         /// <param name="incomingCallContext"> The context associated with the call. </param>
-        /// <param name="targets"> The target identity to redirect the call to. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="incomingCallContext"/> or <paramref name="targets"/> is null. </exception>
-        public RedirectCallRequest(string incomingCallContext, IEnumerable<CommunicationIdentifierModel> targets)
+        /// <param name="target"> The target identity to redirect the call to. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="incomingCallContext"/> or <paramref name="target"/> is null. </exception>
+        public RedirectCallRequest(string incomingCallContext, CommunicationIdentifierModel target)
         {
             if (incomingCallContext == null)
             {
                 throw new ArgumentNullException(nameof(incomingCallContext));
             }
-            if (targets == null)
+            if (target == null)
             {
-                throw new ArgumentNullException(nameof(targets));
+                throw new ArgumentNullException(nameof(target));
             }
 
             IncomingCallContext = incomingCallContext;
-            Targets = targets.ToList();
+            Target = target;
         }
 
         /// <summary> The context associated with the call. </summary>
         public string IncomingCallContext { get; }
         /// <summary> The target identity to redirect the call to. </summary>
-        public IList<CommunicationIdentifierModel> Targets { get; }
-        /// <summary> The callback uri. </summary>
-        public string CallbackUri { get; set; }
-        /// <summary> The timeout for the redirect in seconds. </summary>
-        public int? TimeoutInSeconds { get; set; }
+        public CommunicationIdentifierModel Target { get; }
     }
 }

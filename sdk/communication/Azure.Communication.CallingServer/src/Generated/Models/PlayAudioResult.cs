@@ -21,13 +21,13 @@ namespace Azure.Communication.CallingServer
         /// <param name="operationId"> The operation id. </param>
         /// <param name="status"> The status of the operation. </param>
         /// <param name="operationContext"> The operation context provided by client. </param>
-        /// <param name="resultInfo"> The result info for the operation. </param>
-        internal PlayAudioResult(string operationId, CallingOperationStatus status, string operationContext, CallingOperationResultDetails resultInfo)
+        /// <param name="resultDetails"> The result info for the operation. </param>
+        internal PlayAudioResult(string operationId, CallingOperationStatus status, string operationContext, CallingOperationResultDetails resultDetails)
         {
             OperationId = operationId;
             Status = status;
             OperationContext = operationContext;
-            ResultInfo = resultInfo;
+            ResultDetails = resultDetails;
         }
 
         /// <summary> The operation id. </summary>
@@ -37,6 +37,6 @@ namespace Azure.Communication.CallingServer
         /// <summary> The operation context provided by client. </summary>
         public string OperationContext { get; }
         /// <summary> The result info for the operation. </summary>
-        public CallingOperationResultDetails ResultInfo { get; }
+        public CallingOperationResultDetails ResultDetails { get; }
     }
 }

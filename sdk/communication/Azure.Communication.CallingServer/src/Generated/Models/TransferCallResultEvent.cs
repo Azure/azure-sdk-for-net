@@ -18,7 +18,7 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> The result details. </summary>
-        public CallingOperationResultDetails ResultInfo { get; }
+        public CallingOperationResultDetails ResultDetails { get; }
         /// <summary> The operation context. </summary>
         public string OperationContext { get; }
         /// <summary> The status of the operation. </summary>

@@ -18,18 +18,18 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> Initializes a new instance of PlayAudioResultEvent. </summary>
-        /// <param name="resultInfo"> The result details. </param>
+        /// <param name="resultDetails"> The result details. </param>
         /// <param name="operationContext"> The operation context. </param>
         /// <param name="status"> The status of the operation. </param>
-        internal PlayAudioResultEvent(CallingOperationResultDetails resultInfo, string operationContext, CallingOperationStatus status)
+        internal PlayAudioResultEvent(CallingOperationResultDetails resultDetails, string operationContext, CallingOperationStatus status)
         {
-            ResultInfo = resultInfo;
+            ResultDetails = resultDetails;
             OperationContext = operationContext;
             Status = status;
         }
 
         /// <summary> The result details. </summary>
-        public CallingOperationResultDetails ResultInfo { get; }
+        public CallingOperationResultDetails ResultDetails { get; }
         /// <summary> The operation context. </summary>
         public string OperationContext { get; }
         /// <summary> The status of the operation. </summary>

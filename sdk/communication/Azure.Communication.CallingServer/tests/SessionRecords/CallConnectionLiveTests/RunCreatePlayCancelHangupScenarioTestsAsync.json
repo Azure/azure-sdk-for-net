@@ -124,7 +124,7 @@
         "operationId": "4bec2779-fb50-46e1-a87e-ec582ba40516",
         "status": "running",
         "operationContext": "de346f03-7f8d-41ab-a232-cc5e14990769",
-        "resultInfo": {
+        "resultDetails": {
           "code": 500,
           "subcode": 9999,
           "message": "DownloadFailed"

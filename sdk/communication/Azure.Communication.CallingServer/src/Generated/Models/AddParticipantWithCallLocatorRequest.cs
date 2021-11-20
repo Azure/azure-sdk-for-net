@@ -34,13 +34,13 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> The call locator. </summary>
         public CallLocatorModel CallLocator { get; }
+        /// <summary> The callback URI. </summary>
+        public string CallbackUri { get; set; }
         /// <summary> The alternate identity of source participant. </summary>
         public PhoneNumberIdentifierModel AlternateCallerId { get; set; }
         /// <summary> The participant to be added to the call. </summary>
         public CommunicationIdentifierModel Participant { get; }
         /// <summary> The operation context. </summary>
         public string OperationContext { get; set; }
-        /// <summary> The callback URI. </summary>
-        public string CallbackUri { get; set; }
     }
 }

@@ -32,7 +32,5 @@ namespace Azure.Communication.CallingServer
         public CommunicationIdentifierModel Participant { get; }
         /// <summary> The operation context. </summary>
         public string OperationContext { get; set; }
-        /// <summary> The callback URI. </summary>
-        public string CallbackUri { get; set; }
     }
 }

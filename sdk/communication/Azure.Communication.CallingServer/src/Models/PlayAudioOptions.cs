@@ -17,7 +17,7 @@ namespace Azure.Communication.CallingServer
         /// <summary> An id for the media in the AudioFileUri, using which we cache the media resource. </summary>
         public string AudioFileId { get; set; }
 
-        /// <summary> The callback Uri to receive PlayAudio status notifications. </summary>
+        /// <summary> The callback Uri to receive PlayAudio status notifications. This is used only for out-call operations. </summary>
         public Uri CallbackUri { get; set; }
     }
 }
