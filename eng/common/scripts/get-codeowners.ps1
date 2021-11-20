@@ -60,13 +60,13 @@ function Get-CodeOwners ([string]$targetDirectory = $TargetDirectory, [string]$c
 }
 
 function TestGetCodeOwner([string]$targetDirectory, [string]$codeOwnerFileLocation, [string[]]$expectReturn) {
-  $actualReturn = Get-CodeOwners -targetDirectory "sdk" -codeOwnerFileLocation $testFile
+  $actualReturn = Get-CodeOwners -targetDirectory $targetDirectory -codeOwnerFileLocation $codeOwnerFileLocation
 
-  if ($actualReturn.Length -ne $expectReturn.Length) {
-    Write-Error "The length of actual result is not as expected. Expected length: $expectReturn.Length, Actual length: $actualReturn.Length."
+  if ($actualReturn.Count -ne $expectReturn.Count) {
+    Write-Error "The length of actual result is not as expected. Expected length: $($expectReturn.Count), Actual length: $($actualReturn.Count)."
     exit 1
   }
-  for ($i = 0; $i -lt $expectReturn.Length; $i++) {
+  for ($i = 0; $i -lt $expectReturn.Count; $i++) {
     if ($expectReturn[$i] -ne $actualReturn[$i]) {
       Write-Error "Expect result $expectReturn[$i] is different than actual result $actualReturn[$i]."
       exit 1
@@ -76,11 +76,11 @@ function TestGetCodeOwner([string]$targetDirectory, [string]$codeOwnerFileLocati
 
 if($Test) {
   $testFile = "$PSSCriptRoot/../../../tools/code-owners-parser/Azure.Sdk.Tools.RetrieveCodeOwners.Tests/CODEOWNERS"
-  TestGetCodeOwner -targetDirectory "sdk" -codeOwnerFileLocation $testFile -expectResult @("person1", "person2")
-  TestGetCodeOwner -targetDirectory "sdk/noPath" -codeOwnerFileLocation $testFile -expectResult @("person1", "person2")
-  TestGetCodeOwner -targetDirectory "/sdk/azconfig" -codeOwnerFileLocation $testFile -expectResult @("person3", "person4")
-  TestGetCodeOwner -targetDirectory "/sdk/azconfig/package" -codeOwnerFileLocation $testFile -expectResult @("person3", "person4")
-  TestGetCodeOwner -targetDirectory "/sd" -codeOwnerFileLocation $testFile -expectResult @()
+  TestGetCodeOwner -targetDirectory "sdk" -codeOwnerFileLocation $testFile -expectReturn @("person1", "person2")
+  TestGetCodeOwner -targetDirectory "sdk/noPath" -codeOwnerFileLocation $testFile -expectReturn @("person1", "person2")
+  TestGetCodeOwner -targetDirectory "/sdk/azconfig" -codeOwnerFileLocation $testFile -expectReturn @("person3", "person4")
+  TestGetCodeOwner -targetDirectory "/sdk/azconfig/package" -codeOwnerFileLocation $testFile -expectReturn @("person3", "person4")
+  TestGetCodeOwner -targetDirectory "/sd" -codeOwnerFileLocation $testFile -expectReturn @()
 }
 else {
   return Get-CodeOwners 
