@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.TextAnalytics.Models;
@@ -114,12 +113,12 @@ namespace Azure.AI.TextAnalytics
         /// Represents the desire of the user to request statistics.
         /// This is used in every GET request.
         /// </summary>
-        private bool? _showStats { get; }
+        private readonly bool? _showStats;
 
         /// <summary>
         /// Represents the job Id the service assigned to the operation.
         /// </summary>
-        private string _jobId { get; }
+        private readonly string _jobId;
 
         /// <summary>
         /// Returns true if the long-running operation completed successfully and has produced final result (accessible by Value property).

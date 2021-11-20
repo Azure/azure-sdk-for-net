@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.TextAnalytics.Models;
@@ -75,16 +74,6 @@ namespace Azure.AI.TextAnalytics
         private readonly ClientDiagnostics _diagnostics;
 
         /// <summary>
-        /// Represents the status of the long-running operation.
-        /// </summary>
-        private TextAnalyticsOperationStatus _status;
-
-        /// <summary>
-        /// Provides the results for the first page.
-        /// </summary>
-        private Page<AnalyzeHealthcareEntitiesResultCollection> _firstPage;
-
-        /// <summary>
         /// Represents the desire of the user to request statistics.
         /// This is used in every GET request.
         /// </summary>
@@ -93,7 +82,17 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Represents the job Id the service assigned to the operation.
         /// </summary>
-        private string _jobId { get; }
+        private readonly string _jobId;
+
+        /// <summary>
+        /// Represents the status of the long-running operation.
+        /// </summary>
+        private TextAnalyticsOperationStatus _status;
+
+        /// <summary>
+        /// Provides the results for the first page.
+        /// </summary>
+        private Page<AnalyzeHealthcareEntitiesResultCollection> _firstPage;
 
         /// <summary>
         /// Time when the operation will expire.

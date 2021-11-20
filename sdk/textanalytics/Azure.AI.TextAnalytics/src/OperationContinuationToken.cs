@@ -13,12 +13,19 @@ namespace Azure.AI.TextAnalytics
 {
     internal class OperationContinuationToken
     {
-        private const ServiceVersion ContinuationTokenVersion = ServiceVersion.V3_1;
+        private const ServiceVersion LatestTokenVersion = ServiceVersion.V3_1;
+
+        private static readonly string s_latestTokenVersion = TextAnalyticsClientOptions.GetVersionString(LatestTokenVersion);
+
+        private static readonly JsonSerializerOptions s_jsonOptions = new JsonSerializerOptions()
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+        };
 
         // Parameterless constructor required for JSON deserialization.
         public OperationContinuationToken()
         {
-            Version = TextAnalyticsClientOptions.GetVersionString(ContinuationTokenVersion);
+            Version = s_latestTokenVersion;
         }
 
         public OperationContinuationToken(string jobId, IDictionary<string, int> inputDocumentOrder, bool? showStats)
@@ -37,21 +44,17 @@ namespace Azure.AI.TextAnalytics
 
         public bool? ShowStats { get; set; }
 
-        /// <exception cref="ArgumentException">Thrown when the <see cref="Version"/> of the deserialized token is not the expected <see cref="ContinuationTokenVersion"/>.</exception>
+        /// <exception cref="ArgumentException">Thrown when the <see cref="Version"/> of the deserialized token is not the expected <see cref="LatestTokenVersion"/>.</exception>
         /// <exception cref="FormatException">Thrown when <paramref name="base64OperationId"/> is not a valid base-64 string.</exception>
         /// <exception cref="JsonException">Thrown when <paramref name="base64OperationId"/> cannot be deserialized from JSON.</exception>
         public static OperationContinuationToken Deserialize(string base64OperationId)
         {
             byte[] plainTextBytes = Convert.FromBase64String(base64OperationId);
+            OperationContinuationToken token = JsonSerializer.Deserialize<OperationContinuationToken>(plainTextBytes, s_jsonOptions);
 
-            var options = new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
-            OperationContinuationToken token = JsonSerializer.Deserialize<OperationContinuationToken>(plainTextBytes, options);
-
-            string currentTokenVersion = TextAnalyticsClientOptions.GetVersionString(ContinuationTokenVersion);
-
-            if (token.Version != currentTokenVersion)
+            if (token.Version != s_latestTokenVersion)
             {
-                throw new ArgumentException($"Unsupported continuation token version. Expected: '{currentTokenVersion}'. Actual: '{token.Version}'.");
+                throw new ArgumentException($"Unsupported continuation token version. Expected: '{s_latestTokenVersion}'. Actual: '{token.Version}'.");
             }
 
             Argument.AssertNotNull(token.JobId, nameof(JobId));
@@ -65,8 +68,7 @@ namespace Azure.AI.TextAnalytics
 
         public string Serialize()
         {
-            var options = new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
-            string plainOperationId = JsonSerializer.Serialize(this, options);
+            string plainOperationId = JsonSerializer.Serialize(this, s_jsonOptions);
             byte[] plainTextBytes = Encoding.UTF8.GetBytes(plainOperationId);
 
             return Convert.ToBase64String(plainTextBytes);
