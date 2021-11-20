@@ -16,11 +16,11 @@ namespace Azure.Communication.CallingServer
         /// <param name="operationId"> The operation id. </param>
         /// <param name="status"> The status of the operation. </param>
         /// <param name="operationContext"> The operation context provided by client. </param>
-        /// <param name="resultInfo"> The result info for the operation. </param>
+        /// <param name="resultDetails"> The result info for the operation. </param>
         /// <returns> A new <see cref="CallingServer.PlayAudioResult"/> instance for mocking. </returns>
-        public static PlayAudioResult PlayAudioResult(string operationId = null, CallingOperationStatus status = default, string operationContext = null, CallingOperationResultDetails resultInfo = null)
+        public static PlayAudioResult PlayAudioResult(string operationId = null, CallingOperationStatus status = default, string operationContext = null, CallingOperationResultDetails resultDetails = null)
         {
-            return new PlayAudioResult(operationId, status, operationContext, resultInfo);
+            return new PlayAudioResult(operationId, status, operationContext, resultDetails);
         }
 
         /// <summary> Initializes a new instance of CallingOperationResultDetails. </summary>
@@ -37,11 +37,11 @@ namespace Azure.Communication.CallingServer
         /// <param name="operationId"> The operation id. </param>
         /// <param name="status"> The status of the operation. </param>
         /// <param name="operationContext"> The operation context provided by client. </param>
-        /// <param name="resultInfo"> The result info for the operation. </param>
+        /// <param name="resultDetails"> The result info for the operation. </param>
         /// <returns> A new <see cref="CallingServer.TransferCallResult"/> instance for mocking. </returns>
-        public static TransferCallResult TransferCallResult(string operationId = null, CallingOperationStatus status = default, string operationContext = null, CallingOperationResultDetails resultInfo = null)
+        public static TransferCallResult TransferCallResult(string operationId = null, CallingOperationStatus status = default, string operationContext = null, CallingOperationResultDetails resultDetails = null)
         {
-            return new TransferCallResult(operationId, status, operationContext, resultInfo);
+            return new TransferCallResult(operationId, status, operationContext, resultDetails);
         }
 
         /// <summary> Initializes a new instance of CreateAudioRoutingGroupResult. </summary>
@@ -106,23 +106,23 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> Initializes a new instance of AddParticipantResultEvent. </summary>
-        /// <param name="resultInfo"> The result details. </param>
+        /// <param name="resultDetails"> The result details. </param>
         /// <param name="operationContext"> The operation context. </param>
         /// <param name="status"> The status of the operation. </param>
         /// <returns> A new <see cref="CallingServer.AddParticipantResultEvent"/> instance for mocking. </returns>
-        public static AddParticipantResultEvent AddParticipantResultEvent(CallingOperationResultDetails resultInfo = null, string operationContext = null, CallingOperationStatus status = default)
+        public static AddParticipantResultEvent AddParticipantResultEvent(CallingOperationResultDetails resultDetails = null, string operationContext = null, CallingOperationStatus status = default)
         {
-            return new AddParticipantResultEvent(resultInfo, operationContext, status);
+            return new AddParticipantResultEvent(resultDetails, operationContext, status);
         }
 
         /// <summary> Initializes a new instance of PlayAudioResultEvent. </summary>
-        /// <param name="resultInfo"> The result details. </param>
+        /// <param name="resultDetails"> The result details. </param>
         /// <param name="operationContext"> The operation context. </param>
         /// <param name="status"> The status of the operation. </param>
         /// <returns> A new <see cref="CallingServer.PlayAudioResultEvent"/> instance for mocking. </returns>
-        public static PlayAudioResultEvent PlayAudioResultEvent(CallingOperationResultDetails resultInfo = null, string operationContext = null, CallingOperationStatus status = default)
+        public static PlayAudioResultEvent PlayAudioResultEvent(CallingOperationResultDetails resultDetails = null, string operationContext = null, CallingOperationStatus status = default)
         {
-            return new PlayAudioResultEvent(resultInfo, operationContext, status);
+            return new PlayAudioResultEvent(resultDetails, operationContext, status);
         }
 
         /// <summary> Initializes a new instance of ToneReceivedEvent. </summary>

@@ -29,7 +29,5 @@ namespace Azure.Communication.CallingServer
         public string IncomingCallContext { get; }
         /// <summary> The rejection reason. </summary>
         public CallRejectReason? CallRejectReason { get; set; }
-        /// <summary> The callback uri. </summary>
-        public string CallbackUri { get; set; }
     }
 }

@@ -17,23 +17,8 @@ namespace Azure.Communication.CallingServer
             writer.WriteStartObject();
             writer.WritePropertyName("incomingCallContext");
             writer.WriteStringValue(IncomingCallContext);
-            writer.WritePropertyName("targets");
-            writer.WriteStartArray();
-            foreach (var item in Targets)
-            {
-                writer.WriteObjectValue(item);
-            }
-            writer.WriteEndArray();
-            if (Optional.IsDefined(CallbackUri))
-            {
-                writer.WritePropertyName("callbackUri");
-                writer.WriteStringValue(CallbackUri);
-            }
-            if (Optional.IsDefined(TimeoutInSeconds))
-            {
-                writer.WritePropertyName("timeoutInSeconds");
-                writer.WriteNumberValue(TimeoutInSeconds.Value);
-            }
+            writer.WritePropertyName("target");
+            writer.WriteObjectValue(Target);
             writer.WriteEndObject();
         }
     }

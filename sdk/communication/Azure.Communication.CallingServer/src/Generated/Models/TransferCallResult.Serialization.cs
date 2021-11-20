@@ -17,7 +17,7 @@ namespace Azure.Communication.CallingServer
             Optional<string> operationId = default;
             CallingOperationStatus status = default;
             Optional<string> operationContext = default;
-            Optional<CallingOperationResultDetails> resultInfo = default;
+            Optional<CallingOperationResultDetails> resultDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("operationId"))
@@ -35,18 +35,18 @@ namespace Azure.Communication.CallingServer
                     operationContext = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resultInfo"))
+                if (property.NameEquals("resultDetails"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    resultInfo = CallingOperationResultDetails.DeserializeCallingOperationResultDetails(property.Value);
+                    resultDetails = CallingOperationResultDetails.DeserializeCallingOperationResultDetails(property.Value);
                     continue;
                 }
             }
-            return new TransferCallResult(operationId.Value, status, operationContext.Value, resultInfo.Value);
+            return new TransferCallResult(operationId.Value, status, operationContext.Value, resultDetails.Value);
         }
     }
 }

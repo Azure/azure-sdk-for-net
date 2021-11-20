@@ -48,45 +48,45 @@ namespace Azure.Communication.CallingServer.Tests.Events
         [Test]
         public void AddParticipantResultEventTest()
         {
-            var json = "{\"resultInfo\":{\"code\":400,\"subcode\":415,\"message\":\"failure message\"},\"operationContext\":\"operatingContext\",\"status\":\"failed\"}";
+            var json = "{\"resultDetails\":{\"code\":400,\"subcode\":415,\"message\":\"failure message\"},\"operationContext\":\"operatingContext\",\"status\":\"failed\"}";
 
             var c = AddParticipantResultEvent.Deserialize(json);
 
             Assert.AreEqual("operatingContext", c.OperationContext);
             Assert.AreEqual(CallingOperationStatus.Failed, c.Status);
-            Assert.IsNotNull(c.ResultInfo);
-            Assert.AreEqual(400, c.ResultInfo.Code);
-            Assert.AreEqual(415, c.ResultInfo.Subcode);
-            Assert.AreEqual("failure message", c.ResultInfo.Message);
+            Assert.IsNotNull(c.ResultDetails);
+            Assert.AreEqual(400, c.ResultDetails.Code);
+            Assert.AreEqual(415, c.ResultDetails.Subcode);
+            Assert.AreEqual("failure message", c.ResultDetails.Message);
 
             json = "{\"operationContext\":\"operatingContext\",\"status\":\"running\"}";
             c = AddParticipantResultEvent.Deserialize(json);
 
             Assert.AreEqual("operatingContext", c.OperationContext);
             Assert.AreEqual(CallingOperationStatus.Running, c.Status);
-            Assert.IsNull(c.ResultInfo);
+            Assert.IsNull(c.ResultDetails);
         }
 
         [Test]
         public void PlayAudioResultEventTest()
         {
-            var json = "{\"resultInfo\":{\"code\":500,\"subcode\":505,\"message\":\"failure message\"},\"operationContext\":\"operatingContext\",\"status\":\"failed\"}";
+            var json = "{\"resultDetails\":{\"code\":500,\"subcode\":505,\"message\":\"failure message\"},\"operationContext\":\"operatingContext\",\"status\":\"failed\"}";
 
             var c = PlayAudioResultEvent.Deserialize(json);
 
             Assert.AreEqual("operatingContext", c.OperationContext);
             Assert.AreEqual(CallingOperationStatus.Failed, c.Status);
-            Assert.IsNotNull(c.ResultInfo);
-            Assert.AreEqual(500, c.ResultInfo.Code);
-            Assert.AreEqual(505, c.ResultInfo.Subcode);
-            Assert.AreEqual("failure message", c.ResultInfo.Message);
+            Assert.IsNotNull(c.ResultDetails);
+            Assert.AreEqual(500, c.ResultDetails.Code);
+            Assert.AreEqual(505, c.ResultDetails.Subcode);
+            Assert.AreEqual("failure message", c.ResultDetails.Message);
 
             json = "{\"operationContext\":\"operatingContext\",\"status\":\"completed\"}";
             c = PlayAudioResultEvent.Deserialize(json);
 
             Assert.AreEqual("operatingContext", c.OperationContext);
             Assert.AreEqual(CallingOperationStatus.Completed, c.Status);
-            Assert.IsNull(c.ResultInfo);
+            Assert.IsNull(c.ResultDetails);
         }
 
         [Test]

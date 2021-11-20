@@ -22,11 +22,6 @@ namespace Azure.Communication.CallingServer
                 writer.WritePropertyName("callRejectReason");
                 writer.WriteStringValue(CallRejectReason.Value.ToString());
             }
-            if (Optional.IsDefined(CallbackUri))
-            {
-                writer.WritePropertyName("callbackUri");
-                writer.WriteStringValue(CallbackUri);
-            }
             writer.WriteEndObject();
         }
     }

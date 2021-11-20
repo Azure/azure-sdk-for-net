@@ -17,6 +17,11 @@ namespace Azure.Communication.CallingServer
             writer.WriteStartObject();
             writer.WritePropertyName("callLocator");
             writer.WriteObjectValue(CallLocator);
+            if (Optional.IsDefined(CallbackUri))
+            {
+                writer.WritePropertyName("callbackUri");
+                writer.WriteStringValue(CallbackUri);
+            }
             writer.WritePropertyName("audioFileUri");
             writer.WriteStringValue(AudioFileUri);
             writer.WritePropertyName("loop");
@@ -30,11 +35,6 @@ namespace Azure.Communication.CallingServer
             {
                 writer.WritePropertyName("audioFileId");
                 writer.WriteStringValue(AudioFileId);
-            }
-            if (Optional.IsDefined(CallbackUri))
-            {
-                writer.WritePropertyName("callbackUri");
-                writer.WriteStringValue(CallbackUri);
             }
             writer.WriteEndObject();
         }

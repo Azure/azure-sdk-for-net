@@ -110,16 +110,16 @@
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "callLocator": {
+        "callLocator": {          
           "groupCallId": "f8c9bb0a-25ec-408d-b335-266dcc0c0c9a",
           "kind": "groupCallLocator"
         },
+        "callbackUri": "https://dummy.ngrok.io/api/incident/callback?SecretKey=helloworld",
         "participant": {
           "communicationUser": {
             "id": "8:acs:016a7064-0581-40b9-be73-6dde64d69d72_0000000d-5e6a-3252-a808-4548220003b8"
-          }
-        },
-        "callbackUri": "https://dummy.ngrok.io/api/incident/callback?SecretKey=helloworld"
+           }
+        }
       },
       "StatusCode": 202,
       "ResponseHeaders": {

@@ -14,8 +14,8 @@ namespace Azure.Communication.CallingServer
     internal partial class PlayAudioToParticipantWithCallLocatorRequest
     {
         /// <summary> Initializes a new instance of PlayAudioToParticipantWithCallLocatorRequest. </summary>
-        /// <param name="callLocator"> The call locator. </param>
         /// <param name="identifier"> The identifier of the participant to play audio to. </param>
+        /// <param name="callLocator"> The call locator. </param>
         /// <param name="audioFileUri">
         /// The media resource uri of the play audio request. 
         /// Currently only Wave file (.wav) format audio prompts are supported.
@@ -23,32 +23,34 @@ namespace Azure.Communication.CallingServer
         /// 16-bit samples with a 16,000 (16KHz) sampling rate.
         /// </param>
         /// <param name="loop"> The flag indicating whether audio file needs to be played in loop or not. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callLocator"/>, <paramref name="identifier"/>, or <paramref name="audioFileUri"/> is null. </exception>
-        public PlayAudioToParticipantWithCallLocatorRequest(CallLocatorModel callLocator, CommunicationIdentifierModel identifier, string audioFileUri, bool loop)
+        /// <exception cref="ArgumentNullException"> <paramref name="identifier"/>, <paramref name="callLocator"/>, or <paramref name="audioFileUri"/> is null. </exception>
+        public PlayAudioToParticipantWithCallLocatorRequest(CommunicationIdentifierModel identifier, CallLocatorModel callLocator, string audioFileUri, bool loop)
         {
-            if (callLocator == null)
-            {
-                throw new ArgumentNullException(nameof(callLocator));
-            }
             if (identifier == null)
             {
                 throw new ArgumentNullException(nameof(identifier));
+            }
+            if (callLocator == null)
+            {
+                throw new ArgumentNullException(nameof(callLocator));
             }
             if (audioFileUri == null)
             {
                 throw new ArgumentNullException(nameof(audioFileUri));
             }
 
-            CallLocator = callLocator;
             Identifier = identifier;
+            CallLocator = callLocator;
             AudioFileUri = audioFileUri;
             Loop = loop;
         }
 
-        /// <summary> The call locator. </summary>
-        public CallLocatorModel CallLocator { get; }
         /// <summary> The identifier of the participant to play audio to. </summary>
         public CommunicationIdentifierModel Identifier { get; }
+        /// <summary> The call locator. </summary>
+        public CallLocatorModel CallLocator { get; }
+        /// <summary> The callback Uri to receive PlayAudio status notifications. </summary>
+        public string CallbackUri { get; set; }
         /// <summary>
         /// The media resource uri of the play audio request. 
         /// Currently only Wave file (.wav) format audio prompts are supported.
@@ -62,7 +64,5 @@ namespace Azure.Communication.CallingServer
         public string OperationContext { get; set; }
         /// <summary> An id for the media in the AudioFileUri, using which we cache the media resource. </summary>
         public string AudioFileId { get; set; }
-        /// <summary> The callback Uri to receive PlayAudio status notifications. </summary>
-        public string CallbackUri { get; set; }
     }
 }
