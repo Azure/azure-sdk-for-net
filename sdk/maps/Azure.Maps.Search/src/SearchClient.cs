@@ -73,15 +73,14 @@ namespace Azure.Maps.Search
         /// Please note that any geometry ID retrieved from an Online Search endpoint has a limited lifetime. The client  should not store geometry IDs in persistent storage for later referral, as the stability of these identifiers is  not guaranteed for a long period of time. It is expected that a request to the Polygon method is made within a  few minutes of the request to the Online Search method that provided the ID. The service allows for batch  requests up to 20 identifiers.
         /// </summary>
         /// <param name="geometryIds"> Comma separated list of geometry UUIDs, previously retrieved from an Online Search request. </param>
-        /// <param name="format"> Desired format of the response. Only `json` format is supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PolygonResult>> ListPolygonsAsync(IEnumerable<string> geometryIds, JsonFormat? format = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PolygonResult>> ListPolygonsAsync(IEnumerable<string> geometryIds, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.ListPolygons");
             scope.Start();
             try
             {
-                return await RestClient.ListPolygonsAsync(geometryIds, format, cancellationToken).ConfigureAwait(false);
+                return await RestClient.ListPolygonsAsync(geometryIds, JsonFormat.Json, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -102,15 +101,14 @@ namespace Azure.Maps.Search
         /// Please note that any geometry ID retrieved from an Online Search endpoint has a limited lifetime. The client  should not store geometry IDs in persistent storage for later referral, as the stability of these identifiers is  not guaranteed for a long period of time. It is expected that a request to the Polygon method is made within a  few minutes of the request to the Online Search method that provided the ID. The service allows for batch  requests up to 20 identifiers.
         /// </summary>
         /// <param name="geometryIds"> Comma separated list of geometry UUIDs, previously retrieved from an Online Search request. </param>
-        /// <param name="format"> Desired format of the response. Only `json` format is supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PolygonResult> ListPolygons(IEnumerable<string> geometryIds, JsonFormat? format = default, CancellationToken cancellationToken = default)
+        public virtual Response<PolygonResult> ListPolygons(IEnumerable<string> geometryIds, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.ListPolygons");
             scope.Start();
             try
             {
-                return RestClient.ListPolygons(geometryIds, format, cancellationToken);
+                return RestClient.ListPolygons(geometryIds, JsonFormat.Json, cancellationToken);
             }
             catch (Exception e)
             {
@@ -128,7 +126,6 @@ namespace Azure.Maps.Search
         /// The basic default API is Free Form Search which handles the most fuzzy of inputs handling any combination of address or POI tokens. This search API is the canonical &apos;single line search&apos;. The Free Form Search API is a seamless combination of POI search and geocoding. The API can also be weighted with a contextual position (lat./lon. pair), or fully constrained by a coordinate and radius, or it can be executed more generally without any geo biasing anchor point.&lt;br&gt;&lt;br&gt;We strongly advise you to use the &apos;countrySet&apos; parameter to specify only the countries for which your application needs coverage, as the default behavior will be to search the entire world, potentially returning unnecessary results.&lt;br&gt;&lt;br&gt; E.g.: `countrySet`=US,FR &lt;br&gt;&lt;br&gt;Please see [Search Coverage](https://docs.microsoft.com/azure/location-based-services/geocoding-coverage) for a complete list of all the supported countries.&lt;br&gt;&lt;br&gt;Most Search queries default to `maxFuzzyLevel`=2 to gain performance and also reduce unusual results. This new default can be overridden as needed per request by passing in the query param `maxFuzzyLevel`=3 or 4.
         /// </summary>
         /// <param name="query"> The applicable query string (e.g., &quot;seattle&quot;, &quot;pizza&quot;). Can _also_ be specified as a comma separated string composed by latitude followed by longitude (e.g., &quot;47.641268, -122.125679&quot;). Must be properly URL encoded. </param>
-        /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. </param>
         /// <param name="isTypeAhead"> Boolean. If the typeahead flag is set, the query will be interpreted as a partial input and the search will enter predictive mode. </param>
         /// <param name="top"> Maximum number of responses that will be returned. Default: 10, minimum: 1 and maximum: 100. </param>
         /// <param name="skip"> Starting offset of the returned results within the full result set. Default: 0, minimum: 0 and maximum: 1900. </param>
@@ -264,13 +261,13 @@ namespace Azure.Maps.Search
         /// Supported value: nextSevenDays
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SearchAddressResult>> FuzzySearchAsync(string query, ResponseFormat? format = default, bool? isTypeAhead = null, int? top = null, int? skip = null, IEnumerable<int> categoryFilter = null, IEnumerable<string> countryFilter = null, double? lat = null, double? lon = null, int? radiusInMeters = null, string topLeft = null, string btmRight = null, string language = null, IEnumerable<SearchIndexes> extendedPostalCodesFor = null, int? minFuzzyLevel = null, int? maxFuzzyLevel = null, IEnumerable<SearchIndexes> indexFilter = null, IEnumerable<string> brandFilter = null, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter = null, GeographicEntityType? entityType = null, LocalizedMapView? localizedMapView = null, OperatingHoursRange? operatingHours = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchAddressResult>> FuzzySearchAsync(string query, bool? isTypeAhead = null, int? top = null, int? skip = null, IEnumerable<int> categoryFilter = null, IEnumerable<string> countryFilter = null, double? lat = null, double? lon = null, int? radiusInMeters = null, string topLeft = null, string btmRight = null, string language = null, IEnumerable<SearchIndexes> extendedPostalCodesFor = null, int? minFuzzyLevel = null, int? maxFuzzyLevel = null, IEnumerable<SearchIndexes> indexFilter = null, IEnumerable<string> brandFilter = null, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter = null, GeographicEntityType? entityType = null, LocalizedMapView? localizedMapView = null, OperatingHoursRange? operatingHours = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.FuzzySearch");
             scope.Start();
             try
             {
-                return await RestClient.FuzzySearchAsync(query, format, isTypeAhead, top, skip, categoryFilter, countryFilter, lat, lon, radiusInMeters, topLeft, btmRight, language, extendedPostalCodesFor, minFuzzyLevel, maxFuzzyLevel, indexFilter, brandFilter, electricVehicleConnectorFilter, entityType, localizedMapView, operatingHours, cancellationToken).ConfigureAwait(false);
+                return await RestClient.FuzzySearchAsync(query, ResponseFormat.Json, isTypeAhead, top, skip, categoryFilter, countryFilter, lat, lon, radiusInMeters, topLeft, btmRight, language, extendedPostalCodesFor, minFuzzyLevel, maxFuzzyLevel, indexFilter, brandFilter, electricVehicleConnectorFilter, entityType, localizedMapView, operatingHours, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -288,7 +285,6 @@ namespace Azure.Maps.Search
         /// The basic default API is Free Form Search which handles the most fuzzy of inputs handling any combination of address or POI tokens. This search API is the canonical &apos;single line search&apos;. The Free Form Search API is a seamless combination of POI search and geocoding. The API can also be weighted with a contextual position (lat./lon. pair), or fully constrained by a coordinate and radius, or it can be executed more generally without any geo biasing anchor point.&lt;br&gt;&lt;br&gt;We strongly advise you to use the &apos;countrySet&apos; parameter to specify only the countries for which your application needs coverage, as the default behavior will be to search the entire world, potentially returning unnecessary results.&lt;br&gt;&lt;br&gt; E.g.: `countrySet`=US,FR &lt;br&gt;&lt;br&gt;Please see [Search Coverage](https://docs.microsoft.com/azure/location-based-services/geocoding-coverage) for a complete list of all the supported countries.&lt;br&gt;&lt;br&gt;Most Search queries default to `maxFuzzyLevel`=2 to gain performance and also reduce unusual results. This new default can be overridden as needed per request by passing in the query param `maxFuzzyLevel`=3 or 4.
         /// </summary>
         /// <param name="query"> The applicable query string (e.g., &quot;seattle&quot;, &quot;pizza&quot;). Can _also_ be specified as a comma separated string composed by latitude followed by longitude (e.g., &quot;47.641268, -122.125679&quot;). Must be properly URL encoded. </param>
-        /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. </param>
         /// <param name="isTypeAhead"> Boolean. If the typeahead flag is set, the query will be interpreted as a partial input and the search will enter predictive mode. </param>
         /// <param name="top"> Maximum number of responses that will be returned. Default: 10, minimum: 1 and maximum: 100. </param>
         /// <param name="skip"> Starting offset of the returned results within the full result set. Default: 0, minimum: 0 and maximum: 1900. </param>
@@ -424,13 +420,13 @@ namespace Azure.Maps.Search
         /// Supported value: nextSevenDays
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SearchAddressResult> FuzzySearch(string query, ResponseFormat? format = default, bool? isTypeAhead = null, int? top = null, int? skip = null, IEnumerable<int> categoryFilter = null, IEnumerable<string> countryFilter = null, double? lat = null, double? lon = null, int? radiusInMeters = null, string topLeft = null, string btmRight = null, string language = null, IEnumerable<SearchIndexes> extendedPostalCodesFor = null, int? minFuzzyLevel = null, int? maxFuzzyLevel = null, IEnumerable<SearchIndexes> indexFilter = null, IEnumerable<string> brandFilter = null, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter = null, GeographicEntityType? entityType = null, LocalizedMapView? localizedMapView = null, OperatingHoursRange? operatingHours = null, CancellationToken cancellationToken = default)
+        public virtual Response<SearchAddressResult> FuzzySearch(string query, bool? isTypeAhead = null, int? top = null, int? skip = null, IEnumerable<int> categoryFilter = null, IEnumerable<string> countryFilter = null, double? lat = null, double? lon = null, int? radiusInMeters = null, string topLeft = null, string btmRight = null, string language = null, IEnumerable<SearchIndexes> extendedPostalCodesFor = null, int? minFuzzyLevel = null, int? maxFuzzyLevel = null, IEnumerable<SearchIndexes> indexFilter = null, IEnumerable<string> brandFilter = null, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter = null, GeographicEntityType? entityType = null, LocalizedMapView? localizedMapView = null, OperatingHoursRange? operatingHours = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.FuzzySearch");
             scope.Start();
             try
             {
-                return RestClient.FuzzySearch(query, format, isTypeAhead, top, skip, categoryFilter, countryFilter, lat, lon, radiusInMeters, topLeft, btmRight, language, extendedPostalCodesFor, minFuzzyLevel, maxFuzzyLevel, indexFilter, brandFilter, electricVehicleConnectorFilter, entityType, localizedMapView, operatingHours, cancellationToken);
+                return RestClient.FuzzySearch(query, ResponseFormat.Json, isTypeAhead, top, skip, categoryFilter, countryFilter, lat, lon, radiusInMeters, topLeft, btmRight, language, extendedPostalCodesFor, minFuzzyLevel, maxFuzzyLevel, indexFilter, brandFilter, electricVehicleConnectorFilter, entityType, localizedMapView, operatingHours, cancellationToken);
             }
             catch (Exception e)
             {
@@ -448,7 +444,7 @@ namespace Azure.Maps.Search
         /// Points of Interest (POI) Search allows you to request POI results by name.  Search supports additional query parameters such as language and filtering results by area of interest driven by country or bounding box.  Endpoint will return only POI results matching the query string. Response includes POI details such as address, coordinate location and category.
         /// </summary>
         /// <param name="query"> The POI name to search for (e.g., &quot;statue of liberty&quot;, &quot;starbucks&quot;), must be properly URL encoded. </param>
-        /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. </param>
+
         /// <param name="isTypeAhead"> Boolean. If the typeahead flag is set, the query will be interpreted as a partial input and the search will enter predictive mode. </param>
         /// <param name="top"> Maximum number of responses that will be returned. Default: 10, minimum: 1 and maximum: 100. </param>
         /// <param name="skip"> Starting offset of the returned results within the full result set. Default: 0, minimum: 0 and maximum: 1900. </param>
@@ -531,13 +527,13 @@ namespace Azure.Maps.Search
         /// Supported value: nextSevenDays
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SearchAddressResult>> SearchPointOfInterestAsync(string query, ResponseFormat? format = default, bool? isTypeAhead = null, int? top = null, int? skip = null, IEnumerable<int> categoryFilter = null, IEnumerable<string> countryFilter = null, double? lat = null, double? lon = null, int? radiusInMeters = null, string topLeft = null, string btmRight = null, string language = null, IEnumerable<PointOfInterestExtendedPostalCodes> extendedPostalCodesFor = null, IEnumerable<string> brandFilter = null, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter = null, LocalizedMapView? localizedMapView = null, OperatingHoursRange? operatingHours = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchAddressResult>> SearchPointOfInterestAsync(string query, bool? isTypeAhead = null, int? top = null, int? skip = null, IEnumerable<int> categoryFilter = null, IEnumerable<string> countryFilter = null, double? lat = null, double? lon = null, int? radiusInMeters = null, string topLeft = null, string btmRight = null, string language = null, IEnumerable<PointOfInterestExtendedPostalCodes> extendedPostalCodesFor = null, IEnumerable<string> brandFilter = null, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter = null, LocalizedMapView? localizedMapView = null, OperatingHoursRange? operatingHours = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchPointOfInterest");
             scope.Start();
             try
             {
-                return await RestClient.SearchPointOfInterestAsync(query, format, isTypeAhead, top, skip, categoryFilter, countryFilter, lat, lon, radiusInMeters, topLeft, btmRight, language, extendedPostalCodesFor, brandFilter, electricVehicleConnectorFilter, localizedMapView, operatingHours, cancellationToken).ConfigureAwait(false);
+                return await RestClient.SearchPointOfInterestAsync(query, ResponseFormat.Json, isTypeAhead, top, skip, categoryFilter, countryFilter, lat, lon, radiusInMeters, topLeft, btmRight, language, extendedPostalCodesFor, brandFilter, electricVehicleConnectorFilter, localizedMapView, operatingHours, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -555,7 +551,6 @@ namespace Azure.Maps.Search
         /// Points of Interest (POI) Search allows you to request POI results by name.  Search supports additional query parameters such as language and filtering results by area of interest driven by country or bounding box.  Endpoint will return only POI results matching the query string. Response includes POI details such as address, coordinate location and category.
         /// </summary>
         /// <param name="query"> The POI name to search for (e.g., &quot;statue of liberty&quot;, &quot;starbucks&quot;), must be properly URL encoded. </param>
-        /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. </param>
         /// <param name="isTypeAhead"> Boolean. If the typeahead flag is set, the query will be interpreted as a partial input and the search will enter predictive mode. </param>
         /// <param name="top"> Maximum number of responses that will be returned. Default: 10, minimum: 1 and maximum: 100. </param>
         /// <param name="skip"> Starting offset of the returned results within the full result set. Default: 0, minimum: 0 and maximum: 1900. </param>
@@ -638,13 +633,13 @@ namespace Azure.Maps.Search
         /// Supported value: nextSevenDays
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SearchAddressResult> SearchPointOfInterest(string query, ResponseFormat? format = default, bool? isTypeAhead = null, int? top = null, int? skip = null, IEnumerable<int> categoryFilter = null, IEnumerable<string> countryFilter = null, double? lat = null, double? lon = null, int? radiusInMeters = null, string topLeft = null, string btmRight = null, string language = null, IEnumerable<PointOfInterestExtendedPostalCodes> extendedPostalCodesFor = null, IEnumerable<string> brandFilter = null, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter = null, LocalizedMapView? localizedMapView = null, OperatingHoursRange? operatingHours = null, CancellationToken cancellationToken = default)
+        public virtual Response<SearchAddressResult> SearchPointOfInterest(string query, bool? isTypeAhead = null, int? top = null, int? skip = null, IEnumerable<int> categoryFilter = null, IEnumerable<string> countryFilter = null, double? lat = null, double? lon = null, int? radiusInMeters = null, string topLeft = null, string btmRight = null, string language = null, IEnumerable<PointOfInterestExtendedPostalCodes> extendedPostalCodesFor = null, IEnumerable<string> brandFilter = null, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter = null, LocalizedMapView? localizedMapView = null, OperatingHoursRange? operatingHours = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchPointOfInterest");
             scope.Start();
             try
             {
-                return RestClient.SearchPointOfInterest(query, format, isTypeAhead, top, skip, categoryFilter, countryFilter, lat, lon, radiusInMeters, topLeft, btmRight, language, extendedPostalCodesFor, brandFilter, electricVehicleConnectorFilter, localizedMapView, operatingHours, cancellationToken);
+                return RestClient.SearchPointOfInterest(query, ResponseFormat.Json, isTypeAhead, top, skip, categoryFilter, countryFilter, lat, lon, radiusInMeters, topLeft, btmRight, language, extendedPostalCodesFor, brandFilter, electricVehicleConnectorFilter, localizedMapView, operatingHours, cancellationToken);
             }
             catch (Exception e)
             {
@@ -663,7 +658,6 @@ namespace Azure.Maps.Search
         /// </summary>
         /// <param name="lat"> Latitude where results should be biased. E.g. 37.337. </param>
         /// <param name="lon"> Longitude where results should be biased. E.g. -121.89. </param>
-        /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. </param>
         /// <param name="top"> Maximum number of responses that will be returned. Default: 10, minimum: 1 and maximum: 100. </param>
         /// <param name="skip"> Starting offset of the returned results within the full result set. Default: 0, minimum: 0 and maximum: 1900. </param>
         /// <param name="categoryFilter">
@@ -749,13 +743,13 @@ namespace Azure.Maps.Search
         /// Please refer to [Supported Views](https://aka.ms/AzureMapsLocalizationViews) for details and to see the available Views.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SearchAddressResult>> SearchNearbyPointOfInterestAsync(double lat, double lon, ResponseFormat? format = default, int? top = null, int? skip = null, IEnumerable<int> categoryFilter = null, IEnumerable<string> countryFilter = null, int? radiusInMeters = null, string language = null, IEnumerable<SearchIndexes> extendedPostalCodesFor = null, IEnumerable<string> brandFilter = null, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchAddressResult>> SearchNearbyPointOfInterestAsync(double lat, double lon, int? top = null, int? skip = null, IEnumerable<int> categoryFilter = null, IEnumerable<string> countryFilter = null, int? radiusInMeters = null, string language = null, IEnumerable<SearchIndexes> extendedPostalCodesFor = null, IEnumerable<string> brandFilter = null, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchNearbyPointOfInterest");
             scope.Start();
             try
             {
-                return await RestClient.SearchNearbyPointOfInterestAsync(lat, lon, format, top, skip, categoryFilter, countryFilter, radiusInMeters, language, extendedPostalCodesFor, brandFilter, electricVehicleConnectorFilter, localizedMapView, cancellationToken).ConfigureAwait(false);
+                return await RestClient.SearchNearbyPointOfInterestAsync(lat, lon, ResponseFormat.Json, top, skip, categoryFilter, countryFilter, radiusInMeters, language, extendedPostalCodesFor, brandFilter, electricVehicleConnectorFilter, localizedMapView, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -774,7 +768,6 @@ namespace Azure.Maps.Search
         /// </summary>
         /// <param name="lat"> Latitude where results should be biased. E.g. 37.337. </param>
         /// <param name="lon"> Longitude where results should be biased. E.g. -121.89. </param>
-        /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. </param>
         /// <param name="top"> Maximum number of responses that will be returned. Default: 10, minimum: 1 and maximum: 100. </param>
         /// <param name="skip"> Starting offset of the returned results within the full result set. Default: 0, minimum: 0 and maximum: 1900. </param>
         /// <param name="categoryFilter">
@@ -860,13 +853,13 @@ namespace Azure.Maps.Search
         /// Please refer to [Supported Views](https://aka.ms/AzureMapsLocalizationViews) for details and to see the available Views.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SearchAddressResult> SearchNearbyPointOfInterest(double lat, double lon, ResponseFormat? format = default, int? top = null, int? skip = null, IEnumerable<int> categoryFilter = null, IEnumerable<string> countryFilter = null, int? radiusInMeters = null, string language = null, IEnumerable<SearchIndexes> extendedPostalCodesFor = null, IEnumerable<string> brandFilter = null, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
+        public virtual Response<SearchAddressResult> SearchNearbyPointOfInterest(double lat, double lon, int? top = null, int? skip = null, IEnumerable<int> categoryFilter = null, IEnumerable<string> countryFilter = null, int? radiusInMeters = null, string language = null, IEnumerable<SearchIndexes> extendedPostalCodesFor = null, IEnumerable<string> brandFilter = null, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchNearbyPointOfInterest");
             scope.Start();
             try
             {
-                return RestClient.SearchNearbyPointOfInterest(lat, lon, format, top, skip, categoryFilter, countryFilter, radiusInMeters, language, extendedPostalCodesFor, brandFilter, electricVehicleConnectorFilter, localizedMapView, cancellationToken);
+                return RestClient.SearchNearbyPointOfInterest(lat, lon, ResponseFormat.Json, top, skip, categoryFilter, countryFilter, radiusInMeters, language, extendedPostalCodesFor, brandFilter, electricVehicleConnectorFilter, localizedMapView, cancellationToken);
             }
             catch (Exception e)
             {
@@ -884,7 +877,6 @@ namespace Azure.Maps.Search
         /// Points of Interest (POI) Category Search allows you to request POI results from given category. Search allows to query POIs from one category at a time.  Endpoint will only return POI results which are categorized as specified.  Response includes POI details such as address, coordinate location and classification.
         /// </summary>
         /// <param name="query"> The POI category to search for (e.g., &quot;AIRPORT&quot;, &quot;RESTAURANT&quot;), must be properly URL encoded. Supported main categories can be requested by calling [Get Search POI Category Tree API](https://aka.ms/AzureMapsPOICategoryTree). List of available categories can also be found [here](https://docs.microsoft.com/azure/azure-maps/supported-search-categories). We recommend to use POI Search Category Tree API to request the supported categories. </param>
-        /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. </param>
         /// <param name="isTypeAhead"> Boolean. If the typeahead flag is set, the query will be interpreted as a partial input and the search will enter predictive mode. </param>
         /// <param name="top"> Maximum number of responses that will be returned. Default: 10, minimum: 1 and maximum: 100. </param>
         /// <param name="skip"> Starting offset of the returned results within the full result set. Default: 0, minimum: 0 and maximum: 1900. </param>
@@ -979,13 +971,13 @@ namespace Azure.Maps.Search
         /// Supported value: nextSevenDays
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SearchAddressResult>> SearchPointOfInterestCategoryAsync(string query, ResponseFormat? format = default, bool? isTypeAhead = null, int? top = null, int? skip = null, IEnumerable<int> categoryFilter = null, IEnumerable<string> countryFilter = null, double? lat = null, double? lon = null, int? radiusInMeters = null, string topLeft = null, string btmRight = null, string language = null, IEnumerable<SearchIndexes> extendedPostalCodesFor = null, IEnumerable<string> brandFilter = null, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter = null, LocalizedMapView? localizedMapView = null, OperatingHoursRange? operatingHours = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchAddressResult>> SearchPointOfInterestCategoryAsync(string query, bool? isTypeAhead = null, int? top = null, int? skip = null, IEnumerable<int> categoryFilter = null, IEnumerable<string> countryFilter = null, double? lat = null, double? lon = null, int? radiusInMeters = null, string topLeft = null, string btmRight = null, string language = null, IEnumerable<SearchIndexes> extendedPostalCodesFor = null, IEnumerable<string> brandFilter = null, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter = null, LocalizedMapView? localizedMapView = null, OperatingHoursRange? operatingHours = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchPointOfInterestCategory");
             scope.Start();
             try
             {
-                return await RestClient.SearchPointOfInterestCategoryAsync(query, format, isTypeAhead, top, skip, categoryFilter, countryFilter, lat, lon, radiusInMeters, topLeft, btmRight, language, extendedPostalCodesFor, brandFilter, electricVehicleConnectorFilter, localizedMapView, operatingHours, cancellationToken).ConfigureAwait(false);
+                return await RestClient.SearchPointOfInterestCategoryAsync(query, ResponseFormat.Json, isTypeAhead, top, skip, categoryFilter, countryFilter, lat, lon, radiusInMeters, topLeft, btmRight, language, extendedPostalCodesFor, brandFilter, electricVehicleConnectorFilter, localizedMapView, operatingHours, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1003,7 +995,6 @@ namespace Azure.Maps.Search
         /// Points of Interest (POI) Category Search allows you to request POI results from given category. Search allows to query POIs from one category at a time.  Endpoint will only return POI results which are categorized as specified.  Response includes POI details such as address, coordinate location and classification.
         /// </summary>
         /// <param name="query"> The POI category to search for (e.g., &quot;AIRPORT&quot;, &quot;RESTAURANT&quot;), must be properly URL encoded. Supported main categories can be requested by calling [Get Search POI Category Tree API](https://aka.ms/AzureMapsPOICategoryTree). List of available categories can also be found [here](https://docs.microsoft.com/azure/azure-maps/supported-search-categories). We recommend to use POI Search Category Tree API to request the supported categories. </param>
-        /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. </param>
         /// <param name="isTypeAhead"> Boolean. If the typeahead flag is set, the query will be interpreted as a partial input and the search will enter predictive mode. </param>
         /// <param name="top"> Maximum number of responses that will be returned. Default: 10, minimum: 1 and maximum: 100. </param>
         /// <param name="skip"> Starting offset of the returned results within the full result set. Default: 0, minimum: 0 and maximum: 1900. </param>
@@ -1098,13 +1089,13 @@ namespace Azure.Maps.Search
         /// Supported value: nextSevenDays
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SearchAddressResult> SearchPointOfInterestCategory(string query, ResponseFormat? format = default, bool? isTypeAhead = null, int? top = null, int? skip = null, IEnumerable<int> categoryFilter = null, IEnumerable<string> countryFilter = null, double? lat = null, double? lon = null, int? radiusInMeters = null, string topLeft = null, string btmRight = null, string language = null, IEnumerable<SearchIndexes> extendedPostalCodesFor = null, IEnumerable<string> brandFilter = null, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter = null, LocalizedMapView? localizedMapView = null, OperatingHoursRange? operatingHours = null, CancellationToken cancellationToken = default)
+        public virtual Response<SearchAddressResult> SearchPointOfInterestCategory(string query, bool? isTypeAhead = null, int? top = null, int? skip = null, IEnumerable<int> categoryFilter = null, IEnumerable<string> countryFilter = null, double? lat = null, double? lon = null, int? radiusInMeters = null, string topLeft = null, string btmRight = null, string language = null, IEnumerable<SearchIndexes> extendedPostalCodesFor = null, IEnumerable<string> brandFilter = null, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter = null, LocalizedMapView? localizedMapView = null, OperatingHoursRange? operatingHours = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchPointOfInterestCategory");
             scope.Start();
             try
             {
-                return RestClient.SearchPointOfInterestCategory(query, format, isTypeAhead, top, skip, categoryFilter, countryFilter, lat, lon, radiusInMeters, topLeft, btmRight, language, extendedPostalCodesFor, brandFilter, electricVehicleConnectorFilter, localizedMapView, operatingHours, cancellationToken);
+                return RestClient.SearchPointOfInterestCategory(query, ResponseFormat.Json, isTypeAhead, top, skip, categoryFilter, countryFilter, lat, lon, radiusInMeters, topLeft, btmRight, language, extendedPostalCodesFor, brandFilter, electricVehicleConnectorFilter, localizedMapView, operatingHours, cancellationToken);
             }
             catch (Exception e)
             {
@@ -1121,20 +1112,19 @@ namespace Azure.Maps.Search
         /// 
         /// POI Category API provides a full list of supported Points of Interest (POI) categories and subcategories together with their translations and synonyms. The returned content can be used to provide more meaningful results through other Search Service APIs, like [Get Search POI](https://docs.microsoft.com/rest/api/maps/search/getsearchpoi).
         /// </summary>
-        /// <param name="format"> Desired format of the response. Only `json` format is supported. </param>
         /// <param name="language">
         /// Language in which search results should be returned. Should be one of supported IETF language tags, except NGT and NGT-Latn. Language tag is case insensitive. When data in specified language is not available for a specific field, default language is used (English).
         /// 
         /// Please refer to [Supported Languages](https://docs.microsoft.com/azure/azure-maps/supported-languages) for details.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PointOfInterestCategoryTreeResult>> GetPointOfInterestCategoryTreeAsync(JsonFormat? format = default, string language = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PointOfInterestCategoryTreeResult>> GetPointOfInterestCategoryTreeAsync(string language = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.GetPointOfInterestCategoryTree");
             scope.Start();
             try
             {
-                return await RestClient.GetPointOfInterestCategoryTreeAsync(format, language, cancellationToken).ConfigureAwait(false);
+                return await RestClient.GetPointOfInterestCategoryTreeAsync(JsonFormat.Json, language, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1151,20 +1141,19 @@ namespace Azure.Maps.Search
         /// 
         /// POI Category API provides a full list of supported Points of Interest (POI) categories and subcategories together with their translations and synonyms. The returned content can be used to provide more meaningful results through other Search Service APIs, like [Get Search POI](https://docs.microsoft.com/rest/api/maps/search/getsearchpoi).
         /// </summary>
-        /// <param name="format"> Desired format of the response. Only `json` format is supported. </param>
         /// <param name="language">
         /// Language in which search results should be returned. Should be one of supported IETF language tags, except NGT and NGT-Latn. Language tag is case insensitive. When data in specified language is not available for a specific field, default language is used (English).
         /// 
         /// Please refer to [Supported Languages](https://docs.microsoft.com/azure/azure-maps/supported-languages) for details.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PointOfInterestCategoryTreeResult> GetPointOfInterestCategoryTree(JsonFormat? format = default, string language = null, CancellationToken cancellationToken = default)
+        public virtual Response<PointOfInterestCategoryTreeResult> GetPointOfInterestCategoryTree(string language = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.GetPointOfInterestCategoryTree");
             scope.Start();
             try
             {
-                return RestClient.GetPointOfInterestCategoryTree(format, language, cancellationToken);
+                return RestClient.GetPointOfInterestCategoryTree(JsonFormat.Json, language, cancellationToken);
             }
             catch (Exception e)
             {
@@ -1182,7 +1171,6 @@ namespace Azure.Maps.Search
         /// In many cases, the complete search service might be too much, for instance if you are only interested in traditional geocoding. Search can also be accessed for address look up exclusively. The geocoding is performed by hitting the geocode endpoint with just the address or partial address in question. The geocoding search index will be queried for everything above the street level data. No POIs will be returned. Note that the geocoder is very tolerant of typos and incomplete addresses. It will also handle everything from exact street addresses or street or intersections as well as higher level geographies such as city centers, counties, states etc.
         /// </summary>
         /// <param name="query"> The address to search for (e.g., &quot;1 Microsoft way, Redmond, WA&quot;), must be properly URL encoded. </param>
-        /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. </param>
         /// <param name="isTypeAhead"> Boolean. If the typeahead flag is set, the query will be interpreted as a partial input and the search will enter predictive mode. </param>
         /// <param name="top"> Maximum number of responses that will be returned. Default: 10, minimum: 1 and maximum: 100. </param>
         /// <param name="skip"> Starting offset of the returned results within the full result set. Default: 0, minimum: 0 and maximum: 1900. </param>
@@ -1244,13 +1232,13 @@ namespace Azure.Maps.Search
         /// Please refer to [Supported Views](https://aka.ms/AzureMapsLocalizationViews) for details and to see the available Views.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SearchAddressResult>> SearchAddressAsync(string query, ResponseFormat? format = default, bool? isTypeAhead = null, int? top = null, int? skip = null, IEnumerable<string> countryFilter = null, double? lat = null, double? lon = null, int? radiusInMeters = null, string topLeft = null, string btmRight = null, string language = null, IEnumerable<SearchIndexes> extendedPostalCodesFor = null, GeographicEntityType? entityType = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchAddressResult>> SearchAddressAsync(string query, bool? isTypeAhead = null, int? top = null, int? skip = null, IEnumerable<string> countryFilter = null, double? lat = null, double? lon = null, int? radiusInMeters = null, string topLeft = null, string btmRight = null, string language = null, IEnumerable<SearchIndexes> extendedPostalCodesFor = null, GeographicEntityType? entityType = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchAddress");
             scope.Start();
             try
             {
-                return await RestClient.SearchAddressAsync(query, format, isTypeAhead, top, skip, countryFilter, lat, lon, radiusInMeters, topLeft, btmRight, language, extendedPostalCodesFor, entityType, localizedMapView, cancellationToken).ConfigureAwait(false);
+                return await RestClient.SearchAddressAsync(query, ResponseFormat.Json, isTypeAhead, top, skip, countryFilter, lat, lon, radiusInMeters, topLeft, btmRight, language, extendedPostalCodesFor, entityType, localizedMapView, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1268,7 +1256,6 @@ namespace Azure.Maps.Search
         /// In many cases, the complete search service might be too much, for instance if you are only interested in traditional geocoding. Search can also be accessed for address look up exclusively. The geocoding is performed by hitting the geocode endpoint with just the address or partial address in question. The geocoding search index will be queried for everything above the street level data. No POIs will be returned. Note that the geocoder is very tolerant of typos and incomplete addresses. It will also handle everything from exact street addresses or street or intersections as well as higher level geographies such as city centers, counties, states etc.
         /// </summary>
         /// <param name="query"> The address to search for (e.g., &quot;1 Microsoft way, Redmond, WA&quot;), must be properly URL encoded. </param>
-        /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. </param>
         /// <param name="isTypeAhead"> Boolean. If the typeahead flag is set, the query will be interpreted as a partial input and the search will enter predictive mode. </param>
         /// <param name="top"> Maximum number of responses that will be returned. Default: 10, minimum: 1 and maximum: 100. </param>
         /// <param name="skip"> Starting offset of the returned results within the full result set. Default: 0, minimum: 0 and maximum: 1900. </param>
@@ -1330,13 +1317,13 @@ namespace Azure.Maps.Search
         /// Please refer to [Supported Views](https://aka.ms/AzureMapsLocalizationViews) for details and to see the available Views.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SearchAddressResult> SearchAddress(string query, ResponseFormat? format = default, bool? isTypeAhead = null, int? top = null, int? skip = null, IEnumerable<string> countryFilter = null, double? lat = null, double? lon = null, int? radiusInMeters = null, string topLeft = null, string btmRight = null, string language = null, IEnumerable<SearchIndexes> extendedPostalCodesFor = null, GeographicEntityType? entityType = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
+        public virtual Response<SearchAddressResult> SearchAddress(string query, bool? isTypeAhead = null, int? top = null, int? skip = null, IEnumerable<string> countryFilter = null, double? lat = null, double? lon = null, int? radiusInMeters = null, string topLeft = null, string btmRight = null, string language = null, IEnumerable<SearchIndexes> extendedPostalCodesFor = null, GeographicEntityType? entityType = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchAddress");
             scope.Start();
             try
             {
-                return RestClient.SearchAddress(query, format, isTypeAhead, top, skip, countryFilter, lat, lon, radiusInMeters, topLeft, btmRight, language, extendedPostalCodesFor, entityType, localizedMapView, cancellationToken);
+                return RestClient.SearchAddress(query, ResponseFormat.Json, isTypeAhead, top, skip, countryFilter, lat, lon, radiusInMeters, topLeft, btmRight, language, extendedPostalCodesFor, entityType, localizedMapView, cancellationToken);
             }
             catch (Exception e)
             {
@@ -1354,7 +1341,7 @@ namespace Azure.Maps.Search
         /// There may be times when you need to translate a  coordinate (example: 37.786505, -122.3862) into a human understandable street address. Most often  this is needed in tracking applications where you  receive a GPS feed from the device or asset and  wish to know what address where the coordinate is  located. This endpoint will return address  information for a given coordinate.
         /// </summary>
         /// <param name="query"> The applicable query specified as a comma separated string composed by latitude followed by longitude e.g. &quot;47.641268,-122.125679&quot;. </param>
-        /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. </param>
+
         /// <param name="language">
         /// Language in which search results should be returned. Should be one of supported IETF language tags, case insensitive. When data in specified language is not available for a specific field, default language is used.
         /// 
@@ -1389,13 +1376,13 @@ namespace Azure.Maps.Search
         /// Please refer to [Supported Views](https://aka.ms/AzureMapsLocalizationViews) for details and to see the available Views.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ReverseSearchAddressResult>> ReverseSearchAddressAsync(IEnumerable<double> query, ResponseFormat? format = default, string language = null, bool? includeSpeedLimit = null, int? heading = null, int? radiusInMeters = null, string number = null, bool? includeRoadUse = null, IEnumerable<RoadUseType> roadUse = null, bool? allowFreeformNewline = null, bool? includeMatchType = null, GeographicEntityType? entityType = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ReverseSearchAddressResult>> ReverseSearchAddressAsync(IEnumerable<double> query, string language = null, bool? includeSpeedLimit = null, int? heading = null, int? radiusInMeters = null, string number = null, bool? includeRoadUse = null, IEnumerable<RoadUseType> roadUse = null, bool? allowFreeformNewline = null, bool? includeMatchType = null, GeographicEntityType? entityType = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.ReverseSearchAddress");
             scope.Start();
             try
             {
-                return await RestClient.ReverseSearchAddressAsync(query, format, language, includeSpeedLimit, heading, radiusInMeters, number, includeRoadUse, roadUse, allowFreeformNewline, includeMatchType, entityType, localizedMapView, cancellationToken).ConfigureAwait(false);
+                return await RestClient.ReverseSearchAddressAsync(query, ResponseFormat.Json, language, includeSpeedLimit, heading, radiusInMeters, number, includeRoadUse, roadUse, allowFreeformNewline, includeMatchType, entityType, localizedMapView, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1413,7 +1400,6 @@ namespace Azure.Maps.Search
         /// There may be times when you need to translate a  coordinate (example: 37.786505, -122.3862) into a human understandable street address. Most often  this is needed in tracking applications where you  receive a GPS feed from the device or asset and  wish to know what address where the coordinate is  located. This endpoint will return address  information for a given coordinate.
         /// </summary>
         /// <param name="query"> The applicable query specified as a comma separated string composed by latitude followed by longitude e.g. &quot;47.641268,-122.125679&quot;. </param>
-        /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. </param>
         /// <param name="language">
         /// Language in which search results should be returned. Should be one of supported IETF language tags, case insensitive. When data in specified language is not available for a specific field, default language is used.
         /// 
@@ -1448,13 +1434,13 @@ namespace Azure.Maps.Search
         /// Please refer to [Supported Views](https://aka.ms/AzureMapsLocalizationViews) for details and to see the available Views.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ReverseSearchAddressResult> ReverseSearchAddress(IEnumerable<double> query, ResponseFormat? format = default, string language = null, bool? includeSpeedLimit = null, int? heading = null, int? radiusInMeters = null, string number = null, bool? includeRoadUse = null, IEnumerable<RoadUseType> roadUse = null, bool? allowFreeformNewline = null, bool? includeMatchType = null, GeographicEntityType? entityType = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
+        public virtual Response<ReverseSearchAddressResult> ReverseSearchAddress(IEnumerable<double> query, string language = null, bool? includeSpeedLimit = null, int? heading = null, int? radiusInMeters = null, string number = null, bool? includeRoadUse = null, IEnumerable<RoadUseType> roadUse = null, bool? allowFreeformNewline = null, bool? includeMatchType = null, GeographicEntityType? entityType = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.ReverseSearchAddress");
             scope.Start();
             try
             {
-                return RestClient.ReverseSearchAddress(query, format, language, includeSpeedLimit, heading, radiusInMeters, number, includeRoadUse, roadUse, allowFreeformNewline, includeMatchType, entityType, localizedMapView, cancellationToken);
+                return RestClient.ReverseSearchAddress(query, ResponseFormat.Json, language, includeSpeedLimit, heading, radiusInMeters, number, includeRoadUse, roadUse, allowFreeformNewline, includeMatchType, entityType, localizedMapView, cancellationToken);
             }
             catch (Exception e)
             {
@@ -1473,7 +1459,6 @@ namespace Azure.Maps.Search
         /// This endpoint will return cross street information  for a given coordinate.
         /// </summary>
         /// <param name="query"> The applicable query specified as a comma separated string composed by latitude followed by longitude e.g. &quot;47.641268,-122.125679&quot;. </param>
-        /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. </param>
         /// <param name="top"> Maximum number of responses that will be returned. Default: 10, minimum: 1 and maximum: 100. </param>
         /// <param name="heading"> The directional heading of the vehicle in degrees, for travel along a segment of roadway. 0 is North, 90 is East and so on, values range from -360 to 360. The precision can include upto one decimal place. </param>
         /// <param name="radiusInMeters"> The radius in meters to for the results to be constrained to the defined area. </param>
@@ -1488,13 +1473,13 @@ namespace Azure.Maps.Search
         /// Please refer to [Supported Views](https://aka.ms/AzureMapsLocalizationViews) for details and to see the available Views.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ReverseSearchCrossStreetAddressResult>> ReverseSearchCrossStreetAddressAsync(IEnumerable<double> query, ResponseFormat? format = default, int? top = null, int? heading = null, int? radiusInMeters = null, string language = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ReverseSearchCrossStreetAddressResult>> ReverseSearchCrossStreetAddressAsync(IEnumerable<double> query, int? top = null, int? heading = null, int? radiusInMeters = null, string language = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.ReverseSearchCrossStreetAddress");
             scope.Start();
             try
             {
-                return await RestClient.ReverseSearchCrossStreetAddressAsync(query, format, top, heading, radiusInMeters, language, localizedMapView, cancellationToken).ConfigureAwait(false);
+                return await RestClient.ReverseSearchCrossStreetAddressAsync(query, ResponseFormat.Json, top, heading, radiusInMeters, language, localizedMapView, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1513,7 +1498,6 @@ namespace Azure.Maps.Search
         /// This endpoint will return cross street information  for a given coordinate.
         /// </summary>
         /// <param name="query"> The applicable query specified as a comma separated string composed by latitude followed by longitude e.g. &quot;47.641268,-122.125679&quot;. </param>
-        /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. </param>
         /// <param name="top"> Maximum number of responses that will be returned. Default: 10, minimum: 1 and maximum: 100. </param>
         /// <param name="heading"> The directional heading of the vehicle in degrees, for travel along a segment of roadway. 0 is North, 90 is East and so on, values range from -360 to 360. The precision can include upto one decimal place. </param>
         /// <param name="radiusInMeters"> The radius in meters to for the results to be constrained to the defined area. </param>
@@ -1528,13 +1512,13 @@ namespace Azure.Maps.Search
         /// Please refer to [Supported Views](https://aka.ms/AzureMapsLocalizationViews) for details and to see the available Views.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ReverseSearchCrossStreetAddressResult> ReverseSearchCrossStreetAddress(IEnumerable<double> query, ResponseFormat? format = default, int? top = null, int? heading = null, int? radiusInMeters = null, string language = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
+        public virtual Response<ReverseSearchCrossStreetAddressResult> ReverseSearchCrossStreetAddress(IEnumerable<double> query, int? top = null, int? heading = null, int? radiusInMeters = null, string language = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.ReverseSearchCrossStreetAddress");
             scope.Start();
             try
             {
-                return RestClient.ReverseSearchCrossStreetAddress(query, format, top, heading, radiusInMeters, language, localizedMapView, cancellationToken);
+                return RestClient.ReverseSearchCrossStreetAddress(query, ResponseFormat.Json, top, heading, radiusInMeters, language, localizedMapView, cancellationToken);
             }
             catch (Exception e)
             {
@@ -1552,7 +1536,6 @@ namespace Azure.Maps.Search
         /// Azure Address Geocoding can also be accessed for  structured address look up exclusively. The geocoding search index will be queried for everything above the  street level data. No POIs will be returned. Note that the geocoder is very tolerant of typos and incomplete  addresses. It will also handle everything from exact  street addresses or street or intersections as well as higher level geographies such as city centers,  counties, states etc.
         /// </summary>
         /// <param name="countryCode"> The 2 or 3 letter [ISO3166-1](https://www.iso.org/iso-3166-country-codes.html) country code portion of an address. E.g. US. </param>
-        /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. </param>
         /// <param name="language">
         /// Language in which search results should be returned. Should be one of supported IETF language tags, case insensitive. When data in specified language is not available for a specific field, default language is used.
         /// 
@@ -1616,13 +1599,13 @@ namespace Azure.Maps.Search
         /// Please refer to [Supported Views](https://aka.ms/AzureMapsLocalizationViews) for details and to see the available Views.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SearchAddressResult>> SearchStructuredAddressAsync(string countryCode, ResponseFormat? format = default, string language = null, int? top = null, int? skip = null, string streetNumber = null, string streetName = null, string crossStreet = null, string municipality = null, string municipalitySubdivision = null, string countryTertiarySubdivision = null, string countrySecondarySubdivision = null, string countrySubdivision = null, string postalCode = null, IEnumerable<SearchIndexes> extendedPostalCodesFor = null, GeographicEntityType? entityType = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchAddressResult>> SearchStructuredAddressAsync(string countryCode, string language = null, int? top = null, int? skip = null, string streetNumber = null, string streetName = null, string crossStreet = null, string municipality = null, string municipalitySubdivision = null, string countryTertiarySubdivision = null, string countrySecondarySubdivision = null, string countrySubdivision = null, string postalCode = null, IEnumerable<SearchIndexes> extendedPostalCodesFor = null, GeographicEntityType? entityType = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchStructuredAddress");
             scope.Start();
             try
             {
-                return await RestClient.SearchStructuredAddressAsync(countryCode, format, language, top, skip, streetNumber, streetName, crossStreet, municipality, municipalitySubdivision, countryTertiarySubdivision, countrySecondarySubdivision, countrySubdivision, postalCode, extendedPostalCodesFor, entityType, localizedMapView, cancellationToken).ConfigureAwait(false);
+                return await RestClient.SearchStructuredAddressAsync(countryCode, ResponseFormat.Json, language, top, skip, streetNumber, streetName, crossStreet, municipality, municipalitySubdivision, countryTertiarySubdivision, countrySecondarySubdivision, countrySubdivision, postalCode, extendedPostalCodesFor, entityType, localizedMapView, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1640,7 +1623,6 @@ namespace Azure.Maps.Search
         /// Azure Address Geocoding can also be accessed for  structured address look up exclusively. The geocoding search index will be queried for everything above the  street level data. No POIs will be returned. Note that the geocoder is very tolerant of typos and incomplete  addresses. It will also handle everything from exact  street addresses or street or intersections as well as higher level geographies such as city centers,  counties, states etc.
         /// </summary>
         /// <param name="countryCode"> The 2 or 3 letter [ISO3166-1](https://www.iso.org/iso-3166-country-codes.html) country code portion of an address. E.g. US. </param>
-        /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. </param>
         /// <param name="language">
         /// Language in which search results should be returned. Should be one of supported IETF language tags, case insensitive. When data in specified language is not available for a specific field, default language is used.
         /// 
@@ -1704,13 +1686,13 @@ namespace Azure.Maps.Search
         /// Please refer to [Supported Views](https://aka.ms/AzureMapsLocalizationViews) for details and to see the available Views.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SearchAddressResult> SearchStructuredAddress(string countryCode, ResponseFormat? format = default, string language = null, int? top = null, int? skip = null, string streetNumber = null, string streetName = null, string crossStreet = null, string municipality = null, string municipalitySubdivision = null, string countryTertiarySubdivision = null, string countrySecondarySubdivision = null, string countrySubdivision = null, string postalCode = null, IEnumerable<SearchIndexes> extendedPostalCodesFor = null, GeographicEntityType? entityType = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
+        public virtual Response<SearchAddressResult> SearchStructuredAddress(string countryCode, string language = null, int? top = null, int? skip = null, string streetNumber = null, string streetName = null, string crossStreet = null, string municipality = null, string municipalitySubdivision = null, string countryTertiarySubdivision = null, string countrySecondarySubdivision = null, string countrySubdivision = null, string postalCode = null, IEnumerable<SearchIndexes> extendedPostalCodesFor = null, GeographicEntityType? entityType = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchStructuredAddress");
             scope.Start();
             try
             {
-                return RestClient.SearchStructuredAddress(countryCode, format, language, top, skip, streetNumber, streetName, crossStreet, municipality, municipalitySubdivision, countryTertiarySubdivision, countrySecondarySubdivision, countrySubdivision, postalCode, extendedPostalCodesFor, entityType, localizedMapView, cancellationToken);
+                return RestClient.SearchStructuredAddress(countryCode, ResponseFormat.Json, language, top, skip, streetNumber, streetName, crossStreet, municipality, municipalitySubdivision, countryTertiarySubdivision, countrySecondarySubdivision, countrySubdivision, postalCode, extendedPostalCodesFor, entityType, localizedMapView, cancellationToken);
             }
             catch (Exception e)
             {
@@ -1726,7 +1708,6 @@ namespace Azure.Maps.Search
         /// </summary>
         /// <param name="query"> The POI name to search for (e.g., &quot;statue of liberty&quot;, &quot;starbucks&quot;, &quot;pizza&quot;). Must be properly URL encoded. </param>
         /// <param name="geometry"> This represents the geometry for one or more geographical features (parks, state boundary etc.) to search in and should be a GeoJSON compliant type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946) for details. </param>
-        /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. </param>
         /// <param name="top"> Maximum number of responses that will be returned. Default: 10, minimum: 1 and maximum: 100. </param>
         /// <param name="language">
         /// Language in which search results should be returned. Should be one of supported IETF language tags, case insensitive. When data in specified language is not available for a specific field, default language is used.
@@ -1782,13 +1763,13 @@ namespace Azure.Maps.Search
         /// Supported value: nextSevenDays
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SearchAddressResult>> SearchInsideGeometryAsync(string query, SearchInsideGeometryRequest geometry, ResponseFormat? format = default, int? top = null, string language = null, IEnumerable<int> categoryFilter = null, IEnumerable<SearchIndexes> extendedPostalCodesFor = null, IEnumerable<SearchIndexes> indexFilter = null, LocalizedMapView? localizedMapView = null, OperatingHoursRange? operatingHours = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchAddressResult>> SearchInsideGeometryAsync(string query, SearchInsideGeometryRequest geometry, int? top = null, string language = null, IEnumerable<int> categoryFilter = null, IEnumerable<SearchIndexes> extendedPostalCodesFor = null, IEnumerable<SearchIndexes> indexFilter = null, LocalizedMapView? localizedMapView = null, OperatingHoursRange? operatingHours = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchInsideGeometry");
             scope.Start();
             try
             {
-                return await RestClient.SearchInsideGeometryAsync(query, geometry, format, top, language, categoryFilter, extendedPostalCodesFor, indexFilter, localizedMapView, operatingHours, cancellationToken).ConfigureAwait(false);
+                return await RestClient.SearchInsideGeometryAsync(query, geometry, ResponseFormat.Json, top, language, categoryFilter, extendedPostalCodesFor, indexFilter, localizedMapView, operatingHours, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1804,7 +1785,6 @@ namespace Azure.Maps.Search
         /// </summary>
         /// <param name="query"> The POI name to search for (e.g., &quot;statue of liberty&quot;, &quot;starbucks&quot;, &quot;pizza&quot;). Must be properly URL encoded. </param>
         /// <param name="geometry"> This represents the geometry for one or more geographical features (parks, state boundary etc.) to search in and should be a GeoJSON compliant type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946) for details. </param>
-        /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. </param>
         /// <param name="top"> Maximum number of responses that will be returned. Default: 10, minimum: 1 and maximum: 100. </param>
         /// <param name="language">
         /// Language in which search results should be returned. Should be one of supported IETF language tags, case insensitive. When data in specified language is not available for a specific field, default language is used.
@@ -1860,13 +1840,13 @@ namespace Azure.Maps.Search
         /// Supported value: nextSevenDays
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SearchAddressResult> SearchInsideGeometry(string query, SearchInsideGeometryRequest geometry, ResponseFormat? format = default, int? top = null, string language = null, IEnumerable<int> categoryFilter = null, IEnumerable<SearchIndexes> extendedPostalCodesFor = null, IEnumerable<SearchIndexes> indexFilter = null, LocalizedMapView? localizedMapView = null, OperatingHoursRange? operatingHours = null, CancellationToken cancellationToken = default)
+        public virtual Response<SearchAddressResult> SearchInsideGeometry(string query, SearchInsideGeometryRequest geometry, int? top = null, string language = null, IEnumerable<int> categoryFilter = null, IEnumerable<SearchIndexes> extendedPostalCodesFor = null, IEnumerable<SearchIndexes> indexFilter = null, LocalizedMapView? localizedMapView = null, OperatingHoursRange? operatingHours = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchInsideGeometry");
             scope.Start();
             try
             {
-                return RestClient.SearchInsideGeometry(query, geometry, format, top, language, categoryFilter, extendedPostalCodesFor, indexFilter, localizedMapView, operatingHours, cancellationToken);
+                return RestClient.SearchInsideGeometry(query, geometry, ResponseFormat.Json, top, language, categoryFilter, extendedPostalCodesFor, indexFilter, localizedMapView, operatingHours, cancellationToken);
             }
             catch (Exception e)
             {
@@ -1884,7 +1864,6 @@ namespace Azure.Maps.Search
         /// <param name="query"> The POI name to search for (e.g., &quot;statue of liberty&quot;, &quot;starbucks&quot;, &quot;pizza&quot;). Must be properly URL encoded. </param>
         /// <param name="maxDetourTime"> Maximum detour time of the point of interest in seconds. Max value is 3600 seconds. </param>
         /// <param name="route"> This represents the route to search along and should be a valid `GeoJSON LineString` type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.1.4) for details. </param>
-        /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. </param>
         /// <param name="top"> Maximum number of responses that will be returned. Default value is 10. Max value is 20. </param>
         /// <param name="brandFilter">
         /// A comma-separated list of brand names which could be used to restrict the result to specific brands. Item order does not matter. When multiple brands are provided, only results that belong to (at least) one of the provided list will be returned. Brands that contain a &quot;,&quot; in their name should be put into quotes.
@@ -1935,13 +1914,13 @@ namespace Azure.Maps.Search
         /// Supported value: nextSevenDays
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SearchAddressResult>> SearchAlongRouteAsync(string query, int maxDetourTime, SearchAlongRouteRequest route, ResponseFormat? format = default, int? top = null, IEnumerable<string> brandFilter = null, IEnumerable<int> categoryFilter = null, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter = null, LocalizedMapView? localizedMapView = null, OperatingHoursRange? operatingHours = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchAddressResult>> SearchAlongRouteAsync(string query, int maxDetourTime, SearchAlongRouteRequest route, int? top = null, IEnumerable<string> brandFilter = null, IEnumerable<int> categoryFilter = null, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter = null, LocalizedMapView? localizedMapView = null, OperatingHoursRange? operatingHours = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchAlongRoute");
             scope.Start();
             try
             {
-                return await RestClient.SearchAlongRouteAsync(query, maxDetourTime, route, format, top, brandFilter, categoryFilter, electricVehicleConnectorFilter, localizedMapView, operatingHours, cancellationToken).ConfigureAwait(false);
+                return await RestClient.SearchAlongRouteAsync(query, maxDetourTime, route, ResponseFormat.Json, top, brandFilter, categoryFilter, electricVehicleConnectorFilter, localizedMapView, operatingHours, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1959,7 +1938,6 @@ namespace Azure.Maps.Search
         /// <param name="query"> The POI name to search for (e.g., &quot;statue of liberty&quot;, &quot;starbucks&quot;, &quot;pizza&quot;). Must be properly URL encoded. </param>
         /// <param name="maxDetourTime"> Maximum detour time of the point of interest in seconds. Max value is 3600 seconds. </param>
         /// <param name="route"> This represents the route to search along and should be a valid `GeoJSON LineString` type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.1.4) for details. </param>
-        /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. </param>
         /// <param name="top"> Maximum number of responses that will be returned. Default value is 10. Max value is 20. </param>
         /// <param name="brandFilter">
         /// A comma-separated list of brand names which could be used to restrict the result to specific brands. Item order does not matter. When multiple brands are provided, only results that belong to (at least) one of the provided list will be returned. Brands that contain a &quot;,&quot; in their name should be put into quotes.
@@ -2010,13 +1988,13 @@ namespace Azure.Maps.Search
         /// Supported value: nextSevenDays
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SearchAddressResult> SearchAlongRoute(string query, int maxDetourTime, SearchAlongRouteRequest route, ResponseFormat? format = default, int? top = null, IEnumerable<string> brandFilter = null, IEnumerable<int> categoryFilter = null, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter = null, LocalizedMapView? localizedMapView = null, OperatingHoursRange? operatingHours = null, CancellationToken cancellationToken = default)
+        public virtual Response<SearchAddressResult> SearchAlongRoute(string query, int maxDetourTime, SearchAlongRouteRequest route, int? top = null, IEnumerable<string> brandFilter = null, IEnumerable<int> categoryFilter = null, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter = null, LocalizedMapView? localizedMapView = null, OperatingHoursRange? operatingHours = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchAlongRoute");
             scope.Start();
             try
             {
-                return RestClient.SearchAlongRoute(query, maxDetourTime, route, format, top, brandFilter, categoryFilter, electricVehicleConnectorFilter, localizedMapView, operatingHours, cancellationToken);
+                return RestClient.SearchAlongRoute(query, maxDetourTime, route, ResponseFormat.Json, top, brandFilter, categoryFilter, electricVehicleConnectorFilter, localizedMapView, operatingHours, cancellationToken);
             }
             catch (Exception e)
             {
@@ -2178,15 +2156,14 @@ namespace Azure.Maps.Search
         /// ```
         /// </summary>
         /// <param name="batchRequest"> The list of search fuzzy queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
-        /// <param name="format"> Desired format of the response. Only `json` format is supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SearchAddressBatchResult>> FuzzySearchBatchSyncAsync(BatchRequest batchRequest, JsonFormat? format = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchAddressBatchResult>> FuzzySearchBatchSyncAsync(BatchRequest batchRequest, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.FuzzySearchBatchSync");
             scope.Start();
             try
             {
-                return await RestClient.FuzzySearchBatchSyncAsync(batchRequest, format, cancellationToken).ConfigureAwait(false);
+                return await RestClient.FuzzySearchBatchSyncAsync(batchRequest, JsonFormat.Json, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2348,15 +2325,14 @@ namespace Azure.Maps.Search
         /// ```
         /// </summary>
         /// <param name="batchRequest"> The list of search fuzzy queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
-        /// <param name="format"> Desired format of the response. Only `json` format is supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SearchAddressBatchResult> FuzzySearchBatchSync(BatchRequest batchRequest, JsonFormat? format = default, CancellationToken cancellationToken = default)
+        public virtual Response<SearchAddressBatchResult> FuzzySearchBatchSync(BatchRequest batchRequest, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.FuzzySearchBatchSync");
             scope.Start();
             try
             {
-                return RestClient.FuzzySearchBatchSync(batchRequest, format, cancellationToken);
+                return RestClient.FuzzySearchBatchSync(batchRequest, JsonFormat.Json, cancellationToken);
             }
             catch (Exception e)
             {
@@ -2510,15 +2486,14 @@ namespace Azure.Maps.Search
         /// ```
         /// </summary>
         /// <param name="batchRequest"> The list of address geocoding queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
-        /// <param name="format"> Desired format of the response. Only `json` format is supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SearchAddressBatchResult>> SearchAddressBatchSyncAsync(BatchRequest batchRequest, JsonFormat? format = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchAddressBatchResult>> SearchAddressBatchSyncAsync(BatchRequest batchRequest, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchAddressBatchSync");
             scope.Start();
             try
             {
-                return await RestClient.SearchAddressBatchSyncAsync(batchRequest, format, cancellationToken).ConfigureAwait(false);
+                return await RestClient.SearchAddressBatchSyncAsync(batchRequest, JsonFormat.Json, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2672,15 +2647,15 @@ namespace Azure.Maps.Search
         /// ```
         /// </summary>
         /// <param name="batchRequest"> The list of address geocoding queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
-        /// <param name="format"> Desired format of the response. Only `json` format is supported. </param>
+
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SearchAddressBatchResult> SearchAddressBatchSync(BatchRequest batchRequest, JsonFormat? format = default, CancellationToken cancellationToken = default)
+        public virtual Response<SearchAddressBatchResult> SearchAddressBatchSync(BatchRequest batchRequest, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchAddressBatchSync");
             scope.Start();
             try
             {
-                return RestClient.SearchAddressBatchSync(batchRequest, format, cancellationToken);
+                return RestClient.SearchAddressBatchSync(batchRequest, JsonFormat.Json, cancellationToken);
             }
             catch (Exception e)
             {
@@ -2836,15 +2811,15 @@ namespace Azure.Maps.Search
         /// ```
         /// </summary>
         /// <param name="batchRequest"> The list of reverse geocoding queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
-        /// <param name="format"> Desired format of the response. Only `json` format is supported. </param>
+
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ReverseSearchAddressBatchProcessResult>> ReverseSearchAddressBatchSyncAsync(BatchRequest batchRequest, JsonFormat? format = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ReverseSearchAddressBatchProcessResult>> ReverseSearchAddressBatchSyncAsync(BatchRequest batchRequest, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.ReverseSearchAddressBatchSync");
             scope.Start();
             try
             {
-                return await RestClient.ReverseSearchAddressBatchSyncAsync(batchRequest, format, cancellationToken).ConfigureAwait(false);
+                return await RestClient.ReverseSearchAddressBatchSyncAsync(batchRequest, JsonFormat.Json, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -3000,15 +2975,15 @@ namespace Azure.Maps.Search
         /// ```
         /// </summary>
         /// <param name="batchRequest"> The list of reverse geocoding queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
-        /// <param name="format"> Desired format of the response. Only `json` format is supported. </param>
+
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ReverseSearchAddressBatchProcessResult> ReverseSearchAddressBatchSync(BatchRequest batchRequest, JsonFormat? format = default, CancellationToken cancellationToken = default)
+        public virtual Response<ReverseSearchAddressBatchProcessResult> ReverseSearchAddressBatchSync(BatchRequest batchRequest, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.ReverseSearchAddressBatchSync");
             scope.Start();
             try
             {
-                return RestClient.ReverseSearchAddressBatchSync(batchRequest, format, cancellationToken);
+                return RestClient.ReverseSearchAddressBatchSync(batchRequest, JsonFormat.Json, cancellationToken);
             }
             catch (Exception e)
             {
@@ -3170,23 +3145,22 @@ namespace Azure.Maps.Search
         /// ```
         /// </summary>
         /// <param name="batchRequest"> The list of search fuzzy queries/requests to process. The list can contain a max of 10,000 queries and must contain at least 1 query. </param>
-        /// <param name="format"> Desired format of the response. Only `json` format is supported. </param>
+
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="batchRequest"/> is null. </exception>
-        public virtual async Task<SearchFuzzySearchBatchOperation> StartFuzzySearchBatchAsync(BatchRequest batchRequest, JsonFormat? format = default, CancellationToken cancellationToken = default)
+        public virtual async Task<SearchFuzzySearchBatchOperation> StartFuzzySearchBatchAsync(BatchRequest batchRequest, CancellationToken cancellationToken = default)
         {
             if (batchRequest == null)
             {
                 throw new ArgumentNullException(nameof(batchRequest));
             }
-            format ??= JsonFormat.Json;
-
+            
             using var scope = _clientDiagnostics.CreateScope("SearchClient.StartFuzzySearchBatch");
             scope.Start();
             try
             {
-                var originalResponse = await RestClient.FuzzySearchBatchAsync(batchRequest, format, cancellationToken).ConfigureAwait(false);
-                return new SearchFuzzySearchBatchOperation(_clientDiagnostics, _pipeline, RestClient.CreateFuzzySearchBatchRequest(batchRequest, format).Request, originalResponse);
+                var originalResponse = await RestClient.FuzzySearchBatchAsync(batchRequest, JsonFormat.Json, cancellationToken).ConfigureAwait(false);
+                return new SearchFuzzySearchBatchOperation(_clientDiagnostics, _pipeline, RestClient.CreateFuzzySearchBatchRequest(batchRequest, JsonFormat.Json).Request, originalResponse);
             }
             catch (Exception e)
             {
@@ -3348,23 +3322,22 @@ namespace Azure.Maps.Search
         /// ```
         /// </summary>
         /// <param name="batchRequest"> The list of search fuzzy queries/requests to process. The list can contain a max of 10,000 queries and must contain at least 1 query. </param>
-        /// <param name="format"> Desired format of the response. Only `json` format is supported. </param>
+
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="batchRequest"/> is null. </exception>
-        public virtual SearchFuzzySearchBatchOperation StartFuzzySearchBatch(BatchRequest batchRequest, JsonFormat? format = default, CancellationToken cancellationToken = default)
+        public virtual SearchFuzzySearchBatchOperation StartFuzzySearchBatch(BatchRequest batchRequest, CancellationToken cancellationToken = default)
         {
             if (batchRequest == null)
             {
                 throw new ArgumentNullException(nameof(batchRequest));
             }
-            format ??= JsonFormat.Json;
-
+            
             using var scope = _clientDiagnostics.CreateScope("SearchClient.StartFuzzySearchBatch");
             scope.Start();
             try
             {
-                var originalResponse = RestClient.FuzzySearchBatch(batchRequest, format, cancellationToken);
-                return new SearchFuzzySearchBatchOperation(_clientDiagnostics, _pipeline, RestClient.CreateFuzzySearchBatchRequest(batchRequest, format).Request, originalResponse);
+                var originalResponse = RestClient.FuzzySearchBatch(batchRequest, JsonFormat.Json, cancellationToken);
+                return new SearchFuzzySearchBatchOperation(_clientDiagnostics, _pipeline, RestClient.CreateFuzzySearchBatchRequest(batchRequest, JsonFormat.Json).Request, originalResponse);
             }
             catch (Exception e)
             {
@@ -3870,23 +3843,22 @@ namespace Azure.Maps.Search
         /// ```
         /// </summary>
         /// <param name="batchRequest"> The list of address geocoding queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
-        /// <param name="format"> Desired format of the response. Only `json` format is supported. </param>
+
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="batchRequest"/> is null. </exception>
-        public virtual async Task<SearchSearchAddressBatchOperation> StartSearchAddressBatchAsync(BatchRequest batchRequest, JsonFormat? format = default, CancellationToken cancellationToken = default)
+        public virtual async Task<SearchSearchAddressBatchOperation> StartSearchAddressBatchAsync(BatchRequest batchRequest, CancellationToken cancellationToken = default)
         {
             if (batchRequest == null)
             {
                 throw new ArgumentNullException(nameof(batchRequest));
             }
-            format ??= JsonFormat.Json;
-
+            
             using var scope = _clientDiagnostics.CreateScope("SearchClient.StartSearchAddressBatch");
             scope.Start();
             try
             {
-                var originalResponse = await RestClient.SearchAddressBatchAsync(batchRequest, format, cancellationToken).ConfigureAwait(false);
-                return new SearchSearchAddressBatchOperation(_clientDiagnostics, _pipeline, RestClient.CreateSearchAddressBatchRequest(batchRequest, format).Request, originalResponse);
+                var originalResponse = await RestClient.SearchAddressBatchAsync(batchRequest, JsonFormat.Json, cancellationToken).ConfigureAwait(false);
+                return new SearchSearchAddressBatchOperation(_clientDiagnostics, _pipeline, RestClient.CreateSearchAddressBatchRequest(batchRequest, JsonFormat.Json).Request, originalResponse);
             }
             catch (Exception e)
             {
@@ -4040,23 +4012,22 @@ namespace Azure.Maps.Search
         /// ```
         /// </summary>
         /// <param name="batchRequest"> The list of address geocoding queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
-        /// <param name="format"> Desired format of the response. Only `json` format is supported. </param>
+
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="batchRequest"/> is null. </exception>
-        public virtual SearchSearchAddressBatchOperation StartSearchAddressBatch(BatchRequest batchRequest, JsonFormat? format = default, CancellationToken cancellationToken = default)
+        public virtual SearchSearchAddressBatchOperation StartSearchAddressBatch(BatchRequest batchRequest, CancellationToken cancellationToken = default)
         {
             if (batchRequest == null)
             {
                 throw new ArgumentNullException(nameof(batchRequest));
             }
-            format ??= JsonFormat.Json;
-
+            
             using var scope = _clientDiagnostics.CreateScope("SearchClient.StartSearchAddressBatch");
             scope.Start();
             try
             {
-                var originalResponse = RestClient.SearchAddressBatch(batchRequest, format, cancellationToken);
-                return new SearchSearchAddressBatchOperation(_clientDiagnostics, _pipeline, RestClient.CreateSearchAddressBatchRequest(batchRequest, format).Request, originalResponse);
+                var originalResponse = RestClient.SearchAddressBatch(batchRequest, JsonFormat.Json, cancellationToken);
+                return new SearchSearchAddressBatchOperation(_clientDiagnostics, _pipeline, RestClient.CreateSearchAddressBatchRequest(batchRequest, JsonFormat.Json).Request, originalResponse);
             }
             catch (Exception e)
             {
@@ -4548,23 +4519,22 @@ namespace Azure.Maps.Search
         /// ```
         /// </summary>
         /// <param name="batchRequest"> The list of reverse geocoding queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
-        /// <param name="format"> Desired format of the response. Only `json` format is supported. </param>
+
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="batchRequest"/> is null. </exception>
-        public virtual async Task<SearchReverseSearchAddressBatchOperation> StartReverseSearchAddressBatchAsync(BatchRequest batchRequest, JsonFormat? format = default, CancellationToken cancellationToken = default)
+        public virtual async Task<SearchReverseSearchAddressBatchOperation> StartReverseSearchAddressBatchAsync(BatchRequest batchRequest, CancellationToken cancellationToken = default)
         {
             if (batchRequest == null)
             {
                 throw new ArgumentNullException(nameof(batchRequest));
             }
-            format ??= JsonFormat.Json;
-
+            
             using var scope = _clientDiagnostics.CreateScope("SearchClient.StartReverseSearchAddressBatch");
             scope.Start();
             try
             {
-                var originalResponse = await RestClient.ReverseSearchAddressBatchAsync(batchRequest, format, cancellationToken).ConfigureAwait(false);
-                return new SearchReverseSearchAddressBatchOperation(_clientDiagnostics, _pipeline, RestClient.CreateReverseSearchAddressBatchRequest(batchRequest, format).Request, originalResponse);
+                var originalResponse = await RestClient.ReverseSearchAddressBatchAsync(batchRequest, JsonFormat.Json, cancellationToken).ConfigureAwait(false);
+                return new SearchReverseSearchAddressBatchOperation(_clientDiagnostics, _pipeline, RestClient.CreateReverseSearchAddressBatchRequest(batchRequest, JsonFormat.Json).Request, originalResponse);
             }
             catch (Exception e)
             {
@@ -4720,23 +4690,22 @@ namespace Azure.Maps.Search
         /// ```
         /// </summary>
         /// <param name="batchRequest"> The list of reverse geocoding queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
-        /// <param name="format"> Desired format of the response. Only `json` format is supported. </param>
+
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="batchRequest"/> is null. </exception>
-        public virtual SearchReverseSearchAddressBatchOperation StartReverseSearchAddressBatch(BatchRequest batchRequest, JsonFormat? format = default, CancellationToken cancellationToken = default)
+        public virtual SearchReverseSearchAddressBatchOperation StartReverseSearchAddressBatch(BatchRequest batchRequest, CancellationToken cancellationToken = default)
         {
             if (batchRequest == null)
             {
                 throw new ArgumentNullException(nameof(batchRequest));
             }
-            format ??= JsonFormat.Json;
-
+            
             using var scope = _clientDiagnostics.CreateScope("SearchClient.StartReverseSearchAddressBatch");
             scope.Start();
             try
             {
-                var originalResponse = RestClient.ReverseSearchAddressBatch(batchRequest, format, cancellationToken);
-                return new SearchReverseSearchAddressBatchOperation(_clientDiagnostics, _pipeline, RestClient.CreateReverseSearchAddressBatchRequest(batchRequest, format).Request, originalResponse);
+                var originalResponse = RestClient.ReverseSearchAddressBatch(batchRequest, JsonFormat.Json, cancellationToken);
+                return new SearchReverseSearchAddressBatchOperation(_clientDiagnostics, _pipeline, RestClient.CreateReverseSearchAddressBatchRequest(batchRequest, JsonFormat.Json).Request, originalResponse);
             }
             catch (Exception e)
             {
