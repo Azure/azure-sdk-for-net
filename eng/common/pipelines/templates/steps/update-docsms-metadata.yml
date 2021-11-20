@@ -86,8 +86,8 @@ steps:
       -PackageInfoJsonLocations $packageInfoLocations `
       -DocRepoLocation "$(DocRepoLocation)" `
       -Language '${{parameters.Language}}' `
-      -RepoId '${{ parameters.RepoId }}'
-      -DocValidationImageId '${{ parameters.DocValidationImageId }}'
+      -RepoId '${{ parameters.RepoId }}' `
+      -DocValidationImageId '${{ parameters.DocValidationImageId }}' `
       -PackageSourceOverride '${{ parameters.PackageSourceOverride }}'
   displayName: Apply Documentation Updates
 
