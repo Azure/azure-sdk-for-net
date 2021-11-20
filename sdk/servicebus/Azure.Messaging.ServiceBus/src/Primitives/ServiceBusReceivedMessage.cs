@@ -408,10 +408,10 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        /// <summary>Gets or sets the state of the message.</summary>
+        /// <summary>Gets the state of the message.</summary>
         /// <value>The state of the message. </value>
         /// <remarks>
-        ///    State of the message can be Active or Deferred or Scheduled. Deferred messages have Deferred state,
+        ///    The state of the message can be Active, Deferred, or Scheduled. Deferred messages have Deferred state,
         ///    scheduled messages have Scheduled state, all other messages have Active state.
         /// </remarks>
         public ServiceBusMessageState State
