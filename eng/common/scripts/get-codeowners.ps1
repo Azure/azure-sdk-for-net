@@ -82,6 +82,7 @@ if($Test) {
   TestGetCodeOwner -targetDirectory "/sdk/azconfig" -codeOwnerFileLocation $testFile -expectReturn @("person3", "person4")
   TestGetCodeOwner -targetDirectory "/sdk/azconfig/package" -codeOwnerFileLocation $testFile -expectReturn @("person3", "person4")
   TestGetCodeOwner -targetDirectory "/sd" -codeOwnerFileLocation $testFile -expectReturn @()
+  exit 0
 }
 else {
   return Get-CodeOwners 
