@@ -41,7 +41,8 @@ namespace Azure.Messaging.ServiceBus
             long sequenceNumber = -1,
             string deadLetterSource = default,
             long enqueuedSequenceNumber = default,
-            DateTimeOffset enqueuedTime = default)
+            DateTimeOffset enqueuedTime = default,
+            MessageState messageState = default)
         {
             var amqpMessage = new AmqpAnnotatedMessage(new AmqpMessageBody(new ReadOnlyMemory<byte>[] { body }));
 
@@ -98,6 +99,7 @@ namespace Azure.Messaging.ServiceBus
             amqpMessage.MessageAnnotations[AmqpMessageConstants.DeadLetterSourceName] = deadLetterSource;
             amqpMessage.MessageAnnotations[AmqpMessageConstants.EnqueueSequenceNumberName] = enqueuedSequenceNumber;
             amqpMessage.MessageAnnotations[AmqpMessageConstants.EnqueuedTimeUtcName] = enqueuedTime.UtcDateTime;
+            amqpMessage.MessageAnnotations[AmqpMessageConstants.MessageStateName] = messageState;
 
             return new ServiceBusReceivedMessage(amqpMessage)
             {

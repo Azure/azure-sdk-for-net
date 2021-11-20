@@ -408,6 +408,31 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
+        /// <summary>Gets or sets the state of the message.</summary>
+        /// <value>The state of the message. </value>
+        /// <remarks>
+        ///    State of the message can be Active or Deferred or Scheduled. Deferred messages have Deferred state,
+        ///    scheduled messages have Scheduled state, all other messages have Active state.
+        /// </remarks>
+        public MessageState State
+        {
+            get
+            {
+                if (AmqpMessage.MessageAnnotations.TryGetValue(
+                    AmqpMessageConstants.MessageStateName,
+                    out object val))
+                {
+                    return (MessageState)val;
+                }
+
+                return default;
+            }
+            internal set
+            {
+                AmqpMessage.MessageAnnotations[AmqpMessageConstants.MessageStateName] = value;
+            }
+        }
+
         /// <summary>Returns a string that represents the current message.</summary>
         /// <returns>The string representation of the current message.</returns>
         public override string ToString()
