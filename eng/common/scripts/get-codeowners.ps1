@@ -75,7 +75,7 @@ function TestGetCodeOwner([string]$targetDirectory, [string]$codeOwnerFileLocati
 }
 
 if($Test) {
-  $testFile = "$PSSCriptRoot\..\..\..\tools\code-owners-parser\Azure.Sdk.Tools.RetrieveCodeOwners.Tests\CODEOWNERS"
+  $testFile = "$PSSCriptRoot/../../../tools/code-owners-parser/Azure.Sdk.Tools.RetrieveCodeOwners.Tests/CODEOWNERS"
   TestGetCodeOwner -targetDirectory "sdk" -codeOwnerFileLocation $testFile -expectResult @("person1", "person2")
   TestGetCodeOwner -targetDirectory "sdk/noPath" -codeOwnerFileLocation $testFile -expectResult @("person1", "person2")
   TestGetCodeOwner -targetDirectory "/sdk/azconfig" -codeOwnerFileLocation $testFile -expectResult @("person3", "person4")
