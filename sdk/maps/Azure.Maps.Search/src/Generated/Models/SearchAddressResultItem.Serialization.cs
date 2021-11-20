@@ -23,7 +23,7 @@ namespace Azure.Maps.Search.Models
             Optional<GeographicEntityType> entityType = default;
             Optional<PointOfInterest> poi = default;
             Optional<Address> address = default;
-            Optional<LatLongPairAbbreviated> position = default;
+            Optional<LatLong> position = default;
             Optional<BoundingBox> viewport = default;
             Optional<IReadOnlyList<EntryPoint>> entryPoints = default;
             Optional<AddressRanges> addressRanges = default;
@@ -109,7 +109,7 @@ namespace Azure.Maps.Search.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    position = LatLongPairAbbreviated.DeserializeLatLongPairAbbreviated(property.Value);
+                    position = LatLong.DeserializeLatLong(property.Value);
                     continue;
                 }
                 if (property.NameEquals("viewport"))

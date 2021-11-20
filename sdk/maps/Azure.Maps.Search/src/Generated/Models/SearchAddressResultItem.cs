@@ -50,7 +50,7 @@ namespace Azure.Maps.Search.Models
         ///   * Street
         /// </param>
         /// <param name="detourTime"> Detour time in seconds. Only returned for calls to the Search Along Route API. </param>
-        internal SearchAddressResultItem(SearchAddressResultType? type, string id, double? score, double? distanceInMeters, string info, GeographicEntityType? entityType, PointOfInterest pointOfInterest, Address address, LatLongPairAbbreviated position, BoundingBox viewport, IReadOnlyList<EntryPoint> entryPoints, AddressRanges addressRanges, DataSource dataSources, MatchType? matchType, int? detourTime)
+        internal SearchAddressResultItem(SearchAddressResultType? type, string id, double? score, double? distanceInMeters, string info, GeographicEntityType? entityType, PointOfInterest pointOfInterest, Address address, LatLong position, BoundingBox viewport, IReadOnlyList<EntryPoint> entryPoints, AddressRanges addressRanges, DataSource dataSources, MatchType? matchType, int? detourTime)
         {
             Type = type;
             Id = id;
@@ -94,7 +94,7 @@ namespace Azure.Maps.Search.Models
         /// <summary> The address of the result. </summary>
         public Address Address { get; }
         /// <summary> A location represented as a latitude and longitude using short names &apos;lat&apos; &amp; &apos;lon&apos;. </summary>
-        public LatLongPairAbbreviated Position { get; }
+        public LatLong Position { get; }
         /// <summary> The viewport that covers the result represented by the top-left and bottom-right coordinates of the viewport. </summary>
         public BoundingBox Viewport { get; }
         /// <summary> Array of EntryPoints. Those describe the types of entrances available at the location. The type can be &quot;main&quot; for main entrances such as a front door, or a lobby, and &quot;minor&quot;, for side and back doors. </summary>
