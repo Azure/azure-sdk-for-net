@@ -140,8 +140,7 @@ namespace Azure.Maps.Search
         /// <param name="lat"> Latitude where results should be biased. E.g. 37.337. </param>
         /// <param name="lon"> Longitude where results should be biased. E.g. -121.89. </param>
         /// <param name="radiusInMeters"> The radius in meters to for the results to be constrained to the defined area. </param>
-        /// <param name="topLeft"> Top left position of the bounding box. E.g. 37.553,-122.453. </param>
-        /// <param name="btmRight"> Bottom right position of the bounding box. E.g. 37.553,-122.453. </param>
+        /// <param name="boundingBox"> bounding box. </param>
         /// <param name="language">
         /// Language in which search results should be returned. Should be one of supported IETF language tags, case insensitive. When data in specified language is not available for a specific field, default language is used.
         /// 
@@ -261,13 +260,13 @@ namespace Azure.Maps.Search
         /// Supported value: nextSevenDays
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SearchAddressResult>> FuzzySearchAsync(string query, bool? isTypeAhead = null, int? top = null, int? skip = null, IEnumerable<int> categoryFilter = null, IEnumerable<string> countryFilter = null, double? lat = null, double? lon = null, int? radiusInMeters = null, string topLeft = null, string btmRight = null, string language = null, IEnumerable<SearchIndexes> extendedPostalCodesFor = null, int? minFuzzyLevel = null, int? maxFuzzyLevel = null, IEnumerable<SearchIndexes> indexFilter = null, IEnumerable<string> brandFilter = null, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter = null, GeographicEntityType? entityType = null, LocalizedMapView? localizedMapView = null, OperatingHoursRange? operatingHours = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchAddressResult>> FuzzySearchAsync(string query, bool? isTypeAhead = null, int? top = null, int? skip = null, IEnumerable<int> categoryFilter = null, IEnumerable<string> countryFilter = null, double? lat = null, double? lon = null, int? radiusInMeters = null, BoundingBox boundingBox= null, string language = null, IEnumerable<SearchIndexes> extendedPostalCodesFor = null, int? minFuzzyLevel = null, int? maxFuzzyLevel = null, IEnumerable<SearchIndexes> indexFilter = null, IEnumerable<string> brandFilter = null, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter = null, GeographicEntityType? entityType = null, LocalizedMapView? localizedMapView = null, OperatingHoursRange? operatingHours = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.FuzzySearch");
             scope.Start();
             try
             {
-                return await RestClient.FuzzySearchAsync(query, ResponseFormat.Json, isTypeAhead, top, skip, categoryFilter, countryFilter, lat, lon, radiusInMeters, topLeft, btmRight, language, extendedPostalCodesFor, minFuzzyLevel, maxFuzzyLevel, indexFilter, brandFilter, electricVehicleConnectorFilter, entityType, localizedMapView, operatingHours, cancellationToken).ConfigureAwait(false);
+                return await RestClient.FuzzySearchAsync(query, ResponseFormat.Json, isTypeAhead, top, skip, categoryFilter, countryFilter, lat, lon, radiusInMeters, boundingBox.TopLeft.ToString(), boundingBox.BottomRight.ToString(), language, extendedPostalCodesFor, minFuzzyLevel, maxFuzzyLevel, indexFilter, brandFilter, electricVehicleConnectorFilter, entityType, localizedMapView, operatingHours, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -299,8 +298,7 @@ namespace Azure.Maps.Search
         /// <param name="lat"> Latitude where results should be biased. E.g. 37.337. </param>
         /// <param name="lon"> Longitude where results should be biased. E.g. -121.89. </param>
         /// <param name="radiusInMeters"> The radius in meters to for the results to be constrained to the defined area. </param>
-        /// <param name="topLeft"> Top left position of the bounding box. E.g. 37.553,-122.453. </param>
-        /// <param name="btmRight"> Bottom right position of the bounding box. E.g. 37.553,-122.453. </param>
+        /// <param name="boundingBox"> bounding box. </param>
         /// <param name="language">
         /// Language in which search results should be returned. Should be one of supported IETF language tags, case insensitive. When data in specified language is not available for a specific field, default language is used.
         /// 
@@ -420,13 +418,13 @@ namespace Azure.Maps.Search
         /// Supported value: nextSevenDays
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SearchAddressResult> FuzzySearch(string query, bool? isTypeAhead = null, int? top = null, int? skip = null, IEnumerable<int> categoryFilter = null, IEnumerable<string> countryFilter = null, double? lat = null, double? lon = null, int? radiusInMeters = null, string topLeft = null, string btmRight = null, string language = null, IEnumerable<SearchIndexes> extendedPostalCodesFor = null, int? minFuzzyLevel = null, int? maxFuzzyLevel = null, IEnumerable<SearchIndexes> indexFilter = null, IEnumerable<string> brandFilter = null, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter = null, GeographicEntityType? entityType = null, LocalizedMapView? localizedMapView = null, OperatingHoursRange? operatingHours = null, CancellationToken cancellationToken = default)
+        public virtual Response<SearchAddressResult> FuzzySearch(string query, bool? isTypeAhead = null, int? top = null, int? skip = null, IEnumerable<int> categoryFilter = null, IEnumerable<string> countryFilter = null, double? lat = null, double? lon = null, int? radiusInMeters = null, BoundingBox boundingBox = null, string language = null, IEnumerable<SearchIndexes> extendedPostalCodesFor = null, int? minFuzzyLevel = null, int? maxFuzzyLevel = null, IEnumerable<SearchIndexes> indexFilter = null, IEnumerable<string> brandFilter = null, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter = null, GeographicEntityType? entityType = null, LocalizedMapView? localizedMapView = null, OperatingHoursRange? operatingHours = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.FuzzySearch");
             scope.Start();
             try
             {
-                return RestClient.FuzzySearch(query, ResponseFormat.Json, isTypeAhead, top, skip, categoryFilter, countryFilter, lat, lon, radiusInMeters, topLeft, btmRight, language, extendedPostalCodesFor, minFuzzyLevel, maxFuzzyLevel, indexFilter, brandFilter, electricVehicleConnectorFilter, entityType, localizedMapView, operatingHours, cancellationToken);
+                return RestClient.FuzzySearch(query, ResponseFormat.Json, isTypeAhead, top, skip, categoryFilter, countryFilter, lat, lon, radiusInMeters, boundingBox.TopLeft.ToString(), boundingBox.BottomRight.ToString(), language, extendedPostalCodesFor, minFuzzyLevel, maxFuzzyLevel, indexFilter, brandFilter, electricVehicleConnectorFilter, entityType, localizedMapView, operatingHours, cancellationToken);
             }
             catch (Exception e)
             {
@@ -459,8 +457,7 @@ namespace Azure.Maps.Search
         /// <param name="lat"> Latitude where results should be biased. E.g. 37.337. </param>
         /// <param name="lon"> Longitude where results should be biased. E.g. -121.89. </param>
         /// <param name="radiusInMeters"> The radius in meters to for the results to be constrained to the defined area. </param>
-        /// <param name="topLeft"> Top left position of the bounding box. E.g. 37.553,-122.453. </param>
-        /// <param name="btmRight"> Bottom right position of the bounding box. E.g. 37.553,-122.453. </param>
+        /// <param name="boundingBox"> bounding box. </param>
         /// <param name="language">
         /// Language in which search results should be returned. Should be one of supported IETF language tags, case insensitive. When data in specified language is not available for a specific field, default language is used.
         /// 
@@ -527,13 +524,13 @@ namespace Azure.Maps.Search
         /// Supported value: nextSevenDays
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SearchAddressResult>> SearchPointOfInterestAsync(string query, bool? isTypeAhead = null, int? top = null, int? skip = null, IEnumerable<int> categoryFilter = null, IEnumerable<string> countryFilter = null, double? lat = null, double? lon = null, int? radiusInMeters = null, string topLeft = null, string btmRight = null, string language = null, IEnumerable<PointOfInterestExtendedPostalCodes> extendedPostalCodesFor = null, IEnumerable<string> brandFilter = null, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter = null, LocalizedMapView? localizedMapView = null, OperatingHoursRange? operatingHours = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchAddressResult>> SearchPointOfInterestAsync(string query, bool? isTypeAhead = null, int? top = null, int? skip = null, IEnumerable<int> categoryFilter = null, IEnumerable<string> countryFilter = null, double? lat = null, double? lon = null, int? radiusInMeters = null, BoundingBox boundingBox = null, string language = null, IEnumerable<PointOfInterestExtendedPostalCodes> extendedPostalCodesFor = null, IEnumerable<string> brandFilter = null, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter = null, LocalizedMapView? localizedMapView = null, OperatingHoursRange? operatingHours = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchPointOfInterest");
             scope.Start();
             try
             {
-                return await RestClient.SearchPointOfInterestAsync(query, ResponseFormat.Json, isTypeAhead, top, skip, categoryFilter, countryFilter, lat, lon, radiusInMeters, topLeft, btmRight, language, extendedPostalCodesFor, brandFilter, electricVehicleConnectorFilter, localizedMapView, operatingHours, cancellationToken).ConfigureAwait(false);
+                return await RestClient.SearchPointOfInterestAsync(query, ResponseFormat.Json, isTypeAhead, top, skip, categoryFilter, countryFilter, lat, lon, radiusInMeters, boundingBox.TopLeft.ToString(), boundingBox.BottomRight.ToString(), language, extendedPostalCodesFor, brandFilter, electricVehicleConnectorFilter, localizedMapView, operatingHours, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -565,8 +562,7 @@ namespace Azure.Maps.Search
         /// <param name="lat"> Latitude where results should be biased. E.g. 37.337. </param>
         /// <param name="lon"> Longitude where results should be biased. E.g. -121.89. </param>
         /// <param name="radiusInMeters"> The radius in meters to for the results to be constrained to the defined area. </param>
-        /// <param name="topLeft"> Top left position of the bounding box. E.g. 37.553,-122.453. </param>
-        /// <param name="btmRight"> Bottom right position of the bounding box. E.g. 37.553,-122.453. </param>
+        /// <param name="boundingBox"> bounding box. </param>
         /// <param name="language">
         /// Language in which search results should be returned. Should be one of supported IETF language tags, case insensitive. When data in specified language is not available for a specific field, default language is used.
         /// 
@@ -633,13 +629,13 @@ namespace Azure.Maps.Search
         /// Supported value: nextSevenDays
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SearchAddressResult> SearchPointOfInterest(string query, bool? isTypeAhead = null, int? top = null, int? skip = null, IEnumerable<int> categoryFilter = null, IEnumerable<string> countryFilter = null, double? lat = null, double? lon = null, int? radiusInMeters = null, string topLeft = null, string btmRight = null, string language = null, IEnumerable<PointOfInterestExtendedPostalCodes> extendedPostalCodesFor = null, IEnumerable<string> brandFilter = null, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter = null, LocalizedMapView? localizedMapView = null, OperatingHoursRange? operatingHours = null, CancellationToken cancellationToken = default)
+        public virtual Response<SearchAddressResult> SearchPointOfInterest(string query, bool? isTypeAhead = null, int? top = null, int? skip = null, IEnumerable<int> categoryFilter = null, IEnumerable<string> countryFilter = null, double? lat = null, double? lon = null, int? radiusInMeters = null, BoundingBox boundingBox = null, string language = null, IEnumerable<PointOfInterestExtendedPostalCodes> extendedPostalCodesFor = null, IEnumerable<string> brandFilter = null, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter = null, LocalizedMapView? localizedMapView = null, OperatingHoursRange? operatingHours = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchPointOfInterest");
             scope.Start();
             try
             {
-                return RestClient.SearchPointOfInterest(query, ResponseFormat.Json, isTypeAhead, top, skip, categoryFilter, countryFilter, lat, lon, radiusInMeters, topLeft, btmRight, language, extendedPostalCodesFor, brandFilter, electricVehicleConnectorFilter, localizedMapView, operatingHours, cancellationToken);
+                return RestClient.SearchPointOfInterest(query, ResponseFormat.Json, isTypeAhead, top, skip, categoryFilter, countryFilter, lat, lon, radiusInMeters, boundingBox.TopLeft.ToString(), boundingBox.BottomRight.ToString(), language, extendedPostalCodesFor, brandFilter, electricVehicleConnectorFilter, localizedMapView, operatingHours, cancellationToken);
             }
             catch (Exception e)
             {
@@ -891,8 +887,7 @@ namespace Azure.Maps.Search
         /// <param name="lat"> Latitude where results should be biased. E.g. 37.337. </param>
         /// <param name="lon"> Longitude where results should be biased. E.g. -121.89. </param>
         /// <param name="radiusInMeters"> The radius in meters to for the results to be constrained to the defined area. </param>
-        /// <param name="topLeft"> Top left position of the bounding box. E.g. 37.553,-122.453. </param>
-        /// <param name="btmRight"> Bottom right position of the bounding box. E.g. 37.553,-122.453. </param>
+        /// <param name="boundingBox"> bounding box. </param>
         /// <param name="language">
         /// Language in which search results should be returned. Should be one of supported IETF language tags, case insensitive. When data in specified language is not available for a specific field, default language is used.
         /// 
@@ -971,13 +966,14 @@ namespace Azure.Maps.Search
         /// Supported value: nextSevenDays
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SearchAddressResult>> SearchPointOfInterestCategoryAsync(string query, bool? isTypeAhead = null, int? top = null, int? skip = null, IEnumerable<int> categoryFilter = null, IEnumerable<string> countryFilter = null, double? lat = null, double? lon = null, int? radiusInMeters = null, string topLeft = null, string btmRight = null, string language = null, IEnumerable<SearchIndexes> extendedPostalCodesFor = null, IEnumerable<string> brandFilter = null, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter = null, LocalizedMapView? localizedMapView = null, OperatingHoursRange? operatingHours = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchAddressResult>> SearchPointOfInterestCategoryAsync(string query, bool? isTypeAhead = null, int? top = null, int? skip = null, IEnumerable<int> categoryFilter = null, IEnumerable<string> countryFilter = null, double? lat = null, double? lon = null, int? radiusInMeters = null, BoundingBox boundingBox = null, string language = null, IEnumerable<SearchIndexes> extendedPostalCodesFor = null, IEnumerable<string> brandFilter = null, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter = null, LocalizedMapView? localizedMapView = null, OperatingHoursRange? operatingHours = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchPointOfInterestCategory");
             scope.Start();
             try
             {
-                return await RestClient.SearchPointOfInterestCategoryAsync(query, ResponseFormat.Json, isTypeAhead, top, skip, categoryFilter, countryFilter, lat, lon, radiusInMeters, topLeft, btmRight, language, extendedPostalCodesFor, brandFilter, electricVehicleConnectorFilter, localizedMapView, operatingHours, cancellationToken).ConfigureAwait(false);
+
+                return await RestClient.SearchPointOfInterestCategoryAsync(query, ResponseFormat.Json, isTypeAhead, top, skip, categoryFilter, countryFilter, lat, lon, radiusInMeters, boundingBox.TopLeft.ToString(), boundingBox.TopRight.ToString(), language, extendedPostalCodesFor, brandFilter, electricVehicleConnectorFilter, localizedMapView, operatingHours, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1009,8 +1005,7 @@ namespace Azure.Maps.Search
         /// <param name="lat"> Latitude where results should be biased. E.g. 37.337. </param>
         /// <param name="lon"> Longitude where results should be biased. E.g. -121.89. </param>
         /// <param name="radiusInMeters"> The radius in meters to for the results to be constrained to the defined area. </param>
-        /// <param name="topLeft"> Top left position of the bounding box. E.g. 37.553,-122.453. </param>
-        /// <param name="btmRight"> Bottom right position of the bounding box. E.g. 37.553,-122.453. </param>
+        /// <param name="boundingBox"> bounding box. </param>
         /// <param name="language">
         /// Language in which search results should be returned. Should be one of supported IETF language tags, case insensitive. When data in specified language is not available for a specific field, default language is used.
         /// 
@@ -1089,13 +1084,13 @@ namespace Azure.Maps.Search
         /// Supported value: nextSevenDays
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SearchAddressResult> SearchPointOfInterestCategory(string query, bool? isTypeAhead = null, int? top = null, int? skip = null, IEnumerable<int> categoryFilter = null, IEnumerable<string> countryFilter = null, double? lat = null, double? lon = null, int? radiusInMeters = null, string topLeft = null, string btmRight = null, string language = null, IEnumerable<SearchIndexes> extendedPostalCodesFor = null, IEnumerable<string> brandFilter = null, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter = null, LocalizedMapView? localizedMapView = null, OperatingHoursRange? operatingHours = null, CancellationToken cancellationToken = default)
+        public virtual Response<SearchAddressResult> SearchPointOfInterestCategory(string query, bool? isTypeAhead = null, int? top = null, int? skip = null, IEnumerable<int> categoryFilter = null, IEnumerable<string> countryFilter = null, double? lat = null, double? lon = null, int? radiusInMeters = null, BoundingBox boundingBox = null, string language = null, IEnumerable<SearchIndexes> extendedPostalCodesFor = null, IEnumerable<string> brandFilter = null, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter = null, LocalizedMapView? localizedMapView = null, OperatingHoursRange? operatingHours = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchPointOfInterestCategory");
             scope.Start();
             try
             {
-                return RestClient.SearchPointOfInterestCategory(query, ResponseFormat.Json, isTypeAhead, top, skip, categoryFilter, countryFilter, lat, lon, radiusInMeters, topLeft, btmRight, language, extendedPostalCodesFor, brandFilter, electricVehicleConnectorFilter, localizedMapView, operatingHours, cancellationToken);
+                return RestClient.SearchPointOfInterestCategory(query, ResponseFormat.Json, isTypeAhead, top, skip, categoryFilter, countryFilter, lat, lon, radiusInMeters, boundingBox.TopLeft.ToString(), boundingBox.BottomRight.ToString(), language, extendedPostalCodesFor, brandFilter, electricVehicleConnectorFilter, localizedMapView, operatingHours, cancellationToken);
             }
             catch (Exception e)
             {
@@ -1178,8 +1173,7 @@ namespace Azure.Maps.Search
         /// <param name="lat"> Latitude where results should be biased. E.g. 37.337. </param>
         /// <param name="lon"> Longitude where results should be biased. E.g. -121.89. </param>
         /// <param name="radiusInMeters"> The radius in meters to for the results to be constrained to the defined area. </param>
-        /// <param name="topLeft"> Top left position of the bounding box. E.g. 37.553,-122.453. </param>
-        /// <param name="btmRight"> Bottom right position of the bounding box. E.g. 37.553,-122.453. </param>
+        /// <param name="boundingBox"> bounding box. </param>
         /// <param name="language">
         /// Language in which search results should be returned. Should be one of supported IETF language tags, case insensitive. When data in specified language is not available for a specific field, default language is used.
         /// 
@@ -1232,13 +1226,13 @@ namespace Azure.Maps.Search
         /// Please refer to [Supported Views](https://aka.ms/AzureMapsLocalizationViews) for details and to see the available Views.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SearchAddressResult>> SearchAddressAsync(string query, bool? isTypeAhead = null, int? top = null, int? skip = null, IEnumerable<string> countryFilter = null, double? lat = null, double? lon = null, int? radiusInMeters = null, string topLeft = null, string btmRight = null, string language = null, IEnumerable<SearchIndexes> extendedPostalCodesFor = null, GeographicEntityType? entityType = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchAddressResult>> SearchAddressAsync(string query, bool? isTypeAhead = null, int? top = null, int? skip = null, IEnumerable<string> countryFilter = null, double? lat = null, double? lon = null, int? radiusInMeters = null, BoundingBox boundingBox = null, string language = null, IEnumerable<SearchIndexes> extendedPostalCodesFor = null, GeographicEntityType? entityType = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchAddress");
             scope.Start();
             try
             {
-                return await RestClient.SearchAddressAsync(query, ResponseFormat.Json, isTypeAhead, top, skip, countryFilter, lat, lon, radiusInMeters, topLeft, btmRight, language, extendedPostalCodesFor, entityType, localizedMapView, cancellationToken).ConfigureAwait(false);
+                return await RestClient.SearchAddressAsync(query, ResponseFormat.Json, isTypeAhead, top, skip, countryFilter, lat, lon, radiusInMeters, boundingBox.TopLeft.ToString(), boundingBox.BottomRight.ToString(), language, extendedPostalCodesFor, entityType, localizedMapView, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1263,8 +1257,7 @@ namespace Azure.Maps.Search
         /// <param name="lat"> Latitude where results should be biased. E.g. 37.337. </param>
         /// <param name="lon"> Longitude where results should be biased. E.g. -121.89. </param>
         /// <param name="radiusInMeters"> The radius in meters to for the results to be constrained to the defined area. </param>
-        /// <param name="topLeft"> Top left position of the bounding box. E.g. 37.553,-122.453. </param>
-        /// <param name="btmRight"> Bottom right position of the bounding box. E.g. 37.553,-122.453. </param>
+        /// <param name="boundingBox"> bounding box. </param>
         /// <param name="language">
         /// Language in which search results should be returned. Should be one of supported IETF language tags, case insensitive. When data in specified language is not available for a specific field, default language is used.
         /// 
@@ -1317,13 +1310,13 @@ namespace Azure.Maps.Search
         /// Please refer to [Supported Views](https://aka.ms/AzureMapsLocalizationViews) for details and to see the available Views.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SearchAddressResult> SearchAddress(string query, bool? isTypeAhead = null, int? top = null, int? skip = null, IEnumerable<string> countryFilter = null, double? lat = null, double? lon = null, int? radiusInMeters = null, string topLeft = null, string btmRight = null, string language = null, IEnumerable<SearchIndexes> extendedPostalCodesFor = null, GeographicEntityType? entityType = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
+        public virtual Response<SearchAddressResult> SearchAddress(string query, bool? isTypeAhead = null, int? top = null, int? skip = null, IEnumerable<string> countryFilter = null, double? lat = null, double? lon = null, int? radiusInMeters = null, BoundingBox boundingBox = null, string language = null, IEnumerable<SearchIndexes> extendedPostalCodesFor = null, GeographicEntityType? entityType = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchAddress");
             scope.Start();
             try
             {
-                return RestClient.SearchAddress(query, ResponseFormat.Json, isTypeAhead, top, skip, countryFilter, lat, lon, radiusInMeters, topLeft, btmRight, language, extendedPostalCodesFor, entityType, localizedMapView, cancellationToken);
+                return RestClient.SearchAddress(query, ResponseFormat.Json, isTypeAhead, top, skip, countryFilter, lat, lon, radiusInMeters, boundingBox.TopLeft.ToString(), boundingBox.BottomRight.ToString(), language, extendedPostalCodesFor, entityType, localizedMapView, cancellationToken);
             }
             catch (Exception e)
             {

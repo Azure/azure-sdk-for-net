@@ -22,7 +22,7 @@ namespace Azure.Maps.Search.Models
             Optional<int> offset = default;
             Optional<int> totalResults = default;
             Optional<int> fuzzyLevel = default;
-            Optional<LatLongPairAbbreviated> geoBias = default;
+            Optional<LatLong> geoBias = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("query"))
@@ -107,7 +107,7 @@ namespace Azure.Maps.Search.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    geoBias = LatLongPairAbbreviated.DeserializeLatLongPairAbbreviated(property.Value);
+                    geoBias = LatLong.DeserializeLatLong(property.Value);
                     continue;
                 }
             }
