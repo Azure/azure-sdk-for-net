@@ -81,7 +81,9 @@ namespace Azure.Core.Pipeline
                         message.Request.Content.WriteTo(requestStream, message.CancellationToken);
                     }
                 }
-                else
+                else if (message.Request.Method != RequestMethod.Head &&
+                         message.Request.Method != RequestMethod.Get &&
+                         message.Request.Method != RequestMethod.Delete)
                 {
                     request.ContentLength = 0;
                 }
