@@ -2801,7 +2801,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         [Ignore("Live tests will run out of memory")]
         public async Task UploadAsync_StreamLarge()
         {
@@ -2946,7 +2946,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             TestHelper.AssertSequenceEqual(data, actual.ToArray());
         }
 
-        [Test]
+        [RecordedTest]
         [TestCase(Constants.KB)]
         [TestCase(10 * Constants.KB)]
         [TestCase(Constants.MB)]
@@ -3086,7 +3086,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             TestHelper.AssertSequenceEqual(data, actual.ToArray());
         }
 
-        [Test]
+        [RecordedTest]
         [Ignore("Live tests will run out of memory")]
         public async Task UploadAsync_FileLarge()
         {
@@ -3769,7 +3769,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 e => Assert.AreEqual($"{nameof(DataLakeQueryArrowOptions)} can only be used for output serialization.", e.Message));
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_08_04)]
         [RetryOnException(TestConstants.QuickQueryRetryCount, typeof(IOException))]
         public async Task QueryAsync_ParquetConfigurationInput()
@@ -3799,7 +3799,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual("0,mdifjt55.ea3,mdifjt55.ea3\n", s);
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_08_04)]
         [RetryOnException(TestConstants.QuickQueryRetryCount, typeof(IOException))]
         public async Task QueryAsync_ParquetConfigurationOutputError()
