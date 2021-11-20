@@ -20,6 +20,36 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Creates a new ServiceBusReceivedMessage instance for mocking.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ServiceBusReceivedMessage ServiceBusReceivedMessage(
+            BinaryData body,
+            string messageId,
+            string partitionKey,
+            string viaPartitionKey,
+            string sessionId,
+            string replyToSessionId,
+            TimeSpan timeToLive,
+            string correlationId,
+            string subject,
+            string to,
+            string contentType,
+            string replyTo,
+            DateTimeOffset scheduledEnqueueTime,
+            IDictionary<string, object> properties,
+            Guid lockTokenGuid,
+            int deliveryCount,
+            DateTimeOffset lockedUntil,
+            long sequenceNumber,
+            string deadLetterSource,
+            long enqueuedSequenceNumber,
+            DateTimeOffset enqueuedTime) =>
+            ServiceBusReceivedMessage(body, messageId, partitionKey, viaPartitionKey, sessionId, replyToSessionId,
+            timeToLive, correlationId, subject, to, contentType, replyTo, scheduledEnqueueTime, properties,
+            lockTokenGuid, deliveryCount, lockedUntil, sequenceNumber, deadLetterSource, enqueuedSequenceNumber, enqueuedTime);
+
+        /// <summary>
+        /// Creates a new ServiceBusReceivedMessage instance for mocking.
+        /// </summary>
         public static ServiceBusReceivedMessage ServiceBusReceivedMessage(
             BinaryData body = default,
             string messageId = default,
@@ -42,7 +72,7 @@ namespace Azure.Messaging.ServiceBus
             string deadLetterSource = default,
             long enqueuedSequenceNumber = default,
             DateTimeOffset enqueuedTime = default,
-            MessageState messageState = default)
+            ServiceBusMessageState serviceBusMessageState = default)
         {
             var amqpMessage = new AmqpAnnotatedMessage(new AmqpMessageBody(new ReadOnlyMemory<byte>[] { body }));
 
@@ -99,7 +129,7 @@ namespace Azure.Messaging.ServiceBus
             amqpMessage.MessageAnnotations[AmqpMessageConstants.DeadLetterSourceName] = deadLetterSource;
             amqpMessage.MessageAnnotations[AmqpMessageConstants.EnqueueSequenceNumberName] = enqueuedSequenceNumber;
             amqpMessage.MessageAnnotations[AmqpMessageConstants.EnqueuedTimeUtcName] = enqueuedTime.UtcDateTime;
-            amqpMessage.MessageAnnotations[AmqpMessageConstants.MessageStateName] = messageState;
+            amqpMessage.MessageAnnotations[AmqpMessageConstants.MessageStateName] = serviceBusMessageState;
 
             return new ServiceBusReceivedMessage(amqpMessage)
             {
