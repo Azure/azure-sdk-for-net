@@ -4,6 +4,7 @@
 using System;
 using System.Buffers;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -70,6 +71,9 @@ namespace Azure.Core.Pipeline
 
             _transport = transport ?? throw new ArgumentNullException(nameof(transport));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
+
+            Debug.Assert(pipeline[pipeline.Length - 1] is HttpPipelineTransportPolicy);
+
             _perCallIndex = perCallIndex;
             _perRetryIndex = perRetryIndex;
             _internallyConstructed = true;
