@@ -45,7 +45,7 @@ namespace Azure.Messaging.ServiceBus
             DateTimeOffset enqueuedTime) =>
             ServiceBusReceivedMessage(body, messageId, partitionKey, viaPartitionKey, sessionId, replyToSessionId,
             timeToLive, correlationId, subject, to, contentType, replyTo, scheduledEnqueueTime, properties,
-            lockTokenGuid, deliveryCount, lockedUntil, sequenceNumber, deadLetterSource, enqueuedSequenceNumber, enqueuedTime);
+            lockTokenGuid, deliveryCount, lockedUntil, sequenceNumber, deadLetterSource, enqueuedSequenceNumber, enqueuedTime, ServiceBusMessageState.Active);
 
         /// <summary>
         /// Creates a new ServiceBusReceivedMessage instance for mocking.
