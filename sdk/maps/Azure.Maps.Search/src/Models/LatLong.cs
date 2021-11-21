@@ -4,6 +4,7 @@
 #nullable disable
 
 using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.Maps.Search.Models
 {
@@ -35,5 +36,8 @@ namespace Azure.Maps.Search.Models
 
         /// <summary> LatLong comma-seperated string representation: lat,lng </summary>
         public override string ToString() => $"{this.Lat},${this.Lon}";
+
+        /// <summary> LatLong representation as array </summary>
+        public static implicit operator double[](LatLong latLong) => new double[] { latLong.Lat, latLong.Lon };
     }
 }
