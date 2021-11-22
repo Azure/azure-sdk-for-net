@@ -1,12 +1,18 @@
  #!/usr/bin/env pwsh -c
 
 <#
+.SYNOPSIS
+Easy start/stop of docker proxy.
+
 .DESCRIPTION
 Start the docker proxy container. If it is already running, quietly exit. Any other error should fail.
+
 .PARAMETER Mode
-"start" or "stop" to start up or stop the test-proxy instance.
+Pass value "start" or "stop" to start up or stop the test-proxy instance.
+
 .PARAMETER TargetFolder
 The folder in which context the test proxy will be started. Defaults to current working directory.
+
 #>
 [CmdletBinding(SupportsShouldProcess = $true)]
 param(
@@ -14,7 +20,7 @@ param(
     [String]
     $Mode,
     [String]
-    $TargetFolder = "."
+    $TargetFolder = ""
 )
 
 try {
@@ -25,10 +31,15 @@ catch {
     Write-Error "Please check your docker invocation and try running the script again."
 }
 
-$SELECTED_IMAGE_TAG = "1147815"
+$SELECTED_IMAGE_TAG = "1203416"
 $CONTAINER_NAME = "ambitious_azsdk_test_proxy"
 $LINUX_IMAGE_SOURCE = "azsdkengsys.azurecr.io/engsys/testproxy-lin:${SELECTED_IMAGE_TAG}"
 $WINDOWS_IMAGE_SOURCE = "azsdkengsys.azurecr.io/engsys/testproxy-win:${SELECTED_IMAGE_TAG}"
+
+if (-not $TargetFolder){
+    $TargetFolder = Join-Path -Path $PSScriptRoot -ChildPath "../../../"
+}
+
 $root = (Resolve-Path $TargetFolder).Path.Replace("`\", "/")
 
 function Get-Proxy-Container(){

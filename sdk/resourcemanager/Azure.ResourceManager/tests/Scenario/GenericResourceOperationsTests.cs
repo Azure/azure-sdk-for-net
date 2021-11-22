@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Tests
         {
             var rgOp = await (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
             ResourceGroup rg = rgOp.Value;
-            var createOp = await StartCreateGenericAvailabilitySetAsync(rg.Id);
+            var createOp = InstrumentOperation(await StartCreateGenericAvailabilitySetAsync(rg.Id));
             GenericResource aset = await createOp.WaitForCompletionAsync();
 
             Assert.DoesNotThrowAsync(async () =>
