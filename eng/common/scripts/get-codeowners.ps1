@@ -5,7 +5,7 @@ param (
   [string]$ToolPath = (Join-Path ([System.IO.Path]::GetTempPath()) "codeowners-tool-path"), # The place to check the tool existence. Put temp path as default
   [string]$DevOpsFeed = "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json", # DevOp tool feeds.
   [string]$VsoVariable = "", # Option of write code owners into devop variable
-  [switch]$FilterNonUser, # Option to filter out the team alias in code owner list. e.g. Azure/azure-sdk-team
+  [switch]$IncludeNonUserAliases, # Option to filter out the team alias in code owner list. e.g. Azure/azure-sdk-team
   [switch]$Test  #Run test functions against the script logic
 )
 
