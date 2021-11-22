@@ -73,6 +73,30 @@ namespace Azure.Data.SchemaRegistry.Tests
             AssertPropertiesAreEqual(registerProperties, schema.Properties);
         }
 
+        [RecordedTest]
+        public void CanCreateRegisterRequestForUnknownFormatType()
+        {
+            var client = CreateClient();
+            var schemaName = "test1";
+            var groupName = TestEnvironment.SchemaRegistryGroup;
+            var format = new SchemaFormat("JSON");
+            Assert.That(
+                async () => await client.RegisterSchemaAsync(groupName, schemaName, SchemaContent, format),
+                Throws.InstanceOf<RequestFailedException>().And.Property(nameof(RequestFailedException.Status)).EqualTo(415));
+        }
+
+        [RecordedTest]
+        public void CanCreateGetSchemaPropertiesRequestForUnknownFormatType()
+        {
+            var client = CreateClient();
+            var schemaName = "test1";
+            var groupName = TestEnvironment.SchemaRegistryGroup;
+            var format = new SchemaFormat("JSON");
+            Assert.That(
+                async () => await client.GetSchemaPropertiesAsync(groupName, schemaName, SchemaContent, format),
+                Throws.InstanceOf<RequestFailedException>().And.Property(nameof(RequestFailedException.Status)).EqualTo(415));
+        }
+
         private void AssertSchema(SchemaRegistrySchema schema)
         {
             AssertSchemaProperties(schema.Properties);
