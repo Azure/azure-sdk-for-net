@@ -30,7 +30,7 @@ function Get-CodeOwnersTool()
   return $command
 }
 
-function Get-CodeOwners ([string]$targetDirectory = $TargetDirectory, [string]$codeOwnerFileLocation = $CodeOwnerFileLocation)
+function Get-CodeOwners ([string]$targetDirectory, [string]$codeOwnerFileLocation)
 {
   $command = Get-CodeOwnersTool
   # Params $RootDirectory is already in use in cpp release pipeline. 
