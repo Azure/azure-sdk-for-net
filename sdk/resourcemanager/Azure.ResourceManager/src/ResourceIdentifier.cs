@@ -28,7 +28,7 @@ namespace Azure.ResourceManager
         /// <summary>
         /// The root of the resource hierarchy.
         /// </summary>
-        public static readonly ResourceIdentifier RootResourceIdentifier = new ResourceIdentifier(null, Tenant.ResourceType, string.Empty);
+        public static readonly ResourceIdentifier Root = new ResourceIdentifier(null, Tenant.ResourceType, string.Empty);
 
         /// <summary>
         /// For internal use only.
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager
             if (resourceType == Resources.Provider.ResourceType)
                 Provider = name;
 
-            Parent = parent ?? RootResourceIdentifier;
+            Parent = parent ?? Root;
             IsChild = isChild;
             ResourceType = resourceType;
             Name = name;
@@ -110,12 +110,7 @@ namespace Azure.ResourceManager
             _ => new ResourceType(parent.ResourceType, resourceTypeName)
         };
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ResourceIdentifier"/> class.
-        /// </summary>
-        /// <param name="resourceId"> The string representation of a resource Id. </param>
-        /// <returns> The resource identifier. </returns>
-        public static ResourceIdentifier Create(string resourceId)
+        private static ResourceIdentifier Create(string resourceId)
         {
             if (resourceId is null)
                 throw new ArgumentNullException(nameof(resourceId));
@@ -131,7 +126,7 @@ namespace Azure.ResourceManager
             if (firstToLower != SubscriptionsKey && firstToLower != ProvidersKey)
                 throw new ArgumentOutOfRangeException(nameof(resourceId), "Invalid resource id.");
 
-            return AppendNext(RootResourceIdentifier, parts);
+            return AppendNext(Root, parts);
         }
 
         private static ResourceIdentifier AppendNext(ResourceIdentifier parent, List<string> parts)
@@ -205,92 +200,44 @@ namespace Azure.ResourceManager
         /// <summary>
         /// The resource type of the resource.
         /// </summary>
-        public virtual ResourceType ResourceType { get; internal set; }
+        public virtual ResourceType ResourceType { get; private set; }
 
         /// <summary>
         /// The name of the resource.
         /// </summary>
-        public virtual string Name { get; internal set; }
+        public virtual string Name { get; private set; }
 
         /// <summary>
         /// The immediate parent containing this resource.
         /// </summary>
-        public virtual ResourceIdentifier Parent { get; internal set; }
+        public virtual ResourceIdentifier Parent { get; private set; }
 
         /// <summary>
         /// Determines whether this resource is in the same namespace as its parent.
         /// </summary>
-        internal virtual bool IsChild { get; set; }
+        internal virtual bool IsChild { get; private set; }
 
         /// <summary>
         /// Gets the subscription id if it exists otherwise null.
         /// </summary>
-        public string SubscriptionId { get; protected set; }
+        public string SubscriptionId { get; private set; }
 
         /// <summary>
         /// Gets the provider namespace if it exists otherwise null.
         /// </summary>
-        public string Provider { get; protected set; }
+        public string Provider { get; private set; }
 
         /// <summary>
         /// Gets the location if it exists otherwise null.
         /// </summary>
-        public string Location { get; protected set; }
+        public Location Location { get; private set; }
 
         /// <summary>
         /// The name of the resource group if it exists otherwise null.
         /// </summary>
-        public string ResourceGroupName { get; protected set; }
+        public string ResourceGroupName { get; private set; }
 
-        /// <summary>
-        /// Tries to get the resource identifier of the parent of this resource.
-        /// </summary>
-        /// <param name="resourceId"> The resource id of the parent resource. </param>
-        /// <returns> True if the resource has a parent, otherwise false. </returns>
-        public virtual bool TryGetParent(out ResourceIdentifier resourceId)
-        {
-            resourceId = Parent;
-            return resourceId != null;
-        }
-
-        /// <summary>
-        /// Tries to get the subscription associated with this resource.
-        /// </summary>
-        /// <param name="subscriptionId"> The resource Id of the subscription for this resource. </param>
-        /// <returns> True if the resource is contained in a subscription, otherwise false. </returns>
-        public virtual bool TryGetSubscriptionId(out string subscriptionId)
-        {
-            subscriptionId = SubscriptionId;
-            return subscriptionId != null;
-        }
-
-        /// <summary>
-        /// Tries to get the resource group associated with this resource.
-        /// </summary>
-        /// <param name="resourceGroupName"> The resource group for this resource. </param>
-        /// <returns> True if the resource is contained in a resource group, otherwise false. </returns>
-        public virtual bool TryGetResourceGroupName(out string resourceGroupName)
-        {
-            resourceGroupName = ResourceGroupName;
-            return resourceGroupName != null;
-        }
-
-        /// <summary>
-        /// Tries to get the location associated with this resource.
-        /// </summary>
-        /// <param name="location"> The location for thsi resource. </param>
-        /// <returns> True if the resource is contained in a location, otherwise false. </returns>
-        public virtual bool TryGetLocation(out Location location)
-        {
-            location = Location;
-            return location != null;
-        }
-
-        /// <summary>
-        /// Create the resource id string based on the resource id string of the parent resource.
-        /// </summary>
-        /// <returns> The string representation of this resource id. </returns>
-        internal virtual string ToResourceString()
+        private string ToResourceString()
         {
             if (Parent == null)
                 return string.Empty;
@@ -328,7 +275,7 @@ namespace Azure.ResourceManager
         {
             if (other is null)
                 return false;
-            return string.Equals(this.ToString(), other.ToString(), StringComparison.InvariantCultureIgnoreCase);
+            return string.Equals(ToString(), other.ToString(), StringComparison.InvariantCultureIgnoreCase);
         }
 
         /// <summary>
@@ -342,7 +289,7 @@ namespace Azure.ResourceManager
         {
             if (other is null)
                 return 1;
-            return string.Compare(this.ToString(), other.ToString(), StringComparison.InvariantCultureIgnoreCase);
+            return string.Compare(ToString(), other.ToString(), StringComparison.InvariantCultureIgnoreCase);
         }
 
         /// <inheritdoc/>
@@ -354,7 +301,7 @@ namespace Azure.ResourceManager
                 return resourceObj.Equals(this);
             string stringObj = obj as string;
             if (!(stringObj is null))
-                return this.Equals(ResourceIdentifier.Create(stringObj));
+                return Equals(new ResourceIdentifier(stringObj));
             return false;
         }
 
@@ -364,12 +311,6 @@ namespace Azure.ResourceManager
         {
             return ToString().GetHashCode();
         }
-
-        /// <summary>
-        /// Convert a string into a resource identifier.
-        /// </summary>
-        /// <param name="other"> The string representation of a resource identifier. </param>
-        public static implicit operator ResourceIdentifier(string other) => (other is null ? null : ResourceIdentifier.Create(other));
 
         /// <summary>
         /// Convert a resource identifier to a string
@@ -385,7 +326,10 @@ namespace Azure.ResourceManager
         /// <returns></returns>
         public static bool operator ==(ResourceIdentifier id1, ResourceIdentifier id2)
         {
-            return ResourceIdentifier.Equals(id1, id2);
+            if (ReferenceEquals(id1, null))
+                return ReferenceEquals(id2, null);
+
+            return id1.Equals(id2);
         }
 
         /// <summary>
@@ -396,7 +340,10 @@ namespace Azure.ResourceManager
         /// <returns></returns>
         public static bool operator !=(ResourceIdentifier id1, ResourceIdentifier id2)
         {
-            return !ResourceIdentifier.Equals(id1, id2);
+            if (ReferenceEquals(id1, null))
+                return !ReferenceEquals(id2, null);
+
+            return !id1.Equals(id2);
         }
 
         /// <summary>

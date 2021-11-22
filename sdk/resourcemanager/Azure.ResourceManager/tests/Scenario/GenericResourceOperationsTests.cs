@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Tests
             var rgName = Recording.GenerateAssetName("testrg");
             _ = await (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(rgName);
             var asetid = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{rgName}/providers/Microsoft.Compute/availabilitySets/testavset";
-            var genericResourceOperations = Client.GetGenericResource(asetid);
+            var genericResourceOperations = Client.GetGenericResource(new ResourceIdentifier(asetid));
             RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => await genericResourceOperations.GetAsync());
             Assert.AreEqual(404, exception.Status);
             Assert.True(exception.Message.Contains("ResourceNotFound"));
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Tests
             var rgName = Recording.GenerateAssetName("testrg");
             _ = await (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(rgName);
             var asetid = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{rgName}/providers/Microsoft.NotAValidNameSpace123/availabilitySets/testavset";
-            var genericResourceOperations = Client.GetGenericResource(asetid);
+            var genericResourceOperations = Client.GetGenericResource(new ResourceIdentifier(asetid));
             InvalidOperationException exception = Assert.ThrowsAsync<InvalidOperationException>(async () => await genericResourceOperations.GetAsync());
             Assert.IsTrue(exception.Message.Equals($"An invalid resouce id was given {asetid}"));
         }
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Tests
             Assert.DoesNotThrowAsync(async () => await aset.DeleteAsync());
 
             var fakeId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/foo-1";
-            Assert.ThrowsAsync<RequestFailedException>(async () => _ = await CreateGenericAvailabilitySetAsync(fakeId));
+            Assert.ThrowsAsync<RequestFailedException>(async () => _ = await CreateGenericAvailabilitySetAsync(new ResourceIdentifier(fakeId)));
         }
 
         [TestCase]
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Tests
             var fakeId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/foo-1";
             Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
-                var createOp = await StartCreateGenericAvailabilitySetAsync(fakeId);
+                var createOp = await StartCreateGenericAvailabilitySetAsync(new ResourceIdentifier(fakeId));
                 _ = await createOp.WaitForCompletionAsync();
             });
         }
@@ -134,7 +134,8 @@ namespace Azure.ResourceManager.Tests
 
             AssertAreEqual(aset, aset2);
 
-            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => _ = await Client.GetGenericResource(aset2.Id + "x").GetAsync());
+            ResourceIdentifier fakeId = new ResourceIdentifier(aset2.Id.ToString() + "x");
+            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => _ = await Client.GetGenericResource(new ResourceIdentifier(fakeId)).GetAsync());
             Assert.AreEqual(404, ex.Status);
         }
 

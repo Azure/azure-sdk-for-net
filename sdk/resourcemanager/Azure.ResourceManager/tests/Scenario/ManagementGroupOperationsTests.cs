@@ -31,7 +31,8 @@ namespace Azure.ResourceManager.Tests
         {
             var mgmtGroup = await Client.GetManagementGroup(_mgmtGroup.Id).GetAsync();
             CompareMgmtGroups(_mgmtGroup, mgmtGroup.Value);
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => _ = await Client.GetManagementGroup(_mgmtGroup.Id + "x").GetAsync());
+            ResourceIdentifier fakeId = new ResourceIdentifier(_mgmtGroup.Id.ToString() + "x");
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => _ = await Client.GetManagementGroup(new ResourceIdentifier(fakeId)).GetAsync());
             Assert.AreEqual(403, ex.Status);
         }
 

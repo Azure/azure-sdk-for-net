@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Management
         /// <param name="displayName"> The friendly name of the management group. </param>
         /// <param name="details"> The details of a management group. </param>
         /// <param name="children"> The list of children. </param>
-        internal ManagementGroupData(string id, string type, string name, string tenantId, string displayName, ManagementGroupDetails details, IReadOnlyList<ManagementGroupChildInfo> children)
+        internal ManagementGroupData(ResourceIdentifier id, string type, string name, string tenantId, string displayName, ManagementGroupDetails details, IReadOnlyList<ManagementGroupChildInfo> children)
             :base(id, name, type)
         {
             TenantId = tenantId;
