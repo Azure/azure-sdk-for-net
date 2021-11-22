@@ -59,7 +59,7 @@ namespace Azure.Core.Experimental.Tests
             var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
 
             // TODO: When we move the IsError functionality into Core, we'll move the addition of ResponsePropertiesPolicy to the pipeline into HttpPipelineBuilder.
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy, new ResponsePropertiesPolicy(options) }, ResponseClassifier.Shared);
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy, new ResponsePropertiesPolicy(options) }, null);
             this.endpoint = endpoint;
             apiVersion = options.Version;
         }
