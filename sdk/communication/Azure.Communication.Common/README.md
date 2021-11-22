@@ -70,7 +70,7 @@ Optionally, you can enable proactive token refreshing where a fresh token will b
 previous token approaches expiry. Using this method, your requests are less likely to be blocked to acquire a fresh token:
 
 Optionally, you can provide a time span before token expiry that `tokenRefresher` will be called if `refreshProactively` is true. For example, setting it to 5min means that 5min before the cached token expires, the proactive refresh will request a new token.
-The default value is 10min.
+The default value is 10 minutes.
 
 ```C# Snippet:CommunicationTokenCredential_CreateRefreshableWithoutInitialToken
 using var tokenCredential = new CommunicationTokenCredential(
