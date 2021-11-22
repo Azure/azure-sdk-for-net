@@ -1,11 +1,11 @@
 param (
   [string]$TargetDirectory = "", # Code path to code owners. e.g sdk/core/azure-amqp
-  [string]$RootDirectory = "$env:SYSTEM_DEFAULTWORKINGDIRECTORY", # The repo contains CODEOWNER file.
   [string]$CodeOwnerFileLocation = "$PSSCriptRoot/../../../.github/CODEOWNERS", # The absolute path of CODEOWNERS file. 
   [string]$ToolVersion = "1.0.0-dev.20211118.20", # Placeholder. Will update in next PR
   [string]$ToolPath = (Join-Path ([System.IO.Path]::GetTempPath()) "codeowners-tool-path"), # The place to check the tool existence. Put temp path as default
   [string]$DevOpsFeed = "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json", # DevOp tool feeds.
   [string]$VsoVariable = "", # Option of write code owners into devop variable
+  [switch]$FilterNonUser, # Option to filter out the team alias in code owner list. e.g. Azure/azure-sdk-team
   [switch]$Test  #Run test functions against the script logic
 )
 
@@ -33,13 +33,13 @@ function Get-CodeOwnersTool()
 function Get-CodeOwners ([string]$targetDirectory, [string]$codeOwnerFileLocation)
 {
   $command = Get-CodeOwnersTool
-  # Params $RootDirectory is already in use in cpp release pipeline. 
-  # Will use $codeOwnerFileLocation and deprecate $RootDirectory once it is ready to retire $RootDirectory.
-  if ($RootDirectory -and !(Test-Path $codeOwnerFileLocation)) {
-    $codeOwnerFileLocation = Join-Path $RootDirectory ".github/CODEOWNERS"
+  # Filter out the non user alias from code owner list.
+  if($FilterNonUser) {
+    $codeOwnersString = & $command --target-directory $targetDirectory --code-owner-file-path $codeOwnerFileLocation --filter-out-non-user-aliases 2>&1
   }
-  
-  $codeOwnersString = & $command --target-directory $targetDirectory --code-owner-file-path $codeOwnerFileLocation 2>&1
+  else {
+    $codeOwnersString = & $command --target-directory $targetDirectory --code-owner-file-path $codeOwnerFileLocation 2>&1
+  }
   # Failed at the command of fetching code owners.
   if ($LASTEXITCODE -ne 0) {
     Write-Host $codeOwnersString
