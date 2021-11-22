@@ -49,7 +49,7 @@ namespace Azure.Storage.Blobs
     }
     public partial class BlobClientOptions : Azure.Core.ClientOptions
     {
-        public BlobClientOptions(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion version = Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2020_12_06) { }
+        public BlobClientOptions(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion version = Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2021_02_12) { }
         public Azure.Storage.Blobs.Models.CustomerProvidedKey? CustomerProvidedKey { get { throw null; } set { } }
         public bool EnableTenantDiscovery { get { throw null; } set { } }
         public string EncryptionScope { get { throw null; } set { } }
@@ -633,6 +633,7 @@ namespace Azure.Storage.Blobs.Models
         public static Azure.Storage.Blobs.Models.BlobErrorCode SequenceNumberConditionNotMet { get { throw null; } }
         public static Azure.Storage.Blobs.Models.BlobErrorCode SequenceNumberIncrementTooLarge { get { throw null; } }
         public static Azure.Storage.Blobs.Models.BlobErrorCode ServerBusy { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Storage.Blobs.Models.BlobErrorCode SnaphotOperationRateExceeded { get { throw null; } }
         public static Azure.Storage.Blobs.Models.BlobErrorCode SnapshotCountExceeded { get { throw null; } }
         public static Azure.Storage.Blobs.Models.BlobErrorCode SnapshotOperationRateExceeded { get { throw null; } }
@@ -1378,6 +1379,12 @@ namespace Azure.Storage.Blobs.Models
         public string BlobName { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
+    public partial class UpdateClientSideKeyEncryptionKeyOptions
+    {
+        public UpdateClientSideKeyEncryptionKeyOptions() { }
+        public Azure.Storage.Blobs.Models.BlobRequestConditions Conditions { get { throw null; } set { } }
+        public Azure.Storage.ClientSideEncryptionOptions EncryptionOptionsOverride { get { throw null; } set { } }
+    }
     public partial class UserDelegationKey
     {
         internal UserDelegationKey() { }
@@ -1693,7 +1700,7 @@ namespace Azure.Storage.Blobs.Specialized
     }
     public partial class SpecializedBlobClientOptions : Azure.Storage.Blobs.BlobClientOptions
     {
-        public SpecializedBlobClientOptions(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion version = Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2020_12_06) : base (default(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion)) { }
+        public SpecializedBlobClientOptions(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion version = Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2021_02_12) : base (default(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion)) { }
         public Azure.Storage.ClientSideEncryptionOptions ClientSideEncryption { get { throw null; } set { } }
     }
     public static partial class SpecializedBlobExtensions
@@ -1706,6 +1713,8 @@ namespace Azure.Storage.Blobs.Specialized
         public static Azure.Storage.Blobs.Specialized.PageBlobClient GetPageBlobClient(this Azure.Storage.Blobs.BlobContainerClient client, string blobName) { throw null; }
         public static Azure.Storage.Blobs.BlobContainerClient GetParentBlobContainerClient(this Azure.Storage.Blobs.Specialized.BlobBaseClient client) { throw null; }
         public static Azure.Storage.Blobs.BlobServiceClient GetParentBlobServiceClient(this Azure.Storage.Blobs.BlobContainerClient client) { throw null; }
+        public static void UpdateClientSideKeyEncryptionKey(this Azure.Storage.Blobs.BlobClient client, Azure.Storage.Blobs.Models.UpdateClientSideKeyEncryptionKeyOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
+        public static System.Threading.Tasks.Task UpdateClientSideKeyEncryptionKeyAsync(this Azure.Storage.Blobs.BlobClient client, Azure.Storage.Blobs.Models.UpdateClientSideKeyEncryptionKeyOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Storage.Blobs.BlobClient WithClientSideEncryptionOptions(this Azure.Storage.Blobs.BlobClient client, Azure.Storage.ClientSideEncryptionOptions clientSideEncryptionOptions) { throw null; }
     }
 }

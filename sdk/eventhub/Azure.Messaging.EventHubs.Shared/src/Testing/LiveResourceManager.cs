@@ -28,7 +28,7 @@ namespace Azure.Messaging.EventHubs.Tests
     public sealed class LiveResourceManager
     {
         /// <summary>The maximum number of attempts to retry a management operation.</summary>
-        private const int RetryMaximumAttempts = 20;
+        public const int RetryMaximumAttempts = 20;
 
         /// <summary>The number of seconds to use as the basis for backing off on retry attempts.</summary>
         private const double RetryExponentialBackoffSeconds = 3.0;
