@@ -83,7 +83,7 @@ if($Test) {
   TestGetCodeOwner -targetDirectory "/sdk/azconfig" -codeOwnerFileLocation $testFile -useNonUserAlias $true -expectReturn @("person3", "person4")
   TestGetCodeOwner -targetDirectory "/sdk/azconfig/package" -codeOwnerFileLocation $testFile -useNonUserAlias $true  $testFile -expectReturn @("person3", "person4")
   TestGetCodeOwner -targetDirectory "/sd" -codeOwnerFileLocation $testFile -useNonUserAlias $true  -expectReturn @()
-  TestGetCodeOwner -targetDirectory "/sdk/testUser/" -codeOwnerFileLocation $testFile -expectReturn @("azuer-sdk") 
+  TestGetCodeOwner -targetDirectory "/sdk/testUser/" -codeOwnerFileLocation $testFile -expectReturn @("azure-sdk") 
   exit 0
 }
 else {
