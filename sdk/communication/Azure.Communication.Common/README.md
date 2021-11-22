@@ -76,7 +76,7 @@ The default value is 10 minutes.
 using var tokenCredential = new CommunicationTokenCredential(
     new CommunicationTokenRefreshOptions(
         refreshProactively: true, // Indicates if the token should be proactively refreshed in the background or only on-demand
-        refreshTimeBeforeTokenExpiry: new TimeSpan(0, 0, 5, 0),
+        refreshTimeBeforeTokenExpiry: new TimeSpan(0, 0, 5, 0), // Proactive refreshing will be triggered 5 minutes before the token expires
         tokenRefresher: cancellationToken => FetchTokenForUserFromMyServer("bob@contoso.com", cancellationToken))
     {
         AsyncTokenRefresher = cancellationToken => FetchTokenForUserFromMyServerAsync("bob@contoso.com", cancellationToken)
