@@ -13,7 +13,7 @@ namespace Azure.Communication
     /// </summary>
     public class CommunicationTokenRefreshOptions
     {
-        /// <summary>Default time span in minutes before token expiry that `tokenRefresher` will be called.</summary>
+        /// <summary>Default time span in minutes before token expiry that causes the 'tokenRefresher' to be called.</summary>
         internal const int DefaultExpiringOffsetMinutes = 10;
         /// <summary>The initial token.</summary>
         public string InitialToken { get; set; }
