@@ -75,7 +75,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Blobs.Tests
 
         private async Task<BlobClient> GetBlobClient(string name)
         {
-            var client = new BlobServiceClient(TestEnvironment.BlobStorageEndpoint, TestEnvironment.Credential, new BlobClientOptions(BlobClientOptions.ServiceVersion.V2019_02_02));
+            var client = new BlobServiceClient(TestEnvironment.BlobStorageEndpoint, TestEnvironment.Credential, new BlobClientOptions(TestEnvironment.StorageVersion));
 
             var blobContainerClient = client.GetBlobContainerClient("testcontainer");
             await blobContainerClient.CreateIfNotExistsAsync();
