@@ -367,7 +367,7 @@ namespace Azure.Communication.Identity
                 _ => throw new NotImplementedException(),
                 twentyMinToken);
 
-            // go into soon to expire window
+            // Go into the soon-to-expire window
             testClock.Tick(TimeSpan.FromMinutes(20 - CommunicationTokenRefreshOptions.DefaultExpiringOffsetMinutes + 0.5));
 
             for (var i = 0; i < 10; i++)
