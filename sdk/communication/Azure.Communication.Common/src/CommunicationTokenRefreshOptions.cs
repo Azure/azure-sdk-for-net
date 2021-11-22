@@ -53,7 +53,7 @@ namespace Azure.Communication
         /// </summary>
         /// <param name="refreshProactively">Indicates whether the token should be proactively renewed prior to its expiry or on demand.</param>
         /// <param name="tokenRefresher">The function that provides the token acquired from CommunicationIdentityClient.</param>
-        /// <param name="refreshTimeBeforeTokenExpiry">The time span before token expiry that `tokenRefresher` will be called if `refreshProactively` is true. For example, setting it to 5min means that 5min before the cached token expires, proactive refresh will request a new token. The default value is 10min.</param>
+        /// <param name="refreshTimeBeforeTokenExpiry">The time span before token expiry that causes the 'tokenRefresher' to be called if 'refreshProactively' is true. For example, setting it to 5 minutes means that 5 minutes before the cached token expires, the proactive refresh will request a new token. The default value is 10 minutes.</param>
         public CommunicationTokenRefreshOptions(
             bool refreshProactively,
             TimeSpan refreshTimeBeforeTokenExpiry,
