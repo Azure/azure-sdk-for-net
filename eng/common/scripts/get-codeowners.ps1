@@ -30,12 +30,12 @@ function Get-CodeOwnersTool()
   return $command
 }
 
-function Get-CodeOwners ([string]$targetDirectory, [string]$codeOwnerFileLocation, [bool]$useNonUserAlias = $false)
+function Get-CodeOwners ([string]$targetDirectory, [string]$codeOwnerFileLocation, [bool]$includeNonUserAliases = $false)
 {
   $command = Get-CodeOwnersTool
   # Filter out the non user alias from code owner list.
   Write-Host "Testing on $targetDirectory..."
-  if($useNonUserAlias) {
+  if($includeNonUserAliases) {
     $codeOwnersString = & $command --target-directory $targetDirectory --code-owner-file-path $codeOwnerFileLocation 2>&1
   }
   else {
@@ -58,11 +58,11 @@ function Get-CodeOwners ([string]$targetDirectory, [string]$codeOwnerFileLocatio
     Write-Host "##vso[task.setvariable variable=$VsoVariable;]$codeOwners"
   }
 
-  return $codeOwnersJson.Owners
+  return ,@($codeOwnersJson.Owners)
 }
 
-function TestGetCodeOwner([string]$targetDirectory, [string]$codeOwnerFileLocation, [bool]$useNonUserAlias = $false, [string[]]$expectReturn) {
-  $actualReturn = Get-CodeOwners -targetDirectory $targetDirectory -codeOwnerFileLocation $codeOwnerFileLocation -useNonUserAlias $useNonUserAlias
+function TestGetCodeOwner([string]$targetDirectory, [string]$codeOwnerFileLocation, [bool]$includeNonUserAliases = $false, [string[]]$expectReturn) {
+  $actualReturn = Get-CodeOwners -targetDirectory $targetDirectory -codeOwnerFileLocation $codeOwnerFileLocation -includeNonUserAliases $IncludeNonUserAliases
 
   if ($actualReturn.Count -ne $expectReturn.Count) {
     Write-Error "The length of actual result is not as expected. Expected length: $($expectReturn.Count), Actual length: $($actualReturn.Count)."
@@ -78,14 +78,14 @@ function TestGetCodeOwner([string]$targetDirectory, [string]$codeOwnerFileLocati
 
 if($Test) {
   $testFile = "$PSSCriptRoot/../../../tools/code-owners-parser/Azure.Sdk.Tools.RetrieveCodeOwners.Tests/CODEOWNERS"
-  TestGetCodeOwner -targetDirectory "sdk" -codeOwnerFileLocation $testFile -useNonUserAlias $true -expectReturn @("person1", "person2")
-  TestGetCodeOwner -targetDirectory "sdk/noPath" -codeOwnerFileLocation $testFile -useNonUserAlias $true -expectReturn @("person1", "person2")
-  TestGetCodeOwner -targetDirectory "/sdk/azconfig" -codeOwnerFileLocation $testFile -useNonUserAlias $true -expectReturn @("person3", "person4")
-  TestGetCodeOwner -targetDirectory "/sdk/azconfig/package" -codeOwnerFileLocation $testFile -useNonUserAlias $true  $testFile -expectReturn @("person3", "person4")
-  TestGetCodeOwner -targetDirectory "/sd" -codeOwnerFileLocation $testFile -useNonUserAlias $true  -expectReturn @()
+  TestGetCodeOwner -targetDirectory "sdk" -codeOwnerFileLocation $testFile -includeNonUserAliases $true -expectReturn @("person1", "person2")
+  TestGetCodeOwner -targetDirectory "sdk/noPath" -codeOwnerFileLocation $testFile -includeNonUserAliases $true -expectReturn @("person1", "person2")
+  TestGetCodeOwner -targetDirectory "/sdk/azconfig" -codeOwnerFileLocation $testFile -includeNonUserAliases $true -expectReturn @("person3", "person4")
+  TestGetCodeOwner -targetDirectory "/sdk/azconfig/package" -codeOwnerFileLocation $testFile -includeNonUserAliases $true  $testFile -expectReturn @("person3", "person4")
+  TestGetCodeOwner -targetDirectory "/sd" -codeOwnerFileLocation $testFile -includeNonUserAliases $true  -expectReturn @()
   TestGetCodeOwner -targetDirectory "/sdk/testUser/" -codeOwnerFileLocation $testFile -expectReturn @("azure-sdk") 
   exit 0
 }
 else {
-  return Get-CodeOwners -targetDirectory $TargetDirectory -codeOwnerFileLocation $CodeOwnerFileLocation -useNonUserAlias $IncludeNonUserAliases
+  return Get-CodeOwners -targetDirectory $TargetDirectory -codeOwnerFileLocation $CodeOwnerFileLocation -includeNonUserAliases $IncludeNonUserAliases
 }
