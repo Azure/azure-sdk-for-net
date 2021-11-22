@@ -85,5 +85,5 @@ if($Test) {
   exit 0
 }
 else {
-  return Get-CodeOwners 
+  return Get-CodeOwners -targetDirectory $TargetDirectory -codeOwnerFileLocation $CodeOwnerFileLocation
 }
