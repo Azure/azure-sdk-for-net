@@ -2,7 +2,7 @@
   <PropertyGroup>
     <AssemblyTitle>Microsoft Cognitive Services Face SDK</AssemblyTitle>
     <Description>This client library provides access to the Microsoft Cognitive Services Face APIs.</Description>
-    <Version>2.7.0-preview.2</Version>
+    <Version>2.8.0-preview.2</Version>
     <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;REST HTTP client;Face;Face API;Face SDK;Vision;netcore451511</PackageTags>
     <PackageReleaseNotes>
     <![CDATA[
@@ -14,6 +14,7 @@
     6) Aligned with latest Face API, multiple recognition model feature was added.
     ]]>
     </PackageReleaseNotes>
+    <GenerateAPIListing>true</GenerateAPIListing>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -23,5 +24,7 @@
   <PropertyGroup>
     <AzureApiTag />
     <PackageTags>$(PackageTags);$(CommonTags);$(AzureApiTag);</PackageTags>
+    <AssemblyName>Microsoft.Azure.CognitiveServices.Vision.Face</AssemblyName>
+    <RootNamespace>Microsoft.Azure.CognitiveServices.Vision.Face</RootNamespace>
   </PropertyGroup>
 </Project>
