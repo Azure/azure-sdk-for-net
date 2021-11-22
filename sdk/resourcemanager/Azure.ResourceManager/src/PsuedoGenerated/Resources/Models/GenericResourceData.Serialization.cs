@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Resources
             Optional<object> properties = default;
             Optional<string> kind = default;
             Optional<string> managedBy = default;
-            Optional<Sku> sku = default;
+            Optional<Models.Sku> sku = default;
             Optional<ResourceIdentity> identity = default;
             Optional<string> id = default;
             Optional<string> name = default;
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Resources
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = Sku.DeserializeSku(property.Value);
+                    sku = Models.Sku.DeserializeSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("identity"))

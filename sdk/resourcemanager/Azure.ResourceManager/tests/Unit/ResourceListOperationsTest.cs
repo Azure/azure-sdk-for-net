@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Tests
@@ -15,9 +14,9 @@ namespace Azure.ResourceManager.Tests
             return new Plan("name", "publisher", "product", "promo", "version");
         }
 
-        private static Sku GetSku()
+        private static Resources.Models.Sku GetSku()
         {
-            return new Sku("name", SkuTier.Basic, "family", "size", 10);
+            return new Resources.Models.Sku("name", SkuTier.Basic.ToString(), "size", "family", "model", 10);
         }
 
         private static GenericResourceData GetGenericResource()
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.Tests
 
         private static GenericResourceData GetGenericResource(
             Dictionary<string, string> tags,
-            Sku sku,
+            Resources.Models.Sku sku,
             Plan plan,
             string kind,
             string managedBy,

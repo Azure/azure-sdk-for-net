@@ -37,7 +37,10 @@ namespace Azure.ResourceManager.Tests
         protected static GenericResourceData ConstructGenericAvailabilitySet()
         {
             var data = new GenericResourceData(Location.WestUS2);
-            data.Sku = new Sku("Aligned");
+            data.Sku = new Resources.Models.Sku()
+            {
+                Name = "Aligned"
+            };
             var propertyBag = new Dictionary<string, object>();
             propertyBag.Add("platformUpdateDomainCount", 5);
             propertyBag.Add("platformFaultDomainCount", 2);
@@ -71,7 +74,17 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual(aset.Data.ManagedBy, aset2.Data.ManagedBy);
             Assert.AreEqual(aset.Data.Name, aset2.Data.Name);
             Assert.AreEqual(aset.Data.Plan, aset2.Data.Plan);
-            Assert.AreEqual(aset.Data.Sku, aset2.Data.Sku);
+            if (aset.Data.Sku != null && aset2.Data.Sku != null)
+            {
+                Assert.NotNull(aset.Data.Sku);
+                Assert.NotNull(aset2.Data.Sku);
+                Assert.AreEqual(aset.Data.Sku.Name, aset2.Data.Sku.Name);
+                Assert.AreEqual(aset.Data.Sku.Tier, aset2.Data.Sku.Tier);
+                Assert.AreEqual(aset.Data.Sku.Size, aset2.Data.Sku.Size);
+                Assert.AreEqual(aset.Data.Sku.Family, aset2.Data.Sku.Family);
+                Assert.AreEqual(aset.Data.Sku.Model, aset2.Data.Sku.Model);
+                Assert.AreEqual(aset.Data.Sku.Capacity, aset2.Data.Sku.Capacity);
+            }
             //TODO: Add equal for Properties and Tags
         }
 
