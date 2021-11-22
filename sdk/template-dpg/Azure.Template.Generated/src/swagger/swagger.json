@@ -75,7 +75,7 @@
         }
       },
       "get": {
-        "operationId": "Get",
+        "operationId": "GetResource",
         "description": "Retrieves information about the resource.",
         "parameters": [
           {
