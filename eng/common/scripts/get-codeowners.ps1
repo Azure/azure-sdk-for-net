@@ -34,6 +34,7 @@ function Get-CodeOwners ([string]$targetDirectory, [string]$codeOwnerFileLocatio
 {
   $command = Get-CodeOwnersTool
   # Filter out the non user alias from code owner list.
+  Write-Host "Testing on $targetDirectory..."
   if($useNonUserAlias) {
     $codeOwnersString = & $command --target-directory $targetDirectory --code-owner-file-path $codeOwnerFileLocation 2>&1
   }
