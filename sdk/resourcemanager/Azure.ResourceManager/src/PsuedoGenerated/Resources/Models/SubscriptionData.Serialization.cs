@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Resources
     {
         internal static SubscriptionData DeserializeSubscriptionData(JsonElement element)
         {
-            Optional<string> id = default;
+            Optional<ResourceIdentifier> id = default;
             Optional<string> subscriptionId = default;
             Optional<string> displayName = default;
             Optional<string> tenantId = default;
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Resources
             {
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("subscriptionId"))

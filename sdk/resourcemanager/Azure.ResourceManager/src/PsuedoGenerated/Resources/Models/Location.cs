@@ -25,19 +25,12 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="name"> The location name. </param>
         /// <param name="displayName"> The display name of the location. </param>
         /// <param name="regionalDisplayName"> The display name of the location and its region. </param>
-        /// <param name="canonicalName"> The canonical name of the location. </param>
-        internal Location(string name, string displayName, string regionalDisplayName, string canonicalName)
+        public Location(string name, string displayName, string regionalDisplayName)
         {
             Name = name;
             DisplayName = displayName;
             RegionalDisplayName = regionalDisplayName;
-            CanonicalName = canonicalName;
         }
-
-        /// <summary>
-        /// Gets a location canonical name consisting of only lowercase chararters with a '-' between words, e.g. "west-us".
-        /// </summary>
-        public string CanonicalName { get; private set; }
 
         /// <summary> The display name of the location and its region. </summary>
         public string RegionalDisplayName { get; private set; }

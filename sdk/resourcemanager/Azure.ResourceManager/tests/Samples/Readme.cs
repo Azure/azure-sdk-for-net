@@ -45,11 +45,8 @@ ArmClient armClient = new ArmClient(new DefaultAzureCredential());
             string resourceId = "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/resourceGroups/workshop2021-rg/providers/Microsoft.Network/virtualNetworks/myVnet/subnets/mySubnet";
             // Assume we don't know what type of resource id we have we can cast to the base type
             ResourceIdentifier id = new ResourceIdentifier(resourceId);
-            string property;
-            if (id.TryGetSubscriptionId(out property))
-                Console.WriteLine($"Subscription: {property}");
-            if (id.TryGetResourceGroupName(out property))
-                Console.WriteLine($"ResourceGroup: {property}");
+            Console.WriteLine($"Subscription: {id.SubscriptionId}");
+            Console.WriteLine($"ResourceGroup: {id.ResourceGroupName}");
             // Parent is only null when we reach the top of the chain which is a Tenant
             Console.WriteLine($"Vnet: {id.Parent.Name}");
             // Name will never be null

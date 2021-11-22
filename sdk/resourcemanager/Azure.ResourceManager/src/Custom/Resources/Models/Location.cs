@@ -15,207 +15,209 @@ namespace Azure.ResourceManager.Resources.Models
     /// </summary>
     public partial class Location : IEquatable<Location>, IComparable<Location>
     {
+        private const char Space = ' ';
+
         #region Public Cloud Locations
 
         /// <summary>
         /// Public cloud location for East Asia.
         /// </summary>
-        public static readonly Location EastAsia = new Location { Name = "eastasia", CanonicalName = "east-asia", DisplayName = "East Asia", RegionalDisplayName = "(Asia Pacific) East Asia" };
+        public static readonly Location EastAsia = new Location { Name = "eastasia", DisplayName = "East Asia", RegionalDisplayName = "(Asia Pacific) East Asia" };
 
         /// <summary>
         /// Public cloud location for Southeast Asia.
         /// </summary>
-        public static readonly Location SoutheastAsia = new Location { Name = "southeastasia", CanonicalName = "southeast-asia", DisplayName = "Southeast Asia", RegionalDisplayName = "(Asia Pacific) Southeast Asia" };
+        public static readonly Location SoutheastAsia = new Location { Name = "southeastasia", DisplayName = "Southeast Asia", RegionalDisplayName = "(Asia Pacific) Southeast Asia" };
 
         /// <summary>
         /// Public cloud location for Central US.
         /// </summary>
-        public static readonly Location CentralUS = new Location { Name = "centralus", CanonicalName = "central-us", DisplayName = "Central US", RegionalDisplayName = "(US) Central US" };
+        public static readonly Location CentralUS = new Location { Name = "centralus", DisplayName = "Central US", RegionalDisplayName = "(US) Central US" };
 
         /// <summary>
         /// Public cloud location for East US.
         /// </summary>
-        public static readonly Location EastUS = new Location { Name = "eastus", CanonicalName = "east-us", DisplayName = "East US", RegionalDisplayName = "(US) East US" };
+        public static readonly Location EastUS = new Location { Name = "eastus", DisplayName = "East US", RegionalDisplayName = "(US) East US" };
 
         /// <summary>
         /// Public cloud location for East US 2.
         /// </summary>
-        public static readonly Location EastUS2 = new Location { Name = "eastus2", CanonicalName = "east-us-2", DisplayName = "East US 2", RegionalDisplayName = "(US) East US 2" };
+        public static readonly Location EastUS2 = new Location { Name = "eastus2", DisplayName = "East US 2", RegionalDisplayName = "(US) East US 2" };
 
         /// <summary>
         /// Public cloud location for West US.
         /// </summary>
-        public static readonly Location WestUS = new Location { Name = "westus", CanonicalName = "west-us", DisplayName = "West US", RegionalDisplayName = "(US) West US" };
+        public static readonly Location WestUS = new Location { Name = "westus", DisplayName = "West US", RegionalDisplayName = "(US) West US" };
 
         /// <summary>
         /// Public cloud location for North Central US.
         /// </summary>
-        public static readonly Location NorthCentralUS = new Location { Name = "northcentralus", CanonicalName = "north-central-us", DisplayName = "North Central US", RegionalDisplayName = "(US) North Central US" };
+        public static readonly Location NorthCentralUS = new Location { Name = "northcentralus", DisplayName = "North Central US", RegionalDisplayName = "(US) North Central US" };
 
         /// <summary>
         /// Public cloud location for South Central US.
         /// </summary>
-        public static readonly Location SouthCentralUS = new Location { Name = "southcentralus", CanonicalName = "south-central-us", DisplayName = "South Central US", RegionalDisplayName = "(US) South Central US" };
+        public static readonly Location SouthCentralUS = new Location { Name = "southcentralus", DisplayName = "South Central US", RegionalDisplayName = "(US) South Central US" };
 
         /// <summary>
         /// Public cloud location for North Europe.
         /// </summary>
-        public static readonly Location NorthEurope = new Location { Name = "northeurope", CanonicalName = "north-europe", DisplayName = "North Europe", RegionalDisplayName = "(Europe) North Europe" };
+        public static readonly Location NorthEurope = new Location { Name = "northeurope", DisplayName = "North Europe", RegionalDisplayName = "(Europe) North Europe" };
 
         /// <summary>
         /// Public cloud location for West Europe.
         /// </summary>
-        public static readonly Location WestEurope = new Location { Name = "westeurope", CanonicalName = "west-europe", DisplayName = "West Europe", RegionalDisplayName = "(Europe) West Europe" };
+        public static readonly Location WestEurope = new Location { Name = "westeurope", DisplayName = "West Europe", RegionalDisplayName = "(Europe) West Europe" };
 
         /// <summary>
         /// Public cloud location for Japan West.
         /// </summary>
-        public static readonly Location JapanWest = new Location { Name = "japanwest", CanonicalName = "japan-west", DisplayName = "Japan West", RegionalDisplayName = "(Asia Pacific) Japan West" };
+        public static readonly Location JapanWest = new Location { Name = "japanwest", DisplayName = "Japan West", RegionalDisplayName = "(Asia Pacific) Japan West" };
 
         /// <summary>
         /// Public cloud location for Japan East.
         /// </summary>
-        public static readonly Location JapanEast = new Location { Name = "japaneast", CanonicalName = "japan-east", DisplayName = "Japan East", RegionalDisplayName = "(Asia Pacific) Japan East" };
+        public static readonly Location JapanEast = new Location { Name = "japaneast", DisplayName = "Japan East", RegionalDisplayName = "(Asia Pacific) Japan East" };
 
         /// <summary>
         /// Public cloud location for Brazil South.
         /// </summary>
-        public static readonly Location BrazilSouth = new Location { Name = "brazilsouth", CanonicalName = "brazil-south", DisplayName = "Brazil South", RegionalDisplayName = "(South America) Brazil South" };
+        public static readonly Location BrazilSouth = new Location { Name = "brazilsouth", DisplayName = "Brazil South", RegionalDisplayName = "(South America) Brazil South" };
 
         /// <summary>
         /// Public cloud location for Australia East.
         /// </summary>
-        public static readonly Location AustraliaEast = new Location { Name = "australiaeast", CanonicalName = "australia-east", DisplayName = "Australia East", RegionalDisplayName = "(Asia Pacific) Australia East" };
+        public static readonly Location AustraliaEast = new Location { Name = "australiaeast", DisplayName = "Australia East", RegionalDisplayName = "(Asia Pacific) Australia East" };
 
         /// <summary>
         /// Public cloud location for Australia Southeast.
         /// </summary>
-        public static readonly Location AustraliaSoutheast = new Location { Name = "australiasoutheast", CanonicalName = "australia-southeast", DisplayName = "Australia Southeast", RegionalDisplayName = "(Asia Pacific) Australia Southeast" };
+        public static readonly Location AustraliaSoutheast = new Location { Name = "australiasoutheast", DisplayName = "Australia Southeast", RegionalDisplayName = "(Asia Pacific) Australia Southeast" };
 
         /// <summary>
         /// Public cloud location for South India.
         /// </summary>
-        public static readonly Location SouthIndia = new Location { Name = "southindia", CanonicalName = "south-india", DisplayName = "South India", RegionalDisplayName = "(Asia Pacific) South India" };
+        public static readonly Location SouthIndia = new Location { Name = "southindia", DisplayName = "South India", RegionalDisplayName = "(Asia Pacific) South India" };
 
         /// <summary>
         /// Public cloud location for Central India.
         /// </summary>
-        public static readonly Location CentralIndia = new Location { Name = "centralindia", CanonicalName = "central-india", DisplayName = "Central India", RegionalDisplayName = "(Asia Pacific) Central India" };
+        public static readonly Location CentralIndia = new Location { Name = "centralindia", DisplayName = "Central India", RegionalDisplayName = "(Asia Pacific) Central India" };
 
         /// <summary>
         /// Public cloud location for West India.
         /// </summary>
-        public static readonly Location WestIndia = new Location { Name = "westindia", CanonicalName = "west-india", DisplayName = "West India", RegionalDisplayName = "(Asia Pacific) West India" };
+        public static readonly Location WestIndia = new Location { Name = "westindia", DisplayName = "West India", RegionalDisplayName = "(Asia Pacific) West India" };
 
         /// <summary>
         /// Public cloud location for Canada Central.
         /// </summary>
-        public static readonly Location CanadaCentral = new Location { Name = "canadacentral", CanonicalName = "canada-central", DisplayName = "Canada Central", RegionalDisplayName = "(Canada) Canada Central" };
+        public static readonly Location CanadaCentral = new Location { Name = "canadacentral", DisplayName = "Canada Central", RegionalDisplayName = "(Canada) Canada Central" };
 
         /// <summary>
         /// Public cloud location for Canada East.
         /// </summary>
-        public static readonly Location CanadaEast = new Location { Name = "canadaeast", CanonicalName = "canada-east", DisplayName = "Canada East", RegionalDisplayName = "(Canada) Canada East" };
+        public static readonly Location CanadaEast = new Location { Name = "canadaeast", DisplayName = "Canada East", RegionalDisplayName = "(Canada) Canada East" };
 
         /// <summary>
         /// Public cloud location for UK South.
         /// </summary>
-        public static readonly Location UKSouth = new Location { Name = "uksouth", CanonicalName = "uk-south", DisplayName = "UK South", RegionalDisplayName = "(Europe) UK South" };
+        public static readonly Location UKSouth = new Location { Name = "uksouth", DisplayName = "UK South", RegionalDisplayName = "(Europe) UK South" };
 
         /// <summary>
         /// Public cloud location for UK West.
         /// </summary>
-        public static readonly Location UKWest = new Location { Name = "ukwest", CanonicalName = "uk-west", DisplayName = "UK West", RegionalDisplayName = "(Europe) UK West" };
+        public static readonly Location UKWest = new Location { Name = "ukwest", DisplayName = "UK West", RegionalDisplayName = "(Europe) UK West" };
 
         /// <summary>
         /// Public cloud location for West Central US.
         /// </summary>
-        public static readonly Location WestCentralUS = new Location { Name = "westcentralus", CanonicalName = "west-central-us", DisplayName = "West Central US", RegionalDisplayName = "(US) West Central US" };
+        public static readonly Location WestCentralUS = new Location { Name = "westcentralus", DisplayName = "West Central US", RegionalDisplayName = "(US) West Central US" };
 
         /// <summary>
         /// Public cloud location for West US 2.
         /// </summary>
-        public static readonly Location WestUS2 = new Location { Name = "westus2", CanonicalName = "west-us-2", DisplayName = "West US 2", RegionalDisplayName = "(US) West US 2" };
+        public static readonly Location WestUS2 = new Location { Name = "westus2", DisplayName = "West US 2", RegionalDisplayName = "(US) West US 2" };
 
         /// <summary>
         /// Public cloud location for Korea Central.
         /// </summary>
-        public static readonly Location KoreaCentral = new Location { Name = "koreacentral", CanonicalName = "korea-central", DisplayName = "Korea Central", RegionalDisplayName = "(Asia Pacific) Korea Central" };
+        public static readonly Location KoreaCentral = new Location { Name = "koreacentral", DisplayName = "Korea Central", RegionalDisplayName = "(Asia Pacific) Korea Central" };
 
         /// <summary>
         /// Public cloud location for Korea South.
         /// </summary>
-        public static readonly Location KoreaSouth = new Location { Name = "koreasouth", CanonicalName = "korea-south", DisplayName = "Korea South", RegionalDisplayName = "(Asia Pacific) Korea South" };
+        public static readonly Location KoreaSouth = new Location { Name = "koreasouth", DisplayName = "Korea South", RegionalDisplayName = "(Asia Pacific) Korea South" };
 
         /// <summary>
         /// Public cloud location for France Central.
         /// </summary>
-        public static readonly Location FranceCentral = new Location { Name = "francecentral", CanonicalName = "france-central", DisplayName = "France Central", RegionalDisplayName = "(Europe) France Central" };
+        public static readonly Location FranceCentral = new Location { Name = "francecentral", DisplayName = "France Central", RegionalDisplayName = "(Europe) France Central" };
 
         /// <summary>
         /// Public cloud location for France South.
         /// </summary>
-        public static readonly Location FranceSouth = new Location { Name = "francesouth", CanonicalName = "france-south", DisplayName = "France South", RegionalDisplayName = "(Europe) France South" };
+        public static readonly Location FranceSouth = new Location { Name = "francesouth", DisplayName = "France South", RegionalDisplayName = "(Europe) France South" };
 
         /// <summary>
         /// Public cloud location for Australia Central.
         /// </summary>
-        public static readonly Location AustraliaCentral = new Location { Name = "australiacentral", CanonicalName = "australia-central", DisplayName = "Australia Central", RegionalDisplayName = "(Asia Pacific) Australia Central" };
+        public static readonly Location AustraliaCentral = new Location { Name = "australiacentral", DisplayName = "Australia Central", RegionalDisplayName = "(Asia Pacific) Australia Central" };
 
         /// <summary>
         /// Public cloud location for Australia Central 2.
         /// </summary>
-        public static readonly Location AustraliaCentral2 = new Location { Name = "australiacentral2", CanonicalName = "australia-central-2", DisplayName = "Australia Central 2", RegionalDisplayName = "(Asia Pacific) Australia Central 2" };
+        public static readonly Location AustraliaCentral2 = new Location { Name = "australiacentral2", DisplayName = "Australia Central 2", RegionalDisplayName = "(Asia Pacific) Australia Central 2" };
 
         /// <summary>
         /// Public cloud location for UAE Central.
         /// </summary>
-        public static readonly Location UAECentral = new Location { Name = "uaecentral", CanonicalName = "uae-central", DisplayName = "UAE Central", RegionalDisplayName = "(Middle East) UAE Central" };
+        public static readonly Location UAECentral = new Location { Name = "uaecentral", DisplayName = "UAE Central", RegionalDisplayName = "(Middle East) UAE Central" };
 
         /// <summary>
         /// Public cloud location for UAE North.
         /// </summary>
-        public static readonly Location UAENorth = new Location { Name = "uaenorth", CanonicalName = "uae-north", DisplayName = "UAE North", RegionalDisplayName = "(Middle East) UAE North" };
+        public static readonly Location UAENorth = new Location { Name = "uaenorth", DisplayName = "UAE North", RegionalDisplayName = "(Middle East) UAE North" };
 
         /// <summary>
         /// Public cloud location for South Africa North.
         /// </summary>
-        public static readonly Location SouthAfricaNorth = new Location { Name = "southafricanorth", CanonicalName = "south-africa-north", DisplayName = "South Africa North", RegionalDisplayName = "(Africa) South Africa North" };
+        public static readonly Location SouthAfricaNorth = new Location { Name = "southafricanorth", DisplayName = "South Africa North", RegionalDisplayName = "(Africa) South Africa North" };
 
         /// <summary>
         /// Public cloud location for South Africa West.
         /// </summary>
-        public static readonly Location SouthAfricaWest = new Location { Name = "southafricawest", CanonicalName = "south-africa-west", DisplayName = "South Africa West", RegionalDisplayName = "(Africa) South Africa West" };
+        public static readonly Location SouthAfricaWest = new Location { Name = "southafricawest", DisplayName = "South Africa West", RegionalDisplayName = "(Africa) South Africa West" };
 
         /// <summary>
         /// Public cloud location for Switzerland North.
         /// </summary>
-        public static readonly Location SwitzerlandNorth = new Location { Name = "switzerlandnorth", CanonicalName = "switzerland-north", DisplayName = "Switzerland North", RegionalDisplayName = "(Europe) Switzerland North" };
+        public static readonly Location SwitzerlandNorth = new Location { Name = "switzerlandnorth", DisplayName = "Switzerland North", RegionalDisplayName = "(Europe) Switzerland North" };
 
         /// <summary>
         /// Public cloud location for Switzerland West.
         /// </summary>
-        public static readonly Location SwitzerlandWest = new Location { Name = "switzerlandwest", CanonicalName = "switzerland-west", DisplayName = "Switzerland West", RegionalDisplayName = "(Europe) Switzerland West" };
+        public static readonly Location SwitzerlandWest = new Location { Name = "switzerlandwest", DisplayName = "Switzerland West", RegionalDisplayName = "(Europe) Switzerland West" };
 
         /// <summary>
         /// Public cloud location for Germany North.
         /// </summary>
-        public static readonly Location GermanyNorth = new Location { Name = "germanynorth", CanonicalName = "germany-north", DisplayName = "Germany North", RegionalDisplayName = "(Europe) Germany North" };
+        public static readonly Location GermanyNorth = new Location { Name = "germanynorth", DisplayName = "Germany North", RegionalDisplayName = "(Europe) Germany North" };
 
         /// <summary>
         /// Public cloud location for Germany West Central.
         /// </summary>
-        public static readonly Location GermanyWestCentral = new Location { Name = "germanywestcentral", CanonicalName = "germany-west-central", DisplayName = "Germany West Central", RegionalDisplayName = "(Europe) Germany West Central" };
+        public static readonly Location GermanyWestCentral = new Location { Name = "germanywestcentral", DisplayName = "Germany West Central", RegionalDisplayName = "(Europe) Germany West Central" };
 
         /// <summary>
         /// Public cloud location for Norway West.
         /// </summary>
-        public static readonly Location NorwayWest = new Location { Name = "norwaywest", CanonicalName = "norway-west", DisplayName = "Norway West", RegionalDisplayName = "(Europe) Norway West" };
+        public static readonly Location NorwayWest = new Location { Name = "norwaywest", DisplayName = "Norway West", RegionalDisplayName = "(Europe) Norway West" };
 
         /// <summary>
         /// Public cloud location for Brazil Southeast.
         /// </summary>
-        public static readonly Location BrazilSoutheast = new Location { Name = "brazilsoutheast", CanonicalName = "brazil-southeast", DisplayName = "Brazil Southeast", RegionalDisplayName = "(South America) Brazil Southeast" };
+        public static readonly Location BrazilSoutheast = new Location { Name = "brazilsoutheast", DisplayName = "Brazil Southeast", RegionalDisplayName = "(South America) Brazil Southeast" };
 
         #endregion
         private static readonly Dictionary<string, Location> PublicCloudLocations = new Dictionary<string, Location>()
@@ -262,47 +264,29 @@ namespace Azure.ResourceManager.Resources.Models
             { "BRAZILSOUTHEAST", BrazilSoutheast },
         };
 
-        private const string CanonicalPattern = "^[a-z]+(-[a-z]+)+(-[1-9])?$";
-        private const string DisplayPattern = "^[A-Z]+[a-z]*( [A-Z]+[a-z]*)+( [1-9])?$";
-        private const string RegexDash = @"-";
-        private const string RegexWhitespace = @" ";
-
-        private Location(string location)
-        {
-            switch (DetectNameType(location))
-            {
-                case NameType.Name:
-                    Name = location;
-                    CanonicalName = location;
-                    DisplayName = location;
-                    break;
-                case NameType.CanonicalName:
-                    Name = GetDefaultNameFromCanonicalName(location);
-                    CanonicalName = location;
-                    DisplayName = GetDisplayNameFromCanonicalName(location);
-                    break;
-                case NameType.DisplayName:
-                    Name = GetDefaultNameFromDisplayName(location);
-                    CanonicalName = GetCanonicalNameFromDisplayName(location);
-                    DisplayName = location;
-                    break;
-            }
-        }
-
-        private enum NameType
-        {
-            Name,
-            CanonicalName,
-            DisplayName,
-        }
-
         /// <summary> Initializes a new instance of Location. </summary>
-        /// <param name="name"> The location name. </param>
-        /// <param name="displayName"> The display name of the location. </param>
-        /// <param name="regionalDisplayName"> The display name of the location and its region. </param>
-        internal Location(string name, string displayName, string regionalDisplayName)
-            :this(name, displayName, regionalDisplayName, GetCanonicalNameFromDisplayName(displayName))
+        /// <param name="location"> The location name or the display name. </param>
+        public Location(string location)
         {
+            Name = GetNameFromDisplayName(location);
+            DisplayName = location;
+        }
+
+        private static string GetNameFromDisplayName(string name)
+        {
+            bool foundSpace = false;
+            StringBuilder sb = new StringBuilder();
+            foreach (char c in name)
+            {
+                if (c == Space)
+                {
+                    foundSpace = true;
+                    continue;
+                }
+
+                sb.Append(char.ToLowerInvariant(c));
+            }
+            return foundSpace ? sb.ToString() : name;
         }
 
         /// <summary>
@@ -315,22 +299,51 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary>
-        /// Creates a new location implicitly from a string.
+        /// Creates a new location from a string.
         /// </summary>
-        /// <param name="other"> String to be assigned in the Name, CanonicalName or DisplayName form. </param>
-        public static implicit operator Location(string other)
+        /// <param name="name"> String to convert to Location from. </param>
+        /// <exception cref="ArgumentNullException"> Throws if name is null. </exception>
+        /// <exception cref="ArgumentException"> Throws if name is not a known public cloud. </exception>
+        public static Location FromName(string name)
         {
-            if (ReferenceEquals(other, null))
-                return null;
+            if (ReferenceEquals(name, null))
+                throw new ArgumentNullException(nameof(name));
 
-            var normalizedName = NormalizationUtility(other);
+            var normalizedName = NormalizationUtility(name);
             Location value;
             if (PublicCloudLocations.TryGetValue(normalizedName, out value))
             {
                 return value;
             }
 
-            return new Location(other);
+            return new Location(name);
+        }
+
+        /// <summary>
+        /// Creates a new location implicitly from a string.
+        /// </summary>
+        /// <param name="other"> String to be assigned in the Name, CanonicalName or DisplayName form. </param>
+        public static implicit operator Location(string other)
+        {
+            if (ReferenceEquals(other, null))
+            {
+                return null;
+            }
+
+            return FromName(other);
+        }
+
+        /// <summary>
+        /// Detects if a location object is equal to another location instance or a string representing the location name.
+        /// </summary>
+        /// <param name="other"> Location object or name as a string. </param>
+        /// <returns> True or false. </returns>
+        public bool Equals(Location other)
+        {
+            if (ReferenceEquals(other, null))
+                return false;
+
+            return Name == other.Name && DisplayName == other.DisplayName;
         }
 
         /// <summary>
@@ -345,19 +358,6 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             return other.ToString();
-        }
-
-        /// <summary>
-        /// Detects if a location object is equal to another location instance or a string representing the location name.
-        /// </summary>
-        /// <param name="other"> Location object or name as a string. </param>
-        /// <returns> True or false. </returns>
-        public bool Equals(Location other)
-        {
-            if (ReferenceEquals(other, null))
-                return false;
-
-            return Name == other.Name && CanonicalName == other.CanonicalName && DisplayName == other.DisplayName;
         }
 
         /// <summary>
@@ -388,59 +388,11 @@ namespace Azure.ResourceManager.Resources.Models
                 var c = value[index];
                 if (char.IsLetterOrDigit(c))
                 {
-                    sb.Append(c);
+                    sb.Append(char.ToUpperInvariant(c));
                 }
             }
 
-            return sb.ToString().ToUpperInvariant();
-        }
-
-        private static NameType DetectNameType(string location)
-        {
-            if (Regex.IsMatch(location, CanonicalPattern))
-            {
-                return NameType.CanonicalName;
-            }
-            else if (Regex.IsMatch(location, DisplayPattern))
-            {
-                return NameType.DisplayName;
-            }
-            else
-            {
-                return NameType.Name;
-            }
-        }
-
-        private static string GetCanonicalNameFromDisplayName(string name)
-        {
-            return name.Replace(RegexWhitespace, RegexDash).ToLower(CultureInfo.InvariantCulture);
-        }
-
-        private static string GetDisplayNameFromCanonicalName(string name)
-        {
-            char[] chName = name.ToCharArray();
-            chName[0] = char.ToUpper(chName[0], CultureInfo.InvariantCulture);
-
-            for (int i = 0; i < chName.Length - 1; i++)
-            {
-                if (chName[i] == '-')
-                {
-                    chName[i] = ' ';
-                    chName[i + 1] = char.ToUpper(chName[i + 1], CultureInfo.InvariantCulture);
-                }
-            }
-
-            return new string(chName);
-        }
-
-        private static string GetDefaultNameFromCanonicalName(string name)
-        {
-            return name.Replace(RegexDash, string.Empty);
-        }
-
-        private static string GetDefaultNameFromDisplayName(string name)
-        {
-            return name.Replace(RegexWhitespace, string.Empty).ToLower(CultureInfo.InvariantCulture);
+            return sb.ToString();
         }
 
         /// <inheritdoc/>
