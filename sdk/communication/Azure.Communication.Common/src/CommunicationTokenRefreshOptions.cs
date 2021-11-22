@@ -28,7 +28,7 @@ namespace Azure.Communication
         internal TimeSpan RefreshTimeBeforeTokenExpiry { get; } = new TimeSpan(0, 0, DefaultExpiringOffsetMinutes, 0);
         /// <summary>Determines whether the token should be proactively renewed prior to expiry or renew on demand./// </summary>
         internal bool RefreshProactively { get; }
-        /// <summary>The function that provides the token acquired from CommunicationIdentityClient. </summary>
+        /// <summary>The callback function that acquires a fresh token from the Communication Identity API, e.g. by calling the CommunicationIdentityClient.</summary>
         internal Func<CancellationToken, string> TokenRefresher { get; }
 
         /// <summary>The asynchronous token refresher.</summary>
