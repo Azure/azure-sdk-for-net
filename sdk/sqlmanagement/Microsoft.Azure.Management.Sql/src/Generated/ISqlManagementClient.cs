@@ -73,11 +73,6 @@ namespace Microsoft.Azure.Management.Sql
         IRecoverableDatabasesOperations RecoverableDatabases { get; }
 
         /// <summary>
-        /// Gets the IServerConnectionPoliciesOperations.
-        /// </summary>
-        IServerConnectionPoliciesOperations ServerConnectionPolicies { get; }
-
-        /// <summary>
         /// Gets the IDataMaskingPoliciesOperations.
         /// </summary>
         IDataMaskingPoliciesOperations DataMaskingPolicies { get; }
@@ -661,6 +656,11 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IRestorableDroppedManagedDatabasesOperations.
         /// </summary>
         IRestorableDroppedManagedDatabasesOperations RestorableDroppedManagedDatabases { get; }
+
+        /// <summary>
+        /// Gets the IServerConnectionPoliciesOperations.
+        /// </summary>
+        IServerConnectionPoliciesOperations ServerConnectionPolicies { get; }
 
     }
 }

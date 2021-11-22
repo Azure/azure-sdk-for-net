@@ -78,11 +78,6 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IRecoverableDatabasesOperations RecoverableDatabases { get; private set; }
 
         /// <summary>
-        /// Gets the IServerConnectionPoliciesOperations.
-        /// </summary>
-        public virtual IServerConnectionPoliciesOperations ServerConnectionPolicies { get; private set; }
-
-        /// <summary>
         /// Gets the IDataMaskingPoliciesOperations.
         /// </summary>
         public virtual IDataMaskingPoliciesOperations DataMaskingPolicies { get; private set; }
@@ -668,6 +663,11 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IRestorableDroppedManagedDatabasesOperations RestorableDroppedManagedDatabases { get; private set; }
 
         /// <summary>
+        /// Gets the IServerConnectionPoliciesOperations.
+        /// </summary>
+        public virtual IServerConnectionPoliciesOperations ServerConnectionPolicies { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the SqlManagementClient class.
         /// </summary>
         /// <param name='httpClient'>
@@ -909,7 +909,6 @@ namespace Microsoft.Azure.Management.Sql
         private void Initialize()
         {
             RecoverableDatabases = new RecoverableDatabasesOperations(this);
-            ServerConnectionPolicies = new ServerConnectionPoliciesOperations(this);
             DataMaskingPolicies = new DataMaskingPoliciesOperations(this);
             DataMaskingRules = new DataMaskingRulesOperations(this);
             GeoBackupPolicies = new GeoBackupPoliciesOperations(this);
@@ -1027,6 +1026,7 @@ namespace Microsoft.Azure.Management.Sql
             ManagedInstances = new ManagedInstancesOperations(this);
             RestorableDroppedDatabases = new RestorableDroppedDatabasesOperations(this);
             RestorableDroppedManagedDatabases = new RestorableDroppedManagedDatabasesOperations(this);
+            ServerConnectionPolicies = new ServerConnectionPoliciesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
