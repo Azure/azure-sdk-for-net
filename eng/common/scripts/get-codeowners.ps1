@@ -77,11 +77,11 @@ function TestGetCodeOwner([string]$targetDirectory, [string]$codeOwnerFileLocati
 
 if($Test) {
   $testFile = "$PSSCriptRoot/../../../tools/code-owners-parser/Azure.Sdk.Tools.RetrieveCodeOwners.Tests/CODEOWNERS"
-  TestGetCodeOwner -targetDirectory "sdk" -codeOwnerFileLocation $testFile $useNonUserAlias $true -expectReturn @("person1", "person2")
-  TestGetCodeOwner -targetDirectory "sdk/noPath" -codeOwnerFileLocation $testFile $useNonUserAlias $true -expectReturn @("person1", "person2")
-  TestGetCodeOwner -targetDirectory "/sdk/azconfig" -codeOwnerFileLocation $testFile $useNonUserAlias $true -expectReturn @("person3", "person4")
-  TestGetCodeOwner -targetDirectory "/sdk/azconfig/package" -codeOwnerFileLocation $useNonUserAlias $true  $testFile -expectReturn @("person3", "person4")
-  TestGetCodeOwner -targetDirectory "/sd" -codeOwnerFileLocation $testFile $useNonUserAlias $true  -expectReturn @()
+  TestGetCodeOwner -targetDirectory "sdk" -codeOwnerFileLocation $testFile -useNonUserAlias $true -expectReturn @("person1", "person2")
+  TestGetCodeOwner -targetDirectory "sdk/noPath" -codeOwnerFileLocation $testFile -useNonUserAlias $true -expectReturn @("person1", "person2")
+  TestGetCodeOwner -targetDirectory "/sdk/azconfig" -codeOwnerFileLocation $testFile -useNonUserAlias $true -expectReturn @("person3", "person4")
+  TestGetCodeOwner -targetDirectory "/sdk/azconfig/package" -codeOwnerFileLocation $testFile -useNonUserAlias $true  $testFile -expectReturn @("person3", "person4")
+  TestGetCodeOwner -targetDirectory "/sd" -codeOwnerFileLocation $testFile -useNonUserAlias $true  -expectReturn @()
   TestGetCodeOwner -targetDirectory "/sdk/testUser/" -codeOwnerFileLocation $testFile -expectReturn @() 
   exit 0
 }
