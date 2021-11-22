@@ -94,8 +94,15 @@ namespace Azure.ResourceManager.AppService
             }
             if (Optional.IsDefined(HostingEnvironmentProfile))
             {
-                writer.WritePropertyName("hostingEnvironmentProfile");
-                writer.WriteObjectValue(HostingEnvironmentProfile);
+                if (HostingEnvironmentProfile != null)
+                {
+                    writer.WritePropertyName("hostingEnvironmentProfile");
+                    writer.WriteObjectValue(HostingEnvironmentProfile);
+                }
+                else
+                {
+                    writer.WriteNull("hostingEnvironmentProfile");
+                }
             }
             if (Optional.IsDefined(ClientAffinityEnabled))
             {
@@ -139,8 +146,15 @@ namespace Azure.ResourceManager.AppService
             }
             if (Optional.IsDefined(CloningInfo))
             {
-                writer.WritePropertyName("cloningInfo");
-                writer.WriteObjectValue(CloningInfo);
+                if (CloningInfo != null)
+                {
+                    writer.WritePropertyName("cloningInfo");
+                    writer.WriteObjectValue(CloningInfo);
+                }
+                else
+                {
+                    writer.WriteNull("cloningInfo");
+                }
             }
             if (Optional.IsDefined(HttpsOnly))
             {
@@ -209,8 +223,8 @@ namespace Azure.ResourceManager.AppService
             Optional<string> possibleOutboundIpAddresses = default;
             Optional<int> containerSize = default;
             Optional<int> dailyMemoryTimeQuota = default;
-            Optional<DateTimeOffset> suspendedTill = default;
-            Optional<int> maxNumberOfWorkers = default;
+            Optional<DateTimeOffset?> suspendedTill = default;
+            Optional<int?> maxNumberOfWorkers = default;
             Optional<CloningInfo> cloningInfo = default;
             Optional<string> resourceGroup = default;
             Optional<bool> isDefaultContainer = default;
@@ -218,7 +232,7 @@ namespace Azure.ResourceManager.AppService
             Optional<SlotSwapStatus> slotSwapStatus = default;
             Optional<bool> httpsOnly = default;
             Optional<RedundancyMode> redundancyMode = default;
-            Optional<Guid> inProgressOperationId = default;
+            Optional<Guid?> inProgressOperationId = default;
             Optional<bool> storageAccountRequired = default;
             Optional<string> keyVaultReferenceIdentity = default;
             Optional<string> virtualNetworkSubnetId = default;
@@ -432,7 +446,7 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                trafficManagerHostNames = null;
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -462,7 +476,7 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                hostingEnvironmentProfile = null;
                                 continue;
                             }
                             hostingEnvironmentProfile = HostingEnvironmentProfile.DeserializeHostingEnvironmentProfile(property0.Value);
@@ -552,7 +566,7 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                suspendedTill = null;
                                 continue;
                             }
                             suspendedTill = property0.Value.GetDateTimeOffset("O");
@@ -562,7 +576,7 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                maxNumberOfWorkers = null;
                                 continue;
                             }
                             maxNumberOfWorkers = property0.Value.GetInt32();
@@ -572,7 +586,7 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                cloningInfo = null;
                                 continue;
                             }
                             cloningInfo = CloningInfo.DeserializeCloningInfo(property0.Value);
@@ -602,7 +616,7 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                slotSwapStatus = null;
                                 continue;
                             }
                             slotSwapStatus = SlotSwapStatus.DeserializeSlotSwapStatus(property0.Value);
@@ -632,7 +646,7 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                inProgressOperationId = null;
                                 continue;
                             }
                             inProgressOperationId = property0.Value.GetGuid();

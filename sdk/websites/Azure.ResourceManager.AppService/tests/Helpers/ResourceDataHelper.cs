@@ -61,29 +61,63 @@ namespace Azure.ResourceManager.AppService.Tests.Helpers
         #endregion
 
         #region Site
+
         public static void AssertSite(SiteData site1, SiteData site2)
         {
             AssertTrackedResource(site1, site2);
             Assert.AreEqual(site1.EnabledHostNames, site2.EnabledHostNames);
         }
 
-        public static SiteData GetBasicSiteData(Location location, string description = null)
+        public static SiteData GetBasicSiteData(Location location)//, string description = null)
+        {
+            var data = new SiteData(location)
+            {
+                /*Reserved = false,
+                IsXenon = false,
+                HyperV = false,
+                SiteConfig = new SiteConfig
+                {
+                    NetFrameworkVersion = "v4.6",
+                    AppSettings =
+                    {
+                        new NameValuePair
+                        {
+                            Name = "WEBSITE_NODE_DEFAULT_VERSION",
+                            Value = "10.14"
+                        }
+                    },
+                    LocalMySqlEnabled = false,
+                    Http20Enabled = true
+                },
+                ScmSiteAlsoStopped = false,
+                HttpsOnly = false*/
+            };
+            return data;
+        }
+        #endregion
+
+        #region SiteSlot
+        public static void AssertSiteSlot(SiteData site1, SiteData site2)
+        {
+            AssertTrackedResource(site1, site2);
+            Assert.AreEqual(site1.EnabledHostNames, site2.EnabledHostNames);
+        }
+
+        public static SiteData GetBasicSiteSlotData(Location location, string description = null)
         {
             var data = new SiteData(location)
             {
                 Reserved = false,
                 IsXenon = false,
                 HyperV = false,
-                SiteConfig =
+                SiteConfig = new SiteConfig
                 {
                     NetFrameworkVersion = "v4.6",
-                    AppSettings =
-                    {
-                       // new list
-                    }
-                }
-            }
-                ;//HostNames = { "ServerCert" }
+                    LocalMySqlEnabled = false,
+                    Http20Enabled = true
+                },
+                ScmSiteAlsoStopped = false,
+            };
             return data;
         }
         #endregion
@@ -131,6 +165,80 @@ namespace Azure.ResourceManager.AppService.Tests.Helpers
                     Name =  "Allow all",
                     Description = "Allow all access"
                     }
+                },
+                ScmIpSecurityRestrictions =
+                {
+                    new IpSecurityRestriction
+                    {
+                    IpAddress = "Any",
+                    Action = "Allow",
+                    Priority = 1,
+                    Name =  "Allow all",
+                    Description = "Allow all access"
+                    }
+                },
+                VirtualApplications =
+                {
+                    new VirtualApplication
+                    {
+                    VirtualPath =  "/",
+                    PhysicalPath =  "site\\wwwroot",
+                    PreloadEnabled =  true
+                    }
+                }
+            };
+            return data;
+        }
+        #endregion
+
+        #region SiteSourceControlData(SiteSlotSourcecontrol)
+        public static void AssertSiteSourceControlData(SiteSourceControlData sscd1, SiteSourceControlData sscd2)
+        {
+            Assert.AreEqual(sscd1.Name, sscd2.Name);
+            Assert.AreEqual(sscd1.Id, sscd2.Id);
+            Assert.AreEqual(sscd1.Type, sscd2.Type);
+            Assert.AreEqual(sscd1.Branch, sscd2.Branch);
+        }
+
+        public static SiteSourceControlData GetBasicSiteSourceControlData()
+        {
+            var data = new SiteSourceControlData()
+            {
+                RepoUrl = "https://github.com/00Kai0/azure-site-test",
+                Branch = "staging",
+                IsManualIntegration = true,
+                IsMercurial = false,
+            };
+            return data;
+        }
+        #endregion
+
+        #region StaticSiteARMResourceData(StaticSiteRestOperation)
+        public static void AssertStaticSiteARMSourceData(StaticSiteARMResourceData ssrd1, StaticSiteARMResourceData ssrd2)
+        {
+            AssertTrackedResource(ssrd1, ssrd2);
+            Assert.AreEqual(ssrd1.Branch, ssrd2.Branch);
+            Assert.AreEqual(ssrd1.RepositoryUrl, ssrd2.RepositoryUrl);
+            Assert.AreEqual(ssrd1.Kind, ssrd2.Kind);
+        }
+
+        public static StaticSiteARMResourceData GetBasicStaticSiteARMSourceData(Location location)
+        {
+            var data = new StaticSiteARMResourceData(location)
+            {
+                Sku = new SkuDescription()
+                {
+                    Name = "Basic",
+                    Tier = "Basic"
+                },
+                RepositoryUrl = "https://github.com/username/RepoName",
+                Branch = "master",
+                RepositoryToken = "repoToken123",
+                BuildProperties = new StaticSiteBuildProperties()
+                {
+                    AppLocation = "app",
+                    ApiLocation = "api",
+                    AppArtifactLocation = "build"
                 }
             };
             return data;

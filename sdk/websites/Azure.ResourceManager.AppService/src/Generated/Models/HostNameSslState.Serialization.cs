@@ -37,8 +37,15 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (Optional.IsDefined(ToUpdate))
             {
-                writer.WritePropertyName("toUpdate");
-                writer.WriteBooleanValue(ToUpdate.Value);
+                if (ToUpdate != null)
+                {
+                    writer.WritePropertyName("toUpdate");
+                    writer.WriteBooleanValue(ToUpdate.Value);
+                }
+                else
+                {
+                    writer.WriteNull("toUpdate");
+                }
             }
             if (Optional.IsDefined(HostType))
             {
@@ -54,7 +61,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<SslState> sslState = default;
             Optional<string> virtualIP = default;
             Optional<string> thumbprint = default;
-            Optional<bool> toUpdate = default;
+            Optional<bool?> toUpdate = default;
             Optional<HostType> hostType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -87,7 +94,7 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        toUpdate = null;
                         continue;
                     }
                     toUpdate = property.Value.GetBoolean();

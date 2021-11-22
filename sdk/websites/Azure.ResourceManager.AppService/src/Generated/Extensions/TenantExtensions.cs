@@ -257,10 +257,10 @@ namespace Azure.ResourceManager.AppService
         /// OperationId: Provider_GetAvailableStacks
         /// <summary> Lists the ApplicationStackResources for this <see cref="Tenant" />. </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
-        /// <param name="osTypeSelected"> The Enum10 to use. </param>
+        /// <param name="osTypeSelected"> The Enum9 to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ApplicationStackResource> GetAvailableStacksProvidersAsync(this Tenant tenant, Enum10? osTypeSelected = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ApplicationStackResource> GetAvailableStacksProvidersAsync(this Tenant tenant, Enum9? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
             return tenant.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -306,10 +306,10 @@ namespace Azure.ResourceManager.AppService
         /// OperationId: Provider_GetAvailableStacks
         /// <summary> Lists the ApplicationStackResources for this <see cref="Tenant" />. </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
-        /// <param name="osTypeSelected"> The Enum10 to use. </param>
+        /// <param name="osTypeSelected"> The Enum9 to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ApplicationStackResource> GetAvailableStacksProviders(this Tenant tenant, Enum10? osTypeSelected = null, CancellationToken cancellationToken = default)
+        public static Pageable<ApplicationStackResource> GetAvailableStacksProviders(this Tenant tenant, Enum9? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
             return tenant.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="stackOsType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<FunctionAppStack> GetFunctionAppStacksProvidersAsync(this Tenant tenant, Enum11? stackOsType = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<FunctionAppStack> GetFunctionAppStacksProvidersAsync(this Tenant tenant, Enum10? stackOsType = null, CancellationToken cancellationToken = default)
         {
             return tenant.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="stackOsType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<FunctionAppStack> GetFunctionAppStacksProviders(this Tenant tenant, Enum11? stackOsType = null, CancellationToken cancellationToken = default)
+        public static Pageable<FunctionAppStack> GetFunctionAppStacksProviders(this Tenant tenant, Enum10? stackOsType = null, CancellationToken cancellationToken = default)
         {
             return tenant.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static AsyncPageable<FunctionAppStack> GetFunctionAppStacksForLocationProvidersAsync(this Tenant tenant, string location, Enum12? stackOsType = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<FunctionAppStack> GetFunctionAppStacksForLocationProvidersAsync(this Tenant tenant, string location, Enum11? stackOsType = null, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -514,7 +514,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static Pageable<FunctionAppStack> GetFunctionAppStacksForLocationProviders(this Tenant tenant, string location, Enum12? stackOsType = null, CancellationToken cancellationToken = default)
+        public static Pageable<FunctionAppStack> GetFunctionAppStacksForLocationProviders(this Tenant tenant, string location, Enum11? stackOsType = null, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -570,7 +570,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static AsyncPageable<WebAppStack> GetWebAppStacksForLocationProvidersAsync(this Tenant tenant, string location, Enum13? stackOsType = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<WebAppStack> GetWebAppStacksForLocationProvidersAsync(this Tenant tenant, string location, Enum12? stackOsType = null, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -626,7 +626,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static Pageable<WebAppStack> GetWebAppStacksForLocationProviders(this Tenant tenant, string location, Enum13? stackOsType = null, CancellationToken cancellationToken = default)
+        public static Pageable<WebAppStack> GetWebAppStacksForLocationProviders(this Tenant tenant, string location, Enum12? stackOsType = null, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -776,7 +776,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="stackOsType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<WebAppStack> GetWebAppStacksProvidersAsync(this Tenant tenant, Enum14? stackOsType = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<WebAppStack> GetWebAppStacksProvidersAsync(this Tenant tenant, Enum13? stackOsType = null, CancellationToken cancellationToken = default)
         {
             return tenant.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -825,7 +825,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="stackOsType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<WebAppStack> GetWebAppStacksProviders(this Tenant tenant, Enum14? stackOsType = null, CancellationToken cancellationToken = default)
+        public static Pageable<WebAppStack> GetWebAppStacksProviders(this Tenant tenant, Enum13? stackOsType = null, CancellationToken cancellationToken = default)
         {
             return tenant.UseClientContext((baseUri, credential, options, pipeline) =>
             {

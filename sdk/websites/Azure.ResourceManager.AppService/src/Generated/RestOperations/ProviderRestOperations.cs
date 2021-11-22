@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppService
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateGetAvailableStacksRequest(Enum10? osTypeSelected)
+        internal HttpMessage CreateGetAvailableStacksRequest(Enum9? osTypeSelected)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -64,9 +64,9 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Get available application frameworks and their versions. </summary>
-        /// <param name="osTypeSelected"> The Enum10 to use. </param>
+        /// <param name="osTypeSelected"> The Enum9 to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<ApplicationStackCollection>> GetAvailableStacksAsync(Enum10? osTypeSelected = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ApplicationStackCollection>> GetAvailableStacksAsync(Enum9? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetAvailableStacksRequest(osTypeSelected);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -85,9 +85,9 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Get available application frameworks and their versions. </summary>
-        /// <param name="osTypeSelected"> The Enum10 to use. </param>
+        /// <param name="osTypeSelected"> The Enum9 to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<ApplicationStackCollection> GetAvailableStacks(Enum10? osTypeSelected = null, CancellationToken cancellationToken = default)
+        public Response<ApplicationStackCollection> GetAvailableStacks(Enum9? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetAvailableStacksRequest(osTypeSelected);
             _pipeline.Send(message, cancellationToken);
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateGetFunctionAppStacksRequest(Enum11? stackOsType)
+        internal HttpMessage CreateGetFunctionAppStacksRequest(Enum10? stackOsType)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Get available Function app frameworks and their versions. </summary>
         /// <param name="stackOsType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<FunctionAppStackCollection>> GetFunctionAppStacksAsync(Enum11? stackOsType = null, CancellationToken cancellationToken = default)
+        public async Task<Response<FunctionAppStackCollection>> GetFunctionAppStacksAsync(Enum10? stackOsType = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetFunctionAppStacksRequest(stackOsType);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Get available Function app frameworks and their versions. </summary>
         /// <param name="stackOsType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<FunctionAppStackCollection> GetFunctionAppStacks(Enum11? stackOsType = null, CancellationToken cancellationToken = default)
+        public Response<FunctionAppStackCollection> GetFunctionAppStacks(Enum10? stackOsType = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetFunctionAppStacksRequest(stackOsType);
             _pipeline.Send(message, cancellationToken);
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateGetFunctionAppStacksForLocationRequest(string location, Enum12? stackOsType)
+        internal HttpMessage CreateGetFunctionAppStacksForLocationRequest(string location, Enum11? stackOsType)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="stackOsType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public async Task<Response<FunctionAppStackCollection>> GetFunctionAppStacksForLocationAsync(string location, Enum12? stackOsType = null, CancellationToken cancellationToken = default)
+        public async Task<Response<FunctionAppStackCollection>> GetFunctionAppStacksForLocationAsync(string location, Enum11? stackOsType = null, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="stackOsType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public Response<FunctionAppStackCollection> GetFunctionAppStacksForLocation(string location, Enum12? stackOsType = null, CancellationToken cancellationToken = default)
+        public Response<FunctionAppStackCollection> GetFunctionAppStacksForLocation(string location, Enum11? stackOsType = null, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateGetWebAppStacksForLocationRequest(string location, Enum13? stackOsType)
+        internal HttpMessage CreateGetWebAppStacksForLocationRequest(string location, Enum12? stackOsType)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="stackOsType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public async Task<Response<WebAppStackCollection>> GetWebAppStacksForLocationAsync(string location, Enum13? stackOsType = null, CancellationToken cancellationToken = default)
+        public async Task<Response<WebAppStackCollection>> GetWebAppStacksForLocationAsync(string location, Enum12? stackOsType = null, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="stackOsType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public Response<WebAppStackCollection> GetWebAppStacksForLocation(string location, Enum13? stackOsType = null, CancellationToken cancellationToken = default)
+        public Response<WebAppStackCollection> GetWebAppStacksForLocation(string location, Enum12? stackOsType = null, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateGetWebAppStacksRequest(Enum14? stackOsType)
+        internal HttpMessage CreateGetWebAppStacksRequest(Enum13? stackOsType)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Get available Web app frameworks and their versions. </summary>
         /// <param name="stackOsType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<WebAppStackCollection>> GetWebAppStacksAsync(Enum14? stackOsType = null, CancellationToken cancellationToken = default)
+        public async Task<Response<WebAppStackCollection>> GetWebAppStacksAsync(Enum13? stackOsType = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetWebAppStacksRequest(stackOsType);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Get available Web app frameworks and their versions. </summary>
         /// <param name="stackOsType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<WebAppStackCollection> GetWebAppStacks(Enum14? stackOsType = null, CancellationToken cancellationToken = default)
+        public Response<WebAppStackCollection> GetWebAppStacks(Enum13? stackOsType = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetWebAppStacksRequest(stackOsType);
             _pipeline.Send(message, cancellationToken);
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateGetAvailableStacksOnPremRequest(Enum15? osTypeSelected)
+        internal HttpMessage CreateGetAvailableStacksOnPremRequest(Enum14? osTypeSelected)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -458,9 +458,9 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Get available application frameworks and their versions. </summary>
-        /// <param name="osTypeSelected"> The Enum15 to use. </param>
+        /// <param name="osTypeSelected"> The Enum14 to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<ApplicationStackCollection>> GetAvailableStacksOnPremAsync(Enum15? osTypeSelected = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ApplicationStackCollection>> GetAvailableStacksOnPremAsync(Enum14? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetAvailableStacksOnPremRequest(osTypeSelected);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -479,9 +479,9 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Get available application frameworks and their versions. </summary>
-        /// <param name="osTypeSelected"> The Enum15 to use. </param>
+        /// <param name="osTypeSelected"> The Enum14 to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<ApplicationStackCollection> GetAvailableStacksOnPrem(Enum15? osTypeSelected = null, CancellationToken cancellationToken = default)
+        public Response<ApplicationStackCollection> GetAvailableStacksOnPrem(Enum14? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetAvailableStacksOnPremRequest(osTypeSelected);
             _pipeline.Send(message, cancellationToken);
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateGetAvailableStacksNextPageRequest(string nextLink, Enum10? osTypeSelected)
+        internal HttpMessage CreateGetAvailableStacksNextPageRequest(string nextLink, Enum9? osTypeSelected)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -515,10 +515,10 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for Get available application frameworks and their versions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="osTypeSelected"> The Enum10 to use. </param>
+        /// <param name="osTypeSelected"> The Enum9 to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<ApplicationStackCollection>> GetAvailableStacksNextPageAsync(string nextLink, Enum10? osTypeSelected = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ApplicationStackCollection>> GetAvailableStacksNextPageAsync(string nextLink, Enum9? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -543,10 +543,10 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for Get available application frameworks and their versions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="osTypeSelected"> The Enum10 to use. </param>
+        /// <param name="osTypeSelected"> The Enum9 to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<ApplicationStackCollection> GetAvailableStacksNextPage(string nextLink, Enum10? osTypeSelected = null, CancellationToken cancellationToken = default)
+        public Response<ApplicationStackCollection> GetAvailableStacksNextPage(string nextLink, Enum9? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -569,7 +569,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateGetFunctionAppStacksNextPageRequest(string nextLink, Enum11? stackOsType)
+        internal HttpMessage CreateGetFunctionAppStacksNextPageRequest(string nextLink, Enum10? stackOsType)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -588,7 +588,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="stackOsType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<FunctionAppStackCollection>> GetFunctionAppStacksNextPageAsync(string nextLink, Enum11? stackOsType = null, CancellationToken cancellationToken = default)
+        public async Task<Response<FunctionAppStackCollection>> GetFunctionAppStacksNextPageAsync(string nextLink, Enum10? stackOsType = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -616,7 +616,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="stackOsType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<FunctionAppStackCollection> GetFunctionAppStacksNextPage(string nextLink, Enum11? stackOsType = null, CancellationToken cancellationToken = default)
+        public Response<FunctionAppStackCollection> GetFunctionAppStacksNextPage(string nextLink, Enum10? stackOsType = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -639,7 +639,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateGetFunctionAppStacksForLocationNextPageRequest(string nextLink, string location, Enum12? stackOsType)
+        internal HttpMessage CreateGetFunctionAppStacksForLocationNextPageRequest(string nextLink, string location, Enum11? stackOsType)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -659,7 +659,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="stackOsType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="location"/> is null. </exception>
-        public async Task<Response<FunctionAppStackCollection>> GetFunctionAppStacksForLocationNextPageAsync(string nextLink, string location, Enum12? stackOsType = null, CancellationToken cancellationToken = default)
+        public async Task<Response<FunctionAppStackCollection>> GetFunctionAppStacksForLocationNextPageAsync(string nextLink, string location, Enum11? stackOsType = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -692,7 +692,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="stackOsType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="location"/> is null. </exception>
-        public Response<FunctionAppStackCollection> GetFunctionAppStacksForLocationNextPage(string nextLink, string location, Enum12? stackOsType = null, CancellationToken cancellationToken = default)
+        public Response<FunctionAppStackCollection> GetFunctionAppStacksForLocationNextPage(string nextLink, string location, Enum11? stackOsType = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -719,7 +719,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateGetWebAppStacksForLocationNextPageRequest(string nextLink, string location, Enum13? stackOsType)
+        internal HttpMessage CreateGetWebAppStacksForLocationNextPageRequest(string nextLink, string location, Enum12? stackOsType)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -739,7 +739,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="stackOsType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="location"/> is null. </exception>
-        public async Task<Response<WebAppStackCollection>> GetWebAppStacksForLocationNextPageAsync(string nextLink, string location, Enum13? stackOsType = null, CancellationToken cancellationToken = default)
+        public async Task<Response<WebAppStackCollection>> GetWebAppStacksForLocationNextPageAsync(string nextLink, string location, Enum12? stackOsType = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -772,7 +772,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="stackOsType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="location"/> is null. </exception>
-        public Response<WebAppStackCollection> GetWebAppStacksForLocationNextPage(string nextLink, string location, Enum13? stackOsType = null, CancellationToken cancellationToken = default)
+        public Response<WebAppStackCollection> GetWebAppStacksForLocationNextPage(string nextLink, string location, Enum12? stackOsType = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -867,7 +867,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateGetWebAppStacksNextPageRequest(string nextLink, Enum14? stackOsType)
+        internal HttpMessage CreateGetWebAppStacksNextPageRequest(string nextLink, Enum13? stackOsType)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -886,7 +886,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="stackOsType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<WebAppStackCollection>> GetWebAppStacksNextPageAsync(string nextLink, Enum14? stackOsType = null, CancellationToken cancellationToken = default)
+        public async Task<Response<WebAppStackCollection>> GetWebAppStacksNextPageAsync(string nextLink, Enum13? stackOsType = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -914,7 +914,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="stackOsType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<WebAppStackCollection> GetWebAppStacksNextPage(string nextLink, Enum14? stackOsType = null, CancellationToken cancellationToken = default)
+        public Response<WebAppStackCollection> GetWebAppStacksNextPage(string nextLink, Enum13? stackOsType = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -937,7 +937,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateGetAvailableStacksOnPremNextPageRequest(string nextLink, Enum15? osTypeSelected)
+        internal HttpMessage CreateGetAvailableStacksOnPremNextPageRequest(string nextLink, Enum14? osTypeSelected)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -953,10 +953,10 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for Get available application frameworks and their versions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="osTypeSelected"> The Enum15 to use. </param>
+        /// <param name="osTypeSelected"> The Enum14 to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<ApplicationStackCollection>> GetAvailableStacksOnPremNextPageAsync(string nextLink, Enum15? osTypeSelected = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ApplicationStackCollection>> GetAvailableStacksOnPremNextPageAsync(string nextLink, Enum14? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -981,10 +981,10 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for Get available application frameworks and their versions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="osTypeSelected"> The Enum15 to use. </param>
+        /// <param name="osTypeSelected"> The Enum14 to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<ApplicationStackCollection> GetAvailableStacksOnPremNextPage(string nextLink, Enum15? osTypeSelected = null, CancellationToken cancellationToken = default)
+        public Response<ApplicationStackCollection> GetAvailableStacksOnPremNextPage(string nextLink, Enum14? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

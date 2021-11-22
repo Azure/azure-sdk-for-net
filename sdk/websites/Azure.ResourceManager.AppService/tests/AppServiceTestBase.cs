@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.AppService.Tests
 {
     public class AppServiceTestBase : ManagementRecordedTestBase<AppServiceTestEnviroment>
     {
-        protected Location DefaultLocation => Location.WestUS2;
+        protected Location DefaultLocation => Location.EastUS;
         protected ArmClient Client { get; private set; }
         protected Subscription DefaultSubscription => Client.DefaultSubscription;
 

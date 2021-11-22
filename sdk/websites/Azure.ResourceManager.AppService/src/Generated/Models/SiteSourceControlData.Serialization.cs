@@ -56,8 +56,15 @@ namespace Azure.ResourceManager.AppService
             }
             if (Optional.IsDefined(GitHubActionConfiguration))
             {
-                writer.WritePropertyName("gitHubActionConfiguration");
-                writer.WriteObjectValue(GitHubActionConfiguration);
+                if (GitHubActionConfiguration != null)
+                {
+                    writer.WritePropertyName("gitHubActionConfiguration");
+                    writer.WriteObjectValue(GitHubActionConfiguration);
+                }
+                else
+                {
+                    writer.WriteNull("gitHubActionConfiguration");
+                }
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -161,7 +168,7 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                gitHubActionConfiguration = null;
                                 continue;
                             }
                             gitHubActionConfiguration = GitHubActionConfiguration.DeserializeGitHubActionConfiguration(property0.Value);
