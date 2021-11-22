@@ -1,7 +1,7 @@
 param (
   [string]$TargetDirectory = "", # Code path to code owners. e.g sdk/core/azure-amqp
   [string]$CodeOwnerFileLocation = "$PSSCriptRoot/../../../.github/CODEOWNERS", # The absolute path of CODEOWNERS file. 
-  [string]$ToolVersion = "1.0.0-dev.20211118.20", # Placeholder. Will update in next PR
+  [string]$ToolVersion = "1.0.0-dev.20211122.14", # Placeholder. Will update in next PR
   [string]$ToolPath = (Join-Path ([System.IO.Path]::GetTempPath()) "codeowners-tool-path"), # The place to check the tool existence. Put temp path as default
   [string]$DevOpsFeed = "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json", # DevOp tool feeds.
   [string]$VsoVariable = "", # Option of write code owners into devop variable
@@ -34,11 +34,11 @@ function Get-CodeOwners ([string]$targetDirectory, [string]$codeOwnerFileLocatio
 {
   $command = Get-CodeOwnersTool
   # Filter out the non user alias from code owner list.
-  if($FilterNonUser) {
-    $codeOwnersString = & $command --target-directory $targetDirectory --code-owner-file-path $codeOwnerFileLocation --filter-out-non-user-aliases 2>&1
+  if($IncludeNonUserAliases) {
+    $codeOwnersString = & $command --target-directory $targetDirectory --code-owner-file-path $codeOwnerFileLocation 2>&1
   }
   else {
-    $codeOwnersString = & $command --target-directory $targetDirectory --code-owner-file-path $codeOwnerFileLocation 2>&1
+    $codeOwnersString = & $command --target-directory $targetDirectory --code-owner-file-path $codeOwnerFileLocation --filter-out-non-user-aliases 2>&1
   }
   # Failed at the command of fetching code owners.
   if ($LASTEXITCODE -ne 0) {
