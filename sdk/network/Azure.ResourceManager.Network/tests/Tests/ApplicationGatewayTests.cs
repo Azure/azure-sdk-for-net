@@ -745,7 +745,7 @@ namespace Azure.ResourceManager.Network.Tests
             await createOrUpdateOperation2.WaitForCompletionAsync();
 
             // Get AppGw backend health
-            Operation<ApplicationGatewayBackendHealth> backendHealthOperation = await getGateway.Value.BackendHealthAsync("true");
+            Operation<ApplicationGatewayBackendHealth> backendHealthOperation = await getGateway.Value.BackendHealthAsync("true", waitForCompletion: false);
             Response<ApplicationGatewayBackendHealth> backendHealth = await backendHealthOperation.WaitForCompletionAsync();
 
             Assert.AreEqual(2, backendHealth.Value.BackendAddressPools.Count);
@@ -791,7 +791,7 @@ namespace Azure.ResourceManager.Network.Tests
                     }
             };
             var virtualNetworkCollection = GetVirtualNetworkCollection(resourceGroup);
-            var putVnetResponseOperation = await virtualNetworkCollection.CreateOrUpdateAsync(vnetName, vnetdata);
+            var putVnetResponseOperation = await virtualNetworkCollection.CreateOrUpdateAsync(vnetName, vnetdata, waitForCompletion: false);
             var vnet = await putVnetResponseOperation.WaitForCompletionAsync();
 
             //create VMs
@@ -819,7 +819,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Put AppGw
             var applicationGatewayCollection = resourceGroup.GetApplicationGateways();
-            Operation<ApplicationGateway> putAppGw = await applicationGatewayCollection.CreateOrUpdateAsync(appGwName, appGw);
+            Operation<ApplicationGateway> putAppGw = InstrumentOperation(await applicationGatewayCollection.CreateOrUpdateAsync(appGwName, appGw, waitForCompletion: false));
             Response<ApplicationGateway> putAppGwResponse = await putAppGw.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", putAppGwResponse.Value.Data.ProvisioningState.ToString());
 
@@ -838,14 +838,14 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Put Nics
             var networkInterfaceCollection = GetNetworkInterfaceCollection(resourceGroup);
-            var createOrUpdateOperation1 = await networkInterfaceCollection.CreateOrUpdateAsync(nicName1, nic1.Result.Value.Data);
+            var createOrUpdateOperation1 = InstrumentOperation(await networkInterfaceCollection.CreateOrUpdateAsync(nicName1, nic1.Result.Value.Data, waitForCompletion: false));
             await createOrUpdateOperation1.WaitForCompletionAsync();
 
-            var createOrUpdateOperation2 = await networkInterfaceCollection.CreateOrUpdateAsync(nicName2, nic2.Result.Value.Data);
+            var createOrUpdateOperation2 = InstrumentOperation(await networkInterfaceCollection.CreateOrUpdateAsync(nicName2, nic2.Result.Value.Data, waitForCompletion: false));
             await createOrUpdateOperation2.WaitForCompletionAsync();
 
             // Get AppGw backend health
-            Operation<ApplicationGatewayBackendHealth> backendHealthOperation = await getGateway.Value.BackendHealthAsync("true");
+            Operation<ApplicationGatewayBackendHealth> backendHealthOperation = InstrumentOperation(await getGateway.Value.BackendHealthAsync("true", waitForCompletion: false));
             Response<ApplicationGatewayBackendHealth> backendHealth = await backendHealthOperation.WaitForCompletionAsync();
 
             Assert.AreEqual(2, backendHealth.Value.BackendAddressPools[0].BackendHttpSettingsCollection[0].Servers.Count);
