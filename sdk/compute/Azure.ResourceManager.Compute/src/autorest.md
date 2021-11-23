@@ -16,6 +16,11 @@ clear-output-folder: true
 skip-csproj: true
 modelerfour:
   lenient-model-deduplication: true
+
+# temporary
+mgmt-debug:
+  suppress-list-exception: true
+
 #TODO: remove after we resolve why RestorePoint has no list
 list-exception:
   RestorePoints
