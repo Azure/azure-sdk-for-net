@@ -3,6 +3,7 @@
 
 namespace Microsoft.Azure.Management.Marketplace.Tests.ScenarioTests
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Microsoft.Azure.Management.Marketplace.Models;
@@ -16,7 +17,7 @@ namespace Microsoft.Azure.Management.Marketplace.Tests.ScenarioTests
         {
             using (var context = MockContext.Start(this.GetType()))
             {
-                using (var client = context.GetServiceClient<MarketplaceManagementClient>())
+                using (var client = context.GetServiceClient<MarketplaceRPServiceClient>())
                 {
                     var privateStores = client.PrivateStore.List();
                     Assert.True(privateStores.Any());
@@ -50,89 +51,266 @@ namespace Microsoft.Azure.Management.Marketplace.Tests.ScenarioTests
         }
 
         [Fact]
-        public void PrivateStoreOffersTest()
+        public void PrivateStoreCollectionTest()
         {
-            var privateStoreId = "a70d384d-ec34-47dd-9d38-ec6df452cba1";
+            string privateStoreId = "3bc6b734-0508-42db-849e-7a60818a96fc";
+            string testSubscription = "bc17bb69-1264-4f90-a9f6-0e51e29d5281";
+            string TestCollectionName = "TestCollection";            
+            string collectionId = "6408057d-3c16-4c09-bd4b-4aa0f2bb6a17";
+
+            string TargetTestCollectionName = "TargetTestCollection";
+            string TargetcollectionId = "1065c936-3533-4af5-b636-cc75136d696f";
+
             var offerId = "data3-limited-1019419.d3_azure_managed_services";
             var planId = "data3-managed-azure-plan";
-
+    
             using (var context = MockContext.Start(this.GetType()))
             {
-                using (var client = context.GetServiceClient<MarketplaceManagementClient>())
+                using (var client = context.GetServiceClient<MarketplaceRPServiceClient>())
                 {
-                    //clean data before test
-                    var offers = client.PrivateStoreOffers.List(privateStoreId);
-                    foreach (var item in offers)
+                    //check privateStore exist
+                    var privateStore = client.PrivateStore.Get(privateStoreId);
+                    Assert.NotNull(privateStore);
+
+                    //clean test collection if exist
+                    try
                     {
-                        if (item.UniqueOfferId == offerId)
-                        {
-                            client.PrivateStoreOffer.Delete(privateStoreId, offerId);
-                            var o = client.PrivateStoreOffer.Get(privateStoreId, offerId);
-                            Assert.Null(o);
-                            break;
+                        client.PrivateStoreCollection.Delete(privateStoreId, collectionId);
+                    }
+                    catch (Exception ex) {
+                        if (!ex.Message.Contains("NotFound")) {
+                            throw;
                         }
                     }
+                    try
+                    { 
+                        client.PrivateStoreCollection.Delete(privateStoreId, TargetcollectionId);
+                    }
+                    catch (Exception ex)
+                    {
+                        if (!ex.Message.Contains("NotFound"))
+                        {
+                            throw;
+                        }
+                    }
+                    // create Test Collections
+                    Collection testCollection = new Collection {
+                        CollectionName = TestCollectionName,                     
+                        AllSubscriptions = false,
+                        SubscriptionsList = new List<string> { testSubscription }
+                    };
 
-                    //test
+                    Collection targetTestCollection = new Collection
+                    {
+                        CollectionName = TargetTestCollectionName,
+                        AllSubscriptions = false,
+                        SubscriptionsList = new List<string> { testSubscription }
+                    };
+
+                    client.PrivateStoreCollection.CreateOrUpdate(privateStoreId, collectionId, testCollection);
+                    client.PrivateStoreCollection.CreateOrUpdate(privateStoreId, TargetcollectionId, targetTestCollection);
+                    var collections = client.PrivateStoreCollection.List(privateStoreId);
+                    Assert.NotNull(collections);
+                    
+                    // Enable collections
+                    BulkCollectionsPayload bulkCollectionsPayload = new BulkCollectionsPayload {
+                        Action = "EnableCollections",
+                        CollectionIds = new List<string>() { collectionId, TargetcollectionId }
+                    };
+                    client.PrivateStore.BulkCollectionsAction(privateStoreId, bulkCollectionsPayload);
+
+                    var TestCollection = client.PrivateStoreCollection.Get(privateStoreId, collectionId);
+                    Assert.NotNull(TestCollection);
+                    Assert.True(TestCollection.Enabled);
+
+                    var TargetTestCollection = client.PrivateStoreCollection.Get(privateStoreId, TargetcollectionId);
+                    Assert.NotNull(TargetTestCollection);
+                    
+                    //check collection to subscription mapping
+                    CollectionsToSubscriptionsMappingProperties collectionsToSubscriptionsMappingProperties = new CollectionsToSubscriptionsMappingProperties
+                    {
+                        SubscriptionIds = new List<string>() { testSubscription }
+                    };
+                    CollectionsToSubscriptionsMappingPayload collectionsToSubscriptionsMappingPayload = new CollectionsToSubscriptionsMappingPayload {
+                        Properties = collectionsToSubscriptionsMappingProperties
+                    };
+                    var collectionToSubscriptionMapping = client.PrivateStore.CollectionsToSubscriptionsMapping(privateStoreId, collectionsToSubscriptionsMappingPayload);
+                    Assert.Equal(testSubscription, collectionToSubscriptionMapping.Details[collectionId].Subscriptions.First() ); 
+
+                    var testCollectionOffers = client.PrivateStoreCollectionOffer.List(privateStoreId, collectionId);
+                    Assert.True(testCollectionOffers.Count() == 0);
+
+                    // create offer in the Test collection
                     var offerToUpdate = new Offer
                     {
                         ETag = "57002de5-0000-0300-0000-5eaee7e50000",
                         SpecificPlanIdsLimitation = new List<string> { planId }
                     };
+                    var createCollectionOffer = client.PrivateStoreCollectionOffer.CreateOrUpdate(privateStoreId, offerId, collectionId, offerToUpdate);
 
-                    var offer = client.PrivateStoreOffer.CreateOrUpdate(privateStoreId, offerId, offerToUpdate);
-                    Assert.Equal(offer.UniqueOfferId, offerId);
-                    Assert.True(offer.SpecificPlanIdsLimitation.Count == 1);
+                    //check offer in collection
+                    bool offerFound = false;
+                    var privateStoreOffers = client.PrivateStore.QueryOffersMethod(privateStoreId);
+                    foreach (OfferProperties offer in privateStoreOffers.Value) {
+                        if (offer.UniqueOfferId == offerId) {
+                            offerFound = true;
+                            break;
+                        }
+                    }
+                    Assert.True(offerFound);
 
-                    offer = client.PrivateStoreOffer.Get(privateStoreId, offerId);
-                    Assert.NotNull(offer);
-                    
-                    client.PrivateStoreOffer.Delete(privateStoreId, offerId);
+                    // transfer offer to target collection
+                    TransferOffersProperties transferOffersProperties = new TransferOffersProperties {
+                        TargetCollections = new List<string>() { TargetcollectionId },
+                        Operation = "copy",
+                        OfferIdsList = new List<string>() { offerId }
+                    };
+                    var transferOffersOperation = client.PrivateStoreCollection.TransferOffers(privateStoreId, collectionId, transferOffersProperties);
 
+                    var transsferedOffer = client.PrivateStoreCollectionOffer.Get(privateStoreId, offerId, TargetcollectionId);
+                    Assert.Equal(transsferedOffer.UniqueOfferId , offerId);
+
+                    // delete test offer from collection
+                    client.PrivateStoreCollectionOffer.Delete(privateStoreId, offerId, TargetcollectionId);
+                    var targetTestCollectionOffers = client.PrivateStoreCollectionOffer.List(privateStoreId, TargetcollectionId);
+                    Assert.True(targetTestCollectionOffers.Count() == 0);
+                   
+                    // deleting test collections
+                    client.PrivateStoreCollection.Delete(privateStoreId, collectionId);
+                    client.PrivateStoreCollection.Delete(privateStoreId, TargetcollectionId);
                 }
             }
         }
 
         [Fact]
-        public void PrivateStorePrivateOffersTest()
+        public void PrivateStoreNotificationsTest()
         {
-            var privateStoreId = "a70d384d-ec34-47dd-9d38-ec6df452cba1";
-            var offerId = "test_test_pmc2pc1.test-managed-app-private-indirect-gov";
-            var subscriptionId = "bc17bb69-1264-4f90-a9f6-0e51e29d5281";
-            var planId = "test-managed-app";
-
+            string privateStoreId = "3bc6b734-0508-42db-849e-7a60818a96fc";
+            string testSubscription = "bc17bb69-1264-4f90-a9f6-0e51e29d5281";
+            string testSubscriptionName = "Renamed JEDI Sub";
+            string requestAprrovalId = "data3-limited-1019419.d3_azure_managed_services";
+            string publisherId = "data3-limited-1019419";
+            string TestCollectionName = "TestCollection";
+            string collectionId = "6408057d-3c16-4c09-bd4b-4aa0f2bb6a17";
+            string planId = "d3-azure-health-check";
             using (var context = MockContext.Start(this.GetType()))
             {
-                using (var client = context.GetServiceClient<MarketplaceManagementClient>())
+                using (var client = context.GetServiceClient<MarketplaceRPServiceClient>())
                 {
-                    var offers = client.PrivateStorePrivateOffers.List(subscriptionId, privateStoreId);
-                    Assert.True(!offers.Any());
-
-
-                    var offerToCreate = new Offer
+                    //clean test collection if exist
+                    try
                     {
-                        SpecificPlanIdsLimitation = new List<string> { planId }
-                    };
-
-                    var offer = client.PrivateStorePrivateOffer.CreateOrUpdate(subscriptionId, privateStoreId, offerId, offerToCreate);
-                    Assert.Equal(offer.UniqueOfferId, offerId);
-                    Assert.True(offer.SpecificPlanIdsLimitation.Count == 1);
-
-                    offers = client.PrivateStorePrivateOffers.List(subscriptionId, privateStoreId);
-                    Assert.True(offers.Count() == 1);
-                    var privateOffer = offers.FirstOrDefault();
-                    if (privateOffer != null)
+                        client.PrivateStoreCollection.Delete(privateStoreId, collectionId);
+                    }
+                    catch (Exception ex)
                     {
-                        Assert.Equal(privateOffer.UniqueOfferId, offerId);
+                        if (!ex.Message.Contains("NotFound"))
+                        {
+                            throw;
+                        }
                     }
                     
-                    client.PrivateStoreOffer.Delete(privateStoreId, offerId);
+                    // create Test Collections
+                    Collection testCollection = new Collection
+                    {
+                        CollectionName = TestCollectionName,
+                        AllSubscriptions = false,
+                        SubscriptionsList = new List<string> { testSubscription }
+                    };
+                    client.PrivateStoreCollection.CreateOrUpdate(privateStoreId, collectionId, testCollection);
 
-                    offers = client.PrivateStorePrivateOffers.List(subscriptionId, privateStoreId);
-                    Assert.True(!offers.Any());
+                    //create approval request
+                    PlanDetails planDetails = new PlanDetails { 
+                    PlanId = planId,
+                    Justification = "because ...",
+                    SubscriptionId = testSubscription,
+                    SubscriptionName = testSubscriptionName
+                    };
+
+                    RequestApprovalResource requestApprovalResource = new RequestApprovalResource {
+                        PublisherId = "data3-limited-1019419",
+                        PlansDetails = new List<PlanDetails>() { planDetails }
+                    };
+
+                    try
+                    {
+                        var approvalRequest = client.PrivateStore.CreateApprovalRequest(privateStoreId, requestAprrovalId, requestApprovalResource);
+                    }
+                    catch (Exception ex) {
+                        if (!ex.Message.Contains("BadRequest")) {
+                            throw;
+                        }  
+                    }
+
+                    var notificationState = client.PrivateStore.QueryNotificationsState(privateStoreId);
+                    bool requestFound = false;
+                    foreach (var request in notificationState.ApprovalRequests) {
+                        if (request.OfferId == requestAprrovalId) {
+                            requestFound = true;
+                            break;
+                        }
+                    }
+                    Assert.True(requestFound);
+
+                    var adminRequestApproval = client.PrivateStore.GetAdminRequestApproval(publisherId, privateStoreId, requestAprrovalId);
+                    Assert.Equal("Pending", adminRequestApproval.AdminAction);
+
+                    RequestDetails requestDetails = new RequestDetails {
+                    PublisherId = publisherId,
+                    PlanIds = new List<string> { planId }                    
+                    };
+                    QueryRequestApprovalProperties queryRequestApprovalProperties = new QueryRequestApprovalProperties {
+                        Properties = requestDetails
+                    };
+                    var requestApproval = client.PrivateStore.QueryRequestApprovalMethod(privateStoreId, requestAprrovalId, queryRequestApprovalProperties);
+                    //Assert.Equal(requestAprrovalId, requestApproval.OfferId);
+
+                    // Withdraw request
+                    WithdrawProperties withdrawProperties = new WithdrawProperties {
+                        PublisherId = publisherId,
+                        PlanId = planId
+                    };
+                    client.PrivateStore.WithdrawPlan(privateStoreId,requestAprrovalId, withdrawProperties);
+                    
+                    notificationState = client.PrivateStore.QueryNotificationsState(privateStoreId);
+                     requestFound = false;
+                    foreach (var request in notificationState.ApprovalRequests)
+                    {
+                        if (request.OfferId == requestAprrovalId)
+                        {
+                            requestFound = true;
+                            break;
+                        }
+                    }
+                    Assert.True(!requestFound);
+
+                    AdminRequestApprovalsResource adminRequestApprovalsResource = new AdminRequestApprovalsResource {
+                        PublisherId = publisherId,
+                        AdminAction = "Approved",
+                        ApprovedPlans = new List<string>() { planId },
+                        Comment = "I'm ok with that",
+                        CollectionIds = new List<string>() { collectionId }
+
+                    };
+                    client.PrivateStore.UpdateAdminRequestApproval(privateStoreId, requestAprrovalId, adminRequestApprovalsResource);
+
+                    client.PrivateStoreCollection.Delete(privateStoreId, collectionId);
                 }
             }
         }
 
+        [Fact]
+        public void PrivateStoreBillingAccountTest()
+        {
+            string privateStoreId = "3bc6b734-0508-42db-849e-7a60818a96fc";
+            using (var context = MockContext.Start(this.GetType()))
+            {
+                using (var client = context.GetServiceClient<MarketplaceRPServiceClient>())
+                {
+                    var billigAccount = client.PrivateStore.BillingAccounts(privateStoreId);
+                    Assert.Equal("direct-TSZ", billigAccount.BillingAccounts.First());
+                }
+            }
+        }
     }
 }

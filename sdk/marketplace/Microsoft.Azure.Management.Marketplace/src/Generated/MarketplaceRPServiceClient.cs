@@ -22,9 +22,9 @@ namespace Microsoft.Azure.Management.Marketplace
     using System.Net.Http;
 
     /// <summary>
-    /// REST APIs for Azure Marketplace
+    /// REST APIs for Private Marketplace
     /// </summary>
-    public partial class MarketplaceManagementClient : ServiceClient<MarketplaceManagementClient>, IMarketplaceManagementClient, IAzureClient
+    public partial class MarketplaceRPServiceClient : ServiceClient<MarketplaceRPServiceClient>, IMarketplaceRPServiceClient, IAzureClient
     {
         /// <summary>
         /// The base URI of the service.
@@ -70,29 +70,19 @@ namespace Microsoft.Azure.Management.Marketplace
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
-        /// Gets the IPrivateStoreOffersOperations.
-        /// </summary>
-        public virtual IPrivateStoreOffersOperations PrivateStoreOffers { get; private set; }
-
-        /// <summary>
-        /// Gets the IPrivateStorePrivateOffersOperations.
-        /// </summary>
-        public virtual IPrivateStorePrivateOffersOperations PrivateStorePrivateOffers { get; private set; }
-
-        /// <summary>
-        /// Gets the IPrivateStoreOfferOperations.
-        /// </summary>
-        public virtual IPrivateStoreOfferOperations PrivateStoreOffer { get; private set; }
-
-        /// <summary>
-        /// Gets the IPrivateStorePrivateOfferOperations.
-        /// </summary>
-        public virtual IPrivateStorePrivateOfferOperations PrivateStorePrivateOffer { get; private set; }
-
-        /// <summary>
         /// Gets the IPrivateStoreOperations.
         /// </summary>
         public virtual IPrivateStoreOperations PrivateStore { get; private set; }
+
+        /// <summary>
+        /// Gets the IPrivateStoreCollectionOperations.
+        /// </summary>
+        public virtual IPrivateStoreCollectionOperations PrivateStoreCollection { get; private set; }
+
+        /// <summary>
+        /// Gets the IPrivateStoreCollectionOfferOperations.
+        /// </summary>
+        public virtual IPrivateStoreCollectionOfferOperations PrivateStoreCollectionOffer { get; private set; }
 
         /// <summary>
         /// Gets the IOperations.
@@ -100,31 +90,31 @@ namespace Microsoft.Azure.Management.Marketplace
         public virtual IOperations Operations { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the MarketplaceManagementClient class.
+        /// Initializes a new instance of the MarketplaceRPServiceClient class.
         /// </summary>
         /// <param name='httpClient'>
         /// HttpClient to be used
         /// </param>
         /// <param name='disposeHttpClient'>
-        /// True: will dispose the provided httpClient on calling MarketplaceManagementClient.Dispose(). False: will not dispose provided httpClient</param>
-        protected MarketplaceManagementClient(HttpClient httpClient, bool disposeHttpClient) : base(httpClient, disposeHttpClient)
+        /// True: will dispose the provided httpClient on calling MarketplaceRPServiceClient.Dispose(). False: will not dispose provided httpClient</param>
+        protected MarketplaceRPServiceClient(HttpClient httpClient, bool disposeHttpClient) : base(httpClient, disposeHttpClient)
         {
             Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the MarketplaceManagementClient class.
+        /// Initializes a new instance of the MarketplaceRPServiceClient class.
         /// </summary>
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        protected MarketplaceManagementClient(params DelegatingHandler[] handlers) : base(handlers)
+        protected MarketplaceRPServiceClient(params DelegatingHandler[] handlers) : base(handlers)
         {
             Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the MarketplaceManagementClient class.
+        /// Initializes a new instance of the MarketplaceRPServiceClient class.
         /// </summary>
         /// <param name='rootHandler'>
         /// Optional. The http client handler used to handle http transport.
@@ -132,13 +122,13 @@ namespace Microsoft.Azure.Management.Marketplace
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        protected MarketplaceManagementClient(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
+        protected MarketplaceRPServiceClient(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
         {
             Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the MarketplaceManagementClient class.
+        /// Initializes a new instance of the MarketplaceRPServiceClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -149,7 +139,7 @@ namespace Microsoft.Azure.Management.Marketplace
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        protected MarketplaceManagementClient(System.Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
+        protected MarketplaceRPServiceClient(System.Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (baseUri == null)
             {
@@ -159,7 +149,7 @@ namespace Microsoft.Azure.Management.Marketplace
         }
 
         /// <summary>
-        /// Initializes a new instance of the MarketplaceManagementClient class.
+        /// Initializes a new instance of the MarketplaceRPServiceClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -173,7 +163,7 @@ namespace Microsoft.Azure.Management.Marketplace
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        protected MarketplaceManagementClient(System.Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        protected MarketplaceRPServiceClient(System.Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (baseUri == null)
             {
@@ -183,7 +173,7 @@ namespace Microsoft.Azure.Management.Marketplace
         }
 
         /// <summary>
-        /// Initializes a new instance of the MarketplaceManagementClient class.
+        /// Initializes a new instance of the MarketplaceRPServiceClient class.
         /// </summary>
         /// <param name='credentials'>
         /// Required. Credentials needed for the client to connect to Azure.
@@ -194,7 +184,7 @@ namespace Microsoft.Azure.Management.Marketplace
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public MarketplaceManagementClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        public MarketplaceRPServiceClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (credentials == null)
             {
@@ -208,7 +198,7 @@ namespace Microsoft.Azure.Management.Marketplace
         }
 
         /// <summary>
-        /// Initializes a new instance of the MarketplaceManagementClient class.
+        /// Initializes a new instance of the MarketplaceRPServiceClient class.
         /// </summary>
         /// <param name='credentials'>
         /// Required. Credentials needed for the client to connect to Azure.
@@ -217,11 +207,11 @@ namespace Microsoft.Azure.Management.Marketplace
         /// HttpClient to be used
         /// </param>
         /// <param name='disposeHttpClient'>
-        /// True: will dispose the provided httpClient on calling MarketplaceManagementClient.Dispose(). False: will not dispose provided httpClient</param>
+        /// True: will dispose the provided httpClient on calling MarketplaceRPServiceClient.Dispose(). False: will not dispose provided httpClient</param>
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public MarketplaceManagementClient(ServiceClientCredentials credentials, HttpClient httpClient, bool disposeHttpClient) : this(httpClient, disposeHttpClient)
+        public MarketplaceRPServiceClient(ServiceClientCredentials credentials, HttpClient httpClient, bool disposeHttpClient) : this(httpClient, disposeHttpClient)
         {
             if (credentials == null)
             {
@@ -235,7 +225,7 @@ namespace Microsoft.Azure.Management.Marketplace
         }
 
         /// <summary>
-        /// Initializes a new instance of the MarketplaceManagementClient class.
+        /// Initializes a new instance of the MarketplaceRPServiceClient class.
         /// </summary>
         /// <param name='credentials'>
         /// Required. Credentials needed for the client to connect to Azure.
@@ -249,7 +239,7 @@ namespace Microsoft.Azure.Management.Marketplace
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public MarketplaceManagementClient(ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        public MarketplaceRPServiceClient(ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (credentials == null)
             {
@@ -263,7 +253,7 @@ namespace Microsoft.Azure.Management.Marketplace
         }
 
         /// <summary>
-        /// Initializes a new instance of the MarketplaceManagementClient class.
+        /// Initializes a new instance of the MarketplaceRPServiceClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -277,7 +267,7 @@ namespace Microsoft.Azure.Management.Marketplace
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public MarketplaceManagementClient(System.Uri baseUri, ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        public MarketplaceRPServiceClient(System.Uri baseUri, ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (baseUri == null)
             {
@@ -296,7 +286,7 @@ namespace Microsoft.Azure.Management.Marketplace
         }
 
         /// <summary>
-        /// Initializes a new instance of the MarketplaceManagementClient class.
+        /// Initializes a new instance of the MarketplaceRPServiceClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -313,7 +303,7 @@ namespace Microsoft.Azure.Management.Marketplace
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public MarketplaceManagementClient(System.Uri baseUri, ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        public MarketplaceRPServiceClient(System.Uri baseUri, ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (baseUri == null)
             {
@@ -340,14 +330,12 @@ namespace Microsoft.Azure.Management.Marketplace
         /// </summary>
         private void Initialize()
         {
-            PrivateStoreOffers = new PrivateStoreOffersOperations(this);
-            PrivateStorePrivateOffers = new PrivateStorePrivateOffersOperations(this);
-            PrivateStoreOffer = new PrivateStoreOfferOperations(this);
-            PrivateStorePrivateOffer = new PrivateStorePrivateOfferOperations(this);
             PrivateStore = new PrivateStoreOperations(this);
+            PrivateStoreCollection = new PrivateStoreCollectionOperations(this);
+            PrivateStoreCollectionOffer = new PrivateStoreCollectionOfferOperations(this);
             Operations = new Operations(this);
-            BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2020-01-01";
+            BaseUri = new System.Uri("https://api-dogfood.resources.windows-int.net/");
+            ApiVersion = "2021-06-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

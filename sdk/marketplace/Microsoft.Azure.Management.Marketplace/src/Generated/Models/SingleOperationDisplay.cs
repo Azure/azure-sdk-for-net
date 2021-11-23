@@ -16,29 +16,32 @@ namespace Microsoft.Azure.Management.Marketplace.Models
     /// <summary>
     /// The object that represents the operation.
     /// </summary>
-    public partial class OperationDisplay
+    public partial class SingleOperationDisplay
     {
         /// <summary>
-        /// Initializes a new instance of the OperationDisplay class.
+        /// Initializes a new instance of the SingleOperationDisplay class.
         /// </summary>
-        public OperationDisplay()
+        public SingleOperationDisplay()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the OperationDisplay class.
+        /// Initializes a new instance of the SingleOperationDisplay class.
         /// </summary>
         /// <param name="provider">Service provider:
         /// Microsoft.Marketplace</param>
         /// <param name="resource">Resource on which the operation is
-        /// performed: Amendments</param>
-        /// <param name="operation">Operation type: Get Amendments etc.</param>
-        public OperationDisplay(string provider = default(string), string resource = default(string), string operation = default(string))
+        /// performed</param>
+        /// <param name="operation">Operation type</param>
+        /// <param name="description">Friendly description for the
+        /// operation,</param>
+        public SingleOperationDisplay(string provider = default(string), string resource = default(string), string operation = default(string), string description = default(string))
         {
             Provider = provider;
             Resource = resource;
             Operation = operation;
+            Description = description;
             CustomInit();
         }
 
@@ -48,23 +51,28 @@ namespace Microsoft.Azure.Management.Marketplace.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets service provider: Microsoft.Marketplace
+        /// Gets service provider: Microsoft.Marketplace
         /// </summary>
         [JsonProperty(PropertyName = "provider")]
-        public string Provider { get; set; }
+        public string Provider { get; private set; }
 
         /// <summary>
-        /// Gets or sets resource on which the operation is performed:
-        /// Amendments
+        /// Gets resource on which the operation is performed
         /// </summary>
         [JsonProperty(PropertyName = "resource")]
-        public string Resource { get; set; }
+        public string Resource { get; private set; }
 
         /// <summary>
-        /// Gets or sets operation type: Get Amendments etc.
+        /// Gets operation type
         /// </summary>
         [JsonProperty(PropertyName = "operation")]
-        public string Operation { get; set; }
+        public string Operation { get; private set; }
+
+        /// <summary>
+        /// Gets friendly description for the operation,
+        /// </summary>
+        [JsonProperty(PropertyName = "description")]
+        public string Description { get; private set; }
 
     }
 }
