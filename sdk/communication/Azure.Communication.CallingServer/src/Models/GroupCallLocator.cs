@@ -8,9 +8,6 @@ namespace Azure.Communication.CallingServer.Models
     /// <summary> The group call locator. </summary>
     public class GroupCallLocator : CallLocator
     {
-        /// <summary> The group call id. </summary>
-        public string Id { get; }
-
         /// <summary>
         /// Initializes a new instance of <see cref="GroupCallLocator"/>.
         /// </summary>

@@ -8,9 +8,6 @@ namespace Azure.Communication.CallingServer.Models
     /// <summary> The server call locator. </summary>
     public class ServerCallLocator : CallLocator
     {
-        /// <summary> The server call id. </summary>
-        public string Id { get; }
-
         /// <summary>
         /// Initializes a new instance of <see cref="ServerCallLocator"/>.
         /// </summary>
