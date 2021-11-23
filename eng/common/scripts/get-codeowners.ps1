@@ -1,6 +1,6 @@
 param (
   [string]$TargetDirectory = "", # Code path to code owners. e.g sdk/core/azure-amqp
-  [string]$CodeOwnerFileLocation = "$PSSCriptRoot/../../../.github/CODEOWNERS", # The absolute path of CODEOWNERS file. 
+  [string]$CodeOwnerFileLocation = (Resolve-Path $PSScriptRoot/../../../.github/CODEOWNERS), # The absolute path of CODEOWNERS file. 
   [string]$ToolVersion = "1.0.0-dev.20211122.14", # Placeholder. Will update in next PR
   [string]$ToolPath = (Join-Path ([System.IO.Path]::GetTempPath()) "codeowners-tool-path"), # The place to check the tool existence. Put temp path as default
   [string]$DevOpsFeed = "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json", # DevOp tool feeds.
@@ -34,7 +34,6 @@ function Get-CodeOwners ([string]$targetDirectory, [string]$codeOwnerFileLocatio
 {
   $command = Get-CodeOwnersTool
   # Filter out the non user alias from code owner list.
-  Write-Host "Testing on $targetDirectory..."
   if($includeNonUserAliases) {
     $codeOwnersString = & $command --target-directory $targetDirectory --code-owner-file-path $codeOwnerFileLocation 2>&1
   }
@@ -62,6 +61,7 @@ function Get-CodeOwners ([string]$targetDirectory, [string]$codeOwnerFileLocatio
 }
 
 function TestGetCodeOwner([string]$targetDirectory, [string]$codeOwnerFileLocation, [bool]$includeNonUserAliases = $false, [string[]]$expectReturn) {
+  Write-Host "Testing on $targetDirectory..."
   $actualReturn = Get-CodeOwners -targetDirectory $targetDirectory -codeOwnerFileLocation $codeOwnerFileLocation -includeNonUserAliases $IncludeNonUserAliases
 
   if ($actualReturn.Count -ne $expectReturn.Count) {
@@ -77,7 +77,7 @@ function TestGetCodeOwner([string]$targetDirectory, [string]$codeOwnerFileLocati
 }
 
 if($Test) {
-  $testFile = "$PSSCriptRoot/../../../tools/code-owners-parser/Azure.Sdk.Tools.RetrieveCodeOwners.Tests/CODEOWNERS"
+  $testFile = (Resolve-Path $PSScriptRoot/../../../tools/code-owners-parser/Azure.Sdk.Tools.RetrieveCodeOwners.Tests/CODEOWNERS)
   TestGetCodeOwner -targetDirectory "sdk" -codeOwnerFileLocation $testFile -includeNonUserAliases $true -expectReturn @("person1", "person2")
   TestGetCodeOwner -targetDirectory "sdk/noPath" -codeOwnerFileLocation $testFile -includeNonUserAliases $true -expectReturn @("person1", "person2")
   TestGetCodeOwner -targetDirectory "/sdk/azconfig" -codeOwnerFileLocation $testFile -includeNonUserAliases $true -expectReturn @("person3", "person4")
