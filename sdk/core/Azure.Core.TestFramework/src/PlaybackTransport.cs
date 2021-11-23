@@ -123,7 +123,7 @@ namespace Azure.Core.TestFramework
                 }
 
                 // Ignore the Retry-After header wait time for 429 responses during playback.
-                if (response.Status == 429 && response.Headers.TryGetValue("Retry-After", out _))
+                if (response.Headers.TryGetValue("Retry-After", out _))
                 {
                     response.AddHeader(new HttpHeader("Retry-After", "0"));
                 }
