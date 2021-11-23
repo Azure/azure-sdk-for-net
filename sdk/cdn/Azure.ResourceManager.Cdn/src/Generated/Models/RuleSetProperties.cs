@@ -8,10 +8,10 @@
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The JSON object that contains the properties of the Rule Set to create. </summary>
-    internal partial class RuleSetProperties : AFDStateProperties
+    public partial class RuleSetProperties : AFDStateProperties
     {
         /// <summary> Initializes a new instance of RuleSetProperties. </summary>
-        internal RuleSetProperties()
+        public RuleSetProperties()
         {
         }
     }

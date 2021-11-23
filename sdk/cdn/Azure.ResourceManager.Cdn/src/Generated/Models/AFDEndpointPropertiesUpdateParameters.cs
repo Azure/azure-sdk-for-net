@@ -8,16 +8,16 @@
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The JSON object containing endpoint update parameters. </summary>
-    internal partial class AFDEndpointPropertiesUpdateParameters
+    public partial class AFDEndpointPropertiesUpdateParameters
     {
         /// <summary> Initializes a new instance of AFDEndpointPropertiesUpdateParameters. </summary>
-        internal AFDEndpointPropertiesUpdateParameters()
+        public AFDEndpointPropertiesUpdateParameters()
         {
         }
 
         /// <summary> Send and receive timeout on forwarding request to the origin. When timeout is reached, the request fails and returns. </summary>
-        public int? OriginResponseTimeoutSeconds { get; }
+        public int? OriginResponseTimeoutSeconds { get; set; }
         /// <summary> Whether to enable use of this rule. Permitted values are &apos;Enabled&apos; or &apos;Disabled&apos;. </summary>
-        public EnabledState? EnabledState { get; }
+        public EnabledState? EnabledState { get; set; }
     }
 }

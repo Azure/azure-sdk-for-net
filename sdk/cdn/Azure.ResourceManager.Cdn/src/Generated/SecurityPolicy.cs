@@ -183,5 +183,63 @@ namespace Azure.ResourceManager.Cdn
                 throw;
             }
         }
+
+        /// <summary> Updates an existing Secret within a profile. </summary>
+        /// <param name="securityPolicyProperties"> Security policy update properties. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyProperties"/> is null. </exception>
+        public async virtual Task<SecurityPolicyPatchOperation> UpdateAsync(SecurityPolicyProperties securityPolicyProperties, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            if (securityPolicyProperties == null)
+            {
+                throw new ArgumentNullException(nameof(securityPolicyProperties));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("SecurityPolicy.Update");
+            scope.Start();
+            try
+            {
+                var response = await _securityPoliciesRestClient.PatchAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, securityPolicyProperties, cancellationToken).ConfigureAwait(false);
+                var operation = new SecurityPolicyPatchOperation(this, _clientDiagnostics, Pipeline, _securityPoliciesRestClient.CreatePatchRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, securityPolicyProperties).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Updates an existing Secret within a profile. </summary>
+        /// <param name="securityPolicyProperties"> Security policy update properties. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyProperties"/> is null. </exception>
+        public virtual SecurityPolicyPatchOperation Update(SecurityPolicyProperties securityPolicyProperties, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            if (securityPolicyProperties == null)
+            {
+                throw new ArgumentNullException(nameof(securityPolicyProperties));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("SecurityPolicy.Update");
+            scope.Start();
+            try
+            {
+                var response = _securityPoliciesRestClient.Patch(Id.ResourceGroupName, Id.Parent.Name, Id.Name, securityPolicyProperties, cancellationToken);
+                var operation = new SecurityPolicyPatchOperation(this, _clientDiagnostics, Pipeline, _securityPoliciesRestClient.CreatePatchRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, securityPolicyProperties).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
     }
 }
