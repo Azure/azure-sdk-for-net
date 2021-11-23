@@ -33,7 +33,7 @@ GitHub repository ID of the SDK. Typically of the form: 'Azure/azure-sdk-for-js'
 param(
   [Parameter(Mandatory = $true)]
   [array]$PackageInfoJsonLocations,
-  
+
   [Parameter(Mandatory = $true)]
   [string]$DocRepoLocation, 
 
@@ -78,12 +78,21 @@ function GetAdjustedReadmeContent($ReadmeContent, $PackageInfo, $PackageMetadata
     $ReadmeContent = $ReadmeContent -replace $releaseReplaceRegex, $replacementPattern
   }
   
+  # Get the first code owners of the package.
+  $author = "ramya-rao-a"
+  $msauthor = "ramyar"
+  $codeOwnerArray = ./$PSScriptRoot/get-codeowners.ps1 -TargetDirectory $PackageInfo.DirectoryPath 
+  if ($codeOwnerArray) {
+    $author = $codeOwnerArray[0]
+    $msauthor = $author # This is a placeholder for now. Will change to the right ms alias.
+  }
+
   $header = @"
 ---
 title: $foundTitle
 keywords: Azure, $Language, SDK, API, $($PackageInfo.Name), $service
-author: maggiepint
-ms.author: magpint
+author: $author
+ms.author: $msauthor
 ms.date: $date
 ms.topic: reference
 ms.prod: azure
