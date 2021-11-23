@@ -482,12 +482,11 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             Assert.AreEqual(model.Data.Parameters.Type, getResult.Data.Parameters.Type);
         }
 
-        //public static void AssertSecurityPolicy(SecurityPolicy updatedSecurityPolicy, SecurityPolicyProperties updateParameters)
-        //{
-        //    Assert.AreEqual(((SecurityPolicyWebApplicationFirewallParameters)updatedSecurityPolicy.Data.Parameters).Associations.Count, 1);
-        //    Assert.AreEqual(((SecurityPolicyWebApplicationFirewallParameters)updatedSecurityPolicy.Data.Parameters).Associations[0].PatternsToMatch.Count, 1);
-        //    Assert.AreEqual(((SecurityPolicyWebApplicationFirewallParameters)updatedSecurityPolicy.Data.Parameters).Associations[0].PatternsToMatch[0], ((SecurityPolicyWebApplicationFirewallParameters)updateParameters.Parameters).Associations[0].PatternsToMatch[0]);
-        //}
+        public static void AssertSecurityPolicy(SecurityPolicy updatedSecurityPolicy, SecurityPolicyProperties updateParameters)
+        {
+            Assert.AreEqual(((SecurityPolicyWebApplicationFirewallParameters)updatedSecurityPolicy.Data.Parameters).Associations.Count, 1);
+            Assert.AreEqual(((SecurityPolicyWebApplicationFirewallParameters)updatedSecurityPolicy.Data.Parameters).Associations[0].Domains.Count, 2);
+        }
 
         public static void AssertValidPolicy(CdnWebApplicationFirewallPolicy model, CdnWebApplicationFirewallPolicy getResult)
         {

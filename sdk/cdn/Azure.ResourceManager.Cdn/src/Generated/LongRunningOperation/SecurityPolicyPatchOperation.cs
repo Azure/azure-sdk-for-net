@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal SecurityPolicyPatchOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<SecurityPolicy>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "SecurityPolicyPatchOperation");
+            _operation = new OperationInternals<SecurityPolicy>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.OriginalUri, "SecurityPolicyPatchOperation");
             _operationBase = operationsBase;
         }
 

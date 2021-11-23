@@ -100,6 +100,12 @@ directive:
           "final-state-via": "original-uri"
       }
   - from: swagger-document
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/securityPolicies/{securityPolicyName}'].patch
+    transform: >
+      $['x-ms-long-running-operation-options'] = {
+          "final-state-via": "original-uri"
+      }
+  - from: swagger-document
     where: $.definitions.EndpointPropertiesUpdateParameters.properties.defaultOriginGroup
     transform: $['x-nullable'] = true
   - from: swagger-document
@@ -185,7 +191,6 @@ directive:
       to: AFDProfiles_GetWafLogAnalyticsRankings
   # remove below operations to avoid breaking changes
   - remove-operation: AFDProfiles_CheckHostNameAvailability
-  # - remove-operation: SecurityPolicies_Patch
   - remove-operation: Secrets_Update
   - remove-operation: Validate_Secret
 ```
