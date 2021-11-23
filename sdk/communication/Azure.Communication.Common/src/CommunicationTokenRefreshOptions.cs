@@ -25,7 +25,7 @@ namespace Azure.Communication
         }
 
         /// <summary>The time span before token expiry that causes the 'tokenRefresher' to be called if 'refreshProactively' is true.</summary>
-        internal TimeSpan RefreshTimeBeforeTokenExpiry { get; } = new TimeSpan(0, 0, DefaultExpiringOffsetMinutes, 0);
+        public TimeSpan RefreshTimeBeforeTokenExpiry { get; set; } = new TimeSpan(0, 0, DefaultExpiringOffsetMinutes, 0);
         /// <summary>Determines whether the token should be proactively renewed prior to its expiry or on demand.</summary>
         internal bool RefreshProactively { get; }
         /// <summary>The callback function that acquires a fresh token from the Communication Identity API, e.g. by calling the CommunicationIdentityClient.</summary>
@@ -46,20 +46,6 @@ namespace Azure.Communication
             Argument.AssertNotNull(tokenRefresher, nameof(tokenRefresher));
             RefreshProactively = refreshProactively;
             TokenRefresher = tokenRefresher;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of <see cref="CommunicationTokenRefreshOptions"/>.
-        /// </summary>
-        /// <param name="refreshProactively">Indicates whether the token should be proactively renewed prior to its expiry or on demand.</param>
-        /// <param name="tokenRefresher">The callback function that acquires a fresh token from the Communication Identity API, e.g. by calling the CommunicationIdentityClient.</param>
-        /// <param name="refreshTimeBeforeTokenExpiry">The time span before token expiry that causes the 'tokenRefresher' to be called if 'refreshProactively' is true. For example, setting it to 5 minutes means that 5 minutes before the cached token expires, the proactive refresh will request a new token. The default value is 10 minutes.</param>
-        public CommunicationTokenRefreshOptions(
-            bool refreshProactively,
-            TimeSpan refreshTimeBeforeTokenExpiry,
-            Func<CancellationToken, string> tokenRefresher) : this(refreshProactively, tokenRefresher)
-        {
-            RefreshTimeBeforeTokenExpiry = refreshTimeBeforeTokenExpiry;
         }
     }
 }

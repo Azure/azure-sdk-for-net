@@ -52,9 +52,9 @@ namespace Azure.Communication.Identity
             using var tokenCredential = new CommunicationTokenCredential(
                 new CommunicationTokenRefreshOptions(
                     refreshProactively: true, // Indicates if the token should be proactively refreshed in the background or only on-demand
-                    refreshTimeBeforeTokenExpiry: new TimeSpan(0, 0, 5, 0), // Proactive refreshing will be triggered 5 minutes before the token expires
                     tokenRefresher: cancellationToken => FetchTokenForUserFromMyServer("bob@contoso.com", cancellationToken))
                 {
+                    RefreshTimeBeforeTokenExpiry = new TimeSpan(0, 0, 5, 0), // Proactive refreshing will be triggered 5 minutes before the token expires
                     AsyncTokenRefresher = cancellationToken => FetchTokenForUserFromMyServerAsync("bob@contoso.com", cancellationToken)
                 });
             #endregion
@@ -334,9 +334,10 @@ namespace Azure.Communication.Identity
             var proactiveRefreshIntervalInMinutes = 5;
             var refreshTimeBeforeTokenExpiry = new TimeSpan(0, 0, proactiveRefreshIntervalInMinutes, 0);
             using var tokenCredential = new AutoRefreshTokenCredential(
-                new CommunicationTokenRefreshOptions(true, refreshTimeBeforeTokenExpiry, _ => GenerateTokenValidForMinutes(testClock.UtcNow, 20))
+                new CommunicationTokenRefreshOptions(true, _ => GenerateTokenValidForMinutes(testClock.UtcNow, 20))
                 {
-                    InitialToken = twentyMinToken
+                    InitialToken = twentyMinToken,
+                    RefreshTimeBeforeTokenExpiry = refreshTimeBeforeTokenExpiry
                 },
                 testClock.Schedule,
                 () => testClock.UtcNow);
