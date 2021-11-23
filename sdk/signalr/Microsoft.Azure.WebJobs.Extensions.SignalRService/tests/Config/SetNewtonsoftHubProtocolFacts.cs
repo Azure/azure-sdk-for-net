@@ -29,19 +29,6 @@ namespace SignalRServiceExtension.Tests
             Assert.Empty(services);
         }
 
-#if NETCOREAPP2_1_OR_GREATER
-
-        [Fact]
-        public void SetHubProtocol_Throw()
-        {
-            var configuration = new ConfigurationBuilder().AddInMemoryCollection().Build();
-            configuration[Constants.AzureSignalRHubProtocol] = HubProtocol.SystemTextJson.ToString();
-            var services = new ServiceCollection();
-            Assert.Throws<InvalidOperationException>(() => services.SetHubProtocol(configuration));
-        }
-
-#endif
-
 #if NETCOREAPP3_1
 
         [Fact]
