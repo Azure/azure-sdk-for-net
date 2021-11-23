@@ -4,6 +4,7 @@
   <PropertyGroup>
     <IsMgmtLibrary Condition="'$(IsMgmtLibrary)' == '' and $(MSBuildProjectName.StartsWith('Azure.ResourceManager'))">true</IsMgmtLibrary>
     <IsMgmtSubLibrary Condition="'$(IsMgmtSubLibrary)' == '' and $(MSBuildProjectName.StartsWith('Azure.ResourceManager.'))">true</IsMgmtSubLibrary>
+    <IsMgmtCoreLibrary Condition="'$(IsMgmtCoreLibrary)' == '' and '$(MSBuildProjectName)' == 'Azure.ResourceManager'">true</IsMgmtCoreLibrary>
 
     <MgmtAutorestVersion>3.0.0-beta.20210504.1</MgmtAutorestVersion>
 
