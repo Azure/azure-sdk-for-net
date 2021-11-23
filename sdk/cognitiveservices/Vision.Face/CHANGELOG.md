@@ -1,5 +1,15 @@
 # Release History
 
+## 2.7.0-preview.3 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 2.7.0-preview.2 (2021-11-15)
 - Add support for new detection attribute `qualityForRecognition`
 
