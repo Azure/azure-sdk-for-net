@@ -774,11 +774,11 @@ namespace Azure.ResourceManager.Storage
 
         #region ManagementPolicy
 
-        /// <summary> Gets a collection of ManagementPolicies in the StorageAccount. </summary>
-        /// <returns> An object representing collection of ManagementPolicies and their operations over a StorageAccount. </returns>
-        public ManagementPolicyCollection GetManagementPolicies()
+        /// <summary> Gets an object representing a ManagementPolicy along with the instance operations that can be performed on it in the StorageAccount. </summary>
+        /// <returns> Returns a <see cref="ManagementPolicy" /> object. </returns>
+        public ManagementPolicy GetManagementPolicy()
         {
-            return new ManagementPolicyCollection(this);
+            return new ManagementPolicy(this, Id + "/managementPolicies/default");
         }
         #endregion
 
@@ -824,41 +824,41 @@ namespace Azure.ResourceManager.Storage
 
         #region BlobService
 
-        /// <summary> Gets a collection of BlobServices in the StorageAccount. </summary>
-        /// <returns> An object representing collection of BlobServices and their operations over a StorageAccount. </returns>
-        public BlobServiceCollection GetBlobServices()
+        /// <summary> Gets an object representing a BlobService along with the instance operations that can be performed on it in the StorageAccount. </summary>
+        /// <returns> Returns a <see cref="BlobService" /> object. </returns>
+        public BlobService GetBlobService()
         {
-            return new BlobServiceCollection(this);
+            return new BlobService(this, Id + "/blobServices/default");
         }
         #endregion
 
         #region FileService
 
-        /// <summary> Gets a collection of FileServices in the StorageAccount. </summary>
-        /// <returns> An object representing collection of FileServices and their operations over a StorageAccount. </returns>
-        public FileServiceCollection GetFileServices()
+        /// <summary> Gets an object representing a FileService along with the instance operations that can be performed on it in the StorageAccount. </summary>
+        /// <returns> Returns a <see cref="FileService" /> object. </returns>
+        public FileService GetFileService()
         {
-            return new FileServiceCollection(this);
+            return new FileService(this, Id + "/fileServices/default");
         }
         #endregion
 
         #region QueueService
 
-        /// <summary> Gets a collection of QueueServices in the StorageAccount. </summary>
-        /// <returns> An object representing collection of QueueServices and their operations over a StorageAccount. </returns>
-        public QueueServiceCollection GetQueueServices()
+        /// <summary> Gets an object representing a QueueService along with the instance operations that can be performed on it in the StorageAccount. </summary>
+        /// <returns> Returns a <see cref="QueueService" /> object. </returns>
+        public QueueService GetQueueService()
         {
-            return new QueueServiceCollection(this);
+            return new QueueService(this, Id + "/queueServices/default");
         }
         #endregion
 
         #region TableService
 
-        /// <summary> Gets a collection of TableServices in the StorageAccount. </summary>
-        /// <returns> An object representing collection of TableServices and their operations over a StorageAccount. </returns>
-        public TableServiceCollection GetTableServices()
+        /// <summary> Gets an object representing a TableService along with the instance operations that can be performed on it in the StorageAccount. </summary>
+        /// <returns> Returns a <see cref="TableService" /> object. </returns>
+        public TableService GetTableService()
         {
-            return new TableServiceCollection(this);
+            return new TableService(this, Id + "/tableServices/default");
         }
         #endregion
     }

@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Storage
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateListRequest(string resourceGroupName, string accountName, string fileServicesName, string maxpagesize, string filter, string expand)
+        internal HttpMessage CreateListRequest(string resourceGroupName, string accountName, string maxpagesize, string filter, string expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -57,9 +57,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Storage/storageAccounts/", false);
             uri.AppendPath(accountName, true);
-            uri.AppendPath("/fileServices/", false);
-            uri.AppendPath(fileServicesName, true);
-            uri.AppendPath("/shares", false);
+            uri.AppendPath("/fileServices/default/shares", false);
             uri.AppendQuery("api-version", apiVersion, true);
             if (maxpagesize != null)
             {
@@ -82,13 +80,12 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Lists all shares. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="fileServicesName"> The name of the file Service within the specified storage account. File Service Name must be &quot;default&quot;. </param>
         /// <param name="maxpagesize"> Optional. Specified maximum number of shares that can be included in the list. </param>
         /// <param name="filter"> Optional. When specified, only share names starting with the filter will be listed. </param>
         /// <param name="expand"> Optional, used to expand the properties within share&apos;s properties. Valid values are: deleted, snapshots. Should be passed as a string with delimiter &apos;,&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="fileServicesName"/> is null. </exception>
-        public async Task<Response<FileShareItems>> ListAsync(string resourceGroupName, string accountName, string fileServicesName, string maxpagesize = null, string filter = null, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
+        public async Task<Response<FileShareItems>> ListAsync(string resourceGroupName, string accountName, string maxpagesize = null, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -98,12 +95,8 @@ namespace Azure.ResourceManager.Storage
             {
                 throw new ArgumentNullException(nameof(accountName));
             }
-            if (fileServicesName == null)
-            {
-                throw new ArgumentNullException(nameof(fileServicesName));
-            }
 
-            using var message = CreateListRequest(resourceGroupName, accountName, fileServicesName, maxpagesize, filter, expand);
+            using var message = CreateListRequest(resourceGroupName, accountName, maxpagesize, filter, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -122,13 +115,12 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Lists all shares. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="fileServicesName"> The name of the file Service within the specified storage account. File Service Name must be &quot;default&quot;. </param>
         /// <param name="maxpagesize"> Optional. Specified maximum number of shares that can be included in the list. </param>
         /// <param name="filter"> Optional. When specified, only share names starting with the filter will be listed. </param>
         /// <param name="expand"> Optional, used to expand the properties within share&apos;s properties. Valid values are: deleted, snapshots. Should be passed as a string with delimiter &apos;,&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="fileServicesName"/> is null. </exception>
-        public Response<FileShareItems> List(string resourceGroupName, string accountName, string fileServicesName, string maxpagesize = null, string filter = null, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
+        public Response<FileShareItems> List(string resourceGroupName, string accountName, string maxpagesize = null, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -138,12 +130,8 @@ namespace Azure.ResourceManager.Storage
             {
                 throw new ArgumentNullException(nameof(accountName));
             }
-            if (fileServicesName == null)
-            {
-                throw new ArgumentNullException(nameof(fileServicesName));
-            }
 
-            using var message = CreateListRequest(resourceGroupName, accountName, fileServicesName, maxpagesize, filter, expand);
+            using var message = CreateListRequest(resourceGroupName, accountName, maxpagesize, filter, expand);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -159,7 +147,7 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string resourceGroupName, string accountName, string fileServicesName, string shareName, FileShareData fileShare, string expand)
+        internal HttpMessage CreateCreateRequest(string resourceGroupName, string accountName, string shareName, FileShareData fileShare, string expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -172,9 +160,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Storage/storageAccounts/", false);
             uri.AppendPath(accountName, true);
-            uri.AppendPath("/fileServices/", false);
-            uri.AppendPath(fileServicesName, true);
-            uri.AppendPath("/shares/", false);
+            uri.AppendPath("/fileServices/default/shares/", false);
             uri.AppendPath(shareName, true);
             if (expand != null)
             {
@@ -194,13 +180,12 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Creates a new share under the specified account as described by request body. The share resource includes metadata and properties for that share. It does not include a list of the files contained by the share. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="fileServicesName"> The name of the file Service within the specified storage account. File Service Name must be &quot;default&quot;. </param>
         /// <param name="shareName"> The name of the file share within the specified storage account. File share names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
         /// <param name="fileShare"> Properties of the file share to create. </param>
         /// <param name="expand"> Optional, used to expand the properties within share&apos;s properties. Valid values are: snapshots. Should be passed as a string with delimiter &apos;,&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="fileServicesName"/>, <paramref name="shareName"/>, or <paramref name="fileShare"/> is null. </exception>
-        public async Task<Response<FileShareData>> CreateAsync(string resourceGroupName, string accountName, string fileServicesName, string shareName, FileShareData fileShare, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="shareName"/>, or <paramref name="fileShare"/> is null. </exception>
+        public async Task<Response<FileShareData>> CreateAsync(string resourceGroupName, string accountName, string shareName, FileShareData fileShare, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -209,10 +194,6 @@ namespace Azure.ResourceManager.Storage
             if (accountName == null)
             {
                 throw new ArgumentNullException(nameof(accountName));
-            }
-            if (fileServicesName == null)
-            {
-                throw new ArgumentNullException(nameof(fileServicesName));
             }
             if (shareName == null)
             {
@@ -223,7 +204,7 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentNullException(nameof(fileShare));
             }
 
-            using var message = CreateCreateRequest(resourceGroupName, accountName, fileServicesName, shareName, fileShare, expand);
+            using var message = CreateCreateRequest(resourceGroupName, accountName, shareName, fileShare, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -243,13 +224,12 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Creates a new share under the specified account as described by request body. The share resource includes metadata and properties for that share. It does not include a list of the files contained by the share. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="fileServicesName"> The name of the file Service within the specified storage account. File Service Name must be &quot;default&quot;. </param>
         /// <param name="shareName"> The name of the file share within the specified storage account. File share names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
         /// <param name="fileShare"> Properties of the file share to create. </param>
         /// <param name="expand"> Optional, used to expand the properties within share&apos;s properties. Valid values are: snapshots. Should be passed as a string with delimiter &apos;,&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="fileServicesName"/>, <paramref name="shareName"/>, or <paramref name="fileShare"/> is null. </exception>
-        public Response<FileShareData> Create(string resourceGroupName, string accountName, string fileServicesName, string shareName, FileShareData fileShare, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="shareName"/>, or <paramref name="fileShare"/> is null. </exception>
+        public Response<FileShareData> Create(string resourceGroupName, string accountName, string shareName, FileShareData fileShare, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -258,10 +238,6 @@ namespace Azure.ResourceManager.Storage
             if (accountName == null)
             {
                 throw new ArgumentNullException(nameof(accountName));
-            }
-            if (fileServicesName == null)
-            {
-                throw new ArgumentNullException(nameof(fileServicesName));
             }
             if (shareName == null)
             {
@@ -272,7 +248,7 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentNullException(nameof(fileShare));
             }
 
-            using var message = CreateCreateRequest(resourceGroupName, accountName, fileServicesName, shareName, fileShare, expand);
+            using var message = CreateCreateRequest(resourceGroupName, accountName, shareName, fileShare, expand);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -289,7 +265,7 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string resourceGroupName, string accountName, string fileServicesName, string shareName, FileShareData fileShare)
+        internal HttpMessage CreateUpdateRequest(string resourceGroupName, string accountName, string shareName, FileShareData fileShare)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -302,9 +278,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Storage/storageAccounts/", false);
             uri.AppendPath(accountName, true);
-            uri.AppendPath("/fileServices/", false);
-            uri.AppendPath(fileServicesName, true);
-            uri.AppendPath("/shares/", false);
+            uri.AppendPath("/fileServices/default/shares/", false);
             uri.AppendPath(shareName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
@@ -320,12 +294,11 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Updates share properties as specified in request body. Properties not mentioned in the request will not be changed. Update fails if the specified share does not already exist. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="fileServicesName"> The name of the file Service within the specified storage account. File Service Name must be &quot;default&quot;. </param>
         /// <param name="shareName"> The name of the file share within the specified storage account. File share names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
         /// <param name="fileShare"> Properties to update for the file share. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="fileServicesName"/>, <paramref name="shareName"/>, or <paramref name="fileShare"/> is null. </exception>
-        public async Task<Response<FileShareData>> UpdateAsync(string resourceGroupName, string accountName, string fileServicesName, string shareName, FileShareData fileShare, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="shareName"/>, or <paramref name="fileShare"/> is null. </exception>
+        public async Task<Response<FileShareData>> UpdateAsync(string resourceGroupName, string accountName, string shareName, FileShareData fileShare, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -334,10 +307,6 @@ namespace Azure.ResourceManager.Storage
             if (accountName == null)
             {
                 throw new ArgumentNullException(nameof(accountName));
-            }
-            if (fileServicesName == null)
-            {
-                throw new ArgumentNullException(nameof(fileServicesName));
             }
             if (shareName == null)
             {
@@ -348,7 +317,7 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentNullException(nameof(fileShare));
             }
 
-            using var message = CreateUpdateRequest(resourceGroupName, accountName, fileServicesName, shareName, fileShare);
+            using var message = CreateUpdateRequest(resourceGroupName, accountName, shareName, fileShare);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -367,12 +336,11 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Updates share properties as specified in request body. Properties not mentioned in the request will not be changed. Update fails if the specified share does not already exist. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="fileServicesName"> The name of the file Service within the specified storage account. File Service Name must be &quot;default&quot;. </param>
         /// <param name="shareName"> The name of the file share within the specified storage account. File share names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
         /// <param name="fileShare"> Properties to update for the file share. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="fileServicesName"/>, <paramref name="shareName"/>, or <paramref name="fileShare"/> is null. </exception>
-        public Response<FileShareData> Update(string resourceGroupName, string accountName, string fileServicesName, string shareName, FileShareData fileShare, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="shareName"/>, or <paramref name="fileShare"/> is null. </exception>
+        public Response<FileShareData> Update(string resourceGroupName, string accountName, string shareName, FileShareData fileShare, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -381,10 +349,6 @@ namespace Azure.ResourceManager.Storage
             if (accountName == null)
             {
                 throw new ArgumentNullException(nameof(accountName));
-            }
-            if (fileServicesName == null)
-            {
-                throw new ArgumentNullException(nameof(fileServicesName));
             }
             if (shareName == null)
             {
@@ -395,7 +359,7 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentNullException(nameof(fileShare));
             }
 
-            using var message = CreateUpdateRequest(resourceGroupName, accountName, fileServicesName, shareName, fileShare);
+            using var message = CreateUpdateRequest(resourceGroupName, accountName, shareName, fileShare);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -411,7 +375,7 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        internal HttpMessage CreateGetRequest(string resourceGroupName, string accountName, string fileServicesName, string shareName, string expand, string xMsSnapshot)
+        internal HttpMessage CreateGetRequest(string resourceGroupName, string accountName, string shareName, string expand, string xMsSnapshot)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -424,9 +388,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Storage/storageAccounts/", false);
             uri.AppendPath(accountName, true);
-            uri.AppendPath("/fileServices/", false);
-            uri.AppendPath(fileServicesName, true);
-            uri.AppendPath("/shares/", false);
+            uri.AppendPath("/fileServices/default/shares/", false);
             uri.AppendPath(shareName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             if (expand != null)
@@ -446,13 +408,12 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Gets properties of a specified share. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="fileServicesName"> The name of the file Service within the specified storage account. File Service Name must be &quot;default&quot;. </param>
         /// <param name="shareName"> The name of the file share within the specified storage account. File share names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
         /// <param name="expand"> Optional, used to expand the properties within share&apos;s properties. Valid values are: stats. Should be passed as a string with delimiter &apos;,&apos;. </param>
         /// <param name="xMsSnapshot"> Optional, used to retrieve properties of a snapshot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="fileServicesName"/>, or <paramref name="shareName"/> is null. </exception>
-        public async Task<Response<FileShareData>> GetAsync(string resourceGroupName, string accountName, string fileServicesName, string shareName, string expand = null, string xMsSnapshot = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="shareName"/> is null. </exception>
+        public async Task<Response<FileShareData>> GetAsync(string resourceGroupName, string accountName, string shareName, string expand = null, string xMsSnapshot = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -462,16 +423,12 @@ namespace Azure.ResourceManager.Storage
             {
                 throw new ArgumentNullException(nameof(accountName));
             }
-            if (fileServicesName == null)
-            {
-                throw new ArgumentNullException(nameof(fileServicesName));
-            }
             if (shareName == null)
             {
                 throw new ArgumentNullException(nameof(shareName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, accountName, fileServicesName, shareName, expand, xMsSnapshot);
+            using var message = CreateGetRequest(resourceGroupName, accountName, shareName, expand, xMsSnapshot);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -492,13 +449,12 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Gets properties of a specified share. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="fileServicesName"> The name of the file Service within the specified storage account. File Service Name must be &quot;default&quot;. </param>
         /// <param name="shareName"> The name of the file share within the specified storage account. File share names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
         /// <param name="expand"> Optional, used to expand the properties within share&apos;s properties. Valid values are: stats. Should be passed as a string with delimiter &apos;,&apos;. </param>
         /// <param name="xMsSnapshot"> Optional, used to retrieve properties of a snapshot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="fileServicesName"/>, or <paramref name="shareName"/> is null. </exception>
-        public Response<FileShareData> Get(string resourceGroupName, string accountName, string fileServicesName, string shareName, string expand = null, string xMsSnapshot = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="shareName"/> is null. </exception>
+        public Response<FileShareData> Get(string resourceGroupName, string accountName, string shareName, string expand = null, string xMsSnapshot = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -508,16 +464,12 @@ namespace Azure.ResourceManager.Storage
             {
                 throw new ArgumentNullException(nameof(accountName));
             }
-            if (fileServicesName == null)
-            {
-                throw new ArgumentNullException(nameof(fileServicesName));
-            }
             if (shareName == null)
             {
                 throw new ArgumentNullException(nameof(shareName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, accountName, fileServicesName, shareName, expand, xMsSnapshot);
+            using var message = CreateGetRequest(resourceGroupName, accountName, shareName, expand, xMsSnapshot);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -535,7 +487,7 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string resourceGroupName, string accountName, string fileServicesName, string shareName, string xMsSnapshot, string include)
+        internal HttpMessage CreateDeleteRequest(string resourceGroupName, string accountName, string shareName, string xMsSnapshot, string include)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -548,9 +500,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Storage/storageAccounts/", false);
             uri.AppendPath(accountName, true);
-            uri.AppendPath("/fileServices/", false);
-            uri.AppendPath(fileServicesName, true);
-            uri.AppendPath("/shares/", false);
+            uri.AppendPath("/fileServices/default/shares/", false);
             uri.AppendPath(shareName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             if (include != null)
@@ -570,13 +520,12 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Deletes specified share under its account. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="fileServicesName"> The name of the file Service within the specified storage account. File Service Name must be &quot;default&quot;. </param>
         /// <param name="shareName"> The name of the file share within the specified storage account. File share names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
         /// <param name="xMsSnapshot"> Optional, used to delete a snapshot. </param>
         /// <param name="include"> Optional. Valid values are: snapshots, leased-snapshots, none. The default value is snapshots. For &apos;snapshots&apos;, the file share is deleted including all of its file share snapshots. If the file share contains leased-snapshots, the deletion fails. For &apos;leased-snapshots&apos;, the file share is deleted included all of its file share snapshots (leased/unleased). For &apos;none&apos;, the file share is deleted if it has no share snapshots. If the file share contains any snapshots (leased or unleased), the deletion fails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="fileServicesName"/>, or <paramref name="shareName"/> is null. </exception>
-        public async Task<Response> DeleteAsync(string resourceGroupName, string accountName, string fileServicesName, string shareName, string xMsSnapshot = null, string include = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="shareName"/> is null. </exception>
+        public async Task<Response> DeleteAsync(string resourceGroupName, string accountName, string shareName, string xMsSnapshot = null, string include = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -586,16 +535,12 @@ namespace Azure.ResourceManager.Storage
             {
                 throw new ArgumentNullException(nameof(accountName));
             }
-            if (fileServicesName == null)
-            {
-                throw new ArgumentNullException(nameof(fileServicesName));
-            }
             if (shareName == null)
             {
                 throw new ArgumentNullException(nameof(shareName));
             }
 
-            using var message = CreateDeleteRequest(resourceGroupName, accountName, fileServicesName, shareName, xMsSnapshot, include);
+            using var message = CreateDeleteRequest(resourceGroupName, accountName, shareName, xMsSnapshot, include);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -610,13 +555,12 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Deletes specified share under its account. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="fileServicesName"> The name of the file Service within the specified storage account. File Service Name must be &quot;default&quot;. </param>
         /// <param name="shareName"> The name of the file share within the specified storage account. File share names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
         /// <param name="xMsSnapshot"> Optional, used to delete a snapshot. </param>
         /// <param name="include"> Optional. Valid values are: snapshots, leased-snapshots, none. The default value is snapshots. For &apos;snapshots&apos;, the file share is deleted including all of its file share snapshots. If the file share contains leased-snapshots, the deletion fails. For &apos;leased-snapshots&apos;, the file share is deleted included all of its file share snapshots (leased/unleased). For &apos;none&apos;, the file share is deleted if it has no share snapshots. If the file share contains any snapshots (leased or unleased), the deletion fails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="fileServicesName"/>, or <paramref name="shareName"/> is null. </exception>
-        public Response Delete(string resourceGroupName, string accountName, string fileServicesName, string shareName, string xMsSnapshot = null, string include = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="shareName"/> is null. </exception>
+        public Response Delete(string resourceGroupName, string accountName, string shareName, string xMsSnapshot = null, string include = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -626,16 +570,12 @@ namespace Azure.ResourceManager.Storage
             {
                 throw new ArgumentNullException(nameof(accountName));
             }
-            if (fileServicesName == null)
-            {
-                throw new ArgumentNullException(nameof(fileServicesName));
-            }
             if (shareName == null)
             {
                 throw new ArgumentNullException(nameof(shareName));
             }
 
-            using var message = CreateDeleteRequest(resourceGroupName, accountName, fileServicesName, shareName, xMsSnapshot, include);
+            using var message = CreateDeleteRequest(resourceGroupName, accountName, shareName, xMsSnapshot, include);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -647,7 +587,7 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        internal HttpMessage CreateRestoreRequest(string resourceGroupName, string accountName, string fileServicesName, string shareName, DeletedShare deletedShare)
+        internal HttpMessage CreateRestoreRequest(string resourceGroupName, string accountName, string shareName, DeletedShare deletedShare)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -660,9 +600,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Storage/storageAccounts/", false);
             uri.AppendPath(accountName, true);
-            uri.AppendPath("/fileServices/", false);
-            uri.AppendPath(fileServicesName, true);
-            uri.AppendPath("/shares/", false);
+            uri.AppendPath("/fileServices/default/shares/", false);
             uri.AppendPath(shareName, true);
             uri.AppendPath("/restore", false);
             uri.AppendQuery("api-version", apiVersion, true);
@@ -679,12 +617,11 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Restore a file share within a valid retention days if share soft delete is enabled. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="fileServicesName"> The name of the file Service within the specified storage account. File Service Name must be &quot;default&quot;. </param>
         /// <param name="shareName"> The name of the file share within the specified storage account. File share names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
         /// <param name="deletedShare"> The DeletedShare to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="fileServicesName"/>, <paramref name="shareName"/>, or <paramref name="deletedShare"/> is null. </exception>
-        public async Task<Response> RestoreAsync(string resourceGroupName, string accountName, string fileServicesName, string shareName, DeletedShare deletedShare, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="shareName"/>, or <paramref name="deletedShare"/> is null. </exception>
+        public async Task<Response> RestoreAsync(string resourceGroupName, string accountName, string shareName, DeletedShare deletedShare, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -693,10 +630,6 @@ namespace Azure.ResourceManager.Storage
             if (accountName == null)
             {
                 throw new ArgumentNullException(nameof(accountName));
-            }
-            if (fileServicesName == null)
-            {
-                throw new ArgumentNullException(nameof(fileServicesName));
             }
             if (shareName == null)
             {
@@ -707,7 +640,7 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentNullException(nameof(deletedShare));
             }
 
-            using var message = CreateRestoreRequest(resourceGroupName, accountName, fileServicesName, shareName, deletedShare);
+            using var message = CreateRestoreRequest(resourceGroupName, accountName, shareName, deletedShare);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -721,12 +654,11 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Restore a file share within a valid retention days if share soft delete is enabled. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="fileServicesName"> The name of the file Service within the specified storage account. File Service Name must be &quot;default&quot;. </param>
         /// <param name="shareName"> The name of the file share within the specified storage account. File share names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
         /// <param name="deletedShare"> The DeletedShare to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="fileServicesName"/>, <paramref name="shareName"/>, or <paramref name="deletedShare"/> is null. </exception>
-        public Response Restore(string resourceGroupName, string accountName, string fileServicesName, string shareName, DeletedShare deletedShare, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="shareName"/>, or <paramref name="deletedShare"/> is null. </exception>
+        public Response Restore(string resourceGroupName, string accountName, string shareName, DeletedShare deletedShare, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -735,10 +667,6 @@ namespace Azure.ResourceManager.Storage
             if (accountName == null)
             {
                 throw new ArgumentNullException(nameof(accountName));
-            }
-            if (fileServicesName == null)
-            {
-                throw new ArgumentNullException(nameof(fileServicesName));
             }
             if (shareName == null)
             {
@@ -749,7 +677,7 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentNullException(nameof(deletedShare));
             }
 
-            using var message = CreateRestoreRequest(resourceGroupName, accountName, fileServicesName, shareName, deletedShare);
+            using var message = CreateRestoreRequest(resourceGroupName, accountName, shareName, deletedShare);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -760,7 +688,7 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        internal HttpMessage CreateLeaseRequest(string resourceGroupName, string accountName, string fileServicesName, string shareName, string xMsSnapshot, LeaseShareRequest parameters)
+        internal HttpMessage CreateLeaseRequest(string resourceGroupName, string accountName, string shareName, string xMsSnapshot, LeaseShareRequest parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -773,9 +701,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Storage/storageAccounts/", false);
             uri.AppendPath(accountName, true);
-            uri.AppendPath("/fileServices/", false);
-            uri.AppendPath(fileServicesName, true);
-            uri.AppendPath("/shares/", false);
+            uri.AppendPath("/fileServices/default/shares/", false);
             uri.AppendPath(shareName, true);
             uri.AppendPath("/lease", false);
             uri.AppendQuery("api-version", apiVersion, true);
@@ -799,13 +725,12 @@ namespace Azure.ResourceManager.Storage
         /// <summary> The Lease Share operation establishes and manages a lock on a share for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="fileServicesName"> The name of the file Service within the specified storage account. File Service Name must be &quot;default&quot;. </param>
         /// <param name="shareName"> The name of the file share within the specified storage account. File share names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
         /// <param name="xMsSnapshot"> Optional. Specify the snapshot time to lease a snapshot. </param>
         /// <param name="parameters"> Lease Share request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="fileServicesName"/>, or <paramref name="shareName"/> is null. </exception>
-        public async Task<Response<LeaseShareResponse>> LeaseAsync(string resourceGroupName, string accountName, string fileServicesName, string shareName, string xMsSnapshot = null, LeaseShareRequest parameters = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="shareName"/> is null. </exception>
+        public async Task<Response<LeaseShareResponse>> LeaseAsync(string resourceGroupName, string accountName, string shareName, string xMsSnapshot = null, LeaseShareRequest parameters = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -815,16 +740,12 @@ namespace Azure.ResourceManager.Storage
             {
                 throw new ArgumentNullException(nameof(accountName));
             }
-            if (fileServicesName == null)
-            {
-                throw new ArgumentNullException(nameof(fileServicesName));
-            }
             if (shareName == null)
             {
                 throw new ArgumentNullException(nameof(shareName));
             }
 
-            using var message = CreateLeaseRequest(resourceGroupName, accountName, fileServicesName, shareName, xMsSnapshot, parameters);
+            using var message = CreateLeaseRequest(resourceGroupName, accountName, shareName, xMsSnapshot, parameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -843,13 +764,12 @@ namespace Azure.ResourceManager.Storage
         /// <summary> The Lease Share operation establishes and manages a lock on a share for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="fileServicesName"> The name of the file Service within the specified storage account. File Service Name must be &quot;default&quot;. </param>
         /// <param name="shareName"> The name of the file share within the specified storage account. File share names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
         /// <param name="xMsSnapshot"> Optional. Specify the snapshot time to lease a snapshot. </param>
         /// <param name="parameters"> Lease Share request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="fileServicesName"/>, or <paramref name="shareName"/> is null. </exception>
-        public Response<LeaseShareResponse> Lease(string resourceGroupName, string accountName, string fileServicesName, string shareName, string xMsSnapshot = null, LeaseShareRequest parameters = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="shareName"/> is null. </exception>
+        public Response<LeaseShareResponse> Lease(string resourceGroupName, string accountName, string shareName, string xMsSnapshot = null, LeaseShareRequest parameters = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -859,16 +779,12 @@ namespace Azure.ResourceManager.Storage
             {
                 throw new ArgumentNullException(nameof(accountName));
             }
-            if (fileServicesName == null)
-            {
-                throw new ArgumentNullException(nameof(fileServicesName));
-            }
             if (shareName == null)
             {
                 throw new ArgumentNullException(nameof(shareName));
             }
 
-            using var message = CreateLeaseRequest(resourceGroupName, accountName, fileServicesName, shareName, xMsSnapshot, parameters);
+            using var message = CreateLeaseRequest(resourceGroupName, accountName, shareName, xMsSnapshot, parameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -884,7 +800,7 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string resourceGroupName, string accountName, string fileServicesName, string maxpagesize, string filter, string expand)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string resourceGroupName, string accountName, string maxpagesize, string filter, string expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -902,13 +818,12 @@ namespace Azure.ResourceManager.Storage
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="fileServicesName"> The name of the file Service within the specified storage account. File Service Name must be &quot;default&quot;. </param>
         /// <param name="maxpagesize"> Optional. Specified maximum number of shares that can be included in the list. </param>
         /// <param name="filter"> Optional. When specified, only share names starting with the filter will be listed. </param>
         /// <param name="expand"> Optional, used to expand the properties within share&apos;s properties. Valid values are: deleted, snapshots. Should be passed as a string with delimiter &apos;,&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="fileServicesName"/> is null. </exception>
-        public async Task<Response<FileShareItems>> ListNextPageAsync(string nextLink, string resourceGroupName, string accountName, string fileServicesName, string maxpagesize = null, string filter = null, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="accountName"/> is null. </exception>
+        public async Task<Response<FileShareItems>> ListNextPageAsync(string nextLink, string resourceGroupName, string accountName, string maxpagesize = null, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -922,12 +837,8 @@ namespace Azure.ResourceManager.Storage
             {
                 throw new ArgumentNullException(nameof(accountName));
             }
-            if (fileServicesName == null)
-            {
-                throw new ArgumentNullException(nameof(fileServicesName));
-            }
 
-            using var message = CreateListNextPageRequest(nextLink, resourceGroupName, accountName, fileServicesName, maxpagesize, filter, expand);
+            using var message = CreateListNextPageRequest(nextLink, resourceGroupName, accountName, maxpagesize, filter, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -947,13 +858,12 @@ namespace Azure.ResourceManager.Storage
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="fileServicesName"> The name of the file Service within the specified storage account. File Service Name must be &quot;default&quot;. </param>
         /// <param name="maxpagesize"> Optional. Specified maximum number of shares that can be included in the list. </param>
         /// <param name="filter"> Optional. When specified, only share names starting with the filter will be listed. </param>
         /// <param name="expand"> Optional, used to expand the properties within share&apos;s properties. Valid values are: deleted, snapshots. Should be passed as a string with delimiter &apos;,&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="fileServicesName"/> is null. </exception>
-        public Response<FileShareItems> ListNextPage(string nextLink, string resourceGroupName, string accountName, string fileServicesName, string maxpagesize = null, string filter = null, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="accountName"/> is null. </exception>
+        public Response<FileShareItems> ListNextPage(string nextLink, string resourceGroupName, string accountName, string maxpagesize = null, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -967,12 +877,8 @@ namespace Azure.ResourceManager.Storage
             {
                 throw new ArgumentNullException(nameof(accountName));
             }
-            if (fileServicesName == null)
-            {
-                throw new ArgumentNullException(nameof(fileServicesName));
-            }
 
-            using var message = CreateListNextPageRequest(nextLink, resourceGroupName, accountName, fileServicesName, maxpagesize, filter, expand);
+            using var message = CreateListNextPageRequest(nextLink, resourceGroupName, accountName, maxpagesize, filter, expand);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
