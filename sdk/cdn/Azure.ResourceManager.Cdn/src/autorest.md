@@ -191,6 +191,5 @@ directive:
       to: AFDProfiles_GetWafLogAnalyticsRankings
   # remove below operations to avoid breaking changes
   - remove-operation: AFDProfiles_CheckHostNameAvailability
-  - remove-operation: Secrets_Update
   - remove-operation: Validate_Secret
 ```
