@@ -1,135 +1,75 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/anullian-rg/providers/Microsoft.AVS/privateClouds/anullian-southcentralus-runcommand/scriptPackages?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2FudWxsaWFuLXJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvYW51bGxpYW4tc291dGhjZW50cmFsdXMtcnVuY29tbWFuZC9zY3JpcHRQYWNrYWdlcz9hcGktdmVyc2lvbj0yMDIxLTA2LTAx",
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/anullian-rg/providers/Microsoft.AVS/privateClouds/anullian-southcentralus-runcommand/scriptPackages?api-version=2021-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2FudWxsaWFuLXJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvYW51bGxpYW4tc291dGhjZW50cmFsdXMtcnVuY29tbWFuZC9zY3JpcHRQYWNrYWdlcz9hcGktdmVyc2lvbj0yMDIxLTEyLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "a8dd177d-49dc-43f1-9c44-615b2f2461e9"
+          "199710b4-bd74-4648-b2d9-dc7b80dd15e2"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29719.03",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.72.microsoft.standard.WSL2.1.SMP.Wed.Oct.28.23.40.43.UTC.2020",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+          "FxVersion/5.0.1221.52207",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
         ]
       },
       "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14999"
-        ],
-        "x-ms-request-id": [
-          "e5242ce4-7cc1-46ff-a6d6-b038126d6fdd"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-correlation-request-id": [
-          "ee31f3e4-e058-41dc-8ddf-7613e941a4ad"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20210512T195101Z:ee31f3e4-e058-41dc-8ddf-7613e941a4ad"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "X-Cache": [
-          "CONFIG_NOCACHE"
-        ],
-        "X-MSEdge-Ref": [
-          "Ref A: 61F7686870C546CAA3693C64E49DC81B Ref B: BOG30EDGE0120 Ref C: 2021-05-12T19:51:00Z"
+        "Server": [
+          "Rocket"
         ],
         "Date": [
-          "Wed, 12 May 2021 19:51:00 GMT"
-        ],
-        "Content-Length": [
-          "425"
+          "Fri, 12 Nov 2021 17:42:05 GMT"
         ],
         "Content-Type": [
-          "application/json; charset=utf-8"
+          "application/json"
         ],
-        "Expires": [
-          "-1"
+        "Content-Length": [
+          "713"
         ]
       },
-      "ResponseBody": "{\n  \"value\": [\n    {\n      \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/anullian-rg/providers/Microsoft.AVS/privateClouds/anullian-southcentralus-runcommand/scriptPackages/JSDR.Configuration@1.0.16\",\n      \"name\": \"JSDR.Configuration@1.0.16\",\n      \"properties\": {\n        \"description\": \"JetStream scripting packages for configuration\",\n        \"name\": \"JSDR.Configuration\",\n        \"version\": \"1.0.16\"\n      },\n      \"type\": \"Microsoft.AVS/privateClouds/scriptPackages\"\n    }\n  ]\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/{subscription-id}/resourceGroups/group1/providers/Microsoft.AVS/privateClouds/cloud1/scriptPackages/AVS.PowerCommands@1.0.0\",\r\n      \"name\": \"AVS.PowerCommands@1.0.0\",\r\n      \"type\": \"Microsoft.AVS/privateClouds/scriptPackages\",\r\n      \"properties\": {\r\n        \"description\": \"Various cmdlets for elevated access to Private Cloud administrative functions\",\r\n        \"version\": \"1.0.0\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/{subscription-id}/resourceGroups/group1/providers/Microsoft.AVS/privateClouds/cloud1/scriptPackages/JSDR.Configuration@1.0\",\r\n      \"name\": \"JSDR.Configuration@1.0\",\r\n      \"type\": \"Microsoft.AVS/privateClouds/scriptPackages\",\r\n      \"properties\": {\r\n        \"description\": \"Various cmdlets by Jetstream for Private Cloud administration\",\r\n        \"version\": \"1.0.0\"\r\n      }\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/anullian-rg/providers/Microsoft.AVS/privateClouds/anullian-southcentralus-runcommand/scriptPackages/JSDR.Configuration%401.0.16?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2FudWxsaWFuLXJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvYW51bGxpYW4tc291dGhjZW50cmFsdXMtcnVuY29tbWFuZC9zY3JpcHRQYWNrYWdlcy9KU0RSLkNvbmZpZ3VyYXRpb24lNDAxLjAuMTY/YXBpLXZlcnNpb249MjAyMS0wNi0wMQ==",
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/anullian-rg/providers/Microsoft.AVS/privateClouds/anullian-southcentralus-runcommand/scriptPackages/JSDR.Configuration%401.0.16?api-version=2021-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2FudWxsaWFuLXJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvYW51bGxpYW4tc291dGhjZW50cmFsdXMtcnVuY29tbWFuZC9zY3JpcHRQYWNrYWdlcy9KU0RSLkNvbmZpZ3VyYXRpb24lNDAxLjAuMTY/YXBpLXZlcnNpb249MjAyMS0xMi0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "1469d888-0482-46e4-8dcb-c45966797c70"
+          "d6d1f799-ca29-432f-88ed-390da2ddf4b9"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29719.03",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.72.microsoft.standard.WSL2.1.SMP.Wed.Oct.28.23.40.43.UTC.2020",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+          "FxVersion/5.0.1221.52207",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
         ]
       },
       "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14998"
-        ],
-        "x-ms-request-id": [
-          "cc40f319-1e95-4a88-b98b-05250c9638c7"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-correlation-request-id": [
-          "9ed01a25-eeb0-40c8-b7d7-44167c25f6fb"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20210512T195101Z:9ed01a25-eeb0-40c8-b7d7-44167c25f6fb"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "X-Cache": [
-          "CONFIG_NOCACHE"
-        ],
-        "X-MSEdge-Ref": [
-          "Ref A: 61034DCCD7E8478BACE336BE60B09A50 Ref B: BOG30EDGE0120 Ref C: 2021-05-12T19:51:01Z"
+        "Server": [
+          "Rocket"
         ],
         "Date": [
-          "Wed, 12 May 2021 19:51:00 GMT"
-        ],
-        "Content-Length": [
-          "413"
+          "Fri, 12 Nov 2021 17:42:05 GMT"
         ],
         "Content-Type": [
-          "application/json; charset=utf-8"
+          "application/json"
         ],
-        "Expires": [
-          "-1"
+        "Content-Length": [
+          "355"
         ]
       },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/anullian-rg/providers/Microsoft.AVS/privateClouds/anullian-southcentralus-runcommand/scriptPackages/JSDR.Configuration@1.0.16\",\n  \"name\": \"JSDR.Configuration@1.0.16\",\n  \"properties\": {\n    \"description\": \"JetStream scripting packages for configuration\",\n    \"name\": \"JSDR.Configuration\",\n    \"version\": \"1.0.16\"\n  },\n  \"type\": \"Microsoft.AVS/privateClouds/scriptPackages\"\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/{subscription-id}/resourceGroups/group1/providers/Microsoft.AVS/privateClouds/cloud1/scriptPackages/{scriptPackageName}\",\r\n  \"name\": \"AVS.PowerCommands@1.0.0\",\r\n  \"type\": \"Microsoft.AVS/privateClouds/scriptPackages\",\r\n  \"properties\": {\r\n    \"description\": \"Various cmdlets for elevated access to Private Cloud administrative functions\",\r\n    \"version\": \"1.0.0\"\r\n  }\r\n}",
       "StatusCode": 200
     }
   ],
