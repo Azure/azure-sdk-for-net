@@ -37,15 +37,28 @@ namespace Azure.Monitor.Query.Models
             return new LogsQueryResult(allTables, statisticsJson, visualizationJson, errorJson);
         }
 
-        /// <summary> Initializes a new instance of LogsTable. </summary>
-        /// <param name="name"> The name of the table. </param>
-        /// <param name="column"> The list of columns in this table. </param>
-        /// <param name="rows"> The resulting rows from this query. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="rows"/> is null. </exception>
-        public static LogsTable LogsTable(string name, IEnumerable<LogsTableColumn> column, IEnumerable<LogsTableRow> rows)
+        /// <summary> Initializes a new instance of LogsTableRow. </summary>
+        /// <returns> A new <see cref="Models.LogsTableColumn"/> instance for mocking. </returns>
+        public static LogsTableRow LogsTableRow(IReadOnlyList<LogsTableColumn> columns, Object[] rows)
         {
-            JsonElement row = 
-            return new LogsTable(name, column, row);
+            var columnMap = ; //TODO
+            JsonElement row = JsonElementFromObject(rows);
+            return new LogsTableRow(columnMap, columns, row);
+        }
+
+        /// <summary> Initializes a new instance of LogsTable. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="rows"/> is null. </exception>
+        public static LogsTable LogsTable(string name, IEnumerable<LogsTableRow> rows, IEnumerable<LogsTableColumn> columns)
+        {
+            JsonElement row = JsonElementFromObject(rows);
+            return new LogsTable(name, columns, row);
+        }
+
+        private static JsonElement JsonElementFromObject<TValue>(TValue value, JsonSerializerOptions options = default)
+        {
+            var bytes = JsonSerializer.SerializeToUtf8Bytes(value, options);
+            var doc = JsonDocument.Parse(bytes);
+            return doc.RootElement.Clone();
         }
     }
 }
