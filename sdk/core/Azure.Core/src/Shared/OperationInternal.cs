@@ -21,12 +21,24 @@ namespace Azure.Core
     /// </list>
     /// Supported members:
     /// <list type="bullet">
-    ///   <item><see cref="OperationInternalBase.HasCompleted"/></item>
-    ///   <item><see cref="OperationInternalBase.RawResponse"/>, used for <see cref="Operation.GetRawResponse"/></item>
-    ///   <item><see cref="OperationInternalBase.UpdateStatus"/></item>
-    ///   <item><see cref="OperationInternalBase.UpdateStatusAsync(CancellationToken)"/></item>
-    ///   <item><see cref="OperationInternalBase.WaitForCompletionResponseAsync(CancellationToken)"/></item>
-    ///   <item><see cref="OperationInternalBase.WaitForCompletionResponseAsync(TimeSpan, CancellationToken)"/></item>
+    ///   <item>
+    ///     <description><see cref="OperationInternalBase.HasCompleted"/></description>
+    ///   </item>
+    ///   <item>
+    ///     <description><see cref="OperationInternalBase.RawResponse"/>, used for <see cref="Operation.GetRawResponse"/></description>
+    ///   </item>
+    ///   <item>
+    ///     <description><see cref="OperationInternalBase.UpdateStatus"/></description>
+    ///   </item>
+    ///   <item>
+    ///     <description><see cref="OperationInternalBase.UpdateStatusAsync(CancellationToken)"/></description>
+    ///   </item>
+    ///   <item>
+    ///     <description><see cref="OperationInternalBase.WaitForCompletionResponseAsync(CancellationToken)"/></description>
+    ///   </item>
+    ///   <item>
+    ///     <description><see cref="OperationInternalBase.WaitForCompletionResponseAsync(TimeSpan, CancellationToken)"/></description>
+    ///   </item>
     /// </list>
     /// </summary>
     internal class OperationInternal : OperationInternalBase

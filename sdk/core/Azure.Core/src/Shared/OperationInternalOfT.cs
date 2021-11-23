@@ -20,14 +20,30 @@ namespace Azure.Core
     /// </list>
     /// Supported members:
     /// <list type="bullet">
-    ///   <item><see cref="HasValue"/></item>
-    ///   <item><see cref="OperationInternalBase.HasCompleted"/></item>
-    ///   <item><see cref="Value"/></item>
-    ///   <item><see cref="OperationInternalBase.RawResponse"/>, used for <see cref="Operation.GetRawResponse"/></item>
-    ///   <item><see cref="OperationInternalBase.UpdateStatus"/></item>
-    ///   <item><see cref="OperationInternalBase.UpdateStatusAsync(CancellationToken)"/></item>
-    ///   <item><see cref="WaitForCompletionAsync(CancellationToken)"/></item>
-    ///   <item><see cref="WaitForCompletionAsync(TimeSpan, CancellationToken)"/></item>
+    ///   <item>
+    ///     <description><see cref="HasValue"/></description>
+    ///   </item>
+    ///   <item>
+    ///     <description><see cref="OperationInternalBase.HasCompleted"/></description>
+    ///   </item>
+    ///   <item>
+    ///     <description><see cref="Value"/></description>
+    ///   </item>
+    ///   <item>
+    ///     <description><see cref="OperationInternalBase.RawResponse"/>, used for <see cref="Operation.GetRawResponse"/></description>
+    ///   </item>
+    ///   <item>
+    ///     <description><see cref="OperationInternalBase.UpdateStatus"/></description>
+    ///   </item>
+    ///   <item>
+    ///     <description><see cref="OperationInternalBase.UpdateStatusAsync(CancellationToken)"/></description>
+    ///   </item>
+    ///   <item>
+    ///     <description><see cref="WaitForCompletionAsync(CancellationToken)"/></description>
+    ///   </item>
+    ///   <item>
+    ///     <description><see cref="WaitForCompletionAsync(TimeSpan, CancellationToken)"/></description>
+    ///   </item>
     /// </list>
     /// </summary>
     /// <typeparam name="T">The final result of the long-running operation. Must match the type used in <see cref="Operation{T}"/>.</typeparam>
