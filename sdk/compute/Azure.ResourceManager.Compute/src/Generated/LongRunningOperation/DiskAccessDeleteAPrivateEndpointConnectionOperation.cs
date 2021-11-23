@@ -14,19 +14,19 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> Starts the cloud service. </summary>
-    public partial class CloudServicePowerOnOperation : Operation
+    /// <summary> Deletes a private endpoint connection under a disk access resource. </summary>
+    public partial class DiskAccessDeleteAPrivateEndpointConnectionOperation : Operation
     {
         private readonly OperationInternals _operation;
 
-        /// <summary> Initializes a new instance of CloudServicePowerOnOperation for mocking. </summary>
-        protected CloudServicePowerOnOperation()
+        /// <summary> Initializes a new instance of DiskAccessDeleteAPrivateEndpointConnectionOperation for mocking. </summary>
+        protected DiskAccessDeleteAPrivateEndpointConnectionOperation()
         {
         }
 
-        internal CloudServicePowerOnOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal DiskAccessDeleteAPrivateEndpointConnectionOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "CloudServicePowerOnOperation");
+            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DiskAccessDeleteAPrivateEndpointConnectionOperation");
         }
 
         /// <inheritdoc />

@@ -18,20 +18,20 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Approve or reject a private endpoint connection under disk access resource, this can&apos;t be used to create a new private endpoint connection. </summary>
-    public partial class PrivateEndpointConnectionCreateOrUpdateOperation : Operation<PrivateEndpointConnection>, IOperationSource<PrivateEndpointConnection>
+    public partial class DiskAccessUpdateAPrivateEndpointConnectionOperation : Operation<PrivateEndpointConnection>, IOperationSource<PrivateEndpointConnection>
     {
         private readonly OperationInternals<PrivateEndpointConnection> _operation;
 
         private readonly ArmResource _operationBase;
 
-        /// <summary> Initializes a new instance of PrivateEndpointConnectionCreateOrUpdateOperation for mocking. </summary>
-        protected PrivateEndpointConnectionCreateOrUpdateOperation()
+        /// <summary> Initializes a new instance of DiskAccessUpdateAPrivateEndpointConnectionOperation for mocking. </summary>
+        protected DiskAccessUpdateAPrivateEndpointConnectionOperation()
         {
         }
 
-        internal PrivateEndpointConnectionCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal DiskAccessUpdateAPrivateEndpointConnectionOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<PrivateEndpointConnection>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "PrivateEndpointConnectionCreateOrUpdateOperation");
+            _operation = new OperationInternals<PrivateEndpointConnection>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DiskAccessUpdateAPrivateEndpointConnectionOperation");
             _operationBase = operationsBase;
         }
 
