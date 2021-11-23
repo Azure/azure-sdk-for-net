@@ -337,11 +337,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="top"> The number of elements to return from the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ServerJobAgentJobExecution" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServerJobAgentJobExecution> GetByJobExecutionJobTargetExecutions(Guid jobExecutionId, DateTimeOffset? createTimeMin = null, DateTimeOffset? createTimeMax = null, DateTimeOffset? endTimeMin = null, DateTimeOffset? endTimeMax = null, bool? isActive = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ServerJobAgentJobExecution> GetJobTargetExecutions(Guid jobExecutionId, DateTimeOffset? createTimeMin = null, DateTimeOffset? createTimeMax = null, DateTimeOffset? endTimeMin = null, DateTimeOffset? endTimeMax = null, bool? isActive = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Page<ServerJobAgentJobExecution> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionCollection.GetByJobExecutionJobTargetExecutions");
+                using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionCollection.GetJobTargetExecutions");
                 scope.Start();
                 try
                 {
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.Sql
             }
             Page<ServerJobAgentJobExecution> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionCollection.GetByJobExecutionJobTargetExecutions");
+                using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionCollection.GetJobTargetExecutions");
                 scope.Start();
                 try
                 {
@@ -386,11 +386,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="top"> The number of elements to return from the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ServerJobAgentJobExecution" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServerJobAgentJobExecution> GetByJobExecutionJobTargetExecutionsAsync(Guid jobExecutionId, DateTimeOffset? createTimeMin = null, DateTimeOffset? createTimeMax = null, DateTimeOffset? endTimeMin = null, DateTimeOffset? endTimeMax = null, bool? isActive = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ServerJobAgentJobExecution> GetJobTargetExecutionsAsync(Guid jobExecutionId, DateTimeOffset? createTimeMin = null, DateTimeOffset? createTimeMax = null, DateTimeOffset? endTimeMin = null, DateTimeOffset? endTimeMax = null, bool? isActive = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<ServerJobAgentJobExecution>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionCollection.GetByJobExecutionJobTargetExecutions");
+                using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionCollection.GetJobTargetExecutions");
                 scope.Start();
                 try
                 {
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<ServerJobAgentJobExecution>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionCollection.GetByJobExecutionJobTargetExecutions");
+                using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionCollection.GetJobTargetExecutions");
                 scope.Start();
                 try
                 {

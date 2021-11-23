@@ -235,11 +235,11 @@ namespace Azure.ResourceManager.Sql
 
         #region ServerDatabaseSchemaTableColumnSensitivityLabel
 
-        /// <summary> Gets a collection of ServerDatabaseSchemaTableColumnSensitivityLabels in the ServerDatabaseSchemaTableColumn. </summary>
-        /// <returns> An object representing collection of ServerDatabaseSchemaTableColumnSensitivityLabels and their operations over a ServerDatabaseSchemaTableColumn. </returns>
-        public ServerDatabaseSchemaTableColumnSensitivityLabelCollection GetServerDatabaseSchemaTableColumnSensitivityLabels()
+        /// <summary> Gets an object representing a ServerDatabaseSchemaTableColumnSensitivityLabel along with the instance operations that can be performed on it in the ServerDatabaseSchemaTableColumn. </summary>
+        /// <returns> Returns a <see cref="ServerDatabaseSchemaTableColumnSensitivityLabel" /> object. </returns>
+        public ServerDatabaseSchemaTableColumnSensitivityLabel GetServerDatabaseSchemaTableColumnSensitivityLabel()
         {
-            return new ServerDatabaseSchemaTableColumnSensitivityLabelCollection(this);
+            return new ServerDatabaseSchemaTableColumnSensitivityLabel(this, Id + "/sensitivityLabels/current");
         }
         #endregion
     }

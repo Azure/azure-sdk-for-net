@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        internal HttpMessage CreateListByDatabaseRequest(string resourceGroupName, string serverName, string databaseName)
+        internal HttpMessage CreateListRequest(string resourceGroupName, string serverName, string databaseName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, or <paramref name="databaseName"/> is null. </exception>
-        public async Task<Response<DataMaskingRuleListResult>> ListByDatabaseAsync(string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default)
+        public async Task<Response<DataMaskingRuleListResult>> ListAsync(string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(databaseName));
             }
 
-            using var message = CreateListByDatabaseRequest(resourceGroupName, serverName, databaseName);
+            using var message = CreateListRequest(resourceGroupName, serverName, databaseName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, or <paramref name="databaseName"/> is null. </exception>
-        public Response<DataMaskingRuleListResult> ListByDatabase(string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default)
+        public Response<DataMaskingRuleListResult> List(string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(databaseName));
             }
 
-            using var message = CreateListByDatabaseRequest(resourceGroupName, serverName, databaseName);
+            using var message = CreateListRequest(resourceGroupName, serverName, databaseName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

@@ -702,7 +702,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        internal HttpMessage CreateListCurrentByDatabaseRequest(string resourceGroupName, string managedInstanceName, string databaseName, string skipToken, bool? count, string filter)
+        internal HttpMessage CreateListCurrentRequest(string resourceGroupName, string managedInstanceName, string databaseName, string skipToken, bool? count, string filter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -746,7 +746,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, or <paramref name="databaseName"/> is null. </exception>
-        public async Task<Response<SensitivityLabelListResult>> ListCurrentByDatabaseAsync(string resourceGroupName, string managedInstanceName, string databaseName, string skipToken = null, bool? count = null, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SensitivityLabelListResult>> ListCurrentAsync(string resourceGroupName, string managedInstanceName, string databaseName, string skipToken = null, bool? count = null, string filter = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -761,7 +761,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(databaseName));
             }
 
-            using var message = CreateListCurrentByDatabaseRequest(resourceGroupName, managedInstanceName, databaseName, skipToken, count, filter);
+            using var message = CreateListCurrentRequest(resourceGroupName, managedInstanceName, databaseName, skipToken, count, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -786,7 +786,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, or <paramref name="databaseName"/> is null. </exception>
-        public Response<SensitivityLabelListResult> ListCurrentByDatabase(string resourceGroupName, string managedInstanceName, string databaseName, string skipToken = null, bool? count = null, string filter = null, CancellationToken cancellationToken = default)
+        public Response<SensitivityLabelListResult> ListCurrent(string resourceGroupName, string managedInstanceName, string databaseName, string skipToken = null, bool? count = null, string filter = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -801,7 +801,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(databaseName));
             }
 
-            using var message = CreateListCurrentByDatabaseRequest(resourceGroupName, managedInstanceName, databaseName, skipToken, count, filter);
+            using var message = CreateListCurrentRequest(resourceGroupName, managedInstanceName, databaseName, skipToken, count, filter);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -917,7 +917,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        internal HttpMessage CreateListRecommendedByDatabaseRequest(string resourceGroupName, string managedInstanceName, string databaseName, string skipToken, bool? includeDisabledRecommendations, string filter)
+        internal HttpMessage CreateListRecommendedRequest(string resourceGroupName, string managedInstanceName, string databaseName, string skipToken, bool? includeDisabledRecommendations, string filter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -961,7 +961,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, or <paramref name="databaseName"/> is null. </exception>
-        public async Task<Response<SensitivityLabelListResult>> ListRecommendedByDatabaseAsync(string resourceGroupName, string managedInstanceName, string databaseName, string skipToken = null, bool? includeDisabledRecommendations = null, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SensitivityLabelListResult>> ListRecommendedAsync(string resourceGroupName, string managedInstanceName, string databaseName, string skipToken = null, bool? includeDisabledRecommendations = null, string filter = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -976,7 +976,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(databaseName));
             }
 
-            using var message = CreateListRecommendedByDatabaseRequest(resourceGroupName, managedInstanceName, databaseName, skipToken, includeDisabledRecommendations, filter);
+            using var message = CreateListRecommendedRequest(resourceGroupName, managedInstanceName, databaseName, skipToken, includeDisabledRecommendations, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1001,7 +1001,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, or <paramref name="databaseName"/> is null. </exception>
-        public Response<SensitivityLabelListResult> ListRecommendedByDatabase(string resourceGroupName, string managedInstanceName, string databaseName, string skipToken = null, bool? includeDisabledRecommendations = null, string filter = null, CancellationToken cancellationToken = default)
+        public Response<SensitivityLabelListResult> ListRecommended(string resourceGroupName, string managedInstanceName, string databaseName, string skipToken = null, bool? includeDisabledRecommendations = null, string filter = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -1016,7 +1016,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(databaseName));
             }
 
-            using var message = CreateListRecommendedByDatabaseRequest(resourceGroupName, managedInstanceName, databaseName, skipToken, includeDisabledRecommendations, filter);
+            using var message = CreateListRecommendedRequest(resourceGroupName, managedInstanceName, databaseName, skipToken, includeDisabledRecommendations, filter);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1132,7 +1132,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        internal HttpMessage CreateListCurrentByDatabaseNextPageRequest(string nextLink, string resourceGroupName, string managedInstanceName, string databaseName, string skipToken, bool? count, string filter)
+        internal HttpMessage CreateListCurrentNextPageRequest(string nextLink, string resourceGroupName, string managedInstanceName, string databaseName, string skipToken, bool? count, string filter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1156,7 +1156,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, or <paramref name="databaseName"/> is null. </exception>
-        public async Task<Response<SensitivityLabelListResult>> ListCurrentByDatabaseNextPageAsync(string nextLink, string resourceGroupName, string managedInstanceName, string databaseName, string skipToken = null, bool? count = null, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SensitivityLabelListResult>> ListCurrentNextPageAsync(string nextLink, string resourceGroupName, string managedInstanceName, string databaseName, string skipToken = null, bool? count = null, string filter = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1175,7 +1175,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(databaseName));
             }
 
-            using var message = CreateListCurrentByDatabaseNextPageRequest(nextLink, resourceGroupName, managedInstanceName, databaseName, skipToken, count, filter);
+            using var message = CreateListCurrentNextPageRequest(nextLink, resourceGroupName, managedInstanceName, databaseName, skipToken, count, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1201,7 +1201,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, or <paramref name="databaseName"/> is null. </exception>
-        public Response<SensitivityLabelListResult> ListCurrentByDatabaseNextPage(string nextLink, string resourceGroupName, string managedInstanceName, string databaseName, string skipToken = null, bool? count = null, string filter = null, CancellationToken cancellationToken = default)
+        public Response<SensitivityLabelListResult> ListCurrentNextPage(string nextLink, string resourceGroupName, string managedInstanceName, string databaseName, string skipToken = null, bool? count = null, string filter = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1220,7 +1220,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(databaseName));
             }
 
-            using var message = CreateListCurrentByDatabaseNextPageRequest(nextLink, resourceGroupName, managedInstanceName, databaseName, skipToken, count, filter);
+            using var message = CreateListCurrentNextPageRequest(nextLink, resourceGroupName, managedInstanceName, databaseName, skipToken, count, filter);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1236,7 +1236,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        internal HttpMessage CreateListRecommendedByDatabaseNextPageRequest(string nextLink, string resourceGroupName, string managedInstanceName, string databaseName, string skipToken, bool? includeDisabledRecommendations, string filter)
+        internal HttpMessage CreateListRecommendedNextPageRequest(string nextLink, string resourceGroupName, string managedInstanceName, string databaseName, string skipToken, bool? includeDisabledRecommendations, string filter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1260,7 +1260,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, or <paramref name="databaseName"/> is null. </exception>
-        public async Task<Response<SensitivityLabelListResult>> ListRecommendedByDatabaseNextPageAsync(string nextLink, string resourceGroupName, string managedInstanceName, string databaseName, string skipToken = null, bool? includeDisabledRecommendations = null, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SensitivityLabelListResult>> ListRecommendedNextPageAsync(string nextLink, string resourceGroupName, string managedInstanceName, string databaseName, string skipToken = null, bool? includeDisabledRecommendations = null, string filter = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1279,7 +1279,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(databaseName));
             }
 
-            using var message = CreateListRecommendedByDatabaseNextPageRequest(nextLink, resourceGroupName, managedInstanceName, databaseName, skipToken, includeDisabledRecommendations, filter);
+            using var message = CreateListRecommendedNextPageRequest(nextLink, resourceGroupName, managedInstanceName, databaseName, skipToken, includeDisabledRecommendations, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1305,7 +1305,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, or <paramref name="databaseName"/> is null. </exception>
-        public Response<SensitivityLabelListResult> ListRecommendedByDatabaseNextPage(string nextLink, string resourceGroupName, string managedInstanceName, string databaseName, string skipToken = null, bool? includeDisabledRecommendations = null, string filter = null, CancellationToken cancellationToken = default)
+        public Response<SensitivityLabelListResult> ListRecommendedNextPage(string nextLink, string resourceGroupName, string managedInstanceName, string databaseName, string skipToken = null, bool? includeDisabledRecommendations = null, string filter = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1324,7 +1324,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(databaseName));
             }
 
-            using var message = CreateListRecommendedByDatabaseNextPageRequest(nextLink, resourceGroupName, managedInstanceName, databaseName, skipToken, includeDisabledRecommendations, filter);
+            using var message = CreateListRecommendedNextPageRequest(nextLink, resourceGroupName, managedInstanceName, databaseName, skipToken, includeDisabledRecommendations, filter);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

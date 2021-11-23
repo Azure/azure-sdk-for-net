@@ -455,11 +455,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="skiptoken"> An opaque token that identifies a starting point in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DatabaseColumnData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DatabaseColumnData> GetByDatabaseManagedDatabaseColumnsAsync(IEnumerable<string> schema = null, IEnumerable<string> table = null, IEnumerable<string> column = null, IEnumerable<string> orderBy = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DatabaseColumnData> GetManagedDatabaseColumnsByDatabaseAsync(IEnumerable<string> schema = null, IEnumerable<string> table = null, IEnumerable<string> column = null, IEnumerable<string> orderBy = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<DatabaseColumnData>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetByDatabaseManagedDatabaseColumns");
+                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetManagedDatabaseColumnsByDatabase");
                 scope.Start();
                 try
                 {
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<DatabaseColumnData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetByDatabaseManagedDatabaseColumns");
+                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetManagedDatabaseColumnsByDatabase");
                 scope.Start();
                 try
                 {
@@ -501,11 +501,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="skiptoken"> An opaque token that identifies a starting point in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DatabaseColumnData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DatabaseColumnData> GetByDatabaseManagedDatabaseColumns(IEnumerable<string> schema = null, IEnumerable<string> table = null, IEnumerable<string> column = null, IEnumerable<string> orderBy = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<DatabaseColumnData> GetManagedDatabaseColumnsByDatabase(IEnumerable<string> schema = null, IEnumerable<string> table = null, IEnumerable<string> column = null, IEnumerable<string> orderBy = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
             Page<DatabaseColumnData> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetByDatabaseManagedDatabaseColumns");
+                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetManagedDatabaseColumnsByDatabase");
                 scope.Start();
                 try
                 {
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.Sql
             }
             Page<DatabaseColumnData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetByDatabaseManagedDatabaseColumns");
+                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetManagedDatabaseColumnsByDatabase");
                 scope.Start();
                 try
                 {
@@ -610,11 +610,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="skiptoken"> An opaque token that identifies a starting point in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SecurityEvent" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SecurityEvent> GetByDatabaseManagedDatabaseSecurityEventsAsync(string filter = null, int? skip = null, int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SecurityEvent> GetManagedDatabaseSecurityEventsByDatabaseAsync(string filter = null, int? skip = null, int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<SecurityEvent>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetByDatabaseManagedDatabaseSecurityEvents");
+                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetManagedDatabaseSecurityEventsByDatabase");
                 scope.Start();
                 try
                 {
@@ -629,7 +629,7 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<SecurityEvent>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetByDatabaseManagedDatabaseSecurityEvents");
+                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetManagedDatabaseSecurityEventsByDatabase");
                 scope.Start();
                 try
                 {
@@ -655,11 +655,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="skiptoken"> An opaque token that identifies a starting point in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SecurityEvent" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SecurityEvent> GetByDatabaseManagedDatabaseSecurityEvents(string filter = null, int? skip = null, int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<SecurityEvent> GetManagedDatabaseSecurityEventsByDatabase(string filter = null, int? skip = null, int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
             Page<SecurityEvent> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetByDatabaseManagedDatabaseSecurityEvents");
+                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetManagedDatabaseSecurityEventsByDatabase");
                 scope.Start();
                 try
                 {
@@ -674,7 +674,7 @@ namespace Azure.ResourceManager.Sql
             }
             Page<SecurityEvent> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetByDatabaseManagedDatabaseSecurityEvents");
+                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetManagedDatabaseSecurityEventsByDatabase");
                 scope.Start();
                 try
                 {
@@ -692,22 +692,22 @@ namespace Azure.ResourceManager.Sql
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/currentSensitivityLabels
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}
-        /// OperationId: ManagedDatabaseSensitivityLabels_ListCurrentByDatabase
+        /// OperationId: ManagedDatabaseSensitivityLabels_ListCurrent
         /// <summary> Gets the sensitivity labels of a given database. </summary>
         /// <param name="skipToken"> The String to use. </param>
         /// <param name="count"> The Boolean to use. </param>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SensitivityLabelData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SensitivityLabelData> GetCurrentByDatabaseManagedDatabaseSensitivityLabelsAsync(string skipToken = null, bool? count = null, string filter = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SensitivityLabelData> GetCurrentManagedDatabaseSensitivityLabelsAsync(string skipToken = null, bool? count = null, string filter = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<SensitivityLabelData>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetCurrentByDatabaseManagedDatabaseSensitivityLabels");
+                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetCurrentManagedDatabaseSensitivityLabels");
                 scope.Start();
                 try
                 {
-                    var response = await _managedDatabaseSensitivityLabelsRestClient.ListCurrentByDatabaseAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _managedDatabaseSensitivityLabelsRestClient.ListCurrentAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -718,11 +718,11 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<SensitivityLabelData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetCurrentByDatabaseManagedDatabaseSensitivityLabels");
+                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetCurrentManagedDatabaseSensitivityLabels");
                 scope.Start();
                 try
                 {
-                    var response = await _managedDatabaseSensitivityLabelsRestClient.ListCurrentByDatabaseNextPageAsync(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _managedDatabaseSensitivityLabelsRestClient.ListCurrentNextPageAsync(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -736,22 +736,22 @@ namespace Azure.ResourceManager.Sql
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/currentSensitivityLabels
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}
-        /// OperationId: ManagedDatabaseSensitivityLabels_ListCurrentByDatabase
+        /// OperationId: ManagedDatabaseSensitivityLabels_ListCurrent
         /// <summary> Gets the sensitivity labels of a given database. </summary>
         /// <param name="skipToken"> The String to use. </param>
         /// <param name="count"> The Boolean to use. </param>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SensitivityLabelData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SensitivityLabelData> GetCurrentByDatabaseManagedDatabaseSensitivityLabels(string skipToken = null, bool? count = null, string filter = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<SensitivityLabelData> GetCurrentManagedDatabaseSensitivityLabels(string skipToken = null, bool? count = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Page<SensitivityLabelData> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetCurrentByDatabaseManagedDatabaseSensitivityLabels");
+                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetCurrentManagedDatabaseSensitivityLabels");
                 scope.Start();
                 try
                 {
-                    var response = _managedDatabaseSensitivityLabelsRestClient.ListCurrentByDatabase(Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter, cancellationToken: cancellationToken);
+                    var response = _managedDatabaseSensitivityLabelsRestClient.ListCurrent(Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -762,11 +762,11 @@ namespace Azure.ResourceManager.Sql
             }
             Page<SensitivityLabelData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetCurrentByDatabaseManagedDatabaseSensitivityLabels");
+                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetCurrentManagedDatabaseSensitivityLabels");
                 scope.Start();
                 try
                 {
-                    var response = _managedDatabaseSensitivityLabelsRestClient.ListCurrentByDatabaseNextPage(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter, cancellationToken: cancellationToken);
+                    var response = _managedDatabaseSensitivityLabelsRestClient.ListCurrentNextPage(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -836,22 +836,22 @@ namespace Azure.ResourceManager.Sql
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/recommendedSensitivityLabels
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}
-        /// OperationId: ManagedDatabaseSensitivityLabels_ListRecommendedByDatabase
+        /// OperationId: ManagedDatabaseSensitivityLabels_ListRecommended
         /// <summary> Gets the sensitivity labels of a given database. </summary>
         /// <param name="skipToken"> The String to use. </param>
         /// <param name="includeDisabledRecommendations"> Specifies whether to include disabled recommendations or not. </param>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SensitivityLabelData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SensitivityLabelData> GetRecommendedByDatabaseManagedDatabaseSensitivityLabelsAsync(string skipToken = null, bool? includeDisabledRecommendations = null, string filter = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SensitivityLabelData> GetRecommendedManagedDatabaseSensitivityLabelsAsync(string skipToken = null, bool? includeDisabledRecommendations = null, string filter = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<SensitivityLabelData>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetRecommendedByDatabaseManagedDatabaseSensitivityLabels");
+                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetRecommendedManagedDatabaseSensitivityLabels");
                 scope.Start();
                 try
                 {
-                    var response = await _managedDatabaseSensitivityLabelsRestClient.ListRecommendedByDatabaseAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _managedDatabaseSensitivityLabelsRestClient.ListRecommendedAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -862,11 +862,11 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<SensitivityLabelData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetRecommendedByDatabaseManagedDatabaseSensitivityLabels");
+                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetRecommendedManagedDatabaseSensitivityLabels");
                 scope.Start();
                 try
                 {
-                    var response = await _managedDatabaseSensitivityLabelsRestClient.ListRecommendedByDatabaseNextPageAsync(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _managedDatabaseSensitivityLabelsRestClient.ListRecommendedNextPageAsync(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -880,22 +880,22 @@ namespace Azure.ResourceManager.Sql
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/recommendedSensitivityLabels
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}
-        /// OperationId: ManagedDatabaseSensitivityLabels_ListRecommendedByDatabase
+        /// OperationId: ManagedDatabaseSensitivityLabels_ListRecommended
         /// <summary> Gets the sensitivity labels of a given database. </summary>
         /// <param name="skipToken"> The String to use. </param>
         /// <param name="includeDisabledRecommendations"> Specifies whether to include disabled recommendations or not. </param>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SensitivityLabelData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SensitivityLabelData> GetRecommendedByDatabaseManagedDatabaseSensitivityLabels(string skipToken = null, bool? includeDisabledRecommendations = null, string filter = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<SensitivityLabelData> GetRecommendedManagedDatabaseSensitivityLabels(string skipToken = null, bool? includeDisabledRecommendations = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Page<SensitivityLabelData> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetRecommendedByDatabaseManagedDatabaseSensitivityLabels");
+                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetRecommendedManagedDatabaseSensitivityLabels");
                 scope.Start();
                 try
                 {
-                    var response = _managedDatabaseSensitivityLabelsRestClient.ListRecommendedByDatabase(Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter, cancellationToken: cancellationToken);
+                    var response = _managedDatabaseSensitivityLabelsRestClient.ListRecommended(Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -906,11 +906,11 @@ namespace Azure.ResourceManager.Sql
             }
             Page<SensitivityLabelData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetRecommendedByDatabaseManagedDatabaseSensitivityLabels");
+                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetRecommendedManagedDatabaseSensitivityLabels");
                 scope.Start();
                 try
                 {
-                    var response = _managedDatabaseSensitivityLabelsRestClient.ListRecommendedByDatabaseNextPage(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter, cancellationToken: cancellationToken);
+                    var response = _managedDatabaseSensitivityLabelsRestClient.ListRecommendedNextPage(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
