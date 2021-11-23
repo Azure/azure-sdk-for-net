@@ -36,5 +36,29 @@ namespace Azure.Monitor.Query.Models
             JsonElement errorJson = error.ToObjectFromJson<JsonElement>();
             return new LogsQueryResult(allTables, statisticsJson, visualizationJson, errorJson);
         }
+
+        /// <summary> Initializes a new instance of LogsTableRow. </summary>
+        /// <returns> A new <see cref="Models.LogsTableColumn"/> instance for mocking. </returns>
+        public static LogsTableRow LogsTableRow(IReadOnlyList<LogsTableColumn> columns, Object[] rows)
+        {
+            var columnMap = ; //TODO
+            JsonElement row = JsonElementFromObject(rows);
+            return new LogsTableRow(columnMap, columns, row);
+        }
+
+        /// <summary> Initializes a new instance of LogsTable. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="rows"/> is null. </exception>
+        public static LogsTable LogsTable(string name, IEnumerable<LogsTableRow> rows, IEnumerable<LogsTableColumn> columns)
+        {
+            JsonElement row = JsonElementFromObject(rows);
+            return new LogsTable(name, columns, row);
+        }
+
+        private static JsonElement JsonElementFromObject<TValue>(TValue value, JsonSerializerOptions options = default)
+        {
+            var bytes = JsonSerializer.SerializeToUtf8Bytes(value, options);
+            var doc = JsonDocument.Parse(bytes);
+            return doc.RootElement.Clone();
+        }
     }
 }
