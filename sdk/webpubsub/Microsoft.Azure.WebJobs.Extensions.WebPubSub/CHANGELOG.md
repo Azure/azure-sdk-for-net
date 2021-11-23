@@ -1,14 +1,9 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.1.0 (2021-11-24)
 
 ### Bugs Fixed
-
-### Other Changes
+- Fix connection state underlying type to be `JsonElement` as the dynamic type.
 
 ## 1.0.0 (2021-11-09)
 
