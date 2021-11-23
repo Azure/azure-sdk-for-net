@@ -68,26 +68,6 @@ namespace Azure.ResourceManager.Network
             return new ApplicationGatewaysRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
-        private static ApplicationGatewayAvailableServiceVariablesRestOperations GetApplicationGatewayAvailableServiceVariablesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
-        {
-            return new ApplicationGatewayAvailableServiceVariablesRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
-        }
-
-        private static ApplicationGatewayAvailableRequestHeadersRestOperations GetApplicationGatewayAvailableRequestHeadersRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
-        {
-            return new ApplicationGatewayAvailableRequestHeadersRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
-        }
-
-        private static AppicationGatewayAvailableResponseHeadersRestOperations GetAppicationGatewayAvailableResponseHeadersRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
-        {
-            return new AppicationGatewayAvailableResponseHeadersRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
-        }
-
-        private static ApplicationGatewayAvailableWafRuleSetsRestOperations GetApplicationGatewayAvailableWafRuleSetsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
-        {
-            return new ApplicationGatewayAvailableWafRuleSetsRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
-        }
-
         private static ApplicationSecurityGroupsRestOperations GetApplicationSecurityGroupsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             return new ApplicationSecurityGroupsRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
@@ -118,9 +98,9 @@ namespace Azure.ResourceManager.Network
             return new BastionHostsRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
-        private static DnsNameAvailabilitiesRestOperations GetDnsNameAvailabilitiesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
+        private static NetworkManagementRestOperations GetNetworkManagementRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new DnsNameAvailabilitiesRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
+            return new NetworkManagementRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         private static CustomIPPrefixesRestOperations GetCustomIPPrefixesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
@@ -449,17 +429,17 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all available server variables. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<IReadOnlyList<string>>> GetApplicationGatewayAvailableServiceVariablesAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static async Task<Response<IReadOnlyList<string>>> GetAvailableServerVariablesApplicationGatewaysAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return await subscription.UseClientContext(async (baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetApplicationGatewayAvailableServiceVariables");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAvailableServerVariablesApplicationGateways");
                 scope.Start();
                 try
                 {
-                    var restOperations = GetApplicationGatewayAvailableServiceVariablesRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                    var response = await restOperations.ListAsync(cancellationToken).ConfigureAwait(false);
+                    var restOperations = GetApplicationGatewaysRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                    var response = await restOperations.ListAvailableServerVariablesAsync(cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(response.Value, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -474,17 +454,17 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all available server variables. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<IReadOnlyList<string>> GetApplicationGatewayAvailableServiceVariables(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static Response<IReadOnlyList<string>> GetAvailableServerVariablesApplicationGateways(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetApplicationGatewayAvailableServiceVariables");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAvailableServerVariablesApplicationGateways");
                 scope.Start();
                 try
                 {
-                    var restOperations = GetApplicationGatewayAvailableServiceVariablesRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                    var response = restOperations.List(cancellationToken);
+                    var restOperations = GetApplicationGatewaysRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                    var response = restOperations.ListAvailableServerVariables(cancellationToken);
                     return Response.FromValue(response.Value, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -499,17 +479,17 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all available request headers. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<IReadOnlyList<string>>> GetApplicationGatewayAvailableRequestHeadersAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static async Task<Response<IReadOnlyList<string>>> GetAvailableRequestHeadersApplicationGatewaysAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return await subscription.UseClientContext(async (baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetApplicationGatewayAvailableRequestHeaders");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAvailableRequestHeadersApplicationGateways");
                 scope.Start();
                 try
                 {
-                    var restOperations = GetApplicationGatewayAvailableRequestHeadersRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                    var response = await restOperations.ListAsync(cancellationToken).ConfigureAwait(false);
+                    var restOperations = GetApplicationGatewaysRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                    var response = await restOperations.ListAvailableRequestHeadersAsync(cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(response.Value, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -524,17 +504,17 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all available request headers. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<IReadOnlyList<string>> GetApplicationGatewayAvailableRequestHeaders(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static Response<IReadOnlyList<string>> GetAvailableRequestHeadersApplicationGateways(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetApplicationGatewayAvailableRequestHeaders");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAvailableRequestHeadersApplicationGateways");
                 scope.Start();
                 try
                 {
-                    var restOperations = GetApplicationGatewayAvailableRequestHeadersRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                    var response = restOperations.List(cancellationToken);
+                    var restOperations = GetApplicationGatewaysRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                    var response = restOperations.ListAvailableRequestHeaders(cancellationToken);
                     return Response.FromValue(response.Value, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -549,17 +529,17 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all available response headers. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<IReadOnlyList<string>>> GetAppicationGatewayAvailableResponseHeadersAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static async Task<Response<IReadOnlyList<string>>> GetAvailableResponseHeadersApplicationGatewaysAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return await subscription.UseClientContext(async (baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAppicationGatewayAvailableResponseHeaders");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAvailableResponseHeadersApplicationGateways");
                 scope.Start();
                 try
                 {
-                    var restOperations = GetAppicationGatewayAvailableResponseHeadersRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                    var response = await restOperations.ListAsync(cancellationToken).ConfigureAwait(false);
+                    var restOperations = GetApplicationGatewaysRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                    var response = await restOperations.ListAvailableResponseHeadersAsync(cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(response.Value, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -574,17 +554,17 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all available response headers. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<IReadOnlyList<string>> GetAppicationGatewayAvailableResponseHeaders(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static Response<IReadOnlyList<string>> GetAvailableResponseHeadersApplicationGateways(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAppicationGatewayAvailableResponseHeaders");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAvailableResponseHeadersApplicationGateways");
                 scope.Start();
                 try
                 {
-                    var restOperations = GetAppicationGatewayAvailableResponseHeadersRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                    var response = restOperations.List(cancellationToken);
+                    var restOperations = GetApplicationGatewaysRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                    var response = restOperations.ListAvailableResponseHeaders(cancellationToken);
                     return Response.FromValue(response.Value, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -599,17 +579,17 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all available web application firewall rule sets. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<IReadOnlyList<ApplicationGatewayFirewallRuleSet>>> GetApplicationGatewayAvailableWafRuleSetsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static async Task<Response<IReadOnlyList<ApplicationGatewayFirewallRuleSet>>> GetApplicationGatewayAvailableWafRuleSetsAsyncAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return await subscription.UseClientContext(async (baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetApplicationGatewayAvailableWafRuleSets");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetApplicationGatewayAvailableWafRuleSetsAsync");
                 scope.Start();
                 try
                 {
-                    var restOperations = GetApplicationGatewayAvailableWafRuleSetsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                    var response = await restOperations.ListAsync(cancellationToken).ConfigureAwait(false);
+                    var restOperations = GetApplicationGatewaysRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                    var response = await restOperations.ListAvailableWafRuleSetsAsync(cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(response.Value.Value, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -624,17 +604,17 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all available web application firewall rule sets. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<IReadOnlyList<ApplicationGatewayFirewallRuleSet>> GetApplicationGatewayAvailableWafRuleSets(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static Response<IReadOnlyList<ApplicationGatewayFirewallRuleSet>> GetApplicationGatewayAvailableWafRuleSetsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetApplicationGatewayAvailableWafRuleSets");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetApplicationGatewayAvailableWafRuleSetsAsync");
                 scope.Start();
                 try
                 {
-                    var restOperations = GetApplicationGatewayAvailableWafRuleSetsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                    var response = restOperations.List(cancellationToken);
+                    var restOperations = GetApplicationGatewaysRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                    var response = restOperations.ListAvailableWafRuleSets(cancellationToken);
                     return Response.FromValue(response.Value.Value, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1322,8 +1302,8 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var restOperations = GetDnsNameAvailabilitiesRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                    var response = await restOperations.CheckAsync(location, domainNameLabel, cancellationToken).ConfigureAwait(false);
+                    var restOperations = GetNetworkManagementRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                    var response = await restOperations.CheckDnsNameAvailabilityAsync(location, domainNameLabel, cancellationToken).ConfigureAwait(false);
                     return response;
                 }
                 catch (Exception e)
@@ -1359,8 +1339,8 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var restOperations = GetDnsNameAvailabilitiesRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                    var response = restOperations.Check(location, domainNameLabel, cancellationToken);
+                    var restOperations = GetNetworkManagementRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                    var response = restOperations.CheckDnsNameAvailability(location, domainNameLabel, cancellationToken);
                     return response;
                 }
                 catch (Exception e)

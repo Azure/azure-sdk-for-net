@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network
             Optional<string> type = default;
             Optional<string> location = default;
             Optional<IDictionary<string, string>> tags = default;
-            Optional<IList<RouteFilterRule>> rules = default;
+            Optional<IList<RouteFilterRuleData>> rules = default;
             Optional<IReadOnlyList<ExpressRouteCircuitPeeringData>> peerings = default;
             Optional<IReadOnlyList<ExpressRouteCircuitPeeringData>> ipv6Peerings = default;
             Optional<ProvisioningState> provisioningState = default;
@@ -124,10 +124,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<RouteFilterRule> array = new List<RouteFilterRule>();
+                            List<RouteFilterRuleData> array = new List<RouteFilterRuleData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RouteFilterRule.DeserializeRouteFilterRule(item));
+                                array.Add(RouteFilterRuleData.DeserializeRouteFilterRuleData(item));
                             }
                             rules = array;
                             continue;

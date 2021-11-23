@@ -24,10 +24,9 @@ namespace Azure.ResourceManager.Network
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly VirtualWansRestOperations _virtualWansRestClient;
+        private readonly NetworkManagementRestOperations _restClient;
         private readonly VpnSitesConfigurationRestOperations _vpnSitesConfigurationRestClient;
-        private readonly SupportedSecurityProvidersRestOperations _supportedSecurityProvidersRestClient;
         private readonly VpnServerConfigurationsAssociatedWithVirtualWanRestOperations _vpnServerConfigurationsAssociatedWithVirtualWanRestClient;
-        private readonly VirtualWanVpnServerConfigurationVpnProfilesRestOperations _virtualWanVpnServerConfigurationVpnProfilesRestClient;
         private readonly VirtualWANData _data;
 
         /// <summary> Initializes a new instance of the <see cref="VirtualWAN"/> class for mocking. </summary>
@@ -44,10 +43,9 @@ namespace Azure.ResourceManager.Network
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _virtualWansRestClient = new VirtualWansRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _restClient = new NetworkManagementRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
             _vpnSitesConfigurationRestClient = new VpnSitesConfigurationRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _supportedSecurityProvidersRestClient = new SupportedSecurityProvidersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
             _vpnServerConfigurationsAssociatedWithVirtualWanRestClient = new VpnServerConfigurationsAssociatedWithVirtualWanRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _virtualWanVpnServerConfigurationVpnProfilesRestClient = new VirtualWanVpnServerConfigurationVpnProfilesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="VirtualWAN"/> class. </summary>
@@ -57,10 +55,9 @@ namespace Azure.ResourceManager.Network
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _virtualWansRestClient = new VirtualWansRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _restClient = new NetworkManagementRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
             _vpnSitesConfigurationRestClient = new VpnSitesConfigurationRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _supportedSecurityProvidersRestClient = new SupportedSecurityProvidersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
             _vpnServerConfigurationsAssociatedWithVirtualWanRestClient = new VpnServerConfigurationsAssociatedWithVirtualWanRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _virtualWanVpnServerConfigurationVpnProfilesRestClient = new VirtualWanVpnServerConfigurationVpnProfilesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="VirtualWAN"/> class. </summary>
@@ -73,10 +70,9 @@ namespace Azure.ResourceManager.Network
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _virtualWansRestClient = new VirtualWansRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _restClient = new NetworkManagementRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
             _vpnSitesConfigurationRestClient = new VpnSitesConfigurationRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _supportedSecurityProvidersRestClient = new SupportedSecurityProvidersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
             _vpnServerConfigurationsAssociatedWithVirtualWanRestClient = new VpnServerConfigurationsAssociatedWithVirtualWanRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _virtualWanVpnServerConfigurationVpnProfilesRestClient = new VirtualWanVpnServerConfigurationVpnProfilesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -250,6 +246,100 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary> Gives the supported security providers for the virtual wan. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response<VirtualWanSecurityProviders>> SupportedSecurityProvidersAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualWAN.SupportedSecurityProviders");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.SupportedSecurityProvidersAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gives the supported security providers for the virtual wan. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<VirtualWanSecurityProviders> SupportedSecurityProviders(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualWAN.SupportedSecurityProviders");
+            scope.Start();
+            try
+            {
+                var response = _restClient.SupportedSecurityProviders(Id.ResourceGroupName, Id.Name, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Generates a unique VPN profile for P2S clients for VirtualWan and associated VpnServerConfiguration combination in the specified resource group. </summary>
+        /// <param name="vpnClientParams"> Parameters supplied to the generate VirtualWan VPN profile generation operation. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vpnClientParams"/> is null. </exception>
+        public async virtual Task<NetworkManagementGeneratevirtualwanvpnserverconfigurationvpnprofileOperation> GeneratevirtualwanvpnserverconfigurationvpnprofileAsync(VirtualWanVpnProfileParameters vpnClientParams, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            if (vpnClientParams == null)
+            {
+                throw new ArgumentNullException(nameof(vpnClientParams));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VirtualWAN.Generatevirtualwanvpnserverconfigurationvpnprofile");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.GeneratevirtualwanvpnserverconfigurationvpnprofileAsync(Id.ResourceGroupName, Id.Name, vpnClientParams, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkManagementGeneratevirtualwanvpnserverconfigurationvpnprofileOperation(_clientDiagnostics, Pipeline, _restClient.CreateGeneratevirtualwanvpnserverconfigurationvpnprofileRequest(Id.ResourceGroupName, Id.Name, vpnClientParams).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Generates a unique VPN profile for P2S clients for VirtualWan and associated VpnServerConfiguration combination in the specified resource group. </summary>
+        /// <param name="vpnClientParams"> Parameters supplied to the generate VirtualWan VPN profile generation operation. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vpnClientParams"/> is null. </exception>
+        public virtual NetworkManagementGeneratevirtualwanvpnserverconfigurationvpnprofileOperation Generatevirtualwanvpnserverconfigurationvpnprofile(VirtualWanVpnProfileParameters vpnClientParams, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            if (vpnClientParams == null)
+            {
+                throw new ArgumentNullException(nameof(vpnClientParams));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VirtualWAN.Generatevirtualwanvpnserverconfigurationvpnprofile");
+            scope.Start();
+            try
+            {
+                var response = _restClient.Generatevirtualwanvpnserverconfigurationvpnprofile(Id.ResourceGroupName, Id.Name, vpnClientParams, cancellationToken);
+                var operation = new NetworkManagementGeneratevirtualwanvpnserverconfigurationvpnprofileOperation(_clientDiagnostics, Pipeline, _restClient.CreateGeneratevirtualwanvpnserverconfigurationvpnprofileRequest(Id.ResourceGroupName, Id.Name, vpnClientParams).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         /// <summary> Gives the sas-url to download the configurations for vpn-sites in a resource group. </summary>
         /// <param name="request"> Parameters supplied to download vpn-sites configuration. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
@@ -308,42 +398,6 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gives the supported security providers for the virtual wan. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<VirtualWanSecurityProviders>> GetSupportedSecurityProviderAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("VirtualWAN.GetSupportedSecurityProvider");
-            scope.Start();
-            try
-            {
-                var response = await _supportedSecurityProvidersRestClient.ListAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gives the supported security providers for the virtual wan. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<VirtualWanSecurityProviders> GetSupportedSecurityProvider(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("VirtualWAN.GetSupportedSecurityProvider");
-            scope.Start();
-            try
-            {
-                var response = _supportedSecurityProvidersRestClient.List(Id.ResourceGroupName, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> Gives the list of VpnServerConfigurations associated with Virtual Wan in a resource group. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -377,64 +431,6 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _vpnServerConfigurationsAssociatedWithVirtualWanRestClient.List(Id.ResourceGroupName, Id.Name, cancellationToken);
                 var operation = new VpnServerConfigurationsAssociatedWithVirtualWanListOperation(_clientDiagnostics, Pipeline, _vpnServerConfigurationsAssociatedWithVirtualWanRestClient.CreateListRequest(Id.ResourceGroupName, Id.Name).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Generates a unique VPN profile for P2S clients for VirtualWan and associated VpnServerConfiguration combination in the specified resource group. </summary>
-        /// <param name="vpnClientParams"> Parameters supplied to the generate VirtualWan VPN profile generation operation. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vpnClientParams"/> is null. </exception>
-        public async virtual Task<VirtualWanVpnServerConfigurationVpnProfileGenerateOperation> GenerateVirtualWanVpnServerConfigurationVpnProfileAsync(VirtualWanVpnProfileParameters vpnClientParams, bool waitForCompletion = true, CancellationToken cancellationToken = default)
-        {
-            if (vpnClientParams == null)
-            {
-                throw new ArgumentNullException(nameof(vpnClientParams));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("VirtualWAN.GenerateVirtualWanVpnServerConfigurationVpnProfile");
-            scope.Start();
-            try
-            {
-                var response = await _virtualWanVpnServerConfigurationVpnProfilesRestClient.GenerateAsync(Id.ResourceGroupName, Id.Name, vpnClientParams, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualWanVpnServerConfigurationVpnProfileGenerateOperation(_clientDiagnostics, Pipeline, _virtualWanVpnServerConfigurationVpnProfilesRestClient.CreateGenerateRequest(Id.ResourceGroupName, Id.Name, vpnClientParams).Request, response);
-                if (waitForCompletion)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Generates a unique VPN profile for P2S clients for VirtualWan and associated VpnServerConfiguration combination in the specified resource group. </summary>
-        /// <param name="vpnClientParams"> Parameters supplied to the generate VirtualWan VPN profile generation operation. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vpnClientParams"/> is null. </exception>
-        public virtual VirtualWanVpnServerConfigurationVpnProfileGenerateOperation GenerateVirtualWanVpnServerConfigurationVpnProfile(VirtualWanVpnProfileParameters vpnClientParams, bool waitForCompletion = true, CancellationToken cancellationToken = default)
-        {
-            if (vpnClientParams == null)
-            {
-                throw new ArgumentNullException(nameof(vpnClientParams));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("VirtualWAN.GenerateVirtualWanVpnServerConfigurationVpnProfile");
-            scope.Start();
-            try
-            {
-                var response = _virtualWanVpnServerConfigurationVpnProfilesRestClient.Generate(Id.ResourceGroupName, Id.Name, vpnClientParams, cancellationToken);
-                var operation = new VirtualWanVpnServerConfigurationVpnProfileGenerateOperation(_clientDiagnostics, Pipeline, _virtualWanVpnServerConfigurationVpnProfilesRestClient.CreateGenerateRequest(Id.ResourceGroupName, Id.Name, vpnClientParams).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.Network
 
     {
         private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly VirtualHubBgpConnectionRestOperations _virtualHubBgpConnectionRestClient;
         private readonly VirtualHubBgpConnectionsRestOperations _virtualHubBgpConnectionsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="BgpConnectionCollection"/> class for mocking. </summary>
@@ -37,6 +38,7 @@ namespace Azure.ResourceManager.Network
         internal BgpConnectionCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            _virtualHubBgpConnectionRestClient = new VirtualHubBgpConnectionRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
             _virtualHubBgpConnectionsRestClient = new VirtualHubBgpConnectionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
@@ -66,8 +68,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _virtualHubBgpConnectionsRestClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, connectionName, parameters, cancellationToken);
-                var operation = new VirtualHubBgpConnectionCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _virtualHubBgpConnectionsRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, connectionName, parameters).Request, response);
+                var response = _virtualHubBgpConnectionRestClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, connectionName, parameters, cancellationToken);
+                var operation = new VirtualHubBgpConnectionCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _virtualHubBgpConnectionRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, connectionName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -100,8 +102,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _virtualHubBgpConnectionsRestClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, connectionName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualHubBgpConnectionCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _virtualHubBgpConnectionsRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, connectionName, parameters).Request, response);
+                var response = await _virtualHubBgpConnectionRestClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, connectionName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new VirtualHubBgpConnectionCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _virtualHubBgpConnectionRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, connectionName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -128,7 +130,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _virtualHubBgpConnectionsRestClient.Get(Id.ResourceGroupName, Id.Name, connectionName, cancellationToken);
+                var response = _virtualHubBgpConnectionRestClient.Get(Id.ResourceGroupName, Id.Name, connectionName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new BgpConnection(Parent, response.Value), response.GetRawResponse());
@@ -155,7 +157,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _virtualHubBgpConnectionsRestClient.GetAsync(Id.ResourceGroupName, Id.Name, connectionName, cancellationToken).ConfigureAwait(false);
+                var response = await _virtualHubBgpConnectionRestClient.GetAsync(Id.ResourceGroupName, Id.Name, connectionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new BgpConnection(Parent, response.Value), response.GetRawResponse());
@@ -182,7 +184,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _virtualHubBgpConnectionsRestClient.Get(Id.ResourceGroupName, Id.Name, connectionName, cancellationToken: cancellationToken);
+                var response = _virtualHubBgpConnectionRestClient.Get(Id.ResourceGroupName, Id.Name, connectionName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<BgpConnection>(null, response.GetRawResponse())
                     : Response.FromValue(new BgpConnection(this, response.Value), response.GetRawResponse());
@@ -209,7 +211,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _virtualHubBgpConnectionsRestClient.GetAsync(Id.ResourceGroupName, Id.Name, connectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _virtualHubBgpConnectionRestClient.GetAsync(Id.ResourceGroupName, Id.Name, connectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<BgpConnection>(null, response.GetRawResponse())
                     : Response.FromValue(new BgpConnection(this, response.Value), response.GetRawResponse());

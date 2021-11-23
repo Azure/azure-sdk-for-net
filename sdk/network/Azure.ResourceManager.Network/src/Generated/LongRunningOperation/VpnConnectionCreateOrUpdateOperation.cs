@@ -12,6 +12,8 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -20,14 +22,17 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly OperationInternals<VpnConnection> _operation;
 
+        private readonly ArmResource _operationBase;
+
         /// <summary> Initializes a new instance of VpnConnectionCreateOrUpdateOperation for mocking. </summary>
         protected VpnConnectionCreateOrUpdateOperation()
         {
         }
 
-        internal VpnConnectionCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal VpnConnectionCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<VpnConnection>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "VpnConnectionCreateOrUpdateOperation");
+            _operationBase = operationsBase;
         }
 
         /// <inheritdoc />
@@ -60,13 +65,13 @@ namespace Azure.ResourceManager.Network.Models
         VpnConnection IOperationSource<VpnConnection>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return VpnConnection.DeserializeVpnConnection(document.RootElement);
+            return new VpnConnection(_operationBase, VpnConnectionData.DeserializeVpnConnectionData(document.RootElement));
         }
 
         async ValueTask<VpnConnection> IOperationSource<VpnConnection>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return VpnConnection.DeserializeVpnConnection(document.RootElement);
+            return new VpnConnection(_operationBase, VpnConnectionData.DeserializeVpnConnectionData(document.RootElement));
         }
     }
 }

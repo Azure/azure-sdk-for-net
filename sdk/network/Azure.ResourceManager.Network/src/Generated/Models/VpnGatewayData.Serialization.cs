@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network
             Optional<string> location = default;
             Optional<IDictionary<string, string>> tags = default;
             Optional<WritableSubResource> virtualHub = default;
-            Optional<IList<VpnConnection>> connections = default;
+            Optional<IList<VpnConnectionData>> connections = default;
             Optional<BgpSettings> bgpSettings = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<int> vpnGatewayScaleUnit = default;
@@ -169,10 +169,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<VpnConnection> array = new List<VpnConnection>();
+                            List<VpnConnectionData> array = new List<VpnConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VpnConnection.DeserializeVpnConnection(item));
+                                array.Add(VpnConnectionData.DeserializeVpnConnectionData(item));
                             }
                             connections = array;
                             continue;
