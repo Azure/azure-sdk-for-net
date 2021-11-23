@@ -47,11 +47,6 @@ namespace Azure.ResourceManager.KeyVault
             return new VaultsRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
-        private static DeletedVaultsRestOperations GetDeletedVaultsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
-        {
-            return new DeletedVaultsRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
-        }
-
         private static ManagedHsmsRestOperations GetManagedHsmsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             return new ManagedHsmsRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
@@ -177,70 +172,6 @@ namespace Azure.ResourceManager.KeyVault
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
 
-        /// <summary> Checks that the vault name is valid and is not already in use. </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
-        /// <param name="name"> The vault name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public static async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityVaultAsync(this Subscription subscription, string name, CancellationToken cancellationToken = default)
-        {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-
-            return await subscription.UseClientContext(async (baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckNameAvailabilityVault");
-                scope.Start();
-                try
-                {
-                    var restOperations = GetVaultsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                    var response = await restOperations.CheckNameAvailabilityAsync(name, cancellationToken).ConfigureAwait(false);
-                    return response;
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            ).ConfigureAwait(false);
-        }
-
-        /// <summary> Checks that the vault name is valid and is not already in use. </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
-        /// <param name="name"> The vault name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public static Response<CheckNameAvailabilityResult> CheckNameAvailabilityVault(this Subscription subscription, string name, CancellationToken cancellationToken = default)
-        {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-
-            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckNameAvailabilityVault");
-                scope.Start();
-                try
-                {
-                    var restOperations = GetVaultsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                    var response = restOperations.CheckNameAvailability(name, cancellationToken);
-                    return response;
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            );
-        }
-
         /// <summary> Lists the DeletedVaultDatas for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -250,14 +181,14 @@ namespace Azure.ResourceManager.KeyVault
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetDeletedVaultsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                var restOperations = GetVaultsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
                 async Task<Page<DeletedVaultData>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDeletedVaults");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.ListBySubscriptionAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListDeletedAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -272,7 +203,7 @@ namespace Azure.ResourceManager.KeyVault
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.ListBySubscriptionNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListDeletedNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -295,14 +226,14 @@ namespace Azure.ResourceManager.KeyVault
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetDeletedVaultsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                var restOperations = GetVaultsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
                 Page<DeletedVaultData> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDeletedVaults");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.ListBySubscription(cancellationToken: cancellationToken);
+                        var response = restOperations.ListDeleted(cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -317,7 +248,7 @@ namespace Azure.ResourceManager.KeyVault
                     scope.Start();
                     try
                     {
-                        var response = restOperations.ListBySubscriptionNextPage(nextLink, cancellationToken: cancellationToken);
+                        var response = restOperations.ListDeletedNextPage(nextLink, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -357,6 +288,70 @@ namespace Azure.ResourceManager.KeyVault
             ResourceFilterCollection filters = new(DeletedVault.ResourceType);
             filters.SubstringFilter = filter;
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
+        }
+
+        /// <summary> Checks that the vault name is valid and is not already in use. </summary>
+        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="vaultName"> The name of the vault. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
+        public static async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityVaultAsync(this Subscription subscription, VaultCheckNameAvailabilityParameters vaultName, CancellationToken cancellationToken = default)
+        {
+            if (vaultName == null)
+            {
+                throw new ArgumentNullException(nameof(vaultName));
+            }
+
+            return await subscription.UseClientContext(async (baseUri, credential, options, pipeline) =>
+            {
+                var clientDiagnostics = new ClientDiagnostics(options);
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckNameAvailabilityVault");
+                scope.Start();
+                try
+                {
+                    var restOperations = GetVaultsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                    var response = await restOperations.CheckNameAvailabilityAsync(vaultName, cancellationToken).ConfigureAwait(false);
+                    return response;
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            ).ConfigureAwait(false);
+        }
+
+        /// <summary> Checks that the vault name is valid and is not already in use. </summary>
+        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="vaultName"> The name of the vault. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
+        public static Response<CheckNameAvailabilityResult> CheckNameAvailabilityVault(this Subscription subscription, VaultCheckNameAvailabilityParameters vaultName, CancellationToken cancellationToken = default)
+        {
+            if (vaultName == null)
+            {
+                throw new ArgumentNullException(nameof(vaultName));
+            }
+
+            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
+            {
+                var clientDiagnostics = new ClientDiagnostics(options);
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckNameAvailabilityVault");
+                scope.Start();
+                try
+                {
+                    var restOperations = GetVaultsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                    var response = restOperations.CheckNameAvailability(vaultName, cancellationToken);
+                    return response;
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            );
         }
 
         /// <summary> Lists the ManagedHsms for this <see cref="Subscription" />. </summary>

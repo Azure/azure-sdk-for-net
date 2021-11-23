@@ -37,11 +37,6 @@ namespace Azure.ResourceManager.Storage
             return new SkusRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
-        private static StorageAccountNameRestOperations GetStorageAccountNameRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
-        {
-            return new StorageAccountNameRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
-        }
-
         private static StorageAccountsRestOperations GetStorageAccountsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             return new StorageAccountsRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
@@ -122,7 +117,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
-        public static async Task<Response<CheckNameAvailabilityResult>> CheckAvailabilityStorageAccountNameAsync(this Subscription subscription, StorageAccountCheckNameAvailabilityParameters accountName, CancellationToken cancellationToken = default)
+        public static async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityStorageAccountAsync(this Subscription subscription, StorageAccountCheckNameAvailabilityParameters accountName, CancellationToken cancellationToken = default)
         {
             if (accountName == null)
             {
@@ -132,12 +127,12 @@ namespace Azure.ResourceManager.Storage
             return await subscription.UseClientContext(async (baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckAvailabilityStorageAccountName");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckNameAvailabilityStorageAccount");
                 scope.Start();
                 try
                 {
-                    var restOperations = GetStorageAccountNameRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                    var response = await restOperations.CheckAvailabilityAsync(accountName, cancellationToken).ConfigureAwait(false);
+                    var restOperations = GetStorageAccountsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                    var response = await restOperations.CheckNameAvailabilityAsync(accountName, cancellationToken).ConfigureAwait(false);
                     return response;
                 }
                 catch (Exception e)
@@ -154,7 +149,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
-        public static Response<CheckNameAvailabilityResult> CheckAvailabilityStorageAccountName(this Subscription subscription, StorageAccountCheckNameAvailabilityParameters accountName, CancellationToken cancellationToken = default)
+        public static Response<CheckNameAvailabilityResult> CheckNameAvailabilityStorageAccount(this Subscription subscription, StorageAccountCheckNameAvailabilityParameters accountName, CancellationToken cancellationToken = default)
         {
             if (accountName == null)
             {
@@ -164,12 +159,12 @@ namespace Azure.ResourceManager.Storage
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckAvailabilityStorageAccountName");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckNameAvailabilityStorageAccount");
                 scope.Start();
                 try
                 {
-                    var restOperations = GetStorageAccountNameRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                    var response = restOperations.CheckAvailability(accountName, cancellationToken);
+                    var restOperations = GetStorageAccountsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                    var response = restOperations.CheckNameAvailability(accountName, cancellationToken);
                     return response;
                 }
                 catch (Exception e)

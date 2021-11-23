@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="privateDnsZoneGroupName"> The name of the private dns zone group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="privateEndpointName"/>, or <paramref name="privateDnsZoneGroupName"/> is null. </exception>
-        public async Task<Response<PrivateDnsZoneGroup>> GetAsync(string resourceGroupName, string privateEndpointName, string privateDnsZoneGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<PrivateDnsZoneGroupData>> GetAsync(string resourceGroupName, string privateEndpointName, string privateDnsZoneGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -183,11 +183,13 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        PrivateDnsZoneGroup value = default;
+                        PrivateDnsZoneGroupData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PrivateDnsZoneGroup.DeserializePrivateDnsZoneGroup(document.RootElement);
+                        value = PrivateDnsZoneGroupData.DeserializePrivateDnsZoneGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((PrivateDnsZoneGroupData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -199,7 +201,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="privateDnsZoneGroupName"> The name of the private dns zone group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="privateEndpointName"/>, or <paramref name="privateDnsZoneGroupName"/> is null. </exception>
-        public Response<PrivateDnsZoneGroup> Get(string resourceGroupName, string privateEndpointName, string privateDnsZoneGroupName, CancellationToken cancellationToken = default)
+        public Response<PrivateDnsZoneGroupData> Get(string resourceGroupName, string privateEndpointName, string privateDnsZoneGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -220,17 +222,19 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        PrivateDnsZoneGroup value = default;
+                        PrivateDnsZoneGroupData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PrivateDnsZoneGroup.DeserializePrivateDnsZoneGroup(document.RootElement);
+                        value = PrivateDnsZoneGroupData.DeserializePrivateDnsZoneGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((PrivateDnsZoneGroupData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string privateEndpointName, string privateDnsZoneGroupName, PrivateDnsZoneGroup parameters)
+        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string privateEndpointName, string privateDnsZoneGroupName, PrivateDnsZoneGroupData parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -263,7 +267,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters supplied to the create or update private dns zone group operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="privateEndpointName"/>, <paramref name="privateDnsZoneGroupName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string privateEndpointName, string privateDnsZoneGroupName, PrivateDnsZoneGroup parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string privateEndpointName, string privateDnsZoneGroupName, PrivateDnsZoneGroupData parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -301,7 +305,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters supplied to the create or update private dns zone group operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="privateEndpointName"/>, <paramref name="privateDnsZoneGroupName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response CreateOrUpdate(string resourceGroupName, string privateEndpointName, string privateDnsZoneGroupName, PrivateDnsZoneGroup parameters, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string resourceGroupName, string privateEndpointName, string privateDnsZoneGroupName, PrivateDnsZoneGroupData parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

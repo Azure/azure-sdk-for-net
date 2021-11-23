@@ -24,7 +24,6 @@ namespace Azure.ResourceManager.Network
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ServiceEndpointPoliciesRestOperations _serviceEndpointPoliciesRestClient;
-        private readonly ServiceEndpointPolicyDefinitionsRestOperations _serviceEndpointPolicyDefinitionsRestClient;
         private readonly ServiceEndpointPolicyData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ServiceEndpointPolicy"/> class for mocking. </summary>
@@ -41,7 +40,6 @@ namespace Azure.ResourceManager.Network
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _serviceEndpointPoliciesRestClient = new ServiceEndpointPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _serviceEndpointPolicyDefinitionsRestClient = new ServiceEndpointPolicyDefinitionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="ServiceEndpointPolicy"/> class. </summary>
@@ -51,7 +49,6 @@ namespace Azure.ResourceManager.Network
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _serviceEndpointPoliciesRestClient = new ServiceEndpointPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _serviceEndpointPolicyDefinitionsRestClient = new ServiceEndpointPolicyDefinitionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="ServiceEndpointPolicy"/> class. </summary>
@@ -64,7 +61,6 @@ namespace Azure.ResourceManager.Network
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _serviceEndpointPoliciesRestClient = new ServiceEndpointPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _serviceEndpointPolicyDefinitionsRestClient = new ServiceEndpointPolicyDefinitionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -240,256 +236,14 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Deletes the specified ServiceEndpoint policy definitions. </summary>
-        /// <param name="serviceEndpointPolicyDefinitionName"> The name of the service endpoint policy definition. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpointPolicyDefinitionName"/> is null. </exception>
-        public async virtual Task<ServiceEndpointPolicyDefinitionDeleteOperation> DeleteServiceEndpointPolicyDefinitionAsync(string serviceEndpointPolicyDefinitionName, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        #region ServiceEndpointPolicyDefinition
+
+        /// <summary> Gets a collection of ServiceEndpointPolicyDefinitions in the ServiceEndpointPolicy. </summary>
+        /// <returns> An object representing collection of ServiceEndpointPolicyDefinitions and their operations over a ServiceEndpointPolicy. </returns>
+        public ServiceEndpointPolicyDefinitionCollection GetServiceEndpointPolicyDefinitions()
         {
-            if (serviceEndpointPolicyDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceEndpointPolicyDefinitionName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("ServiceEndpointPolicy.DeleteServiceEndpointPolicyDefinition");
-            scope.Start();
-            try
-            {
-                var response = await _serviceEndpointPolicyDefinitionsRestClient.DeleteAsync(Id.ResourceGroupName, Id.Name, serviceEndpointPolicyDefinitionName, cancellationToken).ConfigureAwait(false);
-                var operation = new ServiceEndpointPolicyDefinitionDeleteOperation(_clientDiagnostics, Pipeline, _serviceEndpointPolicyDefinitionsRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name, serviceEndpointPolicyDefinitionName).Request, response);
-                if (waitForCompletion)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new ServiceEndpointPolicyDefinitionCollection(this);
         }
-
-        /// <summary> Deletes the specified ServiceEndpoint policy definitions. </summary>
-        /// <param name="serviceEndpointPolicyDefinitionName"> The name of the service endpoint policy definition. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpointPolicyDefinitionName"/> is null. </exception>
-        public virtual ServiceEndpointPolicyDefinitionDeleteOperation DeleteServiceEndpointPolicyDefinition(string serviceEndpointPolicyDefinitionName, bool waitForCompletion = true, CancellationToken cancellationToken = default)
-        {
-            if (serviceEndpointPolicyDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceEndpointPolicyDefinitionName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("ServiceEndpointPolicy.DeleteServiceEndpointPolicyDefinition");
-            scope.Start();
-            try
-            {
-                var response = _serviceEndpointPolicyDefinitionsRestClient.Delete(Id.ResourceGroupName, Id.Name, serviceEndpointPolicyDefinitionName, cancellationToken);
-                var operation = new ServiceEndpointPolicyDefinitionDeleteOperation(_clientDiagnostics, Pipeline, _serviceEndpointPolicyDefinitionsRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name, serviceEndpointPolicyDefinitionName).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Get the specified service endpoint policy definitions from service endpoint policy. </summary>
-        /// <param name="serviceEndpointPolicyDefinitionName"> The name of the service endpoint policy definition name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpointPolicyDefinitionName"/> is null. </exception>
-        public async virtual Task<Response<ServiceEndpointPolicyDefinition>> GetServiceEndpointPolicyDefinitionAsync(string serviceEndpointPolicyDefinitionName, CancellationToken cancellationToken = default)
-        {
-            if (serviceEndpointPolicyDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceEndpointPolicyDefinitionName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("ServiceEndpointPolicy.GetServiceEndpointPolicyDefinition");
-            scope.Start();
-            try
-            {
-                var response = await _serviceEndpointPolicyDefinitionsRestClient.GetAsync(Id.ResourceGroupName, Id.Name, serviceEndpointPolicyDefinitionName, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Get the specified service endpoint policy definitions from service endpoint policy. </summary>
-        /// <param name="serviceEndpointPolicyDefinitionName"> The name of the service endpoint policy definition name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpointPolicyDefinitionName"/> is null. </exception>
-        public virtual Response<ServiceEndpointPolicyDefinition> GetServiceEndpointPolicyDefinition(string serviceEndpointPolicyDefinitionName, CancellationToken cancellationToken = default)
-        {
-            if (serviceEndpointPolicyDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceEndpointPolicyDefinitionName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("ServiceEndpointPolicy.GetServiceEndpointPolicyDefinition");
-            scope.Start();
-            try
-            {
-                var response = _serviceEndpointPolicyDefinitionsRestClient.Get(Id.ResourceGroupName, Id.Name, serviceEndpointPolicyDefinitionName, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or updates a service endpoint policy definition in the specified service endpoint policy. </summary>
-        /// <param name="serviceEndpointPolicyDefinitionName"> The name of the service endpoint policy definition name. </param>
-        /// <param name="serviceEndpointPolicyDefinitions"> Parameters supplied to the create or update service endpoint policy operation. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpointPolicyDefinitionName"/> or <paramref name="serviceEndpointPolicyDefinitions"/> is null. </exception>
-        public async virtual Task<ServiceEndpointPolicyDefinitionCreateOrUpdateOperation> CreateOrUpdateServiceEndpointPolicyDefinitionAsync(string serviceEndpointPolicyDefinitionName, ServiceEndpointPolicyDefinition serviceEndpointPolicyDefinitions, bool waitForCompletion = true, CancellationToken cancellationToken = default)
-        {
-            if (serviceEndpointPolicyDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceEndpointPolicyDefinitionName));
-            }
-            if (serviceEndpointPolicyDefinitions == null)
-            {
-                throw new ArgumentNullException(nameof(serviceEndpointPolicyDefinitions));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("ServiceEndpointPolicy.CreateOrUpdateServiceEndpointPolicyDefinition");
-            scope.Start();
-            try
-            {
-                var response = await _serviceEndpointPolicyDefinitionsRestClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, serviceEndpointPolicyDefinitionName, serviceEndpointPolicyDefinitions, cancellationToken).ConfigureAwait(false);
-                var operation = new ServiceEndpointPolicyDefinitionCreateOrUpdateOperation(_clientDiagnostics, Pipeline, _serviceEndpointPolicyDefinitionsRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, serviceEndpointPolicyDefinitionName, serviceEndpointPolicyDefinitions).Request, response);
-                if (waitForCompletion)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or updates a service endpoint policy definition in the specified service endpoint policy. </summary>
-        /// <param name="serviceEndpointPolicyDefinitionName"> The name of the service endpoint policy definition name. </param>
-        /// <param name="serviceEndpointPolicyDefinitions"> Parameters supplied to the create or update service endpoint policy operation. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpointPolicyDefinitionName"/> or <paramref name="serviceEndpointPolicyDefinitions"/> is null. </exception>
-        public virtual ServiceEndpointPolicyDefinitionCreateOrUpdateOperation CreateOrUpdateServiceEndpointPolicyDefinition(string serviceEndpointPolicyDefinitionName, ServiceEndpointPolicyDefinition serviceEndpointPolicyDefinitions, bool waitForCompletion = true, CancellationToken cancellationToken = default)
-        {
-            if (serviceEndpointPolicyDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceEndpointPolicyDefinitionName));
-            }
-            if (serviceEndpointPolicyDefinitions == null)
-            {
-                throw new ArgumentNullException(nameof(serviceEndpointPolicyDefinitions));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("ServiceEndpointPolicy.CreateOrUpdateServiceEndpointPolicyDefinition");
-            scope.Start();
-            try
-            {
-                var response = _serviceEndpointPolicyDefinitionsRestClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, serviceEndpointPolicyDefinitionName, serviceEndpointPolicyDefinitions, cancellationToken);
-                var operation = new ServiceEndpointPolicyDefinitionCreateOrUpdateOperation(_clientDiagnostics, Pipeline, _serviceEndpointPolicyDefinitionsRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, serviceEndpointPolicyDefinitionName, serviceEndpointPolicyDefinitions).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets all service endpoint policy definitions in a service end point policy. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServiceEndpointPolicyDefinition" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServiceEndpointPolicyDefinition> GetServiceEndpointPolicyDefinitionsByResourceGroupAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<ServiceEndpointPolicyDefinition>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("ServiceEndpointPolicy.GetServiceEndpointPolicyDefinitionsByResourceGroup");
-                scope.Start();
-                try
-                {
-                    var response = await _serviceEndpointPolicyDefinitionsRestClient.ListByResourceGroupAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ServiceEndpointPolicyDefinition>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("ServiceEndpointPolicy.GetServiceEndpointPolicyDefinitionsByResourceGroup");
-                scope.Start();
-                try
-                {
-                    var response = await _serviceEndpointPolicyDefinitionsRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Gets all service endpoint policy definitions in a service end point policy. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServiceEndpointPolicyDefinition" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServiceEndpointPolicyDefinition> GetServiceEndpointPolicyDefinitionsByResourceGroup(CancellationToken cancellationToken = default)
-        {
-            Page<ServiceEndpointPolicyDefinition> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("ServiceEndpointPolicy.GetServiceEndpointPolicyDefinitionsByResourceGroup");
-                scope.Start();
-                try
-                {
-                    var response = _serviceEndpointPolicyDefinitionsRestClient.ListByResourceGroup(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ServiceEndpointPolicyDefinition> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("ServiceEndpointPolicy.GetServiceEndpointPolicyDefinitionsByResourceGroup");
-                scope.Start();
-                try
-                {
-                    var response = _serviceEndpointPolicyDefinitionsRestClient.ListByResourceGroupNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
+        #endregion
     }
 }

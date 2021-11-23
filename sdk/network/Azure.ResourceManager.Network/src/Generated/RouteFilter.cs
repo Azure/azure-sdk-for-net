@@ -24,7 +24,6 @@ namespace Azure.ResourceManager.Network
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly RouteFiltersRestOperations _routeFiltersRestClient;
-        private readonly RouteFilterRulesRestOperations _routeFilterRulesRestClient;
         private readonly RouteFilterData _data;
 
         /// <summary> Initializes a new instance of the <see cref="RouteFilter"/> class for mocking. </summary>
@@ -41,7 +40,6 @@ namespace Azure.ResourceManager.Network
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _routeFiltersRestClient = new RouteFiltersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _routeFilterRulesRestClient = new RouteFilterRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="RouteFilter"/> class. </summary>
@@ -51,7 +49,6 @@ namespace Azure.ResourceManager.Network
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _routeFiltersRestClient = new RouteFiltersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _routeFilterRulesRestClient = new RouteFilterRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="RouteFilter"/> class. </summary>
@@ -64,7 +61,6 @@ namespace Azure.ResourceManager.Network
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _routeFiltersRestClient = new RouteFiltersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _routeFilterRulesRestClient = new RouteFilterRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -240,256 +236,14 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Deletes the specified rule from a route filter. </summary>
-        /// <param name="ruleName"> The name of the rule. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
-        public async virtual Task<RouteFilterRuleDeleteOperation> DeleteRouteFilterRuleAsync(string ruleName, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        #region RouteFilterRule
+
+        /// <summary> Gets a collection of RouteFilterRules in the RouteFilter. </summary>
+        /// <returns> An object representing collection of RouteFilterRules and their operations over a RouteFilter. </returns>
+        public RouteFilterRuleCollection GetRouteFilterRules()
         {
-            if (ruleName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("RouteFilter.DeleteRouteFilterRule");
-            scope.Start();
-            try
-            {
-                var response = await _routeFilterRulesRestClient.DeleteAsync(Id.ResourceGroupName, Id.Name, ruleName, cancellationToken).ConfigureAwait(false);
-                var operation = new RouteFilterRuleDeleteOperation(_clientDiagnostics, Pipeline, _routeFilterRulesRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name, ruleName).Request, response);
-                if (waitForCompletion)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new RouteFilterRuleCollection(this);
         }
-
-        /// <summary> Deletes the specified rule from a route filter. </summary>
-        /// <param name="ruleName"> The name of the rule. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
-        public virtual RouteFilterRuleDeleteOperation DeleteRouteFilterRule(string ruleName, bool waitForCompletion = true, CancellationToken cancellationToken = default)
-        {
-            if (ruleName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("RouteFilter.DeleteRouteFilterRule");
-            scope.Start();
-            try
-            {
-                var response = _routeFilterRulesRestClient.Delete(Id.ResourceGroupName, Id.Name, ruleName, cancellationToken);
-                var operation = new RouteFilterRuleDeleteOperation(_clientDiagnostics, Pipeline, _routeFilterRulesRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name, ruleName).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets the specified rule from a route filter. </summary>
-        /// <param name="ruleName"> The name of the rule. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
-        public async virtual Task<Response<RouteFilterRule>> GetRouteFilterRuleAsync(string ruleName, CancellationToken cancellationToken = default)
-        {
-            if (ruleName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("RouteFilter.GetRouteFilterRule");
-            scope.Start();
-            try
-            {
-                var response = await _routeFilterRulesRestClient.GetAsync(Id.ResourceGroupName, Id.Name, ruleName, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets the specified rule from a route filter. </summary>
-        /// <param name="ruleName"> The name of the rule. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
-        public virtual Response<RouteFilterRule> GetRouteFilterRule(string ruleName, CancellationToken cancellationToken = default)
-        {
-            if (ruleName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("RouteFilter.GetRouteFilterRule");
-            scope.Start();
-            try
-            {
-                var response = _routeFilterRulesRestClient.Get(Id.ResourceGroupName, Id.Name, ruleName, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or updates a route in the specified route filter. </summary>
-        /// <param name="ruleName"> The name of the route filter rule. </param>
-        /// <param name="routeFilterRuleParameters"> Parameters supplied to the create or update route filter rule operation. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> or <paramref name="routeFilterRuleParameters"/> is null. </exception>
-        public async virtual Task<RouteFilterRuleCreateOrUpdateOperation> CreateOrUpdateRouteFilterRuleAsync(string ruleName, RouteFilterRule routeFilterRuleParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
-        {
-            if (ruleName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleName));
-            }
-            if (routeFilterRuleParameters == null)
-            {
-                throw new ArgumentNullException(nameof(routeFilterRuleParameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("RouteFilter.CreateOrUpdateRouteFilterRule");
-            scope.Start();
-            try
-            {
-                var response = await _routeFilterRulesRestClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, ruleName, routeFilterRuleParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new RouteFilterRuleCreateOrUpdateOperation(_clientDiagnostics, Pipeline, _routeFilterRulesRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, ruleName, routeFilterRuleParameters).Request, response);
-                if (waitForCompletion)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or updates a route in the specified route filter. </summary>
-        /// <param name="ruleName"> The name of the route filter rule. </param>
-        /// <param name="routeFilterRuleParameters"> Parameters supplied to the create or update route filter rule operation. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> or <paramref name="routeFilterRuleParameters"/> is null. </exception>
-        public virtual RouteFilterRuleCreateOrUpdateOperation CreateOrUpdateRouteFilterRule(string ruleName, RouteFilterRule routeFilterRuleParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
-        {
-            if (ruleName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleName));
-            }
-            if (routeFilterRuleParameters == null)
-            {
-                throw new ArgumentNullException(nameof(routeFilterRuleParameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("RouteFilter.CreateOrUpdateRouteFilterRule");
-            scope.Start();
-            try
-            {
-                var response = _routeFilterRulesRestClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, ruleName, routeFilterRuleParameters, cancellationToken);
-                var operation = new RouteFilterRuleCreateOrUpdateOperation(_clientDiagnostics, Pipeline, _routeFilterRulesRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, ruleName, routeFilterRuleParameters).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets all RouteFilterRules in a route filter. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RouteFilterRule" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RouteFilterRule> GetRouteFilterRulesAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<RouteFilterRule>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("RouteFilter.GetRouteFilterRules");
-                scope.Start();
-                try
-                {
-                    var response = await _routeFilterRulesRestClient.ListByRouteFilterAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<RouteFilterRule>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("RouteFilter.GetRouteFilterRules");
-                scope.Start();
-                try
-                {
-                    var response = await _routeFilterRulesRestClient.ListByRouteFilterNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Gets all RouteFilterRules in a route filter. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RouteFilterRule" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RouteFilterRule> GetRouteFilterRules(CancellationToken cancellationToken = default)
-        {
-            Page<RouteFilterRule> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("RouteFilter.GetRouteFilterRules");
-                scope.Start();
-                try
-                {
-                    var response = _routeFilterRulesRestClient.ListByRouteFilter(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<RouteFilterRule> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("RouteFilter.GetRouteFilterRules");
-                scope.Start();
-                try
-                {
-                    var response = _routeFilterRulesRestClient.ListByRouteFilterNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
+        #endregion
     }
 }

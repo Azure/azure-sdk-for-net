@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = _tableRestClient.Create(Id.ResourceGroupName, Id.Parent.Name, Id.Name, tableName, cancellationToken);
+                var response = _tableRestClient.Create(Id.ResourceGroupName, Id.Parent.Name, tableName, cancellationToken);
                 var operation = new TableCreateOperation(Parent, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = await _tableRestClient.CreateAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, tableName, cancellationToken).ConfigureAwait(false);
+                var response = await _tableRestClient.CreateAsync(Id.ResourceGroupName, Id.Parent.Name, tableName, cancellationToken).ConfigureAwait(false);
                 var operation = new TableCreateOperation(Parent, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = _tableRestClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, tableName, cancellationToken);
+                var response = _tableRestClient.Get(Id.ResourceGroupName, Id.Parent.Name, tableName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new Table(Parent, response.Value), response.GetRawResponse());
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = await _tableRestClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, tableName, cancellationToken).ConfigureAwait(false);
+                var response = await _tableRestClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, tableName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new Table(Parent, response.Value), response.GetRawResponse());
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = _tableRestClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, tableName, cancellationToken: cancellationToken);
+                var response = _tableRestClient.Get(Id.ResourceGroupName, Id.Parent.Name, tableName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<Table>(null, response.GetRawResponse())
                     : Response.FromValue(new Table(this, response.Value), response.GetRawResponse());
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = await _tableRestClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, tableName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _tableRestClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, tableName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<Table>(null, response.GetRawResponse())
                     : Response.FromValue(new Table(this, response.Value), response.GetRawResponse());
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Storage
                 scope.Start();
                 try
                 {
-                    var response = _tableRestClient.List(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    var response = _tableRestClient.List(Id.ResourceGroupName, Id.Parent.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new Table(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Storage
                 scope.Start();
                 try
                 {
-                    var response = _tableRestClient.ListNextPage(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    var response = _tableRestClient.ListNextPage(nextLink, Id.ResourceGroupName, Id.Parent.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new Table(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Storage
                 scope.Start();
                 try
                 {
-                    var response = await _tableRestClient.ListAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _tableRestClient.ListAsync(Id.ResourceGroupName, Id.Parent.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new Table(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Storage
                 scope.Start();
                 try
                 {
-                    var response = await _tableRestClient.ListNextPageAsync(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _tableRestClient.ListNextPageAsync(nextLink, Id.ResourceGroupName, Id.Parent.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new Table(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

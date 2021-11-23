@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Resources
     public partial class ScriptLog : ArmResource
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly DeploymentScriptLogsRestOperations _deploymentScriptLogsRestClient;
+        private readonly DeploymentScriptsRestOperations _deploymentScriptsRestClient;
         private readonly ScriptLogData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ScriptLog"/> class for mocking. </summary>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Resources
             _data = resource;
             Parent = options;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _deploymentScriptLogsRestClient = new DeploymentScriptLogsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _deploymentScriptsRestClient = new DeploymentScriptsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="ScriptLog"/> class. </summary>
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Resources
         {
             Parent = options;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _deploymentScriptLogsRestClient = new DeploymentScriptLogsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _deploymentScriptsRestClient = new DeploymentScriptsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="ScriptLog"/> class. </summary>
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Resources
         internal ScriptLog(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _deploymentScriptLogsRestClient = new DeploymentScriptLogsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _deploymentScriptsRestClient = new DeploymentScriptsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = await _deploymentScriptLogsRestClient.GetLogsDefaultAsync(Id.ResourceGroupName, Id.Parent.Name, tail, cancellationToken).ConfigureAwait(false);
+                var response = await _deploymentScriptsRestClient.GetLogsDefaultAsync(Id.ResourceGroupName, Id.Parent.Name, tail, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new ScriptLog(this, response.Value), response.GetRawResponse());
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = _deploymentScriptLogsRestClient.GetLogsDefault(Id.ResourceGroupName, Id.Parent.Name, tail, cancellationToken);
+                var response = _deploymentScriptsRestClient.GetLogsDefault(Id.ResourceGroupName, Id.Parent.Name, tail, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ScriptLog(this, response.Value), response.GetRawResponse());

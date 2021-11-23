@@ -12,6 +12,8 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -20,14 +22,17 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly OperationInternals<PacketCapture> _operation;
 
+        private readonly ArmResource _operationBase;
+
         /// <summary> Initializes a new instance of PacketCaptureCreateOperation for mocking. </summary>
         protected PacketCaptureCreateOperation()
         {
         }
 
-        internal PacketCaptureCreateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal PacketCaptureCreateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<PacketCapture>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "PacketCaptureCreateOperation");
+            _operationBase = operationsBase;
         }
 
         /// <inheritdoc />
@@ -60,13 +65,13 @@ namespace Azure.ResourceManager.Network.Models
         PacketCapture IOperationSource<PacketCapture>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return PacketCapture.DeserializePacketCapture(document.RootElement);
+            return new PacketCapture(_operationBase, PacketCaptureData.DeserializePacketCaptureData(document.RootElement));
         }
 
         async ValueTask<PacketCapture> IOperationSource<PacketCapture>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return PacketCapture.DeserializePacketCapture(document.RootElement);
+            return new PacketCapture(_operationBase, PacketCaptureData.DeserializePacketCaptureData(document.RootElement));
         }
     }
 }

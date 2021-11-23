@@ -22,23 +22,13 @@ namespace Azure.ResourceManager.Resources
     /// <summary> A class to add extension methods to Subscription. </summary>
     public static partial class SubscriptionExtensions
     {
-        #region ManagementGroupResourceGroupSubscriptionTenantDeployment
-        /// <summary> Gets an object representing a ManagementGroupResourceGroupSubscriptionTenantDeploymentCollection along with the instance operations that can be performed on it. </summary>
+        #region Deployment
+        /// <summary> Gets an object representing a DeploymentCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="ManagementGroupResourceGroupSubscriptionTenantDeploymentCollection" /> object. </returns>
-        public static ManagementGroupResourceGroupSubscriptionTenantDeploymentCollection GetManagementGroupResourceGroupSubscriptionTenantDeployments(this Subscription subscription)
+        /// <returns> Returns a <see cref="DeploymentCollection" /> object. </returns>
+        public static DeploymentCollection GetDeployments(this Subscription subscription)
         {
-            return new ManagementGroupResourceGroupSubscriptionTenantDeploymentCollection(subscription);
-        }
-        #endregion
-
-        #region SubscriptionDeployment
-        /// <summary> Gets an object representing a SubscriptionDeploymentCollection along with the instance operations that can be performed on it. </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="SubscriptionDeploymentCollection" /> object. </returns>
-        public static SubscriptionDeploymentCollection GetSubscriptionDeployments(this Subscription subscription)
-        {
-            return new SubscriptionDeploymentCollection(subscription);
+            return new DeploymentCollection(subscription);
         }
         #endregion
 
@@ -183,12 +173,12 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Retrieves all JIT requests within the subscription. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<IReadOnlyList<JitRequestDefinition>>> GetJitRequestsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static async Task<Response<IReadOnlyList<JitRequestDefinition>>> GetJitRequestDefinitionsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return await subscription.UseClientContext(async (baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetJitRequests");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetJitRequestDefinitions");
                 scope.Start();
                 try
                 {
@@ -208,12 +198,12 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Retrieves all JIT requests within the subscription. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<IReadOnlyList<JitRequestDefinition>> GetJitRequests(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static Response<IReadOnlyList<JitRequestDefinition>> GetJitRequestDefinitions(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetJitRequests");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetJitRequestDefinitions");
                 scope.Start();
                 try
                 {

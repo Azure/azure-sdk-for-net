@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of RouteFilterData. </summary>
         public RouteFilterData()
         {
-            Rules = new ChangeTrackingList<RouteFilterRule>();
+            Rules = new ChangeTrackingList<RouteFilterRuleData>();
             Peerings = new ChangeTrackingList<ExpressRouteCircuitPeeringData>();
             Ipv6Peerings = new ChangeTrackingList<ExpressRouteCircuitPeeringData>();
         }
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="peerings"> A collection of references to express route circuit peerings. </param>
         /// <param name="ipv6Peerings"> A collection of references to express route circuit ipv6 peerings. </param>
         /// <param name="provisioningState"> The provisioning state of the route filter resource. </param>
-        internal RouteFilterData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, IList<RouteFilterRule> rules, IReadOnlyList<ExpressRouteCircuitPeeringData> peerings, IReadOnlyList<ExpressRouteCircuitPeeringData> ipv6Peerings, ProvisioningState? provisioningState) : base(id, name, type, location, tags)
+        internal RouteFilterData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, IList<RouteFilterRuleData> rules, IReadOnlyList<ExpressRouteCircuitPeeringData> peerings, IReadOnlyList<ExpressRouteCircuitPeeringData> ipv6Peerings, ProvisioningState? provisioningState) : base(id, name, type, location, tags)
         {
             Etag = etag;
             Rules = rules;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> Collection of RouteFilterRules contained within a route filter. </summary>
-        public IList<RouteFilterRule> Rules { get; }
+        public IList<RouteFilterRuleData> Rules { get; }
         /// <summary> A collection of references to express route circuit peerings. </summary>
         public IReadOnlyList<ExpressRouteCircuitPeeringData> Peerings { get; }
         /// <summary> A collection of references to express route circuit ipv6 peerings. </summary>

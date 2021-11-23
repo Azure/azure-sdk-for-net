@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="connectionName"> The name of the vpn connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, or <paramref name="connectionName"/> is null. </exception>
-        public async Task<Response<VpnConnection>> GetAsync(string resourceGroupName, string gatewayName, string connectionName, CancellationToken cancellationToken = default)
+        public async Task<Response<VpnConnectionData>> GetAsync(string resourceGroupName, string gatewayName, string connectionName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -93,11 +93,13 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        VpnConnection value = default;
+                        VpnConnectionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = VpnConnection.DeserializeVpnConnection(document.RootElement);
+                        value = VpnConnectionData.DeserializeVpnConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((VpnConnectionData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -109,7 +111,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="connectionName"> The name of the vpn connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, or <paramref name="connectionName"/> is null. </exception>
-        public Response<VpnConnection> Get(string resourceGroupName, string gatewayName, string connectionName, CancellationToken cancellationToken = default)
+        public Response<VpnConnectionData> Get(string resourceGroupName, string gatewayName, string connectionName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -130,17 +132,19 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        VpnConnection value = default;
+                        VpnConnectionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = VpnConnection.DeserializeVpnConnection(document.RootElement);
+                        value = VpnConnectionData.DeserializeVpnConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((VpnConnectionData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string gatewayName, string connectionName, VpnConnection vpnConnectionParameters)
+        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string gatewayName, string connectionName, VpnConnectionData vpnConnectionParameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -173,7 +177,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="vpnConnectionParameters"> Parameters supplied to create or Update a VPN Connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, <paramref name="connectionName"/>, or <paramref name="vpnConnectionParameters"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string gatewayName, string connectionName, VpnConnection vpnConnectionParameters, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string gatewayName, string connectionName, VpnConnectionData vpnConnectionParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -211,7 +215,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="vpnConnectionParameters"> Parameters supplied to create or Update a VPN Connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, <paramref name="connectionName"/>, or <paramref name="vpnConnectionParameters"/> is null. </exception>
-        public Response CreateOrUpdate(string resourceGroupName, string gatewayName, string connectionName, VpnConnection vpnConnectionParameters, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string resourceGroupName, string gatewayName, string connectionName, VpnConnectionData vpnConnectionParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

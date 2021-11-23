@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = await _queueRestClient.GetAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _queueRestClient.GetAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new StorageQueue(this, response.Value), response.GetRawResponse());
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = _queueRestClient.Get(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _queueRestClient.Get(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new StorageQueue(this, response.Value), response.GetRawResponse());
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = await _queueRestClient.DeleteAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _queueRestClient.DeleteAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new QueueDeleteOperation(response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = _queueRestClient.Delete(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _queueRestClient.Delete(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, cancellationToken);
                 var operation = new QueueDeleteOperation(response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = await _queueRestClient.UpdateAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, queue, cancellationToken).ConfigureAwait(false);
+                var response = await _queueRestClient.UpdateAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, queue, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new StorageQueue(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = _queueRestClient.Update(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, queue, cancellationToken);
+                var response = _queueRestClient.Update(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, queue, cancellationToken);
                 return Response.FromValue(new StorageQueue(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

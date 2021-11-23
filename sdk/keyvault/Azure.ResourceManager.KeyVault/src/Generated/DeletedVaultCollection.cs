@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.KeyVault
     public partial class DeletedVaultCollection : ArmCollection
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly DeletedVaultsRestOperations _deletedVaultsRestClient;
+        private readonly VaultsRestOperations _vaultsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="DeletedVaultCollection"/> class for mocking. </summary>
         protected DeletedVaultCollection()
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.KeyVault
         internal DeletedVaultCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _deletedVaultsRestClient = new DeletedVaultsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _vaultsRestClient = new VaultsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.KeyVault
             scope.Start();
             try
             {
-                var response = _deletedVaultsRestClient.Get(location, vaultName, cancellationToken);
+                var response = _vaultsRestClient.GetDeleted(location, vaultName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DeletedVault(Parent, response.Value), response.GetRawResponse());
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.KeyVault
             scope.Start();
             try
             {
-                var response = await _deletedVaultsRestClient.GetAsync(location, vaultName, cancellationToken).ConfigureAwait(false);
+                var response = await _vaultsRestClient.GetDeletedAsync(location, vaultName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new DeletedVault(Parent, response.Value), response.GetRawResponse());
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.KeyVault
             scope.Start();
             try
             {
-                var response = _deletedVaultsRestClient.Get(location, vaultName, cancellationToken: cancellationToken);
+                var response = _vaultsRestClient.GetDeleted(location, vaultName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<DeletedVault>(null, response.GetRawResponse())
                     : Response.FromValue(new DeletedVault(this, response.Value), response.GetRawResponse());
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.KeyVault
             scope.Start();
             try
             {
-                var response = await _deletedVaultsRestClient.GetAsync(location, vaultName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _vaultsRestClient.GetDeletedAsync(location, vaultName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<DeletedVault>(null, response.GetRawResponse())
                     : Response.FromValue(new DeletedVault(this, response.Value), response.GetRawResponse());
