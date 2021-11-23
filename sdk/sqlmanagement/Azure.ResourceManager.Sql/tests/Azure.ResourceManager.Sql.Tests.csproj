@@ -7,4 +7,8 @@
     <PackageReference Include="Azure.ResourceManager.Network" />
     <PackageReference Include="Microsoft.Azure.AutoRest.CSharp" VersionOverride="$(MgmtAutorestVersion)" PrivateAssets="All" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <Folder Include="SessionRecords\ServerTrustGroupTests\" />
+  </ItemGroup>
 </Project>

@@ -46,10 +46,8 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         private async Task<ServerTrustGroup> CreateServerTrustGroup(string locationName, string serverTrustGroupName)
         {
             // create two ManagedInstanceName
-            string primaryManagedInstanceName = Recording.GenerateAssetName("managed-instance-");
-            string backupManagedInstanceName = Recording.GenerateAssetName("managed-instance-backup-");
             string managedInstanceName1 = Recording.GenerateAssetName("managed-instance-");
-            string managedInstanceName2 = Recording.GenerateAssetName("managed-instance-");
+            string managedInstanceName2 = Recording.GenerateAssetName("managed-instance-backup-");
             string networkSecurityGroupName1 = Recording.GenerateAssetName("network-security-group-");
             string networkSecurityGroupName2 = Recording.GenerateAssetName("network-security-group-");
             string routeTableName1 = Recording.GenerateAssetName("route-table-");
@@ -62,8 +60,8 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
                 CreateDefaultManagedInstance(managedInstanceName2, networkSecurityGroupName2, routeTableName2, vnetName2, Location.WestUS2, _resourceGroup),
             };
             Task.WaitAll(tasks);
-            string primaryManagedInstanceId = (await _resourceGroup.GetManagedInstances().GetAsync(primaryManagedInstanceName)).Value.Data.Id.ToString();
-            string backupManagedInstanceId = (await _resourceGroup.GetManagedInstances().GetAsync(backupManagedInstanceName)).Value.Data.Id.ToString();
+            string primaryManagedInstanceId = (await _resourceGroup.GetManagedInstances().GetAsync(managedInstanceName1)).Value.Data.Id.ToString();
+            string backupManagedInstanceId = (await _resourceGroup.GetManagedInstances().GetAsync(managedInstanceName2)).Value.Data.Id.ToString();
 
             // create ServerTrustGroup
             ServerTrustGroupData data = new ServerTrustGroupData()
