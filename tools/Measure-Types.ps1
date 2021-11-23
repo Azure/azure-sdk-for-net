@@ -94,7 +94,7 @@ public static class Hook
 
     $resolveTargets = @(
         $TargetVersion
-        'netcoreapp2.0'
+        'netcoreapp3.1'
         'net462'
         'net461'
         'netstandard1.6'

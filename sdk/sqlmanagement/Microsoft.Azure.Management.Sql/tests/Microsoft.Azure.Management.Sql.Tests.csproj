@@ -6,7 +6,7 @@
     <VersionPrefix>1.0.0-preview</VersionPrefix>
   </PropertyGroup>
   <!--<PropertyGroup>
-    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
+    <TargetFrameworks>netcoreapp3.1</TargetFrameworks>
   </PropertyGroup>-->
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.KeyVault" Version="3.0.0" />

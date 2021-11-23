@@ -9,7 +9,7 @@ steps:
       useGlobalJson: true
       performMultiLevelLookup: true
       includePreviewVersions: true
-  # Mgmt uses netcoreapp2.0 for testing
+  # Mgmt uses netcoreapp3.1 for testing
   - task: UseDotNet@2
     condition: ne(variables['Agent.OS'], 'Windows_NT') # Windows supports MultiLevelLookup and doesn't need explicit framework installation
     displayName: 'Use .NET Core 3.1 SDK'

@@ -6,7 +6,7 @@
   <PropertyGroup>
     <NetFx452>net452</NetFx452>
     <NetStd14>netstandard1.4</NetStd14>
-    <NetCore11>netcoreapp1.1</NetCore11>
+    <NetCore11>netcoreapp3.1</NetCore11>
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildStaticAnalysisTargets>

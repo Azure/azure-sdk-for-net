@@ -16,7 +16,7 @@
     <OutputPath>bin\$(Configuration)\</OutputPath>
   </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp3.1' ">
     <DefineConstants>netcoreapp11</DefineConstants>
     <OutputPath>bin\$(Configuration)\</OutputPath>
   </PropertyGroup>

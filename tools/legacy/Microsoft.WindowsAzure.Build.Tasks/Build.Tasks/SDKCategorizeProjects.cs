@@ -332,7 +332,7 @@ namespace Microsoft.WindowsAzure.Build.Tasks
                     fxSupported = true;
                     break;
 
-                case "netcoreapp1.1":
+                case "netcoreapp3.1":
                     validMoniker = TargetFrameworkMoniker.netcoreapp11;
                     fxSupported = true;
                     break;

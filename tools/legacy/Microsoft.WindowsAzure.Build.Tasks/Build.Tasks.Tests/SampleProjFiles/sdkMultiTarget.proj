@@ -9,7 +9,7 @@
     <PackageTags>Microsoft AutoRest ClientRuntime HttpRecorder REST;$(CommonNugetPackageTags)</PackageTags>
   </PropertyGroup>
   <PropertyGroup>
-    <TargetFrameworks>net452;netcoreapp1.1</TargetFrameworks>
+    <TargetFrameworks>net452;netcoreapp3.1</TargetFrameworks>
   </PropertyGroup>
   
   <ItemGroup>
@@ -22,7 +22,7 @@
     <Reference Include="System.Net.Http.WebRequest" />
   </ItemGroup>
   
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp3.1' ">
     <!--<PackageReference Include="System.AppDomain" Version="2.0.11" />-->
   </ItemGroup>
 </Project>

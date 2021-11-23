@@ -28,7 +28,7 @@ namespace SignalRServiceExtension.Tests
             Assert.Empty(services);
         }
 
-#if NETCOREAPP2_1
+#if NETCOREAPP2_1_OR_GREATER
 
         [Fact]
         public void SetHubProtocol_Throw()

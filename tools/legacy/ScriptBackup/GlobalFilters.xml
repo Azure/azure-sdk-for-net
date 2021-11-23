@@ -136,19 +136,19 @@
         <string>ART\\TSATest</string>
         <string>ART\\TSATest</string>
         <string>SDKs\\KeyVault\\dataplane\\Microsoft.Azure.KeyVault.Tests\\SessionRecords</string>
-		<string>SDKs\\KeyVault\\dataplane\\Microsoft.Azure.KeyVault.Tests\\bin\\Debug\\netcoreapp1.1\\SessionRecords</string>
+		<string>SDKs\\KeyVault\\dataplane\\Microsoft.Azure.KeyVault.Tests\\bin\\Debug\\netcoreapp3.1\\SessionRecords</string>
 	<string>SDKs\\Network\\Network.Tests\\SessionRecords\\Networks.Tests.ApplicationGatewayTests\\ApplicationGatewayApiTest.json</string>
-	<string>SDKs\\Network\\Network.Tests\\bin\\Debug\\netcoreapp1.1\\SessionRecords\\Networks.Tests.ApplicationGatewayTests\\ApplicationGatewayApiTest.json</string>	
+	<string>SDKs\\Network\\Network.Tests\\bin\\Debug\\netcoreapp3.1\\SessionRecords\\Networks.Tests.ApplicationGatewayTests\\ApplicationGatewayApiTest.json</string>	
 	<string>SDKs\\Network\\Network.Tests\\Tests\\Data\\ApplicationGatewayAuthCert.cer</string>
-	<string>SDKs\\Network\\Network.Tests\\bin\\Debug\\netcoreapp1.1\\Tests\\Data\\ApplicationGatewayAuthCert.cer</string>	
+	<string>SDKs\\Network\\Network.Tests\\bin\\Debug\\netcoreapp3.1\\Tests\\Data\\ApplicationGatewayAuthCert.cer</string>	
 	<string>SDKs\\Graph.RBAC\\Graph.RBAC.Tests\\SessionRecords\\Microsoft.Azure.Graph.RBAC.Tests.ApplicationAndServicePrincipalTests\\CreateDeleteAppCredentialTest.json</string>
-	<string>SDKs\\Graph.RBAC\\Graph.RBAC.Tests\\bin\\Debug\\netcoreapp1.1\\SessionRecords\\Microsoft.Azure.Graph.RBAC.Tests.ApplicationAndServicePrincipalTests\\CreateDeleteAppCredentialTest.json</string>	
+	<string>SDKs\\Graph.RBAC\\Graph.RBAC.Tests\\bin\\Debug\\netcoreapp3.1\\SessionRecords\\Microsoft.Azure.Graph.RBAC.Tests.ApplicationAndServicePrincipalTests\\CreateDeleteAppCredentialTest.json</string>	
 	<string>SDKs\\Graph.RBAC\\Graph.RBAC.Tests\\SessionRecords\\Microsoft.Azure.Graph.RBAC.Tests.ApplicationAndServicePrincipalTests\\CreateDeleteSpCredentialTest.json</string>
-	<string>SDKs\\Graph.RBAC\\Graph.RBAC.Tests\\bin\\Debug\\netcoreapp1.1\\SessionRecords\\Microsoft.Azure.Graph.RBAC.Tests.ApplicationAndServicePrincipalTests\\CreateDeleteSpCredentialTest.json</string>	
+	<string>SDKs\\Graph.RBAC\\Graph.RBAC.Tests\\bin\\Debug\\netcoreapp3.1\\SessionRecords\\Microsoft.Azure.Graph.RBAC.Tests.ApplicationAndServicePrincipalTests\\CreateDeleteSpCredentialTest.json</string>	
 	<string>SDKs\\Graph.RBAC\\Graph.RBAC.Tests\\SessionRecords\\Microsoft.Azure.Graph.RBAC.Tests.ApplicationAndServicePrincipalTests\\CRUDApplicationTest.json</string>
-	<string>SDKs\\Graph.RBAC\\Graph.RBAC.Tests\\bin\\Debug\\netcoreapp1.1\\SessionRecords\\Microsoft.Azure.Graph.RBAC.Tests.ApplicationAndServicePrincipalTests\\CRUDApplicationTest.json</string>	
+	<string>SDKs\\Graph.RBAC\\Graph.RBAC.Tests\\bin\\Debug\\netcoreapp3.1\\SessionRecords\\Microsoft.Azure.Graph.RBAC.Tests.ApplicationAndServicePrincipalTests\\CRUDApplicationTest.json</string>	
 	<string>SDKs\\Graph.RBAC\\Graph.RBAC.Tests\\SessionRecords\\Microsoft.Azure.Graph.RBAC.Tests.ApplicationAndServicePrincipalTests\\NegativeCredentialTest.json</string>
-	<string>SDKs\\Graph.RBAC\\Graph.RBAC.Tests\\bin\\Debug\\netcoreapp1.1\\SessionRecords\\Microsoft.Azure.Graph.RBAC.Tests.ApplicationAndServicePrincipalTests\\NegativeCredentialTest.json</string>
+	<string>SDKs\\Graph.RBAC\\Graph.RBAC.Tests\\bin\\Debug\\netcoreapp3.1\\SessionRecords\\Microsoft.Azure.Graph.RBAC.Tests.ApplicationAndServicePrincipalTests\\NegativeCredentialTest.json</string>
       </Filters>
     </ResourceFilter>
   </ResourceSearchFilters>

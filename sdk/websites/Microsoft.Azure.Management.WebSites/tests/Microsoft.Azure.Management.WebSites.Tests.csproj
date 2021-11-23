@@ -7,7 +7,7 @@
     <VersionPrefix>1.0.0-preview</VersionPrefix>
   </PropertyGroup>
   <!--<PropertyGroup>
-    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
+    <TargetFrameworks>netcoreapp3.1</TargetFrameworks>
   </PropertyGroup>-->
   <PropertyGroup>
     <ExcludeFromBuild>true</ExcludeFromBuild>
