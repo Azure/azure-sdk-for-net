@@ -81,9 +81,11 @@ function GetAdjustedReadmeContent($ReadmeContent, $PackageInfo, $PackageMetadata
   # Get the first code owners of the package.
   $author = "ramya-rao-a"
   $msauthor = "ramyar"
+  Write-Host "Retrieve the code owner from $PackageInfo.DirectoryPath."
   $codeOwnerArray = ."$PSScriptRoot/get-codeowners.ps1" `
                     -TargetDirectory $PackageInfo.DirectoryPath 
   if ($codeOwnerArray) {
+    Write-Host "Code Owners are $($codeOwnerArray -join ",")"
     $author = $codeOwnerArray[0]
     $msauthor = $author # This is a placeholder for now. Will change to the right ms alias.
   }
