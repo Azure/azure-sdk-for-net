@@ -11,15 +11,15 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
-    /// <summary> A class representing the AFDDomain data model. </summary>
-    public partial class AFDDomainData : ProxyResource
+    /// <summary> A class representing the AFDCustomDomain data model. </summary>
+    public partial class AFDCustomDomainData : ProxyResource
     {
-        /// <summary> Initializes a new instance of AFDDomainData. </summary>
-        public AFDDomainData()
+        /// <summary> Initializes a new instance of AFDCustomDomainData. </summary>
+        public AFDCustomDomainData()
         {
         }
 
-        /// <summary> Initializes a new instance of AFDDomainData. </summary>
+        /// <summary> Initializes a new instance of AFDCustomDomainData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="domainValidationState"> Provisioning substate shows the progress of custom HTTPS enabling/disabling process step by step. DCV stands for DomainControlValidation. </param>
         /// <param name="hostName"> The host name of the domain. Must be a domain name. </param>
         /// <param name="validationProperties"> Values the customer needs to validate domain ownership. </param>
-        internal AFDDomainData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, AFDDomainHttpsParameters tlsSettings, WritableSubResource azureDnsZone, AfdProvisioningState? provisioningState, DeploymentStatus? deploymentStatus, DomainValidationState? domainValidationState, string hostName, DomainValidationProperties validationProperties) : base(id, name, type, systemData)
+        internal AFDCustomDomainData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, AFDDomainHttpsParameters tlsSettings, WritableSubResource azureDnsZone, AfdProvisioningState? provisioningState, DeploymentStatus? deploymentStatus, DomainValidationState? domainValidationState, string hostName, DomainValidationProperties validationProperties) : base(id, name, type, systemData)
         {
             TlsSettings = tlsSettings;
             AzureDnsZone = azureDnsZone;

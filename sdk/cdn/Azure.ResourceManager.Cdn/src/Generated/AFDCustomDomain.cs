@@ -19,22 +19,22 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
-    /// <summary> A Class representing a AFDDomain along with the instance operations that can be performed on it. </summary>
-    public partial class AFDDomain : ArmResource
+    /// <summary> A Class representing a AFDCustomDomain along with the instance operations that can be performed on it. </summary>
+    public partial class AFDCustomDomain : ArmResource
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly AFDCustomDomainsRestOperations _aFDCustomDomainsRestClient;
-        private readonly AFDDomainData _data;
+        private readonly AFDCustomDomainData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="AFDDomain"/> class for mocking. </summary>
-        protected AFDDomain()
+        /// <summary> Initializes a new instance of the <see cref="AFDCustomDomain"/> class for mocking. </summary>
+        protected AFDCustomDomain()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AFDDomain"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "AFDCustomDomain"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal AFDDomain(ArmResource options, AFDDomainData resource) : base(options, resource.Id)
+        internal AFDCustomDomain(ArmResource options, AFDCustomDomainData resource) : base(options, resource.Id)
         {
             HasData = true;
             _data = resource;
@@ -42,22 +42,22 @@ namespace Azure.ResourceManager.Cdn
             _aFDCustomDomainsRestClient = new AFDCustomDomainsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AFDDomain"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AFDCustomDomain"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal AFDDomain(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal AFDCustomDomain(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _aFDCustomDomainsRestClient = new AFDCustomDomainsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AFDDomain"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AFDCustomDomain"/> class. </summary>
         /// <param name="clientOptions"> The client options to build client context. </param>
         /// <param name="credential"> The credential to build client context. </param>
         /// <param name="uri"> The uri to build client context. </param>
         /// <param name="pipeline"> The pipeline to build client context. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal AFDDomain(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
+        internal AFDCustomDomain(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _aFDCustomDomainsRestClient = new AFDCustomDomainsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual AFDDomainData Data
+        public virtual AFDCustomDomainData Data
         {
             get
             {
@@ -86,16 +86,16 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Gets an existing AzureFrontDoor domain with the specified domain name under the specified subscription, resource group and profile. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<AFDDomain>> GetAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response<AFDCustomDomain>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AFDDomain.Get");
+            using var scope = _clientDiagnostics.CreateScope("AFDCustomDomain.Get");
             scope.Start();
             try
             {
                 var response = await _aFDCustomDomainsRestClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new AFDDomain(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AFDCustomDomain(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -106,16 +106,16 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Gets an existing AzureFrontDoor domain with the specified domain name under the specified subscription, resource group and profile. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AFDDomain> Get(CancellationToken cancellationToken = default)
+        public virtual Response<AFDCustomDomain> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AFDDomain.Get");
+            using var scope = _clientDiagnostics.CreateScope("AFDCustomDomain.Get");
             scope.Start();
             try
             {
                 var response = _aFDCustomDomainsRestClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AFDDomain(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AFDCustomDomain(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<AFDCustomDomainDeleteOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AFDDomain.Delete");
+            using var scope = _clientDiagnostics.CreateScope("AFDCustomDomain.Delete");
             scope.Start();
             try
             {
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AFDCustomDomainDeleteOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AFDDomain.Delete");
+            using var scope = _clientDiagnostics.CreateScope("AFDCustomDomain.Delete");
             scope.Start();
             try
             {
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(customDomainUpdateProperties));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AFDDomain.Update");
+            using var scope = _clientDiagnostics.CreateScope("AFDCustomDomain.Update");
             scope.Start();
             try
             {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(customDomainUpdateProperties));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AFDDomain.Update");
+            using var scope = _clientDiagnostics.CreateScope("AFDCustomDomain.Update");
             scope.Start();
             try
             {
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<AFDCustomDomainRefreshValidationTokenOperation> RefreshValidationTokenAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AFDDomain.RefreshValidationToken");
+            using var scope = _clientDiagnostics.CreateScope("AFDCustomDomain.RefreshValidationToken");
             scope.Start();
             try
             {
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AFDCustomDomainRefreshValidationTokenOperation RefreshValidationToken(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AFDDomain.RefreshValidationToken");
+            using var scope = _clientDiagnostics.CreateScope("AFDCustomDomain.RefreshValidationToken");
             scope.Start();
             try
             {

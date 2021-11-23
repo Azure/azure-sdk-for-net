@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             HostName = hostName
         };
 
-        public static AFDDomainData CreateAFDCustomDomainData(string hostName) => new AFDDomainData
+        public static AFDCustomDomainData CreateAFDCustomDomainData(string hostName) => new AFDCustomDomainData
         {
             HostName = hostName,
             TlsSettings = new AFDDomainHttpsParameters(AfdCertificateType.ManagedCertificate)
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             Assert.AreEqual(model.Data.ProvisioningState, getResult.Data.ProvisioningState);
         }
 
-        public static void AssertValidAFDCustomDomain(AFDDomain model, AFDDomain getResult)
+        public static void AssertValidAFDCustomDomain(AFDCustomDomain model, AFDCustomDomain getResult)
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             }
         }
 
-        public static void AssertAFDDomainUpdate(AFDDomain updatedAFDDomain, AFDDomainUpdateParameters updateParameters)
+        public static void AssertAFDDomainUpdate(AFDCustomDomain updatedAFDDomain, AFDDomainUpdateParameters updateParameters)
         {
             Assert.AreEqual(updatedAFDDomain.Data.TlsSettings.CertificateType, updateParameters.TlsSettings.CertificateType);
             Assert.AreEqual(updatedAFDDomain.Data.TlsSettings.MinimumTlsVersion, updateParameters.TlsSettings.MinimumTlsVersion);

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             Profile AFDProfile = await CreateAFDProfile(rg, AFDProfileName, SkuName.StandardAzureFrontDoor);
             string AFDCustomDomainName = Recording.GenerateAssetName("AFDCustomDomain-");
             string AFDHostName = "customdomain4afd-4.azuretest.net";
-            AFDDomain AFDCustomDomain = await CreateAFDCustomDomain(AFDProfile, AFDCustomDomainName, AFDHostName);
+            AFDCustomDomain AFDCustomDomain = await CreateAFDCustomDomain(AFDProfile, AFDCustomDomainName, AFDHostName);
             await AFDCustomDomain.DeleteAsync();
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await AFDCustomDomain.GetAsync());
             Assert.AreEqual(404, ex.Status);
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroup rg = await subscription.GetResourceGroups().GetAsync("CdnTest");
             Profile AFDProfile = await rg.GetProfiles().GetAsync("testAFDProfile");
-            AFDDomain AFDCustomDomain = await AFDProfile.GetAFDDomains().GetAsync("customdomain4afd-azuretest-net");
+            AFDCustomDomain AFDCustomDomain = await AFDProfile.GetAFDCustomDomains().GetAsync("customdomain4afd-azuretest-net");
             AFDDomainUpdateParameters updateParameters = new AFDDomainUpdateParameters
             {
                 TlsSettings = new AFDDomainHttpsParameters(AfdCertificateType.ManagedCertificate)
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Cdn.Tests
                 },
             };
             var lro = await AFDCustomDomain.UpdateAsync(updateParameters);
-            AFDDomain updatedAFDCustomDomain = lro.Value;
+            AFDCustomDomain updatedAFDCustomDomain = lro.Value;
             ResourceDataHelper.AssertAFDDomainUpdate(updatedAFDCustomDomain, updateParameters);
         }
 
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroup rg = await subscription.GetResourceGroups().GetAsync("CdnTest");
             Profile AFDProfile = await rg.GetProfiles().GetAsync("testAFDProfile");
-            AFDDomain AFDCustomDomain = await AFDProfile.GetAFDDomains().GetAsync("customdomain4afd-azuretest-net");
+            AFDCustomDomain AFDCustomDomain = await AFDProfile.GetAFDCustomDomains().GetAsync("customdomain4afd-azuretest-net");
             Assert.ThrowsAsync<RequestFailedException>(async () => await AFDCustomDomain.RefreshValidationTokenAsync());
         }
     }

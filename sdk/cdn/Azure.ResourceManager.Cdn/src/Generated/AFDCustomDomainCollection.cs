@@ -20,21 +20,21 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Cdn
 {
-    /// <summary> A class representing collection of AFDDomain and their operations over its parent. </summary>
-    public partial class AFDDomainCollection : ArmCollection, IEnumerable<AFDDomain>, IAsyncEnumerable<AFDDomain>
+    /// <summary> A class representing collection of AFDCustomDomain and their operations over its parent. </summary>
+    public partial class AFDCustomDomainCollection : ArmCollection, IEnumerable<AFDCustomDomain>, IAsyncEnumerable<AFDCustomDomain>
 
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly AFDCustomDomainsRestOperations _aFDCustomDomainsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="AFDDomainCollection"/> class for mocking. </summary>
-        protected AFDDomainCollection()
+        /// <summary> Initializes a new instance of the <see cref="AFDCustomDomainCollection"/> class for mocking. </summary>
+        protected AFDCustomDomainCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of AFDDomainCollection class. </summary>
+        /// <summary> Initializes a new instance of AFDCustomDomainCollection class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal AFDDomainCollection(ArmResource parent) : base(parent)
+        internal AFDCustomDomainCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _aFDCustomDomainsRestClient = new AFDCustomDomainsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> or <paramref name="customDomain"/> is null. </exception>
-        public virtual AFDCustomDomainCreateOperation CreateOrUpdate(string customDomainName, AFDDomainData customDomain, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual AFDCustomDomainCreateOperation CreateOrUpdate(string customDomainName, AFDCustomDomainData customDomain, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (customDomainName == null)
             {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(customDomain));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AFDDomainCollection.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("AFDCustomDomainCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> or <paramref name="customDomain"/> is null. </exception>
-        public async virtual Task<AFDCustomDomainCreateOperation> CreateOrUpdateAsync(string customDomainName, AFDDomainData customDomain, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<AFDCustomDomainCreateOperation> CreateOrUpdateAsync(string customDomainName, AFDCustomDomainData customDomain, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (customDomainName == null)
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(customDomain));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AFDDomainCollection.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("AFDCustomDomainCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -117,21 +117,21 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="customDomainName"> Name of the domain under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
-        public virtual Response<AFDDomain> Get(string customDomainName, CancellationToken cancellationToken = default)
+        public virtual Response<AFDCustomDomain> Get(string customDomainName, CancellationToken cancellationToken = default)
         {
             if (customDomainName == null)
             {
                 throw new ArgumentNullException(nameof(customDomainName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AFDDomainCollection.Get");
+            using var scope = _clientDiagnostics.CreateScope("AFDCustomDomainCollection.Get");
             scope.Start();
             try
             {
                 var response = _aFDCustomDomainsRestClient.Get(Id.ResourceGroupName, Id.Name, customDomainName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AFDDomain(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AFDCustomDomain(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -144,21 +144,21 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="customDomainName"> Name of the domain under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
-        public async virtual Task<Response<AFDDomain>> GetAsync(string customDomainName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<AFDCustomDomain>> GetAsync(string customDomainName, CancellationToken cancellationToken = default)
         {
             if (customDomainName == null)
             {
                 throw new ArgumentNullException(nameof(customDomainName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AFDDomainCollection.Get");
+            using var scope = _clientDiagnostics.CreateScope("AFDCustomDomainCollection.Get");
             scope.Start();
             try
             {
                 var response = await _aFDCustomDomainsRestClient.GetAsync(Id.ResourceGroupName, Id.Name, customDomainName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new AFDDomain(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AFDCustomDomain(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -171,21 +171,21 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="customDomainName"> Name of the domain under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
-        public virtual Response<AFDDomain> GetIfExists(string customDomainName, CancellationToken cancellationToken = default)
+        public virtual Response<AFDCustomDomain> GetIfExists(string customDomainName, CancellationToken cancellationToken = default)
         {
             if (customDomainName == null)
             {
                 throw new ArgumentNullException(nameof(customDomainName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AFDDomainCollection.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("AFDCustomDomainCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = _aFDCustomDomainsRestClient.Get(Id.ResourceGroupName, Id.Name, customDomainName, cancellationToken: cancellationToken);
                 return response.Value == null
-                    ? Response.FromValue<AFDDomain>(null, response.GetRawResponse())
-                    : Response.FromValue(new AFDDomain(this, response.Value), response.GetRawResponse());
+                    ? Response.FromValue<AFDCustomDomain>(null, response.GetRawResponse())
+                    : Response.FromValue(new AFDCustomDomain(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -198,21 +198,21 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="customDomainName"> Name of the domain under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
-        public async virtual Task<Response<AFDDomain>> GetIfExistsAsync(string customDomainName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<AFDCustomDomain>> GetIfExistsAsync(string customDomainName, CancellationToken cancellationToken = default)
         {
             if (customDomainName == null)
             {
                 throw new ArgumentNullException(nameof(customDomainName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AFDDomainCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("AFDCustomDomainCollection.GetIfExistsAsync");
             scope.Start();
             try
             {
                 var response = await _aFDCustomDomainsRestClient.GetAsync(Id.ResourceGroupName, Id.Name, customDomainName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
-                    ? Response.FromValue<AFDDomain>(null, response.GetRawResponse())
-                    : Response.FromValue(new AFDDomain(this, response.Value), response.GetRawResponse());
+                    ? Response.FromValue<AFDCustomDomain>(null, response.GetRawResponse())
+                    : Response.FromValue(new AFDCustomDomain(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(customDomainName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AFDDomainCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("AFDCustomDomainCollection.CheckIfExists");
             scope.Start();
             try
             {
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(customDomainName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AFDDomainCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("AFDCustomDomainCollection.CheckIfExistsAsync");
             scope.Start();
             try
             {
@@ -273,17 +273,17 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Lists existing AzureFrontDoor domains. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AFDDomain" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AFDDomain> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AFDCustomDomain" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AFDCustomDomain> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<AFDDomain> FirstPageFunc(int? pageSizeHint)
+            Page<AFDCustomDomain> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("AFDDomainCollection.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("AFDCustomDomainCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _aFDCustomDomainsRestClient.ListByProfile(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AFDDomain(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AFDCustomDomain(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -291,14 +291,14 @@ namespace Azure.ResourceManager.Cdn
                     throw;
                 }
             }
-            Page<AFDDomain> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<AFDCustomDomain> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("AFDDomainCollection.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("AFDCustomDomainCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _aFDCustomDomainsRestClient.ListByProfileNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AFDDomain(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AFDCustomDomain(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -311,17 +311,17 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Lists existing AzureFrontDoor domains. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AFDDomain" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AFDDomain> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AFDCustomDomain" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AFDCustomDomain> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AFDDomain>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AFDCustomDomain>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("AFDDomainCollection.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("AFDCustomDomainCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _aFDCustomDomainsRestClient.ListByProfileAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AFDDomain(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AFDCustomDomain(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -329,14 +329,14 @@ namespace Azure.ResourceManager.Cdn
                     throw;
                 }
             }
-            async Task<Page<AFDDomain>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<AFDCustomDomain>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("AFDDomainCollection.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("AFDCustomDomainCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _aFDCustomDomainsRestClient.ListByProfileNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AFDDomain(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AFDCustomDomain(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.Cdn
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        IEnumerator<AFDDomain> IEnumerable<AFDDomain>.GetEnumerator()
+        IEnumerator<AFDCustomDomain> IEnumerable<AFDCustomDomain>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -357,12 +357,12 @@ namespace Azure.ResourceManager.Cdn
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<AFDDomain> IAsyncEnumerable<AFDDomain>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<AFDCustomDomain> IAsyncEnumerable<AFDCustomDomain>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, AFDDomain, AFDDomainData> Construct() { }
+        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, AFDCustomDomain, AFDCustomDomainData> Construct() { }
     }
 }

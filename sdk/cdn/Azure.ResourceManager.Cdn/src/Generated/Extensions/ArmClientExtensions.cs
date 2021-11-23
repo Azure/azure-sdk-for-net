@@ -67,14 +67,14 @@ namespace Azure.ResourceManager.Cdn
         }
         #endregion
 
-        #region AFDDomain
-        /// <summary> Gets an object representing a AFDDomain along with the instance operations that can be performed on it but with no data. </summary>
+        #region AFDCustomDomain
+        /// <summary> Gets an object representing a AFDCustomDomain along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AFDDomain" /> object. </returns>
-        public static AFDDomain GetAFDDomain(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AFDCustomDomain" /> object. </returns>
+        public static AFDCustomDomain GetAFDCustomDomain(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new AFDDomain(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new AFDCustomDomain(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 

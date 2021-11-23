@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
-    public partial class AFDDomainData : IUtf8JsonSerializable
+    public partial class AFDCustomDomainData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Cdn
             writer.WriteEndObject();
         }
 
-        internal static AFDDomainData DeserializeAFDDomainData(JsonElement element)
+        internal static AFDCustomDomainData DeserializeAFDCustomDomainData(JsonElement element)
         {
             Optional<SystemData> systemData = default;
             ResourceIdentifier id = default;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Cdn
                     continue;
                 }
             }
-            return new AFDDomainData(id, name, type, systemData.Value, tlsSettings.Value, azureDnsZone, Optional.ToNullable(provisioningState), Optional.ToNullable(deploymentStatus), Optional.ToNullable(domainValidationState), hostName.Value, validationProperties.Value);
+            return new AFDCustomDomainData(id, name, type, systemData.Value, tlsSettings.Value, azureDnsZone, Optional.ToNullable(provisioningState), Optional.ToNullable(deploymentStatus), Optional.ToNullable(domainValidationState), hostName.Value, validationProperties.Value);
         }
     }
 }

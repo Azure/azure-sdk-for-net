@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of AFDDomainListResult. </summary>
         internal AFDDomainListResult()
         {
-            Value = new ChangeTrackingList<AFDDomainData>();
+            Value = new ChangeTrackingList<AFDCustomDomainData>();
         }
 
         /// <summary> Initializes a new instance of AFDDomainListResult. </summary>
         /// <param name="value"> List of AzureFrontDoor domains within a profile. </param>
         /// <param name="nextLink"> URL to get the next set of domain objects if there are any. </param>
-        internal AFDDomainListResult(IReadOnlyList<AFDDomainData> value, string nextLink)
+        internal AFDDomainListResult(IReadOnlyList<AFDCustomDomainData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of AzureFrontDoor domains within a profile. </summary>
-        public IReadOnlyList<AFDDomainData> Value { get; }
+        public IReadOnlyList<AFDCustomDomainData> Value { get; }
         /// <summary> URL to get the next set of domain objects if there are any. </summary>
         public string NextLink { get; }
     }

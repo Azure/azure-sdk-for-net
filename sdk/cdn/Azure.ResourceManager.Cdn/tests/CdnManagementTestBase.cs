@@ -129,10 +129,10 @@ namespace Azure.ResourceManager.Cdn.Tests
             return lro.Value;
         }
 
-        protected async Task<AFDDomain> CreateAFDCustomDomain(Profile profile, string customDomainName, string hostName)
+        protected async Task<AFDCustomDomain> CreateAFDCustomDomain(Profile profile, string customDomainName, string hostName)
         {
-            AFDDomainData input = ResourceDataHelper.CreateAFDCustomDomainData(hostName);
-            var lro = await profile.GetAFDDomains().CreateOrUpdateAsync(customDomainName, input);
+            AFDCustomDomainData input = ResourceDataHelper.CreateAFDCustomDomainData(hostName);
+            var lro = await profile.GetAFDCustomDomains().CreateOrUpdateAsync(customDomainName, input);
             return lro.Value;
         }
 

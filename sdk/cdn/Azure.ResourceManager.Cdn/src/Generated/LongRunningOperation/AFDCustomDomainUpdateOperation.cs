@@ -18,9 +18,9 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Updates an existing domain within a profile. </summary>
-    public partial class AFDCustomDomainUpdateOperation : Operation<AFDDomain>, IOperationSource<AFDDomain>
+    public partial class AFDCustomDomainUpdateOperation : Operation<AFDCustomDomain>, IOperationSource<AFDCustomDomain>
     {
-        private readonly OperationInternals<AFDDomain> _operation;
+        private readonly OperationInternals<AFDCustomDomain> _operation;
 
         private readonly ArmResource _operationBase;
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal AFDCustomDomainUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<AFDDomain>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.OriginalUri, "AFDCustomDomainUpdateOperation");
+            _operation = new OperationInternals<AFDCustomDomain>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.OriginalUri, "AFDCustomDomainUpdateOperation");
             _operationBase = operationsBase;
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override AFDDomain Value => _operation.Value;
+        public override AFDCustomDomain Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -57,21 +57,21 @@ namespace Azure.ResourceManager.Cdn.Models
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<AFDDomain>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<AFDCustomDomain>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<AFDDomain>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<AFDCustomDomain>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        AFDDomain IOperationSource<AFDDomain>.CreateResult(Response response, CancellationToken cancellationToken)
+        AFDCustomDomain IOperationSource<AFDCustomDomain>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new AFDDomain(_operationBase, AFDDomainData.DeserializeAFDDomainData(document.RootElement));
+            return new AFDCustomDomain(_operationBase, AFDCustomDomainData.DeserializeAFDCustomDomainData(document.RootElement));
         }
 
-        async ValueTask<AFDDomain> IOperationSource<AFDDomain>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<AFDCustomDomain> IOperationSource<AFDCustomDomain>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new AFDDomain(_operationBase, AFDDomainData.DeserializeAFDDomainData(document.RootElement));
+            return new AFDCustomDomain(_operationBase, AFDCustomDomainData.DeserializeAFDCustomDomainData(document.RootElement));
         }
     }
 }

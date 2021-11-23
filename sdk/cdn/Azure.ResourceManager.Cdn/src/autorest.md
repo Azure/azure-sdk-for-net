@@ -189,7 +189,9 @@ directive:
   - rename-operation:
       from: LogAnalytics_GetWafLogAnalyticsRankings
       to: AFDProfiles_GetWafLogAnalyticsRankings
-  # remove below operations to avoid breaking changes
+  - from: afdx.json
+    where: $.definitions.AFDDomain
+    transform: $['x-ms-client-name'] = 'AFDCustomDomain'
   - remove-operation: AFDProfiles_CheckHostNameAvailability
   - remove-operation: Validate_Secret
 ```

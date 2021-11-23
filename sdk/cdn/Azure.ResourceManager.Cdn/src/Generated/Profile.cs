@@ -1006,13 +1006,13 @@ namespace Azure.ResourceManager.Cdn
         }
         #endregion
 
-        #region AFDDomain
+        #region AFDCustomDomain
 
-        /// <summary> Gets a collection of AFDDomains in the Profile. </summary>
-        /// <returns> An object representing collection of AFDDomains and their operations over a Profile. </returns>
-        public AFDDomainCollection GetAFDDomains()
+        /// <summary> Gets a collection of AFDCustomDomains in the Profile. </summary>
+        /// <returns> An object representing collection of AFDCustomDomains and their operations over a Profile. </returns>
+        public AFDCustomDomainCollection GetAFDCustomDomains()
         {
-            return new AFDDomainCollection(this);
+            return new AFDCustomDomainCollection(this);
         }
         #endregion
 

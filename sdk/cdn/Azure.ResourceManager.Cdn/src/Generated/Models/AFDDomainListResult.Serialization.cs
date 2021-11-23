@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         internal static AFDDomainListResult DeserializeAFDDomainListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<AFDDomainData>> value = default;
+            Optional<IReadOnlyList<AFDCustomDomainData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Cdn.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AFDDomainData> array = new List<AFDDomainData>();
+                    List<AFDCustomDomainData> array = new List<AFDCustomDomainData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AFDDomainData.DeserializeAFDDomainData(item));
+                        array.Add(AFDCustomDomainData.DeserializeAFDCustomDomainData(item));
                     }
                     value = array;
                     continue;

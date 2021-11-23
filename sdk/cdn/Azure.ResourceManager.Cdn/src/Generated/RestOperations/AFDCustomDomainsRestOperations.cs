@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="customDomainName"> Name of the domain under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="customDomainName"/> is null. </exception>
-        public async Task<Response<AFDDomainData>> GetAsync(string resourceGroupName, string profileName, string customDomainName, CancellationToken cancellationToken = default)
+        public async Task<Response<AFDCustomDomainData>> GetAsync(string resourceGroupName, string profileName, string customDomainName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -178,13 +178,13 @@ namespace Azure.ResourceManager.Cdn
             {
                 case 200:
                     {
-                        AFDDomainData value = default;
+                        AFDCustomDomainData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AFDDomainData.DeserializeAFDDomainData(document.RootElement);
+                        value = AFDCustomDomainData.DeserializeAFDCustomDomainData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AFDDomainData)null, message.Response);
+                    return Response.FromValue((AFDCustomDomainData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="customDomainName"> Name of the domain under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="customDomainName"/> is null. </exception>
-        public Response<AFDDomainData> Get(string resourceGroupName, string profileName, string customDomainName, CancellationToken cancellationToken = default)
+        public Response<AFDCustomDomainData> Get(string resourceGroupName, string profileName, string customDomainName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -217,19 +217,19 @@ namespace Azure.ResourceManager.Cdn
             {
                 case 200:
                     {
-                        AFDDomainData value = default;
+                        AFDCustomDomainData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AFDDomainData.DeserializeAFDDomainData(document.RootElement);
+                        value = AFDCustomDomainData.DeserializeAFDCustomDomainData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AFDDomainData)null, message.Response);
+                    return Response.FromValue((AFDCustomDomainData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string resourceGroupName, string profileName, string customDomainName, AFDDomainData customDomain)
+        internal HttpMessage CreateCreateRequest(string resourceGroupName, string profileName, string customDomainName, AFDCustomDomainData customDomain)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="customDomain"> Domain properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="customDomainName"/>, or <paramref name="customDomain"/> is null. </exception>
-        public async Task<Response> CreateAsync(string resourceGroupName, string profileName, string customDomainName, AFDDomainData customDomain, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateAsync(string resourceGroupName, string profileName, string customDomainName, AFDCustomDomainData customDomain, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="customDomain"> Domain properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="customDomainName"/>, or <paramref name="customDomain"/> is null. </exception>
-        public Response Create(string resourceGroupName, string profileName, string customDomainName, AFDDomainData customDomain, CancellationToken cancellationToken = default)
+        public Response Create(string resourceGroupName, string profileName, string customDomainName, AFDCustomDomainData customDomain, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
