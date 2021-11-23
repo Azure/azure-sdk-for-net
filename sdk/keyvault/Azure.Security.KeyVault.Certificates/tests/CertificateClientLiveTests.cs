@@ -905,6 +905,11 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 #if NET461
             Assert.Ignore("ECC is not supported before .NET Framework 4.7");
 #endif
+            if (keyCurveName == CertificateKeyCurveName.P256K && RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                Assert.Ignore("https://github.com/Azure/azure-sdk-for-net/issues/25472");
+            }
+
             string name = Recording.GenerateId();
 
             CertificatePolicy policy = new CertificatePolicy
@@ -957,6 +962,11 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 #if NET461
             Assert.Ignore("ECC is not supported before .NET Framework 4.7");
 #endif
+            if (keyCurveName == CertificateKeyCurveName.P256K && RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                Assert.Ignore("https://github.com/Azure/azure-sdk-for-net/issues/25472");
+            }
+
             string name = Recording.GenerateId();
 
             CertificatePolicy policy = new CertificatePolicy
