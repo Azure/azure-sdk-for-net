@@ -82,8 +82,7 @@ function GetAdjustedReadmeContent($ReadmeContent, $PackageInfo, $PackageMetadata
   $author = "ramya-rao-a"
   $msauthor = "ramyar"
   $codeOwnerArray = ."$PSScriptRoot/get-codeowners.ps1" `
-                        -TargetDirectory "sd"
-                      #-TargetDirectory $PackageInfo.DirectoryPath 
+                    -TargetDirectory $PackageInfo.DirectoryPath 
   if ($codeOwnerArray) {
     $author = $codeOwnerArray[0]
     $msauthor = $author # This is a placeholder for now. Will change to the right ms alias.
