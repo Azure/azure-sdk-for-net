@@ -1,5 +1,15 @@
 # Release History
 
+## 2.8.0-preview.3 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 2.8.0-preview.2 (2021-11-15)
 - Add support for new detection attribute `qualityForRecognition`
 - Note that this version points to the face/v1.0-preview (public preview) endpoints.
