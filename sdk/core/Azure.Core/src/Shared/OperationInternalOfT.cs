@@ -38,7 +38,6 @@ namespace Azure.Core
         private readonly IOperation<T> _operation;
 
         private T? _value;
-        private RequestFailedException? _operationFailedException;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OperationInternal{T}"/> class.
@@ -97,9 +96,9 @@ namespace Azure.Core
                 {
                     return _value!;
                 }
-                if (_operationFailedException != null)
+                if (OperationFailedException != null)
                 {
-                    throw _operationFailedException;
+                    throw OperationFailedException;
                 }
                 throw new InvalidOperationException("The operation has not completed yet.");
             }
@@ -156,19 +155,11 @@ namespace Azure.Core
         protected override async ValueTask<Response> UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
             OperationState<T> state = await _operation.UpdateStateAsync(async, cancellationToken).ConfigureAwait(false);
-            try
+            if (state.HasCompleted && state.HasSucceeded)
             {
-                if (state.HasCompleted && state.HasSucceeded)
-                {
-                    Value = state.Value!;
-                }
-                return await ApplyStateAsync(async, state.RawResponse, state.HasCompleted, state.HasSucceeded, state.OperationFailedException).ConfigureAwait(false);
+                Value = state.Value!;
             }
-            catch (RequestFailedException ex)
-            {
-                _operationFailedException = ex;
-                throw;
-            }
+            return await ApplyStateAsync(async, state.RawResponse, state.HasCompleted, state.HasSucceeded, state.OperationFailedException).ConfigureAwait(false);
         }
     }
 

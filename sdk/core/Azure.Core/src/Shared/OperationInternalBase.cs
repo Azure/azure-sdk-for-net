@@ -17,7 +17,6 @@ namespace Azure.Core
         private readonly ClientDiagnostics _diagnostics;
         private readonly string _updateStatusScopeName;
         private readonly IReadOnlyDictionary<string, string>? _scopeAttributes;
-        private RequestFailedException? _operationFailedException;
         private const string RetryAfterHeaderName = "Retry-After";
         private const string RetryAfterMsHeaderName = "retry-after-ms";
         private const string XRetryAfterMsHeaderName = "x-ms-retry-after-ms";
@@ -58,6 +57,8 @@ namespace Azure.Core
         /// Defaults to 1 second.
         /// </summary>
         public TimeSpan DefaultPollingInterval { get; set; }
+
+        protected RequestFailedException? OperationFailedException { get; private set; }
 
         /// <summary>
         /// Calls the server to get the latest status of the long-running operation, handling diagnostic scope creation for distributed
@@ -193,11 +194,11 @@ namespace Azure.Core
                 return response;
             }
 
-            _operationFailedException = requestFailedException ??
+            OperationFailedException = requestFailedException ??
                 (async
                     ? await _diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false)
                     : _diagnostics.CreateRequestFailedException(response));
-            throw _operationFailedException;
+            throw OperationFailedException;
         }
 
         protected static TimeSpan GetServerDelay(Response response, TimeSpan pollingInterval)
