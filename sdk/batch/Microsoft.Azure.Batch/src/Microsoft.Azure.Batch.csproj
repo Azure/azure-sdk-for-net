@@ -10,7 +10,7 @@
     <PackageTags>Microsoft;Azure;Batch</PackageTags>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
     <SignAssembly>true</SignAssembly>
-    <NoWarn>$(NoWarn);1591;NU5105;CA1308;CA1825;CA2237</NoWarn>  <!-- Remove CA1825 supression here when we deprecate net452 -->
+    <NoWarn>$(NoWarn);1591;NU5105;CA1308;CA1825;CA2237;CS1591</NoWarn>  <!-- Remove CA1825 supression here when we deprecate net452 -->
   </PropertyGroup>
 
   <PropertyGroup>
