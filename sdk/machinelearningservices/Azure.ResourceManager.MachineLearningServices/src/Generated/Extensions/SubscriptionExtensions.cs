@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<Workspace> GetBySubscriptionWorkspacesAsync(this Subscription subscription, string skip = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<Workspace> GetWorkspacesAsync(this Subscription subscription, string skip = null, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                 var restOperations = GetWorkspacesRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
                 async Task<Page<Workspace>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetBySubscriptionWorkspaces");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetWorkspaces");
                     scope.Start();
                     try
                     {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                 }
                 async Task<Page<Workspace>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetBySubscriptionWorkspaces");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetWorkspaces");
                     scope.Start();
                     try
                     {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<Workspace> GetBySubscriptionWorkspaces(this Subscription subscription, string skip = null, CancellationToken cancellationToken = default)
+        public static Pageable<Workspace> GetWorkspaces(this Subscription subscription, string skip = null, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                 var restOperations = GetWorkspacesRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
                 Page<Workspace> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetBySubscriptionWorkspaces");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetWorkspaces");
                     scope.Start();
                     try
                     {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                 }
                 Page<Workspace> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetBySubscriptionWorkspaces");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetWorkspaces");
                     scope.Start();
                     try
                     {
