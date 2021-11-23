@@ -23,7 +23,7 @@ namespace Azure.Template.Perf
 
         public override void Run(CancellationToken cancellationToken)
         {
-#if NET5_0
+#if NET5_0_OR_GREATER
             using var response = _client.Send(new HttpRequestMessage(HttpMethod.Get, _server.Address), Options.Buffer ? HttpCompletionOption.ResponseContentRead : HttpCompletionOption.ResponseHeadersRead, cancellationToken);
             response.Content.CopyTo(Stream.Null, null, cancellationToken);
 #else
