@@ -165,10 +165,10 @@ stages:
               GdnBreakGdnToolCredScan: true
               GdnBreakGdnToolCredScanSeverity: Error
               GdnBreakBaselineFiles: $(Build.SourcesDirectory)\eng\dotnet.gdnbaselines
-              GdnBreakBaselines: baseline  
+              # GdnBreakBaselines: baseline  
               # Used for generating baseline file
-              # GdnBreakOutputBaselineFile: dotnet
-              # GdnBreakOutputBaseline: baseline
+              GdnBreakOutputBaselineFile: dotnet
+              GdnBreakOutputBaseline: baseline
             condition: succeededOrFailed()
             continueOnError: true
 
