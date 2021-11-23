@@ -78,7 +78,7 @@ namespace Microsoft.Azure.WebPubSub.Common
         /// <param name="userId">User Id.</param>
         /// <param name="signature">Signature of the connection.</param>
         /// <param name="origin">Origin of the event.</param>
-        /// <param name="states">Connection states. Value in <see cref="JsonElement"/> type. Use method <see cref="TryGetState{T}(string, out T)"/> to get vaule in customized type directly.</param>
+        /// <param name="states">Connection states. Value in <see cref="JsonElement"/> type. Use the <see cref="TryGetState{T}(string, out T)"/> method to tey getting the vaule deserialized as a specific type.</param>
         /// <param name="headers">Connection request headers.</param>
         public WebPubSubConnectionContext(WebPubSubEventType eventType, string eventName, string hub, string connectionId, string userId = null, string signature = null, string origin = null, IReadOnlyDictionary<string, object> states = null, IReadOnlyDictionary<string, string[]> headers = null)
         {
