@@ -1,0 +1,190 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/f100532e-a283-4523-8ff6-a8cebadb6e9d?api-version=2019-11-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-68739c85933c244aa8e03b7c734e185a-499fca25c0b5a842-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-beta.5 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "5d2355452a81d1081309c6e884b2b103",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "377",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 23 Nov 2021 07:07:41 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "4cf24f73-3826-4168-97b0-9e52291d0bcb",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "4cf24f73-3826-4168-97b0-9e52291d0bcb",
+        "x-ms-routing-request-id": "JIOINDIAWEST:20211123T070741Z:4cf24f73-3826-4168-97b0-9e52291d0bcb"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/f100532e-a283-4523-8ff6-a8cebadb6e9d",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "subscriptionId": "f100532e-a283-4523-8ff6-a8cebadb6e9d",
+        "tenantId": "Sanitized",
+        "displayName": "ASE_Ordering_IDC_testBVT",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/f100532e-a283-4523-8ff6-a8cebadb6e9d/providers/Microsoft.EdgeOrder/listConfigurations?api-version=2021-12-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "267",
+        "Content-Type": "application/json",
+        "traceparent": "00-929fa29ed8eace4784543ef28779d4a5-8c3b8a0362cd2645-00",
+        "User-Agent": "azsdk-net-ResourceManager.EdgeOrder/1.0.0-alpha.20211123.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "58630a24d6f0c08da70319620b7e902a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "configurationFilters": [
+          {
+            "hierarchyInformation": {
+              "productFamilyName": "AzureStackEdge",
+              "productLineName": "AzureStackEdge",
+              "productName": "AzureStackEdgeGPU",
+              "configurationName": "EdgeP_Base"
+            },
+            "filterableProperty": [
+              {
+                "type": "ShipToCountries",
+                "supportedValues": [
+                  "US"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "3585",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 23 Nov 2021 07:07:43 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "58630a24d6f0c08da70319620b7e902a",
+        "x-ms-correlation-request-id": "451e61a8-2a0b-46a3-8aca-86cf8b2fed5a",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "451e61a8-2a0b-46a3-8aca-86cf8b2fed5a",
+        "x-ms-routing-request-id": "JIOINDIAWEST:20211123T070744Z:451e61a8-2a0b-46a3-8aca-86cf8b2fed5a"
+      },
+      "ResponseBody": [
+        "{\r\n",
+        "  \u0022value\u0022: [\r\n",
+        "    {\r\n",
+        "      \u0022properties\u0022: {\r\n",
+        "        \u0022specifications\u0022: [\r\n",
+        "          {\r\n",
+        "            \u0022name\u0022: \u0022Usable compute\u0022,\r\n",
+        "            \u0022value\u0022: \u002240 vCPU\u0022\r\n",
+        "          },\r\n",
+        "          {\r\n",
+        "            \u0022name\u0022: \u0022Usable memory\u0022,\r\n",
+        "            \u0022value\u0022: \u0022102 GB\u0022\r\n",
+        "          },\r\n",
+        "          {\r\n",
+        "            \u0022name\u0022: \u0022Usable storage\u0022,\r\n",
+        "            \u0022value\u0022: \u00224.2 TB\u0022\r\n",
+        "          }\r\n",
+        "        ],\r\n",
+        "        \u0022dimensions\u0022: {\r\n",
+        "          \u0022length\u0022: 50.0,\r\n",
+        "          \u0022height\u0022: 15.0,\r\n",
+        "          \u0022width\u0022: 5.0,\r\n",
+        "          \u0022lengthHeightUnit\u0022: \u0022IN\u0022,\r\n",
+        "          \u0022weight\u0022: 50.0,\r\n",
+        "          \u0022depth\u0022: 2.0,\r\n",
+        "          \u0022weightUnit\u0022: \u0022LBS\u0022\r\n",
+        "        },\r\n",
+        "        \u0022filterableProperties\u0022: [\r\n",
+        "          {\r\n",
+        "            \u0022type\u0022: \u0022ShipToCountries\u0022,\r\n",
+        "            \u0022supportedValues\u0022: [\r\n",
+        "              \u0022US\u0022\r\n",
+        "            ]\r\n",
+        "          }\r\n",
+        "        ],\r\n",
+        "        \u0022displayName\u0022: \u0022Azure Stack Edge Pro - 1 GPU\u0022,\r\n",
+        "        \u0022description\u0022: {\r\n",
+        "          \u0022descriptionType\u0022: \u0022Base\u0022,\r\n",
+        "          \u0022shortDescription\u0022: \u0022\u0022,\r\n",
+        "          \u0022longDescription\u0022: \u0022\u0022,\r\n",
+        "          \u0022keywords\u0022: [\r\n",
+        "            \u0022GPU\u0022\r\n",
+        "          ],\r\n",
+        "          \u0022attributes\u0022: [],\r\n",
+        "          \u0022links\u0022: []\r\n",
+        "        },\r\n",
+        "        \u0022imageInformation\u0022: [],\r\n",
+        "        \u0022costInformation\u0022: {\r\n",
+        "          \u0022billingMeterDetails\u0022: [\r\n",
+        "            {\r\n",
+        "              \u0022name\u0022: \u0022RentalFee\u0022,\r\n",
+        "              \u0022meterDetails\u0022: {\r\n",
+        "                \u0022meterGuid\u0022: \u002291edd360-e07c-5529-a0fd-99f30b20cf21\u0022,\r\n",
+        "                \u0022billingType\u0022: \u0022Pav2\u0022,\r\n",
+        "                \u0022multiplier\u0022: 1.0,\r\n",
+        "                \u0022chargingType\u0022: \u0022PerOrder\u0022\r\n",
+        "              },\r\n",
+        "              \u0022meteringType\u0022: \u0022Recurring\u0022,\r\n",
+        "              \u0022frequency\u0022: \u0022P1D\u0022\r\n",
+        "            },\r\n",
+        "            {\r\n",
+        "              \u0022name\u0022: \u0022ShippingFee\u0022,\r\n",
+        "              \u0022meterDetails\u0022: {\r\n",
+        "                \u0022meterGuid\u0022: \u002297b0cf84-c662-567c-bcbb-4158fa54ccc9\u0022,\r\n",
+        "                \u0022billingType\u0022: \u0022Pav2\u0022,\r\n",
+        "                \u0022multiplier\u0022: 1.0,\r\n",
+        "                \u0022chargingType\u0022: \u0022PerOrder\u0022\r\n",
+        "              },\r\n",
+        "              \u0022meteringType\u0022: \u0022OneTime\u0022,\r\n",
+        "              \u0022frequency\u0022: \u0022\u0022\r\n",
+        "            }\r\n",
+        "          ]\r\n",
+        "        },\r\n",
+        "        \u0022availabilityInformation\u0022: {\r\n",
+        "          \u0022availabilityStage\u0022: \u0022Available\u0022,\r\n",
+        "          \u0022disabledReason\u0022: \u0022None\u0022\r\n",
+        "        },\r\n",
+        "        \u0022hierarchyInformation\u0022: {\r\n",
+        "          \u0022productFamilyName\u0022: \u0022azurestackedge\u0022,\r\n",
+        "          \u0022productLineName\u0022: \u0022azurestackedge\u0022,\r\n",
+        "          \u0022productName\u0022: \u0022azurestackedgegpu\u0022,\r\n",
+        "          \u0022configurationName\u0022: \u0022edgep_base\u0022\r\n",
+        "        }\r\n",
+        "      }\r\n",
+        "    }\r\n",
+        "  ]\r\n",
+        "}"
+      ]
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "2132756504",
+    "SUBSCRIPTION_ID": "f100532e-a283-4523-8ff6-a8cebadb6e9d"
+  }
+}

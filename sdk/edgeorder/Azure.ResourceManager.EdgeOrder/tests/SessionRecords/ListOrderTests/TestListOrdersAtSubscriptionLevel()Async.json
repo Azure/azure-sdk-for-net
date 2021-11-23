@@ -1,0 +1,113 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/f100532e-a283-4523-8ff6-a8cebadb6e9d?api-version=2019-11-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-ac26eaf830a92c4b98a1309d985b5d89-e35f461a217c454c-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-beta.5 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "44178a04654fccea4124502b85d4b26a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "377",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 23 Nov 2021 08:46:53 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "5ca9fafe-a97e-4731-9ab0-de301e59362f",
+        "x-ms-ratelimit-remaining-subscription-reads": "11798",
+        "x-ms-request-id": "5ca9fafe-a97e-4731-9ab0-de301e59362f",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20211123T084653Z:5ca9fafe-a97e-4731-9ab0-de301e59362f"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/f100532e-a283-4523-8ff6-a8cebadb6e9d",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "subscriptionId": "f100532e-a283-4523-8ff6-a8cebadb6e9d",
+        "tenantId": "Sanitized",
+        "displayName": "ASE_Ordering_IDC_testBVT",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/f100532e-a283-4523-8ff6-a8cebadb6e9d/providers/Microsoft.EdgeOrder/orders?api-version=2021-12-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-991338331795f64d8c18c43a5510fe57-f89114cefe6a0348-00",
+        "User-Agent": "azsdk-net-ResourceManager.EdgeOrder/1.0.0-alpha.20211123.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "67e49a0105a7f4381a6db795d5ca4fc0",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "22106",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 23 Nov 2021 08:46:57 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "edbc5874-9d16-472c-8f2d-01e41b3d20b4",
+        "x-ms-original-request-ids": [
+          "",
+          "",
+          ""
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": "11797",
+        "x-ms-request-id": "edbc5874-9d16-472c-8f2d-01e41b3d20b4",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20211123T084657Z:edbc5874-9d16-472c-8f2d-01e41b3d20b4"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "properties": {
+              "orderItemIds": [
+                "/subscriptions/f100532e-a283-4523-8ff6-a8cebadb6e9d/resourceGroups/SdkRg3010/providers/Microsoft.EdgeOrder/orderItems/Sdk-OrderItem7836"
+              ],
+              "currentStage": {
+                "stageStatus": "Succeeded",
+                "stageName": "Placed",
+                "startTime": "2021-11-23T08:46:52.4498328\u002B00:00"
+              },
+              "orderStageHistory": [
+                {
+                  "stageStatus": "Succeeded",
+                  "stageName": "Placed",
+                  "startTime": "2021-11-23T08:46:52.4498328\u002B00:00"
+                },
+                {
+                  "stageStatus": "None",
+                  "stageName": "InReview"
+                }
+              ]
+            },
+            "name": "Sdk-OrderItem7836",
+            "id": "/subscriptions/f100532e-a283-4523-8ff6-a8cebadb6e9d/resourceGroups/SdkRg3010/providers/Microsoft.EdgeOrder/locations/eastus/orders/Sdk-OrderItem7836",
+            "type": "Microsoft.EdgeOrder/orders"
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1631592967",
+    "SUBSCRIPTION_ID": "f100532e-a283-4523-8ff6-a8cebadb6e9d"
+  }
+}

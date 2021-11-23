@@ -1,0 +1,575 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/f100532e-a283-4523-8ff6-a8cebadb6e9d?api-version=2019-11-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-8a6a7b8fddc7c34192c8c91291ca5e57-729199a5110ef647-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-beta.5 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "aa96c5b38dee9203dc755fe87dd53299",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "377",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 23 Nov 2021 05:42:47 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "074a6cd9-788a-42cf-a201-2cfde3be33fc",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "074a6cd9-788a-42cf-a201-2cfde3be33fc",
+        "x-ms-routing-request-id": "CENTRALINDIA:20211123T054248Z:074a6cd9-788a-42cf-a201-2cfde3be33fc"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/f100532e-a283-4523-8ff6-a8cebadb6e9d",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "subscriptionId": "f100532e-a283-4523-8ff6-a8cebadb6e9d",
+        "tenantId": "Sanitized",
+        "displayName": "ASE_Ordering_IDC_testBVT",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/f100532e-a283-4523-8ff6-a8cebadb6e9d/resourcegroups/SdkRg9877?api-version=2019-10-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "21",
+        "Content-Type": "application/json",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-beta.5 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "6387e62675ff9c937de6637ea1717f11",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "eastus"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "215",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 23 Nov 2021 05:42:51 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "fa929cd0-6447-4db1-a169-5ac943b7724e",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "fa929cd0-6447-4db1-a169-5ac943b7724e",
+        "x-ms-routing-request-id": "CENTRALINDIA:20211123T054251Z:fa929cd0-6447-4db1-a169-5ac943b7724e"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/f100532e-a283-4523-8ff6-a8cebadb6e9d/resourceGroups/SdkRg9877",
+        "name": "SdkRg9877",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "eastus",
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/f100532e-a283-4523-8ff6-a8cebadb6e9d/resourceGroups/SdkRg9877/providers/Microsoft.EdgeOrder/addresses/SdkAddress6509?api-version=2021-12-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "385",
+        "Content-Type": "application/json",
+        "traceparent": "00-701a8a15a4b0c64f9f52e7d544620afd-f0f02d14e5450643-00",
+        "User-Agent": "azsdk-net-ResourceManager.EdgeOrder/1.0.0-alpha.20211123.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "5df70fd3b5de1fe7528d5d6d96f5cff1",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "eastus",
+        "properties": {
+          "shippingAddress": {
+            "streetAddress1": "16 TOWNSEND ST",
+            "streetAddress2": "Unit 1",
+            "city": "San Francisco",
+            "stateOrProvince": "CA",
+            "country": "US",
+            "postalCode": "94107",
+            "companyName": "Microsoft",
+            "addressType": "Commercial"
+          },
+          "contactDetails": {
+            "contactName": "Public SDK Test",
+            "phone": "1234567890",
+            "phoneExtension": "1234",
+            "emailList": [
+              "testing@microsoft.com"
+            ]
+          }
+        }
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Date": "Tue, 23 Nov 2021 05:42:58 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/f100532e-a283-4523-8ff6-a8cebadb6e9d/providers/Microsoft.EdgeOrder/locations/eastus/operationResults/23771551-a56f-4e2d-9eaa-92b503c58d05?api-version=2021-12-01",
+        "Pragma": "no-cache",
+        "Retry-After": "10",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "5df70fd3b5de1fe7528d5d6d96f5cff1",
+        "x-ms-correlation-request-id": "d9675047-2088-491d-a84a-cae3bb72e9db",
+        "x-ms-ratelimit-remaining-subscription-writes": "1198",
+        "x-ms-request-id": "d9675047-2088-491d-a84a-cae3bb72e9db",
+        "x-ms-routing-request-id": "CENTRALINDIA:20211123T054259Z:d9675047-2088-491d-a84a-cae3bb72e9db"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/f100532e-a283-4523-8ff6-a8cebadb6e9d/providers/Microsoft.EdgeOrder/locations/eastus/operationResults/23771551-a56f-4e2d-9eaa-92b503c58d05?api-version=2021-12-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager.EdgeOrder/1.0.0-alpha.20211123.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "220247d77da13147a043ade8362ee7f0",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Date": "Tue, 23 Nov 2021 05:42:59 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/f100532e-a283-4523-8ff6-a8cebadb6e9d/providers/Microsoft.EdgeOrder/locations/eastus/operationResults/23771551-a56f-4e2d-9eaa-92b503c58d05?api-version=2021-12-01",
+        "Pragma": "no-cache",
+        "Retry-After": "10",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "220247d77da13147a043ade8362ee7f0",
+        "x-ms-correlation-request-id": "c4cb639c-2afe-488f-ab66-5c4e4541fa40",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "c4cb639c-2afe-488f-ab66-5c4e4541fa40",
+        "x-ms-routing-request-id": "CENTRALINDIA:20211123T054259Z:c4cb639c-2afe-488f-ab66-5c4e4541fa40"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/f100532e-a283-4523-8ff6-a8cebadb6e9d/providers/Microsoft.EdgeOrder/locations/eastus/operationResults/23771551-a56f-4e2d-9eaa-92b503c58d05?api-version=2021-12-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager.EdgeOrder/1.0.0-alpha.20211123.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "d9608c938e5720f5c0f44f6e0d470a17",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Date": "Tue, 23 Nov 2021 05:43:00 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/f100532e-a283-4523-8ff6-a8cebadb6e9d/providers/Microsoft.EdgeOrder/locations/eastus/operationResults/23771551-a56f-4e2d-9eaa-92b503c58d05?api-version=2021-12-01",
+        "Pragma": "no-cache",
+        "Retry-After": "10",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "d9608c938e5720f5c0f44f6e0d470a17",
+        "x-ms-correlation-request-id": "ed8f4058-104f-48de-b828-2dd925d63afa",
+        "x-ms-ratelimit-remaining-subscription-reads": "11997",
+        "x-ms-request-id": "ed8f4058-104f-48de-b828-2dd925d63afa",
+        "x-ms-routing-request-id": "CENTRALINDIA:20211123T054301Z:ed8f4058-104f-48de-b828-2dd925d63afa"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/f100532e-a283-4523-8ff6-a8cebadb6e9d/providers/Microsoft.EdgeOrder/locations/eastus/operationResults/23771551-a56f-4e2d-9eaa-92b503c58d05?api-version=2021-12-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager.EdgeOrder/1.0.0-alpha.20211123.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "4f957d89acf3c35050f6e3fc0666cddf",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Date": "Tue, 23 Nov 2021 05:43:01 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/f100532e-a283-4523-8ff6-a8cebadb6e9d/providers/Microsoft.EdgeOrder/locations/eastus/operationResults/23771551-a56f-4e2d-9eaa-92b503c58d05?api-version=2021-12-01",
+        "Pragma": "no-cache",
+        "Retry-After": "10",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "4f957d89acf3c35050f6e3fc0666cddf",
+        "x-ms-correlation-request-id": "1e95d675-658c-4411-ace8-f0a5010196c2",
+        "x-ms-ratelimit-remaining-subscription-reads": "11996",
+        "x-ms-request-id": "1e95d675-658c-4411-ace8-f0a5010196c2",
+        "x-ms-routing-request-id": "CENTRALINDIA:20211123T054302Z:1e95d675-658c-4411-ace8-f0a5010196c2"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/f100532e-a283-4523-8ff6-a8cebadb6e9d/providers/Microsoft.EdgeOrder/locations/eastus/operationResults/23771551-a56f-4e2d-9eaa-92b503c58d05?api-version=2021-12-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager.EdgeOrder/1.0.0-alpha.20211123.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "880cb7892ada498852e262ad2dd92458",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Date": "Tue, 23 Nov 2021 05:43:03 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/f100532e-a283-4523-8ff6-a8cebadb6e9d/providers/Microsoft.EdgeOrder/locations/eastus/operationResults/23771551-a56f-4e2d-9eaa-92b503c58d05?api-version=2021-12-01",
+        "Pragma": "no-cache",
+        "Retry-After": "10",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "880cb7892ada498852e262ad2dd92458",
+        "x-ms-correlation-request-id": "a2ec11df-dfa7-4856-b315-e14701f49507",
+        "x-ms-ratelimit-remaining-subscription-reads": "11995",
+        "x-ms-request-id": "a2ec11df-dfa7-4856-b315-e14701f49507",
+        "x-ms-routing-request-id": "CENTRALINDIA:20211123T054304Z:a2ec11df-dfa7-4856-b315-e14701f49507"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/f100532e-a283-4523-8ff6-a8cebadb6e9d/providers/Microsoft.EdgeOrder/locations/eastus/operationResults/23771551-a56f-4e2d-9eaa-92b503c58d05?api-version=2021-12-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager.EdgeOrder/1.0.0-alpha.20211123.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "b85f95399798e6fd3b9c8860abf81959",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Date": "Tue, 23 Nov 2021 05:43:04 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/f100532e-a283-4523-8ff6-a8cebadb6e9d/providers/Microsoft.EdgeOrder/locations/eastus/operationResults/23771551-a56f-4e2d-9eaa-92b503c58d05?api-version=2021-12-01",
+        "Pragma": "no-cache",
+        "Retry-After": "10",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "b85f95399798e6fd3b9c8860abf81959",
+        "x-ms-correlation-request-id": "96aa886b-99c8-490b-bde9-12507ce0322b",
+        "x-ms-ratelimit-remaining-subscription-reads": "11994",
+        "x-ms-request-id": "96aa886b-99c8-490b-bde9-12507ce0322b",
+        "x-ms-routing-request-id": "CENTRALINDIA:20211123T054305Z:96aa886b-99c8-490b-bde9-12507ce0322b"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/f100532e-a283-4523-8ff6-a8cebadb6e9d/providers/Microsoft.EdgeOrder/locations/eastus/operationResults/23771551-a56f-4e2d-9eaa-92b503c58d05?api-version=2021-12-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager.EdgeOrder/1.0.0-alpha.20211123.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "56e46f27823a5f3df54cfc1149a39677",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Date": "Tue, 23 Nov 2021 05:43:06 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/f100532e-a283-4523-8ff6-a8cebadb6e9d/resourceGroups/SdkRg9877/providers/Microsoft.EdgeOrder/addresses/SdkAddress6509?api-version=2021-12-01",
+        "Pragma": "no-cache",
+        "Retry-After": "10",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "56e46f27823a5f3df54cfc1149a39677",
+        "x-ms-correlation-request-id": "7435b23c-52c0-49d2-83a3-8857af877c37",
+        "x-ms-ratelimit-remaining-subscription-reads": "11993",
+        "x-ms-request-id": "7435b23c-52c0-49d2-83a3-8857af877c37",
+        "x-ms-routing-request-id": "CENTRALINDIA:20211123T054306Z:7435b23c-52c0-49d2-83a3-8857af877c37"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/f100532e-a283-4523-8ff6-a8cebadb6e9d/resourceGroups/SdkRg9877/providers/Microsoft.EdgeOrder/addresses/SdkAddress6509?api-version=2021-12-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager.EdgeOrder/1.0.0-alpha.20211123.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "70c38ad21507f247b9254c3da1289e59",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "865",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 23 Nov 2021 05:43:12 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "70c38ad21507f247b9254c3da1289e59",
+        "x-ms-correlation-request-id": "68bd1673-3d5b-44ec-8548-6443a2251ea3",
+        "x-ms-ratelimit-remaining-subscription-reads": "11992",
+        "x-ms-request-id": "68bd1673-3d5b-44ec-8548-6443a2251ea3",
+        "x-ms-routing-request-id": "CENTRALINDIA:20211123T054313Z:68bd1673-3d5b-44ec-8548-6443a2251ea3"
+      },
+      "ResponseBody": {
+        "properties": {
+          "shippingAddress": {
+            "streetAddress1": "16 TOWNSEND ST",
+            "streetAddress2": "Unit 1",
+            "city": "San Francisco",
+            "stateOrProvince": "CA",
+            "country": "US",
+            "postalCode": "94107",
+            "companyName": "Microsoft",
+            "addressType": "Commercial"
+          },
+          "contactDetails": {
+            "contactName": "Public SDK Test",
+            "phone": "1234567890",
+            "phoneExtension": "1234",
+            "emailList": [
+              "testing@microsoft.com"
+            ]
+          },
+          "addressValidationStatus": "Valid"
+        },
+        "systemData": {
+          "createdBy": "Sanitized",
+          "createdByType": "Application",
+          "createdAt": "2021-11-23T05:42:57.4482478\u002B00:00",
+          "lastModifiedBy": "Sanitized",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2021-11-23T05:42:57.4482478\u002B00:00"
+        },
+        "location": "eastus",
+        "tags": {},
+        "name": "SdkAddress6509",
+        "id": "/subscriptions/f100532e-a283-4523-8ff6-a8cebadb6e9d/resourceGroups/SdkRg9877/providers/Microsoft.EdgeOrder/addresses/SdkAddress6509",
+        "type": "Microsoft.EdgeOrder/addresses"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/f100532e-a283-4523-8ff6-a8cebadb6e9d/resourceGroups/SdkRg9877/providers/Microsoft.EdgeOrder/addresses/SdkAddress6509?api-version=2021-12-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-a899065cfdc1ff478885a2636eae3bee-280fee2671046a4a-00",
+        "User-Agent": "azsdk-net-ResourceManager.EdgeOrder/1.0.0-alpha.20211123.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "be8609c8cdf5b61d58ffc24c9aec9c98",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "865",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 23 Nov 2021 05:43:13 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "be8609c8cdf5b61d58ffc24c9aec9c98",
+        "x-ms-correlation-request-id": "948d8475-8db6-4500-98e7-e2cb9c091b4c",
+        "x-ms-ratelimit-remaining-subscription-reads": "11991",
+        "x-ms-request-id": "948d8475-8db6-4500-98e7-e2cb9c091b4c",
+        "x-ms-routing-request-id": "CENTRALINDIA:20211123T054313Z:948d8475-8db6-4500-98e7-e2cb9c091b4c"
+      },
+      "ResponseBody": {
+        "properties": {
+          "shippingAddress": {
+            "streetAddress1": "16 TOWNSEND ST",
+            "streetAddress2": "Unit 1",
+            "city": "San Francisco",
+            "stateOrProvince": "CA",
+            "country": "US",
+            "postalCode": "94107",
+            "companyName": "Microsoft",
+            "addressType": "Commercial"
+          },
+          "contactDetails": {
+            "contactName": "Public SDK Test",
+            "phone": "1234567890",
+            "phoneExtension": "1234",
+            "emailList": [
+              "testing@microsoft.com"
+            ]
+          },
+          "addressValidationStatus": "Valid"
+        },
+        "systemData": {
+          "createdBy": "Sanitized",
+          "createdByType": "Application",
+          "createdAt": "2021-11-23T05:42:57.4482478\u002B00:00",
+          "lastModifiedBy": "Sanitized",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2021-11-23T05:42:57.4482478\u002B00:00"
+        },
+        "location": "eastus",
+        "tags": {},
+        "name": "SdkAddress6509",
+        "id": "/subscriptions/f100532e-a283-4523-8ff6-a8cebadb6e9d/resourceGroups/SdkRg9877/providers/Microsoft.EdgeOrder/addresses/SdkAddress6509",
+        "type": "Microsoft.EdgeOrder/addresses"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/f100532e-a283-4523-8ff6-a8cebadb6e9d/resourceGroups/SdkRg9877/providers/Microsoft.EdgeOrder/addresses/SdkAddress6509?api-version=2021-12-01",
+      "RequestMethod": "PATCH",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "370",
+        "Content-Type": "application/json",
+        "traceparent": "00-3b9d5bf505de6f4a9e59689be6601ef0-5495e03ee1a1bc4c-00",
+        "User-Agent": "azsdk-net-ResourceManager.EdgeOrder/1.0.0-alpha.20211123.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "208d1006a935115128f29c1435ffbdcd",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "shippingAddress": {
+            "streetAddress1": "16 TOWNSEND ST",
+            "streetAddress2": "Unit 1",
+            "city": "San Francisco",
+            "stateOrProvince": "CA",
+            "country": "US",
+            "postalCode": "94107",
+            "companyName": "Microsoft",
+            "addressType": "Commercial"
+          },
+          "contactDetails": {
+            "contactName": "Updated contact name",
+            "phone": "1234567890",
+            "phoneExtension": "1234",
+            "emailList": [
+              "testing@microsoft.com"
+            ]
+          }
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "870",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 23 Nov 2021 05:43:14 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "208d1006a935115128f29c1435ffbdcd",
+        "x-ms-correlation-request-id": "0592cc93-9a4a-4299-9a1a-7195b8cb83bd",
+        "x-ms-ratelimit-remaining-subscription-writes": "1197",
+        "x-ms-request-id": "0592cc93-9a4a-4299-9a1a-7195b8cb83bd",
+        "x-ms-routing-request-id": "CENTRALINDIA:20211123T054314Z:0592cc93-9a4a-4299-9a1a-7195b8cb83bd"
+      },
+      "ResponseBody": {
+        "properties": {
+          "shippingAddress": {
+            "streetAddress1": "16 TOWNSEND ST",
+            "streetAddress2": "Unit 1",
+            "city": "San Francisco",
+            "stateOrProvince": "CA",
+            "country": "US",
+            "postalCode": "94107",
+            "companyName": "Microsoft",
+            "addressType": "Commercial"
+          },
+          "contactDetails": {
+            "contactName": "Updated contact name",
+            "phone": "1234567890",
+            "phoneExtension": "1234",
+            "emailList": [
+              "testing@microsoft.com"
+            ]
+          },
+          "addressValidationStatus": "Valid"
+        },
+        "systemData": {
+          "createdBy": "Sanitized",
+          "createdByType": "Application",
+          "createdAt": "2021-11-23T05:42:57.4482478\u002B00:00",
+          "lastModifiedBy": "Sanitized",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2021-11-23T05:43:13.6137291\u002B00:00"
+        },
+        "location": "eastus",
+        "tags": {},
+        "name": "SdkAddress6509",
+        "id": "/subscriptions/f100532e-a283-4523-8ff6-a8cebadb6e9d/resourceGroups/SdkRg9877/providers/Microsoft.EdgeOrder/addresses/SdkAddress6509",
+        "type": "Microsoft.EdgeOrder/addresses"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/f100532e-a283-4523-8ff6-a8cebadb6e9d/resourceGroups/SdkRg9877/providers/Microsoft.EdgeOrder/addresses/SdkAddress6509?api-version=2021-12-01",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-38f601c2a472d643a123caa62b989116-4442a8f901705a49-00",
+        "User-Agent": "azsdk-net-ResourceManager.EdgeOrder/1.0.0-alpha.20211123.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "9136b3887d9a1e24b874950231088158",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Date": "Tue, 23 Nov 2021 05:43:17 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "9136b3887d9a1e24b874950231088158",
+        "x-ms-correlation-request-id": "6da4b016-7996-48bb-8d36-c8c8fe6ea3e5",
+        "x-ms-ratelimit-remaining-subscription-deletes": "14999",
+        "x-ms-request-id": "6da4b016-7996-48bb-8d36-c8c8fe6ea3e5",
+        "x-ms-routing-request-id": "CENTRALINDIA:20211123T054318Z:6da4b016-7996-48bb-8d36-c8c8fe6ea3e5"
+      },
+      "ResponseBody": []
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "445445350",
+    "SUBSCRIPTION_ID": "f100532e-a283-4523-8ff6-a8cebadb6e9d"
+  }
+}

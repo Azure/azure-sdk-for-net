@@ -1,0 +1,189 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/f100532e-a283-4523-8ff6-a8cebadb6e9d?api-version=2019-11-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-b1751cfc34093d47a3f2eae8bfb988f2-49f743ea775e2640-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-beta.5 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "8f6c295c36d945c863c8935932d58e96",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "377",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 23 Nov 2021 08:59:12 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "ed940e4d-189a-4546-b323-5e73fdaa6d95",
+        "x-ms-ratelimit-remaining-subscription-reads": "11928",
+        "x-ms-request-id": "ed940e4d-189a-4546-b323-5e73fdaa6d95",
+        "x-ms-routing-request-id": "CENTRALINDIA:20211123T085913Z:ed940e4d-189a-4546-b323-5e73fdaa6d95"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/f100532e-a283-4523-8ff6-a8cebadb6e9d",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "subscriptionId": "f100532e-a283-4523-8ff6-a8cebadb6e9d",
+        "tenantId": "Sanitized",
+        "displayName": "ASE_Ordering_IDC_testBVT",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/f100532e-a283-4523-8ff6-a8cebadb6e9d/resourceGroups/SdkRg1388/providers/Microsoft.EdgeOrder/orderItems?api-version=2021-12-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-71a4ef0d7f08944ba381cc5eda71ea33-b75645c25f2da748-00",
+        "User-Agent": "azsdk-net-ResourceManager.EdgeOrder/1.0.0-alpha.20211123.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "307aaab36b8374fe4af74ce355948346",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "2291",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 23 Nov 2021 08:59:13 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "307aaab36b8374fe4af74ce355948346",
+        "x-ms-correlation-request-id": "5b33fb34-50ff-4c09-9ecd-cc2cb24c70d3",
+        "x-ms-ratelimit-remaining-subscription-reads": "11927",
+        "x-ms-request-id": "5b33fb34-50ff-4c09-9ecd-cc2cb24c70d3",
+        "x-ms-routing-request-id": "CENTRALINDIA:20211123T085913Z:5b33fb34-50ff-4c09-9ecd-cc2cb24c70d3"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "properties": {
+              "orderItemDetails": {
+                "productDetails": {
+                  "displayInfo": {
+                    "productFamilyDisplayName": "Azure Stack Edge",
+                    "configurationDisplayName": "Azure Stack Edge Pro - 1 GPU"
+                  },
+                  "hierarchyInformation": {
+                    "productFamilyName": "azurestackedge",
+                    "productLineName": "azurestackedge",
+                    "productName": "azurestackedgegpu",
+                    "configurationName": "edgep_base"
+                  },
+                  "count": 0,
+                  "productDoubleEncryptionStatus": "Disabled"
+                },
+                "orderItemType": "Purchase",
+                "currentStage": {
+                  "stageStatus": "Succeeded",
+                  "stageName": "Placed",
+                  "startTime": "2021-11-23T08:56:09.6333904\u002B00:00"
+                },
+                "orderItemStageHistory": [
+                  {
+                    "stageStatus": "Succeeded",
+                    "stageName": "Placed",
+                    "startTime": "2021-11-23T08:56:09.6333904\u002B00:00"
+                  },
+                  {
+                    "stageStatus": "None",
+                    "stageName": "Confirmed"
+                  },
+                  {
+                    "stageStatus": "None",
+                    "stageName": "ReadyToShip"
+                  },
+                  {
+                    "stageStatus": "None",
+                    "stageName": "Shipped"
+                  },
+                  {
+                    "stageStatus": "None",
+                    "stageName": "Delivered"
+                  },
+                  {
+                    "stageStatus": "None",
+                    "stageName": "InUse"
+                  }
+                ],
+                "preferences": {
+                  "transportPreferences": {
+                    "preferredShipmentType": "MicrosoftManaged"
+                  }
+                },
+                "notificationEmailList": [],
+                "cancellationStatus": "Cancellable",
+                "deletionStatus": "NotAllowed",
+                "returnStatus": "NotReturnable",
+                "managementRpDetailsList": [
+                  {
+                    "resourceProviderNamespace": "Microsoft.DataBoxEdge"
+                  }
+                ]
+              },
+              "addressDetails": {
+                "forwardAddress": {
+                  "shippingAddress": {
+                    "streetAddress1": "16 TOWNSEND ST",
+                    "streetAddress2": "Unit 1",
+                    "city": "San Francisco",
+                    "stateOrProvince": "CA",
+                    "country": "US",
+                    "postalCode": "94107",
+                    "companyName": "Microsoft",
+                    "addressType": "Commercial"
+                  },
+                  "contactDetails": {
+                    "contactName": "Public SDK Test",
+                    "phone": "1234567890",
+                    "phoneExtension": "1234",
+                    "emailList": [
+                      "testing@microsoft.com"
+                    ]
+                  },
+                  "addressValidationStatus": "Valid"
+                }
+              },
+              "startTime": "2021-11-23T08:56:03.0722529\u002B00:00",
+              "orderId": "/subscriptions/f100532e-a283-4523-8ff6-a8cebadb6e9d/resourceGroups/SdkRg1388/providers/Microsoft.EdgeOrder/locations/eastus/orders/Sdk-OrderItem9507"
+            },
+            "systemData": {
+              "createdBy": "Sanitized",
+              "createdByType": "Application",
+              "createdAt": "2021-11-23T08:56:01.9412616\u002B00:00",
+              "lastModifiedBy": "Sanitized",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2021-11-23T08:56:01.9412616\u002B00:00"
+            },
+            "location": "eastus",
+            "tags": {},
+            "name": "Sdk-OrderItem9507",
+            "id": "/subscriptions/f100532e-a283-4523-8ff6-a8cebadb6e9d/resourceGroups/SdkRg1388/providers/Microsoft.EdgeOrder/orderItems/Sdk-OrderItem9507",
+            "type": "Microsoft.EdgeOrder/orderItems"
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "456988440",
+    "SUBSCRIPTION_ID": "f100532e-a283-4523-8ff6-a8cebadb6e9d"
+  }
+}
