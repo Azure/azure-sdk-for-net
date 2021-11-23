@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="ruleName"> The name of the rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="routeFilterName"/>, or <paramref name="ruleName"/> is null. </exception>
-        public async Task<Response<RouteFilterRuleData>> GetAsync(string resourceGroupName, string routeFilterName, string ruleName, CancellationToken cancellationToken = default)
+        public async Task<Response<RouteFilterRule>> GetAsync(string resourceGroupName, string routeFilterName, string ruleName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -183,13 +183,11 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        RouteFilterRuleData value = default;
+                        RouteFilterRule value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RouteFilterRuleData.DeserializeRouteFilterRuleData(document.RootElement);
+                        value = RouteFilterRule.DeserializeRouteFilterRule(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((RouteFilterRuleData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -201,7 +199,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="ruleName"> The name of the rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="routeFilterName"/>, or <paramref name="ruleName"/> is null. </exception>
-        public Response<RouteFilterRuleData> Get(string resourceGroupName, string routeFilterName, string ruleName, CancellationToken cancellationToken = default)
+        public Response<RouteFilterRule> Get(string resourceGroupName, string routeFilterName, string ruleName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -222,19 +220,17 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        RouteFilterRuleData value = default;
+                        RouteFilterRule value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RouteFilterRuleData.DeserializeRouteFilterRuleData(document.RootElement);
+                        value = RouteFilterRule.DeserializeRouteFilterRule(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((RouteFilterRuleData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string routeFilterName, string ruleName, RouteFilterRuleData routeFilterRuleParameters)
+        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string routeFilterName, string ruleName, RouteFilterRule routeFilterRuleParameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -267,7 +263,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="routeFilterRuleParameters"> Parameters supplied to the create or update route filter rule operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="routeFilterName"/>, <paramref name="ruleName"/>, or <paramref name="routeFilterRuleParameters"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string routeFilterName, string ruleName, RouteFilterRuleData routeFilterRuleParameters, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string routeFilterName, string ruleName, RouteFilterRule routeFilterRuleParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -305,7 +301,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="routeFilterRuleParameters"> Parameters supplied to the create or update route filter rule operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="routeFilterName"/>, <paramref name="ruleName"/>, or <paramref name="routeFilterRuleParameters"/> is null. </exception>
-        public Response CreateOrUpdate(string resourceGroupName, string routeFilterName, string ruleName, RouteFilterRuleData routeFilterRuleParameters, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string resourceGroupName, string routeFilterName, string ruleName, RouteFilterRule routeFilterRuleParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -336,7 +332,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateGetAllByRouteFilterRequest(string resourceGroupName, string routeFilterName)
+        internal HttpMessage CreateListByRouteFilterRequest(string resourceGroupName, string routeFilterName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -362,7 +358,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="routeFilterName"> The name of the route filter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="routeFilterName"/> is null. </exception>
-        public async Task<Response<RouteFilterRuleListResult>> GetAllByRouteFilterAsync(string resourceGroupName, string routeFilterName, CancellationToken cancellationToken = default)
+        public async Task<Response<RouteFilterRuleListResult>> ListByRouteFilterAsync(string resourceGroupName, string routeFilterName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -373,7 +369,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(routeFilterName));
             }
 
-            using var message = CreateGetAllByRouteFilterRequest(resourceGroupName, routeFilterName);
+            using var message = CreateListByRouteFilterRequest(resourceGroupName, routeFilterName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -394,7 +390,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="routeFilterName"> The name of the route filter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="routeFilterName"/> is null. </exception>
-        public Response<RouteFilterRuleListResult> GetAllByRouteFilter(string resourceGroupName, string routeFilterName, CancellationToken cancellationToken = default)
+        public Response<RouteFilterRuleListResult> ListByRouteFilter(string resourceGroupName, string routeFilterName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -405,7 +401,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(routeFilterName));
             }
 
-            using var message = CreateGetAllByRouteFilterRequest(resourceGroupName, routeFilterName);
+            using var message = CreateListByRouteFilterRequest(resourceGroupName, routeFilterName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -421,7 +417,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateGetAllByRouteFilterNextPageRequest(string nextLink, string resourceGroupName, string routeFilterName)
+        internal HttpMessage CreateListByRouteFilterNextPageRequest(string nextLink, string resourceGroupName, string routeFilterName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -441,7 +437,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="routeFilterName"> The name of the route filter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="routeFilterName"/> is null. </exception>
-        public async Task<Response<RouteFilterRuleListResult>> GetAllByRouteFilterNextPageAsync(string nextLink, string resourceGroupName, string routeFilterName, CancellationToken cancellationToken = default)
+        public async Task<Response<RouteFilterRuleListResult>> ListByRouteFilterNextPageAsync(string nextLink, string resourceGroupName, string routeFilterName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -456,7 +452,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(routeFilterName));
             }
 
-            using var message = CreateGetAllByRouteFilterNextPageRequest(nextLink, resourceGroupName, routeFilterName);
+            using var message = CreateListByRouteFilterNextPageRequest(nextLink, resourceGroupName, routeFilterName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -478,7 +474,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="routeFilterName"> The name of the route filter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="routeFilterName"/> is null. </exception>
-        public Response<RouteFilterRuleListResult> GetAllByRouteFilterNextPage(string nextLink, string resourceGroupName, string routeFilterName, CancellationToken cancellationToken = default)
+        public Response<RouteFilterRuleListResult> ListByRouteFilterNextPage(string nextLink, string resourceGroupName, string routeFilterName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -493,7 +489,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(routeFilterName));
             }
 
-            using var message = CreateGetAllByRouteFilterNextPageRequest(nextLink, resourceGroupName, routeFilterName);
+            using var message = CreateListByRouteFilterNextPageRequest(nextLink, resourceGroupName, routeFilterName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

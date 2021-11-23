@@ -15,14 +15,15 @@ using Azure;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
-    /// <summary> A class representing collection of TableService and their operations over a StorageAccount. </summary>
+    /// <summary> A class representing collection of TableService and their operations over its parent. </summary>
     public partial class TableServiceCollection : ArmCollection, IEnumerable<TableService>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly TableServicesRestOperations _restClient;
+        private readonly TableServicesRestOperations _tableServicesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="TableServiceCollection"/> class for mocking. </summary>
         protected TableServiceCollection()
@@ -34,17 +35,7 @@ namespace Azure.ResourceManager.Storage
         internal TableServiceCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new TableServicesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-        }
-
-        IEnumerator<TableService> IEnumerable<TableService>.GetEnumerator()
-        {
-            return GetAll().Value.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().Value.GetEnumerator();
+            _tableServicesRestClient = new TableServicesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -52,21 +43,90 @@ namespace Azure.ResourceManager.Storage
 
         // Collection level operations.
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Sets the properties of a storage account’s Table service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
         /// <param name="tableServiceName"> The name of the Table Service within the specified storage account. Table Service Name must be &apos;default&apos;. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="parameters"> The properties of a storage account’s Table service, only properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules can be specified. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tableServiceName"/> or <paramref name="parameters"/> is null. </exception>
+        public virtual TableServiceSetServicePropertiesOperation CreateOrUpdate(string tableServiceName, TableServiceData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            if (tableServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(tableServiceName));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("TableServiceCollection.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                var response = _tableServicesRestClient.SetServiceProperties(Id.ResourceGroupName, Id.Name, tableServiceName, parameters, cancellationToken);
+                var operation = new TableServiceSetServicePropertiesOperation(Parent, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Sets the properties of a storage account’s Table service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
+        /// <param name="tableServiceName"> The name of the Table Service within the specified storage account. Table Service Name must be &apos;default&apos;. </param>
+        /// <param name="parameters"> The properties of a storage account’s Table service, only properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules can be specified. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tableServiceName"/> or <paramref name="parameters"/> is null. </exception>
+        public async virtual Task<TableServiceSetServicePropertiesOperation> CreateOrUpdateAsync(string tableServiceName, TableServiceData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            if (tableServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(tableServiceName));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("TableServiceCollection.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                var response = await _tableServicesRestClient.SetServicePropertiesAsync(Id.ResourceGroupName, Id.Name, tableServiceName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new TableServiceSetServicePropertiesOperation(Parent, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the properties of a storage account’s Table service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
+        /// <param name="tableServiceName"> The name of the Table Service within the specified storage account. Table Service Name must be &apos;default&apos;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tableServiceName"/> is null. </exception>
         public virtual Response<TableService> Get(string tableServiceName, CancellationToken cancellationToken = default)
         {
+            if (tableServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(tableServiceName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("TableServiceCollection.Get");
             scope.Start();
             try
             {
-                if (tableServiceName == null)
-                {
-                    throw new ArgumentNullException(nameof(tableServiceName));
-                }
-
-                var response = _restClient.GetServiceProperties(Id.ResourceGroupName, Id.Name, tableServiceName, cancellationToken: cancellationToken);
+                var response = _tableServicesRestClient.GetServiceProperties(Id.ResourceGroupName, Id.Name, tableServiceName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new TableService(Parent, response.Value), response.GetRawResponse());
@@ -78,21 +138,22 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Gets the properties of a storage account’s Table service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
         /// <param name="tableServiceName"> The name of the Table Service within the specified storage account. Table Service Name must be &apos;default&apos;. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tableServiceName"/> is null. </exception>
         public async virtual Task<Response<TableService>> GetAsync(string tableServiceName, CancellationToken cancellationToken = default)
         {
+            if (tableServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(tableServiceName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("TableServiceCollection.Get");
             scope.Start();
             try
             {
-                if (tableServiceName == null)
-                {
-                    throw new ArgumentNullException(nameof(tableServiceName));
-                }
-
-                var response = await _restClient.GetServicePropertiesAsync(Id.ResourceGroupName, Id.Name, tableServiceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _tableServicesRestClient.GetServicePropertiesAsync(Id.ResourceGroupName, Id.Name, tableServiceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new TableService(Parent, response.Value), response.GetRawResponse());
@@ -106,19 +167,20 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="tableServiceName"> The name of the Table Service within the specified storage account. Table Service Name must be &apos;default&apos;. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tableServiceName"/> is null. </exception>
         public virtual Response<TableService> GetIfExists(string tableServiceName, CancellationToken cancellationToken = default)
         {
+            if (tableServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(tableServiceName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("TableServiceCollection.GetIfExists");
             scope.Start();
             try
             {
-                if (tableServiceName == null)
-                {
-                    throw new ArgumentNullException(nameof(tableServiceName));
-                }
-
-                var response = _restClient.GetServiceProperties(Id.ResourceGroupName, Id.Name, tableServiceName, cancellationToken: cancellationToken);
+                var response = _tableServicesRestClient.GetServiceProperties(Id.ResourceGroupName, Id.Name, tableServiceName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<TableService>(null, response.GetRawResponse())
                     : Response.FromValue(new TableService(this, response.Value), response.GetRawResponse());
@@ -132,19 +194,20 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="tableServiceName"> The name of the Table Service within the specified storage account. Table Service Name must be &apos;default&apos;. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tableServiceName"/> is null. </exception>
         public async virtual Task<Response<TableService>> GetIfExistsAsync(string tableServiceName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("TableServiceCollection.GetIfExists");
+            if (tableServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(tableServiceName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("TableServiceCollection.GetIfExistsAsync");
             scope.Start();
             try
             {
-                if (tableServiceName == null)
-                {
-                    throw new ArgumentNullException(nameof(tableServiceName));
-                }
-
-                var response = await _restClient.GetServicePropertiesAsync(Id.ResourceGroupName, Id.Name, tableServiceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _tableServicesRestClient.GetServicePropertiesAsync(Id.ResourceGroupName, Id.Name, tableServiceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<TableService>(null, response.GetRawResponse())
                     : Response.FromValue(new TableService(this, response.Value), response.GetRawResponse());
@@ -158,18 +221,19 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="tableServiceName"> The name of the Table Service within the specified storage account. Table Service Name must be &apos;default&apos;. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tableServiceName"/> is null. </exception>
         public virtual Response<bool> CheckIfExists(string tableServiceName, CancellationToken cancellationToken = default)
         {
+            if (tableServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(tableServiceName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("TableServiceCollection.CheckIfExists");
             scope.Start();
             try
             {
-                if (tableServiceName == null)
-                {
-                    throw new ArgumentNullException(nameof(tableServiceName));
-                }
-
                 var response = GetIfExists(tableServiceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -182,38 +246,21 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="tableServiceName"> The name of the Table Service within the specified storage account. Table Service Name must be &apos;default&apos;. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tableServiceName"/> is null. </exception>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(string tableServiceName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("TableServiceCollection.CheckIfExists");
+            if (tableServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(tableServiceName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("TableServiceCollection.CheckIfExistsAsync");
             scope.Start();
             try
             {
-                if (tableServiceName == null)
-                {
-                    throw new ArgumentNullException(nameof(tableServiceName));
-                }
-
                 var response = await GetIfExistsAsync(tableServiceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> List all table services for the storage account. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<IReadOnlyList<TableService>>> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("TableServiceCollection.GetAll");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.GetAllAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value.Value.Select(data => new TableService(Parent, data)).ToArray() as IReadOnlyList<TableService>, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -230,8 +277,8 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = _restClient.GetAll(Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(response.Value.Value.Select(data => new TableService(Parent, data)).ToArray() as IReadOnlyList<TableService>, response.GetRawResponse());
+                var response = _tableServicesRestClient.List(Id.ResourceGroupName, Id.Name, cancellationToken);
+                return Response.FromValue(response.Value.Value.Select(value => new TableService(Parent, value)).ToArray() as IReadOnlyList<TableService>, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -240,7 +287,35 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
+        /// <summary> List all table services for the storage account. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response<IReadOnlyList<TableService>>> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("TableServiceCollection.GetAll");
+            scope.Start();
+            try
+            {
+                var response = await _tableServicesRestClient.ListAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value.Value.Select(value => new TableService(Parent, value)).ToArray() as IReadOnlyList<TableService>, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        IEnumerator<TableService> IEnumerable<TableService>.GetEnumerator()
+        {
+            return GetAll().Value.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().Value.GetEnumerator();
+        }
+
         // Builders.
-        // public ArmBuilder<ResourceIdentifier, TableService, TableServiceData> Construct() { }
+        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, TableService, TableServiceData> Construct() { }
     }
 }

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of VpnGatewayData. </summary>
         public VpnGatewayData()
         {
-            Connections = new ChangeTrackingList<VpnConnectionData>();
+            Connections = new ChangeTrackingList<VpnConnection>();
             IpConfigurations = new ChangeTrackingList<VpnGatewayIpConfiguration>();
             NatRules = new ChangeTrackingList<VpnGatewayNatRuleData>();
         }
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="ipConfigurations"> List of all IPs configured on the gateway. </param>
         /// <param name="isRoutingPreferenceInternet"> Enable Routing Preference property for the Public IP Interface of the VpnGateway. </param>
         /// <param name="natRules"> List of all the nat Rules associated with the gateway. </param>
-        internal VpnGatewayData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, WritableSubResource virtualHub, IList<VpnConnectionData> connections, BgpSettings bgpSettings, ProvisioningState? provisioningState, int? vpnGatewayScaleUnit, IReadOnlyList<VpnGatewayIpConfiguration> ipConfigurations, bool? isRoutingPreferenceInternet, IList<VpnGatewayNatRuleData> natRules) : base(id, name, type, location, tags)
+        internal VpnGatewayData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, WritableSubResource virtualHub, IList<VpnConnection> connections, BgpSettings bgpSettings, ProvisioningState? provisioningState, int? vpnGatewayScaleUnit, IReadOnlyList<VpnGatewayIpConfiguration> ipConfigurations, bool? isRoutingPreferenceInternet, IList<VpnGatewayNatRuleData> natRules) : base(id, name, type, location, tags)
         {
             Etag = etag;
             VirtualHub = virtualHub;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> The VirtualHub to which the gateway belongs. </summary>
         public WritableSubResource VirtualHub { get; set; }
         /// <summary> List of all vpn connections to the gateway. </summary>
-        public IList<VpnConnectionData> Connections { get; }
+        public IList<VpnConnection> Connections { get; }
         /// <summary> Local network gateway&apos;s BGP speaker settings. </summary>
         public BgpSettings BgpSettings { get; set; }
         /// <summary> The provisioning state of the VPN gateway resource. </summary>

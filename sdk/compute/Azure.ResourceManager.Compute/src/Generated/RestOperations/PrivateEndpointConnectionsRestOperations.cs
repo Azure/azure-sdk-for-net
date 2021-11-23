@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateGetAllRequest(string resourceGroupName, string diskAccessName)
+        internal HttpMessage CreateListRequest(string resourceGroupName, string diskAccessName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="diskAccessName"> The name of the disk access resource that is being created. The name can&apos;t be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="diskAccessName"/> is null. </exception>
-        public async Task<Response<PrivateEndpointConnectionListResult>> GetAllAsync(string resourceGroupName, string diskAccessName, CancellationToken cancellationToken = default)
+        public async Task<Response<PrivateEndpointConnectionListResult>> ListAsync(string resourceGroupName, string diskAccessName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(diskAccessName));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName, diskAccessName);
+            using var message = CreateListRequest(resourceGroupName, diskAccessName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="diskAccessName"> The name of the disk access resource that is being created. The name can&apos;t be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="diskAccessName"/> is null. </exception>
-        public Response<PrivateEndpointConnectionListResult> GetAll(string resourceGroupName, string diskAccessName, CancellationToken cancellationToken = default)
+        public Response<PrivateEndpointConnectionListResult> List(string resourceGroupName, string diskAccessName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(diskAccessName));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName, diskAccessName);
+            using var message = CreateListRequest(resourceGroupName, diskAccessName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateGetAllNextPageRequest(string nextLink, string resourceGroupName, string diskAccessName)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string resourceGroupName, string diskAccessName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="diskAccessName"> The name of the disk access resource that is being created. The name can&apos;t be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="diskAccessName"/> is null. </exception>
-        public async Task<Response<PrivateEndpointConnectionListResult>> GetAllNextPageAsync(string nextLink, string resourceGroupName, string diskAccessName, CancellationToken cancellationToken = default)
+        public async Task<Response<PrivateEndpointConnectionListResult>> ListNextPageAsync(string nextLink, string resourceGroupName, string diskAccessName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(diskAccessName));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, diskAccessName);
+            using var message = CreateListNextPageRequest(nextLink, resourceGroupName, diskAccessName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="diskAccessName"> The name of the disk access resource that is being created. The name can&apos;t be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="diskAccessName"/> is null. </exception>
-        public Response<PrivateEndpointConnectionListResult> GetAllNextPage(string nextLink, string resourceGroupName, string diskAccessName, CancellationToken cancellationToken = default)
+        public Response<PrivateEndpointConnectionListResult> ListNextPage(string nextLink, string resourceGroupName, string diskAccessName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -490,7 +490,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(diskAccessName));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, diskAccessName);
+            using var message = CreateListNextPageRequest(nextLink, resourceGroupName, diskAccessName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

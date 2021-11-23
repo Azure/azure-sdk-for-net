@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Storage
     public partial class ManagementPolicy : ArmResource
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly ManagementPoliciesRestOperations _restClient;
+        private readonly ManagementPoliciesRestOperations _managementPoliciesRestClient;
         private readonly ManagementPolicyData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ManagementPolicy"/> class for mocking. </summary>
@@ -38,9 +38,8 @@ namespace Azure.ResourceManager.Storage
         {
             HasData = true;
             _data = resource;
-            Parent = options;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new ManagementPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _managementPoliciesRestClient = new ManagementPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="ManagementPolicy"/> class. </summary>
@@ -48,9 +47,8 @@ namespace Azure.ResourceManager.Storage
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ManagementPolicy(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
-            Parent = options;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new ManagementPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _managementPoliciesRestClient = new ManagementPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="ManagementPolicy"/> class. </summary>
@@ -62,7 +60,7 @@ namespace Azure.ResourceManager.Storage
         internal ManagementPolicy(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new ManagementPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _managementPoliciesRestClient = new ManagementPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -86,9 +84,6 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Gets the parent resource of this resource. </summary>
-        public ArmResource Parent { get; }
-
         /// <summary> Gets the managementpolicy associated with the specified storage account. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ManagementPolicy>> GetAsync(CancellationToken cancellationToken = default)
@@ -97,7 +92,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _managementPoliciesRestClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new ManagementPolicy(this, response.Value), response.GetRawResponse());
@@ -117,7 +112,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _managementPoliciesRestClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ManagementPolicy(this, response.Value), response.GetRawResponse());
@@ -154,7 +149,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _managementPoliciesRestClient.DeleteAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new ManagementPolicyDeleteOperation(response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -176,60 +171,11 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = _restClient.Delete(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _managementPoliciesRestClient.Delete(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 var operation = new ManagementPolicyDeleteOperation(response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-        /// <summary> Sets the managementpolicy to the specified storage account. </summary>
-        /// <param name="properties"> The ManagementPolicy set to a storage account. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public virtual async Task<Response<ManagementPolicy>> CreateOrUpdateAsync(ManagementPolicyData properties, CancellationToken cancellationToken = default)
-        {
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("ManagementPolicy.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, properties, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ManagementPolicy(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Sets the managementpolicy to the specified storage account. </summary>
-        /// <param name="properties"> The ManagementPolicy set to a storage account. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public virtual Response<ManagementPolicy> CreateOrUpdate(ManagementPolicyData properties, CancellationToken cancellationToken = default)
-        {
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("ManagementPolicy.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, Id.Parent.Name, Id.Name, properties, cancellationToken);
-                return Response.FromValue(new ManagementPolicy(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -16,14 +16,16 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
-    /// <summary> A class representing collection of BlobService and their operations over a StorageAccount. </summary>
+    /// <summary> A class representing collection of BlobService and their operations over its parent. </summary>
     public partial class BlobServiceCollection : ArmCollection, IEnumerable<BlobService>, IAsyncEnumerable<BlobService>
+
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly BlobServicesRestOperations _restClient;
+        private readonly BlobServicesRestOperations _blobServicesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="BlobServiceCollection"/> class for mocking. </summary>
         protected BlobServiceCollection()
@@ -35,22 +37,7 @@ namespace Azure.ResourceManager.Storage
         internal BlobServiceCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new BlobServicesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-        }
-
-        IEnumerator<BlobService> IEnumerable<BlobService>.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IAsyncEnumerator<BlobService> IAsyncEnumerable<BlobService>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            _blobServicesRestClient = new BlobServicesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -58,21 +45,90 @@ namespace Azure.ResourceManager.Storage
 
         // Collection level operations.
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Sets the properties of a storage account’s Blob service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
         /// <param name="blobServicesName"> The name of the blob Service within the specified storage account. Blob Service Name must be &apos;default&apos;. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="parameters"> The properties of a storage account’s Blob service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="blobServicesName"/> or <paramref name="parameters"/> is null. </exception>
+        public virtual BlobServiceSetServicePropertiesOperation CreateOrUpdate(string blobServicesName, BlobServiceData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            if (blobServicesName == null)
+            {
+                throw new ArgumentNullException(nameof(blobServicesName));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("BlobServiceCollection.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                var response = _blobServicesRestClient.SetServiceProperties(Id.ResourceGroupName, Id.Name, blobServicesName, parameters, cancellationToken);
+                var operation = new BlobServiceSetServicePropertiesOperation(Parent, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Sets the properties of a storage account’s Blob service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
+        /// <param name="blobServicesName"> The name of the blob Service within the specified storage account. Blob Service Name must be &apos;default&apos;. </param>
+        /// <param name="parameters"> The properties of a storage account’s Blob service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="blobServicesName"/> or <paramref name="parameters"/> is null. </exception>
+        public async virtual Task<BlobServiceSetServicePropertiesOperation> CreateOrUpdateAsync(string blobServicesName, BlobServiceData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            if (blobServicesName == null)
+            {
+                throw new ArgumentNullException(nameof(blobServicesName));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("BlobServiceCollection.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                var response = await _blobServicesRestClient.SetServicePropertiesAsync(Id.ResourceGroupName, Id.Name, blobServicesName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new BlobServiceSetServicePropertiesOperation(Parent, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the properties of a storage account’s Blob service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
+        /// <param name="blobServicesName"> The name of the blob Service within the specified storage account. Blob Service Name must be &apos;default&apos;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="blobServicesName"/> is null. </exception>
         public virtual Response<BlobService> Get(string blobServicesName, CancellationToken cancellationToken = default)
         {
+            if (blobServicesName == null)
+            {
+                throw new ArgumentNullException(nameof(blobServicesName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("BlobServiceCollection.Get");
             scope.Start();
             try
             {
-                if (blobServicesName == null)
-                {
-                    throw new ArgumentNullException(nameof(blobServicesName));
-                }
-
-                var response = _restClient.GetServiceProperties(Id.ResourceGroupName, Id.Name, blobServicesName, cancellationToken: cancellationToken);
+                var response = _blobServicesRestClient.GetServiceProperties(Id.ResourceGroupName, Id.Name, blobServicesName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new BlobService(Parent, response.Value), response.GetRawResponse());
@@ -84,21 +140,22 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Gets the properties of a storage account’s Blob service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
         /// <param name="blobServicesName"> The name of the blob Service within the specified storage account. Blob Service Name must be &apos;default&apos;. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="blobServicesName"/> is null. </exception>
         public async virtual Task<Response<BlobService>> GetAsync(string blobServicesName, CancellationToken cancellationToken = default)
         {
+            if (blobServicesName == null)
+            {
+                throw new ArgumentNullException(nameof(blobServicesName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("BlobServiceCollection.Get");
             scope.Start();
             try
             {
-                if (blobServicesName == null)
-                {
-                    throw new ArgumentNullException(nameof(blobServicesName));
-                }
-
-                var response = await _restClient.GetServicePropertiesAsync(Id.ResourceGroupName, Id.Name, blobServicesName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _blobServicesRestClient.GetServicePropertiesAsync(Id.ResourceGroupName, Id.Name, blobServicesName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new BlobService(Parent, response.Value), response.GetRawResponse());
@@ -112,19 +169,20 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="blobServicesName"> The name of the blob Service within the specified storage account. Blob Service Name must be &apos;default&apos;. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="blobServicesName"/> is null. </exception>
         public virtual Response<BlobService> GetIfExists(string blobServicesName, CancellationToken cancellationToken = default)
         {
+            if (blobServicesName == null)
+            {
+                throw new ArgumentNullException(nameof(blobServicesName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("BlobServiceCollection.GetIfExists");
             scope.Start();
             try
             {
-                if (blobServicesName == null)
-                {
-                    throw new ArgumentNullException(nameof(blobServicesName));
-                }
-
-                var response = _restClient.GetServiceProperties(Id.ResourceGroupName, Id.Name, blobServicesName, cancellationToken: cancellationToken);
+                var response = _blobServicesRestClient.GetServiceProperties(Id.ResourceGroupName, Id.Name, blobServicesName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<BlobService>(null, response.GetRawResponse())
                     : Response.FromValue(new BlobService(this, response.Value), response.GetRawResponse());
@@ -138,19 +196,20 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="blobServicesName"> The name of the blob Service within the specified storage account. Blob Service Name must be &apos;default&apos;. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="blobServicesName"/> is null. </exception>
         public async virtual Task<Response<BlobService>> GetIfExistsAsync(string blobServicesName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("BlobServiceCollection.GetIfExists");
+            if (blobServicesName == null)
+            {
+                throw new ArgumentNullException(nameof(blobServicesName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("BlobServiceCollection.GetIfExistsAsync");
             scope.Start();
             try
             {
-                if (blobServicesName == null)
-                {
-                    throw new ArgumentNullException(nameof(blobServicesName));
-                }
-
-                var response = await _restClient.GetServicePropertiesAsync(Id.ResourceGroupName, Id.Name, blobServicesName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _blobServicesRestClient.GetServicePropertiesAsync(Id.ResourceGroupName, Id.Name, blobServicesName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<BlobService>(null, response.GetRawResponse())
                     : Response.FromValue(new BlobService(this, response.Value), response.GetRawResponse());
@@ -164,18 +223,19 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="blobServicesName"> The name of the blob Service within the specified storage account. Blob Service Name must be &apos;default&apos;. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="blobServicesName"/> is null. </exception>
         public virtual Response<bool> CheckIfExists(string blobServicesName, CancellationToken cancellationToken = default)
         {
+            if (blobServicesName == null)
+            {
+                throw new ArgumentNullException(nameof(blobServicesName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("BlobServiceCollection.CheckIfExists");
             scope.Start();
             try
             {
-                if (blobServicesName == null)
-                {
-                    throw new ArgumentNullException(nameof(blobServicesName));
-                }
-
                 var response = GetIfExists(blobServicesName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -188,18 +248,19 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="blobServicesName"> The name of the blob Service within the specified storage account. Blob Service Name must be &apos;default&apos;. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="blobServicesName"/> is null. </exception>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(string blobServicesName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("BlobServiceCollection.CheckIfExists");
+            if (blobServicesName == null)
+            {
+                throw new ArgumentNullException(nameof(blobServicesName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("BlobServiceCollection.CheckIfExistsAsync");
             scope.Start();
             try
             {
-                if (blobServicesName == null)
-                {
-                    throw new ArgumentNullException(nameof(blobServicesName));
-                }
-
                 var response = await GetIfExistsAsync(blobServicesName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -221,7 +282,7 @@ namespace Azure.ResourceManager.Storage
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAll(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _blobServicesRestClient.List(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new BlobService(Parent, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -244,7 +305,7 @@ namespace Azure.ResourceManager.Storage
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _blobServicesRestClient.ListAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new BlobService(Parent, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -256,7 +317,22 @@ namespace Azure.ResourceManager.Storage
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
+        IEnumerator<BlobService> IEnumerable<BlobService>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<BlobService> IAsyncEnumerable<BlobService>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
+
         // Builders.
-        // public ArmBuilder<ResourceIdentifier, BlobService, BlobServiceData> Construct() { }
+        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, BlobService, BlobServiceData> Construct() { }
     }
 }

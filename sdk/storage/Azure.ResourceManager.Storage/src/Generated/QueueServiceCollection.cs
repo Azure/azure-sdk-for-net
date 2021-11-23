@@ -15,14 +15,15 @@ using Azure;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
-    /// <summary> A class representing collection of QueueService and their operations over a StorageAccount. </summary>
+    /// <summary> A class representing collection of QueueService and their operations over its parent. </summary>
     public partial class QueueServiceCollection : ArmCollection, IEnumerable<QueueService>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly QueueServicesRestOperations _restClient;
+        private readonly QueueServicesRestOperations _queueServicesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="QueueServiceCollection"/> class for mocking. </summary>
         protected QueueServiceCollection()
@@ -34,17 +35,7 @@ namespace Azure.ResourceManager.Storage
         internal QueueServiceCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new QueueServicesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-        }
-
-        IEnumerator<QueueService> IEnumerable<QueueService>.GetEnumerator()
-        {
-            return GetAll().Value.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().Value.GetEnumerator();
+            _queueServicesRestClient = new QueueServicesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -52,21 +43,90 @@ namespace Azure.ResourceManager.Storage
 
         // Collection level operations.
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Sets the properties of a storage account’s Queue service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
         /// <param name="queueServiceName"> The name of the Queue Service within the specified storage account. Queue Service Name must be &apos;default&apos;. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="parameters"> The properties of a storage account’s Queue service, only properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules can be specified. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="queueServiceName"/> or <paramref name="parameters"/> is null. </exception>
+        public virtual QueueServiceSetServicePropertiesOperation CreateOrUpdate(string queueServiceName, QueueServiceData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            if (queueServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(queueServiceName));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("QueueServiceCollection.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                var response = _queueServicesRestClient.SetServiceProperties(Id.ResourceGroupName, Id.Name, queueServiceName, parameters, cancellationToken);
+                var operation = new QueueServiceSetServicePropertiesOperation(Parent, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Sets the properties of a storage account’s Queue service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
+        /// <param name="queueServiceName"> The name of the Queue Service within the specified storage account. Queue Service Name must be &apos;default&apos;. </param>
+        /// <param name="parameters"> The properties of a storage account’s Queue service, only properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules can be specified. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="queueServiceName"/> or <paramref name="parameters"/> is null. </exception>
+        public async virtual Task<QueueServiceSetServicePropertiesOperation> CreateOrUpdateAsync(string queueServiceName, QueueServiceData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            if (queueServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(queueServiceName));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("QueueServiceCollection.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                var response = await _queueServicesRestClient.SetServicePropertiesAsync(Id.ResourceGroupName, Id.Name, queueServiceName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new QueueServiceSetServicePropertiesOperation(Parent, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the properties of a storage account’s Queue service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
+        /// <param name="queueServiceName"> The name of the Queue Service within the specified storage account. Queue Service Name must be &apos;default&apos;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="queueServiceName"/> is null. </exception>
         public virtual Response<QueueService> Get(string queueServiceName, CancellationToken cancellationToken = default)
         {
+            if (queueServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(queueServiceName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("QueueServiceCollection.Get");
             scope.Start();
             try
             {
-                if (queueServiceName == null)
-                {
-                    throw new ArgumentNullException(nameof(queueServiceName));
-                }
-
-                var response = _restClient.GetServiceProperties(Id.ResourceGroupName, Id.Name, queueServiceName, cancellationToken: cancellationToken);
+                var response = _queueServicesRestClient.GetServiceProperties(Id.ResourceGroupName, Id.Name, queueServiceName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new QueueService(Parent, response.Value), response.GetRawResponse());
@@ -78,21 +138,22 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Gets the properties of a storage account’s Queue service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
         /// <param name="queueServiceName"> The name of the Queue Service within the specified storage account. Queue Service Name must be &apos;default&apos;. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="queueServiceName"/> is null. </exception>
         public async virtual Task<Response<QueueService>> GetAsync(string queueServiceName, CancellationToken cancellationToken = default)
         {
+            if (queueServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(queueServiceName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("QueueServiceCollection.Get");
             scope.Start();
             try
             {
-                if (queueServiceName == null)
-                {
-                    throw new ArgumentNullException(nameof(queueServiceName));
-                }
-
-                var response = await _restClient.GetServicePropertiesAsync(Id.ResourceGroupName, Id.Name, queueServiceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _queueServicesRestClient.GetServicePropertiesAsync(Id.ResourceGroupName, Id.Name, queueServiceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new QueueService(Parent, response.Value), response.GetRawResponse());
@@ -106,19 +167,20 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="queueServiceName"> The name of the Queue Service within the specified storage account. Queue Service Name must be &apos;default&apos;. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="queueServiceName"/> is null. </exception>
         public virtual Response<QueueService> GetIfExists(string queueServiceName, CancellationToken cancellationToken = default)
         {
+            if (queueServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(queueServiceName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("QueueServiceCollection.GetIfExists");
             scope.Start();
             try
             {
-                if (queueServiceName == null)
-                {
-                    throw new ArgumentNullException(nameof(queueServiceName));
-                }
-
-                var response = _restClient.GetServiceProperties(Id.ResourceGroupName, Id.Name, queueServiceName, cancellationToken: cancellationToken);
+                var response = _queueServicesRestClient.GetServiceProperties(Id.ResourceGroupName, Id.Name, queueServiceName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<QueueService>(null, response.GetRawResponse())
                     : Response.FromValue(new QueueService(this, response.Value), response.GetRawResponse());
@@ -132,19 +194,20 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="queueServiceName"> The name of the Queue Service within the specified storage account. Queue Service Name must be &apos;default&apos;. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="queueServiceName"/> is null. </exception>
         public async virtual Task<Response<QueueService>> GetIfExistsAsync(string queueServiceName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("QueueServiceCollection.GetIfExists");
+            if (queueServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(queueServiceName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("QueueServiceCollection.GetIfExistsAsync");
             scope.Start();
             try
             {
-                if (queueServiceName == null)
-                {
-                    throw new ArgumentNullException(nameof(queueServiceName));
-                }
-
-                var response = await _restClient.GetServicePropertiesAsync(Id.ResourceGroupName, Id.Name, queueServiceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _queueServicesRestClient.GetServicePropertiesAsync(Id.ResourceGroupName, Id.Name, queueServiceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<QueueService>(null, response.GetRawResponse())
                     : Response.FromValue(new QueueService(this, response.Value), response.GetRawResponse());
@@ -158,18 +221,19 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="queueServiceName"> The name of the Queue Service within the specified storage account. Queue Service Name must be &apos;default&apos;. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="queueServiceName"/> is null. </exception>
         public virtual Response<bool> CheckIfExists(string queueServiceName, CancellationToken cancellationToken = default)
         {
+            if (queueServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(queueServiceName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("QueueServiceCollection.CheckIfExists");
             scope.Start();
             try
             {
-                if (queueServiceName == null)
-                {
-                    throw new ArgumentNullException(nameof(queueServiceName));
-                }
-
                 var response = GetIfExists(queueServiceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -182,38 +246,21 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="queueServiceName"> The name of the Queue Service within the specified storage account. Queue Service Name must be &apos;default&apos;. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="queueServiceName"/> is null. </exception>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(string queueServiceName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("QueueServiceCollection.CheckIfExists");
+            if (queueServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(queueServiceName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("QueueServiceCollection.CheckIfExistsAsync");
             scope.Start();
             try
             {
-                if (queueServiceName == null)
-                {
-                    throw new ArgumentNullException(nameof(queueServiceName));
-                }
-
                 var response = await GetIfExistsAsync(queueServiceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> List all queue services for the storage account. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<IReadOnlyList<QueueService>>> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("QueueServiceCollection.GetAll");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.GetAllAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value.Value.Select(data => new QueueService(Parent, data)).ToArray() as IReadOnlyList<QueueService>, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -230,8 +277,8 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = _restClient.GetAll(Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(response.Value.Value.Select(data => new QueueService(Parent, data)).ToArray() as IReadOnlyList<QueueService>, response.GetRawResponse());
+                var response = _queueServicesRestClient.List(Id.ResourceGroupName, Id.Name, cancellationToken);
+                return Response.FromValue(response.Value.Value.Select(value => new QueueService(Parent, value)).ToArray() as IReadOnlyList<QueueService>, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -240,7 +287,35 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
+        /// <summary> List all queue services for the storage account. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response<IReadOnlyList<QueueService>>> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("QueueServiceCollection.GetAll");
+            scope.Start();
+            try
+            {
+                var response = await _queueServicesRestClient.ListAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value.Value.Select(value => new QueueService(Parent, value)).ToArray() as IReadOnlyList<QueueService>, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        IEnumerator<QueueService> IEnumerable<QueueService>.GetEnumerator()
+        {
+            return GetAll().Value.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().Value.GetEnumerator();
+        }
+
         // Builders.
-        // public ArmBuilder<ResourceIdentifier, QueueService, QueueServiceData> Construct() { }
+        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, QueueService, QueueServiceData> Construct() { }
     }
 }

@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="packetCaptureName"> The name of the packet capture session. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, or <paramref name="packetCaptureName"/> is null. </exception>
-        public async Task<Response<PacketCaptureData>> GetAsync(string resourceGroupName, string networkWatcherName, string packetCaptureName, CancellationToken cancellationToken = default)
+        public async Task<Response<PacketCapture>> GetAsync(string resourceGroupName, string networkWatcherName, string packetCaptureName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -193,13 +193,11 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        PacketCaptureData value = default;
+                        PacketCapture value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PacketCaptureData.DeserializePacketCaptureData(document.RootElement);
+                        value = PacketCapture.DeserializePacketCapture(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((PacketCaptureData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -211,7 +209,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="packetCaptureName"> The name of the packet capture session. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, or <paramref name="packetCaptureName"/> is null. </exception>
-        public Response<PacketCaptureData> Get(string resourceGroupName, string networkWatcherName, string packetCaptureName, CancellationToken cancellationToken = default)
+        public Response<PacketCapture> Get(string resourceGroupName, string networkWatcherName, string packetCaptureName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -232,13 +230,11 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        PacketCaptureData value = default;
+                        PacketCapture value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PacketCaptureData.DeserializePacketCaptureData(document.RootElement);
+                        value = PacketCapture.DeserializePacketCapture(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((PacketCaptureData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -510,7 +506,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateGetAllRequest(string resourceGroupName, string networkWatcherName)
+        internal HttpMessage CreateListRequest(string resourceGroupName, string networkWatcherName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -536,7 +532,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkWatcherName"> The name of the Network Watcher resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkWatcherName"/> is null. </exception>
-        public async Task<Response<PacketCaptureListResult>> GetAllAsync(string resourceGroupName, string networkWatcherName, CancellationToken cancellationToken = default)
+        public async Task<Response<PacketCaptureListResult>> ListAsync(string resourceGroupName, string networkWatcherName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -547,7 +543,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(networkWatcherName));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName, networkWatcherName);
+            using var message = CreateListRequest(resourceGroupName, networkWatcherName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -568,7 +564,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkWatcherName"> The name of the Network Watcher resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkWatcherName"/> is null. </exception>
-        public Response<PacketCaptureListResult> GetAll(string resourceGroupName, string networkWatcherName, CancellationToken cancellationToken = default)
+        public Response<PacketCaptureListResult> List(string resourceGroupName, string networkWatcherName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -579,7 +575,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(networkWatcherName));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName, networkWatcherName);
+            using var message = CreateListRequest(resourceGroupName, networkWatcherName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

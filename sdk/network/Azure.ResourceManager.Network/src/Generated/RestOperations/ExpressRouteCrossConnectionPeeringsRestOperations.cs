@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateGetAllRequest(string resourceGroupName, string crossConnectionName)
+        internal HttpMessage CreateListRequest(string resourceGroupName, string crossConnectionName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="crossConnectionName"> The name of the ExpressRouteCrossConnection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="crossConnectionName"/> is null. </exception>
-        public async Task<Response<ExpressRouteCrossConnectionPeeringList>> GetAllAsync(string resourceGroupName, string crossConnectionName, CancellationToken cancellationToken = default)
+        public async Task<Response<ExpressRouteCrossConnectionPeeringList>> ListAsync(string resourceGroupName, string crossConnectionName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(crossConnectionName));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName, crossConnectionName);
+            using var message = CreateListRequest(resourceGroupName, crossConnectionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="crossConnectionName"> The name of the ExpressRouteCrossConnection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="crossConnectionName"/> is null. </exception>
-        public Response<ExpressRouteCrossConnectionPeeringList> GetAll(string resourceGroupName, string crossConnectionName, CancellationToken cancellationToken = default)
+        public Response<ExpressRouteCrossConnectionPeeringList> List(string resourceGroupName, string crossConnectionName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(crossConnectionName));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName, crossConnectionName);
+            using var message = CreateListRequest(resourceGroupName, crossConnectionName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="crossConnectionName"/>, or <paramref name="peeringName"/> is null. </exception>
-        public async Task<Response<ExpressRouteCrossConnectionPeeringData>> GetAsync(string resourceGroupName, string crossConnectionName, string peeringName, CancellationToken cancellationToken = default)
+        public async Task<Response<ExpressRouteCrossConnectionPeering>> GetAsync(string resourceGroupName, string crossConnectionName, string peeringName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -268,13 +268,11 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        ExpressRouteCrossConnectionPeeringData value = default;
+                        ExpressRouteCrossConnectionPeering value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ExpressRouteCrossConnectionPeeringData.DeserializeExpressRouteCrossConnectionPeeringData(document.RootElement);
+                        value = ExpressRouteCrossConnectionPeering.DeserializeExpressRouteCrossConnectionPeering(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((ExpressRouteCrossConnectionPeeringData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -286,7 +284,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="crossConnectionName"/>, or <paramref name="peeringName"/> is null. </exception>
-        public Response<ExpressRouteCrossConnectionPeeringData> Get(string resourceGroupName, string crossConnectionName, string peeringName, CancellationToken cancellationToken = default)
+        public Response<ExpressRouteCrossConnectionPeering> Get(string resourceGroupName, string crossConnectionName, string peeringName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -307,19 +305,17 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        ExpressRouteCrossConnectionPeeringData value = default;
+                        ExpressRouteCrossConnectionPeering value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ExpressRouteCrossConnectionPeeringData.DeserializeExpressRouteCrossConnectionPeeringData(document.RootElement);
+                        value = ExpressRouteCrossConnectionPeering.DeserializeExpressRouteCrossConnectionPeering(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((ExpressRouteCrossConnectionPeeringData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string crossConnectionName, string peeringName, ExpressRouteCrossConnectionPeeringData peeringParameters)
+        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string crossConnectionName, string peeringName, ExpressRouteCrossConnectionPeering peeringParameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -352,7 +348,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="peeringParameters"> Parameters supplied to the create or update ExpressRouteCrossConnection peering operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="crossConnectionName"/>, <paramref name="peeringName"/>, or <paramref name="peeringParameters"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string crossConnectionName, string peeringName, ExpressRouteCrossConnectionPeeringData peeringParameters, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string crossConnectionName, string peeringName, ExpressRouteCrossConnectionPeering peeringParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -390,7 +386,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="peeringParameters"> Parameters supplied to the create or update ExpressRouteCrossConnection peering operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="crossConnectionName"/>, <paramref name="peeringName"/>, or <paramref name="peeringParameters"/> is null. </exception>
-        public Response CreateOrUpdate(string resourceGroupName, string crossConnectionName, string peeringName, ExpressRouteCrossConnectionPeeringData peeringParameters, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string resourceGroupName, string crossConnectionName, string peeringName, ExpressRouteCrossConnectionPeering peeringParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -421,7 +417,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateGetAllNextPageRequest(string nextLink, string resourceGroupName, string crossConnectionName)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string resourceGroupName, string crossConnectionName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -441,7 +437,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="crossConnectionName"> The name of the ExpressRouteCrossConnection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="crossConnectionName"/> is null. </exception>
-        public async Task<Response<ExpressRouteCrossConnectionPeeringList>> GetAllNextPageAsync(string nextLink, string resourceGroupName, string crossConnectionName, CancellationToken cancellationToken = default)
+        public async Task<Response<ExpressRouteCrossConnectionPeeringList>> ListNextPageAsync(string nextLink, string resourceGroupName, string crossConnectionName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -456,7 +452,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(crossConnectionName));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, crossConnectionName);
+            using var message = CreateListNextPageRequest(nextLink, resourceGroupName, crossConnectionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -478,7 +474,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="crossConnectionName"> The name of the ExpressRouteCrossConnection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="crossConnectionName"/> is null. </exception>
-        public Response<ExpressRouteCrossConnectionPeeringList> GetAllNextPage(string nextLink, string resourceGroupName, string crossConnectionName, CancellationToken cancellationToken = default)
+        public Response<ExpressRouteCrossConnectionPeeringList> ListNextPage(string nextLink, string resourceGroupName, string crossConnectionName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -493,7 +489,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(crossConnectionName));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, crossConnectionName);
+            using var message = CreateListNextPageRequest(nextLink, resourceGroupName, crossConnectionName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

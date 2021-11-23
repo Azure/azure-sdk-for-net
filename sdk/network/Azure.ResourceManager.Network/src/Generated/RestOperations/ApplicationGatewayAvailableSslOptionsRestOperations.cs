@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -44,7 +43,7 @@ namespace Azure.ResourceManager.Network
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateGetAllRequest()
+        internal HttpMessage CreateListRequest()
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -63,19 +62,21 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Lists available Ssl options for configuring Ssl policy. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<ApplicationGatewayAvailableSslOptions>> GetAllAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<ApplicationGatewayAvailableSslOptionsData>> ListAsync(CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetAllRequest();
+            using var message = CreateListRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ApplicationGatewayAvailableSslOptions value = default;
+                        ApplicationGatewayAvailableSslOptionsData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ApplicationGatewayAvailableSslOptions.DeserializeApplicationGatewayAvailableSslOptions(document.RootElement);
+                        value = ApplicationGatewayAvailableSslOptionsData.DeserializeApplicationGatewayAvailableSslOptionsData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((ApplicationGatewayAvailableSslOptionsData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -83,19 +84,21 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Lists available Ssl options for configuring Ssl policy. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<ApplicationGatewayAvailableSslOptions> GetAll(CancellationToken cancellationToken = default)
+        public Response<ApplicationGatewayAvailableSslOptionsData> List(CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetAllRequest();
+            using var message = CreateListRequest();
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ApplicationGatewayAvailableSslOptions value = default;
+                        ApplicationGatewayAvailableSslOptionsData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ApplicationGatewayAvailableSslOptions.DeserializeApplicationGatewayAvailableSslOptions(document.RootElement);
+                        value = ApplicationGatewayAvailableSslOptionsData.DeserializeApplicationGatewayAvailableSslOptionsData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((ApplicationGatewayAvailableSslOptionsData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }

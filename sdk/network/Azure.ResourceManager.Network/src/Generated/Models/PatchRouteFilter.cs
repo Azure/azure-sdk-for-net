@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
         public PatchRouteFilter()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
-            Rules = new ChangeTrackingList<RouteFilterRuleData>();
+            Rules = new ChangeTrackingList<RouteFilterRule>();
             Peerings = new ChangeTrackingList<ExpressRouteCircuitPeeringData>();
             Ipv6Peerings = new ChangeTrackingList<ExpressRouteCircuitPeeringData>();
         }
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="peerings"> A collection of references to express route circuit peerings. </param>
         /// <param name="ipv6Peerings"> A collection of references to express route circuit ipv6 peerings. </param>
         /// <param name="provisioningState"> The provisioning state of the route filter resource. </param>
-        internal PatchRouteFilter(string id, string name, string etag, string type, IDictionary<string, string> tags, IList<RouteFilterRuleData> rules, IReadOnlyList<ExpressRouteCircuitPeeringData> peerings, IReadOnlyList<ExpressRouteCircuitPeeringData> ipv6Peerings, ProvisioningState? provisioningState) : base(id)
+        internal PatchRouteFilter(string id, string name, string etag, string type, IDictionary<string, string> tags, IList<RouteFilterRule> rules, IReadOnlyList<ExpressRouteCircuitPeeringData> peerings, IReadOnlyList<ExpressRouteCircuitPeeringData> ipv6Peerings, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> Collection of RouteFilterRules contained within a route filter. </summary>
-        public IList<RouteFilterRuleData> Rules { get; }
+        public IList<RouteFilterRule> Rules { get; }
         /// <summary> A collection of references to express route circuit peerings. </summary>
         public IReadOnlyList<ExpressRouteCircuitPeeringData> Peerings { get; }
         /// <summary> A collection of references to express route circuit ipv6 peerings. </summary>

@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateGetAllBySubscriptionRequest(TemplateSpecExpandKind? expand)
+        internal Azure.Core.HttpMessage CreateListBySubscriptionRequest(TemplateSpecExpandKind? expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -435,9 +435,9 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Lists all the Template Specs within the specified subscriptions. </summary>
         /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<TemplateSpecsListResult>> GetAllBySubscriptionAsync(TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<TemplateSpecsListResult>> ListBySubscriptionAsync(TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetAllBySubscriptionRequest(expand);
+            using var message = CreateListBySubscriptionRequest(expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -456,9 +456,9 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Lists all the Template Specs within the specified subscriptions. </summary>
         /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<TemplateSpecsListResult> GetAllBySubscription(TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
+        public Response<TemplateSpecsListResult> ListBySubscription(TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetAllBySubscriptionRequest(expand);
+            using var message = CreateListBySubscriptionRequest(expand);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateGetAllByResourceGroupRequest(string resourceGroupName, TemplateSpecExpandKind? expand)
+        internal Azure.Core.HttpMessage CreateListByResourceGroupRequest(string resourceGroupName, TemplateSpecExpandKind? expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -502,14 +502,14 @@ namespace Azure.ResourceManager.Resources
         /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<TemplateSpecsListResult>> GetAllByResourceGroupAsync(string resourceGroupName, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<TemplateSpecsListResult>> ListByResourceGroupAsync(string resourceGroupName, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateGetAllByResourceGroupRequest(resourceGroupName, expand);
+            using var message = CreateListByResourceGroupRequest(resourceGroupName, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -530,14 +530,14 @@ namespace Azure.ResourceManager.Resources
         /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<TemplateSpecsListResult> GetAllByResourceGroup(string resourceGroupName, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
+        public Response<TemplateSpecsListResult> ListByResourceGroup(string resourceGroupName, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateGetAllByResourceGroupRequest(resourceGroupName, expand);
+            using var message = CreateListByResourceGroupRequest(resourceGroupName, expand);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -553,7 +553,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateGetAllBySubscriptionNextPageRequest(string nextLink, TemplateSpecExpandKind? expand)
+        internal Azure.Core.HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink, TemplateSpecExpandKind? expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -572,14 +572,14 @@ namespace Azure.ResourceManager.Resources
         /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<TemplateSpecsListResult>> GetAllBySubscriptionNextPageAsync(string nextLink, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<TemplateSpecsListResult>> ListBySubscriptionNextPageAsync(string nextLink, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateGetAllBySubscriptionNextPageRequest(nextLink, expand);
+            using var message = CreateListBySubscriptionNextPageRequest(nextLink, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -600,14 +600,14 @@ namespace Azure.ResourceManager.Resources
         /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<TemplateSpecsListResult> GetAllBySubscriptionNextPage(string nextLink, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
+        public Response<TemplateSpecsListResult> ListBySubscriptionNextPage(string nextLink, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateGetAllBySubscriptionNextPageRequest(nextLink, expand);
+            using var message = CreateListBySubscriptionNextPageRequest(nextLink, expand);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -623,7 +623,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateGetAllByResourceGroupNextPageRequest(string nextLink, string resourceGroupName, TemplateSpecExpandKind? expand)
+        internal Azure.Core.HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string resourceGroupName, TemplateSpecExpandKind? expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -643,7 +643,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<TemplateSpecsListResult>> GetAllByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<TemplateSpecsListResult>> ListByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -654,7 +654,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateGetAllByResourceGroupNextPageRequest(nextLink, resourceGroupName, expand);
+            using var message = CreateListByResourceGroupNextPageRequest(nextLink, resourceGroupName, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -676,7 +676,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<TemplateSpecsListResult> GetAllByResourceGroupNextPage(string nextLink, string resourceGroupName, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
+        public Response<TemplateSpecsListResult> ListByResourceGroupNextPage(string nextLink, string resourceGroupName, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -687,7 +687,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateGetAllByResourceGroupNextPageRequest(nextLink, resourceGroupName, expand);
+            using var message = CreateListByResourceGroupNextPageRequest(nextLink, resourceGroupName, expand);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

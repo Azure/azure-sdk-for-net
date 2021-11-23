@@ -10,13 +10,23 @@ namespace Azure.ResourceManager.Resources
     /// <summary> A class to add extension methods to ResourceGroup. </summary>
     public static partial class ResourceGroupExtensions
     {
-        #region Deployment
-        /// <summary> Gets an object representing a DeploymentCollection along with the instance operations that can be performed on it. </summary>
+        #region ManagementGroupResourceGroupSubscriptionTenantDeployment
+        /// <summary> Gets an object representing a ManagementGroupResourceGroupSubscriptionTenantDeploymentCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="DeploymentCollection" /> object. </returns>
-        public static DeploymentCollection GetDeployments(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="ManagementGroupResourceGroupSubscriptionTenantDeploymentCollection" /> object. </returns>
+        public static ManagementGroupResourceGroupSubscriptionTenantDeploymentCollection GetManagementGroupResourceGroupSubscriptionTenantDeployments(this ResourceGroup resourceGroup)
         {
-            return new DeploymentCollection(resourceGroup);
+            return new ManagementGroupResourceGroupSubscriptionTenantDeploymentCollection(resourceGroup);
+        }
+        #endregion
+
+        #region ResourceGroupDeployment
+        /// <summary> Gets an object representing a ResourceGroupDeploymentCollection along with the instance operations that can be performed on it. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> Returns a <see cref="ResourceGroupDeploymentCollection" /> object. </returns>
+        public static ResourceGroupDeploymentCollection GetResourceGroupDeployments(this ResourceGroup resourceGroup)
+        {
+            return new ResourceGroupDeploymentCollection(resourceGroup);
         }
         #endregion
 

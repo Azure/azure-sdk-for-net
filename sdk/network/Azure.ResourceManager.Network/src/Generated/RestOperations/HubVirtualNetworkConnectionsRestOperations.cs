@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string virtualHubName, string connectionName, HubVirtualNetworkConnectionData hubVirtualNetworkConnectionParameters)
+        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string virtualHubName, string connectionName, HubVirtualNetworkConnection hubVirtualNetworkConnectionParameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="hubVirtualNetworkConnectionParameters"> Parameters supplied to create or update a hub virtual network connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualHubName"/>, <paramref name="connectionName"/>, or <paramref name="hubVirtualNetworkConnectionParameters"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string virtualHubName, string connectionName, HubVirtualNetworkConnectionData hubVirtualNetworkConnectionParameters, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string virtualHubName, string connectionName, HubVirtualNetworkConnection hubVirtualNetworkConnectionParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="hubVirtualNetworkConnectionParameters"> Parameters supplied to create or update a hub virtual network connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualHubName"/>, <paramref name="connectionName"/>, or <paramref name="hubVirtualNetworkConnectionParameters"/> is null. </exception>
-        public Response CreateOrUpdate(string resourceGroupName, string virtualHubName, string connectionName, HubVirtualNetworkConnectionData hubVirtualNetworkConnectionParameters, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string resourceGroupName, string virtualHubName, string connectionName, HubVirtualNetworkConnection hubVirtualNetworkConnectionParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="connectionName"> The name of the vpn connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualHubName"/>, or <paramref name="connectionName"/> is null. </exception>
-        public async Task<Response<HubVirtualNetworkConnectionData>> GetAsync(string resourceGroupName, string virtualHubName, string connectionName, CancellationToken cancellationToken = default)
+        public async Task<Response<HubVirtualNetworkConnection>> GetAsync(string resourceGroupName, string virtualHubName, string connectionName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -285,13 +285,11 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        HubVirtualNetworkConnectionData value = default;
+                        HubVirtualNetworkConnection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = HubVirtualNetworkConnectionData.DeserializeHubVirtualNetworkConnectionData(document.RootElement);
+                        value = HubVirtualNetworkConnection.DeserializeHubVirtualNetworkConnection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((HubVirtualNetworkConnectionData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -303,7 +301,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="connectionName"> The name of the vpn connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualHubName"/>, or <paramref name="connectionName"/> is null. </exception>
-        public Response<HubVirtualNetworkConnectionData> Get(string resourceGroupName, string virtualHubName, string connectionName, CancellationToken cancellationToken = default)
+        public Response<HubVirtualNetworkConnection> Get(string resourceGroupName, string virtualHubName, string connectionName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -324,19 +322,17 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        HubVirtualNetworkConnectionData value = default;
+                        HubVirtualNetworkConnection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = HubVirtualNetworkConnectionData.DeserializeHubVirtualNetworkConnectionData(document.RootElement);
+                        value = HubVirtualNetworkConnection.DeserializeHubVirtualNetworkConnection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((HubVirtualNetworkConnectionData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateGetAllRequest(string resourceGroupName, string virtualHubName)
+        internal HttpMessage CreateListRequest(string resourceGroupName, string virtualHubName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -362,7 +358,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualHubName"/> is null. </exception>
-        public async Task<Response<ListHubVirtualNetworkConnectionsResult>> GetAllAsync(string resourceGroupName, string virtualHubName, CancellationToken cancellationToken = default)
+        public async Task<Response<ListHubVirtualNetworkConnectionsResult>> ListAsync(string resourceGroupName, string virtualHubName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -373,7 +369,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(virtualHubName));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName, virtualHubName);
+            using var message = CreateListRequest(resourceGroupName, virtualHubName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -394,7 +390,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualHubName"/> is null. </exception>
-        public Response<ListHubVirtualNetworkConnectionsResult> GetAll(string resourceGroupName, string virtualHubName, CancellationToken cancellationToken = default)
+        public Response<ListHubVirtualNetworkConnectionsResult> List(string resourceGroupName, string virtualHubName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -405,7 +401,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(virtualHubName));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName, virtualHubName);
+            using var message = CreateListRequest(resourceGroupName, virtualHubName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -421,7 +417,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateGetAllNextPageRequest(string nextLink, string resourceGroupName, string virtualHubName)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string resourceGroupName, string virtualHubName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -441,7 +437,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="virtualHubName"/> is null. </exception>
-        public async Task<Response<ListHubVirtualNetworkConnectionsResult>> GetAllNextPageAsync(string nextLink, string resourceGroupName, string virtualHubName, CancellationToken cancellationToken = default)
+        public async Task<Response<ListHubVirtualNetworkConnectionsResult>> ListNextPageAsync(string nextLink, string resourceGroupName, string virtualHubName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -456,7 +452,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(virtualHubName));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, virtualHubName);
+            using var message = CreateListNextPageRequest(nextLink, resourceGroupName, virtualHubName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -478,7 +474,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="virtualHubName"/> is null. </exception>
-        public Response<ListHubVirtualNetworkConnectionsResult> GetAllNextPage(string nextLink, string resourceGroupName, string virtualHubName, CancellationToken cancellationToken = default)
+        public Response<ListHubVirtualNetworkConnectionsResult> ListNextPage(string nextLink, string resourceGroupName, string virtualHubName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -493,7 +489,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(virtualHubName));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, virtualHubName);
+            using var message = CreateListNextPageRequest(nextLink, resourceGroupName, virtualHubName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

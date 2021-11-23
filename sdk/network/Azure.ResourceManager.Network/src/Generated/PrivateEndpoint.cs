@@ -23,7 +23,8 @@ namespace Azure.ResourceManager.Network
     public partial class PrivateEndpoint : ArmResource
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly PrivateEndpointsRestOperations _restClient;
+        private readonly PrivateEndpointsRestOperations _privateEndpointsRestClient;
+        private readonly PrivateDnsZoneGroupsRestOperations _privateDnsZoneGroupsRestClient;
         private readonly PrivateEndpointData _data;
 
         /// <summary> Initializes a new instance of the <see cref="PrivateEndpoint"/> class for mocking. </summary>
@@ -39,7 +40,8 @@ namespace Azure.ResourceManager.Network
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new PrivateEndpointsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _privateEndpointsRestClient = new PrivateEndpointsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _privateDnsZoneGroupsRestClient = new PrivateDnsZoneGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="PrivateEndpoint"/> class. </summary>
@@ -48,7 +50,8 @@ namespace Azure.ResourceManager.Network
         internal PrivateEndpoint(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new PrivateEndpointsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _privateEndpointsRestClient = new PrivateEndpointsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _privateDnsZoneGroupsRestClient = new PrivateDnsZoneGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="PrivateEndpoint"/> class. </summary>
@@ -60,7 +63,8 @@ namespace Azure.ResourceManager.Network
         internal PrivateEndpoint(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new PrivateEndpointsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _privateEndpointsRestClient = new PrivateEndpointsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _privateDnsZoneGroupsRestClient = new PrivateDnsZoneGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -93,7 +97,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _privateEndpointsRestClient.GetAsync(Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new PrivateEndpoint(this, response.Value), response.GetRawResponse());
@@ -114,7 +118,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, expand, cancellationToken);
+                var response = _privateEndpointsRestClient.Get(Id.ResourceGroupName, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new PrivateEndpoint(this, response.Value), response.GetRawResponse());
@@ -151,8 +155,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new PrivateEndpointDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = await _privateEndpointsRestClient.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new PrivateEndpointDeleteOperation(_clientDiagnostics, Pipeline, _privateEndpointsRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -173,8 +177,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new PrivateEndpointDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = _privateEndpointsRestClient.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new PrivateEndpointDeleteOperation(_clientDiagnostics, Pipeline, _privateEndpointsRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -186,11 +190,256 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets a list of PrivateDnsZoneGroups in the PrivateEndpoint. </summary>
-        /// <returns> An object representing collection of PrivateDnsZoneGroups and their operations over a PrivateEndpoint. </returns>
-        public PrivateDnsZoneGroupCollection GetPrivateDnsZoneGroups()
+        /// <summary> Deletes the specified private dns zone group. </summary>
+        /// <param name="privateDnsZoneGroupName"> The name of the private dns zone group. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateDnsZoneGroupName"/> is null. </exception>
+        public async virtual Task<PrivateDnsZoneGroupDeleteOperation> DeletePrivateDnsZoneGroupAsync(string privateDnsZoneGroupName, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            return new PrivateDnsZoneGroupCollection(this);
+            if (privateDnsZoneGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(privateDnsZoneGroupName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("PrivateEndpoint.DeletePrivateDnsZoneGroup");
+            scope.Start();
+            try
+            {
+                var response = await _privateDnsZoneGroupsRestClient.DeleteAsync(Id.ResourceGroupName, Id.Name, privateDnsZoneGroupName, cancellationToken).ConfigureAwait(false);
+                var operation = new PrivateDnsZoneGroupDeleteOperation(_clientDiagnostics, Pipeline, _privateDnsZoneGroupsRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name, privateDnsZoneGroupName).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes the specified private dns zone group. </summary>
+        /// <param name="privateDnsZoneGroupName"> The name of the private dns zone group. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateDnsZoneGroupName"/> is null. </exception>
+        public virtual PrivateDnsZoneGroupDeleteOperation DeletePrivateDnsZoneGroup(string privateDnsZoneGroupName, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            if (privateDnsZoneGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(privateDnsZoneGroupName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("PrivateEndpoint.DeletePrivateDnsZoneGroup");
+            scope.Start();
+            try
+            {
+                var response = _privateDnsZoneGroupsRestClient.Delete(Id.ResourceGroupName, Id.Name, privateDnsZoneGroupName, cancellationToken);
+                var operation = new PrivateDnsZoneGroupDeleteOperation(_clientDiagnostics, Pipeline, _privateDnsZoneGroupsRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name, privateDnsZoneGroupName).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the private dns zone group resource by specified private dns zone group name. </summary>
+        /// <param name="privateDnsZoneGroupName"> The name of the private dns zone group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateDnsZoneGroupName"/> is null. </exception>
+        public async virtual Task<Response<PrivateDnsZoneGroup>> GetPrivateDnsZoneGroupAsync(string privateDnsZoneGroupName, CancellationToken cancellationToken = default)
+        {
+            if (privateDnsZoneGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(privateDnsZoneGroupName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("PrivateEndpoint.GetPrivateDnsZoneGroup");
+            scope.Start();
+            try
+            {
+                var response = await _privateDnsZoneGroupsRestClient.GetAsync(Id.ResourceGroupName, Id.Name, privateDnsZoneGroupName, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the private dns zone group resource by specified private dns zone group name. </summary>
+        /// <param name="privateDnsZoneGroupName"> The name of the private dns zone group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateDnsZoneGroupName"/> is null. </exception>
+        public virtual Response<PrivateDnsZoneGroup> GetPrivateDnsZoneGroup(string privateDnsZoneGroupName, CancellationToken cancellationToken = default)
+        {
+            if (privateDnsZoneGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(privateDnsZoneGroupName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("PrivateEndpoint.GetPrivateDnsZoneGroup");
+            scope.Start();
+            try
+            {
+                var response = _privateDnsZoneGroupsRestClient.Get(Id.ResourceGroupName, Id.Name, privateDnsZoneGroupName, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Creates or updates a private dns zone group in the specified private endpoint. </summary>
+        /// <param name="privateDnsZoneGroupName"> The name of the private dns zone group. </param>
+        /// <param name="parameters"> Parameters supplied to the create or update private dns zone group operation. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateDnsZoneGroupName"/> or <paramref name="parameters"/> is null. </exception>
+        public async virtual Task<PrivateDnsZoneGroupCreateOrUpdateOperation> CreateOrUpdatePrivateDnsZoneGroupAsync(string privateDnsZoneGroupName, PrivateDnsZoneGroup parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            if (privateDnsZoneGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(privateDnsZoneGroupName));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("PrivateEndpoint.CreateOrUpdatePrivateDnsZoneGroup");
+            scope.Start();
+            try
+            {
+                var response = await _privateDnsZoneGroupsRestClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, privateDnsZoneGroupName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new PrivateDnsZoneGroupCreateOrUpdateOperation(_clientDiagnostics, Pipeline, _privateDnsZoneGroupsRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, privateDnsZoneGroupName, parameters).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Creates or updates a private dns zone group in the specified private endpoint. </summary>
+        /// <param name="privateDnsZoneGroupName"> The name of the private dns zone group. </param>
+        /// <param name="parameters"> Parameters supplied to the create or update private dns zone group operation. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateDnsZoneGroupName"/> or <paramref name="parameters"/> is null. </exception>
+        public virtual PrivateDnsZoneGroupCreateOrUpdateOperation CreateOrUpdatePrivateDnsZoneGroup(string privateDnsZoneGroupName, PrivateDnsZoneGroup parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            if (privateDnsZoneGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(privateDnsZoneGroupName));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("PrivateEndpoint.CreateOrUpdatePrivateDnsZoneGroup");
+            scope.Start();
+            try
+            {
+                var response = _privateDnsZoneGroupsRestClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, privateDnsZoneGroupName, parameters, cancellationToken);
+                var operation = new PrivateDnsZoneGroupCreateOrUpdateOperation(_clientDiagnostics, Pipeline, _privateDnsZoneGroupsRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, privateDnsZoneGroupName, parameters).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets all private dns zone groups in a private endpoint. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="PrivateDnsZoneGroup" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PrivateDnsZoneGroup> GetPrivateDnsZoneGroupsAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<PrivateDnsZoneGroup>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("PrivateEndpoint.GetPrivateDnsZoneGroups");
+                scope.Start();
+                try
+                {
+                    var response = await _privateDnsZoneGroupsRestClient.ListAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<PrivateDnsZoneGroup>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("PrivateEndpoint.GetPrivateDnsZoneGroups");
+                scope.Start();
+                try
+                {
+                    var response = await _privateDnsZoneGroupsRestClient.ListNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Gets all private dns zone groups in a private endpoint. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PrivateDnsZoneGroup" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PrivateDnsZoneGroup> GetPrivateDnsZoneGroups(CancellationToken cancellationToken = default)
+        {
+            Page<PrivateDnsZoneGroup> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("PrivateEndpoint.GetPrivateDnsZoneGroups");
+                scope.Start();
+                try
+                {
+                    var response = _privateDnsZoneGroupsRestClient.List(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<PrivateDnsZoneGroup> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("PrivateEndpoint.GetPrivateDnsZoneGroups");
+                scope.Start();
+                try
+                {
+                    var response = _privateDnsZoneGroupsRestClient.ListNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
     }
 }

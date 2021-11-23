@@ -12,8 +12,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -22,17 +20,14 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly OperationInternals<ExpressRouteCrossConnectionPeering> _operation;
 
-        private readonly ArmResource _operationBase;
-
         /// <summary> Initializes a new instance of ExpressRouteCrossConnectionPeeringCreateOrUpdateOperation for mocking. </summary>
         protected ExpressRouteCrossConnectionPeeringCreateOrUpdateOperation()
         {
         }
 
-        internal ExpressRouteCrossConnectionPeeringCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ExpressRouteCrossConnectionPeeringCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<ExpressRouteCrossConnectionPeering>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "ExpressRouteCrossConnectionPeeringCreateOrUpdateOperation");
-            _operationBase = operationsBase;
         }
 
         /// <inheritdoc />
@@ -65,13 +60,13 @@ namespace Azure.ResourceManager.Network.Models
         ExpressRouteCrossConnectionPeering IOperationSource<ExpressRouteCrossConnectionPeering>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new ExpressRouteCrossConnectionPeering(_operationBase, ExpressRouteCrossConnectionPeeringData.DeserializeExpressRouteCrossConnectionPeeringData(document.RootElement));
+            return ExpressRouteCrossConnectionPeering.DeserializeExpressRouteCrossConnectionPeering(document.RootElement);
         }
 
         async ValueTask<ExpressRouteCrossConnectionPeering> IOperationSource<ExpressRouteCrossConnectionPeering>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new ExpressRouteCrossConnectionPeering(_operationBase, ExpressRouteCrossConnectionPeeringData.DeserializeExpressRouteCrossConnectionPeeringData(document.RootElement));
+            return ExpressRouteCrossConnectionPeering.DeserializeExpressRouteCrossConnectionPeering(document.RootElement);
         }
     }
 }
