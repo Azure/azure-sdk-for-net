@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -16,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ServiceEndpointPolicyDefinitionListResult DeserializeServiceEndpointPolicyDefinitionListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ServiceEndpointPolicyDefinitionData>> value = default;
+            Optional<IReadOnlyList<ServiceEndpointPolicyDefinition>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +26,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ServiceEndpointPolicyDefinitionData> array = new List<ServiceEndpointPolicyDefinitionData>();
+                    List<ServiceEndpointPolicyDefinition> array = new List<ServiceEndpointPolicyDefinition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceEndpointPolicyDefinitionData.DeserializeServiceEndpointPolicyDefinitionData(item));
+                        array.Add(ServiceEndpointPolicyDefinition.DeserializeServiceEndpointPolicyDefinition(item));
                     }
                     value = array;
                     continue;

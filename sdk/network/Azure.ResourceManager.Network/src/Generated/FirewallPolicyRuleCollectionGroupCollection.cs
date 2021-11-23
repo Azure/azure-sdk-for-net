@@ -20,11 +20,12 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of FirewallPolicyRuleCollectionGroup and their operations over a FirewallPolicy. </summary>
+    /// <summary> A class representing collection of FirewallPolicyRuleCollectionGroup and their operations over its parent. </summary>
     public partial class FirewallPolicyRuleCollectionGroupCollection : ArmCollection, IEnumerable<FirewallPolicyRuleCollectionGroup>, IAsyncEnumerable<FirewallPolicyRuleCollectionGroup>
+
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly FirewallPolicyRuleCollectionGroupsRestOperations _restClient;
+        private readonly FirewallPolicyRuleCollectionGroupsRestOperations _firewallPolicyRuleCollectionGroupsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="FirewallPolicyRuleCollectionGroupCollection"/> class for mocking. </summary>
         protected FirewallPolicyRuleCollectionGroupCollection()
@@ -36,22 +37,7 @@ namespace Azure.ResourceManager.Network
         internal FirewallPolicyRuleCollectionGroupCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new FirewallPolicyRuleCollectionGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-        }
-
-        IEnumerator<FirewallPolicyRuleCollectionGroup> IEnumerable<FirewallPolicyRuleCollectionGroup>.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IAsyncEnumerator<FirewallPolicyRuleCollectionGroup> IAsyncEnumerable<FirewallPolicyRuleCollectionGroup>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            _firewallPolicyRuleCollectionGroupsRestClient = new FirewallPolicyRuleCollectionGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -80,8 +66,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, ruleCollectionGroupName, parameters, cancellationToken);
-                var operation = new FirewallPolicyRuleCollectionGroupCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, ruleCollectionGroupName, parameters).Request, response);
+                var response = _firewallPolicyRuleCollectionGroupsRestClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, ruleCollectionGroupName, parameters, cancellationToken);
+                var operation = new FirewallPolicyRuleCollectionGroupCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _firewallPolicyRuleCollectionGroupsRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, ruleCollectionGroupName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -114,8 +100,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, ruleCollectionGroupName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new FirewallPolicyRuleCollectionGroupCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, ruleCollectionGroupName, parameters).Request, response);
+                var response = await _firewallPolicyRuleCollectionGroupsRestClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, ruleCollectionGroupName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new FirewallPolicyRuleCollectionGroupCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _firewallPolicyRuleCollectionGroupsRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, ruleCollectionGroupName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -127,21 +113,22 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Gets the specified FirewallPolicyRuleCollectionGroup. </summary>
         /// <param name="ruleCollectionGroupName"> The name of the FirewallPolicyRuleCollectionGroup. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionGroupName"/> is null. </exception>
         public virtual Response<FirewallPolicyRuleCollectionGroup> Get(string ruleCollectionGroupName, CancellationToken cancellationToken = default)
         {
+            if (ruleCollectionGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(ruleCollectionGroupName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("FirewallPolicyRuleCollectionGroupCollection.Get");
             scope.Start();
             try
             {
-                if (ruleCollectionGroupName == null)
-                {
-                    throw new ArgumentNullException(nameof(ruleCollectionGroupName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, ruleCollectionGroupName, cancellationToken: cancellationToken);
+                var response = _firewallPolicyRuleCollectionGroupsRestClient.Get(Id.ResourceGroupName, Id.Name, ruleCollectionGroupName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new FirewallPolicyRuleCollectionGroup(Parent, response.Value), response.GetRawResponse());
@@ -153,21 +140,22 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Gets the specified FirewallPolicyRuleCollectionGroup. </summary>
         /// <param name="ruleCollectionGroupName"> The name of the FirewallPolicyRuleCollectionGroup. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionGroupName"/> is null. </exception>
         public async virtual Task<Response<FirewallPolicyRuleCollectionGroup>> GetAsync(string ruleCollectionGroupName, CancellationToken cancellationToken = default)
         {
+            if (ruleCollectionGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(ruleCollectionGroupName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("FirewallPolicyRuleCollectionGroupCollection.Get");
             scope.Start();
             try
             {
-                if (ruleCollectionGroupName == null)
-                {
-                    throw new ArgumentNullException(nameof(ruleCollectionGroupName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, ruleCollectionGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _firewallPolicyRuleCollectionGroupsRestClient.GetAsync(Id.ResourceGroupName, Id.Name, ruleCollectionGroupName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new FirewallPolicyRuleCollectionGroup(Parent, response.Value), response.GetRawResponse());
@@ -181,19 +169,20 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="ruleCollectionGroupName"> The name of the FirewallPolicyRuleCollectionGroup. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionGroupName"/> is null. </exception>
         public virtual Response<FirewallPolicyRuleCollectionGroup> GetIfExists(string ruleCollectionGroupName, CancellationToken cancellationToken = default)
         {
+            if (ruleCollectionGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(ruleCollectionGroupName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("FirewallPolicyRuleCollectionGroupCollection.GetIfExists");
             scope.Start();
             try
             {
-                if (ruleCollectionGroupName == null)
-                {
-                    throw new ArgumentNullException(nameof(ruleCollectionGroupName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, ruleCollectionGroupName, cancellationToken: cancellationToken);
+                var response = _firewallPolicyRuleCollectionGroupsRestClient.Get(Id.ResourceGroupName, Id.Name, ruleCollectionGroupName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<FirewallPolicyRuleCollectionGroup>(null, response.GetRawResponse())
                     : Response.FromValue(new FirewallPolicyRuleCollectionGroup(this, response.Value), response.GetRawResponse());
@@ -207,19 +196,20 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="ruleCollectionGroupName"> The name of the FirewallPolicyRuleCollectionGroup. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionGroupName"/> is null. </exception>
         public async virtual Task<Response<FirewallPolicyRuleCollectionGroup>> GetIfExistsAsync(string ruleCollectionGroupName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("FirewallPolicyRuleCollectionGroupCollection.GetIfExists");
+            if (ruleCollectionGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(ruleCollectionGroupName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("FirewallPolicyRuleCollectionGroupCollection.GetIfExistsAsync");
             scope.Start();
             try
             {
-                if (ruleCollectionGroupName == null)
-                {
-                    throw new ArgumentNullException(nameof(ruleCollectionGroupName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, ruleCollectionGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _firewallPolicyRuleCollectionGroupsRestClient.GetAsync(Id.ResourceGroupName, Id.Name, ruleCollectionGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<FirewallPolicyRuleCollectionGroup>(null, response.GetRawResponse())
                     : Response.FromValue(new FirewallPolicyRuleCollectionGroup(this, response.Value), response.GetRawResponse());
@@ -233,18 +223,19 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="ruleCollectionGroupName"> The name of the FirewallPolicyRuleCollectionGroup. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionGroupName"/> is null. </exception>
         public virtual Response<bool> CheckIfExists(string ruleCollectionGroupName, CancellationToken cancellationToken = default)
         {
+            if (ruleCollectionGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(ruleCollectionGroupName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("FirewallPolicyRuleCollectionGroupCollection.CheckIfExists");
             scope.Start();
             try
             {
-                if (ruleCollectionGroupName == null)
-                {
-                    throw new ArgumentNullException(nameof(ruleCollectionGroupName));
-                }
-
                 var response = GetIfExists(ruleCollectionGroupName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -257,18 +248,19 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="ruleCollectionGroupName"> The name of the FirewallPolicyRuleCollectionGroup. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionGroupName"/> is null. </exception>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(string ruleCollectionGroupName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("FirewallPolicyRuleCollectionGroupCollection.CheckIfExists");
+            if (ruleCollectionGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(ruleCollectionGroupName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("FirewallPolicyRuleCollectionGroupCollection.CheckIfExistsAsync");
             scope.Start();
             try
             {
-                if (ruleCollectionGroupName == null)
-                {
-                    throw new ArgumentNullException(nameof(ruleCollectionGroupName));
-                }
-
                 var response = await GetIfExistsAsync(ruleCollectionGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -290,7 +282,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAll(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _firewallPolicyRuleCollectionGroupsRestClient.List(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new FirewallPolicyRuleCollectionGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -305,7 +297,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAllNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _firewallPolicyRuleCollectionGroupsRestClient.ListNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new FirewallPolicyRuleCollectionGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -328,7 +320,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _firewallPolicyRuleCollectionGroupsRestClient.ListAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new FirewallPolicyRuleCollectionGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -343,7 +335,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _firewallPolicyRuleCollectionGroupsRestClient.ListNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new FirewallPolicyRuleCollectionGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -355,7 +347,22 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
+        IEnumerator<FirewallPolicyRuleCollectionGroup> IEnumerable<FirewallPolicyRuleCollectionGroup>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<FirewallPolicyRuleCollectionGroup> IAsyncEnumerable<FirewallPolicyRuleCollectionGroup>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
+
         // Builders.
-        // public ArmBuilder<ResourceIdentifier, FirewallPolicyRuleCollectionGroup, FirewallPolicyRuleCollectionGroupData> Construct() { }
+        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, FirewallPolicyRuleCollectionGroup, FirewallPolicyRuleCollectionGroupData> Construct() { }
     }
 }

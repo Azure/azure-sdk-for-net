@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateGetAllRequest(string resourceGroupName, string circuitName)
+        internal HttpMessage CreateListRequest(string resourceGroupName, string circuitName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="circuitName"> The name of the express route circuit. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="circuitName"/> is null. </exception>
-        public async Task<Response<ExpressRouteCircuitPeeringListResult>> GetAllAsync(string resourceGroupName, string circuitName, CancellationToken cancellationToken = default)
+        public async Task<Response<ExpressRouteCircuitPeeringListResult>> ListAsync(string resourceGroupName, string circuitName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(circuitName));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName, circuitName);
+            using var message = CreateListRequest(resourceGroupName, circuitName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="circuitName"> The name of the express route circuit. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="circuitName"/> is null. </exception>
-        public Response<ExpressRouteCircuitPeeringListResult> GetAll(string resourceGroupName, string circuitName, CancellationToken cancellationToken = default)
+        public Response<ExpressRouteCircuitPeeringListResult> List(string resourceGroupName, string circuitName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(circuitName));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName, circuitName);
+            using var message = CreateListRequest(resourceGroupName, circuitName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateGetAllNextPageRequest(string nextLink, string resourceGroupName, string circuitName)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string resourceGroupName, string circuitName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="circuitName"> The name of the express route circuit. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="circuitName"/> is null. </exception>
-        public async Task<Response<ExpressRouteCircuitPeeringListResult>> GetAllNextPageAsync(string nextLink, string resourceGroupName, string circuitName, CancellationToken cancellationToken = default)
+        public async Task<Response<ExpressRouteCircuitPeeringListResult>> ListNextPageAsync(string nextLink, string resourceGroupName, string circuitName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(circuitName));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, circuitName);
+            using var message = CreateListNextPageRequest(nextLink, resourceGroupName, circuitName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="circuitName"> The name of the express route circuit. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="circuitName"/> is null. </exception>
-        public Response<ExpressRouteCircuitPeeringListResult> GetAllNextPage(string nextLink, string resourceGroupName, string circuitName, CancellationToken cancellationToken = default)
+        public Response<ExpressRouteCircuitPeeringListResult> ListNextPage(string nextLink, string resourceGroupName, string circuitName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(circuitName));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, circuitName);
+            using var message = CreateListNextPageRequest(nextLink, resourceGroupName, circuitName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

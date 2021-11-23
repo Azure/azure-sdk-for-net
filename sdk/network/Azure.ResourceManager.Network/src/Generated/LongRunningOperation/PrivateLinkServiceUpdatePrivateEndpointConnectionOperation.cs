@@ -10,6 +10,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -23,9 +25,9 @@ namespace Azure.ResourceManager.Network.Models
         {
         }
 
-        internal PrivateLinkServiceUpdatePrivateEndpointConnectionOperation(Response<PrivateEndpointConnection> response)
+        internal PrivateLinkServiceUpdatePrivateEndpointConnectionOperation(ArmResource operationsBase, Response<PrivateEndpointConnectionData> response)
         {
-            _operation = new OperationOrResponseInternals<PrivateEndpointConnection>(response);
+            _operation = new OperationOrResponseInternals<PrivateEndpointConnection>(Response.FromValue(new PrivateEndpointConnection(operationsBase, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

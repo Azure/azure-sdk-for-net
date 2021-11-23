@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        internal HttpMessage CreateGetAllRequest(string resourceGroupName, string accountName, string tableServiceName)
+        internal HttpMessage CreateListRequest(string resourceGroupName, string accountName, string tableServiceName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="tableServiceName"> The name of the Table Service within the specified storage account. Table Service Name must be &apos;default&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="tableServiceName"/> is null. </exception>
-        public async Task<Response<ListTableResource>> GetAllAsync(string resourceGroupName, string accountName, string tableServiceName, CancellationToken cancellationToken = default)
+        public async Task<Response<ListTableResource>> ListAsync(string resourceGroupName, string accountName, string tableServiceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -514,7 +514,7 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentNullException(nameof(tableServiceName));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName, accountName, tableServiceName);
+            using var message = CreateListRequest(resourceGroupName, accountName, tableServiceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="tableServiceName"> The name of the Table Service within the specified storage account. Table Service Name must be &apos;default&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="tableServiceName"/> is null. </exception>
-        public Response<ListTableResource> GetAll(string resourceGroupName, string accountName, string tableServiceName, CancellationToken cancellationToken = default)
+        public Response<ListTableResource> List(string resourceGroupName, string accountName, string tableServiceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -551,7 +551,7 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentNullException(nameof(tableServiceName));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName, accountName, tableServiceName);
+            using var message = CreateListRequest(resourceGroupName, accountName, tableServiceName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -567,7 +567,7 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        internal HttpMessage CreateGetAllNextPageRequest(string nextLink, string resourceGroupName, string accountName, string tableServiceName)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string resourceGroupName, string accountName, string tableServiceName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -588,7 +588,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="tableServiceName"> The name of the Table Service within the specified storage account. Table Service Name must be &apos;default&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="tableServiceName"/> is null. </exception>
-        public async Task<Response<ListTableResource>> GetAllNextPageAsync(string nextLink, string resourceGroupName, string accountName, string tableServiceName, CancellationToken cancellationToken = default)
+        public async Task<Response<ListTableResource>> ListNextPageAsync(string nextLink, string resourceGroupName, string accountName, string tableServiceName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -607,7 +607,7 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentNullException(nameof(tableServiceName));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, accountName, tableServiceName);
+            using var message = CreateListNextPageRequest(nextLink, resourceGroupName, accountName, tableServiceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -630,7 +630,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="tableServiceName"> The name of the Table Service within the specified storage account. Table Service Name must be &apos;default&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="tableServiceName"/> is null. </exception>
-        public Response<ListTableResource> GetAllNextPage(string nextLink, string resourceGroupName, string accountName, string tableServiceName, CancellationToken cancellationToken = default)
+        public Response<ListTableResource> ListNextPage(string nextLink, string resourceGroupName, string accountName, string tableServiceName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -649,7 +649,7 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentNullException(nameof(tableServiceName));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, accountName, tableServiceName);
+            using var message = CreateListNextPageRequest(nextLink, resourceGroupName, accountName, tableServiceName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

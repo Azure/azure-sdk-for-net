@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Storage
     public partial class FileService : ArmResource
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly FileServicesRestOperations _restClient;
+        private readonly FileServicesRestOperations _fileServicesRestClient;
         private readonly FileServiceData _data;
 
         /// <summary> Initializes a new instance of the <see cref="FileService"/> class for mocking. </summary>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Storage
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new FileServicesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _fileServicesRestClient = new FileServicesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="FileService"/> class. </summary>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Storage
         internal FileService(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new FileServicesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _fileServicesRestClient = new FileServicesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="FileService"/> class. </summary>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Storage
         internal FileService(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new FileServicesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _fileServicesRestClient = new FileServicesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = await _restClient.GetServicePropertiesAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _fileServicesRestClient.GetServicePropertiesAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new FileService(this, response.Value), response.GetRawResponse());
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = _restClient.GetServiceProperties(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _fileServicesRestClient.GetServiceProperties(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new FileService(this, response.Value), response.GetRawResponse());
@@ -138,61 +138,15 @@ namespace Azure.ResourceManager.Storage
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
-        /// <summary> Sets the properties of file services in storage accounts, including CORS (Cross-Origin Resource Sharing) rules. </summary>
-        /// <param name="parameters"> The properties of file services in storage accounts, including CORS (Cross-Origin Resource Sharing) rules. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<Response<FileService>> SetServicePropertiesAsync(FileServiceData parameters, CancellationToken cancellationToken = default)
-        {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
 
-            using var scope = _clientDiagnostics.CreateScope("FileService.SetServiceProperties");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.SetServicePropertiesAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new FileService(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        #region FileShare
 
-        /// <summary> Sets the properties of file services in storage accounts, including CORS (Cross-Origin Resource Sharing) rules. </summary>
-        /// <param name="parameters"> The properties of file services in storage accounts, including CORS (Cross-Origin Resource Sharing) rules. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual Response<FileService> SetServiceProperties(FileServiceData parameters, CancellationToken cancellationToken = default)
-        {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("FileService.SetServiceProperties");
-            scope.Start();
-            try
-            {
-                var response = _restClient.SetServiceProperties(Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken);
-                return Response.FromValue(new FileService(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets a list of FileShares in the FileService. </summary>
+        /// <summary> Gets a collection of FileShares in the FileService. </summary>
         /// <returns> An object representing collection of FileShares and their operations over a FileService. </returns>
         public FileShareCollection GetFileShares()
         {
             return new FileShareCollection(this);
         }
+        #endregion
     }
 }

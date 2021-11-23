@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Storage
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateGetAllRequest(string resourceGroupName, string accountName, string fileServicesName, string maxpagesize, string filter, string expand)
+        internal HttpMessage CreateListRequest(string resourceGroupName, string accountName, string fileServicesName, string maxpagesize, string filter, string expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="expand"> Optional, used to expand the properties within share&apos;s properties. Valid values are: deleted, snapshots. Should be passed as a string with delimiter &apos;,&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="fileServicesName"/> is null. </exception>
-        public async Task<Response<FileShareItems>> GetAllAsync(string resourceGroupName, string accountName, string fileServicesName, string maxpagesize = null, string filter = null, string expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<FileShareItems>> ListAsync(string resourceGroupName, string accountName, string fileServicesName, string maxpagesize = null, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentNullException(nameof(fileServicesName));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName, accountName, fileServicesName, maxpagesize, filter, expand);
+            using var message = CreateListRequest(resourceGroupName, accountName, fileServicesName, maxpagesize, filter, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="expand"> Optional, used to expand the properties within share&apos;s properties. Valid values are: deleted, snapshots. Should be passed as a string with delimiter &apos;,&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="fileServicesName"/> is null. </exception>
-        public Response<FileShareItems> GetAll(string resourceGroupName, string accountName, string fileServicesName, string maxpagesize = null, string filter = null, string expand = null, CancellationToken cancellationToken = default)
+        public Response<FileShareItems> List(string resourceGroupName, string accountName, string fileServicesName, string maxpagesize = null, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentNullException(nameof(fileServicesName));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName, accountName, fileServicesName, maxpagesize, filter, expand);
+            using var message = CreateListRequest(resourceGroupName, accountName, fileServicesName, maxpagesize, filter, expand);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -884,7 +884,7 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        internal HttpMessage CreateGetAllNextPageRequest(string nextLink, string resourceGroupName, string accountName, string fileServicesName, string maxpagesize, string filter, string expand)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string resourceGroupName, string accountName, string fileServicesName, string maxpagesize, string filter, string expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -908,7 +908,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="expand"> Optional, used to expand the properties within share&apos;s properties. Valid values are: deleted, snapshots. Should be passed as a string with delimiter &apos;,&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="fileServicesName"/> is null. </exception>
-        public async Task<Response<FileShareItems>> GetAllNextPageAsync(string nextLink, string resourceGroupName, string accountName, string fileServicesName, string maxpagesize = null, string filter = null, string expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<FileShareItems>> ListNextPageAsync(string nextLink, string resourceGroupName, string accountName, string fileServicesName, string maxpagesize = null, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -927,7 +927,7 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentNullException(nameof(fileServicesName));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, accountName, fileServicesName, maxpagesize, filter, expand);
+            using var message = CreateListNextPageRequest(nextLink, resourceGroupName, accountName, fileServicesName, maxpagesize, filter, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -953,7 +953,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="expand"> Optional, used to expand the properties within share&apos;s properties. Valid values are: deleted, snapshots. Should be passed as a string with delimiter &apos;,&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="fileServicesName"/> is null. </exception>
-        public Response<FileShareItems> GetAllNextPage(string nextLink, string resourceGroupName, string accountName, string fileServicesName, string maxpagesize = null, string filter = null, string expand = null, CancellationToken cancellationToken = default)
+        public Response<FileShareItems> ListNextPage(string nextLink, string resourceGroupName, string accountName, string fileServicesName, string maxpagesize = null, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -972,7 +972,7 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentNullException(nameof(fileServicesName));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, accountName, fileServicesName, maxpagesize, filter, expand);
+            using var message = CreateListNextPageRequest(nextLink, resourceGroupName, accountName, fileServicesName, maxpagesize, filter, expand);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

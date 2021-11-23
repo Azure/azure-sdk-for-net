@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="osVersionName"> Name of the OS version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="osVersionName"/> is null. </exception>
-        public async Task<Response<OSVersion>> GetOSVersionAsync(string location, string osVersionName, CancellationToken cancellationToken = default)
+        public async Task<Response<OSVersionData>> GetOSVersionAsync(string location, string osVersionName, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -83,11 +83,13 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        OSVersion value = default;
+                        OSVersionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = OSVersion.DeserializeOSVersion(document.RootElement);
+                        value = OSVersionData.DeserializeOSVersionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((OSVersionData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -98,7 +100,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="osVersionName"> Name of the OS version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="osVersionName"/> is null. </exception>
-        public Response<OSVersion> GetOSVersion(string location, string osVersionName, CancellationToken cancellationToken = default)
+        public Response<OSVersionData> GetOSVersion(string location, string osVersionName, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -115,17 +117,19 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        OSVersion value = default;
+                        OSVersionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = OSVersion.DeserializeOSVersion(document.RootElement);
+                        value = OSVersionData.DeserializeOSVersionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((OSVersionData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateGetOSVersionsRequest(string location)
+        internal HttpMessage CreateListOSVersionsRequest(string location)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -148,14 +152,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> Name of the location that the OS versions pertain to. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public async Task<Response<OSVersionListResult>> GetOSVersionsAsync(string location, CancellationToken cancellationToken = default)
+        public async Task<Response<OSVersionListResult>> ListOSVersionsAsync(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
             }
 
-            using var message = CreateGetOSVersionsRequest(location);
+            using var message = CreateListOSVersionsRequest(location);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -175,14 +179,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> Name of the location that the OS versions pertain to. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public Response<OSVersionListResult> GetOSVersions(string location, CancellationToken cancellationToken = default)
+        public Response<OSVersionListResult> ListOSVersions(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
             }
 
-            using var message = CreateGetOSVersionsRequest(location);
+            using var message = CreateListOSVersionsRequest(location);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -223,7 +227,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="osFamilyName"> Name of the OS family. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="osFamilyName"/> is null. </exception>
-        public async Task<Response<OSFamily>> GetOSFamilyAsync(string location, string osFamilyName, CancellationToken cancellationToken = default)
+        public async Task<Response<OSFamilyData>> GetOSFamilyAsync(string location, string osFamilyName, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -240,11 +244,13 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        OSFamily value = default;
+                        OSFamilyData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = OSFamily.DeserializeOSFamily(document.RootElement);
+                        value = OSFamilyData.DeserializeOSFamilyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((OSFamilyData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -255,7 +261,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="osFamilyName"> Name of the OS family. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="osFamilyName"/> is null. </exception>
-        public Response<OSFamily> GetOSFamily(string location, string osFamilyName, CancellationToken cancellationToken = default)
+        public Response<OSFamilyData> GetOSFamily(string location, string osFamilyName, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -272,17 +278,19 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        OSFamily value = default;
+                        OSFamilyData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = OSFamily.DeserializeOSFamily(document.RootElement);
+                        value = OSFamilyData.DeserializeOSFamilyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((OSFamilyData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateGetOSFamiliesRequest(string location)
+        internal HttpMessage CreateListOSFamiliesRequest(string location)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -305,14 +313,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> Name of the location that the OS families pertain to. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public async Task<Response<OSFamilyListResult>> GetOSFamiliesAsync(string location, CancellationToken cancellationToken = default)
+        public async Task<Response<OSFamilyListResult>> ListOSFamiliesAsync(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
             }
 
-            using var message = CreateGetOSFamiliesRequest(location);
+            using var message = CreateListOSFamiliesRequest(location);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -332,14 +340,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> Name of the location that the OS families pertain to. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public Response<OSFamilyListResult> GetOSFamilies(string location, CancellationToken cancellationToken = default)
+        public Response<OSFamilyListResult> ListOSFamilies(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
             }
 
-            using var message = CreateGetOSFamiliesRequest(location);
+            using var message = CreateListOSFamiliesRequest(location);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -355,7 +363,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateGetOSVersionsNextPageRequest(string nextLink, string location)
+        internal HttpMessage CreateListOSVersionsNextPageRequest(string nextLink, string location)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -374,7 +382,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> Name of the location that the OS versions pertain to. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="location"/> is null. </exception>
-        public async Task<Response<OSVersionListResult>> GetOSVersionsNextPageAsync(string nextLink, string location, CancellationToken cancellationToken = default)
+        public async Task<Response<OSVersionListResult>> ListOSVersionsNextPageAsync(string nextLink, string location, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -385,7 +393,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(location));
             }
 
-            using var message = CreateGetOSVersionsNextPageRequest(nextLink, location);
+            using var message = CreateListOSVersionsNextPageRequest(nextLink, location);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -406,7 +414,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> Name of the location that the OS versions pertain to. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="location"/> is null. </exception>
-        public Response<OSVersionListResult> GetOSVersionsNextPage(string nextLink, string location, CancellationToken cancellationToken = default)
+        public Response<OSVersionListResult> ListOSVersionsNextPage(string nextLink, string location, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -417,7 +425,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(location));
             }
 
-            using var message = CreateGetOSVersionsNextPageRequest(nextLink, location);
+            using var message = CreateListOSVersionsNextPageRequest(nextLink, location);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -433,7 +441,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateGetOSFamiliesNextPageRequest(string nextLink, string location)
+        internal HttpMessage CreateListOSFamiliesNextPageRequest(string nextLink, string location)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -452,7 +460,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> Name of the location that the OS families pertain to. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="location"/> is null. </exception>
-        public async Task<Response<OSFamilyListResult>> GetOSFamiliesNextPageAsync(string nextLink, string location, CancellationToken cancellationToken = default)
+        public async Task<Response<OSFamilyListResult>> ListOSFamiliesNextPageAsync(string nextLink, string location, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -463,7 +471,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(location));
             }
 
-            using var message = CreateGetOSFamiliesNextPageRequest(nextLink, location);
+            using var message = CreateListOSFamiliesNextPageRequest(nextLink, location);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -484,7 +492,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> Name of the location that the OS families pertain to. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="location"/> is null. </exception>
-        public Response<OSFamilyListResult> GetOSFamiliesNextPage(string nextLink, string location, CancellationToken cancellationToken = default)
+        public Response<OSFamilyListResult> ListOSFamiliesNextPage(string nextLink, string location, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -495,7 +503,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(location));
             }
 
-            using var message = CreateGetOSFamiliesNextPageRequest(nextLink, location);
+            using var message = CreateListOSFamiliesNextPageRequest(nextLink, location);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
