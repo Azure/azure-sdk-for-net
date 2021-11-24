@@ -11,6 +11,7 @@ using Microsoft.Rest.TransientFaultHandling;
 using Newtonsoft.Json;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Net;
 using System.Reflection;
 using System.Text;
@@ -67,7 +68,12 @@ namespace FullDesktop.Tests
                 {
                     Properties = new AcceptOwnershipRequestProperties()
                     {
-                        DisplayName = "TestOwnership"
+                        DisplayName = "TestOwnership",
+                        ManagementGroupId = null,
+                        Tags = new Dictionary<string, string>()
+                        {
+                            { "tag1", "Messi" }, { "tag2", "Ronaldo" }, { "tag3", "Lebron"}
+                        }
                     }
                 };
 
@@ -77,6 +83,7 @@ namespace FullDesktop.Tests
                     subscriptionId: subscriptionId, body: acceptOwnershipRequest).ConfigureAwait(false).GetAwaiter().GetResult();
 
                 Assert.Equal(HttpStatusCode.Accepted, subscriptionResult.Response.StatusCode);
+                Assert.NotNull(subscriptionResult.Headers);
             }
         }
 

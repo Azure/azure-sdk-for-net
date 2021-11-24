@@ -1,10 +1,10 @@
 {
   "Entries": [
     {
-      "RequestUri": "/providers/Microsoft.Subscription/aliases/navyprod1?api-version=2019-10-01-preview",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3Vic2NyaXB0aW9uL2FsaWFzZXMvbmF2eXByb2QxP2FwaS12ZXJzaW9uPTIwMTktMTAtMDEtcHJldmlldw==",
-      "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"TestSub\",\r\n    \"workload\": \"Production\",\r\n    \"billingScope\": \"/providers/Microsoft.Billing/billingAccounts/4756419/enrollmentAccounts/224190\"\r\n  }\r\n}",
+      "RequestUri": "/providers/Microsoft.Subscription/subidprod1}/acceptOwnership?api-version=2021-10-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3Vic2NyaXB0aW9uL3N1YmlkcHJvZDF9L2FjY2VwdE93bmVyc2hpcD9hcGktdmVyc2lvbj0yMDIxLTEwLTAx",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n    \"properties\": {\r\n        \"displayName\": \"TestOwnership\",\r\n        \"managementGroupId\": null,\r\n        \"tags\": {\r\n            \"tag1\": \"Messi\",\r\n            \"tag2\": \"Ronaldo\",\r\n            \"tag3\": \"Lebron\"\r\n        }\r\n    }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
           "fdb31790-2774-4a6a-99e5-0a57e637dde4"
@@ -16,13 +16,13 @@
           "FxVersion/4.8.4200.0",
           "OSName/Windows",
           "OSVersion/10.0.19041.0",
-          "Microsoft.Azure.Management.Subscription.SubscriptionClient/1.1.5.0"
+          "Microsoft.Azure.Management.Subscription.SubscriptionClient/2.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "192"
+          "273"
         ]
       },
       "ResponseHeaders": {
@@ -81,8 +81,8 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/providers/Microsoft.Subscription/aliases/navyprod1\",\r\n  \"name\": \"navyprod1\",\r\n  \"type\": \"Microsoft.Subscription/aliases\",\r\n  \"properties\": {\r\n    \"subscriptionId\": \"cef41c82-c4f0-48ae-a336-2ec44ec4375a\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
-      "StatusCode": 200
+      "ResponseBody": "{\r\n    \"headers\": {\r\n        \"Location\": \"/providers/Microsoft.Subscription/subscriptionOperations/ODdmYTU0MDktODc5YS00ZTEzLTg2MWItNTQ4ZjYxNzBlOTQw?api-version=2021-10-01\",\r\n        \"Retry-After\": 8\r\n    }\r\n}",
+      "StatusCode": 202
     }
   ],
   "Names": {},
