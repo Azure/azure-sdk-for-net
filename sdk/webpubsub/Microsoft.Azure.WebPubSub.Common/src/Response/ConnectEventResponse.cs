@@ -1,7 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text.Json.Serialization;
 
@@ -12,12 +14,18 @@ namespace Microsoft.Azure.WebPubSub.Common
     /// </summary>
     public class ConnectEventResponse : WebPubSubEventResponse
     {
-        private Dictionary<string, object> _states = new();
+        private Dictionary<string, BinaryData> _states = new();
 
         /// <summary>
         /// The connection states.
         /// </summary>
-        public IReadOnlyDictionary<string, object> States => _states;
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public IReadOnlyDictionary<string, object> States { get; private set; }
+
+        /// <summary>
+        /// The connection states.
+        /// </summary>
+        public IReadOnlyDictionary<string, BinaryData> ConnectionStates => _states;
 
         /// <summary>
         /// UserId.
@@ -73,12 +81,22 @@ namespace Microsoft.Azure.WebPubSub.Common
         /// </summary>
         /// <param name="key">State key.</param>
         /// <param name="value">State value.</param>
-        public void SetState(string key, object value)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public void SetState(string key, object value) =>
+            SetState(key, BinaryData.FromObjectAsJson(value));
+
+        /// <summary>
+        /// Set connection states.
+        /// </summary>
+        /// <param name="key">State key.</param>
+        /// <param name="value">State value.</param>
+        public void SetState(string key, BinaryData value)
         {
             // In case user cleared states.
             if (_states == null)
             {
-                _states = new Dictionary<string, object>();
+                _states = new Dictionary<string, BinaryData>();
+                States = new StringifiedDictionary(_states);
             }
             _states[key] = value;
         }
@@ -89,6 +107,7 @@ namespace Microsoft.Azure.WebPubSub.Common
         public void ClearStates()
         {
             _states = null;
+            States = null;
         }
     }
 }

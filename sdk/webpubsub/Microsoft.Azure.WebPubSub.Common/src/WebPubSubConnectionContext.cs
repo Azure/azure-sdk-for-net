@@ -2,12 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Linq;
-using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace Microsoft.Azure.WebPubSub.Common
@@ -137,94 +135,6 @@ namespace Microsoft.Azure.WebPubSub.Common
             ConnectionStates = connectionStates;
             States = connectionStates != null ? new StringifiedDictionary(connectionStates) : null;
             Headers = headers;
-        }
-
-        /// <summary>
-        /// Dictionary that wraps access to the ConnectionStates dictionary but
-        /// returns stringifed JSON instead of BinaryData.  This only exists to
-        /// avoid breaking customers using the old <see cref="States"/> property.
-        /// </summary>
-        private class StringifiedDictionary : IReadOnlyDictionary<string, object>
-        {
-            /// <summary>
-            /// The original dictionary to wrap.
-            /// </summary>
-            private readonly IReadOnlyDictionary<string, BinaryData> _original;
-
-            /// <summary>
-            /// Creates a new instance of the RawJsonWrappingDictionary class.
-            /// </summary>
-            /// <param name="original">The original dictionary to wrap.</param>
-            public StringifiedDictionary(IReadOnlyDictionary<string, BinaryData> original) =>
-                _original = original;
-
-            /// <inheritdoc/>
-            public int Count => _original.Count;
-
-            /// <inheritdoc/>
-            public object this[string key] => _original[key].ToString();
-
-            /// <inheritdoc/>
-            public IEnumerable<string> Keys => _original.Keys;
-
-            /// <inheritdoc/>
-            public IEnumerable<object> Values => _original.Values.Select(v => v.ToString());
-
-            /// <inheritdoc/>
-            public IEnumerator<KeyValuePair<string, object>> GetEnumerator() =>
-                _original.Select(p => new KeyValuePair<string, object>(p.Key, p.Value.ToString())).GetEnumerator();
-
-            /// <inheritdoc/>
-            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-
-            /// <inheritdoc/>
-            public bool ContainsKey(string key) => _original.ContainsKey(key);
-
-            /// <inheritdoc/>
-            public bool TryGetValue(string key, out object value)
-            {
-                if (_original.TryGetValue(key, out BinaryData data))
-                {
-                    value = data.ToString();
-                    return true;
-                }
-                else
-                {
-                    value = default;
-                    return false;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Converter to turn the ConnectionStates dictionary into a regular JSON
-        /// object.
-        /// </summary>
-        private class ConnectionStatesConverter : JsonConverter<IReadOnlyDictionary<string, BinaryData>>
-        {
-            /// <inheritdoc/>
-            public override IReadOnlyDictionary<string, BinaryData> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) =>
-                throw new NotImplementedException();
-
-            /// <inheritdoc/>
-            public override void Write(Utf8JsonWriter writer, IReadOnlyDictionary<string, BinaryData> value, JsonSerializerOptions options)
-            {
-                writer.WriteStartObject();
-                if (value != null)
-                {
-                    foreach (KeyValuePair<string, BinaryData> pair in value)
-                    {
-                        writer.WritePropertyName(pair.Key);
-
-                        // Since STJ doesn't allow you to write raw JSON,
-                        // we have to hack around it by deserializing to an object
-                        // and then serializing it back into our writer
-                        object val = pair.Value.ToObjectFromJson<object>(options);
-                        JsonSerializer.Serialize(writer, val, options);
-                    }
-                }
-                writer.WriteEndObject();
-            }
         }
     }
 }

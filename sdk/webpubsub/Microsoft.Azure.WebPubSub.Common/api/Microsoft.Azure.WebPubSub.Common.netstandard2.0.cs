@@ -22,16 +22,20 @@ namespace Microsoft.Azure.WebPubSub.Common
     {
         public ConnectEventResponse() { }
         public ConnectEventResponse(string userId, System.Collections.Generic.IEnumerable<string> groups, string subprotocol, System.Collections.Generic.IEnumerable<string> roles) { }
+        public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> ConnectionStates { get { throw null; } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("groups")]
         public string[] Groups { get { throw null; } set { } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("roles")]
         public string[] Roles { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Collections.Generic.IReadOnlyDictionary<string, object> States { get { throw null; } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("subprotocol")]
         public string Subprotocol { get { throw null; } set { } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("userId")]
         public string UserId { get { throw null; } set { } }
         public void ClearStates() { }
+        public void SetState(string key, System.BinaryData value) { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public void SetState(string key, object value) { }
     }
     public sealed partial class DisconnectedEventRequest : Microsoft.Azure.WebPubSub.Common.WebPubSubEventRequest
@@ -73,13 +77,17 @@ namespace Microsoft.Azure.WebPubSub.Common
         public UserEventResponse() { }
         public UserEventResponse(System.BinaryData data, Microsoft.Azure.WebPubSub.Common.WebPubSubDataType dataType) { }
         public UserEventResponse(string data, Microsoft.Azure.WebPubSub.Common.WebPubSubDataType dataType = Microsoft.Azure.WebPubSub.Common.WebPubSubDataType.Text) { }
+        public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> ConnectionStates { get { throw null; } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("data")]
         public System.BinaryData Data { get { throw null; } set { } }
         [System.Text.Json.Serialization.JsonConverterAttribute(typeof(System.Text.Json.Serialization.JsonStringEnumConverter))]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("dataType")]
         public Microsoft.Azure.WebPubSub.Common.WebPubSubDataType DataType { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Collections.Generic.IReadOnlyDictionary<string, object> States { get { throw null; } }
         public void ClearStates() { }
+        public void SetState(string key, System.BinaryData value) { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public void SetState(string key, object value) { }
     }
     public sealed partial class WebPubSubClientCertificate
