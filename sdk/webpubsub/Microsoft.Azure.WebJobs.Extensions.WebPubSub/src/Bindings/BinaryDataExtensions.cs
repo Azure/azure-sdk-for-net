@@ -37,10 +37,5 @@ namespace System
 
             return null;
         }
-
-        public static string ToBase64String(this BinaryData data)
-        {
-            return System.Convert.ToBase64String(data.ToArray());
-        }
     }
 }

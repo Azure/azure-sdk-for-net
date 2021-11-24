@@ -41,7 +41,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 foreach (var item in value.ConnectionStates)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteRawValue(item.Value.ToBase64String());
+                    writer.WriteRawValue(item.Value.ToString());
                 }
                 writer.WriteEndObject();
                 writer.WritePropertyName("header");
