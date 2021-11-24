@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
     /// <summary> The parameters for updating a configuration store. </summary>
-    public partial class ConfigurationStoreUpdateParameters
+    public partial class ConfigurationStoreUpdateOptions
     {
-        /// <summary> Initializes a new instance of ConfigurationStoreUpdateParameters. </summary>
-        public ConfigurationStoreUpdateParameters()
+        /// <summary> Initializes a new instance of ConfigurationStoreUpdateOptions. </summary>
+        public ConfigurationStoreUpdateOptions()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }

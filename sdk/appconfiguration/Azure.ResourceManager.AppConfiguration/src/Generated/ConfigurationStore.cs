@@ -357,23 +357,23 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> Updates a configuration store with the specified parameters. </summary>
-        /// <param name="configStoreUpdateParameters"> The parameters for updating a configuration store. </param>
+        /// <param name="configurationStoreUpdateOptions"> The options for updating a configuration store. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="configStoreUpdateParameters"/> is null. </exception>
-        public async virtual Task<ConfigurationStoreUpdateOperation> UpdateAsync(ConfigurationStoreUpdateParameters configStoreUpdateParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationStoreUpdateOptions"/> is null. </exception>
+        public async virtual Task<ConfigurationStoreUpdateOperation> UpdateAsync(ConfigurationStoreUpdateOptions configurationStoreUpdateOptions, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            if (configStoreUpdateParameters == null)
+            if (configurationStoreUpdateOptions == null)
             {
-                throw new ArgumentNullException(nameof(configStoreUpdateParameters));
+                throw new ArgumentNullException(nameof(configurationStoreUpdateOptions));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ConfigurationStore.Update");
             scope.Start();
             try
             {
-                var response = await _configurationStoresRestClient.UpdateAsync(Id.ResourceGroupName, Id.Name, configStoreUpdateParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ConfigurationStoreUpdateOperation(this, _clientDiagnostics, Pipeline, _configurationStoresRestClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, configStoreUpdateParameters).Request, response);
+                var response = await _configurationStoresRestClient.UpdateAsync(Id.ResourceGroupName, Id.Name, configurationStoreUpdateOptions, cancellationToken).ConfigureAwait(false);
+                var operation = new ConfigurationStoreUpdateOperation(this, _clientDiagnostics, Pipeline, _configurationStoresRestClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, configurationStoreUpdateOptions).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -386,23 +386,23 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> Updates a configuration store with the specified parameters. </summary>
-        /// <param name="configStoreUpdateParameters"> The parameters for updating a configuration store. </param>
+        /// <param name="configurationStoreUpdateOptions"> The options for updating a configuration store. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="configStoreUpdateParameters"/> is null. </exception>
-        public virtual ConfigurationStoreUpdateOperation Update(ConfigurationStoreUpdateParameters configStoreUpdateParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationStoreUpdateOptions"/> is null. </exception>
+        public virtual ConfigurationStoreUpdateOperation Update(ConfigurationStoreUpdateOptions configurationStoreUpdateOptions, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            if (configStoreUpdateParameters == null)
+            if (configurationStoreUpdateOptions == null)
             {
-                throw new ArgumentNullException(nameof(configStoreUpdateParameters));
+                throw new ArgumentNullException(nameof(configurationStoreUpdateOptions));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ConfigurationStore.Update");
             scope.Start();
             try
             {
-                var response = _configurationStoresRestClient.Update(Id.ResourceGroupName, Id.Name, configStoreUpdateParameters, cancellationToken);
-                var operation = new ConfigurationStoreUpdateOperation(this, _clientDiagnostics, Pipeline, _configurationStoresRestClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, configStoreUpdateParameters).Request, response);
+                var response = _configurationStoresRestClient.Update(Id.ResourceGroupName, Id.Name, configurationStoreUpdateOptions, cancellationToken);
+                var operation = new ConfigurationStoreUpdateOperation(this, _clientDiagnostics, Pipeline, _configurationStoresRestClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, configurationStoreUpdateOptions).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -493,21 +493,21 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> Regenerates an access key for the specified configuration store. </summary>
-        /// <param name="regenerateKeyParameters"> The parameters for regenerating an access key. </param>
+        /// <param name="regenerateKeyOptions"> The options for regenerating an access key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="regenerateKeyParameters"/> is null. </exception>
-        public async virtual Task<Response<ApiKey>> RegenerateKeyAsync(RegenerateKeyParameters regenerateKeyParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="regenerateKeyOptions"/> is null. </exception>
+        public async virtual Task<Response<ApiKey>> RegenerateKeyAsync(RegenerateKeyOptions regenerateKeyOptions, CancellationToken cancellationToken = default)
         {
-            if (regenerateKeyParameters == null)
+            if (regenerateKeyOptions == null)
             {
-                throw new ArgumentNullException(nameof(regenerateKeyParameters));
+                throw new ArgumentNullException(nameof(regenerateKeyOptions));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ConfigurationStore.RegenerateKey");
             scope.Start();
             try
             {
-                var response = await _configurationStoresRestClient.RegenerateKeyAsync(Id.ResourceGroupName, Id.Name, regenerateKeyParameters, cancellationToken).ConfigureAwait(false);
+                var response = await _configurationStoresRestClient.RegenerateKeyAsync(Id.ResourceGroupName, Id.Name, regenerateKeyOptions, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -518,21 +518,21 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> Regenerates an access key for the specified configuration store. </summary>
-        /// <param name="regenerateKeyParameters"> The parameters for regenerating an access key. </param>
+        /// <param name="regenerateKeyOptions"> The options for regenerating an access key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="regenerateKeyParameters"/> is null. </exception>
-        public virtual Response<ApiKey> RegenerateKey(RegenerateKeyParameters regenerateKeyParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="regenerateKeyOptions"/> is null. </exception>
+        public virtual Response<ApiKey> RegenerateKey(RegenerateKeyOptions regenerateKeyOptions, CancellationToken cancellationToken = default)
         {
-            if (regenerateKeyParameters == null)
+            if (regenerateKeyOptions == null)
             {
-                throw new ArgumentNullException(nameof(regenerateKeyParameters));
+                throw new ArgumentNullException(nameof(regenerateKeyOptions));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ConfigurationStore.RegenerateKey");
             scope.Start();
             try
             {
-                var response = _configurationStoresRestClient.RegenerateKey(Id.ResourceGroupName, Id.Name, regenerateKeyParameters, cancellationToken);
+                var response = _configurationStoresRestClient.RegenerateKey(Id.ResourceGroupName, Id.Name, regenerateKeyOptions, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -543,21 +543,21 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> Lists a configuration store key-value. </summary>
-        /// <param name="listKeyValueParameters"> The parameters for retrieving a key-value. </param>
+        /// <param name="listKeyValueOptions"> The options for retrieving a key-value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="listKeyValueParameters"/> is null. </exception>
-        public async virtual Task<Response<KeyValue>> GetKeyValueAsync(ListKeyValueParameters listKeyValueParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="listKeyValueOptions"/> is null. </exception>
+        public async virtual Task<Response<KeyValue>> GetKeyValueAsync(ListKeyValueOptions listKeyValueOptions, CancellationToken cancellationToken = default)
         {
-            if (listKeyValueParameters == null)
+            if (listKeyValueOptions == null)
             {
-                throw new ArgumentNullException(nameof(listKeyValueParameters));
+                throw new ArgumentNullException(nameof(listKeyValueOptions));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ConfigurationStore.GetKeyValue");
             scope.Start();
             try
             {
-                var response = await _configurationStoresRestClient.ListKeyValueAsync(Id.ResourceGroupName, Id.Name, listKeyValueParameters, cancellationToken).ConfigureAwait(false);
+                var response = await _configurationStoresRestClient.ListKeyValueAsync(Id.ResourceGroupName, Id.Name, listKeyValueOptions, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -568,21 +568,21 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> Lists a configuration store key-value. </summary>
-        /// <param name="listKeyValueParameters"> The parameters for retrieving a key-value. </param>
+        /// <param name="listKeyValueOptions"> The options for retrieving a key-value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="listKeyValueParameters"/> is null. </exception>
-        public virtual Response<KeyValue> GetKeyValue(ListKeyValueParameters listKeyValueParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="listKeyValueOptions"/> is null. </exception>
+        public virtual Response<KeyValue> GetKeyValue(ListKeyValueOptions listKeyValueOptions, CancellationToken cancellationToken = default)
         {
-            if (listKeyValueParameters == null)
+            if (listKeyValueOptions == null)
             {
-                throw new ArgumentNullException(nameof(listKeyValueParameters));
+                throw new ArgumentNullException(nameof(listKeyValueOptions));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ConfigurationStore.GetKeyValue");
             scope.Start();
             try
             {
-                var response = _configurationStoresRestClient.ListKeyValue(Id.ResourceGroupName, Id.Name, listKeyValueParameters, cancellationToken);
+                var response = _configurationStoresRestClient.ListKeyValue(Id.ResourceGroupName, Id.Name, listKeyValueOptions, cancellationToken);
                 return response;
             }
             catch (Exception e)

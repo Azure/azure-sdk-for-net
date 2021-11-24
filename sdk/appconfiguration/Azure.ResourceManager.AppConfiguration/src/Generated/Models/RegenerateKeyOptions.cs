@@ -8,10 +8,10 @@
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
     /// <summary> The parameters used to regenerate an API key. </summary>
-    public partial class RegenerateKeyParameters
+    public partial class RegenerateKeyOptions
     {
-        /// <summary> Initializes a new instance of RegenerateKeyParameters. </summary>
-        public RegenerateKeyParameters()
+        /// <summary> Initializes a new instance of RegenerateKeyOptions. </summary>
+        public RegenerateKeyOptions()
         {
         }
 

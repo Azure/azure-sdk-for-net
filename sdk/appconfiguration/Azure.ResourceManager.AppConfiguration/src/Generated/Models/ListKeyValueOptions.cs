@@ -10,12 +10,12 @@ using System;
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
     /// <summary> The parameters used to list a configuration store key-value. </summary>
-    public partial class ListKeyValueParameters
+    public partial class ListKeyValueOptions
     {
-        /// <summary> Initializes a new instance of ListKeyValueParameters. </summary>
+        /// <summary> Initializes a new instance of ListKeyValueOptions. </summary>
         /// <param name="key"> The key to retrieve. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public ListKeyValueParameters(string key)
+        public ListKeyValueOptions(string key)
         {
             if (key == null)
             {

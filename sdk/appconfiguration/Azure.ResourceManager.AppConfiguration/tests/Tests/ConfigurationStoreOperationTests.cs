@@ -105,8 +105,8 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             List<ApiKey> keys = await ConfigStore.GetKeysAsync().ToEnumerableAsync();
             ApiKey orignalKey = keys.FirstOrDefault();
 
-            RegenerateKeyParameters regenerateKeyParameters = new RegenerateKeyParameters() { Id = orignalKey.Id };
-            ApiKey configurationStore = await ConfigStore.RegenerateKeyAsync(regenerateKeyParameters);
+            RegenerateKeyOptions regenerateKeyOptions = new RegenerateKeyOptions() { Id = orignalKey.Id };
+            ApiKey configurationStore = await ConfigStore.RegenerateKeyAsync(regenerateKeyOptions);
             keys = await ConfigStore.GetKeysAsync().ToEnumerableAsync();
 
             Assert.IsTrue(keys.Where(x => x.Name == orignalKey.Name).FirstOrDefault().Value != orignalKey.Value);
@@ -116,8 +116,8 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         [Test]
         public async Task GetKeyValueTest()
         {
-            ListKeyValueParameters listKeyValueParameters = new ListKeyValueParameters("Primary");
-            KeyValue keyValue = await ConfigStore.GetKeyValueAsync(listKeyValueParameters);
+            ListKeyValueOptions listKeyValueOptions = new ListKeyValueOptions("Primary");
+            KeyValue keyValue = await ConfigStore.GetKeyValueAsync(listKeyValueOptions);
             Assert.IsTrue(keyValue.Key.Equals("Primary"));
         }
 
@@ -132,8 +132,8 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         [Test]
         public async Task UpdateTest()
         {
-            ConfigurationStoreUpdateParameters configurationStoreUpdateParameters = new ConfigurationStoreUpdateParameters() { PublicNetworkAccess = PublicNetworkAccess.Enabled };
-            ConfigurationStore configurationStore = await (await ConfigStore.UpdateAsync(configurationStoreUpdateParameters)).WaitForCompletionAsync();
+            ConfigurationStoreUpdateOptions configurationStoreUpdateOptions = new ConfigurationStoreUpdateOptions() { PublicNetworkAccess = PublicNetworkAccess.Enabled };
+            ConfigurationStore configurationStore = await (await ConfigStore.UpdateAsync(configurationStoreUpdateOptions)).WaitForCompletionAsync();
 
             Assert.IsTrue(configurationStore.Data.PublicNetworkAccess == PublicNetworkAccess.Enabled);
         }

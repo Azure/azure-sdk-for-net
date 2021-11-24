@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.AppConfiguration
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string resourceGroupName, string configStoreName, ConfigurationStoreUpdateParameters configStoreUpdateParameters)
+        internal HttpMessage CreateUpdateRequest(string resourceGroupName, string configStoreName, ConfigurationStoreUpdateOptions configurationStoreUpdateOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.AppConfiguration
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(configStoreUpdateParameters);
+            content.JsonWriter.WriteObjectValue(configurationStoreUpdateOptions);
             request.Content = content;
             message.SetProperty("UserAgentOverride", _userAgent);
             return message;
@@ -469,10 +469,10 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <summary> Updates a configuration store with the specified parameters. </summary>
         /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
-        /// <param name="configStoreUpdateParameters"> The parameters for updating a configuration store. </param>
+        /// <param name="configurationStoreUpdateOptions"> The options for updating a configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/>, or <paramref name="configStoreUpdateParameters"/> is null. </exception>
-        public async Task<Response> UpdateAsync(string resourceGroupName, string configStoreName, ConfigurationStoreUpdateParameters configStoreUpdateParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/>, or <paramref name="configurationStoreUpdateOptions"/> is null. </exception>
+        public async Task<Response> UpdateAsync(string resourceGroupName, string configStoreName, ConfigurationStoreUpdateOptions configurationStoreUpdateOptions, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -482,12 +482,12 @@ namespace Azure.ResourceManager.AppConfiguration
             {
                 throw new ArgumentNullException(nameof(configStoreName));
             }
-            if (configStoreUpdateParameters == null)
+            if (configurationStoreUpdateOptions == null)
             {
-                throw new ArgumentNullException(nameof(configStoreUpdateParameters));
+                throw new ArgumentNullException(nameof(configurationStoreUpdateOptions));
             }
 
-            using var message = CreateUpdateRequest(resourceGroupName, configStoreName, configStoreUpdateParameters);
+            using var message = CreateUpdateRequest(resourceGroupName, configStoreName, configurationStoreUpdateOptions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -502,10 +502,10 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <summary> Updates a configuration store with the specified parameters. </summary>
         /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
-        /// <param name="configStoreUpdateParameters"> The parameters for updating a configuration store. </param>
+        /// <param name="configurationStoreUpdateOptions"> The options for updating a configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/>, or <paramref name="configStoreUpdateParameters"/> is null. </exception>
-        public Response Update(string resourceGroupName, string configStoreName, ConfigurationStoreUpdateParameters configStoreUpdateParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/>, or <paramref name="configurationStoreUpdateOptions"/> is null. </exception>
+        public Response Update(string resourceGroupName, string configStoreName, ConfigurationStoreUpdateOptions configurationStoreUpdateOptions, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -515,12 +515,12 @@ namespace Azure.ResourceManager.AppConfiguration
             {
                 throw new ArgumentNullException(nameof(configStoreName));
             }
-            if (configStoreUpdateParameters == null)
+            if (configurationStoreUpdateOptions == null)
             {
-                throw new ArgumentNullException(nameof(configStoreUpdateParameters));
+                throw new ArgumentNullException(nameof(configurationStoreUpdateOptions));
             }
 
-            using var message = CreateUpdateRequest(resourceGroupName, configStoreName, configStoreUpdateParameters);
+            using var message = CreateUpdateRequest(resourceGroupName, configStoreName, configurationStoreUpdateOptions);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -623,7 +623,7 @@ namespace Azure.ResourceManager.AppConfiguration
             }
         }
 
-        internal HttpMessage CreateRegenerateKeyRequest(string resourceGroupName, string configStoreName, RegenerateKeyParameters regenerateKeyParameters)
+        internal HttpMessage CreateRegenerateKeyRequest(string resourceGroupName, string configStoreName, RegenerateKeyOptions regenerateKeyOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -642,7 +642,7 @@ namespace Azure.ResourceManager.AppConfiguration
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(regenerateKeyParameters);
+            content.JsonWriter.WriteObjectValue(regenerateKeyOptions);
             request.Content = content;
             message.SetProperty("UserAgentOverride", _userAgent);
             return message;
@@ -651,10 +651,10 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <summary> Regenerates an access key for the specified configuration store. </summary>
         /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
-        /// <param name="regenerateKeyParameters"> The parameters for regenerating an access key. </param>
+        /// <param name="regenerateKeyOptions"> The options for regenerating an access key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/>, or <paramref name="regenerateKeyParameters"/> is null. </exception>
-        public async Task<Response<ApiKey>> RegenerateKeyAsync(string resourceGroupName, string configStoreName, RegenerateKeyParameters regenerateKeyParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/>, or <paramref name="regenerateKeyOptions"/> is null. </exception>
+        public async Task<Response<ApiKey>> RegenerateKeyAsync(string resourceGroupName, string configStoreName, RegenerateKeyOptions regenerateKeyOptions, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -664,12 +664,12 @@ namespace Azure.ResourceManager.AppConfiguration
             {
                 throw new ArgumentNullException(nameof(configStoreName));
             }
-            if (regenerateKeyParameters == null)
+            if (regenerateKeyOptions == null)
             {
-                throw new ArgumentNullException(nameof(regenerateKeyParameters));
+                throw new ArgumentNullException(nameof(regenerateKeyOptions));
             }
 
-            using var message = CreateRegenerateKeyRequest(resourceGroupName, configStoreName, regenerateKeyParameters);
+            using var message = CreateRegenerateKeyRequest(resourceGroupName, configStoreName, regenerateKeyOptions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -688,10 +688,10 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <summary> Regenerates an access key for the specified configuration store. </summary>
         /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
-        /// <param name="regenerateKeyParameters"> The parameters for regenerating an access key. </param>
+        /// <param name="regenerateKeyOptions"> The options for regenerating an access key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/>, or <paramref name="regenerateKeyParameters"/> is null. </exception>
-        public Response<ApiKey> RegenerateKey(string resourceGroupName, string configStoreName, RegenerateKeyParameters regenerateKeyParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/>, or <paramref name="regenerateKeyOptions"/> is null. </exception>
+        public Response<ApiKey> RegenerateKey(string resourceGroupName, string configStoreName, RegenerateKeyOptions regenerateKeyOptions, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -701,12 +701,12 @@ namespace Azure.ResourceManager.AppConfiguration
             {
                 throw new ArgumentNullException(nameof(configStoreName));
             }
-            if (regenerateKeyParameters == null)
+            if (regenerateKeyOptions == null)
             {
-                throw new ArgumentNullException(nameof(regenerateKeyParameters));
+                throw new ArgumentNullException(nameof(regenerateKeyOptions));
             }
 
-            using var message = CreateRegenerateKeyRequest(resourceGroupName, configStoreName, regenerateKeyParameters);
+            using var message = CreateRegenerateKeyRequest(resourceGroupName, configStoreName, regenerateKeyOptions);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -722,7 +722,7 @@ namespace Azure.ResourceManager.AppConfiguration
             }
         }
 
-        internal HttpMessage CreateListKeyValueRequest(string resourceGroupName, string configStoreName, ListKeyValueParameters listKeyValueParameters)
+        internal HttpMessage CreateListKeyValueRequest(string resourceGroupName, string configStoreName, ListKeyValueOptions listKeyValueOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -741,7 +741,7 @@ namespace Azure.ResourceManager.AppConfiguration
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(listKeyValueParameters);
+            content.JsonWriter.WriteObjectValue(listKeyValueOptions);
             request.Content = content;
             message.SetProperty("UserAgentOverride", _userAgent);
             return message;
@@ -750,10 +750,10 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <summary> Lists a configuration store key-value. </summary>
         /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
-        /// <param name="listKeyValueParameters"> The parameters for retrieving a key-value. </param>
+        /// <param name="listKeyValueOptions"> The options for retrieving a key-value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/>, or <paramref name="listKeyValueParameters"/> is null. </exception>
-        public async Task<Response<KeyValue>> ListKeyValueAsync(string resourceGroupName, string configStoreName, ListKeyValueParameters listKeyValueParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/>, or <paramref name="listKeyValueOptions"/> is null. </exception>
+        public async Task<Response<KeyValue>> ListKeyValueAsync(string resourceGroupName, string configStoreName, ListKeyValueOptions listKeyValueOptions, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -763,12 +763,12 @@ namespace Azure.ResourceManager.AppConfiguration
             {
                 throw new ArgumentNullException(nameof(configStoreName));
             }
-            if (listKeyValueParameters == null)
+            if (listKeyValueOptions == null)
             {
-                throw new ArgumentNullException(nameof(listKeyValueParameters));
+                throw new ArgumentNullException(nameof(listKeyValueOptions));
             }
 
-            using var message = CreateListKeyValueRequest(resourceGroupName, configStoreName, listKeyValueParameters);
+            using var message = CreateListKeyValueRequest(resourceGroupName, configStoreName, listKeyValueOptions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -787,10 +787,10 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <summary> Lists a configuration store key-value. </summary>
         /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
-        /// <param name="listKeyValueParameters"> The parameters for retrieving a key-value. </param>
+        /// <param name="listKeyValueOptions"> The options for retrieving a key-value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/>, or <paramref name="listKeyValueParameters"/> is null. </exception>
-        public Response<KeyValue> ListKeyValue(string resourceGroupName, string configStoreName, ListKeyValueParameters listKeyValueParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/>, or <paramref name="listKeyValueOptions"/> is null. </exception>
+        public Response<KeyValue> ListKeyValue(string resourceGroupName, string configStoreName, ListKeyValueOptions listKeyValueOptions, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -800,12 +800,12 @@ namespace Azure.ResourceManager.AppConfiguration
             {
                 throw new ArgumentNullException(nameof(configStoreName));
             }
-            if (listKeyValueParameters == null)
+            if (listKeyValueOptions == null)
             {
-                throw new ArgumentNullException(nameof(listKeyValueParameters));
+                throw new ArgumentNullException(nameof(listKeyValueOptions));
             }
 
-            using var message = CreateListKeyValueRequest(resourceGroupName, configStoreName, listKeyValueParameters);
+            using var message = CreateListKeyValueRequest(resourceGroupName, configStoreName, listKeyValueOptions);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
