@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Adding support for retry (SupportsRetryAttribute)
+
 ### Breaking Changes
 
 ### Bugs Fixed
