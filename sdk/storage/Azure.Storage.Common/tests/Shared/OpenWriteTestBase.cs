@@ -477,7 +477,9 @@ namespace Azure.Storage.Test.Shared
                 TResourceClient client = GetResourceClient(disposingContainer.Container);
                 await InitializeResourceAsync(client);
 
+                var garbageLeaseId = GetGarbageLeaseId();
                 parameters.Match = await GetMatchConditionAsync(client, parameters.Match);
+                parameters.LeaseId = await SetupLeaseAsync(client, parameters.LeaseId, garbageLeaseId);
                 TRequestConditions accessConditions = BuildRequestConditions(parameters);
 
                 byte[] data = GetRandomBuffer(Constants.KB);

@@ -16,7 +16,7 @@ namespace Azure.Storage.Blobs.Tests
     public class BlockBlobClientOpenWriteTests : BlobBaseClientOpenWriteTests<BlockBlobClient>
     {
         public BlockBlobClientOpenWriteTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
-            : base(async, serviceVersion, Core.TestFramework.RecordedTestMode.Playback /* RecordedTestMode.Record /* to re-record */)
+            : base(async, serviceVersion, Core.TestFramework.RecordedTestMode.Record /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
