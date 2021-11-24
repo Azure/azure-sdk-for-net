@@ -21,6 +21,10 @@ public-clients: false
 head-as-boolean: false
 payload-flattening-threshold: 2
 
+# temporary
+mgmt-debug:
+  suppress-list-exception: true
+
 operation-group-to-resource-type:
   DeploymentOperations: Microsoft.Resources/deployments/operations
   Deployments: Microsoft.Resources/deployments

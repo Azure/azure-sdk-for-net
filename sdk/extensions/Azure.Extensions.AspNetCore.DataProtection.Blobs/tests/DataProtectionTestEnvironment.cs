@@ -12,6 +12,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Blobs.Tests
     public class DataProtectionTestEnvironment: TestEnvironment
     {
         public Uri BlobStorageEndpoint => new(GetVariable("BLOB_STORAGE_ENDPOINT"));
+        public BlobClientOptions.ServiceVersion StorageVersion => BlobClientOptions.ServiceVersion.V2019_02_02;
 
         protected override async ValueTask<bool> IsEnvironmentReadyAsync()
         {
@@ -20,7 +21,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Blobs.Tests
                 // Try multiple container and blob names to make sure we hit different blob servers
                 for (int i = 0; i < 10; i++)
                 {
-                    var client = new BlobServiceClient(BlobStorageEndpoint, Credential);
+                    var client = new BlobServiceClient(BlobStorageEndpoint, Credential, new BlobClientOptions(StorageVersion));
                     var container = client.GetBlobContainerClient(Guid.NewGuid().ToString());
                     await container.CreateIfNotExistsAsync();
 

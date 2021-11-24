@@ -594,6 +594,29 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        [TestCaseSource(nameof(RequestMethods))]
+        public async Task ContentTypeNullWhenNoContent(RequestMethod method)
+        {
+            var transport = GetTransport();
+
+            string contentType = null;
+            using TestServer testServer = new TestServer(
+                context =>
+                {
+                    contentType = context.Request.ContentType;
+                });
+
+            Request request = transport.CreateRequest();
+            request.Method = method;
+            request.Content = null;
+            request.Headers.Add("Content-Type", "application/json");
+            request.Uri.Reset(testServer.Address);
+
+            await ExecuteRequest(request, transport);
+            Assert.Null(contentType);
+        }
+
+        [Test]
         public async Task RequestAndResponseHasRequestId()
         {
             using TestServer testServer = new TestServer(context => { });

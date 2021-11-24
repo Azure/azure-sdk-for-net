@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Castle.DynamicProxy;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
@@ -97,6 +98,15 @@ namespace Azure.Core.TestFramework
                 "SessionRecords",
                 additionalParameterName == null ? className : $"{className}({additionalParameterName})",
                 fileName);
+        }
+
+        public override void GlobalTimeoutTearDown()
+        {
+            // Only enforce the timeout on playback.
+            if (Mode == RecordedTestMode.Playback)
+            {
+                base.GlobalTimeoutTearDown();
+            }
         }
 
         /// <summary>
@@ -197,6 +207,48 @@ namespace Azure.Core.TestFramework
                 managementInterceptor,
                 new GetOriginalInterceptor(operation),
                 new OperationInterceptor(Mode == RecordedTestMode.Playback));
+        }
+
+        /// <summary>
+        /// A number of our tests have built in delays while we wait an expected
+        /// amount of time for a service operation to complete and this method
+        /// allows us to wait (unless we're playing back recordings, which can
+        /// complete immediately).
+        /// </summary>
+        /// <param name="milliseconds">The number of milliseconds to wait.</param>
+        /// <param name="playbackDelayMilliseconds">
+        /// An optional number of milliseconds to wait if we're playing back a
+        /// recorded test.  This is useful for allowing client side events to
+        /// get processed.
+        /// </param>
+        /// <returns>A task that will (optionally) delay.</returns>
+        public Task Delay(int milliseconds = 1000, int? playbackDelayMilliseconds = null) =>
+            Delay(Mode, milliseconds, playbackDelayMilliseconds);
+
+        /// <summary>
+        /// A number of our tests have built in delays while we wait an expected
+        /// amount of time for a service operation to complete and this method
+        /// allows us to wait (unless we're playing back recordings, which can
+        /// complete immediately).
+        /// </summary>
+        /// <param name="milliseconds">The number of milliseconds to wait.</param>
+        /// <param name="playbackDelayMilliseconds">
+        /// An optional number of milliseconds to wait if we're playing back a
+        /// recorded test.  This is useful for allowing client side events to
+        /// get processed.
+        /// </param>
+        /// <returns>A task that will (optionally) delay.</returns>
+        public static Task Delay(RecordedTestMode mode, int milliseconds = 1000, int? playbackDelayMilliseconds = null)
+        {
+            if (mode != RecordedTestMode.Playback)
+            {
+                return Task.Delay(milliseconds);
+            }
+            else if (playbackDelayMilliseconds != null)
+            {
+                return Task.Delay(playbackDelayMilliseconds.Value);
+            }
+            return Task.CompletedTask;
         }
 
         protected TestRetryHelper TestRetryHelper => new TestRetryHelper(Mode == RecordedTestMode.Playback);

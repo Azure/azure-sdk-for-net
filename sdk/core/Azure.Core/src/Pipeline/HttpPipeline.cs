@@ -4,6 +4,7 @@
 using System;
 using System.Buffers;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -48,9 +49,9 @@ namespace Azure.Core.Pipeline
         public HttpPipeline(HttpPipelineTransport transport, HttpPipelinePolicy[]? policies = null, ResponseClassifier? responseClassifier = null)
         {
             _transport = transport ?? throw new ArgumentNullException(nameof(transport));
-            ResponseClassifier = responseClassifier ?? new ResponseClassifier();
+            ResponseClassifier = responseClassifier ?? ResponseClassifier.Shared;
 
-            policies = policies ?? Array.Empty<HttpPipelinePolicy>();
+            policies ??= Array.Empty<HttpPipelinePolicy>();
 
             var all = new HttpPipelinePolicy[policies.Length + 1];
             all[policies.Length] = new HttpPipelineTransportPolicy(_transport);
@@ -59,8 +60,20 @@ namespace Azure.Core.Pipeline
             _pipeline = all;
         }
 
-        internal HttpPipeline(HttpPipelineTransport transport, int perCallIndex, int perRetryIndex, HttpPipelinePolicy[]? policies = null, ResponseClassifier? responseClassifier = null) : this(transport, policies, responseClassifier)
+        internal HttpPipeline(
+            HttpPipelineTransport transport,
+            int perCallIndex,
+            int perRetryIndex,
+            HttpPipelinePolicy[] pipeline,
+            ResponseClassifier responseClassifier)
         {
+            ResponseClassifier = responseClassifier ?? throw new ArgumentNullException(nameof(responseClassifier));
+
+            _transport = transport ?? throw new ArgumentNullException(nameof(transport));
+            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
+
+            Debug.Assert(pipeline[pipeline.Length - 1] is HttpPipelineTransportPolicy);
+
             _perCallIndex = perCallIndex;
             _perRetryIndex = perRetryIndex;
             _internallyConstructed = true;

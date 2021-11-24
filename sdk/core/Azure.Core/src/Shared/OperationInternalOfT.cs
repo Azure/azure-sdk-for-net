@@ -1,9 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable enable
+
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
@@ -19,28 +20,40 @@ namespace Azure.Core
     /// </list>
     /// Supported members:
     /// <list type="bullet">
-    ///   <item><see cref="HasValue"/></item>
-    ///   <item><see cref="OperationInternal.HasCompleted"/></item>
-    ///   <item><see cref="Value"/></item>
-    ///   <item><see cref="OperationInternal.RawResponse"/>, used for <see cref="Operation.GetRawResponse"/></item>
-    ///   <item><see cref="OperationInternal.UpdateStatus"/></item>
-    ///   <item><see cref="OperationInternal.UpdateStatusAsync(CancellationToken)"/></item>
-    ///   <item><see cref="WaitForCompletionAsync(CancellationToken)"/></item>
-    ///   <item><see cref="WaitForCompletionAsync(TimeSpan, CancellationToken)"/></item>
+    ///   <item>
+    ///     <description><see cref="HasValue"/></description>
+    ///   </item>
+    ///   <item>
+    ///     <description><see cref="OperationInternalBase.HasCompleted"/></description>
+    ///   </item>
+    ///   <item>
+    ///     <description><see cref="Value"/></description>
+    ///   </item>
+    ///   <item>
+    ///     <description><see cref="OperationInternalBase.RawResponse"/>, used for <see cref="Operation.GetRawResponse"/></description>
+    ///   </item>
+    ///   <item>
+    ///     <description><see cref="OperationInternalBase.UpdateStatus"/></description>
+    ///   </item>
+    ///   <item>
+    ///     <description><see cref="OperationInternalBase.UpdateStatusAsync(CancellationToken)"/></description>
+    ///   </item>
+    ///   <item>
+    ///     <description><see cref="WaitForCompletionAsync(CancellationToken)"/></description>
+    ///   </item>
+    ///   <item>
+    ///     <description><see cref="WaitForCompletionAsync(TimeSpan, CancellationToken)"/></description>
+    ///   </item>
     /// </list>
     /// </summary>
     /// <typeparam name="T">The final result of the long-running operation. Must match the type used in <see cref="Operation{T}"/>.</typeparam>
 #pragma warning disable SA1649 // File name should match first type name
-    internal class OperationInternal<T> : OperationInternal
+    internal class OperationInternal<T> : OperationInternalBase
 #pragma warning restore SA1649
     {
         private readonly IOperation<T> _operation;
 
-        private readonly ClientDiagnostics _diagnostics;
-
-        private T _value;
-
-        private RequestFailedException _operationFailedException;
+        private T? _value;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OperationInternal{T}"/> class.
@@ -48,7 +61,7 @@ namespace Azure.Core
         /// <param name="clientDiagnostics">Used for diagnostic scope and exception creation. This is expected to be the instance created during the construction of your main client.</param>
         /// <param name="operation">The long-running operation making use of this class. Passing "<c>this</c>" is expected.</param>
         /// <param name="rawResponse">
-        /// The initial value of <see cref="OperationInternal.RawResponse"/>. Usually, long-running operation objects can be instantiated in two ways:
+        /// The initial value of <see cref="OperationInternalBase.RawResponse"/>. Usually, long-running operation objects can be instantiated in two ways:
         /// <list type="bullet">
         ///   <item>
         ///   When calling a client's "<c>Start&lt;OperationName&gt;</c>" method, a service call is made to start the operation, and an <see cref="Operation{T}"/> instance is returned.
@@ -64,11 +77,10 @@ namespace Azure.Core
         /// parameter <paramref name="operation"/>.
         /// </param>
         /// <param name="scopeAttributes">The attributes to use during diagnostic scope creation.</param>
-        public OperationInternal(ClientDiagnostics clientDiagnostics, IOperation<T> operation, Response rawResponse, string operationTypeName = null, IEnumerable<KeyValuePair<string, string>> scopeAttributes = null)
-        : base(clientDiagnostics, null, rawResponse, operationTypeName ?? operation.GetType().Name, scopeAttributes)
+        public OperationInternal(ClientDiagnostics clientDiagnostics, IOperation<T> operation, Response rawResponse, string? operationTypeName = null, IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null)
+            : base(clientDiagnostics, rawResponse, operationTypeName ?? operation.GetType().Name, scopeAttributes)
         {
             _operation = operation;
-            _diagnostics = clientDiagnostics;
             RawResponse = rawResponse;
         }
 
@@ -98,11 +110,11 @@ namespace Azure.Core
             {
                 if (HasValue)
                 {
-                    return _value;
+                    return _value!;
                 }
-                if (_operationFailedException != null)
+                if (OperationFailedException != null)
                 {
-                    throw _operationFailedException;
+                    throw OperationFailedException;
                 }
                 throw new InvalidOperationException("The operation has not completed yet.");
             }
@@ -112,13 +124,12 @@ namespace Azure.Core
                 HasValue = true;
             }
         }
-
         /// <summary>
-        /// Periodically calls <see cref="OperationInternal.UpdateStatusAsync(CancellationToken)"/> until the long-running operation completes. The interval
-        /// between calls is defined by the property <see cref="OperationInternal.DefaultPollingInterval"/>, but it can change based on information returned
+        /// Periodically calls <see cref="OperationInternalBase.UpdateStatusAsync(CancellationToken)"/> until the long-running operation completes. The interval
+        /// between calls is defined by the property <see cref="OperationInternalBase.DefaultPollingInterval"/>, but it can change based on information returned
         /// from the server. After each service call, a retry-after header may be returned to communicate that there is no reason to poll
-        /// for status change until the specified time has passed. In this case, the maximum value between the <see cref="OperationInternal.DefaultPollingInterval"/>
-        /// property and the retry-after header is choosen as the wait interval. Headers supported are: "Retry-After", "retry-after-ms",
+        /// for status change until the specified time has passed. In this case, the maximum value between the <see cref="OperationInternalBase.DefaultPollingInterval"/>
+        /// property and the retry-after header is chosen as the wait interval. Headers supported are: "Retry-After", "retry-after-ms",
         /// and "x-ms-retry-after-ms".
         /// <example>Usage example:
         /// <code>
@@ -134,11 +145,11 @@ namespace Azure.Core
             await WaitForCompletionAsync(DefaultPollingInterval, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Periodically calls <see cref="OperationInternal.UpdateStatusAsync(CancellationToken)"/> until the long-running operation completes. The interval
+        /// Periodically calls <see cref="OperationInternalBase.UpdateStatusAsync(CancellationToken)"/> until the long-running operation completes. The interval
         /// between calls is defined by the parameter <paramref name="pollingInterval"/>, but it can change based on information returned
         /// from the server. After each service call, a retry-after header may be returned to communicate that there is no reason to poll
         /// for status change until the specified time has passed. In this case, the maximum value between the <paramref name="pollingInterval"/>
-        /// parameter and the retry-after header is choosen as the wait interval. Headers supported are: "Retry-After", "retry-after-ms",
+        /// parameter and the retry-after header is chosen as the wait interval. Headers supported are: "Retry-After", "retry-after-ms",
         /// and "x-ms-retry-after-ms".
         /// <example>Usage example:
         /// <code>
@@ -153,44 +164,18 @@ namespace Azure.Core
         /// <exception cref="RequestFailedException">Thrown if there's been any issues during the connection, or if the operation has completed with failures.</exception>
         public async ValueTask<Response<T>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken)
         {
-            while (true)
-            {
-                Response response = await UpdateStatusAsync(cancellationToken).ConfigureAwait(false);
-
-                if (HasCompleted)
-                {
-                    return Response.FromValue(Value, response);
-                }
-
-                GetServerDelay(response, pollingInterval);
-            }
+            var rawResponse = await WaitForCompletionResponseAsync(pollingInterval, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(Value, rawResponse);
         }
 
         protected override async ValueTask<Response> UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
             OperationState<T> state = await _operation.UpdateStateAsync(async, cancellationToken).ConfigureAwait(false);
-
-            RawResponse = state.RawResponse;
-
-            if (state.HasCompleted)
+            if (state.HasCompleted && state.HasSucceeded)
             {
-                if (state.HasSucceeded)
-                {
-                    Value = state.Value;
-                    HasCompleted = true;
-                }
-                else
-                {
-                    _operationFailedException = state.OperationFailedException ?? (async
-                        ? await _diagnostics.CreateRequestFailedExceptionAsync(state.RawResponse).ConfigureAwait(false)
-                        : _diagnostics.CreateRequestFailedException(state.RawResponse));
-                    HasCompleted = true;
-
-                    throw _operationFailedException;
-                }
+                Value = state.Value!;
             }
-
-            return state.RawResponse;
+            return await ApplyStateAsync(async, state.RawResponse, state.HasCompleted, state.HasSucceeded, state.OperationFailedException).ConfigureAwait(false);
         }
     }
 
@@ -203,7 +188,7 @@ namespace Azure.Core
     {
         /// <summary>
         /// Calls the service and updates the state of the long-running operation. Properties directly handled by the
-        /// <see cref="OperationInternal{T}"/> class, such as <see cref="OperationInternal.RawResponse"/> or
+        /// <see cref="OperationInternal{T}"/> class, such as <see cref="OperationInternalBase.RawResponse"/> or
         /// <see cref="OperationInternal{T}.Value"/>, don't need to be updated. Operation-specific properties, such
         /// as "<c>CreateOn</c>" or "<c>LastModified</c>", must be manually updated by the operation implementing this
         /// method.
@@ -245,7 +230,7 @@ namespace Azure.Core
     /// <typeparam name="T">The final result of the long-running operation. Must match the type used in <see cref="Operation{T}"/>.</typeparam>
     internal readonly struct OperationState<T>
     {
-        private OperationState(Response rawResponse, bool hasCompleted, bool hasSucceeded, T value, RequestFailedException operationFailedException)
+        private OperationState(Response rawResponse, bool hasCompleted, bool hasSucceeded, T? value, RequestFailedException? operationFailedException)
         {
             RawResponse = rawResponse;
             HasCompleted = hasCompleted;
@@ -260,9 +245,9 @@ namespace Azure.Core
 
         public bool HasSucceeded { get; }
 
-        public T Value { get; }
+        public T? Value { get; }
 
-        public RequestFailedException OperationFailedException { get; }
+        public RequestFailedException? OperationFailedException { get; }
 
         /// <summary>
         /// Instantiates an <see cref="OperationState{T}"/> indicating the operation has completed successfully.
@@ -294,7 +279,7 @@ namespace Azure.Core
         /// </param>
         /// <returns>A new <see cref="OperationState{T}"/> instance.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="rawResponse"/> is <c>null</c>.</exception>
-        public static OperationState<T> Failure(Response rawResponse, RequestFailedException operationFailedException = null)
+        public static OperationState<T> Failure(Response rawResponse, RequestFailedException? operationFailedException = null)
         {
             Argument.AssertNotNull(rawResponse, nameof(rawResponse));
             return new OperationState<T>(rawResponse, true, false, default, operationFailedException);

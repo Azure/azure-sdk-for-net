@@ -18,7 +18,7 @@ namespace Azure.Core.Pipeline
         /// <param name="perRetryIndex"></param>
         /// <param name="policies">Policies to be invoked as part of the pipeline in order.</param>
         /// <param name="responseClassifier">The response classifier to be used in invocations.</param>
-        internal DisposableHttpPipeline(HttpPipelineTransport transport, int perCallIndex, int perRetryIndex, HttpPipelinePolicy[]? policies = null, ResponseClassifier? responseClassifier = null)
+        internal DisposableHttpPipeline(HttpPipelineTransport transport, int perCallIndex, int perRetryIndex, HttpPipelinePolicy[] policies, ResponseClassifier responseClassifier)
             : base(transport, perCallIndex, perRetryIndex, policies, responseClassifier)
         {
         }
