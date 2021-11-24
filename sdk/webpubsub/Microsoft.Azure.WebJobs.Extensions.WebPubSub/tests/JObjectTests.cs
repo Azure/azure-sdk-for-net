@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebPubSub.Common;
 using Newtonsoft.Json.Linq;
@@ -347,17 +348,30 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         }
 
         [TestCase]
-        public void TestWebPubSubContext_UserEventStates()
+        public void TestWebPubSubContext_UserEventStates_Legacy()
         {
             WebPubSubConfigProvider.RegisterJsonConverter();
-            var states = new Dictionary<string, object>
-            {
-                { "aKey", "aValue"},
-                { "bKey", 123 },
-                { "cKey", new StateTestClass() }
-            };
-            var decodedStates = states.EncodeConnectionStates().DecodeConnectionStates();
-            var context = new WebPubSubConnectionContext(connectionId: "connectionId", userId: "userA", eventName: "connected", eventType: WebPubSubEventType.System, hub: null, states: decodedStates);
+            var states =
+                new Dictionary<string, object>
+                {
+                    { "aKey", "aValue"},
+                    { "bKey", 123 },
+                    { "cKey", new StateTestClass() }
+                }
+                .EncodeConnectionStates()
+                .DecodeConnectionStates();
+
+            // Use the Dictionary<string, object> states .ctor overload
+            var context = new WebPubSubConnectionContext(
+                eventType: WebPubSubEventType.System,
+                eventName: "connected",
+                hub: null,
+                connectionId: "connectionId",
+                userId: "userA",
+                signature: null,
+                origin: null,
+                states: states,
+                headers: null);
             var test = new WebPubSubContext(new UserEventRequest(context, BinaryData.FromString("test"), WebPubSubDataType.Text));
 
             var jObj = JObject.FromObject(test);
@@ -379,17 +393,140 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             Assert.AreEqual(123, states1["bKey"]);
         }
 
+        [TestCase]
+        public void TestWebPubSubContext_UserEventStates()
+        {
+            WebPubSubConfigProvider.RegisterJsonConverter();
+            var states =
+                new Dictionary<string, object>
+                {
+                    { "aKey", "aValue"},
+                    { "bKey", 123 },
+                    { "cKey", new StateTestClass() }
+                }
+                .EncodeConnectionStates()
+                .DecodeConnectionStates()
+                .ToDictionary(p => p.Key, p => (BinaryData)p.Value);
+
+            // Use the Dictionary<string, BinaryData> connectionStates .ctor overload
+            var context = new WebPubSubConnectionContext(
+                eventType: WebPubSubEventType.System,
+                eventName: "connected",
+                hub: null,
+                connectionId: "connectionId",
+                userId: "userA",
+                connectionStates: states);
+            var test = new WebPubSubContext(new UserEventRequest(context, BinaryData.FromString("test"), WebPubSubDataType.Text));
+
+            var jObj = JObject.FromObject(test);
+            var request = jObj["request"];
+            Assert.NotNull(request);
+            Assert.AreEqual("test", request["data"].ToString());
+            Assert.NotNull(jObj["response"]);
+            Assert.AreEqual("", jObj["errorMessage"].ToString());
+            Assert.AreEqual("False", jObj["hasError"].ToString());
+            Assert.AreEqual("False", jObj["isPreflight"].ToString());
+            var context1 = request["connectionContext"];
+            Assert.NotNull(context1);
+            var states1 = context1["states"].ToObject<IReadOnlyDictionary<string, object>>();
+            Assert.NotNull(states1);
+            Assert.AreEqual("aValue", states1["aKey"]);
+            Assert.NotNull(states1);
+            Assert.AreEqual(123, states1["bKey"]);
+        }
+
+        [TestCase]
+        public void TestWebPubSubContext_UserEventStates_AllBinaryData()
+        {
+            var ex = Assert.Throws<ArgumentException>(() =>
+                new WebPubSubConnectionContext(
+                    eventType: WebPubSubEventType.System,
+                    eventName: "connected",
+                    hub: null,
+                    connectionId: "connectionId",
+                    userId: "userA",
+                    signature: null,
+                    origin: null,
+                    states: new Dictionary<string, object>
+                    {
+                        { "aKey", "aValue"},
+                        { "bKey", 123 },
+                        { "cKey", new StateTestClass() }
+                    },
+                    headers: null));
+            Assert.AreEqual("states", ex.ParamName);
+            StringAssert.Contains("BinaryData", ex.Message);
+        }
+
+        [TestCase]
+        public void TestWebPubSubContext_UserEventStates_NotDoubleSerialized()
+        {
+            WebPubSubConfigProvider.RegisterJsonConverter();
+            var states =
+                new Dictionary<string, object>
+                {
+                    { "aKey", "aValue"},
+                    { "bKey", 123 },
+                    { "cKey", new StateTestClass() }
+                }
+                .EncodeConnectionStates()
+                .DecodeConnectionStates()
+                .ToDictionary(p => p.Key, p => (BinaryData)p.Value);
+            string json = JsonSerializer.Serialize(
+                new WebPubSubConnectionContext(
+                    eventType: WebPubSubEventType.System,
+                    eventName: "connected",
+                    hub: null,
+                    connectionId: "connectionId",
+                    userId: "userA",
+                    connectionStates: states));
+            var jCtx = JObject.Parse(json);
+            Assert.AreEqual("aValue", jCtx["states"]["aKey"].Value<string>());
+            Assert.AreEqual(123, jCtx["states"]["bKey"].Value<int>());
+            Assert.AreEqual("GA", jCtx["states"]["cKey"]["Title"].Value<string>());
+            Assert.AreEqual(1, jCtx["states"]["cKey"]["Version"].Value<int>());
+        }
+
+        [TestCase]
+        public void TestWebPubSubContext_UserEventStates_CollectionsInSync()
+        {
+            WebPubSubConfigProvider.RegisterJsonConverter();
+            var states =
+                new Dictionary<string, object>
+                {
+                    { "aKey", "aValue"},
+                    { "bKey", 123 },
+                    { "cKey", new StateTestClass() }
+                }
+                .EncodeConnectionStates()
+                .DecodeConnectionStates()
+                .ToDictionary(p => p.Key, p => (BinaryData)p.Value);
+            var ctx = new WebPubSubConnectionContext(
+                eventType: WebPubSubEventType.System,
+                eventName: "connected",
+                hub: null,
+                connectionId: "connectionId",
+                userId: "userA",
+                connectionStates: states);
+            CollectionAssert.AreEquivalent(ctx.ConnectionStates.Keys, ctx.States.Keys);
+            Assert.AreEqual(ctx.ConnectionStates["aKey"].ToString(), ctx.States["aKey"]);
+            Assert.AreEqual(ctx.ConnectionStates["bKey"].ToString(), ctx.States["bKey"]);
+            Assert.AreEqual(ctx.ConnectionStates["cKey"].ToString(), ctx.States["cKey"]);
+        }
+
         private static HttpResponseMessage BuildResponse(string input, RequestType requestType, bool hasTestStates = false)
         {
             Dictionary<string, object> states = null;
             if (hasTestStates)
             {
-                states = new Dictionary<string, object>
-                {
-                    { "testKey", "value1" },
-                };
+                states =
+                    new Dictionary<string, object>
+                    {
+                        { "testKey", "value" }
+                    }
+                    .EncodeConnectionStates().DecodeConnectionStates(); // Required now that we enforce BinaryData
             }
-            var context = new WebPubSubConnectionContext(WebPubSubEventType.System, "connect", "testhub", "Connection-Id1", states: states);
+            var context = new WebPubSubConnectionContext(WebPubSubEventType.System, "connect", "testhub", "Connection-Id1", states: states, userId: null, signature: null, origin: null, headers: null);
             return Utilities.BuildValidResponse(input, requestType, context);
         }
 
