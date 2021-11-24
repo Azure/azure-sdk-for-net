@@ -62,7 +62,6 @@ namespace Microsoft.Azure.WebPubSub.Common
         /// using <see cref="ConnectionStates"/> instead.
         /// </summary>
         [JsonIgnore]
-        [JsonPropertyName("states")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public IReadOnlyDictionary<string, object> States { get; }
 
@@ -129,8 +128,8 @@ namespace Microsoft.Azure.WebPubSub.Common
             UserId = userId;
             Signature = signature;
             Origin = origin;
-            ConnectionStates = connectionStates;
-            States = connectionStates != null ? new StringifiedDictionary(connectionStates) : null;
+            ConnectionStates = connectionStates ?? new Dictionary<string, BinaryData>();
+            States = new StringifiedDictionary(ConnectionStates);
             Headers = headers;
         }
     }

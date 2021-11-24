@@ -154,14 +154,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 var statesObj = JsonDocument.Parse(Convert.FromBase64String(connectionStates));
                 foreach (var item in statesObj.RootElement.EnumerateObject())
                 {
-                    states.Add(item.Name, BinaryData.FromString(item.Value.GetRawText()));
+                    states.Add(item.Name, BinaryData.FromObjectAsJson(item.Value));
                 }
                 return states;
             }
             return null;
         }
 
-        internal static Dictionary<string,object> UpdateStates(this WebPubSubConnectionContext connectionContext, IReadOnlyDictionary<string, object> newStates)
+        internal static Dictionary<string, object> UpdateStates(this WebPubSubConnectionContext connectionContext, IReadOnlyDictionary<string, object> newStates)
         {
             // states cleared.
             if (newStates == null)
