@@ -43,6 +43,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="privateEndpointConnections"> Private endpoint connections to the resource. </param>
         /// <param name="sharedPrivateLinkResources"> The list of shared private link resources. </param>
         /// <param name="tls"> TLS settings. </param>
+        /// <param name="hostNamePrefix"> Deprecated. </param>
         /// <param name="liveTraceConfiguration"> Live trace configuration of a Microsoft.SignalRService resource. </param>
         /// <param name="resourceLogConfiguration">
         /// Resource log configuration of a Microsoft.SignalRService resource.
@@ -65,7 +66,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// Enable or disable aad auth
         /// When set as true, connection with AuthType=aad won&apos;t work.
         /// </param>
-        internal WebPubSubResourceData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, ResourceSku sku, ManagedIdentity identity, SystemData systemData, ProvisioningState? provisioningState, string externalIP, string hostName, int? publicPort, int? serverPort, string version, IReadOnlyList<PrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<SharedPrivateLinkResourceData> sharedPrivateLinkResources, WebPubSubTlsSettings tls, LiveTraceConfiguration liveTraceConfiguration, ResourceLogConfiguration resourceLogConfiguration, WebPubSubNetworkACLs networkACLs, string publicNetworkAccess, bool? disableLocalAuth, bool? disableAadAuth) : base(id, name, type, tags, location)
+        internal WebPubSubResourceData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, ResourceSku sku, ManagedIdentity identity, SystemData systemData, ProvisioningState? provisioningState, string externalIP, string hostName, int? publicPort, int? serverPort, string version, IReadOnlyList<PrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<SharedPrivateLinkResourceData> sharedPrivateLinkResources, WebPubSubTlsSettings tls, string hostNamePrefix, LiveTraceConfiguration liveTraceConfiguration, ResourceLogConfiguration resourceLogConfiguration, WebPubSubNetworkACLs networkACLs, string publicNetworkAccess, bool? disableLocalAuth, bool? disableAadAuth) : base(id, name, type, tags, location)
         {
             Sku = sku;
             Identity = identity;
@@ -79,6 +80,7 @@ namespace Azure.ResourceManager.WebPubSub
             PrivateEndpointConnections = privateEndpointConnections;
             SharedPrivateLinkResources = sharedPrivateLinkResources;
             Tls = tls;
+            HostNamePrefix = hostNamePrefix;
             LiveTraceConfiguration = liveTraceConfiguration;
             ResourceLogConfiguration = resourceLogConfiguration;
             NetworkACLs = networkACLs;
@@ -111,6 +113,8 @@ namespace Azure.ResourceManager.WebPubSub
         public IReadOnlyList<SharedPrivateLinkResourceData> SharedPrivateLinkResources { get; }
         /// <summary> TLS settings. </summary>
         public WebPubSubTlsSettings Tls { get; set; }
+        /// <summary> Deprecated. </summary>
+        public string HostNamePrefix { get; }
         /// <summary> Live trace configuration of a Microsoft.SignalRService resource. </summary>
         public LiveTraceConfiguration LiveTraceConfiguration { get; set; }
         /// <summary>

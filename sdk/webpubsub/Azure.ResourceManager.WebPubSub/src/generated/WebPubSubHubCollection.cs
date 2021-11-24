@@ -16,6 +16,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.WebPubSub.Models;
 
 namespace Azure.ResourceManager.WebPubSub
 {
@@ -43,6 +44,74 @@ namespace Azure.ResourceManager.WebPubSub
         protected override ResourceType ValidResourceType => WebPubSubResource.ResourceType;
 
         // Collection level operations.
+
+        /// <summary> Create or update a hub setting. </summary>
+        /// <param name="hubName"> The hub name. </param>
+        /// <param name="parameters"> The resource of WebPubSubHub and its properties. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="hubName"/> or <paramref name="parameters"/> is null. </exception>
+        public virtual WebPubSubHubCreateOrUpdateOperation CreateOrUpdate(string hubName, WebPubSubHubData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            if (hubName == null)
+            {
+                throw new ArgumentNullException(nameof(hubName));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubHubCollection.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                var response = _webPubSubHubsRestClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, hubName, parameters, cancellationToken);
+                var operation = new WebPubSubHubCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _webPubSubHubsRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, hubName, parameters).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create or update a hub setting. </summary>
+        /// <param name="hubName"> The hub name. </param>
+        /// <param name="parameters"> The resource of WebPubSubHub and its properties. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="hubName"/> or <paramref name="parameters"/> is null. </exception>
+        public async virtual Task<WebPubSubHubCreateOrUpdateOperation> CreateOrUpdateAsync(string hubName, WebPubSubHubData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            if (hubName == null)
+            {
+                throw new ArgumentNullException(nameof(hubName));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubHubCollection.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                var response = await _webPubSubHubsRestClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, hubName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new WebPubSubHubCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _webPubSubHubsRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, hubName, parameters).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
         /// <summary> Get a hub setting. </summary>
         /// <param name="hubName"> The hub name. </param>

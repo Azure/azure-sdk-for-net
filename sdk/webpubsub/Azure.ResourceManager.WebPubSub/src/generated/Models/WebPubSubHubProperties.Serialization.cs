@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.WebPubSub;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
@@ -37,7 +36,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         internal static WebPubSubHubProperties DeserializeWebPubSubHubProperties(JsonElement element)
         {
-            Optional<IList<EventHandlerData>> eventHandlers = default;
+            Optional<IList<EventHandler>> eventHandlers = default;
             Optional<string> anonymousConnectPolicy = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -48,10 +47,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<EventHandlerData> array = new List<EventHandlerData>();
+                    List<EventHandler> array = new List<EventHandler>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EventHandlerData.DeserializeEventHandlerData(item));
+                        array.Add(EventHandler.DeserializeEventHandler(item));
                     }
                     eventHandlers = array;
                     continue;

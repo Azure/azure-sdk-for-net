@@ -24,8 +24,6 @@ namespace Azure.ResourceManager.WebPubSub
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly WebPubSubRestOperations _webPubSubRestClient;
-        private readonly WebPubSubHubsRestOperations _webPubSubHubsRestClient;
-        private readonly WebPubSubEventHandlersRestOperations _webPubSubEventHandlersRestClient;
         private readonly WebPubSubPrivateLinkResourcesRestOperations _webPubSubPrivateLinkResourcesRestClient;
         private readonly WebPubSubResourceData _data;
 
@@ -43,8 +41,6 @@ namespace Azure.ResourceManager.WebPubSub
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _webPubSubRestClient = new WebPubSubRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _webPubSubHubsRestClient = new WebPubSubHubsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _webPubSubEventHandlersRestClient = new WebPubSubEventHandlersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
             _webPubSubPrivateLinkResourcesRestClient = new WebPubSubPrivateLinkResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
@@ -55,8 +51,6 @@ namespace Azure.ResourceManager.WebPubSub
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _webPubSubRestClient = new WebPubSubRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _webPubSubHubsRestClient = new WebPubSubHubsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _webPubSubEventHandlersRestClient = new WebPubSubEventHandlersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
             _webPubSubPrivateLinkResourcesRestClient = new WebPubSubPrivateLinkResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
@@ -70,8 +64,6 @@ namespace Azure.ResourceManager.WebPubSub
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _webPubSubRestClient = new WebPubSubRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _webPubSubHubsRestClient = new WebPubSubHubsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _webPubSubEventHandlersRestClient = new WebPubSubEventHandlersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
             _webPubSubPrivateLinkResourcesRestClient = new WebPubSubPrivateLinkResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
@@ -600,278 +592,6 @@ namespace Azure.ResourceManager.WebPubSub
             }
         }
 
-        /// <summary> Create or update a hub setting. </summary>
-        /// <param name="hubName"> The hub name. </param>
-        /// <param name="parameters"> The resource of WebPubSubHub and its properties. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="hubName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<WebPubSubHubCreateOrUpdateOperation> CreateOrUpdateWebPubSubHubAsync(string hubName, WebPubSubHubData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
-        {
-            if (hubName == null)
-            {
-                throw new ArgumentNullException(nameof(hubName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubResource.CreateOrUpdateWebPubSubHub");
-            scope.Start();
-            try
-            {
-                var response = await _webPubSubHubsRestClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, hubName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new WebPubSubHubCreateOrUpdateOperation(_clientDiagnostics, Pipeline, _webPubSubHubsRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, hubName, parameters).Request, response);
-                if (waitForCompletion)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create or update a hub setting. </summary>
-        /// <param name="hubName"> The hub name. </param>
-        /// <param name="parameters"> The resource of WebPubSubHub and its properties. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="hubName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual WebPubSubHubCreateOrUpdateOperation CreateOrUpdateWebPubSubHub(string hubName, WebPubSubHubData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
-        {
-            if (hubName == null)
-            {
-                throw new ArgumentNullException(nameof(hubName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubResource.CreateOrUpdateWebPubSubHub");
-            scope.Start();
-            try
-            {
-                var response = _webPubSubHubsRestClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, hubName, parameters, cancellationToken);
-                var operation = new WebPubSubHubCreateOrUpdateOperation(_clientDiagnostics, Pipeline, _webPubSubHubsRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, hubName, parameters).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Delete a hub setting. </summary>
-        /// <param name="hubName"> The hub name. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="hubName"/> is null. </exception>
-        public async virtual Task<WebPubSubHubDeleteOperation> DeleteWebPubSubHubAsync(string hubName, bool waitForCompletion = true, CancellationToken cancellationToken = default)
-        {
-            if (hubName == null)
-            {
-                throw new ArgumentNullException(nameof(hubName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubResource.DeleteWebPubSubHub");
-            scope.Start();
-            try
-            {
-                var response = await _webPubSubHubsRestClient.DeleteAsync(Id.ResourceGroupName, Id.Name, hubName, cancellationToken).ConfigureAwait(false);
-                var operation = new WebPubSubHubDeleteOperation(_clientDiagnostics, Pipeline, _webPubSubHubsRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name, hubName).Request, response);
-                if (waitForCompletion)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Delete a hub setting. </summary>
-        /// <param name="hubName"> The hub name. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="hubName"/> is null. </exception>
-        public virtual WebPubSubHubDeleteOperation DeleteWebPubSubHub(string hubName, bool waitForCompletion = true, CancellationToken cancellationToken = default)
-        {
-            if (hubName == null)
-            {
-                throw new ArgumentNullException(nameof(hubName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubResource.DeleteWebPubSubHub");
-            scope.Start();
-            try
-            {
-                var response = _webPubSubHubsRestClient.Delete(Id.ResourceGroupName, Id.Name, hubName, cancellationToken);
-                var operation = new WebPubSubHubDeleteOperation(_clientDiagnostics, Pipeline, _webPubSubHubsRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name, hubName).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create or update an event handler. </summary>
-        /// <param name="hubName"> The hub name. </param>
-        /// <param name="eventHandlerName"> The event handler name. </param>
-        /// <param name="parameters"> The resource of EventHandler and its properties. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="hubName"/>, <paramref name="eventHandlerName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<WebPubSubEventHandlerCreateOrUpdateOperation> CreateOrUpdateWebPubSubEventHandlerAsync(string hubName, string eventHandlerName, EventHandlerData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
-        {
-            if (hubName == null)
-            {
-                throw new ArgumentNullException(nameof(hubName));
-            }
-            if (eventHandlerName == null)
-            {
-                throw new ArgumentNullException(nameof(eventHandlerName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubResource.CreateOrUpdateWebPubSubEventHandler");
-            scope.Start();
-            try
-            {
-                var response = await _webPubSubEventHandlersRestClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, hubName, eventHandlerName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new WebPubSubEventHandlerCreateOrUpdateOperation(_clientDiagnostics, Pipeline, _webPubSubEventHandlersRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, hubName, eventHandlerName, parameters).Request, response);
-                if (waitForCompletion)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create or update an event handler. </summary>
-        /// <param name="hubName"> The hub name. </param>
-        /// <param name="eventHandlerName"> The event handler name. </param>
-        /// <param name="parameters"> The resource of EventHandler and its properties. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="hubName"/>, <paramref name="eventHandlerName"/>, or <paramref name="parameters"/> is null. </exception>
-        public virtual WebPubSubEventHandlerCreateOrUpdateOperation CreateOrUpdateWebPubSubEventHandler(string hubName, string eventHandlerName, EventHandlerData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
-        {
-            if (hubName == null)
-            {
-                throw new ArgumentNullException(nameof(hubName));
-            }
-            if (eventHandlerName == null)
-            {
-                throw new ArgumentNullException(nameof(eventHandlerName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubResource.CreateOrUpdateWebPubSubEventHandler");
-            scope.Start();
-            try
-            {
-                var response = _webPubSubEventHandlersRestClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, hubName, eventHandlerName, parameters, cancellationToken);
-                var operation = new WebPubSubEventHandlerCreateOrUpdateOperation(_clientDiagnostics, Pipeline, _webPubSubEventHandlersRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, hubName, eventHandlerName, parameters).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Delete an event handler. </summary>
-        /// <param name="hubName"> The hub name. </param>
-        /// <param name="eventHandlerName"> The event handler name. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="hubName"/> or <paramref name="eventHandlerName"/> is null. </exception>
-        public async virtual Task<WebPubSubEventHandlerDeleteOperation> DeleteWebPubSubEventHandlerAsync(string hubName, string eventHandlerName, bool waitForCompletion = true, CancellationToken cancellationToken = default)
-        {
-            if (hubName == null)
-            {
-                throw new ArgumentNullException(nameof(hubName));
-            }
-            if (eventHandlerName == null)
-            {
-                throw new ArgumentNullException(nameof(eventHandlerName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubResource.DeleteWebPubSubEventHandler");
-            scope.Start();
-            try
-            {
-                var response = await _webPubSubEventHandlersRestClient.DeleteAsync(Id.ResourceGroupName, Id.Name, hubName, eventHandlerName, cancellationToken).ConfigureAwait(false);
-                var operation = new WebPubSubEventHandlerDeleteOperation(_clientDiagnostics, Pipeline, _webPubSubEventHandlersRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name, hubName, eventHandlerName).Request, response);
-                if (waitForCompletion)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Delete an event handler. </summary>
-        /// <param name="hubName"> The hub name. </param>
-        /// <param name="eventHandlerName"> The event handler name. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="hubName"/> or <paramref name="eventHandlerName"/> is null. </exception>
-        public virtual WebPubSubEventHandlerDeleteOperation DeleteWebPubSubEventHandler(string hubName, string eventHandlerName, bool waitForCompletion = true, CancellationToken cancellationToken = default)
-        {
-            if (hubName == null)
-            {
-                throw new ArgumentNullException(nameof(hubName));
-            }
-            if (eventHandlerName == null)
-            {
-                throw new ArgumentNullException(nameof(eventHandlerName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubResource.DeleteWebPubSubEventHandler");
-            scope.Start();
-            try
-            {
-                var response = _webPubSubEventHandlersRestClient.Delete(Id.ResourceGroupName, Id.Name, hubName, eventHandlerName, cancellationToken);
-                var operation = new WebPubSubEventHandlerDeleteOperation(_clientDiagnostics, Pipeline, _webPubSubEventHandlersRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name, hubName, eventHandlerName).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> Get the private link resources that need to be created for a resource. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
@@ -955,16 +675,6 @@ namespace Azure.ResourceManager.WebPubSub
         public WebPubSubHubCollection GetWebPubSubHubs()
         {
             return new WebPubSubHubCollection(this);
-        }
-        #endregion
-
-        #region EventHandler
-
-        /// <summary> Gets a collection of EventHandlers in the WebPubSubResource. </summary>
-        /// <returns> An object representing collection of EventHandlers and their operations over a WebPubSubResource. </returns>
-        public EventHandlerCollection GetEventHandlers()
-        {
-            return new EventHandlerCollection(this);
         }
         #endregion
 
