@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.CosmosDB
             Optional<ResourceIdentity> identity = default;
             Optional<SystemData> systemData = default;
             IDictionary<string, string> tags = default;
-            Resources.Models.Location location = default;
+            Location location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -208,10 +208,10 @@ namespace Azure.ResourceManager.CosmosDB
             Optional<bool> isVirtualNetworkFilterEnabled = default;
             Optional<bool> enableAutomaticFailover = default;
             Optional<ConsistencyPolicy> consistencyPolicy = default;
-            Optional<IList<Capability>> capabilities = default;
-            Optional<IReadOnlyList<Models.Location>> writeLocations = default;
-            Optional<IReadOnlyList<Models.Location>> readLocations = default;
-            Optional<IReadOnlyList<Models.Location>> locations = default;
+            Optional<IList<DatabaseAccountCapability>> capabilities = default;
+            Optional<IReadOnlyList<DatabaseAccountLocation>> writeLocations = default;
+            Optional<IReadOnlyList<DatabaseAccountLocation>> readLocations = default;
+            Optional<IReadOnlyList<DatabaseAccountLocation>> locations = default;
             Optional<IReadOnlyList<FailoverPolicy>> failoverPolicies = default;
             Optional<IList<VirtualNetworkRule>> virtualNetworkRules = default;
             Optional<IReadOnlyList<PrivateEndpointConnectionData>> privateEndpointConnections = default;
@@ -372,10 +372,10 @@ namespace Azure.ResourceManager.CosmosDB
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<Capability> array = new List<Capability>();
+                            List<DatabaseAccountCapability> array = new List<DatabaseAccountCapability>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Capability.DeserializeCapability(item));
+                                array.Add(DatabaseAccountCapability.DeserializeDatabaseAccountCapability(item));
                             }
                             capabilities = array;
                             continue;
@@ -387,10 +387,10 @@ namespace Azure.ResourceManager.CosmosDB
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<Models.Location> array = new List<Models.Location>();
+                            List<DatabaseAccountLocation> array = new List<DatabaseAccountLocation>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Models.Location.DeserializeLocation(item));
+                                array.Add(DatabaseAccountLocation.DeserializeDatabaseAccountLocation(item));
                             }
                             writeLocations = array;
                             continue;
@@ -402,10 +402,10 @@ namespace Azure.ResourceManager.CosmosDB
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<Models.Location> array = new List<Models.Location>();
+                            List<DatabaseAccountLocation> array = new List<DatabaseAccountLocation>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Models.Location.DeserializeLocation(item));
+                                array.Add(DatabaseAccountLocation.DeserializeDatabaseAccountLocation(item));
                             }
                             readLocations = array;
                             continue;
@@ -417,10 +417,10 @@ namespace Azure.ResourceManager.CosmosDB
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<Models.Location> array = new List<Models.Location>();
+                            List<DatabaseAccountLocation> array = new List<DatabaseAccountLocation>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Models.Location.DeserializeLocation(item));
+                                array.Add(DatabaseAccountLocation.DeserializeDatabaseAccountLocation(item));
                             }
                             locations = array;
                             continue;

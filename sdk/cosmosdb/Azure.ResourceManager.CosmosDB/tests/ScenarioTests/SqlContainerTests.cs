@@ -77,11 +77,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             VerifySqlContainers(container, container2);
 
-            SqlContainerCreateUpdateParameters updateParameters = new SqlContainerCreateUpdateParameters(container.Id, _containerName, container.Data.Type,
+            SqlContainerCreateUpdateOptions updateOptions = new SqlContainerCreateUpdateOptions(container.Id, _containerName, container.Data.Type,
                 new Dictionary<string, string>(),// TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
                 Resources.Models.Location.WestUS2, container.Data.Resource, new CreateUpdateOptions { Throughput = TestThroughput2 });
 
-            container = await (await SqlContainerCollection.CreateOrUpdateAsync(_containerName, updateParameters)).WaitForCompletionAsync();
+            container = await (await SqlContainerCollection.CreateOrUpdateAsync(_containerName, updateOptions)).WaitForCompletionAsync();
             Assert.AreEqual(_containerName, container.Data.Resource.Id);
             container2 = await SqlContainerCollection.GetAsync(_containerName);
             VerifySqlContainers(container, container2);
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             Assert.AreEqual(TestThroughput1, throughput.Data.Resource.Throughput);
 
-            DatabaseAccountSqlDatabaseContainerThroughputSetting throughput2 = await throughput.CreateOrUpdate(new ThroughputSettingsUpdateParameters(Resources.Models.Location.WestUS2,
+            DatabaseAccountSqlDatabaseContainerThroughputSetting throughput2 = await throughput.CreateOrUpdate(new ThroughputSettingsUpdateOptions(Resources.Models.Location.WestUS2,
                 new ThroughputSettingsResource(TestThroughput2, null, null, null))).WaitForCompletionAsync();
 
             Assert.AreEqual(TestThroughput2, throughput2.Data.Resource.Throughput);
@@ -153,11 +153,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             long restoreTime = DateTimeOffset.Parse(backupInfo.ContinuousBackupInformation.LatestRestorableTimestamp).ToUnixTimeMilliseconds();
             Assert.True(restoreTime > 0);
 
-            SqlContainerCreateUpdateParameters updateParameters = new SqlContainerCreateUpdateParameters(container.Id, _containerName, container.Data.Type,
+            SqlContainerCreateUpdateOptions updateOptions = new SqlContainerCreateUpdateOptions(container.Id, _containerName, container.Data.Type,
                 new Dictionary<string, string>(),// TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
                 Resources.Models.Location.WestUS2, container.Data.Resource, new CreateUpdateOptions { Throughput = TestThroughput2 });
 
-            container = await (await SqlContainerCollection.CreateOrUpdateAsync(_containerName, updateParameters)).WaitForCompletionAsync();
+            container = await (await SqlContainerCollection.CreateOrUpdateAsync(_containerName, updateOptions)).WaitForCompletionAsync();
             backupInfo =  await container.RetrieveContinuousBackupInformation(new ContinuousBackupRestoreLocation{ Location  = Resources.Models.Location.WestUS2}).WaitForCompletionAsync();
             long latestRestoreTime = DateTimeOffset.Parse(backupInfo.ContinuousBackupInformation.LatestRestorableTimestamp).ToUnixTimeMilliseconds();
             Assert.True(latestRestoreTime > 0);
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         }
         internal static async Task<SqlContainer> CreateSqlContainer(string name, AutoscaleSettings autoscale, SqlContainerCollection sqlContainerCollection)
         {
-            SqlContainerCreateUpdateParameters sqlDatabaseCreateUpdateParameters = new SqlContainerCreateUpdateParameters(Resources.Models.Location.WestUS2,
+            SqlContainerCreateUpdateOptions sqlDatabaseCreateUpdateOptions = new SqlContainerCreateUpdateOptions(Resources.Models.Location.WestUS2,
                 new SqlContainerResource(name)
                 {
                     PartitionKey = new ContainerPartitionKey(new List<string> { "/address/zipCode" }, null, null, false)
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             {
                 Options = BuildDatabaseCreateUpdateOptions(TestThroughput1, autoscale),
             };
-            var sqlContainerLro = await sqlContainerCollection.CreateOrUpdateAsync(name, sqlDatabaseCreateUpdateParameters);
+            var sqlContainerLro = await sqlContainerCollection.CreateOrUpdateAsync(name, sqlDatabaseCreateUpdateOptions);
             return sqlContainerLro.Value;
         }
 
@@ -240,12 +240,12 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         }
         protected async Task<DatabaseAccount> CreateDatabaseAccount(string name)
         {
-            var locations = new List<Location>()
+            var locations = new List<DatabaseAccountLocation>()
             {
-                new Location(id: null, locationName: Resources.Models.Location.WestUS2, documentEndpoint: null, provisioningState: null, failoverPriority: null, isZoneRedundant: false)
+                new DatabaseAccountLocation(id: null, locationName: Resources.Models.Location.WestUS2, documentEndpoint: null, provisioningState: null, failoverPriority: null, isZoneRedundant: false)
             };
 
-            var createParameters = new DatabaseAccountCreateUpdateParameters(Resources.Models.Location.WestUS2, locations)
+            var createOptions = new DatabaseAccountCreateUpdateOptions(Resources.Models.Location.WestUS2, locations)
             {
                 Kind = DatabaseAccountKind.GlobalDocumentDB,
                 ConsistencyPolicy = new ConsistencyPolicy(DefaultConsistencyLevel.BoundedStaleness, MaxStalenessPrefix, MaxIntervalInSeconds),
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 BackupPolicy = new ContinuousModeBackupPolicy(), // Point in time restore feature
             };
             _databaseAccountName = name;
-            var accountLro = await DatabaseAccountCollection.CreateOrUpdateAsync(_databaseAccountName, createParameters);
+            var accountLro = await DatabaseAccountCollection.CreateOrUpdateAsync(_databaseAccountName, createOptions);
             return accountLro.Value;
         }
     }

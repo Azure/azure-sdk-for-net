@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="createUpdateSqlContainerParameters"/> is null. </exception>
-        public virtual SqlResourceCreateUpdateSqlContainerOperation CreateOrUpdate(string containerName, SqlContainerCreateUpdateParameters createUpdateSqlContainerParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual SqlResourceCreateUpdateSqlContainerOperation CreateOrUpdate(string containerName, SqlContainerCreateUpdateOptions createUpdateSqlContainerParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (containerName == null)
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="createUpdateSqlContainerParameters"/> is null. </exception>
-        public async virtual Task<SqlResourceCreateUpdateSqlContainerOperation> CreateOrUpdateAsync(string containerName, SqlContainerCreateUpdateParameters createUpdateSqlContainerParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<SqlResourceCreateUpdateSqlContainerOperation> CreateOrUpdateAsync(string containerName, SqlContainerCreateUpdateOptions createUpdateSqlContainerParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (containerName == null)
             {

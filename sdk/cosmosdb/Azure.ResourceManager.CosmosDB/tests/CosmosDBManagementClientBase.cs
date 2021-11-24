@@ -51,14 +51,14 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             return await CreateDatabaseAccount(name, kind, null);
         }
 
-        protected async Task<DatabaseAccount> CreateDatabaseAccount(string name, DatabaseAccountKind kind, Capability capability)
+        protected async Task<DatabaseAccount> CreateDatabaseAccount(string name, DatabaseAccountKind kind, DatabaseAccountCapability capability)
         {
-            var locations = new List<Location>()
+            var locations = new List<DatabaseAccountLocation>()
             {
-                new Location(id: null, locationName: Resources.Models.Location.WestUS2, documentEndpoint: null, provisioningState: null, failoverPriority: null, isZoneRedundant: false)
+                new DatabaseAccountLocation(id: null, locationName: Resources.Models.Location.WestUS2, documentEndpoint: null, provisioningState: null, failoverPriority: null, isZoneRedundant: false)
             };
 
-            var createParameters = new DatabaseAccountCreateUpdateParameters(Resources.Models.Location.WestUS2, locations)
+            var createParameters = new DatabaseAccountCreateUpdateOptions(Resources.Models.Location.WestUS2, locations)
             {
                 Kind = kind,
                 ConsistencyPolicy = new ConsistencyPolicy(DefaultConsistencyLevel.BoundedStaleness, MaxStalenessPrefix, MaxIntervalInSeconds),

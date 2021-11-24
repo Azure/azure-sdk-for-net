@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             _resourceGroup = await GlobalClient.GetResourceGroup(_resourceGroupIdentifier).GetAsync();
 
-            _databaseAccountIdentifier = (await CreateDatabaseAccount(SessionRecording.GenerateAssetName("dbaccount-"), DatabaseAccountKind.GlobalDocumentDB, new Capability("EnableGremlin"))).Id;
+            _databaseAccountIdentifier = (await CreateDatabaseAccount(SessionRecording.GenerateAssetName("dbaccount-"), DatabaseAccountKind.GlobalDocumentDB, new DatabaseAccountCapability("EnableGremlin"))).Id;
             StopSessionRecording();
         }
 
@@ -76,11 +76,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             VerifyGremlinDatabases(database, database2);
 
-            GremlinDatabaseCreateUpdateParameters updateParameters = new GremlinDatabaseCreateUpdateParameters(database.Id, _databaseName, database.Data.Type,
+            GremlinDatabaseCreateUpdateOptions updateOptions = new GremlinDatabaseCreateUpdateOptions(database.Id, _databaseName, database.Data.Type,
                 new Dictionary<string, string>(),// TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
                 Resources.Models.Location.WestUS2, database.Data.Resource, new CreateUpdateOptions { Throughput = TestThroughput2 });
 
-            database = await (await GremlinDatabaseCollection.CreateOrUpdateAsync(_databaseName, updateParameters)).WaitForCompletionAsync();
+            database = await (await GremlinDatabaseCollection.CreateOrUpdateAsync(_databaseName, updateOptions)).WaitForCompletionAsync();
             Assert.AreEqual(_databaseName, database.Data.Resource.Id);
             database2 = await GremlinDatabaseCollection.GetAsync(_databaseName);
             VerifyGremlinDatabases(database, database2);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             Assert.AreEqual(TestThroughput1, throughput.Data.Resource.Throughput);
 
-            DatabaseAccountGremlinDatabaseThroughputSetting throughput2 = await throughput.CreateOrUpdate(new ThroughputSettingsUpdateParameters(Resources.Models.Location.WestUS2,
+            DatabaseAccountGremlinDatabaseThroughputSetting throughput2 = await throughput.CreateOrUpdate(new ThroughputSettingsUpdateOptions(Resources.Models.Location.WestUS2,
                 new ThroughputSettingsResource(TestThroughput2, null, null, null))).WaitForCompletionAsync();
 
             Assert.AreEqual(TestThroughput2, throughput2.Data.Resource.Throughput);
@@ -161,12 +161,12 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         internal static async Task<GremlinDatabase> CreateGremlinDatabase(string name, AutoscaleSettings autoscale, GremlinDatabaseCollection collection)
         {
-            GremlinDatabaseCreateUpdateParameters cassandraKeyspaceCreateUpdateParameters = new GremlinDatabaseCreateUpdateParameters(Resources.Models.Location.WestUS2,
+            GremlinDatabaseCreateUpdateOptions cassandraKeyspaceCreateUpdateOptions = new GremlinDatabaseCreateUpdateOptions(Resources.Models.Location.WestUS2,
                 new GremlinDatabaseResource(name))
             {
                 Options = BuildDatabaseCreateUpdateOptions(TestThroughput1, autoscale),
             };
-            var databaseLro = await collection.CreateOrUpdateAsync(name, cassandraKeyspaceCreateUpdateParameters);
+            var databaseLro = await collection.CreateOrUpdateAsync(name, cassandraKeyspaceCreateUpdateOptions);
             return databaseLro.Value;
         }
 

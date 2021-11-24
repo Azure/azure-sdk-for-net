@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.CosmosDB
         internal static CassandraKeyspaceData DeserializeCassandraKeyspaceData(JsonElement element)
         {
             IDictionary<string, string> tags = default;
-            Resources.Models.Location location = default;
+            Location location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;

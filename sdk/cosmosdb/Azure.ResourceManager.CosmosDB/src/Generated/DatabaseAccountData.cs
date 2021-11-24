@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.CosmosDB
     {
         /// <summary> Initializes a new instance of DatabaseAccountData. </summary>
         /// <param name="location"> The location. </param>
-        public DatabaseAccountData(Resources.Models.Location location) : base(location)
+        public DatabaseAccountData(Location location) : base(location)
         {
             DatabaseAccountOfferType = "Standard";
             IpRules = new ChangeTrackingList<IpAddressOrRange>();
-            Capabilities = new ChangeTrackingList<Capability>();
-            WriteLocations = new ChangeTrackingList<Models.Location>();
-            ReadLocations = new ChangeTrackingList<Models.Location>();
-            Locations = new ChangeTrackingList<Models.Location>();
+            Capabilities = new ChangeTrackingList<DatabaseAccountCapability>();
+            WriteLocations = new ChangeTrackingList<DatabaseAccountLocation>();
+            ReadLocations = new ChangeTrackingList<DatabaseAccountLocation>();
+            Locations = new ChangeTrackingList<DatabaseAccountLocation>();
             FailoverPolicies = new ChangeTrackingList<FailoverPolicy>();
             VirtualNetworkRules = new ChangeTrackingList<VirtualNetworkRule>();
             PrivateEndpointConnections = new ChangeTrackingList<PrivateEndpointConnectionData>();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="networkAclBypass"> Indicates what services are allowed to bypass firewall checks. </param>
         /// <param name="networkAclBypassResourceIds"> An array that contains the Resource Ids for Network Acl Bypass for the Cosmos DB account. </param>
         /// <param name="disableLocalAuth"> Opt-out of local authentication and ensure only MSI and AAD can be used exclusively for authentication. </param>
-        internal DatabaseAccountData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Resources.Models.Location location, DatabaseAccountKind? kind, ResourceIdentity identity, SystemData systemData, string provisioningState, string documentEndpoint, string databaseAccountOfferType, IList<IpAddressOrRange> ipRules, bool? isVirtualNetworkFilterEnabled, bool? enableAutomaticFailover, ConsistencyPolicy consistencyPolicy, IList<Capability> capabilities, IReadOnlyList<Models.Location> writeLocations, IReadOnlyList<Models.Location> readLocations, IReadOnlyList<Models.Location> locations, IReadOnlyList<FailoverPolicy> failoverPolicies, IList<VirtualNetworkRule> virtualNetworkRules, IReadOnlyList<PrivateEndpointConnectionData> privateEndpointConnections, bool? enableMultipleWriteLocations, bool? enableCassandraConnector, ConnectorOffer? connectorOffer, bool? disableKeyBasedMetadataWriteAccess, string keyVaultKeyUri, string defaultIdentity, PublicNetworkAccess? publicNetworkAccess, bool? enableFreeTier, ApiProperties apiProperties, bool? enableAnalyticalStorage, AnalyticalStorageConfiguration analyticalStorageConfiguration, string instanceId, CreateMode? createMode, RestoreParameters restoreParameters, BackupPolicy backupPolicy, IList<CorsPolicy> cors, NetworkAclBypass? networkAclBypass, IList<string> networkAclBypassResourceIds, bool? disableLocalAuth) : base(id, name, type, tags, location)
+        internal DatabaseAccountData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, DatabaseAccountKind? kind, ResourceIdentity identity, SystemData systemData, string provisioningState, string documentEndpoint, string databaseAccountOfferType, IList<IpAddressOrRange> ipRules, bool? isVirtualNetworkFilterEnabled, bool? enableAutomaticFailover, ConsistencyPolicy consistencyPolicy, IList<DatabaseAccountCapability> capabilities, IReadOnlyList<DatabaseAccountLocation> writeLocations, IReadOnlyList<DatabaseAccountLocation> readLocations, IReadOnlyList<DatabaseAccountLocation> locations, IReadOnlyList<FailoverPolicy> failoverPolicies, IList<VirtualNetworkRule> virtualNetworkRules, IReadOnlyList<PrivateEndpointConnectionData> privateEndpointConnections, bool? enableMultipleWriteLocations, bool? enableCassandraConnector, ConnectorOffer? connectorOffer, bool? disableKeyBasedMetadataWriteAccess, string keyVaultKeyUri, string defaultIdentity, PublicNetworkAccess? publicNetworkAccess, bool? enableFreeTier, ApiProperties apiProperties, bool? enableAnalyticalStorage, AnalyticalStorageConfiguration analyticalStorageConfiguration, string instanceId, CreateMode? createMode, RestoreParameters restoreParameters, BackupPolicy backupPolicy, IList<CorsPolicy> cors, NetworkAclBypass? networkAclBypass, IList<string> networkAclBypassResourceIds, bool? disableLocalAuth) : base(id, name, type, tags, location)
         {
             Kind = kind;
             Identity = identity;
@@ -137,13 +137,13 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> The consistency policy for the Cosmos DB database account. </summary>
         public ConsistencyPolicy ConsistencyPolicy { get; set; }
         /// <summary> List of Cosmos DB capabilities for the account. </summary>
-        public IList<Capability> Capabilities { get; }
+        public IList<DatabaseAccountCapability> Capabilities { get; }
         /// <summary> An array that contains the write location for the Cosmos DB account. </summary>
-        public IReadOnlyList<Models.Location> WriteLocations { get; }
+        public IReadOnlyList<DatabaseAccountLocation> WriteLocations { get; }
         /// <summary> An array that contains of the read locations enabled for the Cosmos DB account. </summary>
-        public IReadOnlyList<Models.Location> ReadLocations { get; }
+        public IReadOnlyList<DatabaseAccountLocation> ReadLocations { get; }
         /// <summary> An array that contains all of the locations enabled for the Cosmos DB account. </summary>
-        public IReadOnlyList<Models.Location> Locations { get; }
+        public IReadOnlyList<DatabaseAccountLocation> Locations { get; }
         /// <summary> An array that contains the regions ordered by their failover priorities. </summary>
         public IReadOnlyList<FailoverPolicy> FailoverPolicies { get; }
         /// <summary> List of Virtual Network ACL rules configured for the Cosmos DB account. </summary>

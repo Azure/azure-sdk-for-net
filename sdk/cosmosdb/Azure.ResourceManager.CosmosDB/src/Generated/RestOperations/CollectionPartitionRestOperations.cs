@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="filter"> An OData filter expression that describes a subset of usages to return. The supported parameter is name.value (name of the metric, can have an or of multiple names). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseRid"/>, or <paramref name="collectionRid"/> is null. </exception>
-        public async Task<Response<PartitionUsages>> ListUsagesAsync(string resourceGroupName, string accountName, string databaseRid, string collectionRid, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PartitionUsageList>> ListUsagesAsync(string resourceGroupName, string accountName, string databaseRid, string collectionRid, string filter = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -226,9 +226,9 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        PartitionUsages value = default;
+                        PartitionUsageList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PartitionUsages.DeserializePartitionUsages(document.RootElement);
+                        value = PartitionUsageList.DeserializePartitionUsageList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="filter"> An OData filter expression that describes a subset of usages to return. The supported parameter is name.value (name of the metric, can have an or of multiple names). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseRid"/>, or <paramref name="collectionRid"/> is null. </exception>
-        public Response<PartitionUsages> ListUsages(string resourceGroupName, string accountName, string databaseRid, string collectionRid, string filter = null, CancellationToken cancellationToken = default)
+        public Response<PartitionUsageList> ListUsages(string resourceGroupName, string accountName, string databaseRid, string collectionRid, string filter = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -269,9 +269,9 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        PartitionUsages value = default;
+                        PartitionUsageList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PartitionUsages.DeserializePartitionUsages(document.RootElement);
+                        value = PartitionUsageList.DeserializePartitionUsageList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

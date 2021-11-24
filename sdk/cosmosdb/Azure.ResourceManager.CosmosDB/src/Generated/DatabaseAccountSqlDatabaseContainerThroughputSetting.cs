@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<Resources.Models.Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
             return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
         }
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<Resources.Models.Location> GetAvailableLocations(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="updateThroughputParameters"/> is null. </exception>
-        public async virtual Task<SqlResourceUpdateSqlContainerThroughputOperation> CreateOrUpdateAsync(ThroughputSettingsUpdateParameters updateThroughputParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<SqlResourceUpdateSqlContainerThroughputOperation> CreateOrUpdateAsync(ThroughputSettingsUpdateOptions updateThroughputParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (updateThroughputParameters == null)
             {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="updateThroughputParameters"/> is null. </exception>
-        public virtual SqlResourceUpdateSqlContainerThroughputOperation CreateOrUpdate(ThroughputSettingsUpdateParameters updateThroughputParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual SqlResourceUpdateSqlContainerThroughputOperation CreateOrUpdate(ThroughputSettingsUpdateOptions updateThroughputParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (updateThroughputParameters == null)
             {

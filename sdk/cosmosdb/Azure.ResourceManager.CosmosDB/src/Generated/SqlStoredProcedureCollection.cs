@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storedProcedureName"/> or <paramref name="createUpdateSqlStoredProcedureParameters"/> is null. </exception>
-        public virtual SqlResourceCreateUpdateSqlStoredProcedureOperation CreateOrUpdate(string storedProcedureName, SqlStoredProcedureCreateUpdateParameters createUpdateSqlStoredProcedureParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual SqlResourceCreateUpdateSqlStoredProcedureOperation CreateOrUpdate(string storedProcedureName, SqlStoredProcedureCreateUpdateOptions createUpdateSqlStoredProcedureParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (storedProcedureName == null)
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storedProcedureName"/> or <paramref name="createUpdateSqlStoredProcedureParameters"/> is null. </exception>
-        public async virtual Task<SqlResourceCreateUpdateSqlStoredProcedureOperation> CreateOrUpdateAsync(string storedProcedureName, SqlStoredProcedureCreateUpdateParameters createUpdateSqlStoredProcedureParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<SqlResourceCreateUpdateSqlStoredProcedureOperation> CreateOrUpdateAsync(string storedProcedureName, SqlStoredProcedureCreateUpdateOptions createUpdateSqlStoredProcedureParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (storedProcedureName == null)
             {

@@ -78,10 +78,10 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             VerifySqlUserDefinedFunctions(userDefinedFunction, userDefinedFunction2);
 
-            SqlUserDefinedFunctionCreateUpdateParameters updateParameters = new SqlUserDefinedFunctionCreateUpdateParameters(userDefinedFunction.Id, _userDefinedFunctionName, userDefinedFunction.Data.Type,
+            SqlUserDefinedFunctionCreateUpdateOptions updateOptions = new SqlUserDefinedFunctionCreateUpdateOptions(userDefinedFunction.Id, _userDefinedFunctionName, userDefinedFunction.Data.Type,
                 new Dictionary<string, string>(),// TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
                 Resources.Models.Location.WestUS2, userDefinedFunction.Data.Resource, new CreateUpdateOptions());
-            updateParameters = new SqlUserDefinedFunctionCreateUpdateParameters(Resources.Models.Location.WestUS2, new SqlUserDefinedFunctionResource(_userDefinedFunctionName)
+            updateOptions = new SqlUserDefinedFunctionCreateUpdateOptions(Resources.Models.Location.WestUS2, new SqlUserDefinedFunctionResource(_userDefinedFunctionName)
             {
                 Body = @"function () { var updatetext = getContext();
     var response = context.getResponse();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 }"
             });
 
-            userDefinedFunction = await SqlUserDefinedFunctionCollection.CreateOrUpdate(_userDefinedFunctionName, updateParameters).WaitForCompletionAsync();
+            userDefinedFunction = await SqlUserDefinedFunctionCollection.CreateOrUpdate(_userDefinedFunctionName, updateOptions).WaitForCompletionAsync();
             Assert.AreEqual(_userDefinedFunctionName, userDefinedFunction.Data.Resource.Id);
             Assert.That(userDefinedFunction.Data.Resource.Body, Contains.Substring("Second Hello World"));
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         protected async Task<SqlUserDefinedFunction> CreateSqlUserDefinedFunction(AutoscaleSettings autoscale)
         {
             _userDefinedFunctionName = Recording.GenerateAssetName("sql-stored-procedure-");
-            SqlUserDefinedFunctionCreateUpdateParameters sqlDatabaseCreateUpdateParameters = new SqlUserDefinedFunctionCreateUpdateParameters(Resources.Models.Location.WestUS2,
+            SqlUserDefinedFunctionCreateUpdateOptions sqlDatabaseCreateUpdateOptions = new SqlUserDefinedFunctionCreateUpdateOptions(Resources.Models.Location.WestUS2,
                 new SqlUserDefinedFunctionResource(_userDefinedFunctionName)
                 {
                     Body = @"function () {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             {
                 Options = BuildDatabaseCreateUpdateOptions(TestThroughput1, autoscale),
             };
-            var sqlContainerLro = await SqlUserDefinedFunctionCollection.CreateOrUpdateAsync(_userDefinedFunctionName, sqlDatabaseCreateUpdateParameters);
+            var sqlContainerLro = await SqlUserDefinedFunctionCollection.CreateOrUpdateAsync(_userDefinedFunctionName, sqlDatabaseCreateUpdateOptions);
             return sqlContainerLro.Value;
         }
 

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.CosmosDB
     {
         /// <summary> Initializes a new instance of CassandraKeyspaceData. </summary>
         /// <param name="location"> The location. </param>
-        public CassandraKeyspaceData(Resources.Models.Location location) : base(location)
+        public CassandraKeyspaceData(Location location) : base(location)
         {
         }
 
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="location"> The location. </param>
         /// <param name="resource"></param>
         /// <param name="options"></param>
-        internal CassandraKeyspaceData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Resources.Models.Location location, CassandraKeyspacePropertiesResource resource, CassandraKeyspacePropertiesOptions options) : base(id, name, type, tags, location)
+        internal CassandraKeyspaceData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, CassandraKeyspacePropertiesResource resource, CassandraKeyspacePropertiesOptions options) : base(id, name, type, tags, location)
         {
             Resource = resource;
             Options = options;

@@ -199,14 +199,14 @@ namespace Azure.ResourceManager.CosmosDB
         }
         #endregion
 
-        #region Table
-        /// <summary> Gets an object representing a Table along with the instance operations that can be performed on it but with no data. </summary>
+        #region CosmosTable
+        /// <summary> Gets an object representing a CosmosTable along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="Table" /> object. </returns>
-        public static Table GetTable(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CosmosTable" /> object. </returns>
+        public static CosmosTable GetCosmosTable(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new Table(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new CosmosTable(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 

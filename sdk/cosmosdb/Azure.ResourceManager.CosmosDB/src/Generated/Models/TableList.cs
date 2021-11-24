@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of TableList. </summary>
         internal TableList()
         {
-            Value = new ChangeTrackingList<TableData>();
+            Value = new ChangeTrackingList<CosmosTableData>();
         }
 
         /// <summary> Initializes a new instance of TableList. </summary>
         /// <param name="value"> List of Table and their properties. </param>
-        internal TableList(IReadOnlyList<TableData> value)
+        internal TableList(IReadOnlyList<CosmosTableData> value)
         {
             Value = value;
         }
 
         /// <summary> List of Table and their properties. </summary>
-        public IReadOnlyList<TableData> Value { get; }
+        public IReadOnlyList<CosmosTableData> Value { get; }
     }
 }

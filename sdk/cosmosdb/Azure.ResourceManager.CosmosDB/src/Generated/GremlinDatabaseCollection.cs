@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> or <paramref name="createUpdateGremlinDatabaseParameters"/> is null. </exception>
-        public virtual GremlinResourceCreateUpdateGremlinDatabaseOperation CreateOrUpdate(string databaseName, GremlinDatabaseCreateUpdateParameters createUpdateGremlinDatabaseParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual GremlinResourceCreateUpdateGremlinDatabaseOperation CreateOrUpdate(string databaseName, GremlinDatabaseCreateUpdateOptions createUpdateGremlinDatabaseParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (databaseName == null)
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> or <paramref name="createUpdateGremlinDatabaseParameters"/> is null. </exception>
-        public async virtual Task<GremlinResourceCreateUpdateGremlinDatabaseOperation> CreateOrUpdateAsync(string databaseName, GremlinDatabaseCreateUpdateParameters createUpdateGremlinDatabaseParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<GremlinResourceCreateUpdateGremlinDatabaseOperation> CreateOrUpdateAsync(string databaseName, GremlinDatabaseCreateUpdateOptions createUpdateGremlinDatabaseParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (databaseName == null)
             {

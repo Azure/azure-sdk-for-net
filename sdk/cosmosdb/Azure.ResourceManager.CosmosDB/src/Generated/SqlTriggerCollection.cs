@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> or <paramref name="createUpdateSqlTriggerParameters"/> is null. </exception>
-        public virtual SqlResourceCreateUpdateSqlTriggerOperation CreateOrUpdate(string triggerName, SqlTriggerCreateUpdateParameters createUpdateSqlTriggerParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual SqlResourceCreateUpdateSqlTriggerOperation CreateOrUpdate(string triggerName, SqlTriggerCreateUpdateOptions createUpdateSqlTriggerParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (triggerName == null)
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> or <paramref name="createUpdateSqlTriggerParameters"/> is null. </exception>
-        public async virtual Task<SqlResourceCreateUpdateSqlTriggerOperation> CreateOrUpdateAsync(string triggerName, SqlTriggerCreateUpdateParameters createUpdateSqlTriggerParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<SqlResourceCreateUpdateSqlTriggerOperation> CreateOrUpdateAsync(string triggerName, SqlTriggerCreateUpdateOptions createUpdateSqlTriggerParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (triggerName == null)
             {
