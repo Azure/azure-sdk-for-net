@@ -1,8 +1,6 @@
 name: Bug report
-about: Create a report to help us improve
+description: Create a report to help us improve
 title: "[BUG]"
-labels: ''
-assignees: ''
 
 body:
   - type: input
@@ -11,8 +9,8 @@ body:
       label: Library name and version
       description: Name and version of the Library package used
       placeholder: ex. Azure.Storage.Blobs 12.2.0
-      validations:
-        required: true
+    validations:
+      required: true
   - type: textarea
     id: background
     attributes:
@@ -59,4 +57,3 @@ body:
       placeholder: Environment
     validations:
       required: false
----
