@@ -57,7 +57,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 
         public async Task<ServiceBusTriggerMetrics> GetMetricsAsync()
         {
-            ServiceBusReceivedMessage message = null;
+            ServiceBusReceivedMessage activeMessage = null;
             string entityName = _serviceBusEntityType == ServiceBusEntityType.Queue ? "queue" : "topic";
 
             try
@@ -65,15 +65,30 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                 // Peek the first message in the queue without removing it from the queue
                 // PeekAsync remembers the sequence number of the last message, so the second call returns the second message instead of the first one
                 // Use PeekBySequenceNumberAsync with fromSequenceNumber = 0 to always get the first available message
-                message = await _receiver.Value.PeekMessageAsync(fromSequenceNumber: 0).ConfigureAwait(false);
+                do
+                {
+                    var receivedMessages = await _receiver.Value.PeekMessagesAsync(10, fromSequenceNumber: 0).ConfigureAwait(false);
+                    if (receivedMessages.Count == 0)
+                    {
+                        break;
+                    }
+                    foreach (var receivedMessage in receivedMessages)
+                    {
+                        if (MessageWasNotScheduledOrDeferred(receivedMessage))
+                        {
+                            activeMessage = receivedMessage;
+                            break;
+                        }
+                    }
+                } while (activeMessage == null);
 
                 if (_serviceBusEntityType == ServiceBusEntityType.Queue)
                 {
-                    return await GetQueueMetricsAsync(message).ConfigureAwait(false);
+                    return await GetQueueMetricsAsync(activeMessage).ConfigureAwait(false);
                 }
                 else
                 {
-                    return await GetTopicMetricsAsync(message).ConfigureAwait(false);
+                    return await GetTopicMetricsAsync(activeMessage).ConfigureAwait(false);
                 }
             }
             catch (ServiceBusException ex)
@@ -95,7 +110,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             }
 
             // Path for connection strings with no manage claim
-            return CreateTriggerMetrics(message, 0, 0, 0, _isListeningOnDeadLetterQueue);
+            return CreateTriggerMetrics(activeMessage, 0, 0, 0, _isListeningOnDeadLetterQueue);
         }
 
         private async Task<ServiceBusTriggerMetrics> GetQueueMetricsAsync(ServiceBusReceivedMessage message)
@@ -144,7 +159,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             long totalNewMessageCount = 0;
             TimeSpan queueTime = TimeSpan.Zero;
 
-            if (message != null && MessageWasNotScheduledOrDeferred(message))
+            if (message != null)
             {
                 queueTime = DateTimeOffset.UtcNow.Subtract(message.EnqueuedTime);
                 totalNewMessageCount = 1; // There's at least one if message != null. Default for connection string with no manage claim
