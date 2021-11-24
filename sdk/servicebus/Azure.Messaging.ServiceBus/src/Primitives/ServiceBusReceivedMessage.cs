@@ -425,7 +425,7 @@ namespace Azure.Messaging.ServiceBus
                     return (ServiceBusMessageState)val;
                 }
 
-                return default;
+                return ServiceBusMessageState.Active;
             }
             internal set
             {
