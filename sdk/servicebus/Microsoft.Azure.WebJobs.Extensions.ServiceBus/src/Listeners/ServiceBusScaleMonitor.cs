@@ -144,7 +144,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             long totalNewMessageCount = 0;
             TimeSpan queueTime = TimeSpan.Zero;
 
-            if (message != null && MessageWasNotScheduled(message))
+            if (message != null && MessageWasNotScheduledOrDeferred(message))
             {
                 queueTime = DateTimeOffset.UtcNow.Subtract(message.EnqueuedTime);
                 totalNewMessageCount = 1; // There's at least one if message != null. Default for connection string with no manage claim
@@ -163,9 +163,13 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             };
         }
 
-        private static bool MessageWasNotScheduled(ServiceBusReceivedMessage message)
+        private static bool MessageWasNotScheduledOrDeferred(ServiceBusReceivedMessage message)
         {
-            return message.ScheduledEnqueueTime == DateTimeOffset.MinValue;
+            if (message.TryGetServiceBusMessageState(out var state))
+            {
+                return state == ServiceBusMessageState.Active;
+            }
+            return true;
         }
 
         ScaleStatus IScaleMonitor.GetScaleStatus(ScaleStatusContext context)
