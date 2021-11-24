@@ -249,7 +249,11 @@ if ($DumpPath) {
   Write-Host "Generating JSONP data export..."
   $Internal = $Pkgs.Keys | ForEach-Object ToString
   $DumpData = Get-PackageExport $Pkgs $Internal
-  "const data = " + (ConvertTo-Json -InputObject $DumpData -Compress -Depth 10) + ";" | Out-File -FilePath $DumpPath
+  Write-Host $DumpData
+  $DumpDataJson = ConvertTo-Json -InputObject $DumpData -Compress -Depth 10
+  Write-Host $DumpDataJson
+  $DumpDataJson | Out-File -FilePath "${DumpPath}/arcdata.json"
+  "const data = " + $DumpDataJson + ";" | Out-File -FilePath "${DumpPath}/data.js"
 }
 
 exit $ExitCode
