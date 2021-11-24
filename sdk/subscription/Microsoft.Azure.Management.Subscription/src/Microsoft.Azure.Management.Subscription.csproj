@@ -13,16 +13,19 @@
             <![CDATA[
                 Breaking changes:
                 * This is the new release of Microsoft.Subscription
-                * SDK structure has been updated to make it more consistent and user-friendly:				  
-				  1. Gets all available geo-locations ability is removed.
-				  2. Gets details about a specified subscription ability is removed.
-				  3. Gets all subscriptions for a tenant ability is removed.
-				  4. Post subscription ownership API is added.
-				  5. Get subscription ownership status API is added.
-				  6. Put Subscription tenant policy for user's tenant API is added.
-				  7. Get the subscription tenant policy for the user's tenant API is added.
-				  8. Get all subscription tenant policy for the user's tenant API is added.
-				  9. Get Billing Account Policy API is added.
+
+				* APIs got removed from the SDK:
+				  1. Gets all available geo-locations ability API.
+				  2. Gets details about a specified subscription ability API.
+				  3. Gets all subscriptions for a tenant ability API.
+
+				* APIs that got added in this apiVersion:
+				  4. Post subscription ownership API.
+				  5. Get subscription ownership status API.
+				  6. Put Subscription tenant policy for user's tenant API.
+				  7. Get the subscription tenant policy for the user's tenant API.
+				  8. Get all subscription tenant policy for the user's tenant API.
+				  9. Get Billing Account Policy API.
             ]]>
      </PackageReleaseNotes>
 	</PropertyGroup>
