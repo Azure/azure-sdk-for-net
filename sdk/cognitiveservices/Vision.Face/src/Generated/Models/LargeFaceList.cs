@@ -17,7 +17,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
     /// <summary>
     /// Large face list object.
     /// </summary>
-    public partial class LargeFaceList : MetaDataContract
+    public partial class LargeFaceList
     {
         /// <summary>
         /// Initializes a new instance of the LargeFaceList class.
@@ -39,10 +39,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// <param name="recognitionModel">Possible values include:
         /// 'recognition_01', 'recognition_02', 'recognition_03',
         /// 'recognition_04'</param>
-        public LargeFaceList(string largeFaceListId, string name = default(string), string userData = default(string), string recognitionModel = default(string))
-            : base(name, userData, recognitionModel)
+        public LargeFaceList(string largeFaceListId, string name, string userData = default(string), string recognitionModel = default(string))
         {
             LargeFaceListId = largeFaceListId;
+            Name = name;
+            UserData = userData;
+            RecognitionModel = recognitionModel;
             CustomInit();
         }
 
@@ -58,17 +60,39 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         public string LargeFaceListId { get; set; }
 
         /// <summary>
+        /// Gets or sets user defined name, maximum length is 128.
+        /// </summary>
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets user specified data. Length should not exceed 16KB.
+        /// </summary>
+        [JsonProperty(PropertyName = "userData")]
+        public string UserData { get; set; }
+
+        /// <summary>
+        /// Gets or sets possible values include: 'recognition_01',
+        /// 'recognition_02', 'recognition_03', 'recognition_04'
+        /// </summary>
+        [JsonProperty(PropertyName = "recognitionModel")]
+        public string RecognitionModel { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public override void Validate()
+        public virtual void Validate()
         {
-            base.Validate();
             if (LargeFaceListId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "LargeFaceListId");
+            }
+            if (Name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
             }
             if (LargeFaceListId != null)
             {
@@ -79,6 +103,24 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
                 if (!System.Text.RegularExpressions.Regex.IsMatch(LargeFaceListId, "^[a-z0-9-_]+$"))
                 {
                     throw new ValidationException(ValidationRules.Pattern, "LargeFaceListId", "^[a-z0-9-_]+$");
+                }
+            }
+            if (Name != null)
+            {
+                if (Name.Length > 128)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "Name", 128);
+                }
+                if (Name.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Name", 1);
+                }
+            }
+            if (UserData != null)
+            {
+                if (UserData.Length > 16384)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "UserData", 16384);
                 }
             }
         }
