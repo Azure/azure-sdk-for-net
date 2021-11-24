@@ -114,16 +114,16 @@ namespace Sql.Tests
             return v12Server;
         }
 
-        public ManagedInstance CreateManagedInstance(ResourceGroup resourceGroup)
+        public ManagedInstance CreateManagedInstance(ResourceGroup resourceGroup, string name = null)
         {
-            return this.CreateManagedInstance(resourceGroup, new ManagedInstance());
+            return this.CreateManagedInstance(resourceGroup, new ManagedInstance(), name);
         }
 
-        public ManagedInstance CreateManagedInstance(ResourceGroup resourceGroup, ManagedInstance initialManagedInstance)
+        public ManagedInstance CreateManagedInstance(ResourceGroup resourceGroup, ManagedInstance initialManagedInstance, string name = null)
         {
             SqlManagementClient sqlClient = GetClient<SqlManagementClient>();
 
-            string miName = SqlManagementTestUtilities.GenerateName("net-sdk-crud-tests-");
+            string miName = name ?? SqlManagementTestUtilities.GenerateName("net-sdk-crud-tests-");
             var payload = this.GetManagedInstancePayload(initialManagedInstance);
 
             return sqlClient.ManagedInstances.CreateOrUpdate(resourceGroup.Name, miName, payload);
@@ -163,7 +163,7 @@ namespace Sql.Tests
                 MaintenanceConfigurationId = mi.MaintenanceConfigurationId,
                 ProxyOverride = mi.ProxyOverride,
                 PublicDataEndpointEnabled = mi.PublicDataEndpointEnabled,
-                StorageAccountType = mi.StorageAccountType ?? "GRS",
+                RequestedBackupStorageRedundancy = mi.RequestedBackupStorageRedundancy ?? "Geo",
                 StorageSizeInGB = mi.StorageSizeInGB ?? 32,
                 SubnetId = ManagedInstanceTestUtilities.SubnetResourceId,
                 Tags = tags,
