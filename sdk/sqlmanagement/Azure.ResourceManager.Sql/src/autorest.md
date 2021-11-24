@@ -41,11 +41,27 @@ directive:
     - rename-operation:
         from: DataMaskingRules_ListByDatabase
         to: DataMaskingRules_List
+    - rename-model:
+        from: UnlinkParameters
+        to: UnlinkOptions
+    - rename-model:
+        from: CopyLongTermRetentionBackupParameters
+        to: CopyLongTermRetentionBackupOptions
+    - rename-model:
+        from: UpdateLongTermRetentionBackupParameters
+        to: UpdateLongTermRetentionBackupOptions
     - from: BlobAuditing.json
       where: $.parameters.BlobAuditingPolicyNameParameter
       transform: >
           $['x-ms-enum'] = {
               "name": "BlobAuditingPolicyName",
+              "modelAsString": true
+          }
+    - from: SyncGroups.json
+      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/syncGroups/{syncGroupName}/logs'].get.parameters[?(@.name === "type")]
+      transform: >
+          $['x-ms-enum'] = {
+              "name": "SyncGroupLogType",
               "modelAsString": true
           }
 ```

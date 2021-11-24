@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="continuationToken"> The continuation token for this operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SyncGroupLogProperties" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SyncGroupLogProperties> GetLogsAsync(string startTime, string endTime, Enum76 type, string continuationToken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SyncGroupLogProperties> GetLogsAsync(string startTime, string endTime, SyncGroupLogType type, string continuationToken = null, CancellationToken cancellationToken = default)
         {
             if (startTime == null)
             {
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="continuationToken"> The continuation token for this operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SyncGroupLogProperties" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SyncGroupLogProperties> GetLogs(string startTime, string endTime, Enum76 type, string continuationToken = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<SyncGroupLogProperties> GetLogs(string startTime, string endTime, SyncGroupLogType type, string continuationToken = null, CancellationToken cancellationToken = default)
         {
             if (startTime == null)
             {
