@@ -1289,7 +1289,7 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        internal HttpMessage CreateRegenerateKeysRequest(string resourceGroupName, string namespaceName, string authorizationRuleName, RegenerateAccessKeyParameters parameters)
+        internal HttpMessage CreateRegenerateKeysRequest(string resourceGroupName, string namespaceName, string authorizationRuleName, RegenerateAccessKeyOptions parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1323,7 +1323,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="parameters"> Parameters required to regenerate the connection string. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="authorizationRuleName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response<AccessKeys>> RegenerateKeysAsync(string resourceGroupName, string namespaceName, string authorizationRuleName, RegenerateAccessKeyParameters parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<AccessKeys>> RegenerateKeysAsync(string resourceGroupName, string namespaceName, string authorizationRuleName, RegenerateAccessKeyOptions parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -1365,7 +1365,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="parameters"> Parameters required to regenerate the connection string. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="authorizationRuleName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response<AccessKeys> RegenerateKeys(string resourceGroupName, string namespaceName, string authorizationRuleName, RegenerateAccessKeyParameters parameters, CancellationToken cancellationToken = default)
+        public Response<AccessKeys> RegenerateKeys(string resourceGroupName, string namespaceName, string authorizationRuleName, RegenerateAccessKeyOptions parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -1400,7 +1400,7 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        internal HttpMessage CreateCheckNameAvailabilityRequest(CheckNameAvailabilityParameter parameters)
+        internal HttpMessage CreateCheckNameAvailabilityRequest(CheckNameAvailabilityOptions parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1425,7 +1425,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="parameters"> Parameters to check availability of the given Namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityAsync(CheckNameAvailabilityParameter parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityAsync(CheckNameAvailabilityOptions parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -1452,7 +1452,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="parameters"> Parameters to check availability of the given Namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public Response<CheckNameAvailabilityResult> CheckNameAvailability(CheckNameAvailabilityParameter parameters, CancellationToken cancellationToken = default)
+        public Response<CheckNameAvailabilityResult> CheckNameAvailability(CheckNameAvailabilityOptions parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {

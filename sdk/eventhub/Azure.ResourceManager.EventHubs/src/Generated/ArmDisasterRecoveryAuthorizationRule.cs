@@ -19,22 +19,22 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    /// <summary> A Class representing a DisasterRecoveryAuthorizationRule along with the instance operations that can be performed on it. </summary>
-    public partial class DisasterRecoveryAuthorizationRule : ArmResource
+    /// <summary> A Class representing a ArmDisasterRecoveryAuthorizationRule along with the instance operations that can be performed on it. </summary>
+    public partial class ArmDisasterRecoveryAuthorizationRule : ArmResource
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly DisasterRecoveryConfigsRestOperations _disasterRecoveryConfigsRestClient;
         private readonly AuthorizationRuleData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="DisasterRecoveryAuthorizationRule"/> class for mocking. </summary>
-        protected DisasterRecoveryAuthorizationRule()
+        /// <summary> Initializes a new instance of the <see cref="ArmDisasterRecoveryAuthorizationRule"/> class for mocking. </summary>
+        protected ArmDisasterRecoveryAuthorizationRule()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DisasterRecoveryAuthorizationRule"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "ArmDisasterRecoveryAuthorizationRule"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal DisasterRecoveryAuthorizationRule(ArmResource options, AuthorizationRuleData resource) : base(options, resource.Id)
+        internal ArmDisasterRecoveryAuthorizationRule(ArmResource options, AuthorizationRuleData resource) : base(options, resource.Id)
         {
             HasData = true;
             _data = resource;
@@ -42,22 +42,22 @@ namespace Azure.ResourceManager.EventHubs
             _disasterRecoveryConfigsRestClient = new DisasterRecoveryConfigsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DisasterRecoveryAuthorizationRule"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ArmDisasterRecoveryAuthorizationRule"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DisasterRecoveryAuthorizationRule(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal ArmDisasterRecoveryAuthorizationRule(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _disasterRecoveryConfigsRestClient = new DisasterRecoveryConfigsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DisasterRecoveryAuthorizationRule"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ArmDisasterRecoveryAuthorizationRule"/> class. </summary>
         /// <param name="clientOptions"> The client options to build client context. </param>
         /// <param name="credential"> The credential to build client context. </param>
         /// <param name="uri"> The uri to build client context. </param>
         /// <param name="pipeline"> The pipeline to build client context. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DisasterRecoveryAuthorizationRule(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
+        internal ArmDisasterRecoveryAuthorizationRule(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _disasterRecoveryConfigsRestClient = new DisasterRecoveryConfigsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
@@ -86,16 +86,16 @@ namespace Azure.ResourceManager.EventHubs
 
         /// <summary> Gets an AuthorizationRule for a Namespace by rule name. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<DisasterRecoveryAuthorizationRule>> GetAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response<ArmDisasterRecoveryAuthorizationRule>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DisasterRecoveryAuthorizationRule.Get");
+            using var scope = _clientDiagnostics.CreateScope("ArmDisasterRecoveryAuthorizationRule.Get");
             scope.Start();
             try
             {
                 var response = await _disasterRecoveryConfigsRestClient.GetAuthorizationRuleAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new DisasterRecoveryAuthorizationRule(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ArmDisasterRecoveryAuthorizationRule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -106,16 +106,16 @@ namespace Azure.ResourceManager.EventHubs
 
         /// <summary> Gets an AuthorizationRule for a Namespace by rule name. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DisasterRecoveryAuthorizationRule> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ArmDisasterRecoveryAuthorizationRule> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DisasterRecoveryAuthorizationRule.Get");
+            using var scope = _clientDiagnostics.CreateScope("ArmDisasterRecoveryAuthorizationRule.Get");
             scope.Start();
             try
             {
                 var response = _disasterRecoveryConfigsRestClient.GetAuthorizationRule(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DisasterRecoveryAuthorizationRule(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ArmDisasterRecoveryAuthorizationRule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<AccessKeys>> GetKeysAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DisasterRecoveryAuthorizationRule.GetKeys");
+            using var scope = _clientDiagnostics.CreateScope("ArmDisasterRecoveryAuthorizationRule.GetKeys");
             scope.Start();
             try
             {
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AccessKeys> GetKeys(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DisasterRecoveryAuthorizationRule.GetKeys");
+            using var scope = _clientDiagnostics.CreateScope("ArmDisasterRecoveryAuthorizationRule.GetKeys");
             scope.Start();
             try
             {

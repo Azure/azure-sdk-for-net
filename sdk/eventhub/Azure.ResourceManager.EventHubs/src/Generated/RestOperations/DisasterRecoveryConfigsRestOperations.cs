@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.EventHubs
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateCheckNameAvailabilityRequest(string resourceGroupName, string namespaceName, CheckNameAvailabilityParameter parameters)
+        internal HttpMessage CreateCheckNameAvailabilityRequest(string resourceGroupName, string namespaceName, CheckNameAvailabilityOptions parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="parameters"> Parameters to check availability of the given Alias name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityAsync(string resourceGroupName, string namespaceName, CheckNameAvailabilityParameter parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityAsync(string resourceGroupName, string namespaceName, CheckNameAvailabilityOptions parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="parameters"> Parameters to check availability of the given Alias name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response<CheckNameAvailabilityResult> CheckNameAvailability(string resourceGroupName, string namespaceName, CheckNameAvailabilityParameter parameters, CancellationToken cancellationToken = default)
+        public Response<CheckNameAvailabilityResult> CheckNameAvailability(string resourceGroupName, string namespaceName, CheckNameAvailabilityOptions parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

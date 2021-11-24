@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    public partial class Destination : IUtf8JsonSerializable
+    public partial class EventHubDestination : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             writer.WriteEndObject();
         }
 
-        internal static Destination DeserializeDestination(JsonElement element)
+        internal static EventHubDestination DeserializeEventHubDestination(JsonElement element)
         {
             Optional<string> name = default;
             Optional<string> storageAccountResourceId = default;
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     continue;
                 }
             }
-            return new Destination(name.Value, storageAccountResourceId.Value, blobContainer.Value, archiveNameFormat.Value, Optional.ToNullable(dataLakeSubscriptionId), dataLakeAccountName.Value, dataLakeFolderPath.Value);
+            return new EventHubDestination(name.Value, storageAccountResourceId.Value, blobContainer.Value, archiveNameFormat.Value, Optional.ToNullable(dataLakeSubscriptionId), dataLakeAccountName.Value, dataLakeFolderPath.Value);
         }
     }
 }

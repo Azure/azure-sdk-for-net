@@ -10,12 +10,12 @@ using System;
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> Parameter supplied to check Namespace name availability operation. </summary>
-    public partial class CheckNameAvailabilityParameter
+    public partial class CheckNameAvailabilityOptions
     {
-        /// <summary> Initializes a new instance of CheckNameAvailabilityParameter. </summary>
+        /// <summary> Initializes a new instance of CheckNameAvailabilityOptions. </summary>
         /// <param name="name"> Name to check the namespace name availability. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public CheckNameAvailabilityParameter(string name)
+        public CheckNameAvailabilityOptions(string name)
         {
             if (name == null)
             {

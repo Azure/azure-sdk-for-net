@@ -50,7 +50,7 @@ EventHubData eventHubData = new EventHubData()
         Encoding = EncodingCaptureDescription.Avro,
         IntervalInSeconds = 120,
         SizeLimitInBytes = 10485763,
-        Destination = new Destination()
+        Destination = new EventHubDestination()
         {
             Name = "EventHubArchive.AzureBlockBlob",
             BlobContainer = "Container",

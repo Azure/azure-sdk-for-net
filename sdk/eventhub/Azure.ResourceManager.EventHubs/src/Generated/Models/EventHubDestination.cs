@@ -10,14 +10,14 @@ using System;
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> Capture storage details for capture description. </summary>
-    public partial class Destination
+    public partial class EventHubDestination
     {
-        /// <summary> Initializes a new instance of Destination. </summary>
-        public Destination()
+        /// <summary> Initializes a new instance of EventHubDestination. </summary>
+        public EventHubDestination()
         {
         }
 
-        /// <summary> Initializes a new instance of Destination. </summary>
+        /// <summary> Initializes a new instance of EventHubDestination. </summary>
         /// <param name="name"> Name for capture destination. </param>
         /// <param name="storageAccountResourceId"> Resource id of the storage account to be used to create the blobs. </param>
         /// <param name="blobContainer"> Blob container Name. </param>
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="dataLakeSubscriptionId"> Subscription Id of Azure Data Lake Store. </param>
         /// <param name="dataLakeAccountName"> The Azure Data Lake Store name for the captured events. </param>
         /// <param name="dataLakeFolderPath"> The destination folder path for the captured events. </param>
-        internal Destination(string name, string storageAccountResourceId, string blobContainer, string archiveNameFormat, Guid? dataLakeSubscriptionId, string dataLakeAccountName, string dataLakeFolderPath)
+        internal EventHubDestination(string name, string storageAccountResourceId, string blobContainer, string archiveNameFormat, Guid? dataLakeSubscriptionId, string dataLakeAccountName, string dataLakeFolderPath)
         {
             Name = name;
             StorageAccountResourceId = storageAccountResourceId;

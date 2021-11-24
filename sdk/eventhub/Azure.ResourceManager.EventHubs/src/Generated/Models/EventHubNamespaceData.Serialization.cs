@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.EventHubs
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity");
-                writer.WriteObjectValue(Identity);
+                JsonSerializer.Serialize(writer, Identity);
             }
             writer.WritePropertyName("tags");
             writer.WriteStartObject();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.EventHubs
         internal static EventHubNamespaceData DeserializeEventHubNamespaceData(JsonElement element)
         {
             Optional<Models.Sku> sku = default;
-            Optional<Identity> identity = default;
+            Optional<ResourceIdentity> identity = default;
             Optional<SystemData> systemData = default;
             IDictionary<string, string> tags = default;
             Location location = default;
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.EventHubs
             Optional<int> maximumThroughputUnits = default;
             Optional<bool> kafkaEnabled = default;
             Optional<bool> zoneRedundant = default;
-            Optional<Encryption> encryption = default;
+            Optional<EventHubEncryption> encryption = default;
             Optional<IList<PrivateEndpointConnectionData>> privateEndpointConnections = default;
             Optional<bool> disableLocalAuth = default;
             Optional<string> alternateName = default;
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.EventHubs
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = Identity.DeserializeIdentity(property.Value);
+                    identity = JsonSerializer.Deserialize<ResourceIdentity>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.EventHubs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            encryption = Encryption.DeserializeEncryption(property0.Value);
+                            encryption = EventHubEncryption.DeserializeEventHubEncryption(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("privateEndpointConnections"))
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.EventHubs
                     continue;
                 }
             }
-            return new EventHubNamespaceData(id, name, type, tags, location, sku.Value, identity.Value, systemData, provisioningState.Value, status.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), serviceBusEndpoint.Value, clusterArmId.Value, metricId.Value, Optional.ToNullable(isAutoInflateEnabled), Optional.ToNullable(maximumThroughputUnits), Optional.ToNullable(kafkaEnabled), Optional.ToNullable(zoneRedundant), encryption.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(disableLocalAuth), alternateName.Value);
+            return new EventHubNamespaceData(id, name, type, tags, location, sku.Value, identity, systemData, provisioningState.Value, status.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), serviceBusEndpoint.Value, clusterArmId.Value, metricId.Value, Optional.ToNullable(isAutoInflateEnabled), Optional.ToNullable(maximumThroughputUnits), Optional.ToNullable(kafkaEnabled), Optional.ToNullable(zoneRedundant), encryption.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(disableLocalAuth), alternateName.Value);
         }
     }
 }

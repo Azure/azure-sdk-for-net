@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
         /// <param name="disableLocalAuth"> This property disables SAS authentication for the Event Hubs namespace. </param>
         /// <param name="alternateName"> Alternate name specified when alias and namespace names are same. </param>
-        internal EventHubNamespaceData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, Models.Sku sku, Identity identity, SystemData systemData, string provisioningState, string status, DateTimeOffset? createdAt, DateTimeOffset? updatedAt, string serviceBusEndpoint, string clusterArmId, string metricId, bool? isAutoInflateEnabled, int? maximumThroughputUnits, bool? kafkaEnabled, bool? zoneRedundant, Encryption encryption, IList<PrivateEndpointConnectionData> privateEndpointConnections, bool? disableLocalAuth, string alternateName) : base(id, name, type, tags, location)
+        internal EventHubNamespaceData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, Models.Sku sku, ResourceIdentity identity, SystemData systemData, string provisioningState, string status, DateTimeOffset? createdAt, DateTimeOffset? updatedAt, string serviceBusEndpoint, string clusterArmId, string metricId, bool? isAutoInflateEnabled, int? maximumThroughputUnits, bool? kafkaEnabled, bool? zoneRedundant, EventHubEncryption encryption, IList<PrivateEndpointConnectionData> privateEndpointConnections, bool? disableLocalAuth, string alternateName) : base(id, name, type, tags, location)
         {
             Sku = sku;
             Identity = identity;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Properties of sku resource. </summary>
         public Models.Sku Sku { get; set; }
         /// <summary> Properties of BYOK Identity description. </summary>
-        public Identity Identity { get; set; }
+        public ResourceIdentity Identity { get; set; }
         /// <summary> The system meta data relating to this resource. </summary>
         public SystemData SystemData { get; }
         /// <summary> Provisioning state of the Namespace. </summary>
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Enabling this property creates a Standard Event Hubs Namespace in regions supported availability zones. </summary>
         public bool? ZoneRedundant { get; set; }
         /// <summary> Properties of BYOK Encryption description. </summary>
-        public Encryption Encryption { get; set; }
+        public EventHubEncryption Encryption { get; set; }
         /// <summary> List of private endpoint connections. </summary>
         public IList<PrivateEndpointConnectionData> PrivateEndpointConnections { get; }
         /// <summary> This property disables SAS authentication for the Event Hubs namespace. </summary>

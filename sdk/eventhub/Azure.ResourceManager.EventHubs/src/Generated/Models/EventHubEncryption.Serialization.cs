@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    public partial class Encryption : IUtf8JsonSerializable
+    public partial class EventHubEncryption : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             writer.WriteEndObject();
         }
 
-        internal static Encryption DeserializeEncryption(JsonElement element)
+        internal static EventHubEncryption DeserializeEventHubEncryption(JsonElement element)
         {
             Optional<IList<KeyVaultProperties>> keyVaultProperties = default;
             Optional<string> keySource = default;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     continue;
                 }
             }
-            return new Encryption(Optional.ToList(keyVaultProperties), keySource.Value, Optional.ToNullable(requireInfrastructureEncryption));
+            return new EventHubEncryption(Optional.ToList(keyVaultProperties), keySource.Value, Optional.ToNullable(requireInfrastructureEncryption));
         }
     }
 }

@@ -10,18 +10,13 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    public partial class RegenerateAccessKeyParameters : IUtf8JsonSerializable
+    public partial class CheckNameAvailabilityOptions : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("keyType");
-            writer.WriteStringValue(KeyType.ToString());
-            if (Optional.IsDefined(Key))
-            {
-                writer.WritePropertyName("key");
-                writer.WriteStringValue(Key);
-            }
+            writer.WritePropertyName("name");
+            writer.WriteStringValue(Name);
             writer.WriteEndObject();
         }
     }

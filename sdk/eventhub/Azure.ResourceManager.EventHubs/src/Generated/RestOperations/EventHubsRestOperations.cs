@@ -979,7 +979,7 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        internal HttpMessage CreateRegenerateKeysRequest(string resourceGroupName, string namespaceName, string eventHubName, string authorizationRuleName, RegenerateAccessKeyParameters parameters)
+        internal HttpMessage CreateRegenerateKeysRequest(string resourceGroupName, string namespaceName, string eventHubName, string authorizationRuleName, RegenerateAccessKeyOptions parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1016,7 +1016,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="parameters"> Parameters supplied to regenerate the AuthorizationRule Keys (PrimaryKey/SecondaryKey). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="eventHubName"/>, <paramref name="authorizationRuleName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response<AccessKeys>> RegenerateKeysAsync(string resourceGroupName, string namespaceName, string eventHubName, string authorizationRuleName, RegenerateAccessKeyParameters parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<AccessKeys>> RegenerateKeysAsync(string resourceGroupName, string namespaceName, string eventHubName, string authorizationRuleName, RegenerateAccessKeyOptions parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -1063,7 +1063,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="parameters"> Parameters supplied to regenerate the AuthorizationRule Keys (PrimaryKey/SecondaryKey). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="eventHubName"/>, <paramref name="authorizationRuleName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response<AccessKeys> RegenerateKeys(string resourceGroupName, string namespaceName, string eventHubName, string authorizationRuleName, RegenerateAccessKeyParameters parameters, CancellationToken cancellationToken = default)
+        public Response<AccessKeys> RegenerateKeys(string resourceGroupName, string namespaceName, string eventHubName, string authorizationRuleName, RegenerateAccessKeyOptions parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

@@ -13,7 +13,7 @@ skip-csproj: true
 modelerfour:
     lenient-model-deduplication: true
 request-path-to-resource-name:
-    /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/authorizationRules/{authorizationRuleName}: DisasterRecoveryAuthorizationRule
+    /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/authorizationRules/{authorizationRuleName}: ArmDisasterRecoveryAuthorizationRule
     /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}/authorizationRules/{authorizationRuleName}: EventHubAuthorizationRule
 directive:
     - rename-model:
@@ -37,5 +37,21 @@ directive:
     - rename-model:
         from: NWRuleSetVirtualNetworkRules
         to: NetworkRuleSetVirtualNetworkRules
+    - rename-model:
+        from: CheckNameAvailabilityParameter
+        to: CheckNameAvailabilityOptions
+    - rename-model:
+        from: RegenerateAccessKeyParameters
+        to: RegenerateAccessKeyOptions
+    - rename-model:
+        from: Destination
+        to: EventHubDestination
+    - rename-model:
+        from: Encryption
+        to: EventHubEncryption
+# change the type name of Identity so that it can be replaced by ResourceIdentity
+    - from: swagger-document
+      where: $.definitions.Identity.properties.type["x-ms-enum"]["name"]
+      transform: return "ResourceIdentityType"
 ```
 
