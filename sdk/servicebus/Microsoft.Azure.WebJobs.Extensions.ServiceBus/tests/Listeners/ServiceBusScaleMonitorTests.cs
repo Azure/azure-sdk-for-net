@@ -150,9 +150,27 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
         [Test]
         public async Task GetMetrics_IgnoresScheduledMessages()
         {
-            var scheduledMessage =
-                ServiceBusModelFactory.ServiceBusReceivedMessage(
-                    scheduledEnqueueTime: DateTimeOffset.UtcNow.AddSeconds(30));
+            var scheduledMessage = ServiceBusModelFactory.ServiceBusReceivedMessage();
+            scheduledMessage.SetMessageState(ServiceBusMessageState.Scheduled);
+
+            _mockMessageReceiver.Setup(x => x.PeekMessageAsync(It.IsAny<long>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(scheduledMessage);
+
+            ServiceBusListener listener = CreateListener();
+
+            var metrics = await ((ServiceBusScaleMonitor)listener.GetMonitor()).GetMetricsAsync();
+
+            Assert.AreEqual(0, metrics.PartitionCount);
+            Assert.AreEqual(0, metrics.MessageCount);
+            Assert.AreEqual(TimeSpan.FromSeconds(0), metrics.QueueTime);
+            Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
+        }
+
+        [Test]
+        public async Task GetMetrics_IgnoresDeferredMessages()
+        {
+            var scheduledMessage = ServiceBusModelFactory.ServiceBusReceivedMessage();
+            scheduledMessage.SetMessageState(ServiceBusMessageState.Deferred);
 
             _mockMessageReceiver.Setup(x => x.PeekMessageAsync(It.IsAny<long>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(scheduledMessage);
