@@ -11,11 +11,11 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests.Helper
 {
     public static class ResourceDataHelper
     {
-        public static AccountData CreateAccountData() => new AccountData(Location.WestUS2);
+        public static DeviceUpdateAccountData CreateAccountData() => new DeviceUpdateAccountData(Location.WestUS2);
 
-        public static InstanceData CreateInstanceData() => new InstanceData(Location.WestUS2);
+        public static DeviceUpdateInstanceData CreateInstanceData() => new DeviceUpdateInstanceData(Location.WestUS2);
 
-        public static void AssertValidAccount(Account model, Account getResult)
+        public static void AssertValidAccount(DeviceUpdateAccount model, DeviceUpdateAccount getResult)
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests.Helper
             Assert.AreEqual(model.Data.PublicNetworkAccess, getResult.Data.PublicNetworkAccess);
         }
 
-        public static void AssertValidInstance(Instance model, Instance getResult)
+        public static void AssertValidInstance(DeviceUpdateInstance model, DeviceUpdateInstance getResult)
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests.Helper
             }
         }
 
-        public static void AssertAccountUpdate(Account updatedAccount, AccountUpdate updateParameters)
+        public static void AssertAccountUpdate(DeviceUpdateAccount updatedAccount, AccountUpdate updateParameters)
         {
             Assert.AreEqual(updatedAccount.Data.Location, updateParameters.Location);
             if (updatedAccount.Data.Identity != null || updateParameters.Identity != null)
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests.Helper
             }
         }
 
-        public static void AssertInstanceUpdate(Instance updatedInstance, TagUpdate updateParameters)
+        public static void AssertInstanceUpdate(DeviceUpdateInstance updatedInstance, TagUpdate updateParameters)
         {
             foreach (var kv in updatedInstance.Data.Tags)
             {

@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         /// <summary> Initializes a new instance of InstanceList. </summary>
         internal InstanceList()
         {
-            Value = new ChangeTrackingList<InstanceData>();
+            Value = new ChangeTrackingList<DeviceUpdateInstanceData>();
         }
 
         /// <summary> Initializes a new instance of InstanceList. </summary>
         /// <param name="nextLink"> The link used to get the next page of Instances list. </param>
         /// <param name="value"> List of Instances. </param>
-        internal InstanceList(string nextLink, IReadOnlyList<InstanceData> value)
+        internal InstanceList(string nextLink, IReadOnlyList<DeviceUpdateInstanceData> value)
         {
             NextLink = nextLink;
             Value = value;
@@ -32,6 +32,6 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         /// <summary> The link used to get the next page of Instances list. </summary>
         public string NextLink { get; }
         /// <summary> List of Instances. </summary>
-        public IReadOnlyList<InstanceData> Value { get; }
+        public IReadOnlyList<DeviceUpdateInstanceData> Value { get; }
     }
 }

@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string accountName = Recording.GenerateAssetName("Account-");
-            Account account = await CreateAccount(rg, accountName);
+            DeviceUpdateAccount account = await CreateAccount(rg, accountName);
             Assert.AreEqual(accountName, account.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetAccounts().CreateOrUpdateAsync(null, account.Data));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetAccounts().CreateOrUpdateAsync(accountName, null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetDeviceUpdateAccounts().CreateOrUpdateAsync(null, account.Data));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetDeviceUpdateAccounts().CreateOrUpdateAsync(accountName, null));
         }
 
         [TestCase]
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests
             string accountName = Recording.GenerateAssetName("Account-");
             _ = await CreateAccount(rg, accountName);
             int count = 0;
-            await foreach (var tempAccount in rg.GetAccounts().GetAllAsync())
+            await foreach (var tempAccount in rg.GetDeviceUpdateAccounts().GetAllAsync())
             {
                 count++;
             }
@@ -53,9 +53,9 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string accountName = Recording.GenerateAssetName("Account-");
-            Account account = await CreateAccount(rg, accountName);
+            DeviceUpdateAccount account = await CreateAccount(rg, accountName);
             int count = 0;
-            await foreach (var tempAccount in subscription.GetAccountsAsync())
+            await foreach (var tempAccount in subscription.GetDeviceUpdateAccountsAsync())
             {
                 if (tempAccount.Data.Id == account.Data.Id)
                 {
@@ -72,10 +72,10 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string accountName = Recording.GenerateAssetName("Account-");
-            Account account = await CreateAccount(rg, accountName);
-            Account getAccount = await rg.GetAccounts().GetAsync(accountName);
+            DeviceUpdateAccount account = await CreateAccount(rg, accountName);
+            DeviceUpdateAccount getAccount = await rg.GetDeviceUpdateAccounts().GetAsync(accountName);
             ResourceDataHelper.AssertValidAccount(account, getAccount);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetAccounts().GetAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetDeviceUpdateAccounts().GetAsync(null));
         }
     }
 }

@@ -26,9 +26,9 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests.Samples
             #region Snippet:Managing_Accounts_CreateAnAccount
             // Get the account collection from the specific resource group and create an account
             string accountName = "myAccount";
-            AccountData input = new AccountData(Location.WestUS2);
-            AccountCreateOperation lro = await resourceGroup.GetAccounts().CreateOrUpdateAsync(accountName, input);
-            Account account = lro.Value;
+            DeviceUpdateAccountData input = new DeviceUpdateAccountData(Location.WestUS2);
+            AccountCreateOperation lro = await resourceGroup.GetDeviceUpdateAccounts().CreateOrUpdateAsync(accountName, input);
+            DeviceUpdateAccount account = lro.Value;
             #endregion Snippet:Managing_Accounts_CreateAnAccount
         }
 
@@ -38,16 +38,16 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests.Samples
         {
             #region Snippet:Managing_Accounts_ListAllAccounts
             // First we need to get the account collection from the specific resource group
-            AccountCollection accountCollection = resourceGroup.GetAccounts();
+            DeviceUpdateAccountCollection accountCollection = resourceGroup.GetDeviceUpdateAccounts();
             // With GetAllAsync(), we can get a list of the accounts in the collection
-            AsyncPageable<Account> response = accountCollection.GetAllAsync();
-            await foreach (Account account in response)
+            AsyncPageable<DeviceUpdateAccount> response = accountCollection.GetAllAsync();
+            await foreach (DeviceUpdateAccount account in response)
             {
                 Console.WriteLine(account.Data.Name);
             }
             //We can also list all accounts in the subscription
-            response = subscription.GetAccountsAsync();
-            await foreach (Account account in response)
+            response = subscription.GetDeviceUpdateAccountsAsync();
+            await foreach (DeviceUpdateAccount account in response)
             {
                 Console.WriteLine(account.Data.Name);
             }
@@ -60,9 +60,9 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests.Samples
         {
             #region Snippet:Managing_Accounts_DeleteAnAccount
             // First we need to get the account collection from the specific resource group
-            AccountCollection accountCollection = resourceGroup.GetAccounts();
+            DeviceUpdateAccountCollection accountCollection = resourceGroup.GetDeviceUpdateAccounts();
             // Now we can get the account with GetAsync()
-            Account account = await accountCollection.GetAsync("myAccount");
+            DeviceUpdateAccount account = await accountCollection.GetAsync("myAccount");
             // With DeleteAsync(), we can delete the account
             await account.DeleteAsync();
             #endregion Snippet:Managing_Accounts_DeleteAnAccount

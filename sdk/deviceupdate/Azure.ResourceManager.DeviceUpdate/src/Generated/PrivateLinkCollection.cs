@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => Account.ResourceType;
+        protected override ResourceType ValidResourceType => DeviceUpdateAccount.ResourceType;
 
         // Collection level operations.
 

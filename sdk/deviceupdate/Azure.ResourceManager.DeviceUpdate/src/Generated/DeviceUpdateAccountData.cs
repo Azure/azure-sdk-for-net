@@ -13,13 +13,13 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DeviceUpdate
 {
-    /// <summary> A class representing the Account data model. </summary>
-    public partial class AccountData : Models.TrackedResource
+    /// <summary> A class representing the DeviceUpdateAccount data model. </summary>
+    public partial class DeviceUpdateAccountData : Models.TrackedResource
     {
-        /// <summary> Initializes a new instance of AccountData. </summary>
+        /// <summary> Initializes a new instance of DeviceUpdateAccountData. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public AccountData(string location) : base(location)
+        public DeviceUpdateAccountData(string location) : base(location)
         {
             if (location == null)
             {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             }
         }
 
-        /// <summary> Initializes a new instance of AccountData. </summary>
+        /// <summary> Initializes a new instance of DeviceUpdateAccountData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <param name="hostName"> API host name. </param>
         /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for the container registry. </param>
-        internal AccountData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, string location, ManagedServiceIdentity identity, ProvisioningState? provisioningState, string hostName, PublicNetworkAccess? publicNetworkAccess) : base(id, name, type, systemData, tags, location)
+        internal DeviceUpdateAccountData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, string location, ManagedServiceIdentity identity, ProvisioningState? provisioningState, string hostName, PublicNetworkAccess? publicNetworkAccess) : base(id, name, type, systemData, tags, location)
         {
             Identity = identity;
             ProvisioningState = provisioningState;

@@ -18,9 +18,9 @@ using Azure.ResourceManager.DeviceUpdate;
 namespace Azure.ResourceManager.DeviceUpdate.Models
 {
     /// <summary> Updates account&apos;s patchable properties. </summary>
-    public partial class AccountUpdateOperation : Operation<Account>, IOperationSource<Account>
+    public partial class AccountUpdateOperation : Operation<DeviceUpdateAccount>, IOperationSource<DeviceUpdateAccount>
     {
-        private readonly OperationInternals<Account> _operation;
+        private readonly OperationInternals<DeviceUpdateAccount> _operation;
 
         private readonly ArmResource _operationBase;
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
 
         internal AccountUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<Account>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "AccountUpdateOperation");
+            _operation = new OperationInternals<DeviceUpdateAccount>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "AccountUpdateOperation");
             _operationBase = operationsBase;
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override Account Value => _operation.Value;
+        public override DeviceUpdateAccount Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -57,21 +57,21 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<Account>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<DeviceUpdateAccount>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<Account>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<DeviceUpdateAccount>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        Account IOperationSource<Account>.CreateResult(Response response, CancellationToken cancellationToken)
+        DeviceUpdateAccount IOperationSource<DeviceUpdateAccount>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new Account(_operationBase, AccountData.DeserializeAccountData(document.RootElement));
+            return new DeviceUpdateAccount(_operationBase, DeviceUpdateAccountData.DeserializeDeviceUpdateAccountData(document.RootElement));
         }
 
-        async ValueTask<Account> IOperationSource<Account>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DeviceUpdateAccount> IOperationSource<DeviceUpdateAccount>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new Account(_operationBase, AccountData.DeserializeAccountData(document.RootElement));
+            return new DeviceUpdateAccount(_operationBase, DeviceUpdateAccountData.DeserializeDeviceUpdateAccountData(document.RootElement));
         }
     }
 }

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string accountName = Recording.GenerateAssetName("Account-");
-            Account account = await CreateAccount(rg, accountName);
+            DeviceUpdateAccount account = await CreateAccount(rg, accountName);
             await account.DeleteAsync();
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await account.GetAsync());
             Assert.AreEqual(404, ex.Status);
@@ -38,14 +38,14 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests
         {
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroup rg = await subscription.GetResourceGroups().GetAsync("DeviceUpdateResourceGroup");
-            Account account = await rg.GetAccounts().GetAsync("AzureDeviceUpdateAccount");
+            DeviceUpdateAccount account = await rg.GetDeviceUpdateAccounts().GetAsync("AzureDeviceUpdateAccount");
             AccountUpdate updateParameters = new AccountUpdate()
             {
                 Location = Location.WestUS2,
                 Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.None)
             };
             var lro = await account.UpdateAsync(updateParameters);
-            Account updatedAccount = lro.Value;
+            DeviceUpdateAccount updatedAccount = lro.Value;
             ResourceDataHelper.AssertAccountUpdate(updatedAccount, updateParameters);
             updateParameters.Identity.Type = ManagedServiceIdentityType.SystemAssigned;
             lro = await account.UpdateAsync(updateParameters);

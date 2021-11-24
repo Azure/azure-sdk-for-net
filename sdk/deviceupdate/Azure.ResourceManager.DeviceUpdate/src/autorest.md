@@ -16,6 +16,15 @@ directive:
   - from: swagger-document
     where: $.definitions.GroupInformation
     transform: $['x-ms-client-name'] = 'PrivateLink'
+  - from: swagger-document
+    where: $.definitions.Account
+    transform: $['x-ms-client-name'] = 'DeviceUpdateAccount'
+  - from: swagger-document
+    where: $.definitions.Instance
+    transform: $['x-ms-client-name'] = 'DeviceUpdateInstance'
+  - rename-operation:
+      from: Accounts_ListBySubscription
+      to: DeviceUpdateAccounts_ListBySubscription
   - remove-operation: Accounts_Head
   - remove-operation: Instances_Head
 

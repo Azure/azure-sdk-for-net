@@ -18,9 +18,9 @@ using Azure.ResourceManager.DeviceUpdate;
 namespace Azure.ResourceManager.DeviceUpdate.Models
 {
     /// <summary> Creates or updates instance. </summary>
-    public partial class InstanceCreateOperation : Operation<Instance>, IOperationSource<Instance>
+    public partial class InstanceCreateOperation : Operation<DeviceUpdateInstance>, IOperationSource<DeviceUpdateInstance>
     {
-        private readonly OperationInternals<Instance> _operation;
+        private readonly OperationInternals<DeviceUpdateInstance> _operation;
 
         private readonly ArmResource _operationBase;
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
 
         internal InstanceCreateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<Instance>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "InstanceCreateOperation");
+            _operation = new OperationInternals<DeviceUpdateInstance>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "InstanceCreateOperation");
             _operationBase = operationsBase;
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override Instance Value => _operation.Value;
+        public override DeviceUpdateInstance Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -57,21 +57,21 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<Instance>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<DeviceUpdateInstance>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<Instance>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<DeviceUpdateInstance>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        Instance IOperationSource<Instance>.CreateResult(Response response, CancellationToken cancellationToken)
+        DeviceUpdateInstance IOperationSource<DeviceUpdateInstance>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new Instance(_operationBase, InstanceData.DeserializeInstanceData(document.RootElement));
+            return new DeviceUpdateInstance(_operationBase, DeviceUpdateInstanceData.DeserializeDeviceUpdateInstanceData(document.RootElement));
         }
 
-        async ValueTask<Instance> IOperationSource<Instance>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DeviceUpdateInstance> IOperationSource<DeviceUpdateInstance>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new Instance(_operationBase, InstanceData.DeserializeInstanceData(document.RootElement));
+            return new DeviceUpdateInstance(_operationBase, DeviceUpdateInstanceData.DeserializeDeviceUpdateInstanceData(document.RootElement));
         }
     }
 }

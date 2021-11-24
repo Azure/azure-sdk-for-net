@@ -24,9 +24,9 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string accountName = Recording.GenerateAssetName("Account-");
-            Account account = await CreateAccount(rg, accountName);
+            DeviceUpdateAccount account = await CreateAccount(rg, accountName);
             string instanceName = Recording.GenerateAssetName("Instance-");
-            Instance instance = await CreateInstance(account, instanceName);
+            DeviceUpdateInstance instance = await CreateInstance(account, instanceName);
             await instance.DeleteAsync();
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await instance.GetAsync());
             Assert.AreEqual(404, ex.Status);
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests
         {
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroup rg = await subscription.GetResourceGroups().GetAsync("DeviceUpdateResourceGroup");
-            Account account = await rg.GetAccounts().GetAsync("AzureDeviceUpdateAccount");
-            Instance instance = await account.GetInstances().GetAsync("Instance");
+            DeviceUpdateAccount account = await rg.GetDeviceUpdateAccounts().GetAsync("AzureDeviceUpdateAccount");
+            DeviceUpdateInstance instance = await account.GetDeviceUpdateInstances().GetAsync("Instance");
             TagUpdate updateParameters = new TagUpdate();
             updateParameters.Tags.Add("newTag", "newValue");
             var lro = await instance.UpdateAsync(updateParameters);
-            Instance updatedInstance = lro.Value;
+            DeviceUpdateInstance updatedInstance = lro.Value;
             ResourceDataHelper.AssertInstanceUpdate(updatedInstance, updateParameters);
             updateParameters.Tags.Clear();
             lro = await instance.UpdateAsync(updateParameters);

@@ -14,16 +14,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DeviceUpdate
 {
-    public partial class AccountData : IUtf8JsonSerializable
+    public partial class DeviceUpdateInstanceData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
-            {
-                writer.WritePropertyName("identity");
-                writer.WriteObjectValue(Identity);
-            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags");
@@ -39,18 +34,32 @@ namespace Azure.ResourceManager.DeviceUpdate
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (Optional.IsCollectionDefined(IotHubs))
             {
-                writer.WritePropertyName("publicNetworkAccess");
-                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+                writer.WritePropertyName("iotHubs");
+                writer.WriteStartArray();
+                foreach (var item in IotHubs)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(EnableDiagnostics))
+            {
+                writer.WritePropertyName("enableDiagnostics");
+                writer.WriteBooleanValue(EnableDiagnostics.Value);
+            }
+            if (Optional.IsDefined(DiagnosticStorageProperties))
+            {
+                writer.WritePropertyName("diagnosticStorageProperties");
+                writer.WriteObjectValue(DiagnosticStorageProperties);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
-        internal static AccountData DeserializeAccountData(JsonElement element)
+        internal static DeviceUpdateInstanceData DeserializeDeviceUpdateInstanceData(JsonElement element)
         {
-            Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
             string location = default;
             Optional<SystemData> systemData = default;
@@ -58,20 +67,12 @@ namespace Azure.ResourceManager.DeviceUpdate
             string name = default;
             ResourceType type = default;
             Optional<ProvisioningState> provisioningState = default;
-            Optional<string> hostName = default;
-            Optional<PublicNetworkAccess> publicNetworkAccess = default;
+            Optional<string> accountName = default;
+            Optional<IList<IotHubSettings>> iotHubs = default;
+            Optional<bool> enableDiagnostics = default;
+            Optional<DiagnosticStorageProperties> diagnosticStorageProperties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    identity = ManagedServiceIdentity.DeserializeManagedServiceIdentity(property.Value);
-                    continue;
-                }
                 if (property.NameEquals("tags"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -136,26 +137,51 @@ namespace Azure.ResourceManager.DeviceUpdate
                             provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("hostName"))
+                        if (property0.NameEquals("accountName"))
                         {
-                            hostName = property0.Value.GetString();
+                            accountName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("publicNetworkAccess"))
+                        if (property0.NameEquals("iotHubs"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            publicNetworkAccess = new PublicNetworkAccess(property0.Value.GetString());
+                            List<IotHubSettings> array = new List<IotHubSettings>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(IotHubSettings.DeserializeIotHubSettings(item));
+                            }
+                            iotHubs = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("enableDiagnostics"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            enableDiagnostics = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("diagnosticStorageProperties"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            diagnosticStorageProperties = DiagnosticStorageProperties.DeserializeDiagnosticStorageProperties(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new AccountData(id, name, type, systemData, Optional.ToDictionary(tags), location, identity.Value, Optional.ToNullable(provisioningState), hostName.Value, Optional.ToNullable(publicNetworkAccess));
+            return new DeviceUpdateInstanceData(id, name, type, systemData, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), accountName.Value, Optional.ToList(iotHubs), Optional.ToNullable(enableDiagnostics), diagnosticStorageProperties.Value);
         }
     }
 }

@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests.Samples
             #region Snippet:Managing_Instances_CreateAnInstance
             // Create a new account
             string accountName = "myAccount";
-            AccountData input1 = new AccountData(Location.WestUS2);
-            AccountCreateOperation lro1 = await resourceGroup.GetAccounts().CreateOrUpdateAsync(accountName, input1);
-            Account account = lro1.Value;
+            DeviceUpdateAccountData input1 = new DeviceUpdateAccountData(Location.WestUS2);
+            AccountCreateOperation lro1 = await resourceGroup.GetDeviceUpdateAccounts().CreateOrUpdateAsync(accountName, input1);
+            DeviceUpdateAccount account = lro1.Value;
             // Get the instance collection from the specific account and create an instance
             string instanceName = "myInstance";
-            InstanceData input2 = new InstanceData(Location.WestUS2);
+            DeviceUpdateInstanceData input2 = new DeviceUpdateInstanceData(Location.WestUS2);
             input2.IotHubs.Add(new IotHubSettings("/subscriptions/.../resourceGroups/.../providers/Microsoft.Devices/IotHubs/..."));
-            InstanceCreateOperation lro2 = await account.GetInstances().CreateOrUpdateAsync(instanceName, input2);
-            Instance instance = lro2.Value;
+            InstanceCreateOperation lro2 = await account.GetDeviceUpdateInstances().CreateOrUpdateAsync(instanceName, input2);
+            DeviceUpdateInstance instance = lro2.Value;
             #endregion Snippet:Managing_Instances_CreateAnInstance
         }
 
@@ -43,11 +43,11 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests.Samples
         {
             #region Snippet:Managing_Instances_ListAllInstances
             // First we need to get the instance collection from the specific account
-            Account account = await resourceGroup.GetAccounts().GetAsync("myAccount");
-            InstanceCollection instanceCollection = account.GetInstances();
+            DeviceUpdateAccount account = await resourceGroup.GetDeviceUpdateAccounts().GetAsync("myAccount");
+            DeviceUpdateInstanceCollection instanceCollection = account.GetDeviceUpdateInstances();
             // With GetAllAsync(), we can get a list of the instances in the collection
-            AsyncPageable<Instance> response = instanceCollection.GetAllAsync();
-            await foreach (Instance instance in response)
+            AsyncPageable<DeviceUpdateInstance> response = instanceCollection.GetAllAsync();
+            await foreach (DeviceUpdateInstance instance in response)
             {
                 Console.WriteLine(instance.Data.Name);
             }
@@ -60,10 +60,10 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests.Samples
         {
             #region Snippet:Managing_Instances_UpdateAnInstance
             // First we need to get the instance collection from the specific account
-            Account account = await resourceGroup.GetAccounts().GetAsync("myAccount");
-            InstanceCollection instanceCollection = account.GetInstances();
+            DeviceUpdateAccount account = await resourceGroup.GetDeviceUpdateAccounts().GetAsync("myAccount");
+            DeviceUpdateInstanceCollection instanceCollection = account.GetDeviceUpdateInstances();
             // Now we can get the instance with GetAsync()
-            Instance instance = await instanceCollection.GetAsync("myInstance");
+            DeviceUpdateInstance instance = await instanceCollection.GetAsync("myInstance");
             // With UpdateAsync(), we can update the instance
             TagUpdate updateParameters = new TagUpdate();
             updateParameters.Tags.Add("newTag", "newValue");
@@ -77,10 +77,10 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests.Samples
         {
             #region Snippet:Managing_Instances_DeleteAnInstance
             // First we need to get the instance collection from the specific account
-            Account account = await resourceGroup.GetAccounts().GetAsync("myAccount");
-            InstanceCollection instanceCollection = account.GetInstances();
+            DeviceUpdateAccount account = await resourceGroup.GetDeviceUpdateAccounts().GetAsync("myAccount");
+            DeviceUpdateInstanceCollection instanceCollection = account.GetDeviceUpdateInstances();
             // Now we can get the instance with GetAsync()
-            Instance instance = await instanceCollection.GetAsync("myInstance");
+            DeviceUpdateInstance instance = await instanceCollection.GetAsync("myInstance");
             // With DeleteAsync(), we can delete the instance
             await instance.DeleteAsync();
             #endregion Snippet:Managing_Instances_DeleteAnInstance

@@ -16,25 +16,25 @@ using Azure.ResourceManager.DeviceUpdate;
 namespace Azure.ResourceManager.DeviceUpdate.Models
 {
     /// <summary> Updates instance&apos;s tags. </summary>
-    public partial class InstanceUpdateOperation : Operation<Instance>
+    public partial class InstanceUpdateOperation : Operation<DeviceUpdateInstance>
     {
-        private readonly OperationOrResponseInternals<Instance> _operation;
+        private readonly OperationOrResponseInternals<DeviceUpdateInstance> _operation;
 
         /// <summary> Initializes a new instance of InstanceUpdateOperation for mocking. </summary>
         protected InstanceUpdateOperation()
         {
         }
 
-        internal InstanceUpdateOperation(ArmResource operationsBase, Response<InstanceData> response)
+        internal InstanceUpdateOperation(ArmResource operationsBase, Response<DeviceUpdateInstanceData> response)
         {
-            _operation = new OperationOrResponseInternals<Instance>(Response.FromValue(new Instance(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<DeviceUpdateInstance>(Response.FromValue(new DeviceUpdateInstance(operationsBase, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override Instance Value => _operation.Value;
+        public override DeviceUpdateInstance Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<Instance>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<DeviceUpdateInstance>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<Instance>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<DeviceUpdateInstance>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
     }
 }

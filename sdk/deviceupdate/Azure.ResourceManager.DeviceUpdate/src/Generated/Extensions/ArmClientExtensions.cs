@@ -12,25 +12,25 @@ namespace Azure.ResourceManager.DeviceUpdate
     /// <summary> A class to add extension methods to ArmClient. </summary>
     public static partial class ArmClientExtensions
     {
-        #region Account
-        /// <summary> Gets an object representing a Account along with the instance operations that can be performed on it but with no data. </summary>
+        #region DeviceUpdateAccount
+        /// <summary> Gets an object representing a DeviceUpdateAccount along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="Account" /> object. </returns>
-        public static Account GetAccount(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DeviceUpdateAccount" /> object. </returns>
+        public static DeviceUpdateAccount GetDeviceUpdateAccount(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new Account(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DeviceUpdateAccount(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
-        #region Instance
-        /// <summary> Gets an object representing a Instance along with the instance operations that can be performed on it but with no data. </summary>
+        #region DeviceUpdateInstance
+        /// <summary> Gets an object representing a DeviceUpdateInstance along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="Instance" /> object. </returns>
-        public static Instance GetInstance(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DeviceUpdateInstance" /> object. </returns>
+        public static DeviceUpdateInstance GetDeviceUpdateInstance(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new Instance(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DeviceUpdateInstance(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 

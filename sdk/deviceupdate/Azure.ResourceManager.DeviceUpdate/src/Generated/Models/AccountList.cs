@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         /// <summary> Initializes a new instance of AccountList. </summary>
         internal AccountList()
         {
-            Value = new ChangeTrackingList<AccountData>();
+            Value = new ChangeTrackingList<DeviceUpdateAccountData>();
         }
 
         /// <summary> Initializes a new instance of AccountList. </summary>
         /// <param name="nextLink"> The link used to get the next page of Accounts list. </param>
         /// <param name="value"> List of Accounts. </param>
-        internal AccountList(string nextLink, IReadOnlyList<AccountData> value)
+        internal AccountList(string nextLink, IReadOnlyList<DeviceUpdateAccountData> value)
         {
             NextLink = nextLink;
             Value = value;
@@ -32,6 +32,6 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         /// <summary> The link used to get the next page of Accounts list. </summary>
         public string NextLink { get; }
         /// <summary> List of Accounts. </summary>
-        public IReadOnlyList<AccountData> Value { get; }
+        public IReadOnlyList<DeviceUpdateAccountData> Value { get; }
     }
 }

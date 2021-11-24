@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="instanceName"> Instance name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="instanceName"/> is null. </exception>
-        public async Task<Response<InstanceData>> GetAsync(string resourceGroupName, string accountName, string instanceName, CancellationToken cancellationToken = default)
+        public async Task<Response<DeviceUpdateInstanceData>> GetAsync(string resourceGroupName, string accountName, string instanceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -178,13 +178,13 @@ namespace Azure.ResourceManager.DeviceUpdate
             {
                 case 200:
                     {
-                        InstanceData value = default;
+                        DeviceUpdateInstanceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = InstanceData.DeserializeInstanceData(document.RootElement);
+                        value = DeviceUpdateInstanceData.DeserializeDeviceUpdateInstanceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((InstanceData)null, message.Response);
+                    return Response.FromValue((DeviceUpdateInstanceData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="instanceName"> Instance name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="instanceName"/> is null. </exception>
-        public Response<InstanceData> Get(string resourceGroupName, string accountName, string instanceName, CancellationToken cancellationToken = default)
+        public Response<DeviceUpdateInstanceData> Get(string resourceGroupName, string accountName, string instanceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -217,19 +217,19 @@ namespace Azure.ResourceManager.DeviceUpdate
             {
                 case 200:
                     {
-                        InstanceData value = default;
+                        DeviceUpdateInstanceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = InstanceData.DeserializeInstanceData(document.RootElement);
+                        value = DeviceUpdateInstanceData.DeserializeDeviceUpdateInstanceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((InstanceData)null, message.Response);
+                    return Response.FromValue((DeviceUpdateInstanceData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string resourceGroupName, string accountName, string instanceName, InstanceData instance)
+        internal HttpMessage CreateCreateRequest(string resourceGroupName, string accountName, string instanceName, DeviceUpdateInstanceData instance)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="instance"> Instance details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="instanceName"/>, or <paramref name="instance"/> is null. </exception>
-        public async Task<Response> CreateAsync(string resourceGroupName, string accountName, string instanceName, InstanceData instance, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateAsync(string resourceGroupName, string accountName, string instanceName, DeviceUpdateInstanceData instance, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="instance"> Instance details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="instanceName"/>, or <paramref name="instance"/> is null. </exception>
-        public Response Create(string resourceGroupName, string accountName, string instanceName, InstanceData instance, CancellationToken cancellationToken = default)
+        public Response Create(string resourceGroupName, string accountName, string instanceName, DeviceUpdateInstanceData instance, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="tagUpdatePayload"> Updated tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="instanceName"/>, or <paramref name="tagUpdatePayload"/> is null. </exception>
-        public async Task<Response<InstanceData>> UpdateAsync(string resourceGroupName, string accountName, string instanceName, TagUpdate tagUpdatePayload, CancellationToken cancellationToken = default)
+        public async Task<Response<DeviceUpdateInstanceData>> UpdateAsync(string resourceGroupName, string accountName, string instanceName, TagUpdate tagUpdatePayload, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -477,9 +477,9 @@ namespace Azure.ResourceManager.DeviceUpdate
             {
                 case 200:
                     {
-                        InstanceData value = default;
+                        DeviceUpdateInstanceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = InstanceData.DeserializeInstanceData(document.RootElement);
+                        value = DeviceUpdateInstanceData.DeserializeDeviceUpdateInstanceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="tagUpdatePayload"> Updated tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="instanceName"/>, or <paramref name="tagUpdatePayload"/> is null. </exception>
-        public Response<InstanceData> Update(string resourceGroupName, string accountName, string instanceName, TagUpdate tagUpdatePayload, CancellationToken cancellationToken = default)
+        public Response<DeviceUpdateInstanceData> Update(string resourceGroupName, string accountName, string instanceName, TagUpdate tagUpdatePayload, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -519,9 +519,9 @@ namespace Azure.ResourceManager.DeviceUpdate
             {
                 case 200:
                     {
-                        InstanceData value = default;
+                        DeviceUpdateInstanceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = InstanceData.DeserializeInstanceData(document.RootElement);
+                        value = DeviceUpdateInstanceData.DeserializeDeviceUpdateInstanceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

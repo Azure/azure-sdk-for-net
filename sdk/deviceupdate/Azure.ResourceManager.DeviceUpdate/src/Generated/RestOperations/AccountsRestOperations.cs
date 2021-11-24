@@ -44,63 +44,6 @@ namespace Azure.ResourceManager.DeviceUpdate
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateListBySubscriptionRequest()
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.DeviceUpdate/accounts", false);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
-            return message;
-        }
-
-        /// <summary> Returns list of Accounts. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<AccountList>> ListBySubscriptionAsync(CancellationToken cancellationToken = default)
-        {
-            using var message = CreateListBySubscriptionRequest();
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        AccountList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AccountList.DeserializeAccountList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Returns list of Accounts. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<AccountList> ListBySubscription(CancellationToken cancellationToken = default)
-        {
-            using var message = CreateListBySubscriptionRequest();
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        AccountList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AccountList.DeserializeAccountList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
         internal HttpMessage CreateListByResourceGroupRequest(string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
@@ -199,7 +142,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="accountName"> Account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
-        public async Task<Response<AccountData>> GetAsync(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public async Task<Response<DeviceUpdateAccountData>> GetAsync(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -216,13 +159,13 @@ namespace Azure.ResourceManager.DeviceUpdate
             {
                 case 200:
                     {
-                        AccountData value = default;
+                        DeviceUpdateAccountData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AccountData.DeserializeAccountData(document.RootElement);
+                        value = DeviceUpdateAccountData.DeserializeDeviceUpdateAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AccountData)null, message.Response);
+                    return Response.FromValue((DeviceUpdateAccountData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -233,7 +176,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="accountName"> Account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
-        public Response<AccountData> Get(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public Response<DeviceUpdateAccountData> Get(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -250,19 +193,19 @@ namespace Azure.ResourceManager.DeviceUpdate
             {
                 case 200:
                     {
-                        AccountData value = default;
+                        DeviceUpdateAccountData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AccountData.DeserializeAccountData(document.RootElement);
+                        value = DeviceUpdateAccountData.DeserializeDeviceUpdateAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AccountData)null, message.Response);
+                    return Response.FromValue((DeviceUpdateAccountData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string resourceGroupName, string accountName, AccountData account)
+        internal HttpMessage CreateCreateRequest(string resourceGroupName, string accountName, DeviceUpdateAccountData account)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -292,7 +235,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="account"> Account details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="account"/> is null. </exception>
-        public async Task<Response> CreateAsync(string resourceGroupName, string accountName, AccountData account, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateAsync(string resourceGroupName, string accountName, DeviceUpdateAccountData account, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -324,7 +267,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="account"> Account details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="account"/> is null. </exception>
-        public Response Create(string resourceGroupName, string accountName, AccountData account, CancellationToken cancellationToken = default)
+        public Response Create(string resourceGroupName, string accountName, DeviceUpdateAccountData account, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -513,74 +456,6 @@ namespace Azure.ResourceManager.DeviceUpdate
                 case 200:
                 case 201:
                     return message.Response;
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
-            return message;
-        }
-
-        /// <summary> Returns list of Accounts. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<AccountList>> ListBySubscriptionNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
-        {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-
-            using var message = CreateListBySubscriptionNextPageRequest(nextLink);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        AccountList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AccountList.DeserializeAccountList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Returns list of Accounts. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<AccountList> ListBySubscriptionNextPage(string nextLink, CancellationToken cancellationToken = default)
-        {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-
-            using var message = CreateListBySubscriptionNextPageRequest(nextLink);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        AccountList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AccountList.DeserializeAccountList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         internal static AccountList DeserializeAccountList(JsonElement element)
         {
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<AccountData>> value = default;
+            Optional<IReadOnlyList<DeviceUpdateAccountData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"))
@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AccountData> array = new List<AccountData>();
+                    List<DeviceUpdateAccountData> array = new List<DeviceUpdateAccountData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AccountData.DeserializeAccountData(item));
+                        array.Add(DeviceUpdateAccountData.DeserializeDeviceUpdateAccountData(item));
                     }
                     value = array;
                     continue;

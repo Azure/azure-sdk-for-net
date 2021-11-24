@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.DeviceUpdate
     /// <summary> A class to add extension methods to ResourceGroup. </summary>
     public static partial class ResourceGroupExtensions
     {
-        #region Account
-        /// <summary> Gets an object representing a AccountCollection along with the instance operations that can be performed on it. </summary>
+        #region DeviceUpdateAccount
+        /// <summary> Gets an object representing a DeviceUpdateAccountCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="AccountCollection" /> object. </returns>
-        public static AccountCollection GetAccounts(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="DeviceUpdateAccountCollection" /> object. </returns>
+        public static DeviceUpdateAccountCollection GetDeviceUpdateAccounts(this ResourceGroup resourceGroup)
         {
-            return new AccountCollection(resourceGroup);
+            return new DeviceUpdateAccountCollection(resourceGroup);
         }
         #endregion
     }
