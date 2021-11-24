@@ -20,9 +20,8 @@ steps:
       path: $(NUGET_PACKAGES)
     displayName: Cache NuGet packages
   - task: PowerShell@2
-    displayName: Add Azurite location as environment variable
+    displayName: Install DevOps Logger
     inputs:
       pwsh: true
       workingDirectory: $(Build.SourcesDirectory)
-      targetType: 'inline'
-      script: Write-Host "##vso[task.setvariable variable=Azure.Azurite.Location;]${{ parameters.AzuriteLocation }}"
+      filePath: eng/scripts/DownloadDevopsLogger.ps1
