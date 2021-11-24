@@ -1,14 +1,10 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0 (2021-11-24)
 
 ### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Add a `ConnectionStates` dictionary to `WebPubSubConnectionContext` to manage connection state.
+- Add the `TryGetConnectionState<T>` method in `WebPubSubConnectionContext` to get connection state in specific type.
 
 ## 1.0.0 (2021-11-09)
 
