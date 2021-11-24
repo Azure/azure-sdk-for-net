@@ -228,6 +228,27 @@ List<EventGridEvent> eventsList = new List<EventGridEvent>
 await client.SendEventsAsync(eventsList);
 ```
 
+For sending CloudEvents, the CloudEvent source is used as the domain topic:
+```C# Snippet:SendCloudEventsToDomain
+List<CloudEvent> eventsList = new List<CloudEvent>();
+
+for (int i = 0; i < 10; i++)
+{
+    CloudEvent newEGEvent = new CloudEvent(
+        // the source is mapped to the domain topic
+        $"Subject-{i}",
+        "Microsoft.MockPublisher.TestEvent",
+        "hello")
+    {
+        Id = Recording.Random.NewGuid().ToString(),
+        Time = Recording.Now
+    };
+    eventsList.Add(newEGEvent);
+}
+
+await client.SendEventsAsync(eventsList);
+```
+
 ### Receiving and Deserializing Events
 There are several different Azure services that act as [event handlers](https://docs.microsoft.com/azure/event-grid/event-handlers).
 
