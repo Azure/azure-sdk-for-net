@@ -199,8 +199,8 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual System.Threading.Tasks.Task<Azure.Response> AddFeedbackAsync(string projectName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response CreateProject(string projectName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateProjectAsync(string projectName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response DeleteProject(string projectName, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteProjectAsync(string projectName, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Operation<System.BinaryData> DeleteProject(string projectName, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> DeleteProjectAsync(string projectName, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Operation<System.BinaryData> DeployProject(string projectName, string deploymentName, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> DeployProjectAsync(string projectName, string deploymentName, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Operation<System.BinaryData> Export(string projectName, string format = null, string assetKind = null, Azure.RequestContext context = null) { throw null; }
