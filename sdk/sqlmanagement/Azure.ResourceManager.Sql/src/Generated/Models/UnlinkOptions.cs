@@ -8,10 +8,10 @@
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Represents the parameters for Unlink Replication Link request. </summary>
-    public partial class UnlinkParameters
+    public partial class UnlinkOptions
     {
-        /// <summary> Initializes a new instance of UnlinkParameters. </summary>
-        public UnlinkParameters()
+        /// <summary> Initializes a new instance of UnlinkOptions. </summary>
+        public UnlinkOptions()
         {
         }
 

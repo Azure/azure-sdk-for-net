@@ -8,10 +8,10 @@
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Contains the information necessary to perform long term retention backup update operation. </summary>
-    public partial class UpdateLongTermRetentionBackupParameters
+    public partial class UpdateLongTermRetentionBackupOptions
     {
-        /// <summary> Initializes a new instance of UpdateLongTermRetentionBackupParameters. </summary>
-        public UpdateLongTermRetentionBackupParameters()
+        /// <summary> Initializes a new instance of UpdateLongTermRetentionBackupOptions. </summary>
+        public UpdateLongTermRetentionBackupOptions()
         {
         }
 

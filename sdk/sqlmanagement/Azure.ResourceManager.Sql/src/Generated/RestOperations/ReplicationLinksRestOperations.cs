@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        internal HttpMessage CreateUnlinkRequest(string resourceGroupName, string serverName, string databaseName, string linkId, UnlinkParameters parameters)
+        internal HttpMessage CreateUnlinkRequest(string resourceGroupName, string serverName, string databaseName, string linkId, UnlinkOptions parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parameters"> The required parameters for unlinking replication link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="linkId"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response> UnlinkAsync(string resourceGroupName, string serverName, string databaseName, string linkId, UnlinkParameters parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> UnlinkAsync(string resourceGroupName, string serverName, string databaseName, string linkId, UnlinkOptions parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parameters"> The required parameters for unlinking replication link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="linkId"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response Unlink(string resourceGroupName, string serverName, string databaseName, string linkId, UnlinkParameters parameters, CancellationToken cancellationToken = default)
+        public Response Unlink(string resourceGroupName, string serverName, string databaseName, string linkId, UnlinkOptions parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

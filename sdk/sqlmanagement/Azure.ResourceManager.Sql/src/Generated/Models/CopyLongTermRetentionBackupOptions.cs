@@ -8,10 +8,10 @@
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Contains the information necessary to perform long term retention backup copy operation. </summary>
-    public partial class CopyLongTermRetentionBackupParameters
+    public partial class CopyLongTermRetentionBackupOptions
     {
-        /// <summary> Initializes a new instance of CopyLongTermRetentionBackupParameters. </summary>
-        public CopyLongTermRetentionBackupParameters()
+        /// <summary> Initializes a new instance of CopyLongTermRetentionBackupOptions. </summary>
+        public CopyLongTermRetentionBackupOptions()
         {
         }
 

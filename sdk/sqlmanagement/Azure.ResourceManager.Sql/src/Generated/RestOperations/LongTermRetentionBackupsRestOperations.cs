@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sql
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateCopyRequest(string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CopyLongTermRetentionBackupParameters parameters)
+        internal HttpMessage CreateCopyRequest(string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CopyLongTermRetentionBackupOptions parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parameters"> The parameters needed for long term retention copy request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/>, <paramref name="backupName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response> CopyAsync(string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CopyLongTermRetentionBackupParameters parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> CopyAsync(string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CopyLongTermRetentionBackupOptions parameters, CancellationToken cancellationToken = default)
         {
             if (locationName == null)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parameters"> The parameters needed for long term retention copy request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/>, <paramref name="backupName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response Copy(string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CopyLongTermRetentionBackupParameters parameters, CancellationToken cancellationToken = default)
+        public Response Copy(string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CopyLongTermRetentionBackupOptions parameters, CancellationToken cancellationToken = default)
         {
             if (locationName == null)
             {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, UpdateLongTermRetentionBackupParameters parameters)
+        internal HttpMessage CreateUpdateRequest(string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, UpdateLongTermRetentionBackupOptions parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parameters"> The requested backup resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/>, <paramref name="backupName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response> UpdateAsync(string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, UpdateLongTermRetentionBackupParameters parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, UpdateLongTermRetentionBackupOptions parameters, CancellationToken cancellationToken = default)
         {
             if (locationName == null)
             {
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parameters"> The requested backup resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/>, <paramref name="backupName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response Update(string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, UpdateLongTermRetentionBackupParameters parameters, CancellationToken cancellationToken = default)
+        public Response Update(string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, UpdateLongTermRetentionBackupOptions parameters, CancellationToken cancellationToken = default)
         {
             if (locationName == null)
             {
@@ -773,7 +773,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        internal HttpMessage CreateCopyByResourceGroupRequest(string resourceGroupName, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CopyLongTermRetentionBackupParameters parameters)
+        internal HttpMessage CreateCopyByResourceGroupRequest(string resourceGroupName, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CopyLongTermRetentionBackupOptions parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -813,7 +813,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parameters"> The parameters needed for long term retention copy request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="locationName"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/>, <paramref name="backupName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response> CopyByResourceGroupAsync(string resourceGroupName, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CopyLongTermRetentionBackupParameters parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> CopyByResourceGroupAsync(string resourceGroupName, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CopyLongTermRetentionBackupOptions parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -861,7 +861,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parameters"> The parameters needed for long term retention copy request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="locationName"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/>, <paramref name="backupName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response CopyByResourceGroup(string resourceGroupName, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CopyLongTermRetentionBackupParameters parameters, CancellationToken cancellationToken = default)
+        public Response CopyByResourceGroup(string resourceGroupName, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CopyLongTermRetentionBackupOptions parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -900,7 +900,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        internal HttpMessage CreateUpdateByResourceGroupRequest(string resourceGroupName, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, UpdateLongTermRetentionBackupParameters parameters)
+        internal HttpMessage CreateUpdateByResourceGroupRequest(string resourceGroupName, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, UpdateLongTermRetentionBackupOptions parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -940,7 +940,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parameters"> The requested backup resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="locationName"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/>, <paramref name="backupName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response> UpdateByResourceGroupAsync(string resourceGroupName, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, UpdateLongTermRetentionBackupParameters parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateByResourceGroupAsync(string resourceGroupName, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, UpdateLongTermRetentionBackupOptions parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -988,7 +988,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parameters"> The requested backup resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="locationName"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/>, <paramref name="backupName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response UpdateByResourceGroup(string resourceGroupName, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, UpdateLongTermRetentionBackupParameters parameters, CancellationToken cancellationToken = default)
+        public Response UpdateByResourceGroup(string resourceGroupName, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, UpdateLongTermRetentionBackupOptions parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
