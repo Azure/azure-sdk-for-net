@@ -76,8 +76,10 @@ namespace Azure.Communication.CallingServer
         public virtual System.Threading.Tasks.Task<Azure.Response> RemoveParticipantAsync(Azure.Communication.CommunicationIdentifier participant, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response ResumeParticipantMeetingAudio(Azure.Communication.CommunicationIdentifier participant, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> ResumeParticipantMeetingAudioAsync(Azure.Communication.CommunicationIdentifier participant, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Communication.CallingServer.TransferCallResult> Transfer(Azure.Communication.CommunicationIdentifier targetParticipant, string targetCallConnectionId, string userToUserInformation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CallingServer.TransferCallResult>> TransferAsync(Azure.Communication.CommunicationIdentifier targetParticipant, string targetCallConnectionId, string userToUserInformation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Communication.CallingServer.TransferCallResult> TransferToCall(string targetCallConnectionId, string userToUserInformation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CallingServer.TransferCallResult>> TransferToCallAsync(string targetCallConnectionId, string userToUserInformation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Communication.CallingServer.TransferCallResult> TransferToParticipant(Azure.Communication.CommunicationIdentifier targetParticipant, string userToUserInformation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CallingServer.TransferCallResult>> TransferToParticipantAsync(Azure.Communication.CommunicationIdentifier targetParticipant, string userToUserInformation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response UnmuteParticipant(Azure.Communication.CommunicationIdentifier participant, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UnmuteParticipantAsync(Azure.Communication.CommunicationIdentifier participant, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response UpdateAudioRoutingGroup(string audioRoutingGroupId, System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> targets, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -445,6 +447,7 @@ namespace Azure.Communication.CallingServer.Models
     public abstract partial class CallLocator : System.IEquatable<Azure.Communication.CallingServer.Models.CallLocator>
     {
         protected CallLocator() { }
+        public string Id { get { throw null; } set { } }
         public abstract bool Equals(Azure.Communication.CallingServer.Models.CallLocator other);
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -485,7 +488,6 @@ namespace Azure.Communication.CallingServer.Models
     public partial class GroupCallLocator : Azure.Communication.CallingServer.Models.CallLocator
     {
         public GroupCallLocator(string id) { }
-        public string Id { get { throw null; } }
         public override bool Equals(Azure.Communication.CallingServer.Models.CallLocator other) { throw null; }
         public override int GetHashCode() { throw null; }
         public override string ToString() { throw null; }
@@ -509,7 +511,6 @@ namespace Azure.Communication.CallingServer.Models
     public partial class ServerCallLocator : Azure.Communication.CallingServer.Models.CallLocator
     {
         public ServerCallLocator(string id) { }
-        public string Id { get { throw null; } }
         public override bool Equals(Azure.Communication.CallingServer.Models.CallLocator other) { throw null; }
         public override int GetHashCode() { throw null; }
         public override string ToString() { throw null; }
