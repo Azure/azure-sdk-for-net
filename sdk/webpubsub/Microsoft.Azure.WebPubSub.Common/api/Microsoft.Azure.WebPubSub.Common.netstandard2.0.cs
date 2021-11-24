@@ -96,32 +96,32 @@ namespace Microsoft.Azure.WebPubSub.Common
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("thumbprint")]
         public string Thumbprint { get { throw null; } }
     }
+    [System.Runtime.Serialization.DataContractAttribute]
     public partial class WebPubSubConnectionContext
     {
         public WebPubSubConnectionContext(Microsoft.Azure.WebPubSub.Common.WebPubSubEventType eventType, string eventName, string hub, string connectionId, string userId = null, string signature = null, string origin = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> connectionStates = null, System.Collections.Generic.IReadOnlyDictionary<string, string[]> headers = null) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public WebPubSubConnectionContext(Microsoft.Azure.WebPubSub.Common.WebPubSubEventType eventType, string eventName, string hub, string connectionId, string userId, string signature, string origin, System.Collections.Generic.IReadOnlyDictionary<string, object> states, System.Collections.Generic.IReadOnlyDictionary<string, string[]> headers) { }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("connectionId")]
+        [System.Runtime.Serialization.DataMemberAttribute(Name="connectionId")]
         public string ConnectionId { get { throw null; } }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("states")]
+        [System.Runtime.Serialization.DataMemberAttribute(Name="states")]
         public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> ConnectionStates { get { throw null; } }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("eventName")]
+        [System.Runtime.Serialization.DataMemberAttribute(Name="eventName")]
         public string EventName { get { throw null; } }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("eventType")]
+        [System.Runtime.Serialization.DataMemberAttribute(Name="eventType")]
         public Microsoft.Azure.WebPubSub.Common.WebPubSubEventType EventType { get { throw null; } }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("headers")]
+        [System.Runtime.Serialization.DataMemberAttribute(Name="headers")]
         public System.Collections.Generic.IReadOnlyDictionary<string, string[]> Headers { get { throw null; } }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("hub")]
+        [System.Runtime.Serialization.DataMemberAttribute(Name="hub")]
         public string Hub { get { throw null; } }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("origin")]
+        [System.Runtime.Serialization.DataMemberAttribute(Name="origin")]
         public string Origin { get { throw null; } }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("signature")]
+        [System.Runtime.Serialization.DataMemberAttribute(Name="signature")]
         public string Signature { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        [System.Text.Json.Serialization.JsonIgnoreAttribute]
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("states")]
+        [System.Runtime.Serialization.IgnoreDataMemberAttribute]
         public System.Collections.Generic.IReadOnlyDictionary<string, object> States { get { throw null; } }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("userId")]
+        [System.Runtime.Serialization.DataMemberAttribute(Name="userId")]
         public string UserId { get { throw null; } }
     }
     public enum WebPubSubDataType

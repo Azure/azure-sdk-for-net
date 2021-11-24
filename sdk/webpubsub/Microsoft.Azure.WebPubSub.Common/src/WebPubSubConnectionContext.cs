@@ -4,8 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
 namespace Microsoft.Azure.WebPubSub.Common
@@ -13,47 +13,55 @@ namespace Microsoft.Azure.WebPubSub.Common
     /// <summary>
     /// Request context from headers following CloudEvents.
     /// </summary>
+    [DataContract]
     public class WebPubSubConnectionContext
     {
         /// <summary>
         /// The type of the message.
         /// </summary>
+        [DataMember(Name = "eventType")]
         [JsonPropertyName("eventType")]
         public WebPubSubEventType EventType { get; }
 
         /// <summary>
         /// The event name of the message.
         /// </summary>
+        [DataMember(Name = "eventName")]
         [JsonPropertyName("eventName")]
         public string EventName { get; }
 
         /// <summary>
         /// The hub which the connection belongs to.
         /// </summary>
+        [DataMember(Name = "hub")]
         [JsonPropertyName("hub")]
         public string Hub { get; }
 
         /// <summary>
         /// The connection-id of the client.
         /// </summary>
+        [DataMember(Name = "connectionId")]
         [JsonPropertyName("connectionId")]
         public string ConnectionId { get; }
 
         /// <summary>
         /// The user identity of the client.
         /// </summary>
+        [DataMember(Name = "userId")]
         [JsonPropertyName("userId")]
         public string UserId { get; }
 
         /// <summary>
         /// The signature for validation.
         /// </summary>
+        [DataMember(Name = "signature")]
         [JsonPropertyName("signature")]
         public string Signature { get; }
 
         /// <summary>
         /// Upstream origin.
         /// </summary>
+        [DataMember(Name = "origin")]
         [JsonPropertyName("origin")]
         public string Origin { get; }
 
@@ -61,6 +69,7 @@ namespace Microsoft.Azure.WebPubSub.Common
         /// The connection states.  The values in this dictionary are strings of raw JSON and we recommend
         /// using <see cref="ConnectionStates"/> instead.
         /// </summary>
+        [IgnoreDataMember]
         [JsonIgnore]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public IReadOnlyDictionary<string, object> States { get; }
@@ -68,6 +77,7 @@ namespace Microsoft.Azure.WebPubSub.Common
         /// <summary>
         /// The connection states.
         /// </summary>
+        [DataMember(Name = "states")]
         [JsonPropertyName("states")]
         [JsonConverter(typeof(ConnectionStatesConverter))]
         public IReadOnlyDictionary<string, BinaryData> ConnectionStates { get; }
@@ -75,6 +85,7 @@ namespace Microsoft.Azure.WebPubSub.Common
         /// <summary>
         /// The headers of request.
         /// </summary>
+        [DataMember(Name = "headers")]
         [JsonPropertyName("headers")]
         public IReadOnlyDictionary<string, string[]> Headers { get; }
 

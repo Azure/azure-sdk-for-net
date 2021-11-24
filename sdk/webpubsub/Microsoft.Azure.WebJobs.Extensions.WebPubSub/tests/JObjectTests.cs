@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebPubSub.Common;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
@@ -363,15 +363,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 
             // Use the Dictionary<string, object> states .ctor overload
             var context = new WebPubSubConnectionContext(
-                eventType: WebPubSubEventType.System,
-                eventName: "connected",
-                hub: null,
-                connectionId: "connectionId",
-                userId: "userA",
-                signature: null,
-                origin: null,
-                states: states,
-                headers: null);
+                WebPubSubEventType.System,
+                "connected",
+                "hub",
+                "connectionId",
+                "userA",
+                null,
+                null,
+                states,
+                null);
             var test = new WebPubSubContext(new UserEventRequest(context, BinaryData.FromString("test"), WebPubSubDataType.Text));
 
             var jObj = JObject.FromObject(test);
@@ -484,7 +484,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
                 .EncodeConnectionStates()
                 .DecodeConnectionStates()
                 .ToDictionary(p => p.Key, p => (BinaryData)p.Value);
-            string json = JsonSerializer.Serialize(
+            // use newtonsoft converter to verify.
+            string json = JsonConvert.SerializeObject(
                 new WebPubSubConnectionContext(
                     eventType: WebPubSubEventType.System,
                     eventName: "connected",
@@ -534,11 +535,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
                 states =
                     new Dictionary<string, object>
                     {
-                        { "testKey", "value" }
+                        { "testKey", BinaryData.FromString("value") }
                     }
                     .EncodeConnectionStates().DecodeConnectionStates(); // Required now that we enforce BinaryData
             }
-            var context = new WebPubSubConnectionContext(WebPubSubEventType.System, "connect", "testhub", "Connection-Id1", states: states, userId: null, signature: null, origin: null, headers: null);
+            var context = new WebPubSubConnectionContext(WebPubSubEventType.System, "connect", "testhub", "Connection-Id1", null, null, null, states, null);
             return Utilities.BuildValidResponse(input, requestType, context);
         }
 
