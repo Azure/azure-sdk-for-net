@@ -6,7 +6,7 @@ using Azure.Messaging.ServiceBus;
 namespace Microsoft.Azure.WebJobs.ServiceBus.Tests
 {
     // can be removed once the SDK is upgraded to the version that supports the message state
-    static class ServiceBusReceivedMessageTestExtensions
+    internal static class ServiceBusReceivedMessageTestExtensions
     {
         public static void SetMessageState(this ServiceBusReceivedMessage receivedMessage, ServiceBusMessageState state = default)
         {
