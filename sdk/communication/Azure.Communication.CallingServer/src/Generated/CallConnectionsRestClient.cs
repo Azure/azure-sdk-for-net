@@ -811,7 +811,7 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        internal HttpMessage CreateTransferRequest(string callConnectionId, CommunicationIdentifierModel targetParticipant, string targetCallConnectionId, PhoneNumberIdentifierModel alternateCallerId, string userToUserInformation, string operationContext)
+        internal HttpMessage CreateTransferToParticipantRequest(string callConnectionId, CommunicationIdentifierModel targetParticipant, PhoneNumberIdentifierModel alternateCallerId, string userToUserInformation, string operationContext)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -820,15 +820,13 @@ namespace Azure.Communication.CallingServer
             uri.AppendRaw(endpoint, false);
             uri.AppendPath("/calling/callConnections/", false);
             uri.AppendPath(callConnectionId, true);
-            uri.AppendPath("/:transfer", false);
+            uri.AppendPath("/:transferToParticipant", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var model = new TransferCallRequest()
+            var model = new TransferToParticipantRequest(targetParticipant)
             {
-                TargetParticipant = targetParticipant,
-                TargetCallConnectionId = targetCallConnectionId,
                 AlternateCallerId = alternateCallerId,
                 UserToUserInformation = userToUserInformation,
                 OperationContext = operationContext
@@ -839,23 +837,26 @@ namespace Azure.Communication.CallingServer
             return message;
         }
 
-        /// <summary> Transfer the call to a participant or to another call. </summary>
+        /// <summary> Transfer the call to a participant. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="targetParticipant"> The identity of the target where call should be transfer to. </param>
-        /// <param name="targetCallConnectionId"> The call connection id to replace the current call with. This parameter should be used for consultative transfer. </param>
         /// <param name="alternateCallerId"> The alternate identity of the transferor if transferring to a pstn number. </param>
         /// <param name="userToUserInformation"> The user to user information. </param>
         /// <param name="operationContext"> The operation context. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
-        public async Task<Response<TransferCallResult>> TransferAsync(string callConnectionId, CommunicationIdentifierModel targetParticipant = null, string targetCallConnectionId = null, PhoneNumberIdentifierModel alternateCallerId = null, string userToUserInformation = null, string operationContext = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="targetParticipant"/> is null. </exception>
+        public async Task<Response<TransferCallResult>> TransferToParticipantAsync(string callConnectionId, CommunicationIdentifierModel targetParticipant, PhoneNumberIdentifierModel alternateCallerId = null, string userToUserInformation = null, string operationContext = null, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
+            if (targetParticipant == null)
+            {
+                throw new ArgumentNullException(nameof(targetParticipant));
+            }
 
-            using var message = CreateTransferRequest(callConnectionId, targetParticipant, targetCallConnectionId, alternateCallerId, userToUserInformation, operationContext);
+            using var message = CreateTransferToParticipantRequest(callConnectionId, targetParticipant, alternateCallerId, userToUserInformation, operationContext);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -871,23 +872,119 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        /// <summary> Transfer the call to a participant or to another call. </summary>
+        /// <summary> Transfer the call to a participant. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="targetParticipant"> The identity of the target where call should be transfer to. </param>
-        /// <param name="targetCallConnectionId"> The call connection id to replace the current call with. This parameter should be used for consultative transfer. </param>
         /// <param name="alternateCallerId"> The alternate identity of the transferor if transferring to a pstn number. </param>
         /// <param name="userToUserInformation"> The user to user information. </param>
         /// <param name="operationContext"> The operation context. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
-        public Response<TransferCallResult> Transfer(string callConnectionId, CommunicationIdentifierModel targetParticipant = null, string targetCallConnectionId = null, PhoneNumberIdentifierModel alternateCallerId = null, string userToUserInformation = null, string operationContext = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="targetParticipant"/> is null. </exception>
+        public Response<TransferCallResult> TransferToParticipant(string callConnectionId, CommunicationIdentifierModel targetParticipant, PhoneNumberIdentifierModel alternateCallerId = null, string userToUserInformation = null, string operationContext = null, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
+            if (targetParticipant == null)
+            {
+                throw new ArgumentNullException(nameof(targetParticipant));
+            }
 
-            using var message = CreateTransferRequest(callConnectionId, targetParticipant, targetCallConnectionId, alternateCallerId, userToUserInformation, operationContext);
+            using var message = CreateTransferToParticipantRequest(callConnectionId, targetParticipant, alternateCallerId, userToUserInformation, operationContext);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    {
+                        TransferCallResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = TransferCallResult.DeserializeTransferCallResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateTransferToCallRequest(string callConnectionId, string targetCallConnectionId, string userToUserInformation, string operationContext)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(endpoint, false);
+            uri.AppendPath("/calling/callConnections/", false);
+            uri.AppendPath(callConnectionId, true);
+            uri.AppendPath("/:transferToCall", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var model = new TransferToCallRequest(targetCallConnectionId)
+            {
+                UserToUserInformation = userToUserInformation,
+                OperationContext = operationContext
+            };
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(model);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Transfer the current call to another call. </summary>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="targetCallConnectionId"> The call connection id to replace the current call with. This parameter should be used for consultative transfer. </param>
+        /// <param name="userToUserInformation"> The user to user information. </param>
+        /// <param name="operationContext"> The operation context. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="targetCallConnectionId"/> is null. </exception>
+        public async Task<Response<TransferCallResult>> TransferToCallAsync(string callConnectionId, string targetCallConnectionId, string userToUserInformation = null, string operationContext = null, CancellationToken cancellationToken = default)
+        {
+            if (callConnectionId == null)
+            {
+                throw new ArgumentNullException(nameof(callConnectionId));
+            }
+            if (targetCallConnectionId == null)
+            {
+                throw new ArgumentNullException(nameof(targetCallConnectionId));
+            }
+
+            using var message = CreateTransferToCallRequest(callConnectionId, targetCallConnectionId, userToUserInformation, operationContext);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    {
+                        TransferCallResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = TransferCallResult.DeserializeTransferCallResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Transfer the current call to another call. </summary>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="targetCallConnectionId"> The call connection id to replace the current call with. This parameter should be used for consultative transfer. </param>
+        /// <param name="userToUserInformation"> The user to user information. </param>
+        /// <param name="operationContext"> The operation context. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="targetCallConnectionId"/> is null. </exception>
+        public Response<TransferCallResult> TransferToCall(string callConnectionId, string targetCallConnectionId, string userToUserInformation = null, string operationContext = null, CancellationToken cancellationToken = default)
+        {
+            if (callConnectionId == null)
+            {
+                throw new ArgumentNullException(nameof(callConnectionId));
+            }
+            if (targetCallConnectionId == null)
+            {
+                throw new ArgumentNullException(nameof(targetCallConnectionId));
+            }
+
+            using var message = CreateTransferToCallRequest(callConnectionId, targetCallConnectionId, userToUserInformation, operationContext);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

@@ -10,26 +10,13 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    internal partial class TransferCallRequest : IUtf8JsonSerializable
+    internal partial class TransferToCallRequest : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(TargetParticipant))
-            {
-                writer.WritePropertyName("targetParticipant");
-                writer.WriteObjectValue(TargetParticipant);
-            }
-            if (Optional.IsDefined(TargetCallConnectionId))
-            {
-                writer.WritePropertyName("targetCallConnectionId");
-                writer.WriteStringValue(TargetCallConnectionId);
-            }
-            if (Optional.IsDefined(AlternateCallerId))
-            {
-                writer.WritePropertyName("alternateCallerId");
-                writer.WriteObjectValue(AlternateCallerId);
-            }
+            writer.WritePropertyName("targetCallConnectionId");
+            writer.WriteStringValue(TargetCallConnectionId);
             if (Optional.IsDefined(UserToUserInformation))
             {
                 writer.WritePropertyName("userToUserInformation");
