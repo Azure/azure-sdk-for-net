@@ -81,7 +81,7 @@ function GetAdjustedReadmeContent($ReadmeContent, $PackageInfo, $PackageMetadata
   # Get the first code owners of the package.
   $author = "ramya-rao-a"
   $msauthor = "ramyar"
-  Write-Host "Retrieve the code owner from $PackageInfo.DirectoryPath."
+  Write-Host "Retrieve the code owner from $($PackageInfo.DirectoryPath)."
   $codeOwnerArray = ."$PSScriptRoot/get-codeowners.ps1" `
                     -TargetDirectory $PackageInfo.DirectoryPath 
   if ($codeOwnerArray) {
