@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             _resourceGroup = await GlobalClient.GetResourceGroup(_resourceGroupIdentifier).GetAsync();
 
-            _databaseAccount = await CreateDatabaseAccount(SessionRecording.GenerateAssetName("dbaccount-"), DatabaseAccountKind.GlobalDocumentDB, new Capability("EnableCassandra"));
+            _databaseAccount = await CreateDatabaseAccount(SessionRecording.GenerateAssetName("dbaccount-"), DatabaseAccountKind.GlobalDocumentDB, new DatabaseAccountCapability("EnableCassandra"));
 
             _cassandraKeyspaceId = (await CassandraKeyspaceTests.CreateCassandraKeyspace(SessionRecording.GenerateAssetName("cassandra-keyspace-"), null, _databaseAccount.GetCassandraKeyspaces())).Id;
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [RecordedTest]
         public async Task CassandraTableCreateAndUpdate()
         {
-            var parameters = BuildCreateUpdateParameters(null);
+            var parameters = BuildCreateUpdateOptions(null);
             var table = await CreateCassandraTable(parameters);
             Assert.AreEqual(_tableName, table.Data.Resource.Id);
             VerifyCassandraTableCreation(table, parameters);
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             Assert.AreEqual(TestThroughput1, throughput.Data.Resource.Throughput);
 
-            DatabaseAccountCassandraKeyspaceTableThroughputSetting throughput2 = await throughput.CreateOrUpdate(new ThroughputSettingsUpdateParameters(Resources.Models.Location.WestUS2,
+            DatabaseAccountCassandraKeyspaceTableThroughputSetting throughput2 = await throughput.CreateOrUpdate(new ThroughputSettingsUpdateOptions(Resources.Models.Location.WestUS2,
                 new ThroughputSettingsResource(TestThroughput2, null, null, null))).WaitForCompletionAsync();
 
             Assert.AreEqual(TestThroughput2, throughput2.Data.Resource.Throughput);
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [RecordedTest]
         public async Task CassandraTableMigrateToManual()
         {
-            var parameters = BuildCreateUpdateParameters(new AutoscaleSettings()
+            var parameters = BuildCreateUpdateOptions(new AutoscaleSettings()
             {
                 MaxThroughput = DefaultMaxThroughput,
             });
@@ -160,23 +160,23 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.Null(table);
         }
 
-        protected async Task<CassandraTable> CreateCassandraTable(CassandraTableCreateUpdateParameters parameters)
+        protected async Task<CassandraTable> CreateCassandraTable(CassandraTableCreateUpdateOptions parameters)
         {
             if (parameters == null)
             {
-                parameters = BuildCreateUpdateParameters(null);
+                parameters = BuildCreateUpdateOptions(null);
             }
 
             var tableLro = await CassandraTableCollection.CreateOrUpdateAsync(_tableName, parameters);
             return tableLro.Value;
         }
 
-        private CassandraTableCreateUpdateParameters BuildCreateUpdateParameters(AutoscaleSettings autoscale)
+        private CassandraTableCreateUpdateOptions BuildCreateUpdateOptions(AutoscaleSettings autoscale)
         {
             _tableName = Recording.GenerateAssetName("cassandra-table-");
-            return new CassandraTableCreateUpdateParameters(Resources.Models.Location.WestUS2,
+            return new CassandraTableCreateUpdateOptions(Resources.Models.Location.WestUS2,
                 new CassandraTableResource(_tableName, default, new CassandraSchema {
-                    Columns = { new Column { Name = "columnA", Type = "int" }, new Column { Name = "columnB", Type = "ascii" } },
+                    Columns = { new CassandraColumn { Name = "columnA", Type = "int" }, new CassandraColumn { Name = "columnB", Type = "ascii" } },
                     PartitionKeys = { new CassandraPartitionKey { Name = "columnA" } },
                     ClusterKeys = { new ClusterKey { Name = "columnB", OrderBy = "Asc" } },
                 }, default))
@@ -185,26 +185,26 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             };
         }
 
-        private void VerifyCassandraTableCreation(CassandraTable cassandraTable, CassandraTableCreateUpdateParameters cassandraTableCreateUpdateParameters)
+        private void VerifyCassandraTableCreation(CassandraTable cassandraTable, CassandraTableCreateUpdateOptions cassandraTableCreateUpdateOptions)
         {
-            Assert.AreEqual(cassandraTable.Data.Resource.Id, cassandraTableCreateUpdateParameters.Resource.Id);
-            Assert.AreEqual(cassandraTable.Data.Resource.Schema.Columns.Count, cassandraTableCreateUpdateParameters.Resource.Schema.Columns.Count);
+            Assert.AreEqual(cassandraTable.Data.Resource.Id, cassandraTableCreateUpdateOptions.Resource.Id);
+            Assert.AreEqual(cassandraTable.Data.Resource.Schema.Columns.Count, cassandraTableCreateUpdateOptions.Resource.Schema.Columns.Count);
             for (int i = 0; i < cassandraTable.Data.Resource.Schema.Columns.Count; i++)
             {
-                Assert.AreEqual(cassandraTable.Data.Resource.Schema.Columns[i].Name, cassandraTableCreateUpdateParameters.Resource.Schema.Columns[i].Name);
-                Assert.AreEqual(cassandraTable.Data.Resource.Schema.Columns[i].Type, cassandraTableCreateUpdateParameters.Resource.Schema.Columns[i].Type);
+                Assert.AreEqual(cassandraTable.Data.Resource.Schema.Columns[i].Name, cassandraTableCreateUpdateOptions.Resource.Schema.Columns[i].Name);
+                Assert.AreEqual(cassandraTable.Data.Resource.Schema.Columns[i].Type, cassandraTableCreateUpdateOptions.Resource.Schema.Columns[i].Type);
             }
 
-            Assert.AreEqual(cassandraTable.Data.Resource.Schema.ClusterKeys.Count, cassandraTableCreateUpdateParameters.Resource.Schema.ClusterKeys.Count);
+            Assert.AreEqual(cassandraTable.Data.Resource.Schema.ClusterKeys.Count, cassandraTableCreateUpdateOptions.Resource.Schema.ClusterKeys.Count);
             for (int i = 0; i < cassandraTable.Data.Resource.Schema.ClusterKeys.Count; i++)
             {
-                Assert.AreEqual(cassandraTable.Data.Resource.Schema.ClusterKeys[i].Name, cassandraTableCreateUpdateParameters.Resource.Schema.ClusterKeys[i].Name);
+                Assert.AreEqual(cassandraTable.Data.Resource.Schema.ClusterKeys[i].Name, cassandraTableCreateUpdateOptions.Resource.Schema.ClusterKeys[i].Name);
             }
 
-            Assert.AreEqual(cassandraTable.Data.Resource.Schema.PartitionKeys.Count, cassandraTableCreateUpdateParameters.Resource.Schema.PartitionKeys.Count);
+            Assert.AreEqual(cassandraTable.Data.Resource.Schema.PartitionKeys.Count, cassandraTableCreateUpdateOptions.Resource.Schema.PartitionKeys.Count);
             for (int i = 0; i < cassandraTable.Data.Resource.Schema.PartitionKeys.Count; i++)
             {
-                Assert.AreEqual(cassandraTable.Data.Resource.Schema.PartitionKeys[i].Name, cassandraTableCreateUpdateParameters.Resource.Schema.PartitionKeys[i].Name);
+                Assert.AreEqual(cassandraTable.Data.Resource.Schema.PartitionKeys[i].Name, cassandraTableCreateUpdateOptions.Resource.Schema.PartitionKeys[i].Name);
             }
         }
 

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="graphName"/> or <paramref name="createUpdateGremlinGraphParameters"/> is null. </exception>
-        public virtual GremlinResourceCreateUpdateGremlinGraphOperation CreateOrUpdate(string graphName, GremlinGraphCreateUpdateParameters createUpdateGremlinGraphParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual GremlinResourceCreateUpdateGremlinGraphOperation CreateOrUpdate(string graphName, GremlinGraphCreateUpdateOptions createUpdateGremlinGraphParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (graphName == null)
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="graphName"/> or <paramref name="createUpdateGremlinGraphParameters"/> is null. </exception>
-        public async virtual Task<GremlinResourceCreateUpdateGremlinGraphOperation> CreateOrUpdateAsync(string graphName, GremlinGraphCreateUpdateParameters createUpdateGremlinGraphParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<GremlinResourceCreateUpdateGremlinGraphOperation> CreateOrUpdateAsync(string graphName, GremlinGraphCreateUpdateOptions createUpdateGremlinGraphParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (graphName == null)
             {

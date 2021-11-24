@@ -21,7 +21,7 @@ modelerfour:
 mgmt-debug:
   suppress-list-exception: true
 
-no-property-type-replacement: SqlDatabaseResource;MongoDBDatabaseResource;TableResource;CassandraKeyspaceResource;Column;GremlinDatabaseResource;PrivateEndpointProperty
+no-property-type-replacement: SqlDatabaseResource;MongoDBDatabaseResource;TableResource;CassandraKeyspaceResource;CassandraColumn;GremlinDatabaseResource;PrivateEndpointProperty
 directive:
 # Below is a workaround for ADO 6196
 - remove-operation:
@@ -128,10 +128,10 @@ directive:
     to: MongoDBCollectionProperties
 - rename-model:
     from: TableGetResults
-    to: Table
+    to: CosmosTable
 - rename-model:
     from: TableGetProperties
-    to: TableProperties
+    to: CosmosTableProperties
 - rename-model:
     from: CassandraKeyspaceGetResults
     to: CassandraKeyspace
@@ -173,13 +173,13 @@ directive:
     to: OperationList
 - rename-model:
     from: UsagesResult
-    to: Usages
+    to: UsageList
 - rename-model:
     from: PartitionUsagesResult
-    to: PartitionUsages
+    to: PartitionUsageList
 - rename-model:
     from: MetricDefinitionsListResult
-    to: MetricDefinitionsList
+    to: MetricDefinitionList
 - rename-model:
     from: MetricListResult
     to: MetricList
@@ -240,6 +240,83 @@ directive:
 - rename-model:
     from: RestorableMongodbResourcesListResult
     to: RestorableMongodbResourcesList
+# rename for CSharp naming convention
+# `Usage` is used in a few places which are not specific to one type of resources, and it has a child definition `PartitionUsage`.
+- rename-model:
+    from: Usage
+    to: BaseUsage
+# same as `Metric`
+- rename-model:
+    from: Metric
+    to: BaseMetric
+# `Location` is single word and we already have a common type `Location`
+- rename-model:
+    from: Location
+    to: DatabaseAccountLocation
+# `Capability` is single word
+- rename-model:
+    from: Capability
+    to: DatabaseAccountCapability
+# `Indexes` is single word
+- rename-model:
+    from: Indexes
+    to: PathIndexes
+# `Column` is a single workd, and it's only used in CassandraSchema
+- rename-model:
+    from: Column
+    to: CassandraColumn
+# Rename for input parameters s/Parameters/Options/, per C# convention
+# rename parametes for cosmos-db.json
+- rename-model:
+    from: DatabaseAccountCreateUpdateParameters
+    to: DatabaseAccountCreateUpdateOptions
+- rename-model:
+    from: DatabaseAccountUpdateParameters
+    to: DatabaseAccountUpdateOptions
+- rename-model:
+    from: DatabaseAccountRegenerateKeyParameters
+    to: DatabaseAccountRegenerateKeyOptions
+- rename-model:
+    from: ThroughputSettingsUpdateParameters
+    to: ThroughputSettingsUpdateOptions
+- rename-model:
+    from: SqlDatabaseCreateUpdateParameters
+    to: SqlDatabaseCreateUpdateOptions
+- rename-model:
+    from: SqlContainerCreateUpdateParameters
+    to: SqlContainerCreateUpdateOptions
+- rename-model:
+    from: SqlStoredProcedureCreateUpdateParameters
+    to: SqlStoredProcedureCreateUpdateOptions
+- rename-model:
+    from: SqlUserDefinedFunctionCreateUpdateParameters
+    to: SqlUserDefinedFunctionCreateUpdateOptions
+- rename-model:
+    from: SqlTriggerCreateUpdateParameters
+    to: SqlTriggerCreateUpdateOptions
+- rename-model:
+    from: MongoDBDatabaseCreateUpdateParameters
+    to: MongoDBDatabaseCreateUpdateOptions
+- rename-model:
+    from: MongoDBCollectionCreateUpdateParameters
+    to: MongoDBCollectionCreateUpdateOptions
+- rename-model:
+    from: TableCreateUpdateParameters
+    to: TableCreateUpdateOptions
+- rename-model:
+    from: CassandraKeyspaceCreateUpdateParameters
+    to: CassandraKeyspaceCreateUpdateOptions
+- rename-model:
+    from: CassandraTableCreateUpdateParameters
+    to: CassandraTableCreateUpdateOptions
+- rename-model:
+    from: GremlinDatabaseCreateUpdateParameters
+    to: GremlinDatabaseCreateUpdateOptions
+- rename-model:
+    from: GremlinGraphCreateUpdateParameters
+    to: GremlinGraphCreateUpdateOptions
+# TODO: rename for notebook.json and rback.json when adding them back
+
 # add a missing response code for long running operation. an issue was filed on swagger: https://github.com/Azure/azure-rest-api-specs/issues/16508
 - from: swagger-document
   where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/notebookWorkspaces/{notebookWorkspaceName}"].put

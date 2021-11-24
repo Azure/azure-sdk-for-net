@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.CosmosDB
     {
         /// <summary> Initializes a new instance of SqlContainerData. </summary>
         /// <param name="location"> The location. </param>
-        public SqlContainerData(Resources.Models.Location location) : base(location)
+        public SqlContainerData(Location location) : base(location)
         {
         }
 
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="location"> The location. </param>
         /// <param name="resource"></param>
         /// <param name="options"></param>
-        internal SqlContainerData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Resources.Models.Location location, SqlContainerPropertiesResource resource, SqlContainerPropertiesOptions options) : base(id, name, type, tags, location)
+        internal SqlContainerData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, SqlContainerPropertiesResource resource, SqlContainerPropertiesOptions options) : base(id, name, type, tags, location)
         {
             Resource = resource;
             Options = options;

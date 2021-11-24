@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyspaceName"/> or <paramref name="createUpdateCassandraKeyspaceParameters"/> is null. </exception>
-        public virtual CassandraResourceCreateUpdateCassandraKeyspaceOperation CreateOrUpdate(string keyspaceName, CassandraKeyspaceCreateUpdateParameters createUpdateCassandraKeyspaceParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual CassandraResourceCreateUpdateCassandraKeyspaceOperation CreateOrUpdate(string keyspaceName, CassandraKeyspaceCreateUpdateOptions createUpdateCassandraKeyspaceParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (keyspaceName == null)
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyspaceName"/> or <paramref name="createUpdateCassandraKeyspaceParameters"/> is null. </exception>
-        public async virtual Task<CassandraResourceCreateUpdateCassandraKeyspaceOperation> CreateOrUpdateAsync(string keyspaceName, CassandraKeyspaceCreateUpdateParameters createUpdateCassandraKeyspaceParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<CassandraResourceCreateUpdateCassandraKeyspaceOperation> CreateOrUpdateAsync(string keyspaceName, CassandraKeyspaceCreateUpdateOptions createUpdateCassandraKeyspaceParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (keyspaceName == null)
             {

@@ -81,10 +81,10 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             VerifySqlTriggers(trigger, trigger2);
 
-            SqlTriggerCreateUpdateParameters updateParameters = new SqlTriggerCreateUpdateParameters(trigger.Id, _triggerName, trigger.Data.Type,
+            SqlTriggerCreateUpdateOptions updateOptions = new SqlTriggerCreateUpdateOptions(trigger.Id, _triggerName, trigger.Data.Type,
                 new Dictionary<string, string>(),// TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
                 Resources.Models.Location.WestUS2, trigger.Data.Resource, new CreateUpdateOptions());
-            updateParameters = new SqlTriggerCreateUpdateParameters(Resources.Models.Location.WestUS2, new SqlTriggerResource(_triggerName)
+            updateOptions = new SqlTriggerCreateUpdateOptions(Resources.Models.Location.WestUS2, new SqlTriggerResource(_triggerName)
             {
                 TriggerOperation = TriggerOperation.Create,
                 TriggerType = TriggerType.Post,
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 }"
             });
 
-            trigger = await SqlTriggerCollection.CreateOrUpdate(_triggerName, updateParameters).WaitForCompletionAsync();
+            trigger = await SqlTriggerCollection.CreateOrUpdate(_triggerName, updateOptions).WaitForCompletionAsync();
             Assert.AreEqual(_triggerName, trigger.Data.Resource.Id);
             Assert.That(trigger.Data.Resource.Body, Contains.Substring("Second Hello World"));
             Assert.AreEqual(trigger.Data.Resource.TriggerOperation, TriggerOperation.Create);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         protected async Task<SqlTrigger> CreateSqlTrigger(AutoscaleSettings autoscale)
         {
             _triggerName = Recording.GenerateAssetName("sql-trigger-");
-            SqlTriggerCreateUpdateParameters sqlDatabaseCreateUpdateParameters = new SqlTriggerCreateUpdateParameters(Resources.Models.Location.WestUS2,
+            SqlTriggerCreateUpdateOptions sqlDatabaseCreateUpdateOptions = new SqlTriggerCreateUpdateOptions(Resources.Models.Location.WestUS2,
                 new SqlTriggerResource(_triggerName)
                 {
                     TriggerOperation = TriggerOperation.All,
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             {
                 Options = BuildDatabaseCreateUpdateOptions(TestThroughput1, autoscale),
             };
-            var sqlContainerLro = await SqlTriggerCollection.CreateOrUpdateAsync(_triggerName, sqlDatabaseCreateUpdateParameters);
+            var sqlContainerLro = await SqlTriggerCollection.CreateOrUpdateAsync(_triggerName, sqlDatabaseCreateUpdateOptions);
             return sqlContainerLro.Value;
         }
 

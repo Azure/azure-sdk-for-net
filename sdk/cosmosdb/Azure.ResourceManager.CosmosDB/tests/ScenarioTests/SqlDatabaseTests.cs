@@ -75,11 +75,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             VerifyDatabases(database, database2);
 
-            SqlDatabaseCreateUpdateParameters updateParameters = new SqlDatabaseCreateUpdateParameters(database.Id, _databaseName, database.Data.Type,
+            SqlDatabaseCreateUpdateOptions updateOptions = new SqlDatabaseCreateUpdateOptions(database.Id, _databaseName, database.Data.Type,
                 new Dictionary<string, string>(),// TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
                 Resources.Models.Location.WestUS2, database.Data.Resource, new CreateUpdateOptions { Throughput = TestThroughput2 });
 
-            database = await (await SqlDatabaseContainer.CreateOrUpdateAsync(_databaseName, updateParameters)).WaitForCompletionAsync();
+            database = await (await SqlDatabaseContainer.CreateOrUpdateAsync(_databaseName, updateOptions)).WaitForCompletionAsync();
             Assert.AreEqual(_databaseName, database.Data.Resource.Id);
             database2 = await SqlDatabaseContainer.GetAsync(_databaseName);
             VerifyDatabases(database, database2);
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             Assert.AreEqual(TestThroughput1, throughput.Data.Resource.Throughput);
 
-            DatabaseAccountSqlDatabaseThroughputSetting throughput2 = await throughput.CreateOrUpdate(new ThroughputSettingsUpdateParameters(Resources.Models.Location.WestUS2,
+            DatabaseAccountSqlDatabaseThroughputSetting throughput2 = await throughput.CreateOrUpdate(new ThroughputSettingsUpdateOptions(Resources.Models.Location.WestUS2,
                 new ThroughputSettingsResource(TestThroughput2, null, null, null))).WaitForCompletionAsync();
 
             Assert.AreEqual(TestThroughput2, throughput2.Data.Resource.Throughput);
@@ -160,12 +160,12 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         internal static async Task<SqlDatabase> CreateSqlDatabase(string name, AutoscaleSettings autoscale, SqlDatabaseCollection collection)
         {
-            SqlDatabaseCreateUpdateParameters sqlDatabaseCreateUpdateParameters = new SqlDatabaseCreateUpdateParameters(Resources.Models.Location.WestUS2,
+            SqlDatabaseCreateUpdateOptions sqlDatabaseCreateUpdateOptions = new SqlDatabaseCreateUpdateOptions(Resources.Models.Location.WestUS2,
                 new SqlDatabaseResource(name))
             {
                 Options = BuildDatabaseCreateUpdateOptions(TestThroughput1, autoscale),
             };
-            var databaseLro = await collection.CreateOrUpdateAsync(name, sqlDatabaseCreateUpdateParameters);
+            var databaseLro = await collection.CreateOrUpdateAsync(name, sqlDatabaseCreateUpdateOptions);
             return databaseLro.Value;
         }
 

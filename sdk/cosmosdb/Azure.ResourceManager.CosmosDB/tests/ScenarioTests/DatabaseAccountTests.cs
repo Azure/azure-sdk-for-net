@@ -51,15 +51,15 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             DatabaseAccount account2 = await DatabaseAccountCollection.GetAsync(_databaseAccountName);
             VerifyCosmosDBAccount(account, account2);
 
-            var updateParameters = new DatabaseAccountUpdateParameters()
+            var updateOptions = new DatabaseAccountUpdateOptions()
             {
                 IsVirtualNetworkFilterEnabled = false,
                 EnableAutomaticFailover = true,
                 DisableKeyBasedMetadataWriteAccess = true,
             };
-            updateParameters.Tags.Add("key3", "value3");
-            updateParameters.Tags.Add("key4", "value4");
-            await account2.Update(updateParameters).WaitForCompletionAsync();
+            updateOptions.Tags.Add("key3", "value3");
+            updateOptions.Tags.Add("key4", "value4");
+            await account2.Update(updateOptions).WaitForCompletionAsync();
 
             var failoverPolicyList = new List<FailoverPolicy>
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             await account2.FailoverPriorityChange(new FailoverPolicies(failoverPolicyList)).WaitForCompletionResponseAsync();
 
             DatabaseAccount account3 = await DatabaseAccountCollection.GetAsync(_databaseAccountName);
-            VerifyCosmosDBAccount(account3, updateParameters);
+            VerifyCosmosDBAccount(account3, updateOptions);
             VerifyFailoverPolicies(failoverPolicyList, account3.Data.FailoverPolicies);
         }
 
@@ -120,10 +120,10 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.IsNotNull(readOnlyKeys.PrimaryReadonlyMasterKey);
             Assert.IsNotNull(readOnlyKeys.SecondaryReadonlyMasterKey);
 
-            await account.RegenerateKey(new DatabaseAccountRegenerateKeyParameters(KeyKind.Primary)).WaitForCompletionResponseAsync();
-            await account.RegenerateKey(new DatabaseAccountRegenerateKeyParameters(KeyKind.Secondary)).WaitForCompletionResponseAsync();
-            await account.RegenerateKey(new DatabaseAccountRegenerateKeyParameters(KeyKind.PrimaryReadonly)).WaitForCompletionResponseAsync();
-            await account.RegenerateKey(new DatabaseAccountRegenerateKeyParameters(KeyKind.SecondaryReadonly)).WaitForCompletionResponseAsync();
+            await account.RegenerateKey(new DatabaseAccountRegenerateKeyOptions(KeyKind.Primary)).WaitForCompletionResponseAsync();
+            await account.RegenerateKey(new DatabaseAccountRegenerateKeyOptions(KeyKind.Secondary)).WaitForCompletionResponseAsync();
+            await account.RegenerateKey(new DatabaseAccountRegenerateKeyOptions(KeyKind.PrimaryReadonly)).WaitForCompletionResponseAsync();
+            await account.RegenerateKey(new DatabaseAccountRegenerateKeyOptions(KeyKind.SecondaryReadonly)).WaitForCompletionResponseAsync();
 
             DatabaseAccountKeyList regeneratedKeys = await account.GetKeysAsync();
             if (Mode != RecordedTestMode.Playback)
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             var account = await CreateDatabaseAccount(Recording.GenerateAssetName("dbaccount-"), DatabaseAccountKind.MongoDB);
 
-            List<Usage> usages = await account.GetUsagesAsync().ToEnumerableAsync();
+            List<BaseUsage> usages = await account.GetUsagesAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(usages);
         }
 
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(expectedData.Cors.Count, actualData.Cors.Count);
         }
 
-        private void VerifyCosmosDBAccount(DatabaseAccount databaseAccount, DatabaseAccountUpdateParameters parameters)
+        private void VerifyCosmosDBAccount(DatabaseAccount databaseAccount, DatabaseAccountUpdateOptions parameters)
         {
             Assert.True(databaseAccount.Data.Tags.SequenceEqual(parameters.Tags));
             Assert.AreEqual(databaseAccount.Data.IsVirtualNetworkFilterEnabled, parameters.IsVirtualNetworkFilterEnabled);
@@ -231,14 +231,14 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(databaseAccount.Data.DisableKeyBasedMetadataWriteAccess, parameters.DisableKeyBasedMetadataWriteAccess);
         }
 
-        private void VerifyLocations(IReadOnlyList<Location> expectedData, IReadOnlyList<Location> actualData)
+        private void VerifyLocations(IReadOnlyList<DatabaseAccountLocation> expectedData, IReadOnlyList<DatabaseAccountLocation> actualData)
         {
             Assert.AreEqual(expectedData.Count, actualData.Count);
             if (expectedData.Count != 0)
             {
-                foreach (Location expexctedLocation in expectedData)
+                foreach (DatabaseAccountLocation expexctedLocation in expectedData)
                 {
-                    foreach (Location actualLocation in actualData)
+                    foreach (DatabaseAccountLocation actualLocation in actualData)
                     {
                         if (expexctedLocation.Id == actualLocation.Id)
                         {

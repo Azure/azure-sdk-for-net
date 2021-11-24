@@ -18,9 +18,9 @@ using Azure.ResourceManager.CosmosDB;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Create or update an Azure Cosmos DB Table. </summary>
-    public partial class TableResourceCreateUpdateTableOperation : Operation<Table>, IOperationSource<Table>
+    public partial class TableResourceCreateUpdateTableOperation : Operation<CosmosTable>, IOperationSource<CosmosTable>
     {
-        private readonly OperationInternals<Table> _operation;
+        private readonly OperationInternals<CosmosTable> _operation;
 
         private readonly ArmResource _operationBase;
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal TableResourceCreateUpdateTableOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<Table>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "TableResourceCreateUpdateTableOperation");
+            _operation = new OperationInternals<CosmosTable>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "TableResourceCreateUpdateTableOperation");
             _operationBase = operationsBase;
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override Table Value => _operation.Value;
+        public override CosmosTable Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -57,21 +57,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<Table>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<CosmosTable>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<Table>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<CosmosTable>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        Table IOperationSource<Table>.CreateResult(Response response, CancellationToken cancellationToken)
+        CosmosTable IOperationSource<CosmosTable>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new Table(_operationBase, TableData.DeserializeTableData(document.RootElement));
+            return new CosmosTable(_operationBase, CosmosTableData.DeserializeCosmosTableData(document.RootElement));
         }
 
-        async ValueTask<Table> IOperationSource<Table>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<CosmosTable> IOperationSource<CosmosTable>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new Table(_operationBase, TableData.DeserializeTableData(document.RootElement));
+            return new CosmosTable(_operationBase, CosmosTableData.DeserializeCosmosTableData(document.RootElement));
         }
     }
 }

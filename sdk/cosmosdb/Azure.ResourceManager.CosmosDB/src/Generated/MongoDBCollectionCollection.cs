@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionName"/> or <paramref name="createUpdateMongoDBCollectionParameters"/> is null. </exception>
-        public virtual MongoDBResourceCreateUpdateMongoDBCollectionOperation CreateOrUpdate(string collectionName, MongoDBCollectionCreateUpdateParameters createUpdateMongoDBCollectionParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual MongoDBResourceCreateUpdateMongoDBCollectionOperation CreateOrUpdate(string collectionName, MongoDBCollectionCreateUpdateOptions createUpdateMongoDBCollectionParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (collectionName == null)
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionName"/> or <paramref name="createUpdateMongoDBCollectionParameters"/> is null. </exception>
-        public async virtual Task<MongoDBResourceCreateUpdateMongoDBCollectionOperation> CreateOrUpdateAsync(string collectionName, MongoDBCollectionCreateUpdateParameters createUpdateMongoDBCollectionParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<MongoDBResourceCreateUpdateMongoDBCollectionOperation> CreateOrUpdateAsync(string collectionName, MongoDBCollectionCreateUpdateOptions createUpdateMongoDBCollectionParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (collectionName == null)
             {

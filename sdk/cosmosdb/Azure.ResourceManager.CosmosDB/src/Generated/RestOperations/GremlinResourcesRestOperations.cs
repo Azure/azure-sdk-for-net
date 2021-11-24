@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateCreateUpdateGremlinDatabaseRequest(string resourceGroupName, string accountName, string databaseName, GremlinDatabaseCreateUpdateParameters createUpdateGremlinDatabaseParameters)
+        internal HttpMessage CreateCreateUpdateGremlinDatabaseRequest(string resourceGroupName, string accountName, string databaseName, GremlinDatabaseCreateUpdateOptions createUpdateGremlinDatabaseParameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="createUpdateGremlinDatabaseParameters"> The parameters to provide for the current Gremlin database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="createUpdateGremlinDatabaseParameters"/> is null. </exception>
-        public async Task<Response> CreateUpdateGremlinDatabaseAsync(string resourceGroupName, string accountName, string databaseName, GremlinDatabaseCreateUpdateParameters createUpdateGremlinDatabaseParameters, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateUpdateGremlinDatabaseAsync(string resourceGroupName, string accountName, string databaseName, GremlinDatabaseCreateUpdateOptions createUpdateGremlinDatabaseParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="createUpdateGremlinDatabaseParameters"> The parameters to provide for the current Gremlin database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="createUpdateGremlinDatabaseParameters"/> is null. </exception>
-        public Response CreateUpdateGremlinDatabase(string resourceGroupName, string accountName, string databaseName, GremlinDatabaseCreateUpdateParameters createUpdateGremlinDatabaseParameters, CancellationToken cancellationToken = default)
+        public Response CreateUpdateGremlinDatabase(string resourceGroupName, string accountName, string databaseName, GremlinDatabaseCreateUpdateOptions createUpdateGremlinDatabaseParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateUpdateGremlinDatabaseThroughputRequest(string resourceGroupName, string accountName, string databaseName, ThroughputSettingsUpdateParameters updateThroughputParameters)
+        internal HttpMessage CreateUpdateGremlinDatabaseThroughputRequest(string resourceGroupName, string accountName, string databaseName, ThroughputSettingsUpdateOptions updateThroughputParameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -553,7 +553,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="updateThroughputParameters"> The RUs per second of the parameters to provide for the current Gremlin database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="updateThroughputParameters"/> is null. </exception>
-        public async Task<Response> UpdateGremlinDatabaseThroughputAsync(string resourceGroupName, string accountName, string databaseName, ThroughputSettingsUpdateParameters updateThroughputParameters, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateGremlinDatabaseThroughputAsync(string resourceGroupName, string accountName, string databaseName, ThroughputSettingsUpdateOptions updateThroughputParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -591,7 +591,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="updateThroughputParameters"> The RUs per second of the parameters to provide for the current Gremlin database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="updateThroughputParameters"/> is null. </exception>
-        public Response UpdateGremlinDatabaseThroughput(string resourceGroupName, string accountName, string databaseName, ThroughputSettingsUpdateParameters updateThroughputParameters, CancellationToken cancellationToken = default)
+        public Response UpdateGremlinDatabaseThroughput(string resourceGroupName, string accountName, string databaseName, ThroughputSettingsUpdateOptions updateThroughputParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -1009,7 +1009,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateCreateUpdateGremlinGraphRequest(string resourceGroupName, string accountName, string databaseName, string graphName, GremlinGraphCreateUpdateParameters createUpdateGremlinGraphParameters)
+        internal HttpMessage CreateCreateUpdateGremlinGraphRequest(string resourceGroupName, string accountName, string databaseName, string graphName, GremlinGraphCreateUpdateOptions createUpdateGremlinGraphParameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1045,7 +1045,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="createUpdateGremlinGraphParameters"> The parameters to provide for the current Gremlin graph. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="graphName"/>, or <paramref name="createUpdateGremlinGraphParameters"/> is null. </exception>
-        public async Task<Response> CreateUpdateGremlinGraphAsync(string resourceGroupName, string accountName, string databaseName, string graphName, GremlinGraphCreateUpdateParameters createUpdateGremlinGraphParameters, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateUpdateGremlinGraphAsync(string resourceGroupName, string accountName, string databaseName, string graphName, GremlinGraphCreateUpdateOptions createUpdateGremlinGraphParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -1088,7 +1088,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="createUpdateGremlinGraphParameters"> The parameters to provide for the current Gremlin graph. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="graphName"/>, or <paramref name="createUpdateGremlinGraphParameters"/> is null. </exception>
-        public Response CreateUpdateGremlinGraph(string resourceGroupName, string accountName, string databaseName, string graphName, GremlinGraphCreateUpdateParameters createUpdateGremlinGraphParameters, CancellationToken cancellationToken = default)
+        public Response CreateUpdateGremlinGraph(string resourceGroupName, string accountName, string databaseName, string graphName, GremlinGraphCreateUpdateOptions createUpdateGremlinGraphParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -1335,7 +1335,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateUpdateGremlinGraphThroughputRequest(string resourceGroupName, string accountName, string databaseName, string graphName, ThroughputSettingsUpdateParameters updateThroughputParameters)
+        internal HttpMessage CreateUpdateGremlinGraphThroughputRequest(string resourceGroupName, string accountName, string databaseName, string graphName, ThroughputSettingsUpdateOptions updateThroughputParameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1372,7 +1372,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="updateThroughputParameters"> The RUs per second of the parameters to provide for the current Gremlin graph. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="graphName"/>, or <paramref name="updateThroughputParameters"/> is null. </exception>
-        public async Task<Response> UpdateGremlinGraphThroughputAsync(string resourceGroupName, string accountName, string databaseName, string graphName, ThroughputSettingsUpdateParameters updateThroughputParameters, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateGremlinGraphThroughputAsync(string resourceGroupName, string accountName, string databaseName, string graphName, ThroughputSettingsUpdateOptions updateThroughputParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -1415,7 +1415,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="updateThroughputParameters"> The RUs per second of the parameters to provide for the current Gremlin graph. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="graphName"/>, or <paramref name="updateThroughputParameters"/> is null. </exception>
-        public Response UpdateGremlinGraphThroughput(string resourceGroupName, string accountName, string databaseName, string graphName, ThroughputSettingsUpdateParameters updateThroughputParameters, CancellationToken cancellationToken = default)
+        public Response UpdateGremlinGraphThroughput(string resourceGroupName, string accountName, string databaseName, string graphName, ThroughputSettingsUpdateOptions updateThroughputParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

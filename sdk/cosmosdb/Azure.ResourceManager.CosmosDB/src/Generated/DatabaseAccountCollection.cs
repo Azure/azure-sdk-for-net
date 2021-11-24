@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> or <paramref name="createUpdateParameters"/> is null. </exception>
-        public virtual DatabaseAccountCreateOrUpdateOperation CreateOrUpdate(string accountName, DatabaseAccountCreateUpdateParameters createUpdateParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual DatabaseAccountCreateOrUpdateOperation CreateOrUpdate(string accountName, DatabaseAccountCreateUpdateOptions createUpdateParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (accountName == null)
             {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> or <paramref name="createUpdateParameters"/> is null. </exception>
-        public async virtual Task<DatabaseAccountCreateOrUpdateOperation> CreateOrUpdateAsync(string accountName, DatabaseAccountCreateUpdateParameters createUpdateParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<DatabaseAccountCreateOrUpdateOperation> CreateOrUpdateAsync(string accountName, DatabaseAccountCreateUpdateOptions createUpdateParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (accountName == null)
             {

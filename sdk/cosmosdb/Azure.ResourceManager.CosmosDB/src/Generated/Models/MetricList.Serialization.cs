@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal static MetricList DeserializeMetricList(JsonElement element)
         {
-            Optional<IReadOnlyList<Metric>> value = default;
+            Optional<IReadOnlyList<BaseMetric>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Metric> array = new List<Metric>();
+                    List<BaseMetric> array = new List<BaseMetric>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Metric.DeserializeMetric(item));
+                        array.Add(BaseMetric.DeserializeBaseMetric(item));
                     }
                     value = array;
                     continue;

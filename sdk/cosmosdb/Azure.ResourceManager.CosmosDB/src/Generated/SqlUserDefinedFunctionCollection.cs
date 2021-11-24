@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userDefinedFunctionName"/> or <paramref name="createUpdateSqlUserDefinedFunctionParameters"/> is null. </exception>
-        public virtual SqlResourceCreateUpdateSqlUserDefinedFunctionOperation CreateOrUpdate(string userDefinedFunctionName, SqlUserDefinedFunctionCreateUpdateParameters createUpdateSqlUserDefinedFunctionParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual SqlResourceCreateUpdateSqlUserDefinedFunctionOperation CreateOrUpdate(string userDefinedFunctionName, SqlUserDefinedFunctionCreateUpdateOptions createUpdateSqlUserDefinedFunctionParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (userDefinedFunctionName == null)
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userDefinedFunctionName"/> or <paramref name="createUpdateSqlUserDefinedFunctionParameters"/> is null. </exception>
-        public async virtual Task<SqlResourceCreateUpdateSqlUserDefinedFunctionOperation> CreateOrUpdateAsync(string userDefinedFunctionName, SqlUserDefinedFunctionCreateUpdateParameters createUpdateSqlUserDefinedFunctionParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<SqlResourceCreateUpdateSqlUserDefinedFunctionOperation> CreateOrUpdateAsync(string userDefinedFunctionName, SqlUserDefinedFunctionCreateUpdateOptions createUpdateSqlUserDefinedFunctionParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (userDefinedFunctionName == null)
             {

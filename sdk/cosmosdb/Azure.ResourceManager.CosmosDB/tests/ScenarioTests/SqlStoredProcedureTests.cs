@@ -80,11 +80,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             VerifySqlStoredProcedures(storedProcedure, storedProcedure2);
 
-            SqlStoredProcedureCreateUpdateParameters updateParameters = new SqlStoredProcedureCreateUpdateParameters(storedProcedure.Id, _storedProcedureName, storedProcedure.Data.Type,
+            SqlStoredProcedureCreateUpdateOptions updateOptions = new SqlStoredProcedureCreateUpdateOptions(storedProcedure.Id, _storedProcedureName, storedProcedure.Data.Type,
                 new Dictionary<string, string>(),// TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
                 Resources.Models.Location.WestUS2, storedProcedure.Data.Resource, new CreateUpdateOptions { Throughput = TestThroughput2 });
 
-            storedProcedure = await (await SqlStoredProcedureCollection.CreateOrUpdateAsync(_storedProcedureName, updateParameters)).WaitForCompletionAsync();
+            storedProcedure = await (await SqlStoredProcedureCollection.CreateOrUpdateAsync(_storedProcedureName, updateOptions)).WaitForCompletionAsync();
             Assert.AreEqual(_storedProcedureName, storedProcedure.Data.Resource.Id);
             storedProcedure2 = await SqlStoredProcedureCollection.GetAsync(_storedProcedureName);
             VerifySqlStoredProcedures(storedProcedure, storedProcedure2);
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         protected async Task<SqlStoredProcedure> CreateSqlStoredProcedure(AutoscaleSettings autoscale)
         {
             _storedProcedureName = Recording.GenerateAssetName("sql-stored-procedure-");
-            SqlStoredProcedureCreateUpdateParameters sqlDatabaseCreateUpdateParameters = new SqlStoredProcedureCreateUpdateParameters(Resources.Models.Location.WestUS2,
+            SqlStoredProcedureCreateUpdateOptions sqlDatabaseCreateUpdateOptions = new SqlStoredProcedureCreateUpdateOptions(Resources.Models.Location.WestUS2,
                 new SqlStoredProcedureResource(_storedProcedureName)
                 {
                     Body = @"function () {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             {
                 Options = BuildDatabaseCreateUpdateOptions(TestThroughput1, autoscale),
             };
-            var sqlContainerLro = await SqlStoredProcedureCollection.CreateOrUpdateAsync(_storedProcedureName, sqlDatabaseCreateUpdateParameters);
+            var sqlContainerLro = await SqlStoredProcedureCollection.CreateOrUpdateAsync(_storedProcedureName, sqlDatabaseCreateUpdateOptions);
             return sqlContainerLro.Value;
         }
 

@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="tableName"> Cosmos DB table name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="tableName"/> is null. </exception>
-        public async Task<Response<TableData>> GetTableAsync(string resourceGroupName, string accountName, string tableName, CancellationToken cancellationToken = default)
+        public async Task<Response<CosmosTableData>> GetTableAsync(string resourceGroupName, string accountName, string tableName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -178,13 +178,13 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        TableData value = default;
+                        CosmosTableData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TableData.DeserializeTableData(document.RootElement);
+                        value = CosmosTableData.DeserializeCosmosTableData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((TableData)null, message.Response);
+                    return Response.FromValue((CosmosTableData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="tableName"> Cosmos DB table name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="tableName"/> is null. </exception>
-        public Response<TableData> GetTable(string resourceGroupName, string accountName, string tableName, CancellationToken cancellationToken = default)
+        public Response<CosmosTableData> GetTable(string resourceGroupName, string accountName, string tableName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -217,19 +217,19 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        TableData value = default;
+                        CosmosTableData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TableData.DeserializeTableData(document.RootElement);
+                        value = CosmosTableData.DeserializeCosmosTableData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((TableData)null, message.Response);
+                    return Response.FromValue((CosmosTableData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateUpdateTableRequest(string resourceGroupName, string accountName, string tableName, TableCreateUpdateParameters createUpdateTableParameters)
+        internal HttpMessage CreateCreateUpdateTableRequest(string resourceGroupName, string accountName, string tableName, TableCreateUpdateOptions createUpdateTableParameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="createUpdateTableParameters"> The parameters to provide for the current Table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="tableName"/>, or <paramref name="createUpdateTableParameters"/> is null. </exception>
-        public async Task<Response> CreateUpdateTableAsync(string resourceGroupName, string accountName, string tableName, TableCreateUpdateParameters createUpdateTableParameters, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateUpdateTableAsync(string resourceGroupName, string accountName, string tableName, TableCreateUpdateOptions createUpdateTableParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="createUpdateTableParameters"> The parameters to provide for the current Table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="tableName"/>, or <paramref name="createUpdateTableParameters"/> is null. </exception>
-        public Response CreateUpdateTable(string resourceGroupName, string accountName, string tableName, TableCreateUpdateParameters createUpdateTableParameters, CancellationToken cancellationToken = default)
+        public Response CreateUpdateTable(string resourceGroupName, string accountName, string tableName, TableCreateUpdateOptions createUpdateTableParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateUpdateTableThroughputRequest(string resourceGroupName, string accountName, string tableName, ThroughputSettingsUpdateParameters updateThroughputParameters)
+        internal HttpMessage CreateUpdateTableThroughputRequest(string resourceGroupName, string accountName, string tableName, ThroughputSettingsUpdateOptions updateThroughputParameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -553,7 +553,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="updateThroughputParameters"> The parameters to provide for the RUs per second of the current Table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="tableName"/>, or <paramref name="updateThroughputParameters"/> is null. </exception>
-        public async Task<Response> UpdateTableThroughputAsync(string resourceGroupName, string accountName, string tableName, ThroughputSettingsUpdateParameters updateThroughputParameters, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateTableThroughputAsync(string resourceGroupName, string accountName, string tableName, ThroughputSettingsUpdateOptions updateThroughputParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -591,7 +591,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="updateThroughputParameters"> The parameters to provide for the RUs per second of the current Table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="tableName"/>, or <paramref name="updateThroughputParameters"/> is null. </exception>
-        public Response UpdateTableThroughput(string resourceGroupName, string accountName, string tableName, ThroughputSettingsUpdateParameters updateThroughputParameters, CancellationToken cancellationToken = default)
+        public Response UpdateTableThroughput(string resourceGroupName, string accountName, string tableName, ThroughputSettingsUpdateOptions updateThroughputParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
