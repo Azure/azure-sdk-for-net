@@ -19,45 +19,19 @@ namespace Azure.Security.ConfidentialLedger
     /// <summary> The ConfidentialLedger service client. </summary>
     public partial class ConfidentialLedgerClient
     {
-        private static readonly string[] AuthorizationScopes = { "https://confidential-ledger.azure.com/.default" };
+        private static readonly string[] AuthorizationScopes = new string[] { "https://confidential-ledger.azure.com/.default" };
         private readonly TokenCredential _tokenCredential;
-
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _ledgerUri;
         private readonly string _apiVersion;
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get => _pipeline; }
+        public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary> Initializes a new instance of ConfidentialLedgerClient for mocking. </summary>
         protected ConfidentialLedgerClient()
         {
-        }
-
-        /// <summary> Initializes a new instance of ConfidentialLedgerClient. </summary>
-        /// <param name="ledgerUri"> The Confidential Ledger URL, for example https://contoso.confidentialledger.azure.com. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ledgerUri"/> or <paramref name="credential"/> is null. </exception>
-        public ConfidentialLedgerClient(Uri ledgerUri, TokenCredential credential, ConfidentialLedgerClientOptions options = null)
-        {
-            if (ledgerUri == null)
-            {
-                throw new ArgumentNullException(nameof(ledgerUri));
-            }
-            if (credential == null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
-
-            options ??= new ConfidentialLedgerClientOptions();
-
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _tokenCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
-            _ledgerUri = ledgerUri;
-            _apiVersion = options.Version;
         }
 
         /// <summary> The constitution is a script that assesses and applies proposals from consortium members. </summary>

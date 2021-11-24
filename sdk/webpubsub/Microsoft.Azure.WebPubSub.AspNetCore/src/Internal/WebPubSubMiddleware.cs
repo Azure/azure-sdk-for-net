@@ -33,7 +33,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
             // Not Web PubSub requests.
             if (!context.Request.Headers.ContainsKey(Constants.Headers.CloudEvents.WebPubSubVersion))
             {
-                await _next(context);
+                await _next(context).ConfigureAwait(false);
                 return;
             }
 
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
             // Not upstream business request.
             if (!context.Request.Headers.TryGetValue(Constants.Headers.CloudEvents.Hub, out var hubName))
             {
-                await _next(context);
+                await _next(context).ConfigureAwait(false);
                 return;
             }
             else
@@ -82,12 +82,12 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                 if (hub == null)
                 {
                     Log.HubNotRegistered(_logger, hubName);
-                    await _next(context);
+                    await _next(context).ConfigureAwait(false);
                     return;
                 }
             }
 
-            await _handler.HandleRequest(context);
+            await _handler.HandleRequest(context).ConfigureAwait(false);
         }
 
         private static class Log

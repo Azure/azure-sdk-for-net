@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -36,7 +37,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 
             var input = @"{ ""actionName"":""{0}"",""userId"":""user"", ""group"":""group1"",""connectionId"":""connection"",""data"":""test"",""dataType"":""text"", ""reason"":""close"", ""excluded"":[""aa"",""bb""]}";
 
-            var replacedInput = input.Replace("{0}", actionName);
+            var replacedInput = input.Replace("{0}", actionName.Substring(0, actionName.IndexOf("Action")));
 
             var jObject = JObject.Parse(replacedInput);
 
@@ -72,7 +73,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 
             var input = @"{ ""actionName"":""{0}"",""userId"":""user"", ""group"":""group1"",""connectionId"":""connection"",""data"": {""type"":""Buffer"", ""data"": [66, 105, 110, 97, 114, 121, 68, 97, 116, 97]} ,""dataType"":""binary"", ""reason"":""close"", ""excluded"":[""aa"",""bb""]}";
 
-            var replacedInput = input.Replace("{0}", actionName.Name);
+            var replacedInput = input.Replace("{0}", actionName.Name.Substring(0, actionName.Name.IndexOf("Action")));
 
             var jObject = JObject.Parse(replacedInput);
 
@@ -151,23 +152,51 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             var test = @"{""code"":""unauthorized"",""errorMessage"":""not valid user.""}";
 
             var result = BuildResponse(test, RequestType.Connect);
-
             Assert.NotNull(result);
             Assert.AreEqual(HttpStatusCode.Unauthorized, result.StatusCode);
 
+            var stateExist = result.Headers.TryGetValues(Constants.Headers.CloudEvents.State, out var states);
+            Assert.False(stateExist);
             var message = await result.Content.ReadAsStringAsync();
             Assert.AreEqual("not valid user.", message);
         }
 
         [TestCase]
-        public async Task ParseConnectResponse()
+        public async Task ParseConnectResponse_JSInvalidStatesNotMerge()
         {
-            var test = @"{""userId"":""aaa""}";
+            var test = @"{""userId"":""aaa"", ""states"": ""a""}";
 
-            var result = BuildResponse(test, RequestType.Connect);
+            var result = BuildResponse(test, RequestType.Connect, true);
 
             Assert.NotNull(result);
             Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);
+
+            var stateExist = result.Headers.TryGetValues(Constants.Headers.CloudEvents.State, out var value);
+            Assert.True(stateExist);
+            var states = value.SingleOrDefault().DecodeConnectionStates();
+            Assert.NotNull(states);
+            Assert.AreEqual(1, states.Count);
+            Assert.True(states.ContainsKey("testKey"));
+
+            var response = await result.Content.ReadAsStringAsync();
+            var message = (JObject.Parse(response)).ToObject<ConnectEventResponse>();
+            Assert.AreEqual("aaa", message.UserId);
+        }
+
+        [TestCase]
+        public async Task ParseConnectResponseWithValidStates()
+        {
+            var test = @"{""userId"":""aaa"", ""states"": { ""a"": ""b"", ""a"": ""c"" }}";
+
+            var result = BuildResponse(test, RequestType.Connect, false);
+
+            Assert.NotNull(result);
+            Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);
+
+            var stateExist = result.Headers.TryGetValues(Constants.Headers.CloudEvents.State, out var value);
+            Assert.True(stateExist);
+            var states = value.SingleOrDefault().DecodeConnectionStates();
+            Assert.True(states.ContainsKey("a"));
 
             var response = await result.Content.ReadAsStringAsync();
             var message = (JObject.Parse(response)).ToObject<ConnectEventResponse>();
@@ -216,13 +245,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         [TestCase]
         public void TestWebPubSubContext_ConnectedEvent()
         {
-            var context = new WebPubSubConnectionContext()
-            {
-                ConnectionId = "connectionId",
-                UserId = "userA",
-                EventName = "connected",
-                EventType = WebPubSubEventType.System
-            };
+            var context = new WebPubSubConnectionContext(connectionId: "connectionId", userId: "userA", eventName: "connected", eventType: WebPubSubEventType.System, hub: null);
             var test = new WebPubSubContext(new ConnectedEventRequest(context));
 
             var serialize = JObject.FromObject(test);
@@ -237,13 +260,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         [TestCase]
         public void TestWebPubSubContext_ConnectEvent()
         {
-            var context = new WebPubSubConnectionContext()
-            {
-                ConnectionId = "connectionId",
-                UserId = "userA",
-                EventName = "connected",
-                EventType = WebPubSubEventType.System
-            };
+            var context = new WebPubSubConnectionContext(connectionId: "connectionId", userId: "userA", eventName: "connected", eventType: WebPubSubEventType.System, hub: null);
+
             var claims = new Dictionary<string, string[]>
             {
                 { "aa", new string[]{"aa1, aa2"} },
@@ -266,13 +284,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         [TestCase]
         public void TestWebPubSubContext_UserEvent()
         {
-            var context = new WebPubSubConnectionContext()
-            {
-                ConnectionId = "connectionId",
-                UserId = "userA",
-                EventName = "connected",
-                EventType = WebPubSubEventType.System
-            };
+            var context = new WebPubSubConnectionContext(connectionId: "connectionId", userId: "userA", eventName: "connected", eventType: WebPubSubEventType.System, hub: null);
             var test = new WebPubSubContext(new UserEventRequest(context, BinaryData.FromString("test"), WebPubSubDataType.Text));
 
             var serialize = JObject.FromObject(test);
@@ -289,7 +301,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         [TestCase]
         public void TestWebPubSubContext_DisconnectedEvent()
         {
-            var test = new WebPubSubContext(new DisconnectedEventRequest("dropped"));
+            var test = new WebPubSubContext(new DisconnectedEventRequest(null, "dropped"));
 
             var serialize = JObject.FromObject(test);
             var request = serialize["request"];
@@ -334,9 +346,74 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             Assert.AreEqual(url, json["url"].ToString());
         }
 
-        private static HttpResponseMessage BuildResponse(string input, RequestType requestType)
+        [TestCase]
+        public void TestWebPubSubContext_UserEventStates()
         {
-            return Utilities.BuildValidResponse(input, requestType);
+            WebPubSubConfigProvider.RegisterJsonConverter();
+            var states = new Dictionary<string, object>
+            {
+                { "aKey", "aValue"},
+                { "bKey", 123 },
+                { "cKey", new StateTestClass() }
+            };
+            var decodedStates = states.EncodeConnectionStates().DecodeConnectionStates();
+            var context = new WebPubSubConnectionContext(connectionId: "connectionId", userId: "userA", eventName: "connected", eventType: WebPubSubEventType.System, hub: null, states: decodedStates);
+            var test = new WebPubSubContext(new UserEventRequest(context, BinaryData.FromString("test"), WebPubSubDataType.Text));
+
+            var jObj = JObject.FromObject(test);
+            var request = jObj["request"];
+
+            Assert.NotNull(request);
+            Assert.AreEqual("test", request["data"].ToString());
+            Assert.NotNull(jObj["response"]);
+            Assert.AreEqual("", jObj["errorMessage"].ToString());
+            Assert.AreEqual("False", jObj["hasError"].ToString());
+            Assert.AreEqual("False", jObj["isPreflight"].ToString());
+
+            var context1 = request["connectionContext"];
+            Assert.NotNull(context1);
+            var states1 = context1["states"].ToObject<IReadOnlyDictionary<string, object>>();
+            Assert.NotNull(states1);
+            Assert.AreEqual("aValue", states1["aKey"]);
+            Assert.NotNull(states1);
+            Assert.AreEqual(123, states1["bKey"]);
+        }
+
+        private static HttpResponseMessage BuildResponse(string input, RequestType requestType, bool hasTestStates = false)
+        {
+            Dictionary<string, object> states = null;
+            if (hasTestStates)
+            {
+                states = new Dictionary<string, object>
+                {
+                    { "testKey", "value1" },
+                };
+            }
+            var context = new WebPubSubConnectionContext(WebPubSubEventType.System, "connect", "testhub", "Connection-Id1", states: states);
+            return Utilities.BuildValidResponse(input, requestType, context);
+        }
+
+        private sealed class StateTestClass
+        {
+            public DateTime Timestamp { get; set; }
+
+            public string Title { get; set; }
+
+            public int Version { get; set; }
+
+            public StateTestClass()
+            {
+                Timestamp = DateTime.Parse("2021-11-10");
+                Title = "GA";
+                Version = 1;
+            }
+
+            public StateTestClass(DateTime timestamp, string title, int version)
+            {
+                Timestamp = timestamp;
+                Title = title;
+                Version = version;
+            }
         }
     }
 }

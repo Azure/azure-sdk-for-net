@@ -82,21 +82,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                         {
                             var content = await req.Content.ReadAsStringAsync().ConfigureAwait(false);
                             var request = JsonSerializer.Deserialize<ConnectEventRequest>(content);
-                            claims = request.Claims.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-                            subprotocols = new List<string>(request.Subprotocols);
-                            query = request.Query.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-                            certificates = new List<WebPubSubClientCertificate>(request.ClientCertificates);
-                            request.ConnectionContext = context;
-                            eventRequest = request;
+                            eventRequest = new ConnectEventRequest(context, request.Claims, request.Query, request.Subprotocols, request.ClientCertificates);
                             break;
                         }
                     case RequestType.Disconnected:
                         {
                             var content = await req.Content.ReadAsStringAsync().ConfigureAwait(false);
                             var request = JsonSerializer.Deserialize<DisconnectedEventRequest>(content);
-                            reason = request.Reason;
-                            request.ConnectionContext = context;
-                            eventRequest = request;
+                            eventRequest = new DisconnectedEventRequest(context, request.Reason);
                             break;
                         }
                     case RequestType.User:
@@ -153,19 +146,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                             // Skip no returns
                             if (response != null)
                             {
-                                var validResponse = Utilities.BuildValidResponse(response, requestType);
+                                var validResponse = Utilities.BuildValidResponse(response, requestType, context);
 
                                 if (validResponse != null)
                                 {
-                                    // built-in support on set states only applies .NET WebPubSubTrigger.
-                                    if (response is ConnectEventResponse connectResponse)
-                                    {
-                                        AddStateHeader(ref validResponse, context, connectResponse.States);
-                                    }
-                                    if (response is UserEventResponse msgResponse)
-                                    {
-                                        AddStateHeader(ref validResponse, context, msgResponse.States);
-                                    }
                                     return validResponse;
                                 }
                                 _logger.LogWarning($"Invalid response type {response.GetType()} regarding current request: {requestType}");
@@ -189,52 +173,43 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         {
             try
             {
-                context = new();
-                context.ConnectionId = request.Headers.GetValues(Constants.Headers.CloudEvents.ConnectionId).SingleOrDefault();
-                context.Hub = request.Headers.GetValues(Constants.Headers.CloudEvents.Hub).SingleOrDefault();
-                context.EventType = Utilities.GetEventType(request.Headers.GetValues(Constants.Headers.CloudEvents.Type).SingleOrDefault());
-                context.EventName = request.Headers.GetValues(Constants.Headers.CloudEvents.EventName).SingleOrDefault();
-                context.Origin = request.Headers.GetValues(Constants.Headers.WebHookRequestOrigin).SingleOrDefault();
-                context.InitHeaders(request.Headers.ToDictionary(x => x.Key, v => v.Value.ToArray(), StringComparer.OrdinalIgnoreCase));
-
+                var connectionId = request.Headers.GetValues(Constants.Headers.CloudEvents.ConnectionId).SingleOrDefault();
+                var hub = request.Headers.GetValues(Constants.Headers.CloudEvents.Hub).SingleOrDefault();
+                var eventType = Utilities.GetEventType(request.Headers.GetValues(Constants.Headers.CloudEvents.Type).SingleOrDefault());
+                var eventName = request.Headers.GetValues(Constants.Headers.CloudEvents.EventName).SingleOrDefault();
+                var origin = request.Headers.GetValues(Constants.Headers.WebHookRequestOrigin).SingleOrDefault();
+                var headers = request.Headers.ToDictionary(x => x.Key, v => v.Value.ToArray(), StringComparer.OrdinalIgnoreCase);
+                string signature = null;
                 // Signature is optional and binding with validation parameter.
-                if (request.Headers.TryGetValues(Constants.Headers.CloudEvents.Signature, out var signature))
+                if (request.Headers.TryGetValues(Constants.Headers.CloudEvents.Signature, out var val))
                 {
-                    context.Signature = signature.SingleOrDefault();
+                    signature = val.SingleOrDefault();
                 }
-
+                string userId = null;
                 // UserId is optional, e.g. connect
                 if (request.Headers.TryGetValues(Constants.Headers.CloudEvents.UserId, out var values))
                 {
-                    context.UserId = values.SingleOrDefault();
+                    userId = values.SingleOrDefault();
                 }
-
+                Dictionary<string, object> states = null;
                 if (request.Headers.TryGetValues(Constants.Headers.CloudEvents.State, out var connectionStates))
                 {
-                    context.InitStates(connectionStates.SingleOrDefault().DecodeConnectionStates());
+                    states = connectionStates.SingleOrDefault().DecodeConnectionStates();
                 }
+
+                context = new WebPubSubConnectionContext(eventType, eventName, hub, connectionId, userId, signature, origin, states, headers);
+                return true;
             }
             catch (Exception)
             {
                 context = null;
                 return false;
             }
-
-            return true;
         }
 
         private static string GetFunctionName(WebPubSubConnectionContext context)
         {
             return $"{context.Hub}.{context.EventType}.{context.EventName}";
-        }
-
-        public static void AddStateHeader(ref HttpResponseMessage response, WebPubSubConnectionContext context, Dictionary<string, object> newStates)
-        {
-            var updatedStates = context.UpdateStates(newStates);
-            if (updatedStates != null)
-            {
-                response.Headers.Add(Constants.Headers.CloudEvents.State, updatedStates.EncodeConnectionStates());
-            }
         }
 
         private static HttpResponseMessage RespondToServiceAbuseCheck(IList<string> requestHosts, WebPubSubValidationOptions options)

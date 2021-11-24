@@ -19,9 +19,8 @@ namespace Azure.Analytics.Purview.Account
     /// <summary> The PurviewCollection service client. </summary>
     public partial class PurviewCollection
     {
-        private static readonly string[] AuthorizationScopes = { "https://purview.azure.net/.default" };
+        private static readonly string[] AuthorizationScopes = new string[] { "https://purview.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
-
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _endpoint;
@@ -29,7 +28,7 @@ namespace Azure.Analytics.Purview.Account
         private readonly string _apiVersion;
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get => _pipeline; }
+        public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary> Initializes a new instance of PurviewCollection for mocking. </summary>
         protected PurviewCollection()

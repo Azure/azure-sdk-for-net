@@ -29,9 +29,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
                 { "aaa", "aaa" },
                 { "bbb", "bbb" }
             };
-            var connectionContext = new WebPubSubConnectionContext();
-
-            connectionContext.InitStates(exist);
+            var connectionContext = new WebPubSubConnectionContext(eventType: WebPubSubEventType.System, null, null, null, states: exist);
 
             var response = new ConnectEventResponse
             {
@@ -89,12 +87,12 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
         [Test]
         public void TestConnectEventRequestSerialize()
         {
-            var connectionContext = new WebPubSubConnectionContext()
-            {
-                ConnectionId = "0f9c97a2f0bf4706afe87a14e0797b11",
-                Signature = "sha256=7767effcb3946f3e1de039df4b986ef02c110b1469d02c0a06f41b3b727ab561",
-                Origin = TestUri.Host
-            };
+            var connectionContext = new WebPubSubConnectionContext(
+                WebPubSubEventType.System,
+                null, null, "0f9c97a2f0bf4706afe87a14e0797b11",
+                signature: "sha256=7767effcb3946f3e1de039df4b986ef02c110b1469d02c0a06f41b3b727ab561",
+                origin: TestUri.Host);
+
             var claims = new Dictionary<string, string[]>
             {
                 {"aaa", new string[]{"a1", "a2"} },
@@ -107,8 +105,8 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
                 {"query2", new string[]{"b1"} },
             };
             var certs = new List<WebPubSubClientCertificate>
-            { 
-                new WebPubSubClientCertificate("111"), 
+            {
+                new WebPubSubClientCertificate("111"),
                 new WebPubSubClientCertificate("222")
             };
             var request = new ConnectEventRequest(connectionContext, claims, query, new string[] { "protocol1", "protocol2" }, certs);
@@ -128,12 +126,11 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
         [Test]
         public void TestUserEventRequestSerialize()
         {
-            var connectionContext = new WebPubSubConnectionContext()
-            {
-                ConnectionId = "0f9c97a2f0bf4706afe87a14e0797b11",
-                Signature = "sha256=7767effcb3946f3e1de039df4b986ef02c110b1469d02c0a06f41b3b727ab561",
-                Origin = TestUri.Host
-            };
+            var connectionContext = new WebPubSubConnectionContext(
+                WebPubSubEventType.System,
+                null, null, "0f9c97a2f0bf4706afe87a14e0797b11",
+                signature: "sha256=7767effcb3946f3e1de039df4b986ef02c110b1469d02c0a06f41b3b727ab561",
+                origin: TestUri.Host);
 
             var request = new UserEventRequest(connectionContext, BinaryData.FromString("Hello World"), WebPubSubDataType.Text);
 
@@ -202,12 +199,11 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
         [TestCase("ccc", false)]
         public void TestSignatureCheck(string accessKey, bool valid)
         {
-            var connectionContext = new WebPubSubConnectionContext()
-            {
-                ConnectionId = "0f9c97a2f0bf4706afe87a14e0797b11",
-                Signature = "sha256=7767effcb3946f3e1de039df4b986ef02c110b1469d02c0a06f41b3b727ab561",
-                Origin = TestUri.Host
-            };
+            var connectionContext = new WebPubSubConnectionContext(
+                WebPubSubEventType.System,
+                null, null, "0f9c97a2f0bf4706afe87a14e0797b11",
+                signature: "sha256=7767effcb3946f3e1de039df4b986ef02c110b1469d02c0a06f41b3b727ab561",
+                origin: TestUri.Host);
             var options = new WebPubSubValidationOptions($"Endpoint={TestUri};AccessKey={accessKey};Version=1.0;");
             var result = connectionContext.IsValidSignature(options);
             Assert.AreEqual(valid, result);
@@ -216,12 +212,11 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
         [Test]
         public void TestSignatureCheck_OptionsNullSuccess()
         {
-            var connectionContext = new WebPubSubConnectionContext()
-            {
-                ConnectionId = "0f9c97a2f0bf4706afe87a14e0797b11",
-                Signature = "sha256=7767effcb3946f3e1de039df4b986ef02c110b1469d02c0a06f41b3b727ab561",
-                Origin = TestUri.Host
-            };
+            var connectionContext = new WebPubSubConnectionContext(
+                WebPubSubEventType.System,
+                null, null, "0f9c97a2f0bf4706afe87a14e0797b11",
+                signature: "sha256=7767effcb3946f3e1de039df4b986ef02c110b1469d02c0a06f41b3b727ab561",
+                origin: TestUri.Host);
             var result = connectionContext.IsValidSignature(null);
             Assert.True(result);
         }
@@ -229,12 +224,11 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
         [Test]
         public void TestSignatureCheck_OptionsEmptySuccess()
         {
-            var connectionContext = new WebPubSubConnectionContext()
-            {
-                ConnectionId = "0f9c97a2f0bf4706afe87a14e0797b11",
-                Signature = "sha256=7767effcb3946f3e1de039df4b986ef02c110b1469d02c0a06f41b3b727ab561",
-                Origin = TestUri.Host
-            };
+            var connectionContext = new WebPubSubConnectionContext(
+                WebPubSubEventType.System,
+                null, null, "0f9c97a2f0bf4706afe87a14e0797b11",
+                signature: "sha256=7767effcb3946f3e1de039df4b986ef02c110b1469d02c0a06f41b3b727ab561",
+                origin: TestUri.Host);
             var result = connectionContext.IsValidSignature(null);
             Assert.True(result);
         }
@@ -242,12 +236,11 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
         [Test]
         public void TestSignatureCheck_AccessKeyEmptySuccess()
         {
-            var connectionContext = new WebPubSubConnectionContext()
-            {
-                ConnectionId = "0f9c97a2f0bf4706afe87a14e0797b11",
-                Signature = "sha256=7767effcb3946f3e1de039df4b986ef02c110b1469d02c0a06f41b3b727ab561",
-                Origin = TestUri.Host
-            };
+            var connectionContext = new WebPubSubConnectionContext(
+                WebPubSubEventType.System,
+                null, null, "0f9c97a2f0bf4706afe87a14e0797b11",
+                signature: "sha256=7767effcb3946f3e1de039df4b986ef02c110b1469d02c0a06f41b3b727ab561",
+                origin: TestUri.Host);
             var options = new WebPubSubValidationOptions($"Endpoint={TestUri};Version=1.0;");
             var result = connectionContext.IsValidSignature(options);
             Assert.True(result);
@@ -256,12 +249,10 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
         [Test]
         public void TestSignatureCheck_SignatureNullFail()
         {
-            var connectionContext = new WebPubSubConnectionContext()
-            {
-                ConnectionId = "0f9c97a2f0bf4706afe87a14e0797b11",
-                Signature = null,
-                Origin = TestUri.Host
-            };
+            var connectionContext = new WebPubSubConnectionContext(
+                WebPubSubEventType.System,
+                null, null, "0f9c97a2f0bf4706afe87a14e0797b11",
+                origin: TestUri.Host);
             var options = new WebPubSubValidationOptions($"Endpoint={TestUri};AccessKey=7aab239577fd4f24bc919802fb629f5f;Version=1.0;");
             var result = connectionContext.IsValidSignature(options);
             Assert.False(result);

@@ -13,6 +13,11 @@ skip-csproj: true
 modelerfour:
     lenient-model-deduplication: true
     seal-single-value-enum-by-default: true
+
+# temporary
+mgmt-debug:
+    suppress-list-exception: true
+
 operation-group-to-resource-type:
     Skus: Microsoft.Storage/skus
     DeletedAccounts: Microsoft.Storage/deletedAccounts

@@ -219,7 +219,7 @@ additional questions or comments.
 [coc_contact]: mailto:opencode@microsoft.com
 [package]: https://aka.ms/ava/sdk/client/net
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/videoanalyzer/Azure.Media.VideoAnalyzer.Edge/src
-[samples]: https://github.com/Azure-Samples/live-video-analytics-iot-edge-csharp
+[samples]: https://go.microsoft.com/fwlink/?linkid=2162276
 [doc_direct_methods]: https://docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/direct-methods
 [doc_pipelines]: https://docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/pipeline
 [doc_product]: https://docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/

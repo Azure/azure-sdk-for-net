@@ -85,14 +85,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 
         private static WebPubSubConnectionContext CreateConnectionContext()
         {
-            return new WebPubSubConnectionContext
-            {
-                ConnectionId = "000000",
-                EventName = "message",
-                EventType = WebPubSubEventType.User,
-                Hub = "testhub",
-                UserId = "user1"
-            };
+            return new WebPubSubConnectionContext(WebPubSubEventType.User, "message", "testhub", "000000", "user1");
         }
 
         private sealed class WebPubSubFuncs

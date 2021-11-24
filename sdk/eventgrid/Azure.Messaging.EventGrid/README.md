@@ -334,7 +334,7 @@ foreach (EventGridEvent egEvent in egEvents)
 You can also easily [enable console logging](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md#logging) if you want to dig deeper into the requests you're making against the service.
 
 ### Distributed Tracing
-The Event Grid library supports distributing tracing out of the box. In order to adhere to the CloudEvents specification's [guidance](https://github.com/cloudevents/spec/blob/master/extensions/distributed-tracing.md) on distributing tracing, the library will set the `traceparent` and `tracestate` on the `ExtensionAttributes` of a `CloudEvent` when distributed tracing is enabled. To learn more about how to enable distributed tracing in your application, take a look at the Azure SDK [distributed tracing documentation](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md#Distributed-tracing).
+The Event Grid library supports distributing tracing out of the box. In order to adhere to the CloudEvents specification's [guidance](https://github.com/cloudevents/spec/blob/v1.0.1/extensions/distributed-tracing.md) on distributing tracing, the library will set the `traceparent` and `tracestate` on the `ExtensionAttributes` of a `CloudEvent` when distributed tracing is enabled. To learn more about how to enable distributed tracing in your application, take a look at the Azure SDK [distributed tracing documentation](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md#Distributed-tracing).
 
 ### Event Grid on Kubernetes
 This library has been tested and validated on Kubernetes using Azure Arc.

@@ -15,11 +15,11 @@
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
 
-    <!-- 
-      TEMP: Move Event Hubs to a project reference until the 
+    <!--
+      TEMP: Move Event Hubs to a project reference until the
             changes for processor defaults for the load balancing strategy,
-            load balancing interval, and ownership experation are published.
-    
+            load balancing interval, and ownership expiration are published.
+
     <PackageReference Include="Azure.Messaging.EventHubs" />
     -->
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Messaging.EventHubs\src\Azure.Messaging.EventHubs.csproj" />
