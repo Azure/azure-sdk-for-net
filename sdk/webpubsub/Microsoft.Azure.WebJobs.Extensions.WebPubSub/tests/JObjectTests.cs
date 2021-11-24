@@ -438,24 +438,36 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         [TestCase]
         public void TestWebPubSubContext_UserEventStates_AllBinaryData()
         {
-            var ex = Assert.Throws<ArgumentException>(() =>
-                new WebPubSubConnectionContext(
-                    eventType: WebPubSubEventType.System,
-                    eventName: "connected",
-                    hub: null,
-                    connectionId: "connectionId",
-                    userId: "userA",
-                    signature: null,
-                    origin: null,
-                    states: new Dictionary<string, object>
-                    {
-                        { "aKey", "aValue"},
-                        { "bKey", 123 },
-                        { "cKey", new StateTestClass() }
-                    },
-                    headers: null));
-            Assert.AreEqual("states", ex.ParamName);
-            StringAssert.Contains("BinaryData", ex.Message);
+            var ctx = new WebPubSubConnectionContext(
+                eventType: WebPubSubEventType.System,
+                eventName: "connected",
+                hub: null,
+                connectionId: "connectionId",
+                userId: "userA",
+                signature: null,
+                origin: null,
+                states: new Dictionary<string, object>
+                {
+                    { "aKey", "aValue"},
+                    { "bKey", 123 },
+                    { "cKey", new StateTestClass(DateTime.Now, "Test", 42) }
+                },
+                headers: null);
+
+            Assert.IsInstanceOf<BinaryData>(ctx.ConnectionStates["aKey"]);
+            Assert.IsInstanceOf<string>(ctx.States["aKey"]);
+            Assert.AreEqual("aValue", ctx.ConnectionStates["aKey"].ToObjectFromJson<string>());
+            Assert.AreEqual("\"aValue\"", ctx.States["aKey"]);
+
+            Assert.IsInstanceOf<BinaryData>(ctx.ConnectionStates["bKey"]);
+            Assert.IsInstanceOf<string>(ctx.States["bKey"]);
+            Assert.AreEqual(123, ctx.ConnectionStates["bKey"].ToObjectFromJson<int>());
+            Assert.AreEqual("123", ctx.States["bKey"]);
+
+            Assert.IsInstanceOf<BinaryData>(ctx.ConnectionStates["cKey"]);
+            Assert.IsInstanceOf<string>(ctx.States["cKey"]);
+            Assert.AreEqual(42, ctx.ConnectionStates["cKey"].ToObjectFromJson<StateTestClass>().Version);
+            StringAssert.StartsWith("{", (string)ctx.States["cKey"]);
         }
 
         [TestCase]

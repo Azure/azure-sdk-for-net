@@ -14,7 +14,7 @@ namespace Microsoft.Azure.WebPubSub.Common
     /// </summary>
     public class ConnectEventResponse : WebPubSubEventResponse
     {
-        private Dictionary<string, BinaryData> _states = new();
+        private Dictionary<string, BinaryData> _states;
 
         /// <summary>
         /// The connection states.
@@ -63,6 +63,7 @@ namespace Microsoft.Azure.WebPubSub.Common
             IEnumerable<string> groups,
             string subprotocol,
             IEnumerable<string> roles)
+            : this()
         {
             UserId = userId;
             Groups = groups?.ToArray();
@@ -73,8 +74,8 @@ namespace Microsoft.Azure.WebPubSub.Common
         /// <summary>
         /// Default constructor for JsonSerialize.
         /// </summary>
-        public ConnectEventResponse()
-        { }
+        public ConnectEventResponse() =>
+            SetStatesDictionary(new Dictionary<string, BinaryData>());
 
         /// <summary>
         /// Set connection states.
@@ -95,8 +96,7 @@ namespace Microsoft.Azure.WebPubSub.Common
             // In case user cleared states.
             if (_states == null)
             {
-                _states = new Dictionary<string, BinaryData>();
-                States = new StringifiedDictionary(_states);
+                SetStatesDictionary(new Dictionary<string, BinaryData>());
             }
             _states[key] = value;
         }
@@ -104,10 +104,16 @@ namespace Microsoft.Azure.WebPubSub.Common
         /// <summary>
         /// Clear all states.
         /// </summary>
-        public void ClearStates()
+        public void ClearStates() => SetStatesDictionary(null);
+
+        /// <summary>
+        /// Update the dictionary backing both States and ConnectionStates.
+        /// </summary>
+        /// <param name="states">The new dictionary or null.</param>
+        private void SetStatesDictionary(Dictionary<string, BinaryData> states)
         {
-            _states = null;
-            States = null;
+            _states = states;
+            States = states != null ? new StringifiedDictionary(states) : null;
         }
     }
 }

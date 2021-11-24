@@ -103,10 +103,7 @@ namespace Microsoft.Azure.WebPubSub.Common
                 origin,
                 states?.ToDictionary(
                     p => p.Key,
-                    p => p.Value is BinaryData data ?
-                        data :
-                        // TODO: Is this safe?  Will all callers of of this .ctor always pass BinaryData? Can we have version mismatches between Common and Extensions that break this?
-                        throw new ArgumentException($"{nameof(states)} values must be of type {nameof(BinaryData)}.", nameof(states))),
+                    p => p.Value as BinaryData ?? BinaryData.FromObjectAsJson(p.Value)),
                 headers)
         {
         }
