@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests
 
         [TestCase]
         [RecordedTest]
-        [Ignore("Need to solve some bugs")]
+        [Ignore("Need fix in OperationInternals")]
         public async Task Update()
         {
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();
