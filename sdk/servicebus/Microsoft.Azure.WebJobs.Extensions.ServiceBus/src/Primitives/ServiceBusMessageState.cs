@@ -3,6 +3,7 @@
 
 namespace Microsoft.Azure.WebJobs.ServiceBus
 {
+    // can be removed once the SDK is upgraded to the version that supports the message state
     enum ServiceBusMessageState
     {
         Active = 0,
