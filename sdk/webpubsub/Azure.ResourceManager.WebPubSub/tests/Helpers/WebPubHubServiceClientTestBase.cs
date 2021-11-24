@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.TestFramework;
+using Azure.ResourceManager.WebPubSub.Models;
 
 namespace Azure.ResourceManager.WebPubSub.Tests.Helpers
 {
@@ -54,9 +56,43 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Helpers
         {
             return (await Subscription.GetResourceGroups().CreateOrUpdateAsync(name, new ResourceGroupData(TestEnvironment.Location))).Value;
         }
-        protected async Task<ResourceGroup> CreateResourceGroup(string name,string location)
+
+        protected async Task<ResourceGroup> CreateResourceGroup(string name, string location)
         {
             return (await Subscription.GetResourceGroups().CreateOrUpdateAsync(name, new ResourceGroupData(location))).Value;
+        }
+
+        protected async Task<WebPubSubResource> CreateDefaultWebPubSub(string webPubSubName, Location location, ResourceGroup resourceGroup)
+        {
+            // Create WebPubSub ConfigData
+            IList<LiveTraceCategory> categories = new List<LiveTraceCategory>()
+            {
+                new LiveTraceCategory("category-01", "true"),
+            };
+
+            ACLAction aCLAction = new ACLAction("Deny");
+            IList<WebPubSubRequestType> allow = new List<WebPubSubRequestType>();
+            IList<WebPubSubRequestType> deny = new List<WebPubSubRequestType>() { new WebPubSubRequestType("RESTAPI") };
+            NetworkACL publicNetwork = new NetworkACL(allow, deny);
+            IList<PrivateEndpointACL> privateEndpoints = new List<PrivateEndpointACL>();
+
+            List<ResourceLogCategory> resourceLogCategory = new List<ResourceLogCategory>()
+            {
+                new ResourceLogCategory(){ Name = "category1", Enabled = "false" }
+            };
+
+            WebPubSubResourceData data = new WebPubSubResourceData(Location.WestUS2)
+            {
+                Sku = new ResourceSku("Standard_S1"),
+                LiveTraceConfiguration = new LiveTraceConfiguration("true", categories),
+                NetworkACLs = new WebPubSubNetworkACLs(aCLAction, publicNetwork, privateEndpoints),
+                ResourceLogConfiguration = new ResourceLogConfiguration(resourceLogCategory),
+            };
+
+            // Create WebPubSub
+            var webPubSub = await (await resourceGroup.GetWebPubSubResources().CreateOrUpdateAsync(webPubSubName, data)).WaitForCompletionAsync();
+
+            return webPubSub.Value;
         }
     }
 }
