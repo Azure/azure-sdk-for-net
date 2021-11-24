@@ -19,3 +19,10 @@ steps:
       key: 'nuget | "$(Agent.OS)" | $(Build.SourcesDirectory)/eng/Packages.Data.props | ${{parameters.NuGetCacheKey}}'
       path: $(NUGET_PACKAGES)
     displayName: Cache NuGet packages
+  - task: PowerShell@2
+    displayName: Add Azurite location as environment variable
+    inputs:
+      pwsh: true
+      workingDirectory: $(Build.SourcesDirectory)
+      targetType: 'inline'
+      script: Write-Host "##vso[task.setvariable variable=Azure.Azurite.Location;]${{ parameters.AzuriteLocation }}"

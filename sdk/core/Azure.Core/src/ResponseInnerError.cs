@@ -21,7 +21,7 @@ namespace Azure
         {
             _innerErrorElement = innerErrorElement;
             Code = code;
-            InnerError = innerError;
+            InnerError = innerError
         }
 
         /// <summary>
