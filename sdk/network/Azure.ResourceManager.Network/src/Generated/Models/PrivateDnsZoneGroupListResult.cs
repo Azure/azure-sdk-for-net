@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -17,20 +16,20 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of PrivateDnsZoneGroupListResult. </summary>
         internal PrivateDnsZoneGroupListResult()
         {
-            Value = new ChangeTrackingList<PrivateDnsZoneGroupData>();
+            Value = new ChangeTrackingList<PrivateDnsZoneGroup>();
         }
 
         /// <summary> Initializes a new instance of PrivateDnsZoneGroupListResult. </summary>
         /// <param name="value"> A list of private dns zone group resources in a private endpoint. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal PrivateDnsZoneGroupListResult(IReadOnlyList<PrivateDnsZoneGroupData> value, string nextLink)
+        internal PrivateDnsZoneGroupListResult(IReadOnlyList<PrivateDnsZoneGroup> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> A list of private dns zone group resources in a private endpoint. </summary>
-        public IReadOnlyList<PrivateDnsZoneGroupData> Value { get; }
+        public IReadOnlyList<PrivateDnsZoneGroup> Value { get; }
         /// <summary> The URL to get the next set of results. </summary>
         public string NextLink { get; }
     }

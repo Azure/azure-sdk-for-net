@@ -15,14 +15,15 @@ using Azure;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
-    /// <summary> A class representing collection of FileService and their operations over a StorageAccount. </summary>
+    /// <summary> A class representing collection of FileService and their operations over its parent. </summary>
     public partial class FileServiceCollection : ArmCollection, IEnumerable<FileService>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly FileServicesRestOperations _restClient;
+        private readonly FileServicesRestOperations _fileServicesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="FileServiceCollection"/> class for mocking. </summary>
         protected FileServiceCollection()
@@ -34,17 +35,7 @@ namespace Azure.ResourceManager.Storage
         internal FileServiceCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new FileServicesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-        }
-
-        IEnumerator<FileService> IEnumerable<FileService>.GetEnumerator()
-        {
-            return GetAll().Value.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().Value.GetEnumerator();
+            _fileServicesRestClient = new FileServicesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -52,21 +43,90 @@ namespace Azure.ResourceManager.Storage
 
         // Collection level operations.
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Sets the properties of file services in storage accounts, including CORS (Cross-Origin Resource Sharing) rules. </summary>
         /// <param name="fileServicesName"> The name of the file Service within the specified storage account. File Service Name must be &quot;default&quot;. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="parameters"> The properties of file services in storage accounts, including CORS (Cross-Origin Resource Sharing) rules. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileServicesName"/> or <paramref name="parameters"/> is null. </exception>
+        public virtual FileServiceSetServicePropertiesOperation CreateOrUpdate(string fileServicesName, FileServiceData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            if (fileServicesName == null)
+            {
+                throw new ArgumentNullException(nameof(fileServicesName));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("FileServiceCollection.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                var response = _fileServicesRestClient.SetServiceProperties(Id.ResourceGroupName, Id.Name, fileServicesName, parameters, cancellationToken);
+                var operation = new FileServiceSetServicePropertiesOperation(Parent, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Sets the properties of file services in storage accounts, including CORS (Cross-Origin Resource Sharing) rules. </summary>
+        /// <param name="fileServicesName"> The name of the file Service within the specified storage account. File Service Name must be &quot;default&quot;. </param>
+        /// <param name="parameters"> The properties of file services in storage accounts, including CORS (Cross-Origin Resource Sharing) rules. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileServicesName"/> or <paramref name="parameters"/> is null. </exception>
+        public async virtual Task<FileServiceSetServicePropertiesOperation> CreateOrUpdateAsync(string fileServicesName, FileServiceData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            if (fileServicesName == null)
+            {
+                throw new ArgumentNullException(nameof(fileServicesName));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("FileServiceCollection.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                var response = await _fileServicesRestClient.SetServicePropertiesAsync(Id.ResourceGroupName, Id.Name, fileServicesName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new FileServiceSetServicePropertiesOperation(Parent, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the properties of file services in storage accounts, including CORS (Cross-Origin Resource Sharing) rules. </summary>
+        /// <param name="fileServicesName"> The name of the file Service within the specified storage account. File Service Name must be &quot;default&quot;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileServicesName"/> is null. </exception>
         public virtual Response<FileService> Get(string fileServicesName, CancellationToken cancellationToken = default)
         {
+            if (fileServicesName == null)
+            {
+                throw new ArgumentNullException(nameof(fileServicesName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("FileServiceCollection.Get");
             scope.Start();
             try
             {
-                if (fileServicesName == null)
-                {
-                    throw new ArgumentNullException(nameof(fileServicesName));
-                }
-
-                var response = _restClient.GetServiceProperties(Id.ResourceGroupName, Id.Name, fileServicesName, cancellationToken: cancellationToken);
+                var response = _fileServicesRestClient.GetServiceProperties(Id.ResourceGroupName, Id.Name, fileServicesName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new FileService(Parent, response.Value), response.GetRawResponse());
@@ -78,21 +138,22 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Gets the properties of file services in storage accounts, including CORS (Cross-Origin Resource Sharing) rules. </summary>
         /// <param name="fileServicesName"> The name of the file Service within the specified storage account. File Service Name must be &quot;default&quot;. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileServicesName"/> is null. </exception>
         public async virtual Task<Response<FileService>> GetAsync(string fileServicesName, CancellationToken cancellationToken = default)
         {
+            if (fileServicesName == null)
+            {
+                throw new ArgumentNullException(nameof(fileServicesName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("FileServiceCollection.Get");
             scope.Start();
             try
             {
-                if (fileServicesName == null)
-                {
-                    throw new ArgumentNullException(nameof(fileServicesName));
-                }
-
-                var response = await _restClient.GetServicePropertiesAsync(Id.ResourceGroupName, Id.Name, fileServicesName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _fileServicesRestClient.GetServicePropertiesAsync(Id.ResourceGroupName, Id.Name, fileServicesName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new FileService(Parent, response.Value), response.GetRawResponse());
@@ -106,19 +167,20 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="fileServicesName"> The name of the file Service within the specified storage account. File Service Name must be &quot;default&quot;. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileServicesName"/> is null. </exception>
         public virtual Response<FileService> GetIfExists(string fileServicesName, CancellationToken cancellationToken = default)
         {
+            if (fileServicesName == null)
+            {
+                throw new ArgumentNullException(nameof(fileServicesName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("FileServiceCollection.GetIfExists");
             scope.Start();
             try
             {
-                if (fileServicesName == null)
-                {
-                    throw new ArgumentNullException(nameof(fileServicesName));
-                }
-
-                var response = _restClient.GetServiceProperties(Id.ResourceGroupName, Id.Name, fileServicesName, cancellationToken: cancellationToken);
+                var response = _fileServicesRestClient.GetServiceProperties(Id.ResourceGroupName, Id.Name, fileServicesName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<FileService>(null, response.GetRawResponse())
                     : Response.FromValue(new FileService(this, response.Value), response.GetRawResponse());
@@ -132,19 +194,20 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="fileServicesName"> The name of the file Service within the specified storage account. File Service Name must be &quot;default&quot;. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileServicesName"/> is null. </exception>
         public async virtual Task<Response<FileService>> GetIfExistsAsync(string fileServicesName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("FileServiceCollection.GetIfExists");
+            if (fileServicesName == null)
+            {
+                throw new ArgumentNullException(nameof(fileServicesName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("FileServiceCollection.GetIfExistsAsync");
             scope.Start();
             try
             {
-                if (fileServicesName == null)
-                {
-                    throw new ArgumentNullException(nameof(fileServicesName));
-                }
-
-                var response = await _restClient.GetServicePropertiesAsync(Id.ResourceGroupName, Id.Name, fileServicesName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _fileServicesRestClient.GetServicePropertiesAsync(Id.ResourceGroupName, Id.Name, fileServicesName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<FileService>(null, response.GetRawResponse())
                     : Response.FromValue(new FileService(this, response.Value), response.GetRawResponse());
@@ -158,18 +221,19 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="fileServicesName"> The name of the file Service within the specified storage account. File Service Name must be &quot;default&quot;. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileServicesName"/> is null. </exception>
         public virtual Response<bool> CheckIfExists(string fileServicesName, CancellationToken cancellationToken = default)
         {
+            if (fileServicesName == null)
+            {
+                throw new ArgumentNullException(nameof(fileServicesName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("FileServiceCollection.CheckIfExists");
             scope.Start();
             try
             {
-                if (fileServicesName == null)
-                {
-                    throw new ArgumentNullException(nameof(fileServicesName));
-                }
-
                 var response = GetIfExists(fileServicesName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -182,38 +246,21 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="fileServicesName"> The name of the file Service within the specified storage account. File Service Name must be &quot;default&quot;. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileServicesName"/> is null. </exception>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(string fileServicesName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("FileServiceCollection.CheckIfExists");
+            if (fileServicesName == null)
+            {
+                throw new ArgumentNullException(nameof(fileServicesName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("FileServiceCollection.CheckIfExistsAsync");
             scope.Start();
             try
             {
-                if (fileServicesName == null)
-                {
-                    throw new ArgumentNullException(nameof(fileServicesName));
-                }
-
                 var response = await GetIfExistsAsync(fileServicesName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> List all file services in storage accounts. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<IReadOnlyList<FileService>>> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("FileServiceCollection.GetAll");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.GetAllAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value.Value.Select(data => new FileService(Parent, data)).ToArray() as IReadOnlyList<FileService>, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -230,8 +277,8 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = _restClient.GetAll(Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(response.Value.Value.Select(data => new FileService(Parent, data)).ToArray() as IReadOnlyList<FileService>, response.GetRawResponse());
+                var response = _fileServicesRestClient.List(Id.ResourceGroupName, Id.Name, cancellationToken);
+                return Response.FromValue(response.Value.Value.Select(value => new FileService(Parent, value)).ToArray() as IReadOnlyList<FileService>, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -240,7 +287,35 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
+        /// <summary> List all file services in storage accounts. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response<IReadOnlyList<FileService>>> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("FileServiceCollection.GetAll");
+            scope.Start();
+            try
+            {
+                var response = await _fileServicesRestClient.ListAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value.Value.Select(value => new FileService(Parent, value)).ToArray() as IReadOnlyList<FileService>, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        IEnumerator<FileService> IEnumerable<FileService>.GetEnumerator()
+        {
+            return GetAll().Value.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().Value.GetEnumerator();
+        }
+
         // Builders.
-        // public ArmBuilder<ResourceIdentifier, FileService, FileServiceData> Construct() { }
+        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, FileService, FileServiceData> Construct() { }
     }
 }

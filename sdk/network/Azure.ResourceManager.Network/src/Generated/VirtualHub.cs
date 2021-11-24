@@ -23,7 +23,9 @@ namespace Azure.ResourceManager.Network
     public partial class VirtualHub : ArmResource
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly VirtualHubsRestOperations _restClient;
+        private readonly VirtualHubsRestOperations _virtualHubsRestClient;
+        private readonly HubVirtualNetworkConnectionsRestOperations _hubVirtualNetworkConnectionsRestClient;
+        private readonly VirtualHubRouteTableV2SRestOperations _virtualHubRouteTableV2sRestClient;
         private readonly VirtualHubData _data;
 
         /// <summary> Initializes a new instance of the <see cref="VirtualHub"/> class for mocking. </summary>
@@ -39,7 +41,9 @@ namespace Azure.ResourceManager.Network
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new VirtualHubsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _virtualHubsRestClient = new VirtualHubsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _hubVirtualNetworkConnectionsRestClient = new HubVirtualNetworkConnectionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _virtualHubRouteTableV2sRestClient = new VirtualHubRouteTableV2SRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="VirtualHub"/> class. </summary>
@@ -48,7 +52,9 @@ namespace Azure.ResourceManager.Network
         internal VirtualHub(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new VirtualHubsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _virtualHubsRestClient = new VirtualHubsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _hubVirtualNetworkConnectionsRestClient = new HubVirtualNetworkConnectionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _virtualHubRouteTableV2sRestClient = new VirtualHubRouteTableV2SRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="VirtualHub"/> class. </summary>
@@ -60,7 +66,9 @@ namespace Azure.ResourceManager.Network
         internal VirtualHub(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new VirtualHubsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _virtualHubsRestClient = new VirtualHubsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _hubVirtualNetworkConnectionsRestClient = new HubVirtualNetworkConnectionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _virtualHubRouteTableV2sRestClient = new VirtualHubRouteTableV2SRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -92,7 +100,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _virtualHubsRestClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new VirtualHub(this, response.Value), response.GetRawResponse());
@@ -112,7 +120,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _virtualHubsRestClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new VirtualHub(this, response.Value), response.GetRawResponse());
@@ -149,8 +157,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualHubDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = await _virtualHubsRestClient.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new VirtualHubDeleteOperation(_clientDiagnostics, Pipeline, _virtualHubsRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -171,8 +179,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new VirtualHubDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = _virtualHubsRestClient.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new VirtualHubDeleteOperation(_clientDiagnostics, Pipeline, _virtualHubsRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -183,22 +191,23 @@ namespace Azure.ResourceManager.Network
                 throw;
             }
         }
+
         /// <summary> Updates VirtualHub tags. </summary>
         /// <param name="virtualHubParameters"> Parameters supplied to update VirtualHub tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualHubParameters"/> is null. </exception>
-        public virtual async Task<Response<VirtualHub>> UpdateTagsAsync(TagsObject virtualHubParameters, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<VirtualHub>> UpdateAsync(TagsObject virtualHubParameters, CancellationToken cancellationToken = default)
         {
             if (virtualHubParameters == null)
             {
                 throw new ArgumentNullException(nameof(virtualHubParameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualHub.UpdateTags");
+            using var scope = _clientDiagnostics.CreateScope("VirtualHub.Update");
             scope.Start();
             try
             {
-                var response = await _restClient.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, virtualHubParameters, cancellationToken).ConfigureAwait(false);
+                var response = await _virtualHubsRestClient.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, virtualHubParameters, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new VirtualHub(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -212,18 +221,18 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualHubParameters"> Parameters supplied to update VirtualHub tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualHubParameters"/> is null. </exception>
-        public virtual Response<VirtualHub> UpdateTags(TagsObject virtualHubParameters, CancellationToken cancellationToken = default)
+        public virtual Response<VirtualHub> Update(TagsObject virtualHubParameters, CancellationToken cancellationToken = default)
         {
             if (virtualHubParameters == null)
             {
                 throw new ArgumentNullException(nameof(virtualHubParameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualHub.UpdateTags");
+            using var scope = _clientDiagnostics.CreateScope("VirtualHub.Update");
             scope.Start();
             try
             {
-                var response = _restClient.UpdateTags(Id.ResourceGroupName, Id.Name, virtualHubParameters, cancellationToken);
+                var response = _virtualHubsRestClient.UpdateTags(Id.ResourceGroupName, Id.Name, virtualHubParameters, cancellationToken);
                 return Response.FromValue(new VirtualHub(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,8 +252,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.GetEffectiveVirtualHubRoutesAsync(Id.ResourceGroupName, Id.Name, effectiveRoutesParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualHubGetEffectiveVirtualHubRoutesOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetEffectiveVirtualHubRoutesRequest(Id.ResourceGroupName, Id.Name, effectiveRoutesParameters).Request, response);
+                var response = await _virtualHubsRestClient.GetEffectiveVirtualHubRoutesAsync(Id.ResourceGroupName, Id.Name, effectiveRoutesParameters, cancellationToken).ConfigureAwait(false);
+                var operation = new VirtualHubGetEffectiveVirtualHubRoutesOperation(_clientDiagnostics, Pipeline, _virtualHubsRestClient.CreateGetEffectiveVirtualHubRoutesRequest(Id.ResourceGroupName, Id.Name, effectiveRoutesParameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -266,8 +275,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.GetEffectiveVirtualHubRoutes(Id.ResourceGroupName, Id.Name, effectiveRoutesParameters, cancellationToken);
-                var operation = new VirtualHubGetEffectiveVirtualHubRoutesOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetEffectiveVirtualHubRoutesRequest(Id.ResourceGroupName, Id.Name, effectiveRoutesParameters).Request, response);
+                var response = _virtualHubsRestClient.GetEffectiveVirtualHubRoutes(Id.ResourceGroupName, Id.Name, effectiveRoutesParameters, cancellationToken);
+                var operation = new VirtualHubGetEffectiveVirtualHubRoutesOperation(_clientDiagnostics, Pipeline, _virtualHubsRestClient.CreateGetEffectiveVirtualHubRoutesRequest(Id.ResourceGroupName, Id.Name, effectiveRoutesParameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -279,39 +288,538 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets a list of HubVirtualNetworkConnections in the VirtualHub. </summary>
-        /// <returns> An object representing collection of HubVirtualNetworkConnections and their operations over a VirtualHub. </returns>
-        public HubVirtualNetworkConnectionCollection GetHubVirtualNetworkConnections()
+        /// <summary> Creates a hub virtual network connection if it doesn&apos;t exist else updates the existing one. </summary>
+        /// <param name="connectionName"> The name of the HubVirtualNetworkConnection. </param>
+        /// <param name="hubVirtualNetworkConnectionParameters"> Parameters supplied to create or update a hub virtual network connection. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> or <paramref name="hubVirtualNetworkConnectionParameters"/> is null. </exception>
+        public async virtual Task<HubVirtualNetworkConnectionCreateOrUpdateOperation> CreateOrUpdateHubVirtualNetworkConnectionAsync(string connectionName, HubVirtualNetworkConnection hubVirtualNetworkConnectionParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            return new HubVirtualNetworkConnectionCollection(this);
+            if (connectionName == null)
+            {
+                throw new ArgumentNullException(nameof(connectionName));
+            }
+            if (hubVirtualNetworkConnectionParameters == null)
+            {
+                throw new ArgumentNullException(nameof(hubVirtualNetworkConnectionParameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VirtualHub.CreateOrUpdateHubVirtualNetworkConnection");
+            scope.Start();
+            try
+            {
+                var response = await _hubVirtualNetworkConnectionsRestClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, connectionName, hubVirtualNetworkConnectionParameters, cancellationToken).ConfigureAwait(false);
+                var operation = new HubVirtualNetworkConnectionCreateOrUpdateOperation(_clientDiagnostics, Pipeline, _hubVirtualNetworkConnectionsRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, connectionName, hubVirtualNetworkConnectionParameters).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary> Gets a list of VirtualHubRouteTableV2s in the VirtualHub. </summary>
-        /// <returns> An object representing collection of VirtualHubRouteTableV2s and their operations over a VirtualHub. </returns>
-        public VirtualHubRouteTableV2Collection GetVirtualHubRouteTableV2s()
+        /// <summary> Creates a hub virtual network connection if it doesn&apos;t exist else updates the existing one. </summary>
+        /// <param name="connectionName"> The name of the HubVirtualNetworkConnection. </param>
+        /// <param name="hubVirtualNetworkConnectionParameters"> Parameters supplied to create or update a hub virtual network connection. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> or <paramref name="hubVirtualNetworkConnectionParameters"/> is null. </exception>
+        public virtual HubVirtualNetworkConnectionCreateOrUpdateOperation CreateOrUpdateHubVirtualNetworkConnection(string connectionName, HubVirtualNetworkConnection hubVirtualNetworkConnectionParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            return new VirtualHubRouteTableV2Collection(this);
+            if (connectionName == null)
+            {
+                throw new ArgumentNullException(nameof(connectionName));
+            }
+            if (hubVirtualNetworkConnectionParameters == null)
+            {
+                throw new ArgumentNullException(nameof(hubVirtualNetworkConnectionParameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VirtualHub.CreateOrUpdateHubVirtualNetworkConnection");
+            scope.Start();
+            try
+            {
+                var response = _hubVirtualNetworkConnectionsRestClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, connectionName, hubVirtualNetworkConnectionParameters, cancellationToken);
+                var operation = new HubVirtualNetworkConnectionCreateOrUpdateOperation(_clientDiagnostics, Pipeline, _hubVirtualNetworkConnectionsRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, connectionName, hubVirtualNetworkConnectionParameters).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary> Gets a list of BgpConnections in the VirtualHub. </summary>
+        /// <summary> Deletes a HubVirtualNetworkConnection. </summary>
+        /// <param name="connectionName"> The name of the HubVirtualNetworkConnection. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        public async virtual Task<HubVirtualNetworkConnectionDeleteOperation> DeleteHubVirtualNetworkConnectionAsync(string connectionName, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            if (connectionName == null)
+            {
+                throw new ArgumentNullException(nameof(connectionName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VirtualHub.DeleteHubVirtualNetworkConnection");
+            scope.Start();
+            try
+            {
+                var response = await _hubVirtualNetworkConnectionsRestClient.DeleteAsync(Id.ResourceGroupName, Id.Name, connectionName, cancellationToken).ConfigureAwait(false);
+                var operation = new HubVirtualNetworkConnectionDeleteOperation(_clientDiagnostics, Pipeline, _hubVirtualNetworkConnectionsRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name, connectionName).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes a HubVirtualNetworkConnection. </summary>
+        /// <param name="connectionName"> The name of the HubVirtualNetworkConnection. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        public virtual HubVirtualNetworkConnectionDeleteOperation DeleteHubVirtualNetworkConnection(string connectionName, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            if (connectionName == null)
+            {
+                throw new ArgumentNullException(nameof(connectionName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VirtualHub.DeleteHubVirtualNetworkConnection");
+            scope.Start();
+            try
+            {
+                var response = _hubVirtualNetworkConnectionsRestClient.Delete(Id.ResourceGroupName, Id.Name, connectionName, cancellationToken);
+                var operation = new HubVirtualNetworkConnectionDeleteOperation(_clientDiagnostics, Pipeline, _hubVirtualNetworkConnectionsRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name, connectionName).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Retrieves the details of a HubVirtualNetworkConnection. </summary>
+        /// <param name="connectionName"> The name of the vpn connection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        public async virtual Task<Response<HubVirtualNetworkConnection>> GetHubVirtualNetworkConnectionAsync(string connectionName, CancellationToken cancellationToken = default)
+        {
+            if (connectionName == null)
+            {
+                throw new ArgumentNullException(nameof(connectionName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VirtualHub.GetHubVirtualNetworkConnection");
+            scope.Start();
+            try
+            {
+                var response = await _hubVirtualNetworkConnectionsRestClient.GetAsync(Id.ResourceGroupName, Id.Name, connectionName, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Retrieves the details of a HubVirtualNetworkConnection. </summary>
+        /// <param name="connectionName"> The name of the vpn connection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        public virtual Response<HubVirtualNetworkConnection> GetHubVirtualNetworkConnection(string connectionName, CancellationToken cancellationToken = default)
+        {
+            if (connectionName == null)
+            {
+                throw new ArgumentNullException(nameof(connectionName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VirtualHub.GetHubVirtualNetworkConnection");
+            scope.Start();
+            try
+            {
+                var response = _hubVirtualNetworkConnectionsRestClient.Get(Id.ResourceGroupName, Id.Name, connectionName, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Retrieves the details of all HubVirtualNetworkConnections. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="HubVirtualNetworkConnection" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HubVirtualNetworkConnection> GetHubVirtualNetworkConnectionsAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<HubVirtualNetworkConnection>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("VirtualHub.GetHubVirtualNetworkConnections");
+                scope.Start();
+                try
+                {
+                    var response = await _hubVirtualNetworkConnectionsRestClient.ListAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<HubVirtualNetworkConnection>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("VirtualHub.GetHubVirtualNetworkConnections");
+                scope.Start();
+                try
+                {
+                    var response = await _hubVirtualNetworkConnectionsRestClient.ListNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Retrieves the details of all HubVirtualNetworkConnections. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="HubVirtualNetworkConnection" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HubVirtualNetworkConnection> GetHubVirtualNetworkConnections(CancellationToken cancellationToken = default)
+        {
+            Page<HubVirtualNetworkConnection> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("VirtualHub.GetHubVirtualNetworkConnections");
+                scope.Start();
+                try
+                {
+                    var response = _hubVirtualNetworkConnectionsRestClient.List(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<HubVirtualNetworkConnection> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("VirtualHub.GetHubVirtualNetworkConnections");
+                scope.Start();
+                try
+                {
+                    var response = _hubVirtualNetworkConnectionsRestClient.ListNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Retrieves the details of a VirtualHubRouteTableV2. </summary>
+        /// <param name="routeTableName"> The name of the VirtualHubRouteTableV2. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> is null. </exception>
+        public async virtual Task<Response<VirtualHubRouteTableV2>> GetVirtualHubRouteTableV2Async(string routeTableName, CancellationToken cancellationToken = default)
+        {
+            if (routeTableName == null)
+            {
+                throw new ArgumentNullException(nameof(routeTableName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VirtualHub.GetVirtualHubRouteTableV2");
+            scope.Start();
+            try
+            {
+                var response = await _virtualHubRouteTableV2sRestClient.GetAsync(Id.ResourceGroupName, Id.Name, routeTableName, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Retrieves the details of a VirtualHubRouteTableV2. </summary>
+        /// <param name="routeTableName"> The name of the VirtualHubRouteTableV2. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> is null. </exception>
+        public virtual Response<VirtualHubRouteTableV2> GetVirtualHubRouteTableV2(string routeTableName, CancellationToken cancellationToken = default)
+        {
+            if (routeTableName == null)
+            {
+                throw new ArgumentNullException(nameof(routeTableName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VirtualHub.GetVirtualHubRouteTableV2");
+            scope.Start();
+            try
+            {
+                var response = _virtualHubRouteTableV2sRestClient.Get(Id.ResourceGroupName, Id.Name, routeTableName, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Creates a VirtualHubRouteTableV2 resource if it doesn&apos;t exist else updates the existing VirtualHubRouteTableV2. </summary>
+        /// <param name="routeTableName"> The name of the VirtualHubRouteTableV2. </param>
+        /// <param name="virtualHubRouteTableV2Parameters"> Parameters supplied to create or update VirtualHubRouteTableV2. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> or <paramref name="virtualHubRouteTableV2Parameters"/> is null. </exception>
+        public async virtual Task<VirtualHubRouteTableV2CreateOrUpdateOperation> CreateOrUpdateVirtualHubRouteTableV2Async(string routeTableName, VirtualHubRouteTableV2 virtualHubRouteTableV2Parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            if (routeTableName == null)
+            {
+                throw new ArgumentNullException(nameof(routeTableName));
+            }
+            if (virtualHubRouteTableV2Parameters == null)
+            {
+                throw new ArgumentNullException(nameof(virtualHubRouteTableV2Parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VirtualHub.CreateOrUpdateVirtualHubRouteTableV2");
+            scope.Start();
+            try
+            {
+                var response = await _virtualHubRouteTableV2sRestClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, routeTableName, virtualHubRouteTableV2Parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new VirtualHubRouteTableV2CreateOrUpdateOperation(_clientDiagnostics, Pipeline, _virtualHubRouteTableV2sRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, routeTableName, virtualHubRouteTableV2Parameters).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Creates a VirtualHubRouteTableV2 resource if it doesn&apos;t exist else updates the existing VirtualHubRouteTableV2. </summary>
+        /// <param name="routeTableName"> The name of the VirtualHubRouteTableV2. </param>
+        /// <param name="virtualHubRouteTableV2Parameters"> Parameters supplied to create or update VirtualHubRouteTableV2. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> or <paramref name="virtualHubRouteTableV2Parameters"/> is null. </exception>
+        public virtual VirtualHubRouteTableV2CreateOrUpdateOperation CreateOrUpdateVirtualHubRouteTableV2(string routeTableName, VirtualHubRouteTableV2 virtualHubRouteTableV2Parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            if (routeTableName == null)
+            {
+                throw new ArgumentNullException(nameof(routeTableName));
+            }
+            if (virtualHubRouteTableV2Parameters == null)
+            {
+                throw new ArgumentNullException(nameof(virtualHubRouteTableV2Parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VirtualHub.CreateOrUpdateVirtualHubRouteTableV2");
+            scope.Start();
+            try
+            {
+                var response = _virtualHubRouteTableV2sRestClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, routeTableName, virtualHubRouteTableV2Parameters, cancellationToken);
+                var operation = new VirtualHubRouteTableV2CreateOrUpdateOperation(_clientDiagnostics, Pipeline, _virtualHubRouteTableV2sRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, routeTableName, virtualHubRouteTableV2Parameters).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes a VirtualHubRouteTableV2. </summary>
+        /// <param name="routeTableName"> The name of the VirtualHubRouteTableV2. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> is null. </exception>
+        public async virtual Task<VirtualHubRouteTableV2DeleteOperation> DeleteVirtualHubRouteTableV2Async(string routeTableName, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            if (routeTableName == null)
+            {
+                throw new ArgumentNullException(nameof(routeTableName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VirtualHub.DeleteVirtualHubRouteTableV2");
+            scope.Start();
+            try
+            {
+                var response = await _virtualHubRouteTableV2sRestClient.DeleteAsync(Id.ResourceGroupName, Id.Name, routeTableName, cancellationToken).ConfigureAwait(false);
+                var operation = new VirtualHubRouteTableV2DeleteOperation(_clientDiagnostics, Pipeline, _virtualHubRouteTableV2sRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name, routeTableName).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes a VirtualHubRouteTableV2. </summary>
+        /// <param name="routeTableName"> The name of the VirtualHubRouteTableV2. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> is null. </exception>
+        public virtual VirtualHubRouteTableV2DeleteOperation DeleteVirtualHubRouteTableV2(string routeTableName, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            if (routeTableName == null)
+            {
+                throw new ArgumentNullException(nameof(routeTableName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VirtualHub.DeleteVirtualHubRouteTableV2");
+            scope.Start();
+            try
+            {
+                var response = _virtualHubRouteTableV2sRestClient.Delete(Id.ResourceGroupName, Id.Name, routeTableName, cancellationToken);
+                var operation = new VirtualHubRouteTableV2DeleteOperation(_clientDiagnostics, Pipeline, _virtualHubRouteTableV2sRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name, routeTableName).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Retrieves the details of all VirtualHubRouteTableV2s. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="VirtualHubRouteTableV2" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualHubRouteTableV2> GetVirtualHubRouteTableV2sAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<VirtualHubRouteTableV2>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("VirtualHub.GetVirtualHubRouteTableV2s");
+                scope.Start();
+                try
+                {
+                    var response = await _virtualHubRouteTableV2sRestClient.ListAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<VirtualHubRouteTableV2>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("VirtualHub.GetVirtualHubRouteTableV2s");
+                scope.Start();
+                try
+                {
+                    var response = await _virtualHubRouteTableV2sRestClient.ListNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Retrieves the details of all VirtualHubRouteTableV2s. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="VirtualHubRouteTableV2" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualHubRouteTableV2> GetVirtualHubRouteTableV2s(CancellationToken cancellationToken = default)
+        {
+            Page<VirtualHubRouteTableV2> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("VirtualHub.GetVirtualHubRouteTableV2s");
+                scope.Start();
+                try
+                {
+                    var response = _virtualHubRouteTableV2sRestClient.List(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<VirtualHubRouteTableV2> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("VirtualHub.GetVirtualHubRouteTableV2s");
+                scope.Start();
+                try
+                {
+                    var response = _virtualHubRouteTableV2sRestClient.ListNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        #region BgpConnection
+
+        /// <summary> Gets a collection of BgpConnections in the VirtualHub. </summary>
         /// <returns> An object representing collection of BgpConnections and their operations over a VirtualHub. </returns>
         public BgpConnectionCollection GetBgpConnections()
         {
             return new BgpConnectionCollection(this);
         }
+        #endregion
 
-        /// <summary> Gets a list of HubIpConfigurations in the VirtualHub. </summary>
+        #region HubIpConfiguration
+
+        /// <summary> Gets a collection of HubIpConfigurations in the VirtualHub. </summary>
         /// <returns> An object representing collection of HubIpConfigurations and their operations over a VirtualHub. </returns>
         public HubIpConfigurationCollection GetHubIpConfigurations()
         {
             return new HubIpConfigurationCollection(this);
         }
+        #endregion
 
-        /// <summary> Gets a list of HubRouteTables in the VirtualHub. </summary>
+        #region HubRouteTable
+
+        /// <summary> Gets a collection of HubRouteTables in the VirtualHub. </summary>
         /// <returns> An object representing collection of HubRouteTables and their operations over a VirtualHub. </returns>
         public HubRouteTableCollection GetHubRouteTables()
         {
             return new HubRouteTableCollection(this);
         }
+        #endregion
     }
 }

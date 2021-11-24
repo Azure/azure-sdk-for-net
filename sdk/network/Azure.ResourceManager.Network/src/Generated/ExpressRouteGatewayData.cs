@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of ExpressRouteGatewayData. </summary>
         public ExpressRouteGatewayData()
         {
-            ExpressRouteConnections = new ChangeTrackingList<ExpressRouteConnectionData>();
+            ExpressRouteConnections = new ChangeTrackingList<ExpressRouteConnection>();
         }
 
         /// <summary> Initializes a new instance of ExpressRouteGatewayData. </summary>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="expressRouteConnections"> List of ExpressRoute connections to the ExpressRoute gateway. </param>
         /// <param name="provisioningState"> The provisioning state of the express route gateway resource. </param>
         /// <param name="virtualHub"> The Virtual Hub where the ExpressRoute gateway is or will be deployed. </param>
-        internal ExpressRouteGatewayData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, ExpressRouteGatewayPropertiesAutoScaleConfiguration autoScaleConfiguration, IReadOnlyList<ExpressRouteConnectionData> expressRouteConnections, ProvisioningState? provisioningState, WritableSubResource virtualHub) : base(id, name, type, location, tags)
+        internal ExpressRouteGatewayData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, ExpressRouteGatewayPropertiesAutoScaleConfiguration autoScaleConfiguration, IReadOnlyList<ExpressRouteConnection> expressRouteConnections, ProvisioningState? provisioningState, WritableSubResource virtualHub) : base(id, name, type, location, tags)
         {
             Etag = etag;
             AutoScaleConfiguration = autoScaleConfiguration;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Configuration for auto scaling. </summary>
         public ExpressRouteGatewayPropertiesAutoScaleConfiguration AutoScaleConfiguration { get; set; }
         /// <summary> List of ExpressRoute connections to the ExpressRoute gateway. </summary>
-        public IReadOnlyList<ExpressRouteConnectionData> ExpressRouteConnections { get; }
+        public IReadOnlyList<ExpressRouteConnection> ExpressRouteConnections { get; }
         /// <summary> The provisioning state of the express route gateway resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> The Virtual Hub where the ExpressRoute gateway is or will be deployed. </summary>

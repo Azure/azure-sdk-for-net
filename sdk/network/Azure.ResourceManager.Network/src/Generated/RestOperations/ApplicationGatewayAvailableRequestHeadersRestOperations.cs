@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateGetAllRequest()
+        internal HttpMessage CreateListRequest()
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -63,9 +63,9 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Lists all available request headers. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<IReadOnlyList<string>>> GetAllAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<string>>> ListAsync(CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetAllRequest();
+            using var message = CreateListRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -88,9 +88,9 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Lists all available request headers. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<IReadOnlyList<string>> GetAll(CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<string>> List(CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetAllRequest();
+            using var message = CreateListRequest();
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

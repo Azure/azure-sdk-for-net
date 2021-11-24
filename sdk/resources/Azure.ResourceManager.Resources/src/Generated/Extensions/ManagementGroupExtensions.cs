@@ -12,13 +12,23 @@ namespace Azure.ResourceManager.Resources
     /// <summary> A class to add extension methods to ManagementGroup. </summary>
     public static partial class ManagementGroupExtensions
     {
-        #region Deployment
-        /// <summary> Gets an object representing a DeploymentCollection along with the instance operations that can be performed on it. </summary>
+        #region ManagementGroupResourceGroupSubscriptionTenantDeployment
+        /// <summary> Gets an object representing a ManagementGroupResourceGroupSubscriptionTenantDeploymentCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="managementGroup"> The <see cref="ManagementGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="DeploymentCollection" /> object. </returns>
-        public static DeploymentCollection GetDeployments(this ManagementGroup managementGroup)
+        /// <returns> Returns a <see cref="ManagementGroupResourceGroupSubscriptionTenantDeploymentCollection" /> object. </returns>
+        public static ManagementGroupResourceGroupSubscriptionTenantDeploymentCollection GetManagementGroupResourceGroupSubscriptionTenantDeployments(this ManagementGroup managementGroup)
         {
-            return new DeploymentCollection(managementGroup);
+            return new ManagementGroupResourceGroupSubscriptionTenantDeploymentCollection(managementGroup);
+        }
+        #endregion
+
+        #region ManagementGroupDeployment
+        /// <summary> Gets an object representing a ManagementGroupDeploymentCollection along with the instance operations that can be performed on it. </summary>
+        /// <param name="managementGroup"> The <see cref="ManagementGroup" /> instance the method will execute against. </param>
+        /// <returns> Returns a <see cref="ManagementGroupDeploymentCollection" /> object. </returns>
+        public static ManagementGroupDeploymentCollection GetManagementGroupDeployments(this ManagementGroup managementGroup)
+        {
+            return new ManagementGroupDeploymentCollection(managementGroup);
         }
         #endregion
     }

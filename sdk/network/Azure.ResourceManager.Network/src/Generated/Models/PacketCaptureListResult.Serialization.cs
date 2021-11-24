@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -16,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static PacketCaptureListResult DeserializePacketCaptureListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<PacketCaptureData>> value = default;
+            Optional<IReadOnlyList<PacketCapture>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -26,10 +25,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<PacketCaptureData> array = new List<PacketCaptureData>();
+                    List<PacketCapture> array = new List<PacketCapture>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PacketCaptureData.DeserializePacketCaptureData(item));
+                        array.Add(PacketCapture.DeserializePacketCapture(item));
                     }
                     value = array;
                     continue;

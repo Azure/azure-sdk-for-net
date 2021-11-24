@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Storage
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateGetAllRequest(string resourceGroupName, string accountName, string blobServicesName, string maxpagesize, string filter, ListContainersInclude? include)
+        internal HttpMessage CreateListRequest(string resourceGroupName, string accountName, string blobServicesName, string maxpagesize, string filter, ListContainersInclude? include)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="include"> Optional, used to include the properties for soft deleted blob containers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="blobServicesName"/> is null. </exception>
-        public async Task<Response<ListContainerItems>> GetAllAsync(string resourceGroupName, string accountName, string blobServicesName, string maxpagesize = null, string filter = null, ListContainersInclude? include = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ListContainerItems>> ListAsync(string resourceGroupName, string accountName, string blobServicesName, string maxpagesize = null, string filter = null, ListContainersInclude? include = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentNullException(nameof(blobServicesName));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName, accountName, blobServicesName, maxpagesize, filter, include);
+            using var message = CreateListRequest(resourceGroupName, accountName, blobServicesName, maxpagesize, filter, include);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="include"> Optional, used to include the properties for soft deleted blob containers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="blobServicesName"/> is null. </exception>
-        public Response<ListContainerItems> GetAll(string resourceGroupName, string accountName, string blobServicesName, string maxpagesize = null, string filter = null, ListContainersInclude? include = null, CancellationToken cancellationToken = default)
+        public Response<ListContainerItems> List(string resourceGroupName, string accountName, string blobServicesName, string maxpagesize = null, string filter = null, ListContainersInclude? include = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentNullException(nameof(blobServicesName));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName, accountName, blobServicesName, maxpagesize, filter, include);
+            using var message = CreateListRequest(resourceGroupName, accountName, blobServicesName, maxpagesize, filter, include);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -862,7 +862,7 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateImmutabilityPolicyRequest(string resourceGroupName, string accountName, string blobServicesName, string containerName, string ifMatch, ImmutabilityPolicy parameters)
+        internal HttpMessage CreateCreateOrUpdateImmutabilityPolicyRequest(string resourceGroupName, string accountName, string blobServicesName, string containerName, string ifMatch, ImmutabilityPolicyData parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -908,7 +908,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="parameters"> The ImmutabilityPolicy Properties that will be created or updated to a blob container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="blobServicesName"/>, or <paramref name="containerName"/> is null. </exception>
-        public async Task<Response<ImmutabilityPolicy>> CreateOrUpdateImmutabilityPolicyAsync(string resourceGroupName, string accountName, string blobServicesName, string containerName, string ifMatch = null, ImmutabilityPolicy parameters = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ImmutabilityPolicyData>> CreateOrUpdateImmutabilityPolicyAsync(string resourceGroupName, string accountName, string blobServicesName, string containerName, string ifMatch = null, ImmutabilityPolicyData parameters = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -933,9 +933,9 @@ namespace Azure.ResourceManager.Storage
             {
                 case 200:
                     {
-                        ImmutabilityPolicy value = default;
+                        ImmutabilityPolicyData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ImmutabilityPolicy.DeserializeImmutabilityPolicy(document.RootElement);
+                        value = ImmutabilityPolicyData.DeserializeImmutabilityPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -952,7 +952,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="parameters"> The ImmutabilityPolicy Properties that will be created or updated to a blob container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="blobServicesName"/>, or <paramref name="containerName"/> is null. </exception>
-        public Response<ImmutabilityPolicy> CreateOrUpdateImmutabilityPolicy(string resourceGroupName, string accountName, string blobServicesName, string containerName, string ifMatch = null, ImmutabilityPolicy parameters = null, CancellationToken cancellationToken = default)
+        public Response<ImmutabilityPolicyData> CreateOrUpdateImmutabilityPolicy(string resourceGroupName, string accountName, string blobServicesName, string containerName, string ifMatch = null, ImmutabilityPolicyData parameters = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -977,9 +977,9 @@ namespace Azure.ResourceManager.Storage
             {
                 case 200:
                     {
-                        ImmutabilityPolicy value = default;
+                        ImmutabilityPolicyData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ImmutabilityPolicy.DeserializeImmutabilityPolicy(document.RootElement);
+                        value = ImmutabilityPolicyData.DeserializeImmutabilityPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1025,7 +1025,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="ifMatch"> The entity state (ETag) version of the immutability policy to update. A value of &quot;*&quot; can be used to apply the operation only if the immutability policy already exists. If omitted, this operation will always be applied. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="blobServicesName"/>, or <paramref name="containerName"/> is null. </exception>
-        public async Task<Response<ImmutabilityPolicy>> GetImmutabilityPolicyAsync(string resourceGroupName, string accountName, string blobServicesName, string containerName, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ImmutabilityPolicyData>> GetImmutabilityPolicyAsync(string resourceGroupName, string accountName, string blobServicesName, string containerName, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -1050,11 +1050,13 @@ namespace Azure.ResourceManager.Storage
             {
                 case 200:
                     {
-                        ImmutabilityPolicy value = default;
+                        ImmutabilityPolicyData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ImmutabilityPolicy.DeserializeImmutabilityPolicy(document.RootElement);
+                        value = ImmutabilityPolicyData.DeserializeImmutabilityPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((ImmutabilityPolicyData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -1068,7 +1070,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="ifMatch"> The entity state (ETag) version of the immutability policy to update. A value of &quot;*&quot; can be used to apply the operation only if the immutability policy already exists. If omitted, this operation will always be applied. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="blobServicesName"/>, or <paramref name="containerName"/> is null. </exception>
-        public Response<ImmutabilityPolicy> GetImmutabilityPolicy(string resourceGroupName, string accountName, string blobServicesName, string containerName, string ifMatch = null, CancellationToken cancellationToken = default)
+        public Response<ImmutabilityPolicyData> GetImmutabilityPolicy(string resourceGroupName, string accountName, string blobServicesName, string containerName, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -1093,11 +1095,13 @@ namespace Azure.ResourceManager.Storage
             {
                 case 200:
                     {
-                        ImmutabilityPolicy value = default;
+                        ImmutabilityPolicyData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ImmutabilityPolicy.DeserializeImmutabilityPolicy(document.RootElement);
+                        value = ImmutabilityPolicyData.DeserializeImmutabilityPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((ImmutabilityPolicyData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -1138,7 +1142,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="ifMatch"> The entity state (ETag) version of the immutability policy to update. A value of &quot;*&quot; can be used to apply the operation only if the immutability policy already exists. If omitted, this operation will always be applied. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="blobServicesName"/>, <paramref name="containerName"/>, or <paramref name="ifMatch"/> is null. </exception>
-        public async Task<Response<ImmutabilityPolicy>> DeleteImmutabilityPolicyAsync(string resourceGroupName, string accountName, string blobServicesName, string containerName, string ifMatch, CancellationToken cancellationToken = default)
+        public async Task<Response<ImmutabilityPolicyData>> DeleteImmutabilityPolicyAsync(string resourceGroupName, string accountName, string blobServicesName, string containerName, string ifMatch, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -1167,9 +1171,9 @@ namespace Azure.ResourceManager.Storage
             {
                 case 200:
                     {
-                        ImmutabilityPolicy value = default;
+                        ImmutabilityPolicyData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ImmutabilityPolicy.DeserializeImmutabilityPolicy(document.RootElement);
+                        value = ImmutabilityPolicyData.DeserializeImmutabilityPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1185,7 +1189,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="ifMatch"> The entity state (ETag) version of the immutability policy to update. A value of &quot;*&quot; can be used to apply the operation only if the immutability policy already exists. If omitted, this operation will always be applied. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="blobServicesName"/>, <paramref name="containerName"/>, or <paramref name="ifMatch"/> is null. </exception>
-        public Response<ImmutabilityPolicy> DeleteImmutabilityPolicy(string resourceGroupName, string accountName, string blobServicesName, string containerName, string ifMatch, CancellationToken cancellationToken = default)
+        public Response<ImmutabilityPolicyData> DeleteImmutabilityPolicy(string resourceGroupName, string accountName, string blobServicesName, string containerName, string ifMatch, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -1214,9 +1218,9 @@ namespace Azure.ResourceManager.Storage
             {
                 case 200:
                     {
-                        ImmutabilityPolicy value = default;
+                        ImmutabilityPolicyData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ImmutabilityPolicy.DeserializeImmutabilityPolicy(document.RootElement);
+                        value = ImmutabilityPolicyData.DeserializeImmutabilityPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1258,7 +1262,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="ifMatch"> The entity state (ETag) version of the immutability policy to update. A value of &quot;*&quot; can be used to apply the operation only if the immutability policy already exists. If omitted, this operation will always be applied. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="blobServicesName"/>, <paramref name="containerName"/>, or <paramref name="ifMatch"/> is null. </exception>
-        public async Task<Response<ImmutabilityPolicy>> LockImmutabilityPolicyAsync(string resourceGroupName, string accountName, string blobServicesName, string containerName, string ifMatch, CancellationToken cancellationToken = default)
+        public async Task<Response<ImmutabilityPolicyData>> LockImmutabilityPolicyAsync(string resourceGroupName, string accountName, string blobServicesName, string containerName, string ifMatch, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -1287,9 +1291,9 @@ namespace Azure.ResourceManager.Storage
             {
                 case 200:
                     {
-                        ImmutabilityPolicy value = default;
+                        ImmutabilityPolicyData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ImmutabilityPolicy.DeserializeImmutabilityPolicy(document.RootElement);
+                        value = ImmutabilityPolicyData.DeserializeImmutabilityPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1305,7 +1309,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="ifMatch"> The entity state (ETag) version of the immutability policy to update. A value of &quot;*&quot; can be used to apply the operation only if the immutability policy already exists. If omitted, this operation will always be applied. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="blobServicesName"/>, <paramref name="containerName"/>, or <paramref name="ifMatch"/> is null. </exception>
-        public Response<ImmutabilityPolicy> LockImmutabilityPolicy(string resourceGroupName, string accountName, string blobServicesName, string containerName, string ifMatch, CancellationToken cancellationToken = default)
+        public Response<ImmutabilityPolicyData> LockImmutabilityPolicy(string resourceGroupName, string accountName, string blobServicesName, string containerName, string ifMatch, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -1334,9 +1338,9 @@ namespace Azure.ResourceManager.Storage
             {
                 case 200:
                     {
-                        ImmutabilityPolicy value = default;
+                        ImmutabilityPolicyData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ImmutabilityPolicy.DeserializeImmutabilityPolicy(document.RootElement);
+                        value = ImmutabilityPolicyData.DeserializeImmutabilityPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1344,7 +1348,7 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        internal HttpMessage CreateExtendImmutabilityPolicyRequest(string resourceGroupName, string accountName, string blobServicesName, string containerName, string ifMatch, ImmutabilityPolicy parameters)
+        internal HttpMessage CreateExtendImmutabilityPolicyRequest(string resourceGroupName, string accountName, string blobServicesName, string containerName, string ifMatch, ImmutabilityPolicyData parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1386,7 +1390,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="parameters"> The ImmutabilityPolicy Properties that will be extended for a blob container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="blobServicesName"/>, <paramref name="containerName"/>, or <paramref name="ifMatch"/> is null. </exception>
-        public async Task<Response<ImmutabilityPolicy>> ExtendImmutabilityPolicyAsync(string resourceGroupName, string accountName, string blobServicesName, string containerName, string ifMatch, ImmutabilityPolicy parameters = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ImmutabilityPolicyData>> ExtendImmutabilityPolicyAsync(string resourceGroupName, string accountName, string blobServicesName, string containerName, string ifMatch, ImmutabilityPolicyData parameters = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -1415,9 +1419,9 @@ namespace Azure.ResourceManager.Storage
             {
                 case 200:
                     {
-                        ImmutabilityPolicy value = default;
+                        ImmutabilityPolicyData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ImmutabilityPolicy.DeserializeImmutabilityPolicy(document.RootElement);
+                        value = ImmutabilityPolicyData.DeserializeImmutabilityPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1434,7 +1438,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="parameters"> The ImmutabilityPolicy Properties that will be extended for a blob container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="blobServicesName"/>, <paramref name="containerName"/>, or <paramref name="ifMatch"/> is null. </exception>
-        public Response<ImmutabilityPolicy> ExtendImmutabilityPolicy(string resourceGroupName, string accountName, string blobServicesName, string containerName, string ifMatch, ImmutabilityPolicy parameters = null, CancellationToken cancellationToken = default)
+        public Response<ImmutabilityPolicyData> ExtendImmutabilityPolicy(string resourceGroupName, string accountName, string blobServicesName, string containerName, string ifMatch, ImmutabilityPolicyData parameters = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -1463,9 +1467,9 @@ namespace Azure.ResourceManager.Storage
             {
                 case 200:
                     {
-                        ImmutabilityPolicy value = default;
+                        ImmutabilityPolicyData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ImmutabilityPolicy.DeserializeImmutabilityPolicy(document.RootElement);
+                        value = ImmutabilityPolicyData.DeserializeImmutabilityPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1692,7 +1696,7 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        internal HttpMessage CreateGetAllNextPageRequest(string nextLink, string resourceGroupName, string accountName, string blobServicesName, string maxpagesize, string filter, ListContainersInclude? include)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string resourceGroupName, string accountName, string blobServicesName, string maxpagesize, string filter, ListContainersInclude? include)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1716,7 +1720,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="include"> Optional, used to include the properties for soft deleted blob containers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="blobServicesName"/> is null. </exception>
-        public async Task<Response<ListContainerItems>> GetAllNextPageAsync(string nextLink, string resourceGroupName, string accountName, string blobServicesName, string maxpagesize = null, string filter = null, ListContainersInclude? include = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ListContainerItems>> ListNextPageAsync(string nextLink, string resourceGroupName, string accountName, string blobServicesName, string maxpagesize = null, string filter = null, ListContainersInclude? include = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1735,7 +1739,7 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentNullException(nameof(blobServicesName));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, accountName, blobServicesName, maxpagesize, filter, include);
+            using var message = CreateListNextPageRequest(nextLink, resourceGroupName, accountName, blobServicesName, maxpagesize, filter, include);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1761,7 +1765,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="include"> Optional, used to include the properties for soft deleted blob containers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="blobServicesName"/> is null. </exception>
-        public Response<ListContainerItems> GetAllNextPage(string nextLink, string resourceGroupName, string accountName, string blobServicesName, string maxpagesize = null, string filter = null, ListContainersInclude? include = null, CancellationToken cancellationToken = default)
+        public Response<ListContainerItems> ListNextPage(string nextLink, string resourceGroupName, string accountName, string blobServicesName, string maxpagesize = null, string filter = null, ListContainersInclude? include = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1780,7 +1784,7 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentNullException(nameof(blobServicesName));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, accountName, blobServicesName, maxpagesize, filter, include);
+            using var message = CreateListNextPageRequest(nextLink, resourceGroupName, accountName, blobServicesName, maxpagesize, filter, include);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
