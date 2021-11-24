@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests
             string accountName = Recording.GenerateAssetName("Account-");
             Account account = await CreateAccount(rg, accountName);
             int count = 0;
-            await foreach (var tempAccount in subscription.GetBySubscriptionAccountsAsync())
+            await foreach (var tempAccount in subscription.GetAccountsAsync())
             {
                 if (tempAccount.Data.Id == account.Data.Id)
                 {

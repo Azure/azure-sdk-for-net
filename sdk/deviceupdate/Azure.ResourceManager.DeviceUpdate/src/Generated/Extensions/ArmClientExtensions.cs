@@ -45,14 +45,14 @@ namespace Azure.ResourceManager.DeviceUpdate
         }
         #endregion
 
-        #region PrivateLinkResource
-        /// <summary> Gets an object representing a PrivateLinkResource along with the instance operations that can be performed on it but with no data. </summary>
+        #region PrivateLink
+        /// <summary> Gets an object representing a PrivateLink along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateLinkResource" /> object. </returns>
-        public static PrivateLinkResource GetPrivateLinkResource(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PrivateLink" /> object. </returns>
+        public static PrivateLink GetPrivateLink(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new PrivateLinkResource(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new PrivateLink(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 

@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="groupId"> The group ID of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="groupId"/> is null. </exception>
-        public async Task<Response<PrivateLinkResourceData>> GetAsync(string resourceGroupName, string accountName, string groupId, CancellationToken cancellationToken = default)
+        public async Task<Response<PrivateLinkData>> GetAsync(string resourceGroupName, string accountName, string groupId, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -178,13 +178,13 @@ namespace Azure.ResourceManager.DeviceUpdate
             {
                 case 200:
                     {
-                        PrivateLinkResourceData value = default;
+                        PrivateLinkData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PrivateLinkResourceData.DeserializePrivateLinkResourceData(document.RootElement);
+                        value = PrivateLinkData.DeserializePrivateLinkData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((PrivateLinkResourceData)null, message.Response);
+                    return Response.FromValue((PrivateLinkData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="groupId"> The group ID of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="groupId"/> is null. </exception>
-        public Response<PrivateLinkResourceData> Get(string resourceGroupName, string accountName, string groupId, CancellationToken cancellationToken = default)
+        public Response<PrivateLinkData> Get(string resourceGroupName, string accountName, string groupId, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -217,13 +217,13 @@ namespace Azure.ResourceManager.DeviceUpdate
             {
                 case 200:
                     {
-                        PrivateLinkResourceData value = default;
+                        PrivateLinkData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PrivateLinkResourceData.DeserializePrivateLinkResourceData(document.RootElement);
+                        value = PrivateLinkData.DeserializePrivateLinkData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((PrivateLinkResourceData)null, message.Response);
+                    return Response.FromValue((PrivateLinkData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }

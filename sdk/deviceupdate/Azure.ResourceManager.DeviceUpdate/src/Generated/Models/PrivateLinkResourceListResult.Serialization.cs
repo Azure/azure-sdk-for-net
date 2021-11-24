@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
     {
         internal static PrivateLinkResourceListResult DeserializePrivateLinkResourceListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<PrivateLinkResourceData>> value = default;
+            Optional<IReadOnlyList<PrivateLinkData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<PrivateLinkResourceData> array = new List<PrivateLinkResourceData>();
+                    List<PrivateLinkData> array = new List<PrivateLinkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrivateLinkResourceData.DeserializePrivateLinkResourceData(item));
+                        array.Add(PrivateLinkData.DeserializePrivateLinkData(item));
                     }
                     value = array;
                     continue;

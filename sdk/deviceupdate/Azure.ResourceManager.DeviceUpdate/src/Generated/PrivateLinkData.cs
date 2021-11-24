@@ -13,17 +13,17 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DeviceUpdate
 {
-    /// <summary> A class representing the PrivateLinkResource data model. </summary>
-    public partial class PrivateLinkResourceData : ProxyResource
+    /// <summary> A class representing the PrivateLink data model. </summary>
+    public partial class PrivateLinkData : ProxyResource
     {
-        /// <summary> Initializes a new instance of PrivateLinkResourceData. </summary>
-        public PrivateLinkResourceData()
+        /// <summary> Initializes a new instance of PrivateLinkData. </summary>
+        public PrivateLinkData()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of PrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of PrivateLinkData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource Private link DNS zone name. </param>
         /// <param name="provisioningState"> The provisioning state of private link group ID. </param>
-        internal PrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames, GroupIdProvisioningState? provisioningState) : base(id, name, type, systemData)
+        internal PrivateLinkData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames, GroupIdProvisioningState? provisioningState) : base(id, name, type, systemData)
         {
             GroupId = groupId;
             RequiredMembers = requiredMembers;

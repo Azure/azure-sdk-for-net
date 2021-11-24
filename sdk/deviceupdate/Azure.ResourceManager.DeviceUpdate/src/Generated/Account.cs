@@ -434,13 +434,13 @@ namespace Azure.ResourceManager.DeviceUpdate
         }
         #endregion
 
-        #region PrivateLinkResource
+        #region PrivateLink
 
-        /// <summary> Gets a collection of PrivateLinkResources in the Account. </summary>
-        /// <returns> An object representing collection of PrivateLinkResources and their operations over a Account. </returns>
-        public PrivateLinkResourceCollection GetPrivateLinkResources()
+        /// <summary> Gets a collection of PrivateLinks in the Account. </summary>
+        /// <returns> An object representing collection of PrivateLinks and their operations over a Account. </returns>
+        public PrivateLinkCollection GetPrivateLinks()
         {
-            return new PrivateLinkResourceCollection(this);
+            return new PrivateLinkCollection(this);
         }
         #endregion
 

@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<Account> GetBySubscriptionAccountsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static AsyncPageable<Account> GetAccountsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                 var restOperations = GetAccountsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
                 async Task<Page<Account>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetBySubscriptionAccounts");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAccounts");
                     scope.Start();
                     try
                     {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                 }
                 async Task<Page<Account>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetBySubscriptionAccounts");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAccounts");
                     scope.Start();
                     try
                     {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<Account> GetBySubscriptionAccounts(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static Pageable<Account> GetAccounts(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                 var restOperations = GetAccountsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
                 Page<Account> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetBySubscriptionAccounts");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAccounts");
                     scope.Start();
                     try
                     {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                 }
                 Page<Account> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetBySubscriptionAccounts");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAccounts");
                     scope.Start();
                     try
                     {

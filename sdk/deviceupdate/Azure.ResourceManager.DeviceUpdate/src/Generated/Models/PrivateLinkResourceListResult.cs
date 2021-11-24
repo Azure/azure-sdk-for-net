@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         /// <summary> Initializes a new instance of PrivateLinkResourceListResult. </summary>
         internal PrivateLinkResourceListResult()
         {
-            Value = new ChangeTrackingList<PrivateLinkResourceData>();
+            Value = new ChangeTrackingList<PrivateLinkData>();
         }
 
         /// <summary> Initializes a new instance of PrivateLinkResourceListResult. </summary>
         /// <param name="value"> The list of available private link resources for an Account. </param>
         /// <param name="nextLink"> The URI that can be used to request the next list of private link resources. </param>
-        internal PrivateLinkResourceListResult(IReadOnlyList<PrivateLinkResourceData> value, string nextLink)
+        internal PrivateLinkResourceListResult(IReadOnlyList<PrivateLinkData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of available private link resources for an Account. </summary>
-        public IReadOnlyList<PrivateLinkResourceData> Value { get; }
+        public IReadOnlyList<PrivateLinkData> Value { get; }
         /// <summary> The URI that can be used to request the next list of private link resources. </summary>
         public string NextLink { get; }
     }

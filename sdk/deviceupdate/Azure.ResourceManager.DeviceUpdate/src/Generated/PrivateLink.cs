@@ -18,22 +18,22 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DeviceUpdate
 {
-    /// <summary> A Class representing a PrivateLinkResource along with the instance operations that can be performed on it. </summary>
-    public partial class PrivateLinkResource : ArmResource
+    /// <summary> A Class representing a PrivateLink along with the instance operations that can be performed on it. </summary>
+    public partial class PrivateLink : ArmResource
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly PrivateLinkResourcesRestOperations _privateLinkResourcesRestClient;
-        private readonly PrivateLinkResourceData _data;
+        private readonly PrivateLinkData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="PrivateLinkResource"/> class for mocking. </summary>
-        protected PrivateLinkResource()
+        /// <summary> Initializes a new instance of the <see cref="PrivateLink"/> class for mocking. </summary>
+        protected PrivateLink()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "PrivateLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "PrivateLink"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal PrivateLinkResource(ArmResource options, PrivateLinkResourceData resource) : base(options, resource.Id)
+        internal PrivateLink(ArmResource options, PrivateLinkData resource) : base(options, resource.Id)
         {
             HasData = true;
             _data = resource;
@@ -41,22 +41,22 @@ namespace Azure.ResourceManager.DeviceUpdate
             _privateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PrivateLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PrivateLink"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal PrivateLinkResource(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal PrivateLink(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _privateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PrivateLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PrivateLink"/> class. </summary>
         /// <param name="clientOptions"> The client options to build client context. </param>
         /// <param name="credential"> The credential to build client context. </param>
         /// <param name="uri"> The uri to build client context. </param>
         /// <param name="pipeline"> The pipeline to build client context. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal PrivateLinkResource(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
+        internal PrivateLink(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _privateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DeviceUpdate
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual PrivateLinkResourceData Data
+        public virtual PrivateLinkData Data
         {
             get
             {
@@ -85,16 +85,16 @@ namespace Azure.ResourceManager.DeviceUpdate
 
         /// <summary> Get the specified private link resource associated with the device update account. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<PrivateLinkResource>> GetAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response<PrivateLink>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PrivateLinkResource.Get");
+            using var scope = _clientDiagnostics.CreateScope("PrivateLink.Get");
             scope.Start();
             try
             {
                 var response = await _privateLinkResourcesRestClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new PrivateLinkResource(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrivateLink(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -105,16 +105,16 @@ namespace Azure.ResourceManager.DeviceUpdate
 
         /// <summary> Get the specified private link resource associated with the device update account. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PrivateLinkResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<PrivateLink> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PrivateLinkResource.Get");
+            using var scope = _clientDiagnostics.CreateScope("PrivateLink.Get");
             scope.Start();
             try
             {
                 var response = _privateLinkResourcesRestClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PrivateLinkResource(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrivateLink(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

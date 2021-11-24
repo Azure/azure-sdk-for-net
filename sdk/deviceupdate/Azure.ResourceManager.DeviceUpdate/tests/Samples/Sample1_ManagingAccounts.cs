@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests.Samples
                 Console.WriteLine(account.Data.Name);
             }
             //We can also list all accounts in the subscription
-            response = subscription.GetBySubscriptionAccountsAsync();
+            response = subscription.GetAccountsAsync();
             await foreach (Account account in response)
             {
                 Console.WriteLine(account.Data.Name);

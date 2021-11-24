@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DeviceUpdate
 {
-    public partial class PrivateLinkResourceData : IUtf8JsonSerializable
+    public partial class PrivateLinkData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             writer.WriteEndObject();
         }
 
-        internal static PrivateLinkResourceData DeserializePrivateLinkResourceData(JsonElement element)
+        internal static PrivateLinkData DeserializePrivateLinkData(JsonElement element)
         {
             Optional<SystemData> systemData = default;
             ResourceIdentifier id = default;
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                     continue;
                 }
             }
-            return new PrivateLinkResourceData(id, name, type, systemData, groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames), Optional.ToNullable(provisioningState));
+            return new PrivateLinkData(id, name, type, systemData, groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames), Optional.ToNullable(provisioningState));
         }
     }
 }

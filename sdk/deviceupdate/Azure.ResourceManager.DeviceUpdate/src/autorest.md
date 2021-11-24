@@ -15,7 +15,7 @@ no-property-type-replacement:
 directive:
   - from: swagger-document
     where: $.definitions.GroupInformation
-    transform: $['x-ms-client-name'] = 'PrivateLinkResource'
+    transform: $['x-ms-client-name'] = 'PrivateLink'
   - remove-operation: Accounts_Head
   - remove-operation: Instances_Head
 
