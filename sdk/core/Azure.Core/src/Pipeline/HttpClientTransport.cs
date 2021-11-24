@@ -206,6 +206,23 @@ namespace Azure.Core.Pipeline
 
         internal static bool TryGetHeader(HttpHeaders headers, HttpContent? content, string name, [NotNullWhen(true)] out string? value)
         {
+#if NET6_0_OR_GREATER
+            if (headers.NonValidated.TryGetValues(name, out HeaderStringValues nvvalues))
+            {
+                value = JoinHeaderValues(nvvalues);
+                return true;
+            }
+
+            if (content != null &&
+                content.Headers.NonValidated.TryGetValues(name, out HeaderStringValues contentnvvalues))
+            {
+                value = JoinHeaderValues(contentnvvalues);
+                return true;
+            }
+
+            value = null;
+            return false;
+#else
             if (TryGetHeader(headers, content, name, out IEnumerable<string>? values))
             {
                 value = JoinHeaderValues(values);
@@ -214,17 +231,50 @@ namespace Azure.Core.Pipeline
 
             value = null;
             return false;
+#endif
         }
 
         internal static bool TryGetHeader(HttpHeaders headers, HttpContent? content, string name, [NotNullWhen(true)] out IEnumerable<string>? values)
         {
+#if NET6_0_OR_GREATER
+            if (headers.NonValidated.TryGetValues(name, out HeaderStringValues nvvalues))
+            {
+                values = nvvalues;
+                return true;
+            }
+
+            if (content != null &&
+                content.Headers.NonValidated.TryGetValues(name, out HeaderStringValues contentnvvalues))
+            {
+                values = contentnvvalues;
+                return true;
+            }
+
+            values = null;
+            return false;
+#else
             return headers.TryGetValues(name, out values) ||
                    content != null &&
                    content.Headers.TryGetValues(name, out values);
+#endif
         }
 
         internal static IEnumerable<HttpHeader> GetHeaders(HttpHeaders headers, HttpContent? content)
         {
+#if NET6_0_OR_GREATER
+            foreach (KeyValuePair<string, HeaderStringValues> header in headers.NonValidated)
+            {
+                yield return new HttpHeader(header.Key, JoinHeaderValues(header.Value));
+            }
+
+            if (content != null)
+            {
+                foreach (KeyValuePair<string, HeaderStringValues> header in content.Headers.NonValidated)
+                {
+                    yield return new HttpHeader(header.Key, JoinHeaderValues(header.Value));
+                }
+            }
+#else
             foreach (KeyValuePair<string, IEnumerable<string>> header in headers)
             {
                 yield return new HttpHeader(header.Key, JoinHeaderValues(header.Value));
@@ -237,10 +287,21 @@ namespace Azure.Core.Pipeline
                     yield return new HttpHeader(header.Key, JoinHeaderValues(header.Value));
                 }
             }
+#endif
         }
 
         internal static bool RemoveHeader(HttpHeaders headers, HttpContent? content, string name)
         {
+#if NET6_0_OR_GREATER
+            // .Remove throws on invalid header name so use TryGet here to check
+            if (headers.NonValidated.Contains(name) && headers.Remove(name))
+            {
+                return true;
+            }
+
+            return content?.Headers.NonValidated.Contains(name) == true && content.Headers.Remove(name);
+
+#else
             // .Remove throws on invalid header name so use TryGet here to check
             if (headers.TryGetValues(name, out _) && headers.Remove(name))
             {
@@ -248,10 +309,20 @@ namespace Azure.Core.Pipeline
             }
 
             return content?.Headers.TryGetValues(name, out _) == true && content.Headers.Remove(name);
+#endif
         }
 
         internal static bool ContainsHeader(HttpHeaders headers, HttpContent? content, string name)
         {
+#if NET6_0_OR_GREATER
+            if (headers.NonValidated.Contains(name))
+            {
+                return true;
+            }
+
+            return content?.Headers.NonValidated.Contains(name) == true;
+
+#else
             // .Contains throws on invalid header name so use TryGet here
             if (headers.TryGetValues(name, out _))
             {
@@ -259,6 +330,7 @@ namespace Azure.Core.Pipeline
             }
 
             return content?.Headers.TryGetValues(name, out _) == true;
+#endif
         }
 
         internal static void CopyHeaders(HttpHeaders from, HttpHeaders to)
