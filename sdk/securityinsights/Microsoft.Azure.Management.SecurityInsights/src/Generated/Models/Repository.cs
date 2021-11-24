@@ -33,12 +33,17 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// </summary>
         /// <param name="url">Url of repository.</param>
         /// <param name="branch">Branch name of repository.</param>
+        /// <param name="displayUrl">Display url of repository.</param>
+        /// <param name="deploymentLogsUrl">Url to access repository action
+        /// logs.</param>
         /// <param name="pathMapping">Dictionary of source control content type
         /// and path mapping.</param>
-        public Repository(string url = default(string), string branch = default(string), IList<ContentPathMap> pathMapping = default(IList<ContentPathMap>))
+        public Repository(string url = default(string), string branch = default(string), string displayUrl = default(string), string deploymentLogsUrl = default(string), IList<ContentPathMap> pathMapping = default(IList<ContentPathMap>))
         {
             Url = url;
             Branch = branch;
+            DisplayUrl = displayUrl;
+            DeploymentLogsUrl = deploymentLogsUrl;
             PathMapping = pathMapping;
             CustomInit();
         }
@@ -59,6 +64,18 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// </summary>
         [JsonProperty(PropertyName = "branch")]
         public string Branch { get; set; }
+
+        /// <summary>
+        /// Gets or sets display url of repository.
+        /// </summary>
+        [JsonProperty(PropertyName = "displayUrl")]
+        public string DisplayUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets url to access repository action logs.
+        /// </summary>
+        [JsonProperty(PropertyName = "deploymentLogsUrl")]
+        public string DeploymentLogsUrl { get; set; }
 
         /// <summary>
         /// Gets or sets dictionary of source control content type and path

@@ -235,6 +235,114 @@ namespace Microsoft.Azure.Management.SecurityInsights
             }
 
             /// <summary>
+            /// Connects a data connector.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='operationalInsightsResourceProvider'>
+            /// The namespace of workspaces resource provider-
+            /// Microsoft.OperationalInsights.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            /// <param name='dataConnectorId'>
+            /// Connector ID
+            /// </param>
+            /// <param name='connectBody'>
+            /// The data connector
+            /// </param>
+            public static void Connect(this IDataConnectorsOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string dataConnectorId, DataConnectorConnectBody connectBody)
+            {
+                operations.ConnectAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, dataConnectorId, connectBody).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Connects a data connector.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='operationalInsightsResourceProvider'>
+            /// The namespace of workspaces resource provider-
+            /// Microsoft.OperationalInsights.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            /// <param name='dataConnectorId'>
+            /// Connector ID
+            /// </param>
+            /// <param name='connectBody'>
+            /// The data connector
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task ConnectAsync(this IDataConnectorsOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string dataConnectorId, DataConnectorConnectBody connectBody, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.ConnectWithHttpMessagesAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, dataConnectorId, connectBody, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Disconnect a data connector.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='operationalInsightsResourceProvider'>
+            /// The namespace of workspaces resource provider-
+            /// Microsoft.OperationalInsights.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            /// <param name='dataConnectorId'>
+            /// Connector ID
+            /// </param>
+            public static void Disconnect(this IDataConnectorsOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string dataConnectorId)
+            {
+                operations.DisconnectAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, dataConnectorId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Disconnect a data connector.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='operationalInsightsResourceProvider'>
+            /// The namespace of workspaces resource provider-
+            /// Microsoft.OperationalInsights.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            /// <param name='dataConnectorId'>
+            /// Connector ID
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DisconnectAsync(this IDataConnectorsOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string dataConnectorId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.DisconnectWithHttpMessagesAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, dataConnectorId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Gets all data connectors.
             /// </summary>
             /// <param name='operations'>

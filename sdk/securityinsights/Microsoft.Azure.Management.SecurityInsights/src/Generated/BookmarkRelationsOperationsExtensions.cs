@@ -116,9 +116,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='relationName'>
             /// Relation Name
             /// </param>
-            public static Relation GetRelation(this IBookmarkRelationsOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string bookmarkId, string relationName)
+            public static Relation Get(this IBookmarkRelationsOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string bookmarkId, string relationName)
             {
-                return operations.GetRelationAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, bookmarkId, relationName).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, bookmarkId, relationName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -146,9 +146,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Relation> GetRelationAsync(this IBookmarkRelationsOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string bookmarkId, string relationName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Relation> GetAsync(this IBookmarkRelationsOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string bookmarkId, string relationName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetRelationWithHttpMessagesAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, bookmarkId, relationName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, bookmarkId, relationName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -182,9 +182,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='etag'>
             /// Etag of the azure resource
             /// </param>
-            public static Relation CreateOrUpdateRelation(this IBookmarkRelationsOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string bookmarkId, string relationName, string relatedResourceId, string etag = default(string))
+            public static Relation CreateOrUpdate(this IBookmarkRelationsOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string bookmarkId, string relationName, string relatedResourceId, string etag = default(string))
             {
-                return operations.CreateOrUpdateRelationAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, bookmarkId, relationName, relatedResourceId, etag).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, bookmarkId, relationName, relatedResourceId, etag).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -218,9 +218,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Relation> CreateOrUpdateRelationAsync(this IBookmarkRelationsOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string bookmarkId, string relationName, string relatedResourceId, string etag = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Relation> CreateOrUpdateAsync(this IBookmarkRelationsOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string bookmarkId, string relationName, string relatedResourceId, string etag = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateRelationWithHttpMessagesAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, bookmarkId, relationName, relatedResourceId, etag, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, bookmarkId, relationName, relatedResourceId, etag, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -248,9 +248,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='relationName'>
             /// Relation Name
             /// </param>
-            public static void DeleteRelation(this IBookmarkRelationsOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string bookmarkId, string relationName)
+            public static void Delete(this IBookmarkRelationsOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string bookmarkId, string relationName)
             {
-                operations.DeleteRelationAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, bookmarkId, relationName).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, bookmarkId, relationName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -278,9 +278,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteRelationAsync(this IBookmarkRelationsOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string bookmarkId, string relationName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IBookmarkRelationsOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string bookmarkId, string relationName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteRelationWithHttpMessagesAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, bookmarkId, relationName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, bookmarkId, relationName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

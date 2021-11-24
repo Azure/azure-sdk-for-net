@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/Microsoft.SecurityInsights-2021-09-01-preview-rebased/specification/securityinsights/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --tag=package-preview-2021-09 --csharp-sdks-folder=E:\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "Microsoft.SecurityInsights-2021-09-01-preview-rebased";
-      public static readonly String GithubCommidId = "80e48ba1352d8b222c9165db019d3e70eb0c32fb";
+      public static readonly String GithubCommidId = "ab2253f18fd7f6b8f9271156ca3fc8e126c17ba9";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

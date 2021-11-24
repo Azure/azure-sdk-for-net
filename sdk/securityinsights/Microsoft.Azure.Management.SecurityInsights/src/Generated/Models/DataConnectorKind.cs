@@ -23,6 +23,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         public const string ThreatIntelligenceTaxii = "ThreatIntelligenceTaxii";
         public const string Office365 = "Office365";
         public const string OfficeATP = "OfficeATP";
+        public const string OfficeIRM = "OfficeIRM";
         public const string AmazonWebServicesCloudTrail = "AmazonWebServicesCloudTrail";
         public const string AmazonWebServicesS3 = "AmazonWebServicesS3";
         public const string AzureAdvancedThreatProtection = "AzureAdvancedThreatProtection";
@@ -31,5 +32,6 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         public const string MicrosoftThreatProtection = "MicrosoftThreatProtection";
         public const string MicrosoftThreatIntelligence = "MicrosoftThreatIntelligence";
         public const string GenericUI = "GenericUI";
+        public const string APIPolling = "APIPolling";
     }
 }

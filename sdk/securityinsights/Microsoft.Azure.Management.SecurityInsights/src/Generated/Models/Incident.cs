@@ -81,7 +81,9 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// to</param>
         /// <param name="relatedAnalyticRuleIds">List of resource ids of
         /// Analytic rules related to the incident</param>
-        public Incident(string severity, string status, string title, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string etag = default(string), IncidentAdditionalData additionalData = default(IncidentAdditionalData), string classification = default(string), string classificationComment = default(string), string classificationReason = default(string), System.DateTime? createdTimeUtc = default(System.DateTime?), string description = default(string), System.DateTime? firstActivityTimeUtc = default(System.DateTime?), string incidentUrl = default(string), int? incidentNumber = default(int?), IList<IncidentLabel> labels = default(IList<IncidentLabel>), string providerName = default(string), string providerIncidentId = default(string), System.DateTime? lastActivityTimeUtc = default(System.DateTime?), System.DateTime? lastModifiedTimeUtc = default(System.DateTime?), IncidentOwnerInfo owner = default(IncidentOwnerInfo), IList<string> relatedAnalyticRuleIds = default(IList<string>))
+        /// <param name="teamInformation">Describes a team for the
+        /// incident</param>
+        public Incident(string severity, string status, string title, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string etag = default(string), IncidentAdditionalData additionalData = default(IncidentAdditionalData), string classification = default(string), string classificationComment = default(string), string classificationReason = default(string), System.DateTime? createdTimeUtc = default(System.DateTime?), string description = default(string), System.DateTime? firstActivityTimeUtc = default(System.DateTime?), string incidentUrl = default(string), int? incidentNumber = default(int?), IList<IncidentLabel> labels = default(IList<IncidentLabel>), string providerName = default(string), string providerIncidentId = default(string), System.DateTime? lastActivityTimeUtc = default(System.DateTime?), System.DateTime? lastModifiedTimeUtc = default(System.DateTime?), IncidentOwnerInfo owner = default(IncidentOwnerInfo), IList<string> relatedAnalyticRuleIds = default(IList<string>), TeamInformation teamInformation = default(TeamInformation))
             : base(id, name, type, systemData, etag)
         {
             AdditionalData = additionalData;
@@ -102,6 +104,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
             RelatedAnalyticRuleIds = relatedAnalyticRuleIds;
             Severity = severity;
             Status = status;
+            TeamInformation = teamInformation;
             Title = title;
             CustomInit();
         }
@@ -225,6 +228,12 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.status")]
         public string Status { get; set; }
+
+        /// <summary>
+        /// Gets or sets describes a team for the incident
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.teamInformation")]
+        public TeamInformation TeamInformation { get; set; }
 
         /// <summary>
         /// Gets or sets the title of the incident

@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// <summary>
         /// Gets or sets the id (a Guid) of the source control
         /// </summary>
-        [JsonProperty(PropertyName = "properties.sourceControlId")]
+        [JsonProperty(PropertyName = "properties.id")]
         public string SourceControlId { get; set; }
 
         /// <summary>

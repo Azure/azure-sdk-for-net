@@ -52,11 +52,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
         string ApiVersion { get; }
 
         /// <summary>
-        /// Azure subscription ID
-        /// </summary>
-        string SubscriptionId1 { get; set; }
-
-        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         string AcceptLanguage { get; set; }
