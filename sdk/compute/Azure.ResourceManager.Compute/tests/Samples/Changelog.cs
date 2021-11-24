@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
                 Location = location,
                 IpConfigurations =
                 {
-                    new NetworkInterfaceIPConfiguration()
+                    new NetworkInterfaceIPConfigurationData()
                     {
                         Name = "Primary",
                         Primary = true,
