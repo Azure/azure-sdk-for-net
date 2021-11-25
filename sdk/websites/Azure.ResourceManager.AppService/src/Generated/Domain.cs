@@ -298,11 +298,11 @@ namespace Azure.ResourceManager.AppService
 
         #region DomainOwnershipIdentifier
 
-        /// <summary> Gets a container of DomainOwnershipIdentifiers in the Domain. </summary>
+        /// <summary> Gets a collection of DomainOwnershipIdentifiers in the Domain. </summary>
         /// <returns> An object representing collection of DomainOwnershipIdentifiers and their operations over a Domain. </returns>
-        public DomainOwnershipIdentifierContainer GetDomainOwnershipIdentifiers()
+        public DomainOwnershipIdentifierCollection GetDomainOwnershipIdentifiers()
         {
-            return new DomainOwnershipIdentifierContainer(this);
+            return new DomainOwnershipIdentifierCollection(this);
         }
         #endregion
     }

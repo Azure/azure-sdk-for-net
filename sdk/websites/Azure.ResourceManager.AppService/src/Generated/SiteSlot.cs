@@ -3703,51 +3703,51 @@ namespace Azure.ResourceManager.AppService
 
         #region SiteSlotDetector
 
-        /// <summary> Gets a container of SiteSlotDetectors in the SiteSlot. </summary>
+        /// <summary> Gets a collection of SiteSlotDetectors in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotDetectors and their operations over a SiteSlot. </returns>
-        public SiteSlotDetectorContainer GetSiteSlotDetectors()
+        public SiteSlotDetectorCollection GetSiteSlotDetectors()
         {
-            return new SiteSlotDetectorContainer(this);
+            return new SiteSlotDetectorCollection(this);
         }
         #endregion
 
         #region SiteSlotPrivateEndpointConnection
 
-        /// <summary> Gets a container of SiteSlotPrivateEndpointConnections in the SiteSlot. </summary>
+        /// <summary> Gets a collection of SiteSlotPrivateEndpointConnections in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotPrivateEndpointConnections and their operations over a SiteSlot. </returns>
-        public SiteSlotPrivateEndpointConnectionContainer GetSiteSlotPrivateEndpointConnections()
+        public SiteSlotPrivateEndpointConnectionCollection GetSiteSlotPrivateEndpointConnections()
         {
-            return new SiteSlotPrivateEndpointConnectionContainer(this);
+            return new SiteSlotPrivateEndpointConnectionCollection(this);
         }
         #endregion
 
         #region SiteSlotHybridConnectionNamespaceRelay
 
-        /// <summary> Gets a container of SiteSlotHybridConnectionNamespaceRelays in the SiteSlot. </summary>
+        /// <summary> Gets a collection of SiteSlotHybridConnectionNamespaceRelays in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotHybridConnectionNamespaceRelays and their operations over a SiteSlot. </returns>
-        public SiteSlotHybridConnectionNamespaceRelayContainer GetSiteSlotHybridConnectionNamespaceRelays()
+        public SiteSlotHybridConnectionNamespaceRelayCollection GetSiteSlotHybridConnectionNamespaceRelays()
         {
-            return new SiteSlotHybridConnectionNamespaceRelayContainer(this);
+            return new SiteSlotHybridConnectionNamespaceRelayCollection(this);
         }
         #endregion
 
         #region SiteSlotVirtualNetworkConnection
 
-        /// <summary> Gets a container of SiteSlotVirtualNetworkConnections in the SiteSlot. </summary>
+        /// <summary> Gets a collection of SiteSlotVirtualNetworkConnections in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotVirtualNetworkConnections and their operations over a SiteSlot. </returns>
-        public SiteSlotVirtualNetworkConnectionContainer GetSiteSlotVirtualNetworkConnections()
+        public SiteSlotVirtualNetworkConnectionCollection GetSiteSlotVirtualNetworkConnections()
         {
-            return new SiteSlotVirtualNetworkConnectionContainer(this);
+            return new SiteSlotVirtualNetworkConnectionCollection(this);
         }
         #endregion
 
         #region SiteSlotDiagnostic
 
-        /// <summary> Gets a container of SiteSlotDiagnostics in the SiteSlot. </summary>
+        /// <summary> Gets a collection of SiteSlotDiagnostics in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotDiagnostics and their operations over a SiteSlot. </returns>
-        public SiteSlotDiagnosticContainer GetSiteSlotDiagnostics()
+        public SiteSlotDiagnosticCollection GetSiteSlotDiagnostics()
         {
-            return new SiteSlotDiagnosticContainer(this);
+            return new SiteSlotDiagnosticCollection(this);
         }
         #endregion
 
@@ -3763,261 +3763,261 @@ namespace Azure.ResourceManager.AppService
 
         #region SiteSlotBackup
 
-        /// <summary> Gets a container of SiteSlotBackups in the SiteSlot. </summary>
+        /// <summary> Gets a collection of SiteSlotBackups in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotBackups and their operations over a SiteSlot. </returns>
-        public SiteSlotBackupContainer GetSiteSlotBackups()
+        public SiteSlotBackupCollection GetSiteSlotBackups()
         {
-            return new SiteSlotBackupContainer(this);
+            return new SiteSlotBackupCollection(this);
         }
         #endregion
 
         #region SiteSlotBasicPublishingCredentialsPolicyFtp
 
-        /// <summary> Gets a container of SiteSlotBasicPublishingCredentialsPolicyFtps in the SiteSlot. </summary>
+        /// <summary> Gets a collection of SiteSlotBasicPublishingCredentialsPolicyFtps in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotBasicPublishingCredentialsPolicyFtps and their operations over a SiteSlot. </returns>
-        public SiteSlotBasicPublishingCredentialsPolicyFtpContainer GetSiteSlotBasicPublishingCredentialsPolicyFtps()
+        public SiteSlotBasicPublishingCredentialsPolicyFtpCollection GetSiteSlotBasicPublishingCredentialsPolicyFtps()
         {
-            return new SiteSlotBasicPublishingCredentialsPolicyFtpContainer(this);
+            return new SiteSlotBasicPublishingCredentialsPolicyFtpCollection(this);
         }
         #endregion
 
         #region SiteSlotBasicPublishingCredentialsPolicyScm
 
-        /// <summary> Gets a container of SiteSlotBasicPublishingCredentialsPolicyScms in the SiteSlot. </summary>
+        /// <summary> Gets a collection of SiteSlotBasicPublishingCredentialsPolicyScms in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotBasicPublishingCredentialsPolicyScms and their operations over a SiteSlot. </returns>
-        public SiteSlotBasicPublishingCredentialsPolicyScmContainer GetSiteSlotBasicPublishingCredentialsPolicyScms()
+        public SiteSlotBasicPublishingCredentialsPolicyScmCollection GetSiteSlotBasicPublishingCredentialsPolicyScms()
         {
-            return new SiteSlotBasicPublishingCredentialsPolicyScmContainer(this);
+            return new SiteSlotBasicPublishingCredentialsPolicyScmCollection(this);
         }
         #endregion
 
         #region SiteSlotConfigAppsetting
 
-        /// <summary> Gets a container of SiteSlotConfigAppsettings in the SiteSlot. </summary>
+        /// <summary> Gets a collection of SiteSlotConfigAppsettings in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotConfigAppsettings and their operations over a SiteSlot. </returns>
-        public SiteSlotConfigAppsettingContainer GetSiteSlotConfigAppsettings()
+        public SiteSlotConfigAppsettingCollection GetSiteSlotConfigAppsettings()
         {
-            return new SiteSlotConfigAppsettingContainer(this);
+            return new SiteSlotConfigAppsettingCollection(this);
         }
         #endregion
 
         #region SiteSlotConfigConnectionstring
 
-        /// <summary> Gets a container of SiteSlotConfigConnectionstrings in the SiteSlot. </summary>
+        /// <summary> Gets a collection of SiteSlotConfigConnectionstrings in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotConfigConnectionstrings and their operations over a SiteSlot. </returns>
-        public SiteSlotConfigConnectionstringContainer GetSiteSlotConfigConnectionstrings()
+        public SiteSlotConfigConnectionstringCollection GetSiteSlotConfigConnectionstrings()
         {
-            return new SiteSlotConfigConnectionstringContainer(this);
+            return new SiteSlotConfigConnectionstringCollection(this);
         }
         #endregion
 
         #region SiteSlotConfigLogs
 
-        /// <summary> Gets a container of SiteSlotConfigLogs in the SiteSlot. </summary>
+        /// <summary> Gets a collection of SiteSlotConfigLogs in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotConfigLogs and their operations over a SiteSlot. </returns>
-        public SiteSlotConfigLogsContainer GetSiteSlotConfigLogs()
+        public SiteSlotConfigLogsCollection GetSiteSlotConfigLogs()
         {
-            return new SiteSlotConfigLogsContainer(this);
+            return new SiteSlotConfigLogsCollection(this);
         }
         #endregion
 
         #region SiteSlotConfigWeb
 
-        /// <summary> Gets a container of SiteSlotConfigWebs in the SiteSlot. </summary>
+        /// <summary> Gets a collection of SiteSlotConfigWebs in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotConfigWebs and their operations over a SiteSlot. </returns>
-        public SiteSlotConfigWebContainer GetSiteSlotConfigWebs()
+        public SiteSlotConfigWebCollection GetSiteSlotConfigWebs()
         {
-            return new SiteSlotConfigWebContainer(this);
+            return new SiteSlotConfigWebCollection(this);
         }
         #endregion
 
         #region SiteSlotContinuouswebjob
 
-        /// <summary> Gets a container of SiteSlotContinuouswebjobs in the SiteSlot. </summary>
+        /// <summary> Gets a collection of SiteSlotContinuouswebjobs in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotContinuouswebjobs and their operations over a SiteSlot. </returns>
-        public SiteSlotContinuouswebjobContainer GetSiteSlotContinuouswebjobs()
+        public SiteSlotContinuouswebjobCollection GetSiteSlotContinuouswebjobs()
         {
-            return new SiteSlotContinuouswebjobContainer(this);
+            return new SiteSlotContinuouswebjobCollection(this);
         }
         #endregion
 
         #region SiteSlotDeployment
 
-        /// <summary> Gets a container of SiteSlotDeployments in the SiteSlot. </summary>
+        /// <summary> Gets a collection of SiteSlotDeployments in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotDeployments and their operations over a SiteSlot. </returns>
-        public SiteSlotDeploymentContainer GetSiteSlotDeployments()
+        public SiteSlotDeploymentCollection GetSiteSlotDeployments()
         {
-            return new SiteSlotDeploymentContainer(this);
+            return new SiteSlotDeploymentCollection(this);
         }
         #endregion
 
         #region SiteSlotDomainOwnershipIdentifier
 
-        /// <summary> Gets a container of SiteSlotDomainOwnershipIdentifiers in the SiteSlot. </summary>
+        /// <summary> Gets a collection of SiteSlotDomainOwnershipIdentifiers in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotDomainOwnershipIdentifiers and their operations over a SiteSlot. </returns>
-        public SiteSlotDomainOwnershipIdentifierContainer GetSiteSlotDomainOwnershipIdentifiers()
+        public SiteSlotDomainOwnershipIdentifierCollection GetSiteSlotDomainOwnershipIdentifiers()
         {
-            return new SiteSlotDomainOwnershipIdentifierContainer(this);
+            return new SiteSlotDomainOwnershipIdentifierCollection(this);
         }
         #endregion
 
         #region SiteSlotExtension
 
-        /// <summary> Gets a container of SiteSlotExtensions in the SiteSlot. </summary>
+        /// <summary> Gets a collection of SiteSlotExtensions in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotExtensions and their operations over a SiteSlot. </returns>
-        public SiteSlotExtensionContainer GetSiteSlotExtensions()
+        public SiteSlotExtensionCollection GetSiteSlotExtensions()
         {
-            return new SiteSlotExtensionContainer(this);
+            return new SiteSlotExtensionCollection(this);
         }
         #endregion
 
         #region SiteSlotFunction
 
-        /// <summary> Gets a container of SiteSlotFunctions in the SiteSlot. </summary>
+        /// <summary> Gets a collection of SiteSlotFunctions in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotFunctions and their operations over a SiteSlot. </returns>
-        public SiteSlotFunctionContainer GetSiteSlotFunctions()
+        public SiteSlotFunctionCollection GetSiteSlotFunctions()
         {
-            return new SiteSlotFunctionContainer(this);
+            return new SiteSlotFunctionCollection(this);
         }
         #endregion
 
         #region SiteSlotHostNameBinding
 
-        /// <summary> Gets a container of SiteSlotHostNameBindings in the SiteSlot. </summary>
+        /// <summary> Gets a collection of SiteSlotHostNameBindings in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotHostNameBindings and their operations over a SiteSlot. </returns>
-        public SiteSlotHostNameBindingContainer GetSiteSlotHostNameBindings()
+        public SiteSlotHostNameBindingCollection GetSiteSlotHostNameBindings()
         {
-            return new SiteSlotHostNameBindingContainer(this);
+            return new SiteSlotHostNameBindingCollection(this);
         }
         #endregion
 
         #region SiteSlotHybridconnection
 
-        /// <summary> Gets a container of SiteSlotHybridconnections in the SiteSlot. </summary>
+        /// <summary> Gets a collection of SiteSlotHybridconnections in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotHybridconnections and their operations over a SiteSlot. </returns>
-        public SiteSlotHybridconnectionContainer GetSiteSlotHybridconnections()
+        public SiteSlotHybridconnectionCollection GetSiteSlotHybridconnections()
         {
-            return new SiteSlotHybridconnectionContainer(this);
+            return new SiteSlotHybridconnectionCollection(this);
         }
         #endregion
 
         #region SiteSlotInstance
 
-        /// <summary> Gets a container of SiteSlotInstances in the SiteSlot. </summary>
+        /// <summary> Gets a collection of SiteSlotInstances in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotInstances and their operations over a SiteSlot. </returns>
-        public SiteSlotInstanceContainer GetSiteSlotInstances()
+        public SiteSlotInstanceCollection GetSiteSlotInstances()
         {
-            return new SiteSlotInstanceContainer(this);
+            return new SiteSlotInstanceCollection(this);
         }
         #endregion
 
         #region SiteSlotProcess
 
-        /// <summary> Gets a container of SiteSlotProcesses in the SiteSlot. </summary>
+        /// <summary> Gets a collection of SiteSlotProcesses in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotProcesses and their operations over a SiteSlot. </returns>
-        public SiteSlotProcessContainer GetSiteSlotProcesses()
+        public SiteSlotProcessCollection GetSiteSlotProcesses()
         {
-            return new SiteSlotProcessContainer(this);
+            return new SiteSlotProcessCollection(this);
         }
         #endregion
 
         #region SiteSlotMigratemysql
 
-        /// <summary> Gets a container of SiteSlotMigratemysqls in the SiteSlot. </summary>
+        /// <summary> Gets a collection of SiteSlotMigratemysqls in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotMigratemysqls and their operations over a SiteSlot. </returns>
-        public SiteSlotMigratemysqlContainer GetSiteSlotMigratemysqls()
+        public SiteSlotMigratemysqlCollection GetSiteSlotMigratemysqls()
         {
-            return new SiteSlotMigratemysqlContainer(this);
+            return new SiteSlotMigratemysqlCollection(this);
         }
         #endregion
 
         #region SiteSlotNetworkConfig
 
-        /// <summary> Gets a container of SiteSlotNetworkConfigs in the SiteSlot. </summary>
+        /// <summary> Gets a collection of SiteSlotNetworkConfigs in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotNetworkConfigs and their operations over a SiteSlot. </returns>
-        public SiteSlotNetworkConfigContainer GetSiteSlotNetworkConfigs()
+        public SiteSlotNetworkConfigCollection GetSiteSlotNetworkConfigs()
         {
-            return new SiteSlotNetworkConfigContainer(this);
+            return new SiteSlotNetworkConfigCollection(this);
         }
         #endregion
 
         #region SiteSlotNetworkFeature
 
-        /// <summary> Gets a container of SiteSlotNetworkFeatures in the SiteSlot. </summary>
+        /// <summary> Gets a collection of SiteSlotNetworkFeatures in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotNetworkFeatures and their operations over a SiteSlot. </returns>
-        public SiteSlotNetworkFeatureContainer GetSiteSlotNetworkFeatures()
+        public SiteSlotNetworkFeatureCollection GetSiteSlotNetworkFeatures()
         {
-            return new SiteSlotNetworkFeatureContainer(this);
+            return new SiteSlotNetworkFeatureCollection(this);
         }
         #endregion
 
         #region SiteSlotPremieraddon
 
-        /// <summary> Gets a container of SiteSlotPremieraddons in the SiteSlot. </summary>
+        /// <summary> Gets a collection of SiteSlotPremieraddons in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotPremieraddons and their operations over a SiteSlot. </returns>
-        public SiteSlotPremieraddonContainer GetSiteSlotPremieraddons()
+        public SiteSlotPremieraddonCollection GetSiteSlotPremieraddons()
         {
-            return new SiteSlotPremieraddonContainer(this);
+            return new SiteSlotPremieraddonCollection(this);
         }
         #endregion
 
         #region SiteSlotPrivateAcces
 
-        /// <summary> Gets a container of SiteSlotPrivateAcces in the SiteSlot. </summary>
+        /// <summary> Gets a collection of SiteSlotPrivateAcces in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotPrivateAcces and their operations over a SiteSlot. </returns>
-        public SiteSlotPrivateAccesContainer GetSiteSlotPrivateAcces()
+        public SiteSlotPrivateAccesCollection GetSiteSlotPrivateAcces()
         {
-            return new SiteSlotPrivateAccesContainer(this);
+            return new SiteSlotPrivateAccesCollection(this);
         }
         #endregion
 
         #region SiteSlotPublicCertificate
 
-        /// <summary> Gets a container of SiteSlotPublicCertificates in the SiteSlot. </summary>
+        /// <summary> Gets a collection of SiteSlotPublicCertificates in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotPublicCertificates and their operations over a SiteSlot. </returns>
-        public SiteSlotPublicCertificateContainer GetSiteSlotPublicCertificates()
+        public SiteSlotPublicCertificateCollection GetSiteSlotPublicCertificates()
         {
-            return new SiteSlotPublicCertificateContainer(this);
+            return new SiteSlotPublicCertificateCollection(this);
         }
         #endregion
 
         #region SiteSlotSiteextension
 
-        /// <summary> Gets a container of SiteSlotSiteextensions in the SiteSlot. </summary>
+        /// <summary> Gets a collection of SiteSlotSiteextensions in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotSiteextensions and their operations over a SiteSlot. </returns>
-        public SiteSlotSiteextensionContainer GetSiteSlotSiteextensions()
+        public SiteSlotSiteextensionCollection GetSiteSlotSiteextensions()
         {
-            return new SiteSlotSiteextensionContainer(this);
+            return new SiteSlotSiteextensionCollection(this);
         }
         #endregion
 
         #region SiteSlotSourcecontrol
 
-        /// <summary> Gets a container of SiteSlotSourcecontrols in the SiteSlot. </summary>
+        /// <summary> Gets a collection of SiteSlotSourcecontrols in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotSourcecontrols and their operations over a SiteSlot. </returns>
-        public SiteSlotSourcecontrolContainer GetSiteSlotSourcecontrols()
+        public SiteSlotSourcecontrolCollection GetSiteSlotSourcecontrols()
         {
-            return new SiteSlotSourcecontrolContainer(this);
+            return new SiteSlotSourcecontrolCollection(this);
         }
         #endregion
 
         #region SiteSlotTriggeredwebjob
 
-        /// <summary> Gets a container of SiteSlotTriggeredwebjobs in the SiteSlot. </summary>
+        /// <summary> Gets a collection of SiteSlotTriggeredwebjobs in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotTriggeredwebjobs and their operations over a SiteSlot. </returns>
-        public SiteSlotTriggeredwebjobContainer GetSiteSlotTriggeredwebjobs()
+        public SiteSlotTriggeredwebjobCollection GetSiteSlotTriggeredwebjobs()
         {
-            return new SiteSlotTriggeredwebjobContainer(this);
+            return new SiteSlotTriggeredwebjobCollection(this);
         }
         #endregion
 
         #region SiteSlotWebjob
 
-        /// <summary> Gets a container of SiteSlotWebjobs in the SiteSlot. </summary>
+        /// <summary> Gets a collection of SiteSlotWebjobs in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotWebjobs and their operations over a SiteSlot. </returns>
-        public SiteSlotWebjobContainer GetSiteSlotWebjobs()
+        public SiteSlotWebjobCollection GetSiteSlotWebjobs()
         {
-            return new SiteSlotWebjobContainer(this);
+            return new SiteSlotWebjobCollection(this);
         }
         #endregion
     }

@@ -244,5 +244,27 @@ namespace Azure.ResourceManager.AppService.Tests.Helpers
             return data;
         }
         #endregion
+
+        #region Certificate
+        public static void AssertCertificate(Certificate certificate1, Certificate certificate2)
+        {
+            //AssertTrackedResource(certificate1, certificate2);
+            Assert.AreEqual(certificate1.Data.CanonicalName, certificate2.Data.CanonicalName);
+        }
+
+        public static CertificateData GetBasicCertificateData(Location location)
+        {
+            var data = new CertificateData(location)
+            {
+                Location = location,
+                HostNames =
+                {
+                    "ServerCert"
+                },
+                Password = "SWsSsd__233$Sdsds#%Sd!"
+            };
+            return data;
+        }
+        #endregion
     }
 }

@@ -147,21 +147,21 @@ namespace Azure.ResourceManager.AppService
 
         #region SiteSlotDiagnosticAnalysis
 
-        /// <summary> Gets a container of SiteSlotDiagnosticAnalyses in the SiteSlotDiagnostic. </summary>
+        /// <summary> Gets a collection of SiteSlotDiagnosticAnalyses in the SiteSlotDiagnostic. </summary>
         /// <returns> An object representing collection of SiteSlotDiagnosticAnalyses and their operations over a SiteSlotDiagnostic. </returns>
-        public SiteSlotDiagnosticAnalysisContainer GetSiteSlotDiagnosticAnalyses()
+        public SiteSlotDiagnosticAnalysisCollection GetSiteSlotDiagnosticAnalyses()
         {
-            return new SiteSlotDiagnosticAnalysisContainer(this);
+            return new SiteSlotDiagnosticAnalysisCollection(this);
         }
         #endregion
 
         #region SiteSlotDiagnosticDetector
 
-        /// <summary> Gets a container of SiteSlotDiagnosticDetectors in the SiteSlotDiagnostic. </summary>
+        /// <summary> Gets a collection of SiteSlotDiagnosticDetectors in the SiteSlotDiagnostic. </summary>
         /// <returns> An object representing collection of SiteSlotDiagnosticDetectors and their operations over a SiteSlotDiagnostic. </returns>
-        public SiteSlotDiagnosticDetectorContainer GetSiteSlotDiagnosticDetectors()
+        public SiteSlotDiagnosticDetectorCollection GetSiteSlotDiagnosticDetectors()
         {
-            return new SiteSlotDiagnosticDetectorContainer(this);
+            return new SiteSlotDiagnosticDetectorCollection(this);
         }
         #endregion
     }

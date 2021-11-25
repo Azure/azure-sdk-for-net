@@ -540,11 +540,11 @@ namespace Azure.ResourceManager.AppService
 
         #region StaticSiteBuildUserProvidedFunctionApp
 
-        /// <summary> Gets a container of StaticSiteBuildUserProvidedFunctionApps in the StaticSiteBuildARMResource. </summary>
+        /// <summary> Gets a collection of StaticSiteBuildUserProvidedFunctionApps in the StaticSiteBuildARMResource. </summary>
         /// <returns> An object representing collection of StaticSiteBuildUserProvidedFunctionApps and their operations over a StaticSiteBuildARMResource. </returns>
-        public StaticSiteBuildUserProvidedFunctionAppContainer GetStaticSiteBuildUserProvidedFunctionApps()
+        public StaticSiteBuildUserProvidedFunctionAppCollection GetStaticSiteBuildUserProvidedFunctionApps()
         {
-            return new StaticSiteBuildUserProvidedFunctionAppContainer(this);
+            return new StaticSiteBuildUserProvidedFunctionAppCollection(this);
         }
         #endregion
     }

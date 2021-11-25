@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AppService
         ///  Retrieval of all properties may increase the API latency.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<AppServicePlanCollection>> ListAsync(bool? detailed = null, CancellationToken cancellationToken = default)
+        public async Task<Response<Models.AppServicePlanCollection>> ListAsync(bool? detailed = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest(detailed);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -80,9 +80,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        AppServicePlanCollection value = default;
+                        Models.AppServicePlanCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AppServicePlanCollection.DeserializeAppServicePlanCollection(document.RootElement);
+                        value = Models.AppServicePlanCollection.DeserializeAppServicePlanCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppService
         ///  Retrieval of all properties may increase the API latency.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<AppServicePlanCollection> List(bool? detailed = null, CancellationToken cancellationToken = default)
+        public Response<Models.AppServicePlanCollection> List(bool? detailed = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest(detailed);
             _pipeline.Send(message, cancellationToken);
@@ -104,9 +104,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        AppServicePlanCollection value = default;
+                        Models.AppServicePlanCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AppServicePlanCollection.DeserializeAppServicePlanCollection(document.RootElement);
+                        value = Models.AppServicePlanCollection.DeserializeAppServicePlanCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<AppServicePlanCollection>> ListByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<Models.AppServicePlanCollection>> ListByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -150,9 +150,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        AppServicePlanCollection value = default;
+                        Models.AppServicePlanCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AppServicePlanCollection.DeserializeAppServicePlanCollection(document.RootElement);
+                        value = Models.AppServicePlanCollection.DeserializeAppServicePlanCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<AppServicePlanCollection> ListByResourceGroup(string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<Models.AppServicePlanCollection> ListByResourceGroup(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -177,9 +177,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        AppServicePlanCollection value = default;
+                        Models.AppServicePlanCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AppServicePlanCollection.DeserializeAppServicePlanCollection(document.RootElement);
+                        value = Models.AppServicePlanCollection.DeserializeAppServicePlanCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2587,7 +2587,7 @@ namespace Azure.ResourceManager.AppService
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<AppServicePlanCollection>> ListNextPageAsync(string nextLink, bool? detailed = null, CancellationToken cancellationToken = default)
+        public async Task<Response<Models.AppServicePlanCollection>> ListNextPageAsync(string nextLink, bool? detailed = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -2600,9 +2600,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        AppServicePlanCollection value = default;
+                        Models.AppServicePlanCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AppServicePlanCollection.DeserializeAppServicePlanCollection(document.RootElement);
+                        value = Models.AppServicePlanCollection.DeserializeAppServicePlanCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2618,7 +2618,7 @@ namespace Azure.ResourceManager.AppService
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<AppServicePlanCollection> ListNextPage(string nextLink, bool? detailed = null, CancellationToken cancellationToken = default)
+        public Response<Models.AppServicePlanCollection> ListNextPage(string nextLink, bool? detailed = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -2631,9 +2631,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        AppServicePlanCollection value = default;
+                        Models.AppServicePlanCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AppServicePlanCollection.DeserializeAppServicePlanCollection(document.RootElement);
+                        value = Models.AppServicePlanCollection.DeserializeAppServicePlanCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2660,7 +2660,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<AppServicePlanCollection>> ListByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<Models.AppServicePlanCollection>> ListByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -2677,9 +2677,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        AppServicePlanCollection value = default;
+                        Models.AppServicePlanCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AppServicePlanCollection.DeserializeAppServicePlanCollection(document.RootElement);
+                        value = Models.AppServicePlanCollection.DeserializeAppServicePlanCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2692,7 +2692,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<AppServicePlanCollection> ListByResourceGroupNextPage(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<Models.AppServicePlanCollection> ListByResourceGroupNextPage(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -2709,9 +2709,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        AppServicePlanCollection value = default;
+                        Models.AppServicePlanCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AppServicePlanCollection.DeserializeAppServicePlanCollection(document.RootElement);
+                        value = Models.AppServicePlanCollection.DeserializeAppServicePlanCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
            : base(isAsync, Azure.Core.TestFramework.RecordedTestMode.Record)
         {
         }
-        private async Task<AppServicePlanContainer> GetAppServicePlanContainerAsync()
+        private async Task<AppServicePlanCollection> GetAppServicePlanCollectionAsync()
         {
             var resourceGroup = await CreateResourceGroupAsync();
             //var AppServicePlanName = Recording.GenerateAssetName("testAppServicePlan_");
@@ -26,13 +26,13 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             return resourceGroup.GetAppServicePlans();
         }
 
-        private async Task<SiteContainer> GetSiteContainerAsync()
+        private async Task<SiteCollection> GetSiteCollectionAsync()
         {
             var resourceGroup = await CreateResourceGroupAsync();
             return resourceGroup.GetSites();
         }
 
-        private async Task<SiteSlotContainer> GetSiteSlotContainerAsync()
+        private async Task<SiteSlotCollection> GetSiteSlotCollectionAsync()
         {
             var resourceGroup = await CreateResourceGroupAsync();
             var SiteName = Recording.GenerateAssetName("testSite");
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             return Site.GetSiteSlots();
         }
 
-        private async Task<SiteSourcecontrolContainer> GetSiteSourceControlContainerAsync()
+        private async Task<SiteSourcecontrolCollection> GetSiteSourceControlCollectionAsync()
         {
             var resourceGroup = await CreateResourceGroupAsync();
             var SiteName = Recording.GenerateAssetName("testSiteSource");
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
         [RecordedTest]
         public async Task AppServicePlanCreateOrUpdate()
         {
-            var container = await GetAppServicePlanContainerAsync();
+            var container = await GetAppServicePlanCollectionAsync();
             var name = Recording.GenerateAssetName("testAppServicePlan");
             var input = ResourceDataHelper.GetBasicAppServicePlanData(DefaultLocation);
             var lro = await container.CreateOrUpdateAsync(name, input);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
         [RecordedTest]
         public async Task SiteCreateOrUpdate()
         {
-            var container = await GetSiteContainerAsync();
+            var container = await GetSiteCollectionAsync();
             var name = Recording.GenerateAssetName("testSite");
             var input = ResourceDataHelper.GetBasicSiteData(DefaultLocation);
             var lro = await container.CreateOrUpdateAsync(name, input);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
         [RecordedTest]
         public async Task SiteSlotCreateOrUpdate()
         {
-            var container = await GetSiteSlotContainerAsync();
+            var container = await GetSiteSlotCollectionAsync();
             var name = Recording.GenerateAssetName("testSiteSlot");
             var input = ResourceDataHelper.GetBasicSiteSlotData(DefaultLocation);
             var lro = await container.CreateOrUpdateAsync(name, input);
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
         [RecordedTest]
         public async Task SiteSourceControlCreateOrUpdate()
         {
-            var container = await GetSiteSourceControlContainerAsync();
+            var container = await GetSiteSourceControlCollectionAsync();
             //var name = Recording.GenerateAssetName("testSiteSource");
             var input = ResourceDataHelper.GetBasicSiteSourceControlData();
             var lro = await container.CreateOrUpdateAsync(input);

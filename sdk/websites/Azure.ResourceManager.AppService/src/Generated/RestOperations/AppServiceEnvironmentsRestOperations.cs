@@ -2638,7 +2638,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
-        public async Task<Response<AppServicePlanCollection>> ListAppServicePlansAsync(string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public async Task<Response<Models.AppServicePlanCollection>> ListAppServicePlansAsync(string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -2655,9 +2655,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        AppServicePlanCollection value = default;
+                        Models.AppServicePlanCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AppServicePlanCollection.DeserializeAppServicePlanCollection(document.RootElement);
+                        value = Models.AppServicePlanCollection.DeserializeAppServicePlanCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2670,7 +2670,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
-        public Response<AppServicePlanCollection> ListAppServicePlans(string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public Response<Models.AppServicePlanCollection> ListAppServicePlans(string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -2687,9 +2687,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        AppServicePlanCollection value = default;
+                        Models.AppServicePlanCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AppServicePlanCollection.DeserializeAppServicePlanCollection(document.RootElement);
+                        value = Models.AppServicePlanCollection.DeserializeAppServicePlanCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -4646,7 +4646,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
-        public async Task<Response<AppServicePlanCollection>> ListAppServicePlansNextPageAsync(string nextLink, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public async Task<Response<Models.AppServicePlanCollection>> ListAppServicePlansNextPageAsync(string nextLink, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -4667,9 +4667,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        AppServicePlanCollection value = default;
+                        Models.AppServicePlanCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AppServicePlanCollection.DeserializeAppServicePlanCollection(document.RootElement);
+                        value = Models.AppServicePlanCollection.DeserializeAppServicePlanCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -4683,7 +4683,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
-        public Response<AppServicePlanCollection> ListAppServicePlansNextPage(string nextLink, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public Response<Models.AppServicePlanCollection> ListAppServicePlansNextPage(string nextLink, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -4704,9 +4704,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        AppServicePlanCollection value = default;
+                        Models.AppServicePlanCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AppServicePlanCollection.DeserializeAppServicePlanCollection(document.RootElement);
+                        value = Models.AppServicePlanCollection.DeserializeAppServicePlanCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

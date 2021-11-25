@@ -10,14 +10,14 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.AppService.Tests.TestsCase
 {
-    public class SiteSourceControlContainerTests : AppServiceTestBase
+    public class SiteSourceControlCollectionTests : AppServiceTestBase
     {
-        public SiteSourceControlContainerTests(bool isAsync)
+        public SiteSourceControlCollectionTests(bool isAsync)
            : base(isAsync, Azure.Core.TestFramework.RecordedTestMode.Record)
         {
         }
 
-        private async Task<SiteSourcecontrolContainer> GetSiteSourceControlContainerAsync()
+        private async Task<SiteSourcecontrolCollection> GetSiteSourceControlCollectionAsync()
         {
             var resourceGroup = await CreateResourceGroupAsync();
             var SiteName = Recording.GenerateAssetName("testSiteSource");
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
         [RecordedTest]
         public async Task SiteSourceControlCreateOrUpdate()
         {
-            var container = await GetSiteSourceControlContainerAsync();
+            var container = await GetSiteSourceControlCollectionAsync();
             //var name = Recording.GenerateAssetName("testSiteSource");
             var input = ResourceDataHelper.GetBasicSiteSourceControlData();
             var lro = await container.CreateOrUpdateAsync(input);
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
         [RecordedTest]
         public async Task Get()
         {
-            var container = await GetSiteSourceControlContainerAsync();
+            var container = await GetSiteSourceControlCollectionAsync();
             //var controlName = Recording.GenerateAssetName("testSiteSourceControl-");
             var input = ResourceDataHelper.GetBasicSiteSourceControlData();
             var lro = await container.CreateOrUpdateAsync(input);

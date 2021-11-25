@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for List all certificate orders in a subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<AppServiceCertificateOrderCollection>> ListAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<Models.AppServiceCertificateOrderCollection>> ListAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -72,9 +72,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        AppServiceCertificateOrderCollection value = default;
+                        Models.AppServiceCertificateOrderCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AppServiceCertificateOrderCollection.DeserializeAppServiceCertificateOrderCollection(document.RootElement);
+                        value = Models.AppServiceCertificateOrderCollection.DeserializeAppServiceCertificateOrderCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for List all certificate orders in a subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<AppServiceCertificateOrderCollection> List(CancellationToken cancellationToken = default)
+        public Response<Models.AppServiceCertificateOrderCollection> List(CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest();
             _pipeline.Send(message, cancellationToken);
@@ -92,9 +92,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        AppServiceCertificateOrderCollection value = default;
+                        Models.AppServiceCertificateOrderCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AppServiceCertificateOrderCollection.DeserializeAppServiceCertificateOrderCollection(document.RootElement);
+                        value = Models.AppServiceCertificateOrderCollection.DeserializeAppServiceCertificateOrderCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<AppServiceCertificateOrderCollection>> ListByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<Models.AppServiceCertificateOrderCollection>> ListByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -203,9 +203,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        AppServiceCertificateOrderCollection value = default;
+                        Models.AppServiceCertificateOrderCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AppServiceCertificateOrderCollection.DeserializeAppServiceCertificateOrderCollection(document.RootElement);
+                        value = Models.AppServiceCertificateOrderCollection.DeserializeAppServiceCertificateOrderCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<AppServiceCertificateOrderCollection> ListByResourceGroup(string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<Models.AppServiceCertificateOrderCollection> ListByResourceGroup(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -230,9 +230,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        AppServiceCertificateOrderCollection value = default;
+                        Models.AppServiceCertificateOrderCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AppServiceCertificateOrderCollection.DeserializeAppServiceCertificateOrderCollection(document.RootElement);
+                        value = Models.AppServiceCertificateOrderCollection.DeserializeAppServiceCertificateOrderCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1801,7 +1801,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<AppServiceCertificateOrderCollection>> ListNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<Models.AppServiceCertificateOrderCollection>> ListNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1814,9 +1814,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        AppServiceCertificateOrderCollection value = default;
+                        Models.AppServiceCertificateOrderCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AppServiceCertificateOrderCollection.DeserializeAppServiceCertificateOrderCollection(document.RootElement);
+                        value = Models.AppServiceCertificateOrderCollection.DeserializeAppServiceCertificateOrderCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1828,7 +1828,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<AppServiceCertificateOrderCollection> ListNextPage(string nextLink, CancellationToken cancellationToken = default)
+        public Response<Models.AppServiceCertificateOrderCollection> ListNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1841,9 +1841,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        AppServiceCertificateOrderCollection value = default;
+                        Models.AppServiceCertificateOrderCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AppServiceCertificateOrderCollection.DeserializeAppServiceCertificateOrderCollection(document.RootElement);
+                        value = Models.AppServiceCertificateOrderCollection.DeserializeAppServiceCertificateOrderCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1870,7 +1870,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<AppServiceCertificateOrderCollection>> ListByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<Models.AppServiceCertificateOrderCollection>> ListByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1887,9 +1887,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        AppServiceCertificateOrderCollection value = default;
+                        Models.AppServiceCertificateOrderCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AppServiceCertificateOrderCollection.DeserializeAppServiceCertificateOrderCollection(document.RootElement);
+                        value = Models.AppServiceCertificateOrderCollection.DeserializeAppServiceCertificateOrderCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1902,7 +1902,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<AppServiceCertificateOrderCollection> ListByResourceGroupNextPage(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<Models.AppServiceCertificateOrderCollection> ListByResourceGroupNextPage(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1919,9 +1919,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        AppServiceCertificateOrderCollection value = default;
+                        Models.AppServiceCertificateOrderCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AppServiceCertificateOrderCollection.DeserializeAppServiceCertificateOrderCollection(document.RootElement);
+                        value = Models.AppServiceCertificateOrderCollection.DeserializeAppServiceCertificateOrderCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

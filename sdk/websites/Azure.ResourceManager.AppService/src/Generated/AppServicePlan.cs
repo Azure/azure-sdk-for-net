@@ -692,31 +692,31 @@ namespace Azure.ResourceManager.AppService
 
         #region ServerfarmHybridConnectionNamespaceRelay
 
-        /// <summary> Gets a container of ServerfarmHybridConnectionNamespaceRelays in the AppServicePlan. </summary>
+        /// <summary> Gets a collection of ServerfarmHybridConnectionNamespaceRelays in the AppServicePlan. </summary>
         /// <returns> An object representing collection of ServerfarmHybridConnectionNamespaceRelays and their operations over a AppServicePlan. </returns>
-        public ServerfarmHybridConnectionNamespaceRelayContainer GetServerfarmHybridConnectionNamespaceRelays()
+        public ServerfarmHybridConnectionNamespaceRelayCollection GetServerfarmHybridConnectionNamespaceRelays()
         {
-            return new ServerfarmHybridConnectionNamespaceRelayContainer(this);
+            return new ServerfarmHybridConnectionNamespaceRelayCollection(this);
         }
         #endregion
 
         #region HybridConnectionLimits
 
-        /// <summary> Gets a container of HybridConnectionLimits in the AppServicePlan. </summary>
+        /// <summary> Gets a collection of HybridConnectionLimits in the AppServicePlan. </summary>
         /// <returns> An object representing collection of HybridConnectionLimits and their operations over a AppServicePlan. </returns>
-        public HybridConnectionLimitsContainer GetHybridConnectionLimits()
+        public HybridConnectionLimitsCollection GetHybridConnectionLimits()
         {
-            return new HybridConnectionLimitsContainer(this);
+            return new HybridConnectionLimitsCollection(this);
         }
         #endregion
 
         #region ServerfarmVirtualNetworkConnection
 
-        /// <summary> Gets a container of ServerfarmVirtualNetworkConnections in the AppServicePlan. </summary>
+        /// <summary> Gets a collection of ServerfarmVirtualNetworkConnections in the AppServicePlan. </summary>
         /// <returns> An object representing collection of ServerfarmVirtualNetworkConnections and their operations over a AppServicePlan. </returns>
-        public ServerfarmVirtualNetworkConnectionContainer GetServerfarmVirtualNetworkConnections()
+        public ServerfarmVirtualNetworkConnectionCollection GetServerfarmVirtualNetworkConnections()
         {
-            return new ServerfarmVirtualNetworkConnectionContainer(this);
+            return new ServerfarmVirtualNetworkConnectionCollection(this);
         }
         #endregion
     }

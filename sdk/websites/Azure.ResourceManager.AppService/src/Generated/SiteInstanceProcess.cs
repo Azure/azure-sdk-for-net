@@ -323,11 +323,11 @@ namespace Azure.ResourceManager.AppService
 
         #region SiteInstanceProcessModule
 
-        /// <summary> Gets a container of SiteInstanceProcessModules in the SiteInstanceProcess. </summary>
+        /// <summary> Gets a collection of SiteInstanceProcessModules in the SiteInstanceProcess. </summary>
         /// <returns> An object representing collection of SiteInstanceProcessModules and their operations over a SiteInstanceProcess. </returns>
-        public SiteInstanceProcessModuleContainer GetSiteInstanceProcessModules()
+        public SiteInstanceProcessModuleCollection GetSiteInstanceProcessModules()
         {
-            return new SiteInstanceProcessModuleContainer(this);
+            return new SiteInstanceProcessModuleCollection(this);
         }
         #endregion
     }

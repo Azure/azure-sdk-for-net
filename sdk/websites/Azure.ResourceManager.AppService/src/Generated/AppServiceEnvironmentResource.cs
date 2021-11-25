@@ -1264,31 +1264,31 @@ namespace Azure.ResourceManager.AppService
 
         #region HostingEnvironmentDetector
 
-        /// <summary> Gets a container of HostingEnvironmentDetectors in the AppServiceEnvironmentResource. </summary>
+        /// <summary> Gets a collection of HostingEnvironmentDetectors in the AppServiceEnvironmentResource. </summary>
         /// <returns> An object representing collection of HostingEnvironmentDetectors and their operations over a AppServiceEnvironmentResource. </returns>
-        public HostingEnvironmentDetectorContainer GetHostingEnvironmentDetectors()
+        public HostingEnvironmentDetectorCollection GetHostingEnvironmentDetectors()
         {
-            return new HostingEnvironmentDetectorContainer(this);
+            return new HostingEnvironmentDetectorCollection(this);
         }
         #endregion
 
         #region AddressResponse
 
-        /// <summary> Gets a container of AddressResponses in the AppServiceEnvironmentResource. </summary>
+        /// <summary> Gets a collection of AddressResponses in the AppServiceEnvironmentResource. </summary>
         /// <returns> An object representing collection of AddressResponses and their operations over a AppServiceEnvironmentResource. </returns>
-        public AddressResponseContainer GetAddressResponses()
+        public AddressResponseCollection GetAddressResponses()
         {
-            return new AddressResponseContainer(this);
+            return new AddressResponseCollection(this);
         }
         #endregion
 
         #region AseV3NetworkingConfiguration
 
-        /// <summary> Gets a container of AseV3NetworkingConfigurations in the AppServiceEnvironmentResource. </summary>
+        /// <summary> Gets a collection of AseV3NetworkingConfigurations in the AppServiceEnvironmentResource. </summary>
         /// <returns> An object representing collection of AseV3NetworkingConfigurations and their operations over a AppServiceEnvironmentResource. </returns>
-        public AseV3NetworkingConfigurationContainer GetAseV3NetworkingConfigurations()
+        public AseV3NetworkingConfigurationCollection GetAseV3NetworkingConfigurations()
         {
-            return new AseV3NetworkingConfigurationContainer(this);
+            return new AseV3NetworkingConfigurationCollection(this);
         }
         #endregion
 
@@ -1304,31 +1304,31 @@ namespace Azure.ResourceManager.AppService
 
         #region HostingEnvironmentWorkerPool
 
-        /// <summary> Gets a container of HostingEnvironmentWorkerPools in the AppServiceEnvironmentResource. </summary>
+        /// <summary> Gets a collection of HostingEnvironmentWorkerPools in the AppServiceEnvironmentResource. </summary>
         /// <returns> An object representing collection of HostingEnvironmentWorkerPools and their operations over a AppServiceEnvironmentResource. </returns>
-        public HostingEnvironmentWorkerPoolContainer GetHostingEnvironmentWorkerPools()
+        public HostingEnvironmentWorkerPoolCollection GetHostingEnvironmentWorkerPools()
         {
-            return new HostingEnvironmentWorkerPoolContainer(this);
+            return new HostingEnvironmentWorkerPoolCollection(this);
         }
         #endregion
 
         #region HostingEnvironmentPrivateEndpointConnection
 
-        /// <summary> Gets a container of HostingEnvironmentPrivateEndpointConnections in the AppServiceEnvironmentResource. </summary>
+        /// <summary> Gets a collection of HostingEnvironmentPrivateEndpointConnections in the AppServiceEnvironmentResource. </summary>
         /// <returns> An object representing collection of HostingEnvironmentPrivateEndpointConnections and their operations over a AppServiceEnvironmentResource. </returns>
-        public HostingEnvironmentPrivateEndpointConnectionContainer GetHostingEnvironmentPrivateEndpointConnections()
+        public HostingEnvironmentPrivateEndpointConnectionCollection GetHostingEnvironmentPrivateEndpointConnections()
         {
-            return new HostingEnvironmentPrivateEndpointConnectionContainer(this);
+            return new HostingEnvironmentPrivateEndpointConnectionCollection(this);
         }
         #endregion
 
         #region HostingEnvironmentRecommendation
 
-        /// <summary> Gets a container of HostingEnvironmentRecommendations in the AppServiceEnvironmentResource. </summary>
+        /// <summary> Gets a collection of HostingEnvironmentRecommendations in the AppServiceEnvironmentResource. </summary>
         /// <returns> An object representing collection of HostingEnvironmentRecommendations and their operations over a AppServiceEnvironmentResource. </returns>
-        public HostingEnvironmentRecommendationContainer GetHostingEnvironmentRecommendations()
+        public HostingEnvironmentRecommendationCollection GetHostingEnvironmentRecommendations()
         {
-            return new HostingEnvironmentRecommendationContainer(this);
+            return new HostingEnvironmentRecommendationCollection(this);
         }
         #endregion
     }

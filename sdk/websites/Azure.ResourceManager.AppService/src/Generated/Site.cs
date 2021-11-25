@@ -4101,61 +4101,61 @@ namespace Azure.ResourceManager.AppService
 
         #region SiteDetector
 
-        /// <summary> Gets a container of SiteDetectors in the Site. </summary>
+        /// <summary> Gets a collection of SiteDetectors in the Site. </summary>
         /// <returns> An object representing collection of SiteDetectors and their operations over a Site. </returns>
-        public SiteDetectorContainer GetSiteDetectors()
+        public SiteDetectorCollection GetSiteDetectors()
         {
-            return new SiteDetectorContainer(this);
+            return new SiteDetectorCollection(this);
         }
         #endregion
 
         #region SitePrivateEndpointConnection
 
-        /// <summary> Gets a container of SitePrivateEndpointConnections in the Site. </summary>
+        /// <summary> Gets a collection of SitePrivateEndpointConnections in the Site. </summary>
         /// <returns> An object representing collection of SitePrivateEndpointConnections and their operations over a Site. </returns>
-        public SitePrivateEndpointConnectionContainer GetSitePrivateEndpointConnections()
+        public SitePrivateEndpointConnectionCollection GetSitePrivateEndpointConnections()
         {
-            return new SitePrivateEndpointConnectionContainer(this);
+            return new SitePrivateEndpointConnectionCollection(this);
         }
         #endregion
 
         #region SiteHybridConnectionNamespaceRelay
 
-        /// <summary> Gets a container of SiteHybridConnectionNamespaceRelays in the Site. </summary>
+        /// <summary> Gets a collection of SiteHybridConnectionNamespaceRelays in the Site. </summary>
         /// <returns> An object representing collection of SiteHybridConnectionNamespaceRelays and their operations over a Site. </returns>
-        public SiteHybridConnectionNamespaceRelayContainer GetSiteHybridConnectionNamespaceRelays()
+        public SiteHybridConnectionNamespaceRelayCollection GetSiteHybridConnectionNamespaceRelays()
         {
-            return new SiteHybridConnectionNamespaceRelayContainer(this);
+            return new SiteHybridConnectionNamespaceRelayCollection(this);
         }
         #endregion
 
         #region SiteVirtualNetworkConnection
 
-        /// <summary> Gets a container of SiteVirtualNetworkConnections in the Site. </summary>
+        /// <summary> Gets a collection of SiteVirtualNetworkConnections in the Site. </summary>
         /// <returns> An object representing collection of SiteVirtualNetworkConnections and their operations over a Site. </returns>
-        public SiteVirtualNetworkConnectionContainer GetSiteVirtualNetworkConnections()
+        public SiteVirtualNetworkConnectionCollection GetSiteVirtualNetworkConnections()
         {
-            return new SiteVirtualNetworkConnectionContainer(this);
+            return new SiteVirtualNetworkConnectionCollection(this);
         }
         #endregion
 
         #region SiteDiagnostic
 
-        /// <summary> Gets a container of SiteDiagnostics in the Site. </summary>
+        /// <summary> Gets a collection of SiteDiagnostics in the Site. </summary>
         /// <returns> An object representing collection of SiteDiagnostics and their operations over a Site. </returns>
-        public SiteDiagnosticContainer GetSiteDiagnostics()
+        public SiteDiagnosticCollection GetSiteDiagnostics()
         {
-            return new SiteDiagnosticContainer(this);
+            return new SiteDiagnosticCollection(this);
         }
         #endregion
 
         #region SiteRecommendation
 
-        /// <summary> Gets a container of SiteRecommendations in the Site. </summary>
+        /// <summary> Gets a collection of SiteRecommendations in the Site. </summary>
         /// <returns> An object representing collection of SiteRecommendations and their operations over a Site. </returns>
-        public SiteRecommendationContainer GetSiteRecommendations()
+        public SiteRecommendationCollection GetSiteRecommendations()
         {
-            return new SiteRecommendationContainer(this);
+            return new SiteRecommendationCollection(this);
         }
         #endregion
 
@@ -4171,281 +4171,281 @@ namespace Azure.ResourceManager.AppService
 
         #region SiteSlot
 
-        /// <summary> Gets a container of SiteSlots in the Site. </summary>
+        /// <summary> Gets a collection of SiteSlots in the Site. </summary>
         /// <returns> An object representing collection of SiteSlots and their operations over a Site. </returns>
-        public SiteSlotContainer GetSiteSlots()
+        public SiteSlotCollection GetSiteSlots()
         {
-            return new SiteSlotContainer(this);
+            return new SiteSlotCollection(this);
         }
         #endregion
 
         #region SiteBackup
 
-        /// <summary> Gets a container of SiteBackups in the Site. </summary>
+        /// <summary> Gets a collection of SiteBackups in the Site. </summary>
         /// <returns> An object representing collection of SiteBackups and their operations over a Site. </returns>
-        public SiteBackupContainer GetSiteBackups()
+        public SiteBackupCollection GetSiteBackups()
         {
-            return new SiteBackupContainer(this);
+            return new SiteBackupCollection(this);
         }
         #endregion
 
         #region SiteBasicPublishingCredentialsPolicyFtp
 
-        /// <summary> Gets a container of SiteBasicPublishingCredentialsPolicyFtps in the Site. </summary>
+        /// <summary> Gets a collection of SiteBasicPublishingCredentialsPolicyFtps in the Site. </summary>
         /// <returns> An object representing collection of SiteBasicPublishingCredentialsPolicyFtps and their operations over a Site. </returns>
-        public SiteBasicPublishingCredentialsPolicyFtpContainer GetSiteBasicPublishingCredentialsPolicyFtps()
+        public SiteBasicPublishingCredentialsPolicyFtpCollection GetSiteBasicPublishingCredentialsPolicyFtps()
         {
-            return new SiteBasicPublishingCredentialsPolicyFtpContainer(this);
+            return new SiteBasicPublishingCredentialsPolicyFtpCollection(this);
         }
         #endregion
 
         #region SiteBasicPublishingCredentialsPolicyScm
 
-        /// <summary> Gets a container of SiteBasicPublishingCredentialsPolicyScms in the Site. </summary>
+        /// <summary> Gets a collection of SiteBasicPublishingCredentialsPolicyScms in the Site. </summary>
         /// <returns> An object representing collection of SiteBasicPublishingCredentialsPolicyScms and their operations over a Site. </returns>
-        public SiteBasicPublishingCredentialsPolicyScmContainer GetSiteBasicPublishingCredentialsPolicyScms()
+        public SiteBasicPublishingCredentialsPolicyScmCollection GetSiteBasicPublishingCredentialsPolicyScms()
         {
-            return new SiteBasicPublishingCredentialsPolicyScmContainer(this);
+            return new SiteBasicPublishingCredentialsPolicyScmCollection(this);
         }
         #endregion
 
         #region SiteConfigAppsetting
 
-        /// <summary> Gets a container of SiteConfigAppsettings in the Site. </summary>
+        /// <summary> Gets a collection of SiteConfigAppsettings in the Site. </summary>
         /// <returns> An object representing collection of SiteConfigAppsettings and their operations over a Site. </returns>
-        public SiteConfigAppsettingContainer GetSiteConfigAppsettings()
+        public SiteConfigAppsettingCollection GetSiteConfigAppsettings()
         {
-            return new SiteConfigAppsettingContainer(this);
+            return new SiteConfigAppsettingCollection(this);
         }
         #endregion
 
         #region SiteConfigConnectionstring
 
-        /// <summary> Gets a container of SiteConfigConnectionstrings in the Site. </summary>
+        /// <summary> Gets a collection of SiteConfigConnectionstrings in the Site. </summary>
         /// <returns> An object representing collection of SiteConfigConnectionstrings and their operations over a Site. </returns>
-        public SiteConfigConnectionstringContainer GetSiteConfigConnectionstrings()
+        public SiteConfigConnectionstringCollection GetSiteConfigConnectionstrings()
         {
-            return new SiteConfigConnectionstringContainer(this);
+            return new SiteConfigConnectionstringCollection(this);
         }
         #endregion
 
         #region SiteConfigLogs
 
-        /// <summary> Gets a container of SiteConfigLogs in the Site. </summary>
+        /// <summary> Gets a collection of SiteConfigLogs in the Site. </summary>
         /// <returns> An object representing collection of SiteConfigLogs and their operations over a Site. </returns>
-        public SiteConfigLogsContainer GetSiteConfigLogs()
+        public SiteConfigLogsCollection GetSiteConfigLogs()
         {
-            return new SiteConfigLogsContainer(this);
+            return new SiteConfigLogsCollection(this);
         }
         #endregion
 
         #region SlotConfigNamesResource
 
-        /// <summary> Gets a container of SlotConfigNamesResources in the Site. </summary>
+        /// <summary> Gets a collection of SlotConfigNamesResources in the Site. </summary>
         /// <returns> An object representing collection of SlotConfigNamesResources and their operations over a Site. </returns>
-        public SlotConfigNamesResourceContainer GetSlotConfigNamesResources()
+        public SlotConfigNamesResourceCollection GetSlotConfigNamesResources()
         {
-            return new SlotConfigNamesResourceContainer(this);
+            return new SlotConfigNamesResourceCollection(this);
         }
         #endregion
 
         #region SiteConfigWeb
 
-        /// <summary> Gets a container of SiteConfigWebs in the Site. </summary>
+        /// <summary> Gets a collection of SiteConfigWebs in the Site. </summary>
         /// <returns> An object representing collection of SiteConfigWebs and their operations over a Site. </returns>
-        public SiteConfigWebContainer GetSiteConfigWebs()
+        public SiteConfigWebCollection GetSiteConfigWebs()
         {
-            return new SiteConfigWebContainer(this);
+            return new SiteConfigWebCollection(this);
         }
         #endregion
 
         #region SiteContinuouswebjob
 
-        /// <summary> Gets a container of SiteContinuouswebjobs in the Site. </summary>
+        /// <summary> Gets a collection of SiteContinuouswebjobs in the Site. </summary>
         /// <returns> An object representing collection of SiteContinuouswebjobs and their operations over a Site. </returns>
-        public SiteContinuouswebjobContainer GetSiteContinuouswebjobs()
+        public SiteContinuouswebjobCollection GetSiteContinuouswebjobs()
         {
-            return new SiteContinuouswebjobContainer(this);
+            return new SiteContinuouswebjobCollection(this);
         }
         #endregion
 
         #region SiteDeployment
 
-        /// <summary> Gets a container of SiteDeployments in the Site. </summary>
+        /// <summary> Gets a collection of SiteDeployments in the Site. </summary>
         /// <returns> An object representing collection of SiteDeployments and their operations over a Site. </returns>
-        public SiteDeploymentContainer GetSiteDeployments()
+        public SiteDeploymentCollection GetSiteDeployments()
         {
-            return new SiteDeploymentContainer(this);
+            return new SiteDeploymentCollection(this);
         }
         #endregion
 
         #region SiteDomainOwnershipIdentifier
 
-        /// <summary> Gets a container of SiteDomainOwnershipIdentifiers in the Site. </summary>
+        /// <summary> Gets a collection of SiteDomainOwnershipIdentifiers in the Site. </summary>
         /// <returns> An object representing collection of SiteDomainOwnershipIdentifiers and their operations over a Site. </returns>
-        public SiteDomainOwnershipIdentifierContainer GetSiteDomainOwnershipIdentifiers()
+        public SiteDomainOwnershipIdentifierCollection GetSiteDomainOwnershipIdentifiers()
         {
-            return new SiteDomainOwnershipIdentifierContainer(this);
+            return new SiteDomainOwnershipIdentifierCollection(this);
         }
         #endregion
 
         #region SiteExtension
 
-        /// <summary> Gets a container of SiteExtensions in the Site. </summary>
+        /// <summary> Gets a collection of SiteExtensions in the Site. </summary>
         /// <returns> An object representing collection of SiteExtensions and their operations over a Site. </returns>
-        public SiteExtensionContainer GetSiteExtensions()
+        public SiteExtensionCollection GetSiteExtensions()
         {
-            return new SiteExtensionContainer(this);
+            return new SiteExtensionCollection(this);
         }
         #endregion
 
         #region SiteFunction
 
-        /// <summary> Gets a container of SiteFunctions in the Site. </summary>
+        /// <summary> Gets a collection of SiteFunctions in the Site. </summary>
         /// <returns> An object representing collection of SiteFunctions and their operations over a Site. </returns>
-        public SiteFunctionContainer GetSiteFunctions()
+        public SiteFunctionCollection GetSiteFunctions()
         {
-            return new SiteFunctionContainer(this);
+            return new SiteFunctionCollection(this);
         }
         #endregion
 
         #region SiteHostNameBinding
 
-        /// <summary> Gets a container of SiteHostNameBindings in the Site. </summary>
+        /// <summary> Gets a collection of SiteHostNameBindings in the Site. </summary>
         /// <returns> An object representing collection of SiteHostNameBindings and their operations over a Site. </returns>
-        public SiteHostNameBindingContainer GetSiteHostNameBindings()
+        public SiteHostNameBindingCollection GetSiteHostNameBindings()
         {
-            return new SiteHostNameBindingContainer(this);
+            return new SiteHostNameBindingCollection(this);
         }
         #endregion
 
         #region SiteHybridconnection
 
-        /// <summary> Gets a container of SiteHybridconnections in the Site. </summary>
+        /// <summary> Gets a collection of SiteHybridconnections in the Site. </summary>
         /// <returns> An object representing collection of SiteHybridconnections and their operations over a Site. </returns>
-        public SiteHybridconnectionContainer GetSiteHybridconnections()
+        public SiteHybridconnectionCollection GetSiteHybridconnections()
         {
-            return new SiteHybridconnectionContainer(this);
+            return new SiteHybridconnectionCollection(this);
         }
         #endregion
 
         #region SiteInstance
 
-        /// <summary> Gets a container of SiteInstances in the Site. </summary>
+        /// <summary> Gets a collection of SiteInstances in the Site. </summary>
         /// <returns> An object representing collection of SiteInstances and their operations over a Site. </returns>
-        public SiteInstanceContainer GetSiteInstances()
+        public SiteInstanceCollection GetSiteInstances()
         {
-            return new SiteInstanceContainer(this);
+            return new SiteInstanceCollection(this);
         }
         #endregion
 
         #region SiteProcess
 
-        /// <summary> Gets a container of SiteProcesses in the Site. </summary>
+        /// <summary> Gets a collection of SiteProcesses in the Site. </summary>
         /// <returns> An object representing collection of SiteProcesses and their operations over a Site. </returns>
-        public SiteProcessContainer GetSiteProcesses()
+        public SiteProcessCollection GetSiteProcesses()
         {
-            return new SiteProcessContainer(this);
+            return new SiteProcessCollection(this);
         }
         #endregion
 
         #region SiteMigratemysql
 
-        /// <summary> Gets a container of SiteMigratemysqls in the Site. </summary>
+        /// <summary> Gets a collection of SiteMigratemysqls in the Site. </summary>
         /// <returns> An object representing collection of SiteMigratemysqls and their operations over a Site. </returns>
-        public SiteMigratemysqlContainer GetSiteMigratemysqls()
+        public SiteMigratemysqlCollection GetSiteMigratemysqls()
         {
-            return new SiteMigratemysqlContainer(this);
+            return new SiteMigratemysqlCollection(this);
         }
         #endregion
 
         #region SiteNetworkConfig
 
-        /// <summary> Gets a container of SiteNetworkConfigs in the Site. </summary>
+        /// <summary> Gets a collection of SiteNetworkConfigs in the Site. </summary>
         /// <returns> An object representing collection of SiteNetworkConfigs and their operations over a Site. </returns>
-        public SiteNetworkConfigContainer GetSiteNetworkConfigs()
+        public SiteNetworkConfigCollection GetSiteNetworkConfigs()
         {
-            return new SiteNetworkConfigContainer(this);
+            return new SiteNetworkConfigCollection(this);
         }
         #endregion
 
         #region SiteNetworkFeature
 
-        /// <summary> Gets a container of SiteNetworkFeatures in the Site. </summary>
+        /// <summary> Gets a collection of SiteNetworkFeatures in the Site. </summary>
         /// <returns> An object representing collection of SiteNetworkFeatures and their operations over a Site. </returns>
-        public SiteNetworkFeatureContainer GetSiteNetworkFeatures()
+        public SiteNetworkFeatureCollection GetSiteNetworkFeatures()
         {
-            return new SiteNetworkFeatureContainer(this);
+            return new SiteNetworkFeatureCollection(this);
         }
         #endregion
 
         #region SitePremieraddon
 
-        /// <summary> Gets a container of SitePremieraddons in the Site. </summary>
+        /// <summary> Gets a collection of SitePremieraddons in the Site. </summary>
         /// <returns> An object representing collection of SitePremieraddons and their operations over a Site. </returns>
-        public SitePremieraddonContainer GetSitePremieraddons()
+        public SitePremieraddonCollection GetSitePremieraddons()
         {
-            return new SitePremieraddonContainer(this);
+            return new SitePremieraddonCollection(this);
         }
         #endregion
 
         #region SitePrivateAcces
 
-        /// <summary> Gets a container of SitePrivateAcces in the Site. </summary>
+        /// <summary> Gets a collection of SitePrivateAcces in the Site. </summary>
         /// <returns> An object representing collection of SitePrivateAcces and their operations over a Site. </returns>
-        public SitePrivateAccesContainer GetSitePrivateAcces()
+        public SitePrivateAccesCollection GetSitePrivateAcces()
         {
-            return new SitePrivateAccesContainer(this);
+            return new SitePrivateAccesCollection(this);
         }
         #endregion
 
         #region SitePublicCertificate
 
-        /// <summary> Gets a container of SitePublicCertificates in the Site. </summary>
+        /// <summary> Gets a collection of SitePublicCertificates in the Site. </summary>
         /// <returns> An object representing collection of SitePublicCertificates and their operations over a Site. </returns>
-        public SitePublicCertificateContainer GetSitePublicCertificates()
+        public SitePublicCertificateCollection GetSitePublicCertificates()
         {
-            return new SitePublicCertificateContainer(this);
+            return new SitePublicCertificateCollection(this);
         }
         #endregion
 
         #region SiteSiteextension
 
-        /// <summary> Gets a container of SiteSiteextensions in the Site. </summary>
+        /// <summary> Gets a collection of SiteSiteextensions in the Site. </summary>
         /// <returns> An object representing collection of SiteSiteextensions and their operations over a Site. </returns>
-        public SiteSiteextensionContainer GetSiteSiteextensions()
+        public SiteSiteextensionCollection GetSiteSiteextensions()
         {
-            return new SiteSiteextensionContainer(this);
+            return new SiteSiteextensionCollection(this);
         }
         #endregion
 
         #region SiteSourcecontrol
 
-        /// <summary> Gets a container of SiteSourcecontrols in the Site. </summary>
+        /// <summary> Gets a collection of SiteSourcecontrols in the Site. </summary>
         /// <returns> An object representing collection of SiteSourcecontrols and their operations over a Site. </returns>
-        public SiteSourcecontrolContainer GetSiteSourcecontrols()
+        public SiteSourcecontrolCollection GetSiteSourcecontrols()
         {
-            return new SiteSourcecontrolContainer(this);
+            return new SiteSourcecontrolCollection(this);
         }
         #endregion
 
         #region SiteTriggeredwebjob
 
-        /// <summary> Gets a container of SiteTriggeredwebjobs in the Site. </summary>
+        /// <summary> Gets a collection of SiteTriggeredwebjobs in the Site. </summary>
         /// <returns> An object representing collection of SiteTriggeredwebjobs and their operations over a Site. </returns>
-        public SiteTriggeredwebjobContainer GetSiteTriggeredwebjobs()
+        public SiteTriggeredwebjobCollection GetSiteTriggeredwebjobs()
         {
-            return new SiteTriggeredwebjobContainer(this);
+            return new SiteTriggeredwebjobCollection(this);
         }
         #endregion
 
         #region SiteWebjob
 
-        /// <summary> Gets a container of SiteWebjobs in the Site. </summary>
+        /// <summary> Gets a collection of SiteWebjobs in the Site. </summary>
         /// <returns> An object representing collection of SiteWebjobs and their operations over a Site. </returns>
-        public SiteWebjobContainer GetSiteWebjobs()
+        public SiteWebjobCollection GetSiteWebjobs()
         {
-            return new SiteWebjobContainer(this);
+            return new SiteWebjobCollection(this);
         }
         #endregion
     }

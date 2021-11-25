@@ -17,6 +17,11 @@ skip-csproj: true
 modelerfour:
   lenient-model-deduplication: true
 output-folder: ./Generated
+
+mgmt-debug:
+  show-request-path: true
+  suppress-list-exception: true
+
 directive:
 # pageable lro
   - remove-operation: AppServiceEnvironments_ChangeVnet

@@ -21,22 +21,22 @@ namespace Azure.ResourceManager.AppService
     public static partial class TenantExtensions
     {
         #region User
-        /// <summary> Gets an object representing a UserContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a UserCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="UserContainer" /> object. </returns>
-        public static UserContainer GetUsers(this Tenant tenant)
+        /// <returns> Returns a <see cref="UserCollection" /> object. </returns>
+        public static UserCollection GetUsers(this Tenant tenant)
         {
-            return new UserContainer(tenant);
+            return new UserCollection(tenant);
         }
         #endregion
 
         #region SourceControl
-        /// <summary> Gets an object representing a SourceControlContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a SourceControlCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="SourceControlContainer" /> object. </returns>
-        public static SourceControlContainer GetSourceControls(this Tenant tenant)
+        /// <returns> Returns a <see cref="SourceControlCollection" /> object. </returns>
+        public static SourceControlCollection GetSourceControls(this Tenant tenant)
         {
-            return new SourceControlContainer(tenant);
+            return new SourceControlCollection(tenant);
         }
         #endregion
 

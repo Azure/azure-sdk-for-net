@@ -10,14 +10,14 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.AppService.Tests.TestsCase
 {
-    public class SiteConfigWebContainerTests : AppServiceTestBase
+    public class SiteConfigWebCollectionTests : AppServiceTestBase
     {
-        public SiteConfigWebContainerTests(bool isAsync)
+        public SiteConfigWebCollectionTests(bool isAsync)
             : base(isAsync, Azure.Core.TestFramework.RecordedTestMode.Record)
         {
         }
 
-        private async Task<SiteSlotConfigWebContainer> GetSiteSlotConfigWebContainerAsync()
+        private async Task<SiteSlotConfigWebCollection> GetSiteSlotConfigWebCollectionAsync()
         {
             var resourceGroup = await CreateResourceGroupAsync();
             var SiteName = Recording.GenerateAssetName("testSite_");
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
-            var container = await GetSiteSlotConfigWebContainerAsync();
+            var container = await GetSiteSlotConfigWebCollectionAsync();
         var name = Recording.GenerateAssetName("testSiteSlotConfigWeb_");
         var Input = ResourceDataHelper.GetBasicSiteConfigResourceData(DefaultLocation);
         var lro = await container.CreateOrUpdateAsync(Input);

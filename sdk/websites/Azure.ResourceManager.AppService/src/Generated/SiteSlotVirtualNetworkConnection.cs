@@ -254,11 +254,11 @@ namespace Azure.ResourceManager.AppService
 
         #region SiteSlotVirtualNetworkConnectionGateway
 
-        /// <summary> Gets a container of SiteSlotVirtualNetworkConnectionGateways in the SiteSlotVirtualNetworkConnection. </summary>
+        /// <summary> Gets a collection of SiteSlotVirtualNetworkConnectionGateways in the SiteSlotVirtualNetworkConnection. </summary>
         /// <returns> An object representing collection of SiteSlotVirtualNetworkConnectionGateways and their operations over a SiteSlotVirtualNetworkConnection. </returns>
-        public SiteSlotVirtualNetworkConnectionGatewayContainer GetSiteSlotVirtualNetworkConnectionGateways()
+        public SiteSlotVirtualNetworkConnectionGatewayCollection GetSiteSlotVirtualNetworkConnectionGateways()
         {
-            return new SiteSlotVirtualNetworkConnectionGatewayContainer(this);
+            return new SiteSlotVirtualNetworkConnectionGatewayCollection(this);
         }
         #endregion
     }

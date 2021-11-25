@@ -147,21 +147,21 @@ namespace Azure.ResourceManager.AppService
 
         #region SiteSlotInstanceExtension
 
-        /// <summary> Gets a container of SiteSlotInstanceExtensions in the SiteSlotInstance. </summary>
+        /// <summary> Gets a collection of SiteSlotInstanceExtensions in the SiteSlotInstance. </summary>
         /// <returns> An object representing collection of SiteSlotInstanceExtensions and their operations over a SiteSlotInstance. </returns>
-        public SiteSlotInstanceExtensionContainer GetSiteSlotInstanceExtensions()
+        public SiteSlotInstanceExtensionCollection GetSiteSlotInstanceExtensions()
         {
-            return new SiteSlotInstanceExtensionContainer(this);
+            return new SiteSlotInstanceExtensionCollection(this);
         }
         #endregion
 
         #region SiteSlotInstanceProcess
 
-        /// <summary> Gets a container of SiteSlotInstanceProcesses in the SiteSlotInstance. </summary>
+        /// <summary> Gets a collection of SiteSlotInstanceProcesses in the SiteSlotInstance. </summary>
         /// <returns> An object representing collection of SiteSlotInstanceProcesses and their operations over a SiteSlotInstance. </returns>
-        public SiteSlotInstanceProcessContainer GetSiteSlotInstanceProcesses()
+        public SiteSlotInstanceProcessCollection GetSiteSlotInstanceProcesses()
         {
-            return new SiteSlotInstanceProcessContainer(this);
+            return new SiteSlotInstanceProcessCollection(this);
         }
         #endregion
     }

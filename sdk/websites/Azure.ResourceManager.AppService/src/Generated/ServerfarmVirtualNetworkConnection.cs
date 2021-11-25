@@ -378,11 +378,11 @@ namespace Azure.ResourceManager.AppService
 
         #region ServerfarmVirtualNetworkConnectionGateway
 
-        /// <summary> Gets a container of ServerfarmVirtualNetworkConnectionGateways in the ServerfarmVirtualNetworkConnection. </summary>
+        /// <summary> Gets a collection of ServerfarmVirtualNetworkConnectionGateways in the ServerfarmVirtualNetworkConnection. </summary>
         /// <returns> An object representing collection of ServerfarmVirtualNetworkConnectionGateways and their operations over a ServerfarmVirtualNetworkConnection. </returns>
-        public ServerfarmVirtualNetworkConnectionGatewayContainer GetServerfarmVirtualNetworkConnectionGateways()
+        public ServerfarmVirtualNetworkConnectionGatewayCollection GetServerfarmVirtualNetworkConnectionGateways()
         {
-            return new ServerfarmVirtualNetworkConnectionGatewayContainer(this);
+            return new ServerfarmVirtualNetworkConnectionGatewayCollection(this);
         }
         #endregion
     }

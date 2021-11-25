@@ -240,11 +240,11 @@ namespace Azure.ResourceManager.AppService
 
         #region SiteTriggeredwebjobHistory
 
-        /// <summary> Gets a container of SiteTriggeredwebjobHistories in the SiteTriggeredwebjob. </summary>
+        /// <summary> Gets a collection of SiteTriggeredwebjobHistories in the SiteTriggeredwebjob. </summary>
         /// <returns> An object representing collection of SiteTriggeredwebjobHistories and their operations over a SiteTriggeredwebjob. </returns>
-        public SiteTriggeredwebjobHistoryContainer GetSiteTriggeredwebjobHistories()
+        public SiteTriggeredwebjobHistoryCollection GetSiteTriggeredwebjobHistories()
         {
-            return new SiteTriggeredwebjobHistoryContainer(this);
+            return new SiteTriggeredwebjobHistoryCollection(this);
         }
         #endregion
     }

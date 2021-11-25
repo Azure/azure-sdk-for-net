@@ -21,82 +21,82 @@ namespace Azure.ResourceManager.AppService
     public static partial class ResourceGroupExtensions
     {
         #region AppServiceCertificateOrder
-        /// <summary> Gets an object representing a AppServiceCertificateOrderContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a AppServiceCertificateOrderCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="AppServiceCertificateOrderContainer" /> object. </returns>
-        public static AppServiceCertificateOrderContainer GetAppServiceCertificateOrders(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="AppServiceCertificateOrderCollection" /> object. </returns>
+        public static AppServiceCertificateOrderCollection GetAppServiceCertificateOrders(this ResourceGroup resourceGroup)
         {
-            return new AppServiceCertificateOrderContainer(resourceGroup);
+            return new AppServiceCertificateOrderCollection(resourceGroup);
         }
         #endregion
 
         #region Domain
-        /// <summary> Gets an object representing a DomainContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a DomainCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="DomainContainer" /> object. </returns>
-        public static DomainContainer GetDomains(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="DomainCollection" /> object. </returns>
+        public static DomainCollection GetDomains(this ResourceGroup resourceGroup)
         {
-            return new DomainContainer(resourceGroup);
+            return new DomainCollection(resourceGroup);
         }
         #endregion
 
         #region AppServiceEnvironmentResource
-        /// <summary> Gets an object representing a AppServiceEnvironmentResourceContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a AppServiceEnvironmentResourceCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="AppServiceEnvironmentResourceContainer" /> object. </returns>
-        public static AppServiceEnvironmentResourceContainer GetAppServiceEnvironmentResources(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="AppServiceEnvironmentResourceCollection" /> object. </returns>
+        public static AppServiceEnvironmentResourceCollection GetAppServiceEnvironmentResources(this ResourceGroup resourceGroup)
         {
-            return new AppServiceEnvironmentResourceContainer(resourceGroup);
+            return new AppServiceEnvironmentResourceCollection(resourceGroup);
         }
         #endregion
 
         #region AppServicePlan
-        /// <summary> Gets an object representing a AppServicePlanContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a AppServicePlanCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="AppServicePlanContainer" /> object. </returns>
-        public static AppServicePlanContainer GetAppServicePlans(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="AppServicePlanCollection" /> object. </returns>
+        public static AppServicePlanCollection GetAppServicePlans(this ResourceGroup resourceGroup)
         {
-            return new AppServicePlanContainer(resourceGroup);
+            return new AppServicePlanCollection(resourceGroup);
         }
         #endregion
 
         #region Certificate
-        /// <summary> Gets an object representing a CertificateContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a CertificateCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="CertificateContainer" /> object. </returns>
-        public static CertificateContainer GetCertificates(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="CertificateCollection" /> object. </returns>
+        public static CertificateCollection GetCertificates(this ResourceGroup resourceGroup)
         {
-            return new CertificateContainer(resourceGroup);
+            return new CertificateCollection(resourceGroup);
         }
         #endregion
 
         #region KubeEnvironment
-        /// <summary> Gets an object representing a KubeEnvironmentContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a KubeEnvironmentCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="KubeEnvironmentContainer" /> object. </returns>
-        public static KubeEnvironmentContainer GetKubeEnvironments(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="KubeEnvironmentCollection" /> object. </returns>
+        public static KubeEnvironmentCollection GetKubeEnvironments(this ResourceGroup resourceGroup)
         {
-            return new KubeEnvironmentContainer(resourceGroup);
+            return new KubeEnvironmentCollection(resourceGroup);
         }
         #endregion
 
         #region StaticSiteARMResource
-        /// <summary> Gets an object representing a StaticSiteARMResourceContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a StaticSiteARMResourceCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="StaticSiteARMResourceContainer" /> object. </returns>
-        public static StaticSiteARMResourceContainer GetStaticSiteARMResources(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="StaticSiteARMResourceCollection" /> object. </returns>
+        public static StaticSiteARMResourceCollection GetStaticSiteARMResources(this ResourceGroup resourceGroup)
         {
-            return new StaticSiteARMResourceContainer(resourceGroup);
+            return new StaticSiteARMResourceCollection(resourceGroup);
         }
         #endregion
 
         #region Site
-        /// <summary> Gets an object representing a SiteContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a SiteCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="SiteContainer" /> object. </returns>
-        public static SiteContainer GetSites(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="SiteCollection" /> object. </returns>
+        public static SiteCollection GetSites(this ResourceGroup resourceGroup)
         {
-            return new SiteContainer(resourceGroup);
+            return new SiteCollection(resourceGroup);
         }
         #endregion
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ResourceHealthMetadataData> GetByResourceGroupResourceHealthMetadatasAsync(this ResourceGroup resourceGroup, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ResourceHealthMetadataData> GetResourceHealthMetadatasAsync(this ResourceGroup resourceGroup, CancellationToken cancellationToken = default)
         {
             return resourceGroup.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.AppService
                 var restOperations = GetResourceHealthMetadataRestOperations(clientDiagnostics, credential, options, pipeline, resourceGroup.Id.SubscriptionId, baseUri);
                 async Task<Page<ResourceHealthMetadataData>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetByResourceGroupResourceHealthMetadatas");
+                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetResourceHealthMetadatas");
                     scope.Start();
                     try
                     {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 async Task<Page<ResourceHealthMetadataData>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetByResourceGroupResourceHealthMetadatas");
+                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetResourceHealthMetadatas");
                     scope.Start();
                     try
                     {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ResourceHealthMetadataData> GetByResourceGroupResourceHealthMetadatas(this ResourceGroup resourceGroup, CancellationToken cancellationToken = default)
+        public static Pageable<ResourceHealthMetadataData> GetResourceHealthMetadatas(this ResourceGroup resourceGroup, CancellationToken cancellationToken = default)
         {
             return resourceGroup.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.AppService
                 var restOperations = GetResourceHealthMetadataRestOperations(clientDiagnostics, credential, options, pipeline, resourceGroup.Id.SubscriptionId, baseUri);
                 Page<ResourceHealthMetadataData> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetByResourceGroupResourceHealthMetadatas");
+                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetResourceHealthMetadatas");
                     scope.Start();
                     try
                     {
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 Page<ResourceHealthMetadataData> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetByResourceGroupResourceHealthMetadatas");
+                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetResourceHealthMetadatas");
                     scope.Start();
                     try
                     {

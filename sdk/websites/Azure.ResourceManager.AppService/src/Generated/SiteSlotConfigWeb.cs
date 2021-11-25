@@ -286,11 +286,11 @@ namespace Azure.ResourceManager.AppService
 
         #region SiteSlotConfigSnapshot
 
-        /// <summary> Gets a container of SiteSlotConfigSnapshots in the SiteSlotConfigWeb. </summary>
+        /// <summary> Gets a collection of SiteSlotConfigSnapshots in the SiteSlotConfigWeb. </summary>
         /// <returns> An object representing collection of SiteSlotConfigSnapshots and their operations over a SiteSlotConfigWeb. </returns>
-        public SiteSlotConfigSnapshotContainer GetSiteSlotConfigSnapshots()
+        public SiteSlotConfigSnapshotCollection GetSiteSlotConfigSnapshots()
         {
-            return new SiteSlotConfigSnapshotContainer(this);
+            return new SiteSlotConfigSnapshotCollection(this);
         }
         #endregion
     }

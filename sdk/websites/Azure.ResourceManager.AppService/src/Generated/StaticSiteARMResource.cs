@@ -1120,41 +1120,41 @@ namespace Azure.ResourceManager.AppService
 
         #region StaticSitePrivateEndpointConnection
 
-        /// <summary> Gets a container of StaticSitePrivateEndpointConnections in the StaticSiteARMResource. </summary>
+        /// <summary> Gets a collection of StaticSitePrivateEndpointConnections in the StaticSiteARMResource. </summary>
         /// <returns> An object representing collection of StaticSitePrivateEndpointConnections and their operations over a StaticSiteARMResource. </returns>
-        public StaticSitePrivateEndpointConnectionContainer GetStaticSitePrivateEndpointConnections()
+        public StaticSitePrivateEndpointConnectionCollection GetStaticSitePrivateEndpointConnections()
         {
-            return new StaticSitePrivateEndpointConnectionContainer(this);
+            return new StaticSitePrivateEndpointConnectionCollection(this);
         }
         #endregion
 
         #region StaticSiteBuildARMResource
 
-        /// <summary> Gets a container of StaticSiteBuildARMResources in the StaticSiteARMResource. </summary>
+        /// <summary> Gets a collection of StaticSiteBuildARMResources in the StaticSiteARMResource. </summary>
         /// <returns> An object representing collection of StaticSiteBuildARMResources and their operations over a StaticSiteARMResource. </returns>
-        public StaticSiteBuildARMResourceContainer GetStaticSiteBuildARMResources()
+        public StaticSiteBuildARMResourceCollection GetStaticSiteBuildARMResources()
         {
-            return new StaticSiteBuildARMResourceContainer(this);
+            return new StaticSiteBuildARMResourceCollection(this);
         }
         #endregion
 
         #region StaticSiteUserProvidedFunctionApp
 
-        /// <summary> Gets a container of StaticSiteUserProvidedFunctionApps in the StaticSiteARMResource. </summary>
+        /// <summary> Gets a collection of StaticSiteUserProvidedFunctionApps in the StaticSiteARMResource. </summary>
         /// <returns> An object representing collection of StaticSiteUserProvidedFunctionApps and their operations over a StaticSiteARMResource. </returns>
-        public StaticSiteUserProvidedFunctionAppContainer GetStaticSiteUserProvidedFunctionApps()
+        public StaticSiteUserProvidedFunctionAppCollection GetStaticSiteUserProvidedFunctionApps()
         {
-            return new StaticSiteUserProvidedFunctionAppContainer(this);
+            return new StaticSiteUserProvidedFunctionAppCollection(this);
         }
         #endregion
 
         #region StaticSiteCustomDomainOverviewARMResource
 
-        /// <summary> Gets a container of StaticSiteCustomDomainOverviewARMResources in the StaticSiteARMResource. </summary>
+        /// <summary> Gets a collection of StaticSiteCustomDomainOverviewARMResources in the StaticSiteARMResource. </summary>
         /// <returns> An object representing collection of StaticSiteCustomDomainOverviewARMResources and their operations over a StaticSiteARMResource. </returns>
-        public StaticSiteCustomDomainOverviewARMResourceContainer GetStaticSiteCustomDomainOverviewARMResources()
+        public StaticSiteCustomDomainOverviewARMResourceCollection GetStaticSiteCustomDomainOverviewARMResources()
         {
-            return new StaticSiteCustomDomainOverviewARMResourceContainer(this);
+            return new StaticSiteCustomDomainOverviewARMResourceCollection(this);
         }
         #endregion
     }

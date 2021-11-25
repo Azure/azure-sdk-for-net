@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Get all certificates for a subscription. </summary>
         /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=KeyVaultId eq &apos;KeyVaultId&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<CertificateCollection>> ListAsync(string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<Models.CertificateCollection>> ListAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest(filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -76,9 +76,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        CertificateCollection value = default;
+                        Models.CertificateCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CertificateCollection.DeserializeCertificateCollection(document.RootElement);
+                        value = Models.CertificateCollection.DeserializeCertificateCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Get all certificates for a subscription. </summary>
         /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=KeyVaultId eq &apos;KeyVaultId&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<CertificateCollection> List(string filter = null, CancellationToken cancellationToken = default)
+        public Response<Models.CertificateCollection> List(string filter = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest(filter);
             _pipeline.Send(message, cancellationToken);
@@ -97,9 +97,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        CertificateCollection value = default;
+                        Models.CertificateCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CertificateCollection.DeserializeCertificateCollection(document.RootElement);
+                        value = Models.CertificateCollection.DeserializeCertificateCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<CertificateCollection>> ListByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<Models.CertificateCollection>> ListByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -143,9 +143,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        CertificateCollection value = default;
+                        Models.CertificateCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CertificateCollection.DeserializeCertificateCollection(document.RootElement);
+                        value = Models.CertificateCollection.DeserializeCertificateCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<CertificateCollection> ListByResourceGroup(string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<Models.CertificateCollection> ListByResourceGroup(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -170,9 +170,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        CertificateCollection value = default;
+                        Models.CertificateCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CertificateCollection.DeserializeCertificateCollection(document.RootElement);
+                        value = Models.CertificateCollection.DeserializeCertificateCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -559,7 +559,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=KeyVaultId eq &apos;KeyVaultId&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<CertificateCollection>> ListNextPageAsync(string nextLink, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<Models.CertificateCollection>> ListNextPageAsync(string nextLink, string filter = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -572,9 +572,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        CertificateCollection value = default;
+                        Models.CertificateCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CertificateCollection.DeserializeCertificateCollection(document.RootElement);
+                        value = Models.CertificateCollection.DeserializeCertificateCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -587,7 +587,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=KeyVaultId eq &apos;KeyVaultId&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<CertificateCollection> ListNextPage(string nextLink, string filter = null, CancellationToken cancellationToken = default)
+        public Response<Models.CertificateCollection> ListNextPage(string nextLink, string filter = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -600,9 +600,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        CertificateCollection value = default;
+                        Models.CertificateCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CertificateCollection.DeserializeCertificateCollection(document.RootElement);
+                        value = Models.CertificateCollection.DeserializeCertificateCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -629,7 +629,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<CertificateCollection>> ListByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<Models.CertificateCollection>> ListByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -646,9 +646,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        CertificateCollection value = default;
+                        Models.CertificateCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CertificateCollection.DeserializeCertificateCollection(document.RootElement);
+                        value = Models.CertificateCollection.DeserializeCertificateCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -661,7 +661,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<CertificateCollection> ListByResourceGroupNextPage(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<Models.CertificateCollection> ListByResourceGroupNextPage(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -678,9 +678,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        CertificateCollection value = default;
+                        Models.CertificateCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CertificateCollection.DeserializeCertificateCollection(document.RootElement);
+                        value = Models.CertificateCollection.DeserializeCertificateCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

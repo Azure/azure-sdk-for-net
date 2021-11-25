@@ -323,11 +323,11 @@ namespace Azure.ResourceManager.AppService
 
         #region SiteSlotProcessModule
 
-        /// <summary> Gets a container of SiteSlotProcessModules in the SiteSlotProcess. </summary>
+        /// <summary> Gets a collection of SiteSlotProcessModules in the SiteSlotProcess. </summary>
         /// <returns> An object representing collection of SiteSlotProcessModules and their operations over a SiteSlotProcess. </returns>
-        public SiteSlotProcessModuleContainer GetSiteSlotProcessModules()
+        public SiteSlotProcessModuleCollection GetSiteSlotProcessModules()
         {
-            return new SiteSlotProcessModuleContainer(this);
+            return new SiteSlotProcessModuleCollection(this);
         }
         #endregion
     }

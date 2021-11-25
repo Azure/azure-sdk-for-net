@@ -646,21 +646,21 @@ namespace Azure.ResourceManager.AppService
 
         #region AppServiceCertificateResource
 
-        /// <summary> Gets a container of AppServiceCertificateResources in the AppServiceCertificateOrder. </summary>
+        /// <summary> Gets a collection of AppServiceCertificateResources in the AppServiceCertificateOrder. </summary>
         /// <returns> An object representing collection of AppServiceCertificateResources and their operations over a AppServiceCertificateOrder. </returns>
-        public AppServiceCertificateResourceContainer GetAppServiceCertificateResources()
+        public AppServiceCertificateResourceCollection GetAppServiceCertificateResources()
         {
-            return new AppServiceCertificateResourceContainer(this);
+            return new AppServiceCertificateResourceCollection(this);
         }
         #endregion
 
         #region CertificateOrderDetector
 
-        /// <summary> Gets a container of CertificateOrderDetectors in the AppServiceCertificateOrder. </summary>
+        /// <summary> Gets a collection of CertificateOrderDetectors in the AppServiceCertificateOrder. </summary>
         /// <returns> An object representing collection of CertificateOrderDetectors and their operations over a AppServiceCertificateOrder. </returns>
-        public CertificateOrderDetectorContainer GetCertificateOrderDetectors()
+        public CertificateOrderDetectorCollection GetCertificateOrderDetectors()
         {
-            return new CertificateOrderDetectorContainer(this);
+            return new CertificateOrderDetectorCollection(this);
         }
         #endregion
     }

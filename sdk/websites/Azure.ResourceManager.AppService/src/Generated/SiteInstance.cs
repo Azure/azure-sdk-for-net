@@ -147,21 +147,21 @@ namespace Azure.ResourceManager.AppService
 
         #region SiteInstanceExtension
 
-        /// <summary> Gets a container of SiteInstanceExtensions in the SiteInstance. </summary>
+        /// <summary> Gets a collection of SiteInstanceExtensions in the SiteInstance. </summary>
         /// <returns> An object representing collection of SiteInstanceExtensions and their operations over a SiteInstance. </returns>
-        public SiteInstanceExtensionContainer GetSiteInstanceExtensions()
+        public SiteInstanceExtensionCollection GetSiteInstanceExtensions()
         {
-            return new SiteInstanceExtensionContainer(this);
+            return new SiteInstanceExtensionCollection(this);
         }
         #endregion
 
         #region SiteInstanceProcess
 
-        /// <summary> Gets a container of SiteInstanceProcesses in the SiteInstance. </summary>
+        /// <summary> Gets a collection of SiteInstanceProcesses in the SiteInstance. </summary>
         /// <returns> An object representing collection of SiteInstanceProcesses and their operations over a SiteInstance. </returns>
-        public SiteInstanceProcessContainer GetSiteInstanceProcesses()
+        public SiteInstanceProcessCollection GetSiteInstanceProcesses()
         {
-            return new SiteInstanceProcessContainer(this);
+            return new SiteInstanceProcessCollection(this);
         }
         #endregion
     }

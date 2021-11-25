@@ -23,32 +23,32 @@ namespace Azure.ResourceManager.AppService
     public static partial class SubscriptionExtensions
     {
         #region TopLevelDomain
-        /// <summary> Gets an object representing a TopLevelDomainContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a TopLevelDomainCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="TopLevelDomainContainer" /> object. </returns>
-        public static TopLevelDomainContainer GetTopLevelDomains(this Subscription subscription)
+        /// <returns> Returns a <see cref="TopLevelDomainCollection" /> object. </returns>
+        public static TopLevelDomainCollection GetTopLevelDomains(this Subscription subscription)
         {
-            return new TopLevelDomainContainer(subscription);
+            return new TopLevelDomainCollection(subscription);
         }
         #endregion
 
         #region LocationDeletedSite
-        /// <summary> Gets an object representing a LocationDeletedSiteContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a LocationDeletedSiteCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="LocationDeletedSiteContainer" /> object. </returns>
-        public static LocationDeletedSiteContainer GetLocationDeletedSites(this Subscription subscription)
+        /// <returns> Returns a <see cref="LocationDeletedSiteCollection" /> object. </returns>
+        public static LocationDeletedSiteCollection GetLocationDeletedSites(this Subscription subscription)
         {
-            return new LocationDeletedSiteContainer(subscription);
+            return new LocationDeletedSiteCollection(subscription);
         }
         #endregion
 
         #region DeletedSite
-        /// <summary> Gets an object representing a DeletedSiteContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a DeletedSiteCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="DeletedSiteContainer" /> object. </returns>
-        public static DeletedSiteContainer GetDeletedSites(this Subscription subscription)
+        /// <returns> Returns a <see cref="DeletedSiteCollection" /> object. </returns>
+        public static DeletedSiteCollection GetDeletedSites(this Subscription subscription)
         {
-            return new DeletedSiteContainer(subscription);
+            return new DeletedSiteCollection(subscription);
         }
         #endregion
 
@@ -1140,7 +1140,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<KubeEnvironment> GetBySubscriptionKubeEnvironmentsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static AsyncPageable<KubeEnvironment> GetKubeEnvironmentsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -1148,7 +1148,7 @@ namespace Azure.ResourceManager.AppService
                 var restOperations = GetKubeEnvironmentsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
                 async Task<Page<KubeEnvironment>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetBySubscriptionKubeEnvironments");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetKubeEnvironments");
                     scope.Start();
                     try
                     {
@@ -1163,7 +1163,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 async Task<Page<KubeEnvironment>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetBySubscriptionKubeEnvironments");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetKubeEnvironments");
                     scope.Start();
                     try
                     {
@@ -1188,7 +1188,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<KubeEnvironment> GetBySubscriptionKubeEnvironments(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static Pageable<KubeEnvironment> GetKubeEnvironments(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -1196,7 +1196,7 @@ namespace Azure.ResourceManager.AppService
                 var restOperations = GetKubeEnvironmentsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
                 Page<KubeEnvironment> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetBySubscriptionKubeEnvironments");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetKubeEnvironments");
                     scope.Start();
                     try
                     {
@@ -1211,7 +1211,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 Page<KubeEnvironment> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetBySubscriptionKubeEnvironments");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetKubeEnvironments");
                     scope.Start();
                     try
                     {

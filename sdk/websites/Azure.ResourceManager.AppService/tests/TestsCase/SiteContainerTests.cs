@@ -10,14 +10,14 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.AppService.Tests.TestsCase
 {
-    public class SiteContainerTests : AppServiceTestBase
+    public class SiteCollectionTests : AppServiceTestBase
     {
-        public SiteContainerTests(bool isAsync)
+        public SiteCollectionTests(bool isAsync)
            : base(isAsync, Azure.Core.TestFramework.RecordedTestMode.Record)
         {
         }
 
-        private async Task<SiteContainer> GetSiteContainerAsync()
+        private async Task<SiteCollection> GetSiteCollectionAsync()
         {
             var resourceGroup = await CreateResourceGroupAsync();
             return resourceGroup.GetSites();
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
         [RecordedTest]
         public async Task SiteCreateOrUpdate()
         {
-            var container = await GetSiteContainerAsync();
+            var container = await GetSiteCollectionAsync();
             var name = Recording.GenerateAssetName("testSite");
             var input = ResourceDataHelper.GetBasicSiteData(DefaultLocation);
             var lro = await container.CreateOrUpdateAsync(name, input);
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
         [RecordedTest]
         public async Task Get()
         {
-            var container = await GetSiteContainerAsync();
+            var container = await GetSiteCollectionAsync();
             var siteName = Recording.GenerateAssetName("testSite-");
             var input = ResourceDataHelper.GetBasicSiteData(DefaultLocation);
             var lro = await container.CreateOrUpdateAsync(siteName, input);
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
         [RecordedTest]
         public async Task GetAll()
         {
-            var container = await GetSiteContainerAsync();
+            var container = await GetSiteCollectionAsync();
             var input = ResourceDataHelper.GetBasicSiteData(DefaultLocation);
             _ = await container.CreateOrUpdateAsync(Recording.GenerateAssetName("testSite-"), input);
             _ = await container.CreateOrUpdateAsync(Recording.GenerateAssetName("testSite-"), input);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
         [RecordedTest]
         public async Task CheckIfExistsAsync()
         {
-            var container = await GetSiteContainerAsync();
+            var container = await GetSiteCollectionAsync();
             var sitekName = Recording.GenerateAssetName("testSite-");
             var input = ResourceDataHelper.GetBasicSiteData(DefaultLocation);
             var lro = await container.CreateOrUpdateAsync(sitekName, input);

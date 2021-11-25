@@ -240,11 +240,11 @@ namespace Azure.ResourceManager.AppService
 
         #region SiteSlotTriggeredwebjobHistory
 
-        /// <summary> Gets a container of SiteSlotTriggeredwebjobHistories in the SiteSlotTriggeredwebjob. </summary>
+        /// <summary> Gets a collection of SiteSlotTriggeredwebjobHistories in the SiteSlotTriggeredwebjob. </summary>
         /// <returns> An object representing collection of SiteSlotTriggeredwebjobHistories and their operations over a SiteSlotTriggeredwebjob. </returns>
-        public SiteSlotTriggeredwebjobHistoryContainer GetSiteSlotTriggeredwebjobHistories()
+        public SiteSlotTriggeredwebjobHistoryCollection GetSiteSlotTriggeredwebjobHistories()
         {
-            return new SiteSlotTriggeredwebjobHistoryContainer(this);
+            return new SiteSlotTriggeredwebjobHistoryCollection(this);
         }
         #endregion
     }
