@@ -326,23 +326,25 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        /// <summary> Transfer the call. </summary>
+        /// <summary> Transfer the call to a participant. </summary>
         /// <param name="targetParticipant"> The target participant. </param>
-        /// <param name="targetCallConnectionId"> The target call connection id to transfer to. </param>
+        /// <param name="alternateCallerId">The phone number to use when transferring to a pstn participant.</param>
         /// <param name="userToUserInformation">The user to user information payload. </param>
+        /// <param name="operationContext"> The operation context. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<TransferCallResult>> TransferAsync(CommunicationIdentifier targetParticipant, string targetCallConnectionId, string userToUserInformation, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TransferCallResult>> TransferToParticipantAsync(CommunicationIdentifier targetParticipant, string alternateCallerId = default, string userToUserInformation = default, string operationContext = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(TransferAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(TransferToParticipantAsync)}");
             scope.Start();
             try
             {
-                return await RestClient.TransferAsync(
+                return await RestClient.TransferToParticipantAsync(
                     callConnectionId: CallConnectionId,
                     targetParticipant: CommunicationIdentifierSerializer.Serialize(targetParticipant),
-                    targetCallConnectionId: targetCallConnectionId,
+                    alternateCallerId: alternateCallerId == null ? null : new PhoneNumberIdentifierModel(alternateCallerId),
                     userToUserInformation: userToUserInformation,
+                    operationContext: operationContext,
                     cancellationToken: cancellationToken
                     ).ConfigureAwait(false);
             }
@@ -353,23 +355,79 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        /// <summary> Transfer the call. </summary>
+        /// <summary> Transfer the call to a participant. </summary>
         /// <param name="targetParticipant"> The target participant. </param>
-        /// <param name="targetCallConnectionId"> The target call connection id to transfer to. </param>
+        /// <param name="alternateCallerId">The phone number to use when transferring to a pstn participant.</param>
         /// <param name="userToUserInformation">The user to user information payload. </param>
+        /// <param name="operationContext"> The operation context. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<TransferCallResult> Transfer(CommunicationIdentifier targetParticipant, string targetCallConnectionId, string userToUserInformation, CancellationToken cancellationToken = default)
+        public virtual Response<TransferCallResult> TransferToParticipant(CommunicationIdentifier targetParticipant, string alternateCallerId = default, string userToUserInformation = default, string operationContext = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(Transfer)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(TransferToParticipant)}");
             scope.Start();
             try
             {
-                return RestClient.Transfer(
+                return RestClient.TransferToParticipant(
                     callConnectionId: CallConnectionId,
                     targetParticipant: CommunicationIdentifierSerializer.Serialize(targetParticipant),
+                    alternateCallerId: alternateCallerId == null ? null : new PhoneNumberIdentifierModel(alternateCallerId),
+                    userToUserInformation: userToUserInformation,
+                    operationContext: operationContext,
+                    cancellationToken: cancellationToken
+                    );
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Transfer the current call to another call. </summary>
+        /// <param name="targetCallConnectionId"> The target call connection id to transfer to. </param>
+        /// <param name="userToUserInformation">The user to user information payload. </param>
+        /// <param name="operationContext">The operation context. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual async Task<Response<TransferCallResult>> TransferToCallAsync(string targetCallConnectionId, string userToUserInformation = default, string operationContext = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(TransferToCallAsync)}");
+            scope.Start();
+            try
+            {
+                return await RestClient.TransferToCallAsync(
+                    callConnectionId: CallConnectionId,
                     targetCallConnectionId: targetCallConnectionId,
                     userToUserInformation: userToUserInformation,
+                    operationContext: operationContext,
+                    cancellationToken: cancellationToken
+                    ).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Transfer the current call to another call. </summary>
+        /// <param name="targetCallConnectionId"> The target call connection id to transfer to. </param>
+        /// <param name="userToUserInformation">The user to user information payload. </param>
+        /// <param name="operationContext"> The operation context. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual Response<TransferCallResult> TransferToCall(string targetCallConnectionId, string userToUserInformation = default, string operationContext = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(TransferToCall)}");
+            scope.Start();
+            try
+            {
+                return RestClient.TransferToCall(
+                    callConnectionId: CallConnectionId,
+                    targetCallConnectionId: targetCallConnectionId,
+                    userToUserInformation: userToUserInformation,
+                    operationContext: operationContext,
                     cancellationToken: cancellationToken
                     );
             }
