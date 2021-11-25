@@ -141,6 +141,7 @@ namespace Microsoft.Azure.WebPubSub.Common
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.Runtime.Serialization.IgnoreDataMemberAttribute]
         [System.Text.Json.Serialization.JsonIgnoreAttribute]
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("states")]
         public System.Collections.Generic.IReadOnlyDictionary<string, object> States { get { throw null; } }
         [System.Runtime.Serialization.DataMemberAttribute(Name="userId")]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("userId")]
