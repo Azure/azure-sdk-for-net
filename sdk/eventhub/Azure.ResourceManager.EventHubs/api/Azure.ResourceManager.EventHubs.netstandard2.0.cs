@@ -3,13 +3,13 @@ namespace Azure.ResourceManager.EventHubs
     public static partial class ArmClientExtensions
     {
         public static Azure.ResourceManager.EventHubs.ArmDisasterRecovery GetArmDisasterRecovery(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.EventHubs.ArmDisasterRecoveryAuthorizationRule GetArmDisasterRecoveryAuthorizationRule(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.EventHubs.ConsumerGroup GetConsumerGroup(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.EventHubs.EventHub GetEventHub(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.EventHubs.EventHubAuthorizationRule GetEventHubAuthorizationRule(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.EventHubs.EventHubCluster GetEventHubCluster(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.EventHubs.EventHubNamespace GetEventHubNamespace(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.EventHubs.NamespaceAuthorizationRule GetNamespaceAuthorizationRule(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.EventHubs.NamespaceDisasterRecoveryConfigAuthorizationRule GetNamespaceDisasterRecoveryConfigAuthorizationRule(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.EventHubs.NamespaceEventhubAuthorizationRule GetNamespaceEventhubAuthorizationRule(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.EventHubs.NetworkRuleSet GetNetworkRuleSet(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.EventHubs.PrivateEndpointConnection GetPrivateEndpointConnection(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.EventHubs.SchemaGroup GetSchemaGroup(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
@@ -28,10 +28,40 @@ namespace Azure.ResourceManager.EventHubs
         public virtual Azure.Response FailOver(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> FailOverAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.EventHubs.ArmDisasterRecovery> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public Azure.ResourceManager.EventHubs.ArmDisasterRecoveryAuthorizationRuleCollection GetArmDisasterRecoveryAuthorizationRules() { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventHubs.ArmDisasterRecovery>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public Azure.ResourceManager.EventHubs.NamespaceDisasterRecoveryConfigAuthorizationRuleCollection GetNamespaceDisasterRecoveryConfigAuthorizationRules() { throw null; }
+    }
+    public partial class ArmDisasterRecoveryAuthorizationRule : Azure.ResourceManager.Core.ArmResource
+    {
+        public static readonly Azure.ResourceManager.ResourceType ResourceType;
+        protected ArmDisasterRecoveryAuthorizationRule() { }
+        public virtual Azure.ResourceManager.EventHubs.AuthorizationRuleData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        public virtual Azure.Response<Azure.ResourceManager.EventHubs.ArmDisasterRecoveryAuthorizationRule> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventHubs.ArmDisasterRecoveryAuthorizationRule>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.EventHubs.Models.AccessKeys> GetKeys(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventHubs.Models.AccessKeys>> GetKeysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ArmDisasterRecoveryAuthorizationRuleCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.EventHubs.ArmDisasterRecoveryAuthorizationRule>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventHubs.ArmDisasterRecoveryAuthorizationRule>, System.Collections.IEnumerable
+    {
+        protected ArmDisasterRecoveryAuthorizationRuleCollection() { }
+        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        public virtual Azure.Response<bool> CheckIfExists(string authorizationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> CheckIfExistsAsync(string authorizationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.EventHubs.ArmDisasterRecoveryAuthorizationRule> Get(string authorizationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.EventHubs.ArmDisasterRecoveryAuthorizationRule> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.EventHubs.ArmDisasterRecoveryAuthorizationRule> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventHubs.ArmDisasterRecoveryAuthorizationRule>> GetAsync(string authorizationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.EventHubs.ArmDisasterRecoveryAuthorizationRule> GetIfExists(string authorizationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventHubs.ArmDisasterRecoveryAuthorizationRule>> GetIfExistsAsync(string authorizationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.EventHubs.ArmDisasterRecoveryAuthorizationRule> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.EventHubs.ArmDisasterRecoveryAuthorizationRule>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.EventHubs.ArmDisasterRecoveryAuthorizationRule> System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventHubs.ArmDisasterRecoveryAuthorizationRule>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class ArmDisasterRecoveryCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.EventHubs.ArmDisasterRecovery>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventHubs.ArmDisasterRecovery>, System.Collections.IEnumerable
     {
@@ -121,7 +151,43 @@ namespace Azure.ResourceManager.EventHubs
         public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public Azure.ResourceManager.EventHubs.ConsumerGroupCollection GetConsumerGroups() { throw null; }
-        public Azure.ResourceManager.EventHubs.NamespaceEventhubAuthorizationRuleCollection GetNamespaceEventhubAuthorizationRules() { throw null; }
+        public Azure.ResourceManager.EventHubs.EventHubAuthorizationRuleCollection GetEventHubAuthorizationRules() { throw null; }
+    }
+    public partial class EventHubAuthorizationRule : Azure.ResourceManager.Core.ArmResource
+    {
+        public static readonly Azure.ResourceManager.ResourceType ResourceType;
+        protected EventHubAuthorizationRule() { }
+        public virtual Azure.ResourceManager.EventHubs.AuthorizationRuleData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        public virtual Azure.ResourceManager.EventHubs.Models.EventHubDeleteAuthorizationRuleOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.EventHubs.Models.EventHubDeleteAuthorizationRuleOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.EventHubs.EventHubAuthorizationRule> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventHubs.EventHubAuthorizationRule>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.EventHubs.Models.AccessKeys> GetKeys(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventHubs.Models.AccessKeys>> GetKeysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.EventHubs.Models.AccessKeys> RegenerateKeys(Azure.ResourceManager.EventHubs.Models.RegenerateAccessKeyOptions parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventHubs.Models.AccessKeys>> RegenerateKeysAsync(Azure.ResourceManager.EventHubs.Models.RegenerateAccessKeyOptions parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class EventHubAuthorizationRuleCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.EventHubs.EventHubAuthorizationRule>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventHubs.EventHubAuthorizationRule>, System.Collections.IEnumerable
+    {
+        protected EventHubAuthorizationRuleCollection() { }
+        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        public virtual Azure.Response<bool> CheckIfExists(string authorizationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> CheckIfExistsAsync(string authorizationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.EventHubs.Models.EventHubCreateOrUpdateAuthorizationRuleOperation CreateOrUpdate(string authorizationRuleName, Azure.ResourceManager.EventHubs.AuthorizationRuleData parameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.EventHubs.Models.EventHubCreateOrUpdateAuthorizationRuleOperation> CreateOrUpdateAsync(string authorizationRuleName, Azure.ResourceManager.EventHubs.AuthorizationRuleData parameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.EventHubs.EventHubAuthorizationRule> Get(string authorizationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.EventHubs.EventHubAuthorizationRule> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.EventHubs.EventHubAuthorizationRule> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventHubs.EventHubAuthorizationRule>> GetAsync(string authorizationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.EventHubs.EventHubAuthorizationRule> GetIfExists(string authorizationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventHubs.EventHubAuthorizationRule>> GetIfExistsAsync(string authorizationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.EventHubs.EventHubAuthorizationRule> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.EventHubs.EventHubAuthorizationRule>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.EventHubs.EventHubAuthorizationRule> System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventHubs.EventHubAuthorizationRule>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class EventHubCluster : Azure.ResourceManager.Core.ArmResource
     {
@@ -220,8 +286,8 @@ namespace Azure.ResourceManager.EventHubs
         protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.EventHubs.EventHubNamespace> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventHubs.EventHubNamespace>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.EventHubs.Models.CheckNameAvailabilityResult> CheckNameAvailabilityDisasterRecoveryConfig(Azure.ResourceManager.EventHubs.Models.CheckNameAvailabilityParameter parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventHubs.Models.CheckNameAvailabilityResult>> CheckNameAvailabilityDisasterRecoveryConfigAsync(Azure.ResourceManager.EventHubs.Models.CheckNameAvailabilityParameter parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.EventHubs.Models.CheckNameAvailabilityResult> CheckNameAvailabilityDisasterRecoveryConfig(Azure.ResourceManager.EventHubs.Models.CheckNameAvailabilityOptions parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventHubs.Models.CheckNameAvailabilityResult>> CheckNameAvailabilityDisasterRecoveryConfigAsync(Azure.ResourceManager.EventHubs.Models.CheckNameAvailabilityOptions parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.EventHubs.Models.NamespaceDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.EventHubs.Models.NamespaceDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.EventHubs.EventHubNamespace> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -270,8 +336,8 @@ namespace Azure.ResourceManager.EventHubs
         public string ClusterArmId { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedAt { get { throw null; } }
         public bool? DisableLocalAuth { get { throw null; } set { } }
-        public Azure.ResourceManager.EventHubs.Models.Encryption Encryption { get { throw null; } set { } }
-        public Azure.ResourceManager.EventHubs.Models.Identity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.EventHubs.Models.EventHubEncryption Encryption { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Models.ResourceIdentity Identity { get { throw null; } set { } }
         public bool? IsAutoInflateEnabled { get { throw null; } set { } }
         public bool? KafkaEnabled { get { throw null; } set { } }
         public int? MaximumThroughputUnits { get { throw null; } set { } }
@@ -303,8 +369,8 @@ namespace Azure.ResourceManager.EventHubs
         public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.EventHubs.Models.AccessKeys> GetKeys(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventHubs.Models.AccessKeys>> GetKeysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.EventHubs.Models.AccessKeys> RegenerateKeys(Azure.ResourceManager.EventHubs.Models.RegenerateAccessKeyParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventHubs.Models.AccessKeys>> RegenerateKeysAsync(Azure.ResourceManager.EventHubs.Models.RegenerateAccessKeyParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.EventHubs.Models.AccessKeys> RegenerateKeys(Azure.ResourceManager.EventHubs.Models.RegenerateAccessKeyOptions parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventHubs.Models.AccessKeys>> RegenerateKeysAsync(Azure.ResourceManager.EventHubs.Models.RegenerateAccessKeyOptions parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class NamespaceAuthorizationRuleCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.EventHubs.NamespaceAuthorizationRule>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventHubs.NamespaceAuthorizationRule>, System.Collections.IEnumerable
     {
@@ -322,72 +388,6 @@ namespace Azure.ResourceManager.EventHubs
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventHubs.NamespaceAuthorizationRule>> GetIfExistsAsync(string authorizationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.EventHubs.NamespaceAuthorizationRule> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.EventHubs.NamespaceAuthorizationRule>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.EventHubs.NamespaceAuthorizationRule> System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventHubs.NamespaceAuthorizationRule>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class NamespaceDisasterRecoveryConfigAuthorizationRule : Azure.ResourceManager.Core.ArmResource
-    {
-        public static readonly Azure.ResourceManager.ResourceType ResourceType;
-        protected NamespaceDisasterRecoveryConfigAuthorizationRule() { }
-        public virtual Azure.ResourceManager.EventHubs.AuthorizationRuleData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.EventHubs.NamespaceDisasterRecoveryConfigAuthorizationRule> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventHubs.NamespaceDisasterRecoveryConfigAuthorizationRule>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.EventHubs.Models.AccessKeys> GetKeys(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventHubs.Models.AccessKeys>> GetKeysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class NamespaceDisasterRecoveryConfigAuthorizationRuleCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.EventHubs.NamespaceDisasterRecoveryConfigAuthorizationRule>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventHubs.NamespaceDisasterRecoveryConfigAuthorizationRule>, System.Collections.IEnumerable
-    {
-        protected NamespaceDisasterRecoveryConfigAuthorizationRuleCollection() { }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.Response<bool> CheckIfExists(string authorizationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> CheckIfExistsAsync(string authorizationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.EventHubs.NamespaceDisasterRecoveryConfigAuthorizationRule> Get(string authorizationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.EventHubs.NamespaceDisasterRecoveryConfigAuthorizationRule> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.EventHubs.NamespaceDisasterRecoveryConfigAuthorizationRule> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventHubs.NamespaceDisasterRecoveryConfigAuthorizationRule>> GetAsync(string authorizationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.EventHubs.NamespaceDisasterRecoveryConfigAuthorizationRule> GetIfExists(string authorizationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventHubs.NamespaceDisasterRecoveryConfigAuthorizationRule>> GetIfExistsAsync(string authorizationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.EventHubs.NamespaceDisasterRecoveryConfigAuthorizationRule> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.EventHubs.NamespaceDisasterRecoveryConfigAuthorizationRule>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.EventHubs.NamespaceDisasterRecoveryConfigAuthorizationRule> System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventHubs.NamespaceDisasterRecoveryConfigAuthorizationRule>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class NamespaceEventhubAuthorizationRule : Azure.ResourceManager.Core.ArmResource
-    {
-        public static readonly Azure.ResourceManager.ResourceType ResourceType;
-        protected NamespaceEventhubAuthorizationRule() { }
-        public virtual Azure.ResourceManager.EventHubs.AuthorizationRuleData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.ResourceManager.EventHubs.Models.EventHubDeleteAuthorizationRuleOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.EventHubs.Models.EventHubDeleteAuthorizationRuleOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.EventHubs.NamespaceEventhubAuthorizationRule> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventHubs.NamespaceEventhubAuthorizationRule>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.EventHubs.Models.AccessKeys> GetKeys(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventHubs.Models.AccessKeys>> GetKeysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.EventHubs.Models.AccessKeys> RegenerateKeys(Azure.ResourceManager.EventHubs.Models.RegenerateAccessKeyParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventHubs.Models.AccessKeys>> RegenerateKeysAsync(Azure.ResourceManager.EventHubs.Models.RegenerateAccessKeyParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class NamespaceEventhubAuthorizationRuleCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.EventHubs.NamespaceEventhubAuthorizationRule>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventHubs.NamespaceEventhubAuthorizationRule>, System.Collections.IEnumerable
-    {
-        protected NamespaceEventhubAuthorizationRuleCollection() { }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.Response<bool> CheckIfExists(string authorizationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> CheckIfExistsAsync(string authorizationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.EventHubs.Models.EventHubCreateOrUpdateAuthorizationRuleOperation CreateOrUpdate(string authorizationRuleName, Azure.ResourceManager.EventHubs.AuthorizationRuleData parameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.EventHubs.Models.EventHubCreateOrUpdateAuthorizationRuleOperation> CreateOrUpdateAsync(string authorizationRuleName, Azure.ResourceManager.EventHubs.AuthorizationRuleData parameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.EventHubs.NamespaceEventhubAuthorizationRule> Get(string authorizationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.EventHubs.NamespaceEventhubAuthorizationRule> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.EventHubs.NamespaceEventhubAuthorizationRule> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventHubs.NamespaceEventhubAuthorizationRule>> GetAsync(string authorizationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.EventHubs.NamespaceEventhubAuthorizationRule> GetIfExists(string authorizationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventHubs.NamespaceEventhubAuthorizationRule>> GetIfExistsAsync(string authorizationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.EventHubs.NamespaceEventhubAuthorizationRule> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.EventHubs.NamespaceEventhubAuthorizationRule>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.EventHubs.NamespaceEventhubAuthorizationRule> System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventHubs.NamespaceEventhubAuthorizationRule>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class NetworkRuleSet : Azure.ResourceManager.Core.ArmResource
@@ -505,12 +505,12 @@ namespace Azure.ResourceManager.EventHubs
     }
     public static partial class SubscriptionExtensions
     {
-        public static Azure.Response<Azure.ResourceManager.EventHubs.Models.CheckNameAvailabilityResult> CheckNameAvailabilityNamespace(this Azure.ResourceManager.Resources.Subscription subscription, Azure.ResourceManager.EventHubs.Models.CheckNameAvailabilityParameter parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventHubs.Models.CheckNameAvailabilityResult>> CheckNameAvailabilityNamespaceAsync(this Azure.ResourceManager.Resources.Subscription subscription, Azure.ResourceManager.EventHubs.Models.CheckNameAvailabilityParameter parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.EventHubs.Models.CheckNameAvailabilityResult> CheckNameAvailabilityNamespace(this Azure.ResourceManager.Resources.Subscription subscription, Azure.ResourceManager.EventHubs.Models.CheckNameAvailabilityOptions parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventHubs.Models.CheckNameAvailabilityResult>> CheckNameAvailabilityNamespaceAsync(this Azure.ResourceManager.Resources.Subscription subscription, Azure.ResourceManager.EventHubs.Models.CheckNameAvailabilityOptions parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EventHubs.Models.AvailableCluster>> GetAvailableClusterRegionClusters(this Azure.ResourceManager.Resources.Subscription subscription, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EventHubs.Models.AvailableCluster>>> GetAvailableClusterRegionClustersAsync(this Azure.ResourceManager.Resources.Subscription subscription, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.EventHubs.EventHubCluster> GetBySubscriptionClusters(this Azure.ResourceManager.Resources.Subscription subscription, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.EventHubs.EventHubCluster> GetBySubscriptionClustersAsync(this Azure.ResourceManager.Resources.Subscription subscription, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.EventHubs.EventHubCluster> GetClusters(this Azure.ResourceManager.Resources.Subscription subscription, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.EventHubs.EventHubCluster> GetClustersAsync(this Azure.ResourceManager.Resources.Subscription subscription, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Resources.GenericResource> GetEventHubClusterByName(this Azure.ResourceManager.Resources.Subscription subscription, string filter, string expand, int? top, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Resources.GenericResource> GetEventHubClusterByNameAsync(this Azure.ResourceManager.Resources.Subscription subscription, string filter, string expand, int? top, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Resources.GenericResource> GetEventHubNamespaceByName(this Azure.ResourceManager.Resources.Subscription subscription, string filter, string expand, int? top, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -567,16 +567,16 @@ namespace Azure.ResourceManager.EventHubs.Models
     public partial class CaptureDescription
     {
         public CaptureDescription() { }
-        public Azure.ResourceManager.EventHubs.Models.Destination Destination { get { throw null; } set { } }
+        public Azure.ResourceManager.EventHubs.Models.EventHubDestination Destination { get { throw null; } set { } }
         public bool? Enabled { get { throw null; } set { } }
         public Azure.ResourceManager.EventHubs.Models.EncodingCaptureDescription? Encoding { get { throw null; } set { } }
         public int? IntervalInSeconds { get { throw null; } set { } }
         public int? SizeLimitInBytes { get { throw null; } set { } }
         public bool? SkipEmptyArchives { get { throw null; } set { } }
     }
-    public partial class CheckNameAvailabilityParameter
+    public partial class CheckNameAvailabilityOptions
     {
-        public CheckNameAvailabilityParameter(string name) { }
+        public CheckNameAvailabilityOptions(string name) { }
         public string Name { get { throw null; } }
     }
     public partial class CheckNameAvailabilityResult
@@ -719,17 +719,6 @@ namespace Azure.ResourceManager.EventHubs.Models
         public static bool operator !=(Azure.ResourceManager.EventHubs.Models.DefaultAction left, Azure.ResourceManager.EventHubs.Models.DefaultAction right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class Destination
-    {
-        public Destination() { }
-        public string ArchiveNameFormat { get { throw null; } set { } }
-        public string BlobContainer { get { throw null; } set { } }
-        public string DataLakeAccountName { get { throw null; } set { } }
-        public string DataLakeFolderPath { get { throw null; } set { } }
-        public System.Guid? DataLakeSubscriptionId { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-        public string StorageAccountResourceId { get { throw null; } set { } }
-    }
     public partial class DisasterRecoveryConfigCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.EventHubs.ArmDisasterRecovery>
     {
         protected DisasterRecoveryConfigCreateOrUpdateOperation() { }
@@ -758,13 +747,6 @@ namespace Azure.ResourceManager.EventHubs.Models
     {
         Avro = 0,
         AvroDeflate = 1,
-    }
-    public partial class Encryption
-    {
-        public Encryption() { }
-        public string KeySource { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.EventHubs.Models.KeyVaultProperties> KeyVaultProperties { get { throw null; } }
-        public bool? RequireInfrastructureEncryption { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EndPointProvisioningState : System.IEquatable<Azure.ResourceManager.EventHubs.Models.EndPointProvisioningState>
@@ -800,18 +782,18 @@ namespace Azure.ResourceManager.EventHubs.Models
         Renaming = 7,
         Unknown = 8,
     }
-    public partial class EventHubCreateOrUpdateAuthorizationRuleOperation : Azure.Operation<Azure.ResourceManager.EventHubs.NamespaceEventhubAuthorizationRule>
+    public partial class EventHubCreateOrUpdateAuthorizationRuleOperation : Azure.Operation<Azure.ResourceManager.EventHubs.EventHubAuthorizationRule>
     {
         protected EventHubCreateOrUpdateAuthorizationRuleOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
-        public override Azure.ResourceManager.EventHubs.NamespaceEventhubAuthorizationRule Value { get { throw null; } }
+        public override Azure.ResourceManager.EventHubs.EventHubAuthorizationRule Value { get { throw null; } }
         public override Azure.Response GetRawResponse() { throw null; }
         public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.EventHubs.NamespaceEventhubAuthorizationRule>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.EventHubs.NamespaceEventhubAuthorizationRule>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.EventHubs.EventHubAuthorizationRule>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.EventHubs.EventHubAuthorizationRule>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class EventHubCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.EventHubs.EventHub>
     {
@@ -848,18 +830,28 @@ namespace Azure.ResourceManager.EventHubs.Models
         public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class EventHubDestination
+    {
+        public EventHubDestination() { }
+        public string ArchiveNameFormat { get { throw null; } set { } }
+        public string BlobContainer { get { throw null; } set { } }
+        public string DataLakeAccountName { get { throw null; } set { } }
+        public string DataLakeFolderPath { get { throw null; } set { } }
+        public System.Guid? DataLakeSubscriptionId { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+        public string StorageAccountResourceId { get { throw null; } set { } }
+    }
+    public partial class EventHubEncryption
+    {
+        public EventHubEncryption() { }
+        public string KeySource { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.EventHubs.Models.KeyVaultProperties> KeyVaultProperties { get { throw null; } }
+        public bool? RequireInfrastructureEncryption { get { throw null; } set { } }
+    }
     public partial class EventHubNamespaceIdListResult
     {
         internal EventHubNamespaceIdListResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> Value { get { throw null; } }
-    }
-    public partial class Identity
-    {
-        public Identity() { }
-        public string PrincipalId { get { throw null; } }
-        public string TenantId { get { throw null; } }
-        public Azure.ResourceManager.EventHubs.Models.ManagedServiceIdentityType? Type { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Resources.Models.UserAssignedIdentity> UserAssignedIdentities { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct KeyType : System.IEquatable<Azure.ResourceManager.EventHubs.Models.KeyType>
@@ -886,13 +878,6 @@ namespace Azure.ResourceManager.EventHubs.Models
         public string KeyName { get { throw null; } set { } }
         public string KeyVaultUri { get { throw null; } set { } }
         public string KeyVersion { get { throw null; } set { } }
-    }
-    public enum ManagedServiceIdentityType
-    {
-        SystemAssigned = 0,
-        UserAssigned = 1,
-        SystemAssignedUserAssigned = 2,
-        None = 3,
     }
     public partial class NamespaceCreateOrUpdateAuthorizationRuleOperation : Azure.Operation<Azure.ResourceManager.EventHubs.NamespaceAuthorizationRule>
     {
@@ -1089,11 +1074,18 @@ namespace Azure.ResourceManager.EventHubs.Models
         public static bool operator !=(Azure.ResourceManager.EventHubs.Models.PublicNetworkAccessFlag left, Azure.ResourceManager.EventHubs.Models.PublicNetworkAccessFlag right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class RegenerateAccessKeyParameters
+    public partial class RegenerateAccessKeyOptions
     {
-        public RegenerateAccessKeyParameters(Azure.ResourceManager.EventHubs.Models.KeyType keyType) { }
+        public RegenerateAccessKeyOptions(Azure.ResourceManager.EventHubs.Models.KeyType keyType) { }
         public string Key { get { throw null; } set { } }
         public Azure.ResourceManager.EventHubs.Models.KeyType KeyType { get { throw null; } }
+    }
+    public enum ResourceIdentityType
+    {
+        SystemAssigned = 0,
+        UserAssigned = 1,
+        SystemAssignedUserAssigned = 2,
+        None = 3,
     }
     public enum RoleDisasterRecovery
     {
