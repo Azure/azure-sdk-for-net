@@ -69,6 +69,12 @@ namespace Compute.Tests.DiskRPTests
         }
 
         [Fact]
+        public void Snapshot_CRUD_WithSecurityType()
+        {
+            Snapshot_CRUD_WithSecurityType_Execute("Snapshot_CRUD_WithSecurityType", location: "eastus2");
+        }
+
+        [Fact]
         public void Disk_List_EmptyDisk()
         {
             Disk_List_Execute(DiskCreateOption.Empty, "Disk_List_EmptyDisk", diskSizeGB: 5);
