@@ -78,15 +78,15 @@ The following examples show common scenarios using the `client` [created above](
 
 The only input required to a ask a question using an existing knowledge base is just the question itself:
 
-```C# Snippet:QuestionAnsweringClient_QueryKnowledgeBase
+```C# Snippet:QuestionAnsweringClient_GetAnswers
 string projectName = "FAQ";
 string deploymentName = "prod";
-QueryKnowledgeBaseOptions options = new QueryKnowledgeBaseOptions(projectName, deploymentName, "How long should my Surface battery last?");
-Response<KnowledgeBaseAnswers> response = client.QueryKnowledgeBase(options);
+QuestionAnsweringProject project = new QuestionAnsweringProject(projectName, deploymentName);
+Response<AnswersResult> response = client.GetAnswers("How long should my Surface battery last?", project);
 
 foreach (KnowledgeBaseAnswer answer in response.Value.Answers)
 {
-    Console.WriteLine($"({answer.ConfidenceScore:P2}) {answer.Answer}");
+    Console.WriteLine($"({answer.Confidence:P2}) {answer.Answer}");
     Console.WriteLine($"Source: {answer.Source}");
     Console.WriteLine();
 }
@@ -103,16 +103,17 @@ string projectName = "FAQ";
 string deploymentName = "prod";
 // Answers are ordered by their ConfidenceScore so assume the user choose the first answer below:
 KnowledgeBaseAnswer previousAnswer = answers.Answers.First();
-QueryKnowledgeBaseOptions options = new QueryKnowledgeBaseOptions(projectName, deploymentName, "How long should charging take?")
+QuestionAnsweringProject project = new QuestionAnsweringProject(projectName, deploymentName);
+AnswersOptions options = new AnswersOptions
 {
-    Context = new KnowledgeBaseAnswerRequestContext(previousAnswer.Id.Value)
+    AnswerContext = new KnowledgeBaseAnswerContext(previousAnswer.QnaId.Value)
 };
 
-Response<KnowledgeBaseAnswers> response = client.QueryKnowledgeBase(options);
+Response<AnswersResult> response = client.GetAnswers("How long should charging take?", project, options);
 
 foreach (KnowledgeBaseAnswer answer in response.Value.Answers)
 {
-    Console.WriteLine($"({answer.ConfidenceScore:P2}) {answer.Answer}");
+    Console.WriteLine($"({answer.Confidence:P2}) {answer.Answer}");
     Console.WriteLine($"Source: {answer.Source}");
     Console.WriteLine();
 }
@@ -129,7 +130,8 @@ For example, if you submit a question to a non-existant knowledge base, a `400` 
 ```C# Snippet:QuestionAnsweringClient_BadRequest
 try
 {
-    Response<KnowledgeBaseAnswers> response = client.QueryKnowledgeBase("invalid-knowledgebase", "test", "Does this knowledge base exist?");
+    QuestionAnsweringProject project = new QuestionAnsweringProject("invalid-knowledgebase", "test");
+    Response<AnswersResult> response = client.GetAnswers("Does this knowledge base exist?", project);
 }
 catch (RequestFailedException ex)
 {

@@ -48,7 +48,8 @@ namespace DataFactory.Tests.JsonSamples
                 ""name"": ""CADSink""
               }
             ],
-            ""script"": ""some script""
+            ""script"": ""some script"",
+            ""scriptLines"": [""some script1"", ""some script2""]
           }
         }
       }

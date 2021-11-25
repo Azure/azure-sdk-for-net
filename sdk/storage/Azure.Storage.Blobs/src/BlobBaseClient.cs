@@ -239,7 +239,6 @@ namespace Azure.Storage.Blobs.Specialized
         public BlobBaseClient(Uri blobUri, BlobClientOptions options = default)
             : this(blobUri, (HttpPipelinePolicy)null, options, null)
         {
-            _blobRestClient = BuildBlobRestClient(blobUri);
         }
 
         /// <summary>
@@ -263,7 +262,6 @@ namespace Azure.Storage.Blobs.Specialized
         public BlobBaseClient(Uri blobUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
             : this(blobUri, credential.AsPolicy(), options, credential)
         {
-            _blobRestClient = BuildBlobRestClient(blobUri);
         }
 
         /// <summary>
@@ -291,7 +289,6 @@ namespace Azure.Storage.Blobs.Specialized
         public BlobBaseClient(Uri blobUri, AzureSasCredential credential, BlobClientOptions options = default)
             : this(blobUri, credential.AsPolicy<BlobUriBuilder>(blobUri), options, null)
         {
-            _blobRestClient = BuildBlobRestClient(blobUri);
         }
 
         /// <summary>
@@ -315,7 +312,6 @@ namespace Azure.Storage.Blobs.Specialized
         public BlobBaseClient(Uri blobUri, TokenCredential credential, BlobClientOptions options = default)
             : this(blobUri, credential.AsPolicy(options), options, null)
         {
-            _blobRestClient = BuildBlobRestClient(blobUri);
             Errors.VerifyHttpsTokenAuth(blobUri);
         }
 
@@ -4835,7 +4831,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<BlobInfo>> SetMetadataInternal(
+        internal async Task<Response<BlobInfo>> SetMetadataInternal(
             Metadata metadata,
             BlobRequestConditions conditions,
             bool async,

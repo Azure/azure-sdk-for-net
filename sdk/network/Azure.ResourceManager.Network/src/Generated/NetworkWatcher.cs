@@ -923,23 +923,23 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a list of PacketCaptures in the NetworkWatcher. </summary>
         /// <returns> An object representing collection of PacketCaptures and their operations over a NetworkWatcher. </returns>
-        public PacketCaptureContainer GetPacketCaptures()
+        public PacketCaptureCollection GetPacketCaptures()
         {
-            return new PacketCaptureContainer(this);
+            return new PacketCaptureCollection(this);
         }
 
         /// <summary> Gets a list of ConnectionMonitors in the NetworkWatcher. </summary>
         /// <returns> An object representing collection of ConnectionMonitors and their operations over a NetworkWatcher. </returns>
-        public ConnectionMonitorContainer GetConnectionMonitors()
+        public ConnectionMonitorCollection GetConnectionMonitors()
         {
-            return new ConnectionMonitorContainer(this);
+            return new ConnectionMonitorCollection(this);
         }
 
         /// <summary> Gets a list of FlowLogs in the NetworkWatcher. </summary>
         /// <returns> An object representing collection of FlowLogs and their operations over a NetworkWatcher. </returns>
-        public FlowLogContainer GetFlowLogs()
+        public FlowLogCollection GetFlowLogs()
         {
-            return new FlowLogContainer(this);
+            return new FlowLogCollection(this);
         }
     }
 }

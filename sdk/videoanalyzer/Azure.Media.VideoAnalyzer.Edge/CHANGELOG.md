@@ -1,6 +1,16 @@
 # Release History
 
-## 1.1.0-beta.1 (2021-10-27)
+## 1.0.0-beta.6 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.0-beta.5 (2021-11-09)
 
 - Added device discovery and device detail request for ONVIF enabled devices.
 - Added Remote Device Adapter configuration for ingesting video in a private network

@@ -19,5 +19,11 @@ namespace Microsoft.Azure.Management.Network.Models
         public const string RequestHeaderNames = "RequestHeaderNames";
         public const string RequestCookieNames = "RequestCookieNames";
         public const string RequestArgNames = "RequestArgNames";
+        public const string RequestHeaderKeys = "RequestHeaderKeys";
+        public const string RequestHeaderValues = "RequestHeaderValues";
+        public const string RequestCookieKeys = "RequestCookieKeys";
+        public const string RequestCookieValues = "RequestCookieValues";
+        public const string RequestArgKeys = "RequestArgKeys";
+        public const string RequestArgValues = "RequestArgValues";
     }
 }

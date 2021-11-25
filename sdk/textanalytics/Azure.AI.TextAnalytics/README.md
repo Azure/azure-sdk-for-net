@@ -3,12 +3,11 @@ Azure Cognitive Services Text Analytics is a cloud service that provides advance
 * Language Detection
 * Sentiment Analysis
 * Key Phrase Extraction
-* Named Entity Recognition
-* Personally Identifiable Information (PII) Recognition
-* Linked Entity Recognition
+* Entity Recognition (Named, Linked, and Personally Identifiable Information (PII) entities)
 * Healthcare Recognition
-* Running multiple actions in one or more documents
 * Extractive Text Summarization
+* Custom Entity Recognition
+* Custom Single and Multi Category Classification
 
 [Source code][textanalytics_client_src] | [Package (NuGet)][textanalytics_nuget_package] | [API reference documentation][textanalytics_refdocs] | [Product documentation][textanalytics_docs] | [Samples][textanalytics_samples]
 
@@ -25,10 +24,10 @@ This table shows the relationship between SDK versions and supported API version
 
 |SDK version|Supported API version of service
 |-|- |
-|5.2.0-beta.1 | 3.0, 3.1, 3.2-preview.1 (default)
-|5.1.0  | 3.0, 3.1 (default)
+|5.2.0-beta.2 | 3.0, 3.1, 3.2-preview.2 (default)
+|5.1.X  | 3.0, 3.1 (default)
 |5.0.0  | 3.0
-|1.0.X | 3.0
+|1.0.X  | 3.0
 
 ### Prerequisites
 * An [Azure subscription][azure_sub].
@@ -600,6 +599,7 @@ This functionality allows running multiple actions in one or more documents. Act
         int docNumber = 1;
         foreach (RecognizeEntitiesActionResult entitiesActionResults in entitiesResults)
         {
+            Console.WriteLine($" Action name: {entitiesActionResults.ActionName}");
             foreach (RecognizeEntitiesResult documentResults in entitiesActionResults.DocumentsResults)
             {
                 Console.WriteLine($" Document #{docNumber++}");
@@ -770,6 +770,9 @@ Samples are provided for each main functional area, and for each area, samples a
 - [Recognize Linked Entities][recognize_linked_entities_sample]
 - [Recognize Healthcare Entities][analyze_healthcare_sample]
 - [Perform Extractive Text Summarization][extract_summary_sample]
+- [Custom Entity Recognition][recognize_custom_entities_sample]
+- [Custom Single Category Classification][single_category_classify_sample]
+- [Custom Multi Category Classification][multi_category_classify_sample]
 
 ### Advanced samples
 - [Analyze Sentiment with Opinion Mining][analyze_sentiment_opinion_mining_sample]
@@ -794,7 +797,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [textanalytics_refdocs]: https://aka.ms/azsdk-net-textanalytics-ref-docs
 [textanalytics_nuget_package]: https://www.nuget.org/packages/Azure.AI.TextAnalytics
 [textanalytics_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/README.md
-[textanalytics_rest_api]: https://westcentralus.dev.cognitive.microsoft.com/docs/services/TextAnalytics-v3-1/operations/Languages
+[textanalytics_rest_api]: https://aka.ms/azsdk/textanalytics/restapi
 [cognitive_resource_portal]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account
 [cognitive_resource_cli]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account-cli
 [dotnet_lro_guidelines]: https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning
@@ -830,6 +833,9 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [recognize_pii_entities_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample5_RecognizePiiEntities.md
 [recognize_linked_entities_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample6_RecognizeLinkedEntities.md
 [mock_client_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample_MockClient.md
+[recognize_custom_entities_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample9_RecognizeCustomEntities.md
+[single_category_classify_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample10_SingleCategoryClassify.md
+[multi_category_classify_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample11_MultiCategoryClassify.md
 
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/dotnet/

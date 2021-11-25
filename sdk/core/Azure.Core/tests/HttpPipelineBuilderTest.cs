@@ -2,13 +2,18 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Diagnostics.Tracing;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Diagnostics;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
+using Microsoft.Extensions.Azure;
 using Moq;
 using NUnit.Framework;
 
@@ -183,6 +188,63 @@ namespace Azure.Core.Tests
 
             Assert.True(transport.SingleRequest.Headers.TryGetValue("x-ms-client-request-id", out var value));
             Assert.AreEqual("MyPolicyClientId", value);
+        }
+
+        [Test]
+        public void SetTransportOptions([Values(true, false)] bool isCustomTransportSet)
+        {
+            using var testListener = new TestEventListener();
+            testListener.EnableEvents(AzureCoreEventSource.Singleton, EventLevel.Verbose);
+
+            var transport = new MockTransport(new MockResponse(503), new MockResponse(200));
+            var options = new TestOptions();
+            if (isCustomTransportSet)
+            {
+                options.Transport = transport;
+            }
+
+            List<EventWrittenEventArgs> events = new();
+
+            using var listener = new AzureEventSourceListener(
+                (args, s) =>
+                {
+                    events.Add(args);
+                },
+                EventLevel.Verbose);
+
+            var pipeline = HttpPipelineBuilder.Build(
+                options,
+                Array.Empty<HttpPipelinePolicy>(),
+                Array.Empty<HttpPipelinePolicy>(),
+                ResponseClassifier.Shared,
+                new HttpPipelineTransportOptions());
+
+            HttpPipelineTransport transportField = pipeline.GetType().GetField("_transport", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.GetField).GetValue(pipeline) as HttpPipelineTransport;
+            if (isCustomTransportSet)
+            {
+                Assert.That(transportField, Is.TypeOf<MockTransport>());
+                events.Any(
+                    e => e.EventId == 23 &&
+                         e.EventName == "PipelineTransportOptionsNotApplied" &&
+                         e.GetProperty<string>("optionsType") == options.GetType().FullName);
+            }
+            else
+            {
+                Assert.That(transportField, Is.Not.TypeOf<MockTransport>());
+            }
+        }
+
+        [Test]
+        public void CanPassNullPolicies([Values(true, false)] bool isCustomTransportSet)
+        {
+            var pipeline = HttpPipelineBuilder.Build(
+                new TestOptions(),
+                new HttpPipelinePolicy[] { null },
+                new HttpPipelinePolicy[] { null },
+                null);
+
+            var message = pipeline.CreateMessage();
+            pipeline.SendAsync(message, message.CancellationToken);
         }
 
         private class TestOptions : ClientOptions

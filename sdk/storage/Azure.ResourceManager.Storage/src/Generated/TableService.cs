@@ -190,9 +190,9 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Gets a list of Tables in the TableService. </summary>
         /// <returns> An object representing collection of Tables and their operations over a TableService. </returns>
-        public TableContainer GetTables()
+        public TableCollection GetTables()
         {
-            return new TableContainer(this);
+            return new TableCollection(this);
         }
     }
 }

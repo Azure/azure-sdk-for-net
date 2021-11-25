@@ -228,6 +228,27 @@ List<EventGridEvent> eventsList = new List<EventGridEvent>
 await client.SendEventsAsync(eventsList);
 ```
 
+For sending CloudEvents, the CloudEvent source is used as the domain topic:
+```C# Snippet:SendCloudEventsToDomain
+List<CloudEvent> eventsList = new List<CloudEvent>();
+
+for (int i = 0; i < 10; i++)
+{
+    CloudEvent cloudEvent = new CloudEvent(
+        // the source is mapped to the domain topic
+        $"Subject-{i}",
+        "Microsoft.MockPublisher.TestEvent",
+        "hello")
+    {
+        Id = $"event-{i}",
+        Time = DateTimeOffset.Now
+    };
+    eventsList.Add(cloudEvent);
+}
+
+await client.SendEventsAsync(eventsList);
+```
+
 ### Receiving and Deserializing Events
 There are several different Azure services that act as [event handlers](https://docs.microsoft.com/azure/event-grid/event-handlers).
 
@@ -334,7 +355,7 @@ foreach (EventGridEvent egEvent in egEvents)
 You can also easily [enable console logging](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md#logging) if you want to dig deeper into the requests you're making against the service.
 
 ### Distributed Tracing
-The Event Grid library supports distributing tracing out of the box. In order to adhere to the CloudEvents specification's [guidance](https://github.com/cloudevents/spec/blob/master/extensions/distributed-tracing.md) on distributing tracing, the library will set the `traceparent` and `tracestate` on the `ExtensionAttributes` of a `CloudEvent` when distributed tracing is enabled. To learn more about how to enable distributed tracing in your application, take a look at the Azure SDK [distributed tracing documentation](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md#Distributed-tracing).
+The Event Grid library supports distributing tracing out of the box. In order to adhere to the CloudEvents specification's [guidance](https://github.com/cloudevents/spec/blob/v1.0.1/extensions/distributed-tracing.md) on distributing tracing, the library will set the `traceparent` and `tracestate` on the `ExtensionAttributes` of a `CloudEvent` when distributed tracing is enabled. To learn more about how to enable distributed tracing in your application, take a look at the Azure SDK [distributed tracing documentation](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md#Distributed-tracing).
 
 ### Event Grid on Kubernetes
 This library has been tested and validated on Kubernetes using Azure Arc.

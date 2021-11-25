@@ -5,6 +5,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.Azure.SignalR;
 using Microsoft.Azure.SignalR.Management;
 using Microsoft.Extensions.Azure;
@@ -14,20 +15,20 @@ using Microsoft.Extensions.Logging;
 
 namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 {
-    internal class ServiceManagerStore : IServiceManagerStore
+    internal sealed class ServiceManagerStore : IServiceManagerStore
     {
-        private readonly ILoggerFactory loggerFactory;
+        private readonly ILoggerFactory _loggerFactory;
         private readonly AzureComponentFactory _azureComponentFactory;
-        private readonly IConfiguration configuration;
-        private readonly IEndpointRouter router;
-        private readonly ConcurrentDictionary<string, IInternalServiceHubContextStore> store = new ConcurrentDictionary<string, IInternalServiceHubContextStore>();
+        private readonly IConfiguration _configuration;
+        private readonly IEndpointRouter _router;
+        private readonly ConcurrentDictionary<string, IInternalServiceHubContextStore> _store = new();
 
         public ServiceManagerStore(IConfiguration configuration, ILoggerFactory loggerFactory, AzureComponentFactory azureComponentFactory, IEndpointRouter router = null)
         {
-            this.loggerFactory = loggerFactory;
+            _loggerFactory = loggerFactory;
             _azureComponentFactory = azureComponentFactory;
-            this.configuration = configuration;
-            this.router = router;
+            _configuration = configuration;
+            _router = router;
         }
 
         public IInternalServiceHubContextStore GetOrAddByConnectionStringKey(string connectionStringKey)
@@ -36,19 +37,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
             {
                 throw new ArgumentException($"'{nameof(connectionStringKey)}' cannot be null or whitespace", nameof(connectionStringKey));
             }
-            return store.GetOrAdd(connectionStringKey, CreateHubContextStore);
+            return _store.GetOrAdd(connectionStringKey, CreateHubContextStore);
         }
 
         //test only
         public IInternalServiceHubContextStore GetByConfigurationKey(string connectionStringKey)
         {
-            return store.ContainsKey(connectionStringKey) ? store[connectionStringKey] : null;
+            return _store.ContainsKey(connectionStringKey) ? _store[connectionStringKey] : null;
         }
 
         private IInternalServiceHubContextStore CreateHubContextStore(string connectionStringKey)
         {
             var services = new ServiceCollection()
-                .SetupOptions<ServiceManagerOptions, OptionsSetup>(new OptionsSetup(configuration, loggerFactory, _azureComponentFactory, connectionStringKey))
+                .SetupOptions<ServiceManagerOptions, OptionsSetup>(new OptionsSetup(_configuration, _loggerFactory, _azureComponentFactory, connectionStringKey))
                 .PostConfigure<ServiceManagerOptions>(o =>
                 {
                     if ((o.ServiceEndpoints == null || o.ServiceEndpoints.Length == 0) && string.IsNullOrWhiteSpace(o.ConnectionString))
@@ -57,16 +58,32 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
                     }
                 })
                 .AddSignalRServiceManager()
-                .AddSingleton(loggerFactory)
+                .AddSingleton(sp => (ServiceManager)sp.GetService<IServiceManager>())
+                .AddSingleton(_loggerFactory)
                 .AddSingleton<IInternalServiceHubContextStore, ServiceHubContextStore>();
-            if (router != null)
+            if (_router != null)
             {
-                services.AddSingleton(router);
+                services.AddSingleton(_router);
             }
-            services.SetHubProtocol(configuration);
+            services.SetHubProtocol(_configuration);
             services.AddSingleton(services.ToList() as IReadOnlyCollection<ServiceDescriptor>);
             return services.BuildServiceProvider()
                .GetRequiredService<IInternalServiceHubContextStore>();
+        }
+
+        public async ValueTask DisposeAsync()
+        {
+            foreach (var hubContextStore in _store.Values)
+            {
+                await hubContextStore.DisposeAsync().ConfigureAwait(false);
+            }
+        }
+
+        public void Dispose()
+        {
+#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
+            DisposeAsync().GetAwaiter().GetResult();
+#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
         }
     }
 }

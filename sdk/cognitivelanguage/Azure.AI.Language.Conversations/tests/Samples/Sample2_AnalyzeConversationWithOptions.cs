@@ -3,7 +3,6 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.AI.Language.Conversations.Models;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -20,17 +19,28 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             #region Snippet:ConversationAnalysis_AnalyzeConversationWithOptions
 
 #if SNIPPET
-            AnalyzeConversationOptions options = new AnalyzeConversationOptions(
-                "Menu",
-                "production",
-                "We'll have 2 plates of seared salmon nigiri.");
-            Response<AnalyzeConversationResult> response = client.AnalyzeConversation(options);
+            ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
+            AnalyzeConversationOptions options = new AnalyzeConversationOptions()
+            {
+                IsLoggingEnabled = true,
+                Verbose = true,
+            };
+
+            Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
+                "We'll have 2 plates of seared salmon nigiri.",
+                conversationsProject,
+                options);
 #else
-            AnalyzeConversationOptions options = new AnalyzeConversationOptions(
-                TestEnvironment.ProjectName,
-                TestEnvironment.DeploymentName,
-                "We'll have 2 plates of seared salmon nigiri.");
-            Response<AnalyzeConversationResult> response = client.AnalyzeConversation(options);
+            AnalyzeConversationOptions options = new AnalyzeConversationOptions()
+            {
+                IsLoggingEnabled = true,
+                Verbose = true,
+            };
+
+            Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
+                "We'll have 2 plates of seared salmon nigiri.",
+                TestEnvironment.Project,
+                options);
 #endif
 
             Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
@@ -50,17 +60,28 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             #region Snippet:ConversationAnalysis_AnalyzeConversationWithOptionsAsync
 
 #if SNIPPET
-            AnalyzeConversationOptions options = new AnalyzeConversationOptions(
-                "Menu",
-                "production",
-                "We'll have 2 plates of seared salmon nigiri.");
-            Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(options);
+            ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
+            AnalyzeConversationOptions options = new AnalyzeConversationOptions()
+            {
+                IsLoggingEnabled = true,
+                Verbose = true,
+            };
+
+            Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(
+                "We'll have 2 plates of seared salmon nigiri.",
+                conversationsProject,
+                options);
 #else
-            AnalyzeConversationOptions options = new AnalyzeConversationOptions(
-                TestEnvironment.ProjectName,
-                TestEnvironment.DeploymentName,
-                "We'll have 2 plates of seared salmon nigiri.");
-            Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(options);
+            AnalyzeConversationOptions options = new AnalyzeConversationOptions()
+            {
+                IsLoggingEnabled = true,
+                Verbose = true,
+            };
+
+            Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(
+                "We'll have 2 plates of seared salmon nigiri.",
+                TestEnvironment.Project,
+                options);
 #endif
 
             Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");

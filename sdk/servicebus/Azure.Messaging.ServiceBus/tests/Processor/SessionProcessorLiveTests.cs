@@ -1855,7 +1855,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                     if (count == 50)
                     {
-                        Assert.GreaterOrEqual(processor.InnerProcessor._tasks.Count, 20);
+                        Assert.GreaterOrEqual(processor.InnerProcessor.TaskTuples.Count, 20);
                     }
                     if (count == 75)
                     {
@@ -1865,7 +1865,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     }
                     if (count == 95)
                     {
-                        Assert.LessOrEqual(processor.InnerProcessor._tasks.Where(t => !t.Task.IsCompleted).Count(), 1);
+                        Assert.LessOrEqual(processor.InnerProcessor.TaskTuples.Where(t => !t.Task.IsCompleted).Count(), 1);
                     }
                 }
 
@@ -1919,14 +1919,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     if (count == 50)
                     {
                         // tasks will generally be 100 here, but allow some forgiveness as this is not deterministic
-                        Assert.GreaterOrEqual(processor.InnerProcessor._tasks.Count, 50);
+                        Assert.GreaterOrEqual(processor.InnerProcessor.TaskTuples.Count, 50);
                         processor.UpdateConcurrency(1, 1);
                         Assert.AreEqual(1, processor.MaxConcurrentSessions);
                         Assert.AreEqual(1, processor.MaxConcurrentCallsPerSession);
                     }
                     if (count == 95)
                     {
-                        Assert.LessOrEqual(processor.InnerProcessor._tasks.Where(t => !t.Task.IsCompleted).Count(), 1);
+                        Assert.LessOrEqual(processor.InnerProcessor.TaskTuples.Where(t => !t.Task.IsCompleted).Count(), 1);
                     }
                 }
 

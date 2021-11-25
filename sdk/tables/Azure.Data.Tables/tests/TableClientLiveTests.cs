@@ -52,8 +52,8 @@ namespace Azure.Data.Tables.Tests
             }
             Assert.AreEqual(1, entityResults.Count, "The entity result count should match the created count");
 
-            // We can also update the entity
-            await client.UpdateEntityAsync(entityResults[0], ETag.All);
+            // GetEntity works also
+            await client.GetEntityAsync<TableEntity>(partitionKeyValue, rowKeyValue);
         }
 
         /// <summary>
