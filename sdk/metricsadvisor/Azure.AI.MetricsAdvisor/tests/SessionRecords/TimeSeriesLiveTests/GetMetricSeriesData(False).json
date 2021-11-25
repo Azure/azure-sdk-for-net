@@ -1,91 +1,90 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://js-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/metrics/27e3015f-04fd-44ba-a20b-bc529a0aebae/data/query",
+      "RequestUri": "https://ga-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/metrics/390d1139-98fb-45af-b831-8d5ad61b150a/data/query",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "159",
+        "Content-Length": "163",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-1e73a1a2e090d24783dbff9b1e93149b-beffd59f270ca24c-00",
+        "traceparent": "00-415c9d8683096441b40f13c1e58c1760-fb7d83a48d35164e-00",
         "User-Agent": [
-          "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20210617.1",
-          "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
+          "azsdk-net-AI.MetricsAdvisor/1.2.0-alpha.20211118.1",
+          "(.NET 5.0.12; Microsoft Windows 10.0.22000)"
         ],
         "x-api-key": "Sanitized",
         "x-ms-client-request-id": "6f1df1ad7afdc47dcecbddd5b1c03695",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "startTime": "2020-10-01T00:00:00Z",
-        "endTime": "2020-10-31T00:00:00Z",
+        "startTime": "2021-10-01T00:00:00Z",
+        "endTime": "2021-10-31T00:00:00Z",
         "series": [
           {
-            "city": "Delhi",
+            "region": "Delhi",
             "category": "Handmade"
           },
           {
-            "city": "Kolkata",
+            "region": "Kolkata",
             "category": "__SUM__"
           }
         ]
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "1cd05353-d8a4-461b-af14-fb5a40448174",
-        "Content-Length": "2300",
+        "apim-request-id": "081535b6-868c-4c61-9ab1-2ce0d04b4bf2",
+        "Content-Length": "1263",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 17 Jun 2021 21:32:57 GMT",
+        "Date": "Thu, 18 Nov 2021 17:48:50 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
         "x-envoy-upstream-service-time": "331",
-        "X-Request-ID": "1cd05353-d8a4-461b-af14-fb5a40448174"
+        "X-Request-ID": "081535b6-868c-4c61-9ab1-2ce0d04b4bf2"
       },
       "ResponseBody": {
         "value": [
           {
             "id": {
-              "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+              "metricId": "390d1139-98fb-45af-b831-8d5ad61b150a",
               "dimension": {
-                "city": "Delhi",
-                "category": "Handmade"
+                "category": "Handmade",
+                "region": "Delhi"
               }
             },
             "timestampList": [
-              "2020-10-01T00:00:00Z",
-              "2020-10-02T00:00:00Z",
-              "2020-10-03T00:00:00Z",
-              "2020-10-04T00:00:00Z",
-              "2020-10-05T00:00:00Z",
-              "2020-10-06T00:00:00Z",
-              "2020-10-07T00:00:00Z",
-              "2020-10-08T00:00:00Z",
-              "2020-10-09T00:00:00Z",
-              "2020-10-10T00:00:00Z",
-              "2020-10-11T00:00:00Z",
-              "2020-10-12T00:00:00Z",
-              "2020-10-13T00:00:00Z",
-              "2020-10-14T00:00:00Z",
-              "2020-10-15T00:00:00Z",
-              "2020-10-16T00:00:00Z",
-              "2020-10-17T00:00:00Z",
-              "2020-10-18T00:00:00Z",
-              "2020-10-19T00:00:00Z",
-              "2020-10-20T00:00:00Z",
-              "2020-10-21T00:00:00Z",
-              "2020-10-22T00:00:00Z",
-              "2020-10-23T00:00:00Z",
-              "2020-10-24T00:00:00Z",
-              "2020-10-25T00:00:00Z",
-              "2020-10-26T00:00:00Z",
-              "2020-10-27T00:00:00Z",
-              "2020-10-28T00:00:00Z",
-              "2020-10-29T00:00:00Z",
-              "2020-10-30T00:00:00Z"
+              "2021-10-01T00:00:00Z",
+              "2021-10-02T00:00:00Z",
+              "2021-10-03T00:00:00Z",
+              "2021-10-04T00:00:00Z",
+              "2021-10-05T00:00:00Z",
+              "2021-10-06T00:00:00Z",
+              "2021-10-07T00:00:00Z",
+              "2021-10-08T00:00:00Z",
+              "2021-10-09T00:00:00Z",
+              "2021-10-10T00:00:00Z",
+              "2021-10-11T00:00:00Z",
+              "2021-10-12T00:00:00Z",
+              "2021-10-13T00:00:00Z",
+              "2021-10-14T00:00:00Z",
+              "2021-10-15T00:00:00Z",
+              "2021-10-16T00:00:00Z",
+              "2021-10-17T00:00:00Z",
+              "2021-10-18T00:00:00Z",
+              "2021-10-19T00:00:00Z",
+              "2021-10-20T00:00:00Z",
+              "2021-10-21T00:00:00Z",
+              "2021-10-22T00:00:00Z",
+              "2021-10-23T00:00:00Z",
+              "2021-10-24T00:00:00Z",
+              "2021-10-25T00:00:00Z",
+              "2021-10-26T00:00:00Z",
+              "2021-10-27T00:00:00Z",
+              "2021-10-28T00:00:00Z",
+              "2021-10-29T00:00:00Z",
+              "2021-10-30T00:00:00Z"
             ],
             "valueList": [
-              646400.8,
               591698.8,
               393672.8,
               461016.4,
@@ -114,88 +113,27 @@
               543222.8,
               545699.2,
               513455.6,
-              503106.4
+              1006212.8,
+              403239.4
             ]
           },
           {
             "id": {
-              "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+              "metricId": "390d1139-98fb-45af-b831-8d5ad61b150a",
               "dimension": {
-                "city": "Kolkata",
-                "category": "__SUM__"
+                "category": "__SUM__",
+                "region": "Kolkata"
               }
             },
-            "timestampList": [
-              "2020-10-01T00:00:00Z",
-              "2020-10-02T00:00:00Z",
-              "2020-10-03T00:00:00Z",
-              "2020-10-04T00:00:00Z",
-              "2020-10-05T00:00:00Z",
-              "2020-10-06T00:00:00Z",
-              "2020-10-07T00:00:00Z",
-              "2020-10-08T00:00:00Z",
-              "2020-10-09T00:00:00Z",
-              "2020-10-10T00:00:00Z",
-              "2020-10-11T00:00:00Z",
-              "2020-10-12T00:00:00Z",
-              "2020-10-13T00:00:00Z",
-              "2020-10-14T00:00:00Z",
-              "2020-10-15T00:00:00Z",
-              "2020-10-16T00:00:00Z",
-              "2020-10-17T00:00:00Z",
-              "2020-10-18T00:00:00Z",
-              "2020-10-19T00:00:00Z",
-              "2020-10-20T00:00:00Z",
-              "2020-10-21T00:00:00Z",
-              "2020-10-22T00:00:00Z",
-              "2020-10-23T00:00:00Z",
-              "2020-10-24T00:00:00Z",
-              "2020-10-25T00:00:00Z",
-              "2020-10-26T00:00:00Z",
-              "2020-10-27T00:00:00Z",
-              "2020-10-28T00:00:00Z",
-              "2020-10-29T00:00:00Z",
-              "2020-10-30T00:00:00Z"
-            ],
-            "valueList": [
-              584117.1999999998,
-              559628.6,
-              541019.6,
-              583172.6,
-              629951.2000000001,
-              668722.0,
-              691216.2,
-              646939.8,
-              535988.3999999999,
-              537591.6,
-              587734.8000000002,
-              622846.8,
-              632489.2,
-              570096.2,
-              547301.8,
-              492355.8,
-              436706.0,
-              497155.19999999995,
-              545303.8,
-              541570.7999999999,
-              543422.4,
-              521883.19999999995,
-              485241.0,
-              452760.8000000001,
-              502012.8,
-              516694.2,
-              375593.19999999995,
-              369414.4,
-              350648.8,
-              306626.6
-            ]
+            "timestampList": [],
+            "valueList": []
           }
         ]
       }
     }
   ],
   "Variables": {
-    "METRICSADVISOR_ACCOUNT_NAME": "js-metrics-advisor",
+    "METRICSADVISOR_ACCOUNT_NAME": "ga-metrics-advisor",
     "METRICSADVISOR_ENDPOINT_SUFFIX": null,
     "METRICSADVISOR_PRIMARY_API_KEY": "Sanitized",
     "METRICSADVISOR_SUBSCRIPTION_KEY": "Sanitized",

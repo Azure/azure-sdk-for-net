@@ -222,40 +222,26 @@ namespace Azure.AI.Translation.Document
         /// This method will periodically call UpdateStatusAsync till HasCompleted is true.
         /// An API call is then made to retrieve the status of the documents.
         /// </remarks>
-        public async override ValueTask<Response<AsyncPageable<DocumentStatusResult>>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default)
+        public async override ValueTask<Response<AsyncPageable<DocumentStatusResult>>> WaitForCompletionAsync(
+            TimeSpan pollingInterval,
+            CancellationToken cancellationToken = default)
         {
-            while (true)
+            await this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken).ConfigureAwait(false);
+            var response = await _serviceClient.GetDocumentsStatusAsync(new Guid(Id), cancellationToken: cancellationToken).ConfigureAwait(false);
+            _firstPage = Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+            _hasValue = true;
+
+            async Task<Page<DocumentStatusResult>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                await UpdateStatusAsync(cancellationToken).ConfigureAwait(false);
-                if (!HasCompleted)
-                {
-                    pollingInterval = _retryAfterHeaderValue.HasValue ? TimeSpan.FromSeconds(_retryAfterHeaderValue.Value) : pollingInterval;
-                    await Task.Delay(pollingInterval, cancellationToken).ConfigureAwait(false);
-                }
-                else
-                {
-                    var response = await _serviceClient.GetDocumentsStatusAsync(new Guid(Id), cancellationToken: cancellationToken).ConfigureAwait(false);
-                    _firstPage = Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    _hasValue = true;
-                    async Task<Page<DocumentStatusResult>> NextPageFunc(string nextLink, int? pageSizeHint)
-                    {
-                        // TODO: diagnostics scope?
-                        try
-                        {
-                            var response = await _serviceClient.GetDocumentsStatusNextPageAsync(nextLink, new Guid(Id), cancellationToken: cancellationToken).ConfigureAwait(false);
+                // TODO: diagnostics scope?
+                var response = await _serviceClient.GetDocumentsStatusNextPageAsync(nextLink, new Guid(Id), cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
 
-                            return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                        }
-                        catch (Exception)
-                        {
-                            throw;
-                        }
-                    }
-
-                    var result = PageableHelpers.CreateAsyncEnumerable(_ => Task.FromResult(_firstPage), NextPageFunc);
-                    return Response.FromValue(result, response);
-                }
+                return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
             }
+
+            var result = PageableHelpers.CreateAsyncEnumerable(_ => Task.FromResult(_firstPage), NextPageFunc);
+            return Response.FromValue(result, response);
         }
 
         /// <summary>

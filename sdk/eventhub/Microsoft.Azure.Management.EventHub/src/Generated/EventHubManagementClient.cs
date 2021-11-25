@@ -119,6 +119,11 @@ namespace Microsoft.Azure.Management.EventHub
         public virtual IConsumerGroupsOperations ConsumerGroups { get; private set; }
 
         /// <summary>
+        /// Gets the ISchemaRegistryOperations.
+        /// </summary>
+        public virtual ISchemaRegistryOperations SchemaRegistry { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the EventHubManagementClient class.
         /// </summary>
         /// <param name='httpClient'>
@@ -368,8 +373,9 @@ namespace Microsoft.Azure.Management.EventHub
             EventHubs = new EventHubsOperations(this);
             DisasterRecoveryConfigs = new DisasterRecoveryConfigsOperations(this);
             ConsumerGroups = new ConsumerGroupsOperations(this);
+            SchemaRegistry = new SchemaRegistryOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2021-06-01-preview";
+            ApiVersion = "2021-11-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

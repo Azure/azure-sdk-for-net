@@ -13,6 +13,11 @@ modelerfour:
   lenient-model-deduplication: true
 model-namespace: false
 payload-flattening-threshold: 2
+
+# temporary
+mgmt-debug:
+  suppress-list-exception: true
+
 operation-group-to-resource-type:
     PrivateLinkResources: Microsoft.KeyVault/vaults/privateLinkResources
     MHSMPrivateLinkResources: Microsoft.KeyVault/managedHSMs/privateLinkResources

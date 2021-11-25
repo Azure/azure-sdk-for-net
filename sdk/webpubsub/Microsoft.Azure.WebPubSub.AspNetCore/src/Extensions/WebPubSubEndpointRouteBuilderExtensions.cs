@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Azure.WebPubSub.AspNetCore;
 using Microsoft.Extensions.DependencyInjection;
