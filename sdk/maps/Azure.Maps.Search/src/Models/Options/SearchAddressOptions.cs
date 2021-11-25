@@ -10,7 +10,7 @@ namespace Azure.Maps.Search.Models
     /// <summary> Options. </summary>
     public class SearchAddressOptions: SearchAddressBaseOptions
     {
-        /// <summary> Coordinate where results should be biased. E.g. 37.337, -121.89. </summary>
+        /// <summary> A pair of coordinates where results should be biased. E.g. 37.337, -121.89. </summary>
         public LatLong Coordinates { get; set; }
 
         /// <summary>
