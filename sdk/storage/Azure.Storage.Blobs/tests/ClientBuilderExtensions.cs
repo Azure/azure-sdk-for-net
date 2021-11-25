@@ -11,7 +11,7 @@ using BlobsClientBuilder = Azure.Storage.Test.Shared.ClientBuilder<
 
 namespace Azure.Storage.Blobs.Tests
 {
-    public static class ClientBuilderExtensions
+    public static partial class ClientBuilderExtensions
     {
         /// <summary>
         /// Creates a new <see cref="ClientBuilder{TServiceClient, TServiceClientOptions}"/>

@@ -44,6 +44,10 @@ namespace Azure.Storage.Blobs.Tests
         }
 
         #region Client-Specific Impl
+        public override string ConditionNotMetErrorCode => BlobErrorCode.ConditionNotMet.ToString();
+
+        public override string ContainerNotFoundErrorCode => BlobErrorCode.ContainerNotFound.ToString();
+
         protected override async Task<BinaryData> DownloadAsync(TBlobClient client)
             => (await client.DownloadContentAsync()).Value.Content;
 

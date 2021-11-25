@@ -69,7 +69,8 @@ namespace Azure.Storage.Blobs.Models
                 HttpHeaders = options.HttpHeaders,
                 Metadata = options.Metadata,
                 Tags = options.Tags,
-                TransactionalHashingOptions = options.TransactionalHashingOptions
+                TransactionalHashingOptions = options.TransactionalHashingOptions,
+                OperationName = $"{nameof(BlobClient)}.{nameof(BlockBlobClient.OpenWrite)}"
             };
     }
 }

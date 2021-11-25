@@ -2746,7 +2746,7 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            string operationName = $"{nameof(BlockBlobClient)}.{nameof(OpenWrite)}";
+            string operationName = options.OperationName ?? $"{nameof(BlockBlobClient)}.{nameof(OpenWrite)}";
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
 
             try
