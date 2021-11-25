@@ -224,21 +224,19 @@ namespace Azure.Messaging.EventGrid.Tests
 
             for (int i = 0; i < 10; i++)
             {
-#if SNIPPET
-                string id = $"event-{i}";
-                DateTimeOffset time = DateTimeOffset.Now;
-#else
-                string id = Recording.Random.NewGuid().ToString();
-                DateTimeOffset time = Recording.Now;
-#endif
                 CloudEvent cloudEvent = new CloudEvent(
                     // the source is mapped to the domain topic
                     $"Subject-{i}",
                     "Microsoft.MockPublisher.TestEvent",
                     "hello")
                 {
-                    Id = id,
-                    Time = time
+#if SNIPPET
+                    Id = $"event-{i}",
+                    Time = DateTimeOffset.Now
+#else
+                    Id = Recording.Random.NewGuid().ToString(),
+                    Time = Recording.Now
+#endif
                 };
                 eventsList.Add(cloudEvent);
             }

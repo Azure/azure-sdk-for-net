@@ -68,16 +68,14 @@ await client.SendCloudNativeCloudEventAsync(cloudEvent);
 ### Publish to an Event Grid Domain
 When publishing to an Event Grid Domain with CloudEvents, the CloudEvent `source` is used as the domain topic. The Event Grid service doesn't support using an absolute URI for a domain topic, so you would need to do something like the following to integrate with the CloudNative CloudEvents:
 ```C# Snippet:CloudNativePublishToDomain
-string id = "eventId";
-DateTimeOffset time = DateTimeOffset.Now;
 CloudEvent cloudEvent =
     new CloudEvent
     {
         Type = "record",
         // Event Grid does not allow absolute URIs as the domain topic
         Source = new Uri("test", UriKind.Relative),
-        Id = id,
-        Time = time,
+        Id = "eventId",
+        Time = DateTimeOffset.Now,
         Data = new TestPayload("name", 0)
     };
 

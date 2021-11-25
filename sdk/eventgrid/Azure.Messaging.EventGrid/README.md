@@ -234,16 +234,14 @@ List<CloudEvent> eventsList = new List<CloudEvent>();
 
 for (int i = 0; i < 10; i++)
 {
-    string id = $"event-{i}";
-    DateTimeOffset time = DateTimeOffset.Now;
     CloudEvent cloudEvent = new CloudEvent(
         // the source is mapped to the domain topic
         $"Subject-{i}",
         "Microsoft.MockPublisher.TestEvent",
         "hello")
     {
-        Id = id,
-        Time = time
+        Id = $"event-{i}",
+        Time = DateTimeOffset.Now
     };
     eventsList.Add(cloudEvent);
 }
