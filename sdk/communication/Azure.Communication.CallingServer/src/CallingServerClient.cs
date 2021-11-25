@@ -933,7 +933,7 @@ namespace Azure.Communication.CallingServer
         /// <returns>The <see cref="IEnumerable{CallParticipant}"/>.</returns>
         public virtual Response<CallParticipant> GetParticipant(CallLocator callLocator, CommunicationIdentifier participant, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(GetParticipant)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(GetParticipant)}");
             scope.Start();
             try
             {
