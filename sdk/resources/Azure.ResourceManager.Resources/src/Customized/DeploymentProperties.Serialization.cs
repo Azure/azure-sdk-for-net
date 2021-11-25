@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(Template))
             {
                 writer.WritePropertyName("template");
-                //If Template is a string, SDK should convert it into a json object
+                //If Template is a string, then SDK should convert it into a json object
                 //see https://github.com/Azure/azure-rest-api-specs/blob/b6b834584cb58a3c2cbe887570fa0942b397dfc7/specification/resources/resource-manager/Microsoft.Resources/stable/2021-04-01/resources.json#L4564
                 if (Template is string s)
                 {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters");
-                //If Parameters is a string, SDK should convert it into a json object
+                //If Parameters is a string, then SDK should convert it into a json object
                 //see https://github.com/Azure/azure-rest-api-specs/blob/b6b834584cb58a3c2cbe887570fa0942b397dfc7/specification/resources/resource-manager/Microsoft.Resources/stable/2021-04-01/resources.json#L4570
                 if (Parameters is string s)
                 {
