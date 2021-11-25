@@ -35,6 +35,40 @@ namespace Azure.ResourceManager.Resources.Tests
 
         [TestCase]
         [RecordedTest]
+        public async Task CreateOrUpdateUsingString()
+        {
+            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            string rgName = Recording.GenerateAssetName("testRg-1-");
+            ResourceGroupData rgData = new ResourceGroupData(Location.WestUS2);
+            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(rgName, rgData);
+            ResourceGroup rg = lro.Value;
+            string deployExName = Recording.GenerateAssetName("deployEx-C-");
+            DeploymentInput deploymentData = CreateDeploymentData(CreateDeploymentPropertiesUsingString());
+            Deployment deployment = (await rg.GetDeployments().CreateOrUpdateAsync(deployExName, deploymentData)).Value;
+            Assert.AreEqual(deployExName, deployment.Data.Name);
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetDeployments().CreateOrUpdateAsync(null, deploymentData));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetDeployments().CreateOrUpdateAsync(deployExName, null));
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task CreateOrUpdateUsingJsonElement()
+        {
+            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            string rgName = Recording.GenerateAssetName("testRg-1-");
+            ResourceGroupData rgData = new ResourceGroupData(Location.WestUS2);
+            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(rgName, rgData);
+            ResourceGroup rg = lro.Value;
+            string deployExName = Recording.GenerateAssetName("deployEx-C-");
+            DeploymentInput deploymentData = CreateDeploymentData(CreateDeploymentPropertiesUsingJsonElement());
+            Deployment deployment = (await rg.GetDeployments().CreateOrUpdateAsync(deployExName, deploymentData)).Value;
+            Assert.AreEqual(deployExName, deployment.Data.Name);
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetDeployments().CreateOrUpdateAsync(null, deploymentData));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetDeployments().CreateOrUpdateAsync(deployExName, null));
+        }
+
+        [TestCase]
+        [RecordedTest]
         public async Task List()
         {
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();

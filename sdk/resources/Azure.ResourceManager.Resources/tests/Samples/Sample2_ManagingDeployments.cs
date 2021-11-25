@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using Azure.Identity;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
+using System.Text.Json;
+using System.IO;
 using JsonObject = System.Collections.Generic.Dictionary<string, object>;
 #endregion Manage_Deployments_Namespaces
 
@@ -39,6 +41,53 @@ namespace Azure.ResourceManager.Resources.Tests.Samples
                         }
                     }
                 }
+            });
+            DeploymentCreateOrUpdateAtScopeOperation lro = await deploymentCollection.CreateOrUpdateAsync(deploymentName, input);
+            Deployment deployment = lro.Value;
+            #endregion Snippet:Managing_Deployments_CreateADeployment
+        }
+
+        [Test]
+        [Ignore("Only verifying that the sample builds")]
+        public async Task CreateDeploymentsUsingJsonElement()
+        {
+            #region Snippet:Managing_Deployments_CreateADeploymentUsingJsonElement
+            // First we need to get the deployment collection from the resource group
+            DeploymentCollection deploymentCollection = resourceGroup.GetDeployments();
+            // Use the same location as the resource group
+            string deploymentName = "myDeployment";
+            // Create a parameter object
+            var parametersObject = new { storageAccountType = new { value = "Standard_GRS" } };
+            //convert this object to JsonElement
+            var parametersString = JsonSerializer.Serialize(parametersObject);
+            var parameters = JsonDocument.Parse(parametersString).RootElement;
+            var input = new DeploymentInput(new DeploymentProperties(DeploymentMode.Incremental)
+            {
+                TemplateLink = new TemplateLink()
+                {
+                    Uri = "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/quickstarts/microsoft.storage/storage-account-create/azuredeploy.json"
+                },
+                Parameters = parameters
+            });
+            DeploymentCreateOrUpdateAtScopeOperation lro = await deploymentCollection.CreateOrUpdateAsync(deploymentName, input);
+            Deployment deployment = lro.Value;
+            #endregion Snippet:Managing_Deployments_CreateADeployment
+        }
+
+        [Test]
+        [Ignore("Only verifying that the sample builds")]
+        public async Task CreateDeploymentsUsingString()
+        {
+            #region Snippet:Managing_Deployments_CreateADeploymentUsingString
+            // First we need to get the deployment collection from the resource group
+            DeploymentCollection deploymentCollection = resourceGroup.GetDeployments();
+            // Use the same location as the resource group
+            string deploymentName = "myDeployment";
+            // Passing string to template and parameters
+            var input = new DeploymentInput(new DeploymentProperties(DeploymentMode.Incremental)
+            {
+                Template = File.ReadAllText("storage-template.json"),
+                Parameters = File.ReadAllText("storage-parameters.json")
             });
             DeploymentCreateOrUpdateAtScopeOperation lro = await deploymentCollection.CreateOrUpdateAsync(deploymentName, input);
             Deployment deployment = lro.Value;

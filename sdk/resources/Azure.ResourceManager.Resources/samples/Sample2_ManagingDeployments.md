@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using Azure.Identity;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
+using System.Text.Json;
+using System.IO;
 using JsonObject = System.Collections.Generic.Dictionary<string, object>;
 ```
 
@@ -30,9 +32,9 @@ ResourceGroupCreateOrUpdateOperation lro = await rgCollection.CreateOrUpdateAsyn
 ResourceGroup resourceGroup = lro.Value;
 ```
 
-Now that we have the resource group created, we can manage the deployments inside this resource group.
+Now that we have the resource group created, we can manage the deployments inside this resource group. For creating a deployment, we can use dictionary, string, or JsonElement.
 
-***Create a deployment***
+***Create a deployment using dictionary***
 
 ```C# Snippet:Managing_Deployments_CreateADeployment
 // First we need to get the deployment collection from the resource group
@@ -53,6 +55,47 @@ var input = new DeploymentInput(new DeploymentProperties(DeploymentMode.Incremen
             }
         }
     }
+});
+DeploymentCreateOrUpdateAtScopeOperation lro = await deploymentCollection.CreateOrUpdateAsync(deploymentName, input);
+Deployment deployment = lro.Value;
+```
+
+***Create a deployment using string***
+
+```C# Snippet:Managing_Deployments_CreateADeploymentUsingString
+// First we need to get the deployment collection from the resource group
+DeploymentCollection deploymentCollection = resourceGroup.GetDeployments();
+// Use the same location as the resource group
+string deploymentName = "myDeployment";
+// Passing string to template and parameters
+var input = new DeploymentInput(new DeploymentProperties(DeploymentMode.Incremental)
+{
+    Template = File.ReadAllText("storage-template.json"),
+    Parameters = File.ReadAllText("storage-parameters.json")
+});
+DeploymentCreateOrUpdateAtScopeOperation lro = await deploymentCollection.CreateOrUpdateAsync(deploymentName, input);
+Deployment deployment = lro.Value;
+```
+
+***Create a deployment using JsonElement***
+
+```C# Snippet:Managing_Deployments_CreateADeploymentUsingJsonElement
+// First we need to get the deployment collection from the resource group
+DeploymentCollection deploymentCollection = resourceGroup.GetDeployments();
+// Use the same location as the resource group
+string deploymentName = "myDeployment";
+// Create a parameter object
+var parametersObject = new { storageAccountType = new { value = "Standard_GRS" } };
+//convert this object to JsonElement
+var parametersString = JsonSerializer.Serialize(parametersObject);
+var parameters = JsonDocument.Parse(parametersString).RootElement;
+var input = new DeploymentInput(new DeploymentProperties(DeploymentMode.Incremental)
+{
+    TemplateLink = new TemplateLink()
+    {
+        Uri = "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/quickstarts/microsoft.storage/storage-account-create/azuredeploy.json"
+    },
+    Parameters = parameters
 });
 DeploymentCreateOrUpdateAtScopeOperation lro = await deploymentCollection.CreateOrUpdateAsync(deploymentName, input);
 Deployment deployment = lro.Value;
