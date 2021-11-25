@@ -57,5 +57,8 @@ namespace Azure.Maps.Search.Models
         /// * returnMatchType
         /// </summary>
         public GeographicEntityType? EntityType { get; set; }
+
+        /// <summary> Comma separated string of country codes, e.g. FR,ES. This will limit the search to the specified countries. </summary>
+        public IEnumerable<string> CountryFilter { get; set; }
     }
 }

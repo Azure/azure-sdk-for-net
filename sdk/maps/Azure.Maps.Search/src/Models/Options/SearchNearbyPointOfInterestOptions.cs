@@ -42,5 +42,8 @@ namespace Azure.Maps.Search.Models
         /// Extended postal code is returned as an **extendedPostalCode** property of an address. Availability is region-dependent.
         /// </summary>
         public new IEnumerable<SearchIndexes> ExtendedPostalCodesFor { get; set; }
+
+        /// <summary> Comma separated string of country codes, e.g. FR,ES. This will limit the search to the specified countries. </summary>
+        public IEnumerable<string> CountryFilter { get; set; }
     }
 }
