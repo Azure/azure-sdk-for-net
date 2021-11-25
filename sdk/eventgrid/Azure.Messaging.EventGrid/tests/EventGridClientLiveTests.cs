@@ -224,16 +224,23 @@ namespace Azure.Messaging.EventGrid.Tests
 
             for (int i = 0; i < 10; i++)
             {
-                CloudEvent newEGEvent = new CloudEvent(
+#if SNIPPET
+                string id = $"event-{i}";
+                DateTimeOffset time = DateTimeOffset.Now;
+#else
+                string id = Recording.Random.NewGuid().ToString();
+                DateTimeOffset time = Recording.Now;
+#endif
+                CloudEvent cloudEvent = new CloudEvent(
                     // the source is mapped to the domain topic
                     $"Subject-{i}",
                     "Microsoft.MockPublisher.TestEvent",
                     "hello")
                 {
-                    Id = Recording.Random.NewGuid().ToString(),
-                    Time = Recording.Now
+                    Id = id,
+                    Time = time
                 };
-                eventsList.Add(newEGEvent);
+                eventsList.Add(cloudEvent);
             }
 
             await client.SendEventsAsync(eventsList);

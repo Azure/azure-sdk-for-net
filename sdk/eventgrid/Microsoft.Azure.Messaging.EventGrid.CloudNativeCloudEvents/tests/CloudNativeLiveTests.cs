@@ -81,14 +81,21 @@ namespace Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents.Tests
                     options));
 
             #region Snippet:CloudNativePublishToDomain
+#if SNIPPET
+            string id = "eventId";
+            DateTimeOffset time = DateTimeOffset.Now;
+#else
+            string id = Recording.Random.NewGuid().ToString();
+            DateTimeOffset time = Recording.Now;
+#endif
             CloudEvent cloudEvent =
                 new CloudEvent
                 {
                     Type = "record",
                     // Event Grid does not allow absolute URIs as the domain topic
                     Source = new Uri("test", UriKind.Relative),
-                    Id = Recording.Random.NewGuid().ToString(),
-                    Time = Recording.Now,
+                    Id = id,
+                    Time = time,
                     Data = new TestPayload("name", 0)
                 };
 
