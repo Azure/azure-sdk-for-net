@@ -9,9 +9,9 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Reflection;
 using System.Text.Json;
-using System.Text.Json.Serialization;
-
 using Microsoft.Azure.WebPubSub.Common;
+
+using NewtonsoftJson = Newtonsoft.Json;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
@@ -120,7 +120,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 {
                     if (needConvert)
                     {
-                        var states = GetStatesFromJson(converted, originStr);
+                        var states = GetStatesFromJson(converted);
                         var mergedStates = context.UpdateStates(states);
                         return BuildConnectEventResponse(originStr, mergedStates);
                     }
@@ -134,7 +134,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 {
                     if (needConvert)
                     {
-                        var states = GetStatesFromJson(converted, originStr);
+                        var states = GetStatesFromJson(converted);
                         var mergedStates = context.UpdateStates(states);
                         return BuildUserEventResponse(JsonSerializer.Deserialize<UserEventResponse>(originStr), mergedStates);
                     }
@@ -218,23 +218,23 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             return false;
         }
 
-        private static Dictionary<string, object> GetStatesFromJson(JsonDocument converted, string originStr)
+        private static Dictionary<string, object> GetStatesFromJson(JsonDocument converted)
         {
+            var states = new Dictionary<string, object>();
             if (converted.RootElement.TryGetProperty("states", out var val))
             {
                 if (val.ValueKind == JsonValueKind.Object)
                 {
-                    return JsonSerializer.Deserialize<StatesEntity>(originStr).States;
+                    var rawJson = val.GetRawText();
+                    var strongType = NewtonsoftJson.JsonConvert.DeserializeObject<IReadOnlyDictionary<string, BinaryData>>(rawJson);
+                    foreach (var item in strongType)
+                    {
+                        states.Add(item.Key, item.Value);
+                    }
                 }
             }
             // We don't support clear states for JS
-            return new Dictionary<string, object>();
-        }
-
-        private sealed class StatesEntity
-        {
-            [JsonPropertyName("states")]
-            public Dictionary<string, object> States { get; set; }
+            return states;
         }
     }
 }

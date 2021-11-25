@@ -4,15 +4,20 @@ namespace Microsoft.Azure.WebPubSub.Common
     {
         public ConnectedEventRequest(Microsoft.Azure.WebPubSub.Common.WebPubSubConnectionContext context) : base (default(Microsoft.Azure.WebPubSub.Common.WebPubSubConnectionContext)) { }
     }
+    [System.Runtime.Serialization.DataContractAttribute]
     public sealed partial class ConnectEventRequest : Microsoft.Azure.WebPubSub.Common.WebPubSubEventRequest
     {
         public ConnectEventRequest(Microsoft.Azure.WebPubSub.Common.WebPubSubConnectionContext context, System.Collections.Generic.IReadOnlyDictionary<string, string[]> claims, System.Collections.Generic.IReadOnlyDictionary<string, string[]> query, System.Collections.Generic.IEnumerable<string> subprotocols, System.Collections.Generic.IEnumerable<Microsoft.Azure.WebPubSub.Common.WebPubSubClientCertificate> certificates) : base (default(Microsoft.Azure.WebPubSub.Common.WebPubSubConnectionContext)) { }
+        [System.Runtime.Serialization.DataMemberAttribute(Name="claims")]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("claims")]
         public System.Collections.Generic.IReadOnlyDictionary<string, string[]> Claims { get { throw null; } }
+        [System.Runtime.Serialization.DataMemberAttribute(Name="clientCertificates")]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("clientCertificates")]
         public System.Collections.Generic.IReadOnlyList<Microsoft.Azure.WebPubSub.Common.WebPubSubClientCertificate> ClientCertificates { get { throw null; } }
+        [System.Runtime.Serialization.DataMemberAttribute(Name="query")]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("query")]
         public System.Collections.Generic.IReadOnlyDictionary<string, string[]> Query { get { throw null; } }
+        [System.Runtime.Serialization.DataMemberAttribute(Name="subprotocols")]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("subprotocols")]
         public System.Collections.Generic.IReadOnlyList<string> Subprotocols { get { throw null; } }
         public Microsoft.Azure.WebPubSub.Common.EventErrorResponse CreateErrorResponse(Microsoft.Azure.WebPubSub.Common.WebPubSubErrorCode code, string message) { throw null; }
@@ -38,9 +43,11 @@ namespace Microsoft.Azure.WebPubSub.Common
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public void SetState(string key, object value) { }
     }
+    [System.Runtime.Serialization.DataContractAttribute]
     public sealed partial class DisconnectedEventRequest : Microsoft.Azure.WebPubSub.Common.WebPubSubEventRequest
     {
         public DisconnectedEventRequest(Microsoft.Azure.WebPubSub.Common.WebPubSubConnectionContext context, string reason) : base (default(Microsoft.Azure.WebPubSub.Common.WebPubSubConnectionContext)) { }
+        [System.Runtime.Serialization.DataMemberAttribute(Name="reason")]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("reason")]
         public string Reason { get { throw null; } }
     }
@@ -54,17 +61,22 @@ namespace Microsoft.Azure.WebPubSub.Common
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("errorMessage")]
         public string ErrorMessage { get { throw null; } set { } }
     }
+    [System.Runtime.Serialization.DataContractAttribute]
     public sealed partial class PreflightRequest : Microsoft.Azure.WebPubSub.Common.WebPubSubEventRequest
     {
         public PreflightRequest(bool isValid) : base (default(Microsoft.Azure.WebPubSub.Common.WebPubSubConnectionContext)) { }
+        [System.Runtime.Serialization.DataMemberAttribute(Name="isValid")]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("isValid")]
         public bool IsValid { get { throw null; } }
     }
+    [System.Runtime.Serialization.DataContractAttribute]
     public sealed partial class UserEventRequest : Microsoft.Azure.WebPubSub.Common.WebPubSubEventRequest
     {
         public UserEventRequest(Microsoft.Azure.WebPubSub.Common.WebPubSubConnectionContext context, System.BinaryData data, Microsoft.Azure.WebPubSub.Common.WebPubSubDataType dataType) : base (default(Microsoft.Azure.WebPubSub.Common.WebPubSubConnectionContext)) { }
+        [System.Runtime.Serialization.DataMemberAttribute(Name="data")]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("data")]
         public System.BinaryData Data { get { throw null; } }
+        [System.Runtime.Serialization.DataMemberAttribute(Name="dataType")]
         [System.Text.Json.Serialization.JsonConverterAttribute(typeof(System.Text.Json.Serialization.JsonStringEnumConverter))]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("dataType")]
         public Microsoft.Azure.WebPubSub.Common.WebPubSubDataType DataType { get { throw null; } }
@@ -146,9 +158,11 @@ namespace Microsoft.Azure.WebPubSub.Common
         UserError = 1,
         ServerError = 2,
     }
+    [System.Runtime.Serialization.DataContractAttribute]
     public abstract partial class WebPubSubEventRequest
     {
         protected WebPubSubEventRequest(Microsoft.Azure.WebPubSub.Common.WebPubSubConnectionContext context) { }
+        [System.Runtime.Serialization.DataMemberAttribute(Name="connectionContext")]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("connectionContext")]
         public Microsoft.Azure.WebPubSub.Common.WebPubSubConnectionContext ConnectionContext { get { throw null; } }
     }

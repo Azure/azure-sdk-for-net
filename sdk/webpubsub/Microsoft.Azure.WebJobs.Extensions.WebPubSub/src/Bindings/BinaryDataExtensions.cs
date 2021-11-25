@@ -1,7 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.IO;
+using System.Text.Json;
 using Newtonsoft.Json.Linq;
 
 namespace System
@@ -36,6 +38,24 @@ namespace System
             }
 
             return null;
+        }
+
+        public static BinaryData FromObjectAsJsonExtended<T>(T item, JsonSerializerOptions? options = null)
+        {
+            try
+            {
+                return BinaryData.FromObjectAsJson(item, options);
+            }
+            catch (NotSupportedException e)
+            {
+                return item is IJEnumerable<JToken> ?
+                    BinaryData.FromString(item.ToString()) :
+                    throw e;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

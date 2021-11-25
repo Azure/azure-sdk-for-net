@@ -12,13 +12,23 @@ namespace Microsoft.Azure.WebPubSub.Common
 {
     /// <summary>
     /// Converter to turn the ConnectionStates dictionary into a regular JSON
-    /// object.
+    /// object works for data transport over http between server and service.
     /// </summary>
     internal class ConnectionStatesConverter : JsonConverter<IReadOnlyDictionary<string, BinaryData>>
     {
         /// <inheritdoc/>
-        public override IReadOnlyDictionary<string, BinaryData> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) =>
-            throw new NotImplementedException();
+        public override IReadOnlyDictionary<string, BinaryData> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            var dic = new Dictionary<string, BinaryData>();
+            var element = JsonDocument.ParseValue(ref reader).RootElement;
+            foreach (var elementInfo in element.EnumerateObject())
+            {
+                var encoded = elementInfo.Value.GetString();
+                var decoded = Convert.FromBase64String(encoded);
+                dic.Add(elementInfo.Name, BinaryData.FromBytes(decoded));
+            }
+            return dic;
+        }
 
         /// <inheritdoc/>
         public override void Write(Utf8JsonWriter writer, IReadOnlyDictionary<string, BinaryData> value, JsonSerializerOptions options)
@@ -28,13 +38,7 @@ namespace Microsoft.Azure.WebPubSub.Common
             {
                 foreach (KeyValuePair<string, BinaryData> pair in value)
                 {
-                    writer.WritePropertyName(pair.Key);
-
-                    // Since STJ doesn't allow you to write raw JSON,
-                    // we have to hack around it by deserializing to an object
-                    // and then serializing it back into our writer
-                    object val = pair.Value.ToObjectFromJson<object>(options);
-                    JsonSerializer.Serialize(writer, val, options);
+                    writer.WriteBase64String(pair.Key, pair.Value.ToArray());
                 }
             }
             writer.WriteEndObject();

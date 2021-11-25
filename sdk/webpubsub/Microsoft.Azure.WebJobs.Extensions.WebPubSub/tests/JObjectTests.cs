@@ -124,19 +124,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         }
 
         [TestCase]
-        public void TestBinaryDataConvertFromByteArray_SystemJson()
-        {
-            var testData = @"{""type"":""Buffer"", ""data"": [66, 105, 110, 97, 114, 121, 68, 97, 116, 97]}";
-
-            var options = new SystemJson.JsonSerializerOptions();
-            options.Converters.Add(new System.BinaryDataJsonConverter());
-
-            var converted = SystemJson.JsonSerializer.Deserialize<BinaryData>(testData, options);
-
-            Assert.AreEqual("BinaryData", converted.ToString());
-        }
-
-        [TestCase]
         public void TestBinaryDataConvertFromByteArray_Newtonsoft()
         {
             WebPubSubConfigProvider.RegisterJsonConverter();
@@ -187,6 +174,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         [TestCase]
         public async Task ParseConnectResponseWithValidStates()
         {
+            WebPubSubConfigProvider.RegisterJsonConverter();
             var test = @"{""userId"":""aaa"", ""states"": { ""a"": ""b"", ""a"": ""c"" }}";
 
             var result = BuildResponse(test, RequestType.Connect, false);
@@ -386,11 +374,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 
             var context1 = request["connectionContext"];
             Assert.NotNull(context1);
-            var states1 = context1["states"].ToObject<IReadOnlyDictionary<string, object>>();
+            var states1 = context1["states"];
             Assert.NotNull(states1);
-            Assert.AreEqual("aValue", states1["aKey"]);
+            Assert.AreEqual("\"aValue\"", states1["aKey"].Value<string>());
             Assert.NotNull(states1);
-            Assert.AreEqual(123, states1["bKey"]);
+            Assert.AreEqual(123, states1["bKey"].Value<int>());
         }
 
         [TestCase]
@@ -403,10 +391,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
                     { "aKey", "aValue"},
                     { "bKey", 123 },
                     { "cKey", new StateTestClass() }
-                }
-                .EncodeConnectionStates()
-                .DecodeConnectionStates()
-                .ToDictionary(p => p.Key, p => (BinaryData)p.Value);
+                }.EncodeConnectionStates().DecodeConnectionStates().ToDictionary(p => p.Key, p => (BinaryData)p.Value);
 
             // Use the Dictionary<string, BinaryData> connectionStates .ctor overload
             var context = new WebPubSubConnectionContext(
@@ -418,21 +403,23 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
                 connectionStates: states);
             var test = new WebPubSubContext(new UserEventRequest(context, BinaryData.FromString("test"), WebPubSubDataType.Text));
 
-            var jObj = JObject.FromObject(test);
+            var jObj = JObject.Parse(JsonConvert.SerializeObject(test));
             var request = jObj["request"];
             Assert.NotNull(request);
-            Assert.AreEqual("test", request["data"].ToString());
+            Assert.AreEqual("test", request["data"].Value<string>());
             Assert.NotNull(jObj["response"]);
-            Assert.AreEqual("", jObj["errorMessage"].ToString());
-            Assert.AreEqual("False", jObj["hasError"].ToString());
-            Assert.AreEqual("False", jObj["isPreflight"].ToString());
+            Assert.AreEqual(null, jObj["errorMessage"].Value<string>());
+            Assert.AreEqual("False", jObj["hasError"].Value<string>());
+            Assert.AreEqual("False", jObj["isPreflight"].Value<string>());
             var context1 = request["connectionContext"];
             Assert.NotNull(context1);
-            var states1 = context1["states"].ToObject<IReadOnlyDictionary<string, object>>();
+            var states1 = context1["states"];
             Assert.NotNull(states1);
-            Assert.AreEqual("aValue", states1["aKey"]);
-            Assert.NotNull(states1);
-            Assert.AreEqual(123, states1["bKey"]);
+            Assert.AreEqual("aValue", states1["aKey"].Value<string>());
+            Assert.AreEqual(123, states1["bKey"].Value<int>());
+            var classStates = states1["cKey"];
+            Assert.NotNull(classStates);
+            Assert.AreEqual("GA", classStates["Title"].Value<string>());
         }
 
         [TestCase]
@@ -484,7 +471,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
                 .EncodeConnectionStates()
                 .DecodeConnectionStates()
                 .ToDictionary(p => p.Key, p => (BinaryData)p.Value);
-            // use newtonsoft converter to verify.
             string json = JsonConvert.SerializeObject(
                 new WebPubSubConnectionContext(
                     eventType: WebPubSubEventType.System,
@@ -527,6 +513,70 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             Assert.AreEqual(ctx.ConnectionStates["cKey"].ToString(), ctx.States["cKey"]);
         }
 
+        [TestCase]
+        public void TestConnectionStatesConverter_Newtonsoft()
+        {
+            WebPubSubConfigProvider.RegisterJsonConverter();
+            var states =
+                new Dictionary<string, object>
+                {
+                    { "aKey", "aValue"},
+                    { "bKey", 123 },
+                    { "cKey", new StateTestClass() },
+                    { "dKey", JObject.FromObject(new StateTestClass())}
+                };
+            IReadOnlyDictionary<string, BinaryData> input = states.ToDictionary(x => x.Key, y => BinaryDataExtensions.FromObjectAsJsonExtended(y.Value));
+            var serialized = JsonConvert.SerializeObject(input);
+            var deserialized = JsonConvert.DeserializeObject<IReadOnlyDictionary<string, BinaryData>>(serialized);
+
+            Assert.AreEqual(4, deserialized.Count);
+            Assert.AreEqual("aValue", deserialized["aKey"].ToObjectFromJson<string>());
+            Assert.AreEqual(123, deserialized["bKey"].ToObjectFromJson<int>());
+            Assert.NotNull(deserialized["cKey"].ToObjectFromJson<StateTestClass>());
+            Assert.NotNull(deserialized["dKey"].ToObjectFromJson<StateTestClass>());
+        }
+
+        [TestCase]
+        public void TestConnectionStatesConverter_SystemText()
+        {
+            var jsonOption = new SystemJson.JsonSerializerOptions();
+            jsonOption.Converters.Add(new ConnectionStatesConverter());
+            IReadOnlyDictionary<string, BinaryData> input =
+                new Dictionary<string, BinaryData>
+                {
+                    { "aKey", BinaryData.FromString("aValue") },
+                    { "bKey", BinaryData.FromObjectAsJson(123) },
+                    { "cKey", BinaryData.FromObjectAsJson(new StateTestClass()) }
+                };
+            var serialized = SystemJson.JsonSerializer.Serialize(input, jsonOption);
+            var deserialized = SystemJson.JsonSerializer.Deserialize<IReadOnlyDictionary<string, BinaryData>>(serialized, jsonOption);
+
+            Assert.AreEqual(3, deserialized.Count);
+            Assert.AreEqual("aValue", deserialized["aKey"].ToString());
+            Assert.AreEqual(123, deserialized["bKey"].ToObjectFromJson<int>());
+        }
+
+        [TestCase]
+        public void TestConnectionStatesEncodeDecode()
+        {
+            var input =
+                new Dictionary<string, object>
+                {
+                    { "aKey", BinaryData.FromString("aValue") },
+                    { "bKey", BinaryData.FromObjectAsJson(123) },
+                    { "cKey", BinaryData.FromObjectAsJson(new StateTestClass()) },
+                    { "dKey", JObject.FromObject(new StateTestClass()) }
+                };
+            var encoded = input.EncodeConnectionStates();
+            var decoded = encoded.DecodeConnectionStates();
+
+            Assert.AreEqual(4, decoded.Count);
+            Assert.AreEqual("aValue", decoded["aKey"].ToString());
+            Assert.AreEqual(123, ((BinaryData)decoded["bKey"]).ToObjectFromJson<int>());
+            Assert.NotNull(((BinaryData)decoded["cKey"]).ToObjectFromJson<StateTestClass>());
+            Assert.NotNull(((BinaryData)decoded["dKey"]).ToObjectFromJson<StateTestClass>());
+        }
+
         private static HttpResponseMessage BuildResponse(string input, RequestType requestType, bool hasTestStates = false)
         {
             Dictionary<string, object> states = null;
@@ -536,8 +586,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
                     new Dictionary<string, object>
                     {
                         { "testKey", BinaryData.FromString("value") }
-                    }
-                    .EncodeConnectionStates().DecodeConnectionStates(); // Required now that we enforce BinaryData
+                    }.EncodeConnectionStates().DecodeConnectionStates(); // Required now that we enforce BinaryData
             }
             var context = new WebPubSubConnectionContext(WebPubSubEventType.System, "connect", "testhub", "Connection-Id1", null, null, null, states, null);
             return Utilities.BuildValidResponse(input, requestType, context);

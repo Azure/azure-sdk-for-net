@@ -155,13 +155,8 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         {
             if (!string.IsNullOrEmpty(connectionStates))
             {
-                var states = new Dictionary<string, BinaryData>();
-                var statesObj = JsonDocument.Parse(Convert.FromBase64String(connectionStates));
-                foreach (var item in statesObj.RootElement.EnumerateObject())
-                {
-                    states.Add(item.Name, BinaryData.FromString(item.Value.GetRawText()));
-                }
-                return states;
+                var strongTyped = JsonSerializer.Deserialize<IReadOnlyDictionary<string, BinaryData>>(connectionStates);
+                return new Dictionary<string, BinaryData>(strongTyped);
             }
             return null;
         }
