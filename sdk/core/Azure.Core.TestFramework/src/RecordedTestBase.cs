@@ -102,8 +102,8 @@ namespace Azure.Core.TestFramework
 
         public override void GlobalTimeoutTearDown()
         {
-            // Only enforce the timeout on playback when debugger is not attached.
-            if (Mode == RecordedTestMode.Playback && !Debugger.IsAttached)
+            // Only enforce the timeout on playback.
+            if (Mode == RecordedTestMode.Playback)
             {
                 base.GlobalTimeoutTearDown();
             }
