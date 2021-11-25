@@ -842,7 +842,7 @@ namespace Azure.Maps.Search
         /// <param name="route"> This represents the route to search along and should be a valid `GeoJSON LineString` type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.1.4) for details. </param>
         /// <param name="options"> additional options </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SearchAddressResult>> SearchAlongRouteAsync(string query, int maxDetourTime, SearchAlongRouteRequest route, SearchAlongRouteOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchAddressResult>> SearchPointOfInterestAlongRouteAsync(string query, int maxDetourTime, SearchAlongRouteRequest route, SearchAlongRouteOptions options = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchAlongRoute");
             scope.Start();
@@ -868,7 +868,7 @@ namespace Azure.Maps.Search
         /// <param name="route"> This represents the route to search along and should be a valid `GeoJSON LineString` type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.1.4) for details. </param>
         /// <param name="options"> additional options </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SearchAddressResult> SearchAlongRoute(string query, int maxDetourTime, SearchAlongRouteRequest route, SearchAlongRouteOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<SearchAddressResult> SearchPointOfInterestAlongRoute(string query, int maxDetourTime, SearchAlongRouteRequest route, SearchAlongRouteOptions options = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchAlongRoute");
             scope.Start();
