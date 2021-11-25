@@ -71,6 +71,7 @@ namespace Microsoft.Azure.WebPubSub.Common
         /// </summary>
         [IgnoreDataMember]
         [JsonIgnore]
+        [JsonPropertyName("states")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public IReadOnlyDictionary<string, object> States { get; }
 
