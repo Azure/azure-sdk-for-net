@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Resources.Tests
         }
 
         protected ResourcesTestBase(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)
         {
         }
 
