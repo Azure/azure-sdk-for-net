@@ -196,7 +196,7 @@ directive:
           if (key.startsWith('AFD')) {
           const newKey = key.replace('AFD', 'Afd');
           $[key]['x-ms-client-name'] = newKey
-              if (key === 'AfdDomain') {
+              if (key === 'AFDDomain') {
                   $[key]['x-ms-client-name'] = 'AfdCustomDomain'
               }
           }
