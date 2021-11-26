@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Models
     {
         /// <summary> Initializes a new instance of CheckNameAvailabilityResponse. </summary>
         [InitializationConstructor]
-        public CheckNameAvailabilityResponse()
+        internal CheckNameAvailabilityResponse()
         {
         }
 
@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.Models
         }
 
         /// <summary> Indicates if the resource name is available. </summary>
-        public bool? NameAvailable { get; set; }
+        public bool? NameAvailable { get; }
         /// <summary> The reason why the given name is not available. </summary>
-        public CheckNameAvailabilityReason? Reason { get; set; }
+        public CheckNameAvailabilityReason? Reason { get; }
         /// <summary> Detailed reason why the given name is available. </summary>
-        public string Message { get; set; }
+        public string Message { get; }
     }
 }
