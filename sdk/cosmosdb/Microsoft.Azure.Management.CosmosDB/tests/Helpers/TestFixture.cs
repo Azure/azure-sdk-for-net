@@ -23,7 +23,7 @@ namespace CosmosDB.Tests
         public CosmosDBManagementClient CosmosDBManagementClient;
         public ResourceManagementClient ResourceManagementClient;
         public string ResourceGroupName;
-        public string Location = "central us euap";
+        public string Location = "centralus";
 
         public Dictionary<AccountType, string> accounts;
 
