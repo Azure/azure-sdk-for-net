@@ -14,33 +14,5 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
     : base(isAsync, RecordedTestMode.Record)
         {
         }
-
-        private async Task<SiteSourcecontrol> CreateSiteSourceControlAsync(string siteSourceControlName)
-        {
-            var container = (await CreateResourceGroupAsync()).GetSi
-            var input = ResourceDataHelper.GetBasicSiteData(DefaultLocation);
-            var lro = await container.CreateOrUpdateAsync(siteName, input);
-            return lro.Value;
-        }
-
-        [TestCase]
-        [RecordedTest]
-        public async Task Delete()
-        {
-            var siteName = Recording.GenerateAssetName("testSite-");
-            var plan = await CreateSiteAsync(siteName);
-            await plan.DeleteAsync();
-        }
-
-        [TestCase]
-        [RecordedTest]
-        public async Task Get()
-        {
-            var siteName = Recording.GenerateAssetName("testSite-");
-            var site1 = await CreateSiteAsync(siteName);
-            Site site2 = await site1.GetAsync();
-
-            ResourceDataHelper.AssertSite(site1.Data, site2.Data);
-        }
     }
 }

@@ -14,8 +14,7 @@ namespace Azure.ResourceManager.AppService.Tests
     {
         protected Location DefaultLocation => Location.EastUS;
         protected ArmClient Client { get; private set; }
-        protected Subscription DefaultSubscription => Client.DefaultSubscription;
-
+        protected Subscription DefaultSubscription { get; private set; }
         public AppServiceTestBase(bool isAsync) : base(isAsync)
         {
         }
@@ -25,9 +24,10 @@ namespace Azure.ResourceManager.AppService.Tests
         }
 
         [SetUp]
-        public void CreateCommonClient()
+        public async void CreateCommonClient()
         {
             Client = GetArmClient();
+            DefaultSubscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
         }
 
         protected async Task<ResourceGroup> CreateResourceGroupAsync()
