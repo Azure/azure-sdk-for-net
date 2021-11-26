@@ -18,9 +18,9 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Creates a new custom domain within an endpoint. </summary>
-    public partial class CustomDomainCreateOperation : Operation<CustomDomain>, IOperationSource<CustomDomain>
+    public partial class CustomDomainCreateOperation : Operation<CdnCustomDomain>, IOperationSource<CdnCustomDomain>
     {
-        private readonly OperationInternals<CustomDomain> _operation;
+        private readonly OperationInternals<CdnCustomDomain> _operation;
 
         private readonly ArmResource _operationBase;
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal CustomDomainCreateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<CustomDomain>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "CustomDomainCreateOperation");
+            _operation = new OperationInternals<CdnCustomDomain>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "CustomDomainCreateOperation");
             _operationBase = operationsBase;
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override CustomDomain Value => _operation.Value;
+        public override CdnCustomDomain Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -57,21 +57,21 @@ namespace Azure.ResourceManager.Cdn.Models
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<CustomDomain>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<CdnCustomDomain>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<CustomDomain>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<CdnCustomDomain>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        CustomDomain IOperationSource<CustomDomain>.CreateResult(Response response, CancellationToken cancellationToken)
+        CdnCustomDomain IOperationSource<CdnCustomDomain>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new CustomDomain(_operationBase, CustomDomainData.DeserializeCustomDomainData(document.RootElement));
+            return new CdnCustomDomain(_operationBase, CdnCustomDomainData.DeserializeCdnCustomDomainData(document.RootElement));
         }
 
-        async ValueTask<CustomDomain> IOperationSource<CustomDomain>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<CdnCustomDomain> IOperationSource<CdnCustomDomain>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new CustomDomain(_operationBase, CustomDomainData.DeserializeCustomDomainData(document.RootElement));
+            return new CdnCustomDomain(_operationBase, CdnCustomDomainData.DeserializeCdnCustomDomainData(document.RootElement));
         }
     }
 }

@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of RouteListResult. </summary>
         internal RouteListResult()
         {
-            Value = new ChangeTrackingList<RouteData>();
+            Value = new ChangeTrackingList<AfdRouteData>();
         }
 
         /// <summary> Initializes a new instance of RouteListResult. </summary>
         /// <param name="value"> List of AzureFrontDoor routes within a profile. </param>
         /// <param name="nextLink"> URL to get the next set of route objects if there are any. </param>
-        internal RouteListResult(IReadOnlyList<RouteData> value, string nextLink)
+        internal RouteListResult(IReadOnlyList<AfdRouteData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of AzureFrontDoor routes within a profile. </summary>
-        public IReadOnlyList<RouteData> Value { get; }
+        public IReadOnlyList<AfdRouteData> Value { get; }
         /// <summary> URL to get the next set of route objects if there are any. </summary>
         public string NextLink { get; }
     }

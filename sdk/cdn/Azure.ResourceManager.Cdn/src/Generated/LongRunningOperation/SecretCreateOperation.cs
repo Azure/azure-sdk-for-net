@@ -18,9 +18,9 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Creates a new Secret within the specified profile. </summary>
-    public partial class SecretCreateOperation : Operation<Secret>, IOperationSource<Secret>
+    public partial class SecretCreateOperation : Operation<AfdSecret>, IOperationSource<AfdSecret>
     {
-        private readonly OperationInternals<Secret> _operation;
+        private readonly OperationInternals<AfdSecret> _operation;
 
         private readonly ArmResource _operationBase;
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal SecretCreateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<Secret>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "SecretCreateOperation");
+            _operation = new OperationInternals<AfdSecret>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "SecretCreateOperation");
             _operationBase = operationsBase;
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override Secret Value => _operation.Value;
+        public override AfdSecret Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -57,21 +57,21 @@ namespace Azure.ResourceManager.Cdn.Models
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<Secret>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<AfdSecret>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<Secret>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<AfdSecret>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        Secret IOperationSource<Secret>.CreateResult(Response response, CancellationToken cancellationToken)
+        AfdSecret IOperationSource<AfdSecret>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new Secret(_operationBase, SecretData.DeserializeSecretData(document.RootElement));
+            return new AfdSecret(_operationBase, AfdSecretData.DeserializeAfdSecretData(document.RootElement));
         }
 
-        async ValueTask<Secret> IOperationSource<Secret>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<AfdSecret> IOperationSource<AfdSecret>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new Secret(_operationBase, SecretData.DeserializeSecretData(document.RootElement));
+            return new AfdSecret(_operationBase, AfdSecretData.DeserializeAfdSecretData(document.RootElement));
         }
     }
 }

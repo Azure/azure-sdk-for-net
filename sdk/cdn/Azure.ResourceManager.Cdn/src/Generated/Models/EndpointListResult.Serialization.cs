@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         internal static EndpointListResult DeserializeEndpointListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<EndpointData>> value = default;
+            Optional<IReadOnlyList<CdnEndpointData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Cdn.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<EndpointData> array = new List<EndpointData>();
+                    List<CdnEndpointData> array = new List<CdnEndpointData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EndpointData.DeserializeEndpointData(item));
+                        array.Add(CdnEndpointData.DeserializeCdnEndpointData(item));
                     }
                     value = array;
                     continue;

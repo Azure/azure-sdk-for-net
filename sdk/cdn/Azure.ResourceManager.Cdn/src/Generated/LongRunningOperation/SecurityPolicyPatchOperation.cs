@@ -18,9 +18,9 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Updates an existing Secret within a profile. </summary>
-    public partial class SecurityPolicyPatchOperation : Operation<SecurityPolicy>, IOperationSource<SecurityPolicy>
+    public partial class SecurityPolicyPatchOperation : Operation<AfdSecurityPolicy>, IOperationSource<AfdSecurityPolicy>
     {
-        private readonly OperationInternals<SecurityPolicy> _operation;
+        private readonly OperationInternals<AfdSecurityPolicy> _operation;
 
         private readonly ArmResource _operationBase;
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal SecurityPolicyPatchOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<SecurityPolicy>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.OriginalUri, "SecurityPolicyPatchOperation");
+            _operation = new OperationInternals<AfdSecurityPolicy>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.OriginalUri, "SecurityPolicyPatchOperation");
             _operationBase = operationsBase;
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override SecurityPolicy Value => _operation.Value;
+        public override AfdSecurityPolicy Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -57,21 +57,21 @@ namespace Azure.ResourceManager.Cdn.Models
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<SecurityPolicy>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<AfdSecurityPolicy>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<SecurityPolicy>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<AfdSecurityPolicy>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        SecurityPolicy IOperationSource<SecurityPolicy>.CreateResult(Response response, CancellationToken cancellationToken)
+        AfdSecurityPolicy IOperationSource<AfdSecurityPolicy>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new SecurityPolicy(_operationBase, SecurityPolicyData.DeserializeSecurityPolicyData(document.RootElement));
+            return new AfdSecurityPolicy(_operationBase, AfdSecurityPolicyData.DeserializeAfdSecurityPolicyData(document.RootElement));
         }
 
-        async ValueTask<SecurityPolicy> IOperationSource<SecurityPolicy>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<AfdSecurityPolicy> IOperationSource<AfdSecurityPolicy>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new SecurityPolicy(_operationBase, SecurityPolicyData.DeserializeSecurityPolicyData(document.RootElement));
+            return new AfdSecurityPolicy(_operationBase, AfdSecurityPolicyData.DeserializeAfdSecurityPolicyData(document.RootElement));
         }
     }
 }

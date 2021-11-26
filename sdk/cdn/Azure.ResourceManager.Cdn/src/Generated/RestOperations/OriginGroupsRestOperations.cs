@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="originGroupName"> Name of the origin group which is unique within the endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, or <paramref name="originGroupName"/> is null. </exception>
-        public async Task<Response<OriginGroupData>> GetAsync(string resourceGroupName, string profileName, string endpointName, string originGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<CdnOriginGroupData>> GetAsync(string resourceGroupName, string profileName, string endpointName, string originGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -197,13 +197,13 @@ namespace Azure.ResourceManager.Cdn
             {
                 case 200:
                     {
-                        OriginGroupData value = default;
+                        CdnOriginGroupData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = OriginGroupData.DeserializeOriginGroupData(document.RootElement);
+                        value = CdnOriginGroupData.DeserializeCdnOriginGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((OriginGroupData)null, message.Response);
+                    return Response.FromValue((CdnOriginGroupData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="originGroupName"> Name of the origin group which is unique within the endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, or <paramref name="originGroupName"/> is null. </exception>
-        public Response<OriginGroupData> Get(string resourceGroupName, string profileName, string endpointName, string originGroupName, CancellationToken cancellationToken = default)
+        public Response<CdnOriginGroupData> Get(string resourceGroupName, string profileName, string endpointName, string originGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -241,19 +241,19 @@ namespace Azure.ResourceManager.Cdn
             {
                 case 200:
                     {
-                        OriginGroupData value = default;
+                        CdnOriginGroupData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = OriginGroupData.DeserializeOriginGroupData(document.RootElement);
+                        value = CdnOriginGroupData.DeserializeCdnOriginGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((OriginGroupData)null, message.Response);
+                    return Response.FromValue((CdnOriginGroupData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string resourceGroupName, string profileName, string endpointName, string originGroupName, OriginGroupData originGroup)
+        internal HttpMessage CreateCreateRequest(string resourceGroupName, string profileName, string endpointName, string originGroupName, CdnOriginGroupData originGroup)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="originGroup"> Origin group properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, <paramref name="originGroupName"/>, or <paramref name="originGroup"/> is null. </exception>
-        public async Task<Response> CreateAsync(string resourceGroupName, string profileName, string endpointName, string originGroupName, OriginGroupData originGroup, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateAsync(string resourceGroupName, string profileName, string endpointName, string originGroupName, CdnOriginGroupData originGroup, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="originGroup"> Origin group properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, <paramref name="originGroupName"/>, or <paramref name="originGroup"/> is null. </exception>
-        public Response Create(string resourceGroupName, string profileName, string endpointName, string originGroupName, OriginGroupData originGroup, CancellationToken cancellationToken = default)
+        public Response Create(string resourceGroupName, string profileName, string endpointName, string originGroupName, CdnOriginGroupData originGroup, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

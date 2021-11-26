@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of EndpointListResult. </summary>
         internal EndpointListResult()
         {
-            Value = new ChangeTrackingList<EndpointData>();
+            Value = new ChangeTrackingList<CdnEndpointData>();
         }
 
         /// <summary> Initializes a new instance of EndpointListResult. </summary>
         /// <param name="value"> List of CDN endpoints within a profile. </param>
         /// <param name="nextLink"> URL to get the next set of endpoint objects if there is any. </param>
-        internal EndpointListResult(IReadOnlyList<EndpointData> value, string nextLink)
+        internal EndpointListResult(IReadOnlyList<CdnEndpointData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of CDN endpoints within a profile. </summary>
-        public IReadOnlyList<EndpointData> Value { get; }
+        public IReadOnlyList<CdnEndpointData> Value { get; }
         /// <summary> URL to get the next set of endpoint objects if there is any. </summary>
         public string NextLink { get; }
     }

@@ -18,9 +18,9 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Creates a new origin within the specified endpoint. </summary>
-    public partial class OriginCreateOperation : Operation<Origin>, IOperationSource<Origin>
+    public partial class OriginCreateOperation : Operation<CdnOrigin>, IOperationSource<CdnOrigin>
     {
-        private readonly OperationInternals<Origin> _operation;
+        private readonly OperationInternals<CdnOrigin> _operation;
 
         private readonly ArmResource _operationBase;
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal OriginCreateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<Origin>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "OriginCreateOperation");
+            _operation = new OperationInternals<CdnOrigin>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "OriginCreateOperation");
             _operationBase = operationsBase;
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override Origin Value => _operation.Value;
+        public override CdnOrigin Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -57,21 +57,21 @@ namespace Azure.ResourceManager.Cdn.Models
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<Origin>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<CdnOrigin>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<Origin>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<CdnOrigin>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        Origin IOperationSource<Origin>.CreateResult(Response response, CancellationToken cancellationToken)
+        CdnOrigin IOperationSource<CdnOrigin>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new Origin(_operationBase, OriginData.DeserializeOriginData(document.RootElement));
+            return new CdnOrigin(_operationBase, CdnOriginData.DeserializeCdnOriginData(document.RootElement));
         }
 
-        async ValueTask<Origin> IOperationSource<Origin>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<CdnOrigin> IOperationSource<CdnOrigin>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new Origin(_operationBase, OriginData.DeserializeOriginData(document.RootElement));
+            return new CdnOrigin(_operationBase, CdnOriginData.DeserializeCdnOriginData(document.RootElement));
         }
     }
 }

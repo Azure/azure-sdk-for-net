@@ -18,9 +18,9 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Updates an existing CDN endpoint with the specified endpoint name under the specified subscription, resource group and profile. Only tags can be updated after creating an endpoint. To update origins, use the Update Origin operation. To update origin groups, use the Update Origin group operation. To update custom domains, use the Update Custom Domain operation. </summary>
-    public partial class EndpointUpdateOperation : Operation<Endpoint>, IOperationSource<Endpoint>
+    public partial class EndpointUpdateOperation : Operation<CdnEndpoint>, IOperationSource<CdnEndpoint>
     {
-        private readonly OperationInternals<Endpoint> _operation;
+        private readonly OperationInternals<CdnEndpoint> _operation;
 
         private readonly ArmResource _operationBase;
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal EndpointUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<Endpoint>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.OriginalUri, "EndpointUpdateOperation");
+            _operation = new OperationInternals<CdnEndpoint>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.OriginalUri, "EndpointUpdateOperation");
             _operationBase = operationsBase;
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override Endpoint Value => _operation.Value;
+        public override CdnEndpoint Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -57,21 +57,21 @@ namespace Azure.ResourceManager.Cdn.Models
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<Endpoint>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<CdnEndpoint>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<Endpoint>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<CdnEndpoint>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        Endpoint IOperationSource<Endpoint>.CreateResult(Response response, CancellationToken cancellationToken)
+        CdnEndpoint IOperationSource<CdnEndpoint>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new Endpoint(_operationBase, EndpointData.DeserializeEndpointData(document.RootElement));
+            return new CdnEndpoint(_operationBase, CdnEndpointData.DeserializeCdnEndpointData(document.RootElement));
         }
 
-        async ValueTask<Endpoint> IOperationSource<Endpoint>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<CdnEndpoint> IOperationSource<CdnEndpoint>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new Endpoint(_operationBase, EndpointData.DeserializeEndpointData(document.RootElement));
+            return new CdnEndpoint(_operationBase, CdnEndpointData.DeserializeCdnEndpointData(document.RootElement));
         }
     }
 }

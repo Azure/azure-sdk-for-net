@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="customDomainName"> Name of the custom domain within an endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, or <paramref name="customDomainName"/> is null. </exception>
-        public async Task<Response<CustomDomainData>> GetAsync(string resourceGroupName, string profileName, string endpointName, string customDomainName, CancellationToken cancellationToken = default)
+        public async Task<Response<CdnCustomDomainData>> GetAsync(string resourceGroupName, string profileName, string endpointName, string customDomainName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -197,13 +197,13 @@ namespace Azure.ResourceManager.Cdn
             {
                 case 200:
                     {
-                        CustomDomainData value = default;
+                        CdnCustomDomainData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CustomDomainData.DeserializeCustomDomainData(document.RootElement);
+                        value = CdnCustomDomainData.DeserializeCdnCustomDomainData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((CustomDomainData)null, message.Response);
+                    return Response.FromValue((CdnCustomDomainData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="customDomainName"> Name of the custom domain within an endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, or <paramref name="customDomainName"/> is null. </exception>
-        public Response<CustomDomainData> Get(string resourceGroupName, string profileName, string endpointName, string customDomainName, CancellationToken cancellationToken = default)
+        public Response<CdnCustomDomainData> Get(string resourceGroupName, string profileName, string endpointName, string customDomainName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -241,13 +241,13 @@ namespace Azure.ResourceManager.Cdn
             {
                 case 200:
                     {
-                        CustomDomainData value = default;
+                        CdnCustomDomainData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CustomDomainData.DeserializeCustomDomainData(document.RootElement);
+                        value = CdnCustomDomainData.DeserializeCdnCustomDomainData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((CustomDomainData)null, message.Response);
+                    return Response.FromValue((CdnCustomDomainData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }

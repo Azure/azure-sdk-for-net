@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         internal static OriginListResult DeserializeOriginListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<OriginData>> value = default;
+            Optional<IReadOnlyList<CdnOriginData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Cdn.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<OriginData> array = new List<OriginData>();
+                    List<CdnOriginData> array = new List<CdnOriginData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OriginData.DeserializeOriginData(item));
+                        array.Add(CdnOriginData.DeserializeCdnOriginData(item));
                     }
                     value = array;
                     continue;

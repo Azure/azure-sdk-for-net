@@ -598,13 +598,13 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        #region Route
+        #region AfdRoute
 
-        /// <summary> Gets a collection of Routes in the AfdEndpoint. </summary>
-        /// <returns> An object representing collection of Routes and their operations over a AfdEndpoint. </returns>
-        public RouteCollection GetRoutes()
+        /// <summary> Gets a collection of AfdRoutes in the AfdEndpoint. </summary>
+        /// <returns> An object representing collection of AfdRoutes and their operations over a AfdEndpoint. </returns>
+        public AfdRouteCollection GetAfdRoutes()
         {
-            return new RouteCollection(this);
+            return new AfdRouteCollection(this);
         }
         #endregion
     }

@@ -996,13 +996,13 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        #region Endpoint
+        #region CdnEndpoint
 
-        /// <summary> Gets a collection of Endpoints in the Profile. </summary>
-        /// <returns> An object representing collection of Endpoints and their operations over a Profile. </returns>
-        public EndpointCollection GetEndpoints()
+        /// <summary> Gets a collection of CdnEndpoints in the Profile. </summary>
+        /// <returns> An object representing collection of CdnEndpoints and their operations over a Profile. </returns>
+        public CdnEndpointCollection GetCdnEndpoints()
         {
-            return new EndpointCollection(this);
+            return new CdnEndpointCollection(this);
         }
         #endregion
 
@@ -1036,33 +1036,33 @@ namespace Azure.ResourceManager.Cdn
         }
         #endregion
 
-        #region RuleSet
+        #region AfdRuleSet
 
-        /// <summary> Gets a collection of RuleSets in the Profile. </summary>
-        /// <returns> An object representing collection of RuleSets and their operations over a Profile. </returns>
-        public RuleSetCollection GetRuleSets()
+        /// <summary> Gets a collection of AfdRuleSets in the Profile. </summary>
+        /// <returns> An object representing collection of AfdRuleSets and their operations over a Profile. </returns>
+        public AfdRuleSetCollection GetAfdRuleSets()
         {
-            return new RuleSetCollection(this);
+            return new AfdRuleSetCollection(this);
         }
         #endregion
 
-        #region SecurityPolicy
+        #region AfdSecurityPolicy
 
-        /// <summary> Gets a collection of SecurityPolicies in the Profile. </summary>
-        /// <returns> An object representing collection of SecurityPolicies and their operations over a Profile. </returns>
-        public SecurityPolicyCollection GetSecurityPolicies()
+        /// <summary> Gets a collection of AfdSecurityPolicies in the Profile. </summary>
+        /// <returns> An object representing collection of AfdSecurityPolicies and their operations over a Profile. </returns>
+        public AfdSecurityPolicyCollection GetAfdSecurityPolicies()
         {
-            return new SecurityPolicyCollection(this);
+            return new AfdSecurityPolicyCollection(this);
         }
         #endregion
 
-        #region Secret
+        #region AfdSecret
 
-        /// <summary> Gets a collection of Secrets in the Profile. </summary>
-        /// <returns> An object representing collection of Secrets and their operations over a Profile. </returns>
-        public SecretCollection GetSecrets()
+        /// <summary> Gets a collection of AfdSecrets in the Profile. </summary>
+        /// <returns> An object representing collection of AfdSecrets and their operations over a Profile. </returns>
+        public AfdSecretCollection GetAfdSecrets()
         {
-            return new SecretCollection(this);
+            return new AfdSecretCollection(this);
         }
         #endregion
     }

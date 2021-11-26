@@ -17,9 +17,9 @@ using Azure.ResourceManager.Cdn;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Starts an existing CDN endpoint that is on a stopped state. </summary>
-    public partial class EndpointStartOperation : Operation<EndpointData>, IOperationSource<EndpointData>
+    public partial class EndpointStartOperation : Operation<CdnEndpointData>, IOperationSource<CdnEndpointData>
     {
-        private readonly OperationInternals<EndpointData> _operation;
+        private readonly OperationInternals<CdnEndpointData> _operation;
 
         /// <summary> Initializes a new instance of EndpointStartOperation for mocking. </summary>
         protected EndpointStartOperation()
@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal EndpointStartOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<EndpointData>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "EndpointStartOperation");
+            _operation = new OperationInternals<CdnEndpointData>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "EndpointStartOperation");
         }
 
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override EndpointData Value => _operation.Value;
+        public override CdnEndpointData Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -53,21 +53,21 @@ namespace Azure.ResourceManager.Cdn.Models
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<EndpointData>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<CdnEndpointData>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<EndpointData>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<CdnEndpointData>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        EndpointData IOperationSource<EndpointData>.CreateResult(Response response, CancellationToken cancellationToken)
+        CdnEndpointData IOperationSource<CdnEndpointData>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return EndpointData.DeserializeEndpointData(document.RootElement);
+            return CdnEndpointData.DeserializeCdnEndpointData(document.RootElement);
         }
 
-        async ValueTask<EndpointData> IOperationSource<EndpointData>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<CdnEndpointData> IOperationSource<CdnEndpointData>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return EndpointData.DeserializeEndpointData(document.RootElement);
+            return CdnEndpointData.DeserializeCdnEndpointData(document.RootElement);
         }
     }
 }

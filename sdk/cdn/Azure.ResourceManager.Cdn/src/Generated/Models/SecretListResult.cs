@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of SecretListResult. </summary>
         internal SecretListResult()
         {
-            Value = new ChangeTrackingList<SecretData>();
+            Value = new ChangeTrackingList<AfdSecretData>();
         }
 
         /// <summary> Initializes a new instance of SecretListResult. </summary>
         /// <param name="value"> List of AzureFrontDoor secrets within a profile. </param>
         /// <param name="nextLink"> URL to get the next set of Secret objects if there are any. </param>
-        internal SecretListResult(IReadOnlyList<SecretData> value, string nextLink)
+        internal SecretListResult(IReadOnlyList<AfdSecretData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of AzureFrontDoor secrets within a profile. </summary>
-        public IReadOnlyList<SecretData> Value { get; }
+        public IReadOnlyList<AfdSecretData> Value { get; }
         /// <summary> URL to get the next set of Secret objects if there are any. </summary>
         public string NextLink { get; }
     }

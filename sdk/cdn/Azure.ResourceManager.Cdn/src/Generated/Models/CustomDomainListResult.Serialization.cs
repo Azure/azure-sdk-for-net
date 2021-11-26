@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         internal static CustomDomainListResult DeserializeCustomDomainListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<CustomDomainData>> value = default;
+            Optional<IReadOnlyList<CdnCustomDomainData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Cdn.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<CustomDomainData> array = new List<CustomDomainData>();
+                    List<CdnCustomDomainData> array = new List<CdnCustomDomainData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CustomDomainData.DeserializeCustomDomainData(item));
+                        array.Add(CdnCustomDomainData.DeserializeCdnCustomDomainData(item));
                     }
                     value = array;
                     continue;

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         internal static RuleListResult DeserializeRuleListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<RuleData>> value = default;
+            Optional<IReadOnlyList<AfdRuleData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Cdn.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<RuleData> array = new List<RuleData>();
+                    List<AfdRuleData> array = new List<AfdRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RuleData.DeserializeRuleData(item));
+                        array.Add(AfdRuleData.DeserializeAfdRuleData(item));
                     }
                     value = array;
                     continue;

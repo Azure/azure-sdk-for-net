@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of OriginListResult. </summary>
         internal OriginListResult()
         {
-            Value = new ChangeTrackingList<OriginData>();
+            Value = new ChangeTrackingList<CdnOriginData>();
         }
 
         /// <summary> Initializes a new instance of OriginListResult. </summary>
         /// <param name="value"> List of CDN origins within an endpoint. </param>
         /// <param name="nextLink"> URL to get the next set of origin objects if there are any. </param>
-        internal OriginListResult(IReadOnlyList<OriginData> value, string nextLink)
+        internal OriginListResult(IReadOnlyList<CdnOriginData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of CDN origins within an endpoint. </summary>
-        public IReadOnlyList<OriginData> Value { get; }
+        public IReadOnlyList<CdnOriginData> Value { get; }
         /// <summary> URL to get the next set of origin objects if there are any. </summary>
         public string NextLink { get; }
     }

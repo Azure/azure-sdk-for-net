@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="endpointName"/> is null. </exception>
-        public async Task<Response<EndpointData>> GetAsync(string resourceGroupName, string profileName, string endpointName, CancellationToken cancellationToken = default)
+        public async Task<Response<CdnEndpointData>> GetAsync(string resourceGroupName, string profileName, string endpointName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -178,13 +178,13 @@ namespace Azure.ResourceManager.Cdn
             {
                 case 200:
                     {
-                        EndpointData value = default;
+                        CdnEndpointData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = EndpointData.DeserializeEndpointData(document.RootElement);
+                        value = CdnEndpointData.DeserializeCdnEndpointData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((EndpointData)null, message.Response);
+                    return Response.FromValue((CdnEndpointData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="endpointName"/> is null. </exception>
-        public Response<EndpointData> Get(string resourceGroupName, string profileName, string endpointName, CancellationToken cancellationToken = default)
+        public Response<CdnEndpointData> Get(string resourceGroupName, string profileName, string endpointName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -217,19 +217,19 @@ namespace Azure.ResourceManager.Cdn
             {
                 case 200:
                     {
-                        EndpointData value = default;
+                        CdnEndpointData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = EndpointData.DeserializeEndpointData(document.RootElement);
+                        value = CdnEndpointData.DeserializeCdnEndpointData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((EndpointData)null, message.Response);
+                    return Response.FromValue((CdnEndpointData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string resourceGroupName, string profileName, string endpointName, EndpointData endpointInput)
+        internal HttpMessage CreateCreateRequest(string resourceGroupName, string profileName, string endpointName, CdnEndpointData endpointInput)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="endpointInput"> Endpoint properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, or <paramref name="endpointInput"/> is null. </exception>
-        public async Task<Response> CreateAsync(string resourceGroupName, string profileName, string endpointName, EndpointData endpointInput, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateAsync(string resourceGroupName, string profileName, string endpointName, CdnEndpointData endpointInput, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="endpointInput"> Endpoint properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, or <paramref name="endpointInput"/> is null. </exception>
-        public Response Create(string resourceGroupName, string profileName, string endpointName, EndpointData endpointInput, CancellationToken cancellationToken = default)
+        public Response Create(string resourceGroupName, string profileName, string endpointName, CdnEndpointData endpointInput, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Cdn
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<AfdDomainHttpsParameters> tlsSettings = default;
+            Optional<AfdCustomDomainHttpsParameters> tlsSettings = default;
             Optional<WritableSubResource> azureDnsZone = default;
             Optional<AfdProvisioningState> provisioningState = default;
             Optional<DeploymentStatus> deploymentStatus = default;
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Cdn
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            tlsSettings = AfdDomainHttpsParameters.DeserializeAfdDomainHttpsParameters(property0.Value);
+                            tlsSettings = AfdCustomDomainHttpsParameters.DeserializeAfdCustomDomainHttpsParameters(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("azureDnsZone"))

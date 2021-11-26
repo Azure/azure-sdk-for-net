@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is null. </exception>
-        public async Task<Response<AfdDomainListResult>> ListByProfileAsync(string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
+        public async Task<Response<AfdCustomDomainListResult>> ListByProfileAsync(string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -87,9 +87,9 @@ namespace Azure.ResourceManager.Cdn
             {
                 case 200:
                     {
-                        AfdDomainListResult value = default;
+                        AfdCustomDomainListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AfdDomainListResult.DeserializeAfdDomainListResult(document.RootElement);
+                        value = AfdCustomDomainListResult.DeserializeAfdCustomDomainListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is null. </exception>
-        public Response<AfdDomainListResult> ListByProfile(string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
+        public Response<AfdCustomDomainListResult> ListByProfile(string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -119,9 +119,9 @@ namespace Azure.ResourceManager.Cdn
             {
                 case 200:
                     {
-                        AfdDomainListResult value = default;
+                        AfdCustomDomainListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AfdDomainListResult.DeserializeAfdDomainListResult(document.RootElement);
+                        value = AfdCustomDomainListResult.DeserializeAfdCustomDomainListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string resourceGroupName, string profileName, string customDomainName, AfdDomainUpdateParameters customDomainUpdateProperties)
+        internal HttpMessage CreateUpdateRequest(string resourceGroupName, string profileName, string customDomainName, AfdCustomDomainUpdateParameters customDomainUpdateProperties)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="customDomainUpdateProperties"> Domain properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="customDomainName"/>, or <paramref name="customDomainUpdateProperties"/> is null. </exception>
-        public async Task<Response> UpdateAsync(string resourceGroupName, string profileName, string customDomainName, AfdDomainUpdateParameters customDomainUpdateProperties, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string resourceGroupName, string profileName, string customDomainName, AfdCustomDomainUpdateParameters customDomainUpdateProperties, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="customDomainUpdateProperties"> Domain properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="customDomainName"/>, or <paramref name="customDomainUpdateProperties"/> is null. </exception>
-        public Response Update(string resourceGroupName, string profileName, string customDomainName, AfdDomainUpdateParameters customDomainUpdateProperties, CancellationToken cancellationToken = default)
+        public Response Update(string resourceGroupName, string profileName, string customDomainName, AfdCustomDomainUpdateParameters customDomainUpdateProperties, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -632,7 +632,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="profileName"/> is null. </exception>
-        public async Task<Response<AfdDomainListResult>> ListByProfileNextPageAsync(string nextLink, string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
+        public async Task<Response<AfdCustomDomainListResult>> ListByProfileNextPageAsync(string nextLink, string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -653,9 +653,9 @@ namespace Azure.ResourceManager.Cdn
             {
                 case 200:
                     {
-                        AfdDomainListResult value = default;
+                        AfdCustomDomainListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AfdDomainListResult.DeserializeAfdDomainListResult(document.RootElement);
+                        value = AfdCustomDomainListResult.DeserializeAfdCustomDomainListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -669,7 +669,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="profileName"/> is null. </exception>
-        public Response<AfdDomainListResult> ListByProfileNextPage(string nextLink, string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
+        public Response<AfdCustomDomainListResult> ListByProfileNextPage(string nextLink, string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -690,9 +690,9 @@ namespace Azure.ResourceManager.Cdn
             {
                 case 200:
                     {
-                        AfdDomainListResult value = default;
+                        AfdCustomDomainListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AfdDomainListResult.DeserializeAfdDomainListResult(document.RootElement);
+                        value = AfdCustomDomainListResult.DeserializeAfdCustomDomainListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

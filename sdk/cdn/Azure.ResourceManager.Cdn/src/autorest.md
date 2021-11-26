@@ -194,11 +194,20 @@ directive:
     transform: >
       for (var key in $) {
           if (key.startsWith('AFD')) {
-          const newKey = key.replace('AFD', 'Afd');
-          $[key]['x-ms-client-name'] = newKey
-              if (key === 'AFDDomain') {
-                  $[key]['x-ms-client-name'] = 'AfdCustomDomain'
-              }
+              const newKey = key.replace('AFD', 'Afd');
+              $[key]['x-ms-client-name'] = newKey
+          }
+          if (key.startsWith('AFDDomain')) {
+              const newKey = key.replace('AFDDomain', 'AfdCustomDomain');
+              $[key]['x-ms-client-name'] = newKey
+          }
+          if (['Endpoint', 'Origin', 'OriginGroup', 'CustomDomain'].includes(key)) {
+              const newKey = 'Cdn' + key;
+              $[key]['x-ms-client-name'] = newKey
+          }
+          if (['Route', 'RuleSet', 'Rule', 'SecurityPolicy', 'Secret'].includes(key)) {
+              const newKey = 'Afd' + key;
+              $[key]['x-ms-client-name'] = newKey
           }
       }
   - remove-operation: AFDProfiles_CheckHostNameAvailability

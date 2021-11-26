@@ -23,47 +23,47 @@ namespace Azure.ResourceManager.Cdn
         }
         #endregion
 
-        #region Endpoint
-        /// <summary> Gets an object representing a Endpoint along with the instance operations that can be performed on it but with no data. </summary>
+        #region CdnEndpoint
+        /// <summary> Gets an object representing a CdnEndpoint along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="Endpoint" /> object. </returns>
-        public static Endpoint GetEndpoint(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CdnEndpoint" /> object. </returns>
+        public static CdnEndpoint GetCdnEndpoint(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new Endpoint(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new CdnEndpoint(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
-        #region Origin
-        /// <summary> Gets an object representing a Origin along with the instance operations that can be performed on it but with no data. </summary>
+        #region CdnOrigin
+        /// <summary> Gets an object representing a CdnOrigin along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="Origin" /> object. </returns>
-        public static Origin GetOrigin(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CdnOrigin" /> object. </returns>
+        public static CdnOrigin GetCdnOrigin(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new Origin(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new CdnOrigin(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
-        #region OriginGroup
-        /// <summary> Gets an object representing a OriginGroup along with the instance operations that can be performed on it but with no data. </summary>
+        #region CdnOriginGroup
+        /// <summary> Gets an object representing a CdnOriginGroup along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="OriginGroup" /> object. </returns>
-        public static OriginGroup GetOriginGroup(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CdnOriginGroup" /> object. </returns>
+        public static CdnOriginGroup GetCdnOriginGroup(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new OriginGroup(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new CdnOriginGroup(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
-        #region CustomDomain
-        /// <summary> Gets an object representing a CustomDomain along with the instance operations that can be performed on it but with no data. </summary>
+        #region CdnCustomDomain
+        /// <summary> Gets an object representing a CdnCustomDomain along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CustomDomain" /> object. </returns>
-        public static CustomDomain GetCustomDomain(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CdnCustomDomain" /> object. </returns>
+        public static CdnCustomDomain GetCdnCustomDomain(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new CustomDomain(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new CdnCustomDomain(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
@@ -111,58 +111,58 @@ namespace Azure.ResourceManager.Cdn
         }
         #endregion
 
-        #region Route
-        /// <summary> Gets an object representing a Route along with the instance operations that can be performed on it but with no data. </summary>
+        #region AfdRoute
+        /// <summary> Gets an object representing a AfdRoute along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="Route" /> object. </returns>
-        public static Route GetRoute(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AfdRoute" /> object. </returns>
+        public static AfdRoute GetAfdRoute(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new Route(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new AfdRoute(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
-        #region RuleSet
-        /// <summary> Gets an object representing a RuleSet along with the instance operations that can be performed on it but with no data. </summary>
+        #region AfdRuleSet
+        /// <summary> Gets an object representing a AfdRuleSet along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RuleSet" /> object. </returns>
-        public static RuleSet GetRuleSet(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AfdRuleSet" /> object. </returns>
+        public static AfdRuleSet GetAfdRuleSet(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new RuleSet(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new AfdRuleSet(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
-        #region Rule
-        /// <summary> Gets an object representing a Rule along with the instance operations that can be performed on it but with no data. </summary>
+        #region AfdRule
+        /// <summary> Gets an object representing a AfdRule along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="Rule" /> object. </returns>
-        public static Rule GetRule(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AfdRule" /> object. </returns>
+        public static AfdRule GetAfdRule(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new Rule(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new AfdRule(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
-        #region SecurityPolicy
-        /// <summary> Gets an object representing a SecurityPolicy along with the instance operations that can be performed on it but with no data. </summary>
+        #region AfdSecurityPolicy
+        /// <summary> Gets an object representing a AfdSecurityPolicy along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityPolicy" /> object. </returns>
-        public static SecurityPolicy GetSecurityPolicy(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AfdSecurityPolicy" /> object. </returns>
+        public static AfdSecurityPolicy GetAfdSecurityPolicy(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new SecurityPolicy(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new AfdSecurityPolicy(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
-        #region Secret
-        /// <summary> Gets an object representing a Secret along with the instance operations that can be performed on it but with no data. </summary>
+        #region AfdSecret
+        /// <summary> Gets an object representing a AfdSecret along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="Secret" /> object. </returns>
-        public static Secret GetSecret(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AfdSecret" /> object. </returns>
+        public static AfdSecret GetAfdSecret(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new Secret(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new AfdSecret(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 

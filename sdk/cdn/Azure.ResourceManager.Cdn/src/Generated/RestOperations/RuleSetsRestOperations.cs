@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="ruleSetName"> Name of the rule set under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="ruleSetName"/> is null. </exception>
-        public async Task<Response<RuleSetData>> GetAsync(string resourceGroupName, string profileName, string ruleSetName, CancellationToken cancellationToken = default)
+        public async Task<Response<AfdRuleSetData>> GetAsync(string resourceGroupName, string profileName, string ruleSetName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -178,13 +178,13 @@ namespace Azure.ResourceManager.Cdn
             {
                 case 200:
                     {
-                        RuleSetData value = default;
+                        AfdRuleSetData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RuleSetData.DeserializeRuleSetData(document.RootElement);
+                        value = AfdRuleSetData.DeserializeAfdRuleSetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((RuleSetData)null, message.Response);
+                    return Response.FromValue((AfdRuleSetData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="ruleSetName"> Name of the rule set under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="ruleSetName"/> is null. </exception>
-        public Response<RuleSetData> Get(string resourceGroupName, string profileName, string ruleSetName, CancellationToken cancellationToken = default)
+        public Response<AfdRuleSetData> Get(string resourceGroupName, string profileName, string ruleSetName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -217,13 +217,13 @@ namespace Azure.ResourceManager.Cdn
             {
                 case 200:
                     {
-                        RuleSetData value = default;
+                        AfdRuleSetData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RuleSetData.DeserializeRuleSetData(document.RootElement);
+                        value = AfdRuleSetData.DeserializeAfdRuleSetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((RuleSetData)null, message.Response);
+                    return Response.FromValue((AfdRuleSetData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }

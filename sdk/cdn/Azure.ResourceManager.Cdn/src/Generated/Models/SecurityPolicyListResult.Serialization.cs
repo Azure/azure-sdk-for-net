@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         internal static SecurityPolicyListResult DeserializeSecurityPolicyListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<SecurityPolicyData>> value = default;
+            Optional<IReadOnlyList<AfdSecurityPolicyData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Cdn.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SecurityPolicyData> array = new List<SecurityPolicyData>();
+                    List<AfdSecurityPolicyData> array = new List<AfdSecurityPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityPolicyData.DeserializeSecurityPolicyData(item));
+                        array.Add(AfdSecurityPolicyData.DeserializeAfdSecurityPolicyData(item));
                     }
                     value = array;
                     continue;

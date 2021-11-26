@@ -18,9 +18,9 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Creates a new rule set within the specified profile. </summary>
-    public partial class RuleSetCreateOperation : Operation<RuleSet>, IOperationSource<RuleSet>
+    public partial class RuleSetCreateOperation : Operation<AfdRuleSet>, IOperationSource<AfdRuleSet>
     {
-        private readonly OperationInternals<RuleSet> _operation;
+        private readonly OperationInternals<AfdRuleSet> _operation;
 
         private readonly ArmResource _operationBase;
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal RuleSetCreateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<RuleSet>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "RuleSetCreateOperation");
+            _operation = new OperationInternals<AfdRuleSet>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "RuleSetCreateOperation");
             _operationBase = operationsBase;
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override RuleSet Value => _operation.Value;
+        public override AfdRuleSet Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -57,21 +57,21 @@ namespace Azure.ResourceManager.Cdn.Models
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<RuleSet>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<AfdRuleSet>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<RuleSet>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<AfdRuleSet>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        RuleSet IOperationSource<RuleSet>.CreateResult(Response response, CancellationToken cancellationToken)
+        AfdRuleSet IOperationSource<AfdRuleSet>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new RuleSet(_operationBase, RuleSetData.DeserializeRuleSetData(document.RootElement));
+            return new AfdRuleSet(_operationBase, AfdRuleSetData.DeserializeAfdRuleSetData(document.RootElement));
         }
 
-        async ValueTask<RuleSet> IOperationSource<RuleSet>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<AfdRuleSet> IOperationSource<AfdRuleSet>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new RuleSet(_operationBase, RuleSetData.DeserializeRuleSetData(document.RootElement));
+            return new AfdRuleSet(_operationBase, AfdRuleSetData.DeserializeAfdRuleSetData(document.RootElement));
         }
     }
 }

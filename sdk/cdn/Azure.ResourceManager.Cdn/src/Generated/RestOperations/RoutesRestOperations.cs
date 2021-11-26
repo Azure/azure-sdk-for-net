@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="routeName"> Name of the routing rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, or <paramref name="routeName"/> is null. </exception>
-        public async Task<Response<RouteData>> GetAsync(string resourceGroupName, string profileName, string endpointName, string routeName, CancellationToken cancellationToken = default)
+        public async Task<Response<AfdRouteData>> GetAsync(string resourceGroupName, string profileName, string endpointName, string routeName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -197,13 +197,13 @@ namespace Azure.ResourceManager.Cdn
             {
                 case 200:
                     {
-                        RouteData value = default;
+                        AfdRouteData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RouteData.DeserializeRouteData(document.RootElement);
+                        value = AfdRouteData.DeserializeAfdRouteData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((RouteData)null, message.Response);
+                    return Response.FromValue((AfdRouteData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="routeName"> Name of the routing rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, or <paramref name="routeName"/> is null. </exception>
-        public Response<RouteData> Get(string resourceGroupName, string profileName, string endpointName, string routeName, CancellationToken cancellationToken = default)
+        public Response<AfdRouteData> Get(string resourceGroupName, string profileName, string endpointName, string routeName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -241,19 +241,19 @@ namespace Azure.ResourceManager.Cdn
             {
                 case 200:
                     {
-                        RouteData value = default;
+                        AfdRouteData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RouteData.DeserializeRouteData(document.RootElement);
+                        value = AfdRouteData.DeserializeAfdRouteData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((RouteData)null, message.Response);
+                    return Response.FromValue((AfdRouteData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string resourceGroupName, string profileName, string endpointName, string routeName, RouteData route)
+        internal HttpMessage CreateCreateRequest(string resourceGroupName, string profileName, string endpointName, string routeName, AfdRouteData route)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="route"> Route properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, <paramref name="routeName"/>, or <paramref name="route"/> is null. </exception>
-        public async Task<Response> CreateAsync(string resourceGroupName, string profileName, string endpointName, string routeName, RouteData route, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateAsync(string resourceGroupName, string profileName, string endpointName, string routeName, AfdRouteData route, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="route"> Route properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, <paramref name="routeName"/>, or <paramref name="route"/> is null. </exception>
-        public Response Create(string resourceGroupName, string profileName, string endpointName, string routeName, RouteData route, CancellationToken cancellationToken = default)
+        public Response Create(string resourceGroupName, string profileName, string endpointName, string routeName, AfdRouteData route, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

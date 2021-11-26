@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="secretName"> Name of the Secret under the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="secretName"/> is null. </exception>
-        public async Task<Response<SecretData>> GetAsync(string resourceGroupName, string profileName, string secretName, CancellationToken cancellationToken = default)
+        public async Task<Response<AfdSecretData>> GetAsync(string resourceGroupName, string profileName, string secretName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -178,13 +178,13 @@ namespace Azure.ResourceManager.Cdn
             {
                 case 200:
                     {
-                        SecretData value = default;
+                        AfdSecretData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SecretData.DeserializeSecretData(document.RootElement);
+                        value = AfdSecretData.DeserializeAfdSecretData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SecretData)null, message.Response);
+                    return Response.FromValue((AfdSecretData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="secretName"> Name of the Secret under the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="secretName"/> is null. </exception>
-        public Response<SecretData> Get(string resourceGroupName, string profileName, string secretName, CancellationToken cancellationToken = default)
+        public Response<AfdSecretData> Get(string resourceGroupName, string profileName, string secretName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -217,19 +217,19 @@ namespace Azure.ResourceManager.Cdn
             {
                 case 200:
                     {
-                        SecretData value = default;
+                        AfdSecretData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SecretData.DeserializeSecretData(document.RootElement);
+                        value = AfdSecretData.DeserializeAfdSecretData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SecretData)null, message.Response);
+                    return Response.FromValue((AfdSecretData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string resourceGroupName, string profileName, string secretName, SecretData secret)
+        internal HttpMessage CreateCreateRequest(string resourceGroupName, string profileName, string secretName, AfdSecretData secret)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="secret"> The Secret properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="secretName"/>, or <paramref name="secret"/> is null. </exception>
-        public async Task<Response> CreateAsync(string resourceGroupName, string profileName, string secretName, SecretData secret, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateAsync(string resourceGroupName, string profileName, string secretName, AfdSecretData secret, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="secret"> The Secret properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="secretName"/>, or <paramref name="secret"/> is null. </exception>
-        public Response Create(string resourceGroupName, string profileName, string secretName, SecretData secret, CancellationToken cancellationToken = default)
+        public Response Create(string resourceGroupName, string profileName, string secretName, AfdSecretData secret, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

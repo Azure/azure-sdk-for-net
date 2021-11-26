@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="securityPolicyName"> Name of the security policy under the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="securityPolicyName"/> is null. </exception>
-        public async Task<Response<SecurityPolicyData>> GetAsync(string resourceGroupName, string profileName, string securityPolicyName, CancellationToken cancellationToken = default)
+        public async Task<Response<AfdSecurityPolicyData>> GetAsync(string resourceGroupName, string profileName, string securityPolicyName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -178,13 +178,13 @@ namespace Azure.ResourceManager.Cdn
             {
                 case 200:
                     {
-                        SecurityPolicyData value = default;
+                        AfdSecurityPolicyData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SecurityPolicyData.DeserializeSecurityPolicyData(document.RootElement);
+                        value = AfdSecurityPolicyData.DeserializeAfdSecurityPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SecurityPolicyData)null, message.Response);
+                    return Response.FromValue((AfdSecurityPolicyData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="securityPolicyName"> Name of the security policy under the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="securityPolicyName"/> is null. </exception>
-        public Response<SecurityPolicyData> Get(string resourceGroupName, string profileName, string securityPolicyName, CancellationToken cancellationToken = default)
+        public Response<AfdSecurityPolicyData> Get(string resourceGroupName, string profileName, string securityPolicyName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -217,19 +217,19 @@ namespace Azure.ResourceManager.Cdn
             {
                 case 200:
                     {
-                        SecurityPolicyData value = default;
+                        AfdSecurityPolicyData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SecurityPolicyData.DeserializeSecurityPolicyData(document.RootElement);
+                        value = AfdSecurityPolicyData.DeserializeAfdSecurityPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SecurityPolicyData)null, message.Response);
+                    return Response.FromValue((AfdSecurityPolicyData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyData securityPolicy)
+        internal HttpMessage CreateCreateRequest(string resourceGroupName, string profileName, string securityPolicyName, AfdSecurityPolicyData securityPolicy)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="securityPolicy"> The security policy properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="securityPolicyName"/>, or <paramref name="securityPolicy"/> is null. </exception>
-        public async Task<Response> CreateAsync(string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyData securityPolicy, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateAsync(string resourceGroupName, string profileName, string securityPolicyName, AfdSecurityPolicyData securityPolicy, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="securityPolicy"> The security policy properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="securityPolicyName"/>, or <paramref name="securityPolicy"/> is null. </exception>
-        public Response Create(string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyData securityPolicy, CancellationToken cancellationToken = default)
+        public Response Create(string resourceGroupName, string profileName, string securityPolicyName, AfdSecurityPolicyData securityPolicy, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
