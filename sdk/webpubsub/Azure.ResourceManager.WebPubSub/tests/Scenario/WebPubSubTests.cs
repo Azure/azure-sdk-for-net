@@ -14,13 +14,13 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.WebPubSub.Tests
 {
-    public class WebPubSubResourceTests : WebPubHubServiceClientTestBase
+    public class WebPubSubTests : WebPubHubServiceClientTestBase
     {
         private ResourceGroup _resourceGroup;
 
         private ResourceIdentifier _resourceGroupIdentifier;
 
-        public WebPubSubResourceTests(bool isAsync) : base(isAsync)
+        public WebPubSubTests(bool isAsync) : base(isAsync)
         {
         }
 
@@ -49,14 +49,14 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         [TearDown]
         public async Task TestTearDown()
         {
-            var list = await _resourceGroup.GetWebPubSubResources().GetAllAsync().ToEnumerableAsync();
+            var list = await _resourceGroup.GetWebPubSubs().GetAllAsync().ToEnumerableAsync();
             foreach (var item in list)
             {
                 await item.DeleteAsync();
             }
         }
 
-        public async Task<WebPubSubResource> CreateWebPubSub(string webPubSubName)
+        public async Task<WebPubSub> CreateWebPubSub(string webPubSubName)
         {
             // Create WebPubSub ConfigData
             IList<LiveTraceCategory> categories = new List<LiveTraceCategory>();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
                 new ResourceLogCategory(){ Name = "category1", Enabled = "false" }
             };
 
-            WebPubSubResourceData data = new WebPubSubResourceData(Location.WestUS2)
+            WebPubSubData data = new WebPubSubData(Location.WestUS2)
             {
                 Sku = new ResourceSku("Standard_S1"),
                 LiveTraceConfiguration = new LiveTraceConfiguration("true", categories),
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             };
 
             // Create WebPubSub
-            var webPubSub = await (await _resourceGroup.GetWebPubSubResources().CreateOrUpdateAsync(webPubSubName, data)).WaitForCompletionAsync();
+            var webPubSub = await (await _resourceGroup.GetWebPubSubs().CreateOrUpdateAsync(webPubSubName, data)).WaitForCompletionAsync();
 
             return webPubSub.Value;
         }
@@ -107,8 +107,8 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         {
             string webPubSubName = Recording.GenerateAssetName("webpubsub-");
             await CreateWebPubSub(webPubSubName);
-            Assert.IsTrue(_resourceGroup.GetWebPubSubResources().CheckIfExists(webPubSubName));
-            Assert.IsFalse(_resourceGroup.GetWebPubSubResources().CheckIfExists(webPubSubName + "1"));
+            Assert.IsTrue(_resourceGroup.GetWebPubSubs().CheckIfExists(webPubSubName));
+            Assert.IsFalse(_resourceGroup.GetWebPubSubs().CheckIfExists(webPubSubName + "1"));
         }
 
         [Test]
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         {
             string webPubSubName = Recording.GenerateAssetName("webpubsub-");
             await CreateWebPubSub(webPubSubName);
-            var webPubSub = await _resourceGroup.GetWebPubSubResources().GetAsync(webPubSubName);
+            var webPubSub = await _resourceGroup.GetWebPubSubs().GetAsync(webPubSubName);
             Assert.IsNotNull(webPubSub.Value.Data);
             Assert.AreEqual(webPubSubName, webPubSub.Value.Data.Name);
             Assert.AreEqual(Location.WestUS2, webPubSub.Value.Data.Location);
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         {
             string webPubSubName = Recording.GenerateAssetName("webpubsub-");
             await CreateWebPubSub(webPubSubName);
-            List<WebPubSubResource> webPubSubList = await _resourceGroup.GetWebPubSubResources().GetAllAsync().ToEnumerableAsync();
+            List<WebPubSub> webPubSubList = await _resourceGroup.GetWebPubSubs().GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(1, webPubSubList.Count);
         }
 

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
     public class SharedPrivateLinkTests : WebPubHubServiceClientTestBase
     {
         private ResourceGroup _resourceGroup;
-        private WebPubSubResource _webPubSub;
+        private WebPubSub _webPubSub;
         private string _webPubSubName;
         private string _linkName;
         private string _vnetName;
@@ -59,14 +59,14 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         [TearDown]
         public async Task TestTearDown()
         {
-            if (_resourceGroup.GetWebPubSubResources().CheckIfExists(_webPubSubName))
+            if (_resourceGroup.GetWebPubSubs().CheckIfExists(_webPubSubName))
             {
-                var webPubSub = await _resourceGroup.GetWebPubSubResources().GetAsync(_webPubSubName);
+                var webPubSub = await _resourceGroup.GetWebPubSubs().GetAsync(_webPubSubName);
                 await webPubSub.Value.DeleteAsync();
             }
         }
 
-        public async Task<WebPubSubResource> CreateWebPubSub()
+        public async Task<WebPubSub> CreateWebPubSub()
         {
             // Create WebPubSub ConfigData
             IList<LiveTraceCategory> categories = new List<LiveTraceCategory>();
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
                 new ResourceLogCategory(){ Name = "category1", Enabled = "false" }
             };
 
-            WebPubSubResourceData data = new WebPubSubResourceData(Location.WestUS2)
+            WebPubSubData data = new WebPubSubData(Location.WestUS2)
             {
                 Sku = new ResourceSku("Standard_S1"),
                 LiveTraceConfiguration = new LiveTraceConfiguration("true", categories),
@@ -95,12 +95,12 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             };
 
             // Create WebPubSub
-            var webPubSub = await (await _resourceGroup.GetWebPubSubResources().CreateOrUpdateAsync(_webPubSubName, data)).WaitForCompletionAsync();
+            var webPubSub = await (await _resourceGroup.GetWebPubSubs().CreateOrUpdateAsync(_webPubSubName, data)).WaitForCompletionAsync();
 
             return webPubSub.Value;
         }
 
-        public async Task<SharedPrivateLinkResource> CreateSharedPrivateLink(string LinkName)
+        public async Task<SharedPrivateLink> CreateSharedPrivateLink(string LinkName)
         {
             //1. create vnet
             var vnetData = new VirtualNetworkData()
@@ -167,8 +167,8 @@ namespace Azure.ResourceManager.WebPubSub.Tests
 
             //3 create SharedPrivateLink
             //TODO: Creating a SharedPrivateLink inevitably requires manual approval on the portal.
-            var container = _webPubSub.GetSharedPrivateLinkResources();
-            SharedPrivateLinkResourceData data = new SharedPrivateLinkResourceData()
+            var container = _webPubSub.GetSharedPrivateLinks();
+            SharedPrivateLinkData data = new SharedPrivateLinkData()
             {
                 PrivateLinkResourceId = $"{_resourceGroupIdentifier}/providers/Microsoft.Web/sites/{WebAppName}/sharedPrivateLinkResources/{LinkName}",
                 GroupId = "webPubSub",
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         public async Task GetAll()
         {
             _webPubSub = await CreateWebPubSub();
-            var list = await _webPubSub.GetSharedPrivateLinkResources().GetAllAsync().ToEnumerableAsync();
+            var list = await _webPubSub.GetSharedPrivateLinks().GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(0, list.Count);
         }
     }

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
     public class PrivateEndpointConnectionTests : WebPubHubServiceClientTestBase
     {
         private ResourceGroup _resourceGroup;
-        private WebPubSubResource _webPubSub;
+        private WebPubSub _webPubSub;
         private VirtualNetwork _vnet;
         private string _vnetName;
         private string _privateEndPointName;
@@ -74,14 +74,14 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             {
                 await (await item.DeleteAsync()).WaitForCompletionResponseAsync();
             }
-            var list = await _resourceGroup.GetWebPubSubResources().GetAllAsync().ToEnumerableAsync();
+            var list = await _resourceGroup.GetWebPubSubs().GetAllAsync().ToEnumerableAsync();
             foreach (var item in list)
             {
                 await item.DeleteAsync();
             }
         }
 
-        public async Task<WebPubSubResource> CreateWebPubSub(string webPubSubName)
+        public async Task<WebPubSub> CreateWebPubSub(string webPubSubName)
         {
             // Create WebPubSub ConfigData
             IList<LiveTraceCategory> categories = new List<LiveTraceCategory>();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
                 new ResourceLogCategory(){ Name = "category1", Enabled = "false" }
             };
 
-            WebPubSubResourceData data = new WebPubSubResourceData(Location.WestUS2)
+            WebPubSubData data = new WebPubSubData(Location.WestUS2)
             {
                 Sku = new ResourceSku("Standard_S1"),
                 LiveTraceConfiguration = new LiveTraceConfiguration("true", categories),
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             };
 
             // Create WebPubSub
-            var webPubSub = await (await _resourceGroup.GetWebPubSubResources().CreateOrUpdateAsync(webPubSubName, data)).WaitForCompletionAsync();
+            var webPubSub = await (await _resourceGroup.GetWebPubSubs().CreateOrUpdateAsync(webPubSubName, data)).WaitForCompletionAsync();
 
             return webPubSub.Value;
         }

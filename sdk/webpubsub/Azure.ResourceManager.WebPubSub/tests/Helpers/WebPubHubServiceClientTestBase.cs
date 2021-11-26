@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Helpers
             return (await Subscription.GetResourceGroups().CreateOrUpdateAsync(name, new ResourceGroupData(location))).Value;
         }
 
-        protected async Task<WebPubSubResource> CreateDefaultWebPubSub(string webPubSubName, Location location, ResourceGroup resourceGroup)
+        protected async Task<WebPubSub> CreateDefaultWebPubSub(string webPubSubName, Location location, ResourceGroup resourceGroup)
         {
             // Create WebPubSub ConfigData
             IList<LiveTraceCategory> categories = new List<LiveTraceCategory>()
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Helpers
                 new ResourceLogCategory(){ Name = "category1", Enabled = "false" }
             };
 
-            WebPubSubResourceData data = new WebPubSubResourceData(Location.WestUS2)
+            WebPubSubData data = new WebPubSubData(Location.WestUS2)
             {
                 Sku = new ResourceSku("Standard_S1"),
                 LiveTraceConfiguration = new LiveTraceConfiguration("true", categories),
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Helpers
             };
 
             // Create WebPubSub
-            var webPubSub = await (await resourceGroup.GetWebPubSubResources().CreateOrUpdateAsync(webPubSubName, data)).WaitForCompletionAsync();
+            var webPubSub = await (await resourceGroup.GetWebPubSubs().CreateOrUpdateAsync(webPubSubName, data)).WaitForCompletionAsync();
 
             return webPubSub.Value;
         }

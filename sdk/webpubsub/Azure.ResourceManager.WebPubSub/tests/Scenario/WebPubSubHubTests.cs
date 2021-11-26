@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         [TearDown]
         public async Task TestTearDown()
         {
-            var list = await _resourceGroup.GetWebPubSubResources().GetAllAsync().ToEnumerableAsync();
+            var list = await _resourceGroup.GetWebPubSubs().GetAllAsync().ToEnumerableAsync();
             foreach (var item in list)
             {
                 await item.DeleteAsync();
