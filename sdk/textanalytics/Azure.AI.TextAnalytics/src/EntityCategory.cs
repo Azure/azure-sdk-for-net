@@ -71,7 +71,7 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Specifies that the entity contains an Internet Protocol Address.
         /// </summary>
-        public static readonly EntityCategory IPAddress = new EntityCategory("IP");
+        public static readonly EntityCategory IPAddress = new EntityCategory("IPAddress");
 
         /// <summary>
         /// Specifies that the entity contains a number or numeric quantity.

@@ -20,6 +20,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         internal const string PartitionIdName = "x-opt-partition-id";
         internal const string ViaPartitionKeyName = "x-opt-via-partition-key";
         internal const string DeadLetterSourceName = "x-opt-deadletter-source";
+        internal const string MessageStateName = "x-opt-message-state";
         internal const string TimeSpanName = AmqpConstants.Vendor + ":timespan";
         internal const string UriName = AmqpConstants.Vendor + ":uri";
         internal const string DateTimeOffsetName = AmqpConstants.Vendor + ":datetime-offset";

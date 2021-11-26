@@ -27,7 +27,8 @@ namespace Azure.ResourceManager.Tests
         {
             _rgName = SessionRecording.GenerateAssetName("testRg-");
             Subscription subscription = await GlobalClient.GetSubscriptions().GetIfExistsAsync(SessionEnvironment.SubscriptionId);
-            _ = subscription.GetResourceGroups().Construct(_location).CreateOrUpdateAsync(_rgName).ConfigureAwait(false).GetAwaiter().GetResult().Value;
+            var op = InstrumentOperation(subscription.GetResourceGroups().Construct(_location).CreateOrUpdate(_rgName, waitForCompletion: false));
+            op.WaitForCompletion();
             StopSessionRecording();
         }
 
