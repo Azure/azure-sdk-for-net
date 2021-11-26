@@ -189,9 +189,18 @@ directive:
   - rename-operation:
       from: LogAnalytics_GetWafLogAnalyticsRankings
       to: AFDProfiles_GetWafLogAnalyticsRankings
-  - from: afdx.json
-    where: $.definitions.AFDDomain
-    transform: $['x-ms-client-name'] = 'AFDCustomDomain'
+  - from: swagger-document
+    where: $.definitions
+    transform: >
+      for (var key in $) {
+          if (key.startsWith('AFD')) {
+          const newKey = key.replace('AFD', 'Afd');
+          $[key]['x-ms-client-name'] = newKey
+              if (key === 'AfdDomain') {
+                  $[key]['x-ms-client-name'] = 'AfdCustomDomain'
+              }
+          }
+      }
   - remove-operation: AFDProfiles_CheckHostNameAvailability
   - remove-operation: Secrets_Update
   - remove-operation: Validate_Secret
