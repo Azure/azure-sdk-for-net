@@ -193,5 +193,6 @@ directive:
     where: $.definitions.AFDDomain
     transform: $['x-ms-client-name'] = 'AFDCustomDomain'
   - remove-operation: AFDProfiles_CheckHostNameAvailability
+  - remove-operation: Secrets_Update
   - remove-operation: Validate_Secret
 ```

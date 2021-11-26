@@ -525,9 +525,9 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             Assert.True(((CustomerCertificateParameters)model.Data.Parameters).SubjectAlternativeNames.SequenceEqual(((CustomerCertificateParameters)getResult.Data.Parameters).SubjectAlternativeNames));
         }
 
-        public static void AssertSecretUpdate(Secret updatedSecret, SecretProperties updateParameters)
-        {
-            Assert.AreEqual(((CustomerCertificateParameters)updatedSecret.Data.Parameters).UseLatestVersion, ((CustomerCertificateParameters)updateParameters.Parameters).UseLatestVersion);
-        }
+        //public static void AssertSecretUpdate(Secret updatedSecret, SecretProperties updateParameters)
+        //{
+        //    Assert.AreEqual(((CustomerCertificateParameters)updatedSecret.Data.Parameters).UseLatestVersion, ((CustomerCertificateParameters)updateParameters.Parameters).UseLatestVersion);
+        //}
     }
 }
