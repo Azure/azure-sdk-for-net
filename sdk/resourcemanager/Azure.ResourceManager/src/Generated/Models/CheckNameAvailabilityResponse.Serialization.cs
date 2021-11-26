@@ -13,29 +13,8 @@ using Azure.Core;
 namespace Azure.ResourceManager.Models
 {
     [JsonConverter(typeof(CheckNameAvailabilityResponseConverter))]
-    public partial class CheckNameAvailabilityResponse : IUtf8JsonSerializable
+    public partial class CheckNameAvailabilityResponse
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(NameAvailable))
-            {
-                writer.WritePropertyName("nameAvailable");
-                writer.WriteBooleanValue(NameAvailable.Value);
-            }
-            if (Optional.IsDefined(Reason))
-            {
-                writer.WritePropertyName("reason");
-                writer.WriteStringValue(Reason.Value.ToString());
-            }
-            if (Optional.IsDefined(Message))
-            {
-                writer.WritePropertyName("message");
-                writer.WriteStringValue(Message);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static CheckNameAvailabilityResponse DeserializeCheckNameAvailabilityResponse(JsonElement element)
         {
             Optional<bool> nameAvailable = default;
@@ -76,7 +55,7 @@ namespace Azure.ResourceManager.Models
         {
             public override void Write(Utf8JsonWriter writer, CheckNameAvailabilityResponse model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                throw new NotImplementedException();
             }
             public override CheckNameAvailabilityResponse Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
