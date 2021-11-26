@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Azure.AI.Language.QuestionAnswering.Projects;
+using Azure.Core;
 using Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker;
 using Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models;
 using NUnit.Framework;
@@ -13,9 +15,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
 {
     public partial class QuestionAnsweringClientSamples
     {
-        /* uncomment when we have authoring
-        [Ignore("Used only for the migration guide")]
-        private async Task MigrationGuide_Authoring()
+        private async Task CognitiveServices_QnA_MigrationGuide_Authoring()
         {
             #region Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_CreateClient
             QnAMakerClient client = new QnAMakerClient(new ApiKeyServiceClientCredentials("<QnAMakerSubscriptionKey>"), new HttpClient(), false)
@@ -71,7 +71,43 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             #endregion Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_DeleteKnowledeBase
 
         }
-        */
+
+        private async Task Language_QnA_MigrationGuide_Authoring()
+        {
+            #region Snippet:Language_QnA_Maker_Snippets_MigrationGuide_CreateClient
+            Uri endpoint = new Uri("https://myaccount.api.cognitive.microsoft.com");
+            AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
+
+            QuestionAnsweringProjectsClient client = new QuestionAnsweringProjectsClient(endpoint, credential);
+            #endregion Snippet:Language_QnA_Maker_Snippets_MigrationGuide_CreateClient
+
+            #region Snippet:Language_QnA_Maker_Snippets_MigrationGuide_CreateKnowledgeBase
+            string newProjectName = "testqna";
+            RequestContent creationRequestContent = RequestContent.Create(
+                new {
+                        description = "This is the description for a test project",
+                        language = "en",
+                        multilingualResource = false,
+                        settings = new
+                        {
+                            defaultAnswer = "No answer found for your question."
+                        }
+                    }
+                );
+
+            Response creationResponse = await client.CreateProjectAsync(newProjectName, creationRequestContent);
+            #endregion Snippet:Language_QnA_Maker_Snippets_MigrationGuide_CreateKnowledgeBase
+
+            #region Snippet:Language_QnA_Maker_Snippets_MigrationGuide_UpdateKnowledeBase
+
+            #endregion Snippet:Language_QnA_Maker_Snippets_MigrationGuide_UpdateKnowledeBase
+
+            // export project
+
+            #region Snippet:Language_QnA_Maker_Snippets_MigrationGuide_DeleteKnowledeBase
+
+            #endregion Snippet:Language_QnA_Maker_Snippets_MigrationGuide_DeleteKnowledeBase
+        }
 
         private async Task Language_QnA_MigrationGuide_Runtime()
         {
