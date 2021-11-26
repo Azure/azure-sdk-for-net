@@ -106,24 +106,24 @@ namespace Azure.ResourceManager.WebPubSub
             );
         }
 
-        /// <summary> Lists the WebPubSubResources for this <see cref="Subscription" />. </summary>
+        /// <summary> Lists the WebPubSubs for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<WebPubSubResource> GetWebPubSubsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static AsyncPageable<WebPubSub> GetWebPubSubsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 var restOperations = GetWebPubSubRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                async Task<Page<WebPubSubResource>> FirstPageFunc(int? pageSizeHint)
+                async Task<Page<WebPubSub>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetWebPubSubs");
                     scope.Start();
                     try
                     {
                         var response = await restOperations.ListBySubscriptionAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new WebPubSubResource(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new WebPubSub(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -131,14 +131,14 @@ namespace Azure.ResourceManager.WebPubSub
                         throw;
                     }
                 }
-                async Task<Page<WebPubSubResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+                async Task<Page<WebPubSub>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetWebPubSubs");
                     scope.Start();
                     try
                     {
                         var response = await restOperations.ListBySubscriptionNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new WebPubSubResource(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new WebPubSub(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -151,24 +151,24 @@ namespace Azure.ResourceManager.WebPubSub
             );
         }
 
-        /// <summary> Lists the WebPubSubResources for this <see cref="Subscription" />. </summary>
+        /// <summary> Lists the WebPubSubs for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<WebPubSubResource> GetWebPubSubs(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static Pageable<WebPubSub> GetWebPubSubs(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 var restOperations = GetWebPubSubRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                Page<WebPubSubResource> FirstPageFunc(int? pageSizeHint)
+                Page<WebPubSub> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetWebPubSubs");
                     scope.Start();
                     try
                     {
                         var response = restOperations.ListBySubscription(cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new WebPubSubResource(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new WebPubSub(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -176,14 +176,14 @@ namespace Azure.ResourceManager.WebPubSub
                         throw;
                     }
                 }
-                Page<WebPubSubResource> NextPageFunc(string nextLink, int? pageSizeHint)
+                Page<WebPubSub> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetWebPubSubs");
                     scope.Start();
                     try
                     {
                         var response = restOperations.ListBySubscriptionNextPage(nextLink, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new WebPubSubResource(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new WebPubSub(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -196,30 +196,30 @@ namespace Azure.ResourceManager.WebPubSub
             );
         }
 
-        /// <summary> Filters the list of WebPubSubResources for a <see cref="Subscription" /> represented as generic resources. </summary>
+        /// <summary> Filters the list of WebPubSubs for a <see cref="Subscription" /> represented as generic resources. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="filter"> The string to filter the list. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<GenericResource> GetWebPubSubResourceByNameAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static AsyncPageable<GenericResource> GetWebPubSubByNameAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
-            ResourceFilterCollection filters = new(WebPubSubResource.ResourceType);
+            ResourceFilterCollection filters = new(WebPubSub.ResourceType);
             filters.SubstringFilter = filter;
             return ResourceListOperations.GetAtContextAsync(subscription, filters, expand, top, cancellationToken);
         }
 
-        /// <summary> Filters the list of WebPubSubResources for a <see cref="Subscription" /> represented as generic resources. </summary>
+        /// <summary> Filters the list of WebPubSubs for a <see cref="Subscription" /> represented as generic resources. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="filter"> The string to filter the list. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<GenericResource> GetWebPubSubResourceByName(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static Pageable<GenericResource> GetWebPubSubByName(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
-            ResourceFilterCollection filters = new(WebPubSubResource.ResourceType);
+            ResourceFilterCollection filters = new(WebPubSub.ResourceType);
             filters.SubstringFilter = filter;
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }

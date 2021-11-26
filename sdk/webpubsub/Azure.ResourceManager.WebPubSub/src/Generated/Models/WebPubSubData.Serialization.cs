@@ -15,7 +15,7 @@ using Azure.ResourceManager.WebPubSub.Models;
 
 namespace Azure.ResourceManager.WebPubSub
 {
-    public partial class WebPubSubResourceData : IUtf8JsonSerializable
+    public partial class WebPubSubData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.WebPubSub
             writer.WriteEndObject();
         }
 
-        internal static WebPubSubResourceData DeserializeWebPubSubResourceData(JsonElement element)
+        internal static WebPubSubData DeserializeWebPubSubData(JsonElement element)
         {
             Optional<ResourceSku> sku = default;
             Optional<ManagedIdentity> identity = default;
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.WebPubSub
             Optional<int> serverPort = default;
             Optional<string> version = default;
             Optional<IReadOnlyList<PrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Optional<IReadOnlyList<SharedPrivateLinkResourceData>> sharedPrivateLinkResources = default;
+            Optional<IReadOnlyList<SharedPrivateLinkData>> sharedPrivateLinkResources = default;
             Optional<WebPubSubTlsSettings> tls = default;
             Optional<string> hostNamePrefix = default;
             Optional<LiveTraceConfiguration> liveTraceConfiguration = default;
@@ -245,10 +245,10 @@ namespace Azure.ResourceManager.WebPubSub
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<SharedPrivateLinkResourceData> array = new List<SharedPrivateLinkResourceData>();
+                            List<SharedPrivateLinkData> array = new List<SharedPrivateLinkData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SharedPrivateLinkResourceData.DeserializeSharedPrivateLinkResourceData(item));
+                                array.Add(SharedPrivateLinkData.DeserializeSharedPrivateLinkData(item));
                             }
                             sharedPrivateLinkResources = array;
                             continue;
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.WebPubSub
                     continue;
                 }
             }
-            return new WebPubSubResourceData(id, name, type, tags, location, sku.Value, identity.Value, systemData, Optional.ToNullable(provisioningState), externalIP.Value, hostName.Value, Optional.ToNullable(publicPort), Optional.ToNullable(serverPort), version.Value, Optional.ToList(privateEndpointConnections), Optional.ToList(sharedPrivateLinkResources), tls.Value, hostNamePrefix.Value, liveTraceConfiguration.Value, resourceLogConfiguration.Value, networkACLs.Value, publicNetworkAccess.Value, Optional.ToNullable(disableLocalAuth), Optional.ToNullable(disableAadAuth));
+            return new WebPubSubData(id, name, type, tags, location, sku.Value, identity.Value, systemData, Optional.ToNullable(provisioningState), externalIP.Value, hostName.Value, Optional.ToNullable(publicPort), Optional.ToNullable(serverPort), version.Value, Optional.ToList(privateEndpointConnections), Optional.ToList(sharedPrivateLinkResources), tls.Value, hostNamePrefix.Value, liveTraceConfiguration.Value, resourceLogConfiguration.Value, networkACLs.Value, publicNetworkAccess.Value, Optional.ToNullable(disableLocalAuth), Optional.ToNullable(disableAadAuth));
         }
     }
 }

@@ -12,28 +12,28 @@ using Azure.ResourceManager.WebPubSub;
 namespace Azure.ResourceManager.WebPubSub.Models
 {
     /// <summary> Object that includes an array of resources and a possible link for next set. </summary>
-    internal partial class WebPubSubResourceList
+    internal partial class WebPubSubList
     {
-        /// <summary> Initializes a new instance of WebPubSubResourceList. </summary>
-        internal WebPubSubResourceList()
+        /// <summary> Initializes a new instance of WebPubSubList. </summary>
+        internal WebPubSubList()
         {
-            Value = new ChangeTrackingList<WebPubSubResourceData>();
+            Value = new ChangeTrackingList<WebPubSubData>();
         }
 
-        /// <summary> Initializes a new instance of WebPubSubResourceList. </summary>
+        /// <summary> Initializes a new instance of WebPubSubList. </summary>
         /// <param name="value"> List of the resources. </param>
         /// <param name="nextLink">
         /// The URL the client should use to fetch the next page (per server side paging).
         /// It&apos;s null for now, added for future use.
         /// </param>
-        internal WebPubSubResourceList(IReadOnlyList<WebPubSubResourceData> value, string nextLink)
+        internal WebPubSubList(IReadOnlyList<WebPubSubData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of the resources. </summary>
-        public IReadOnlyList<WebPubSubResourceData> Value { get; }
+        public IReadOnlyList<WebPubSubData> Value { get; }
         /// <summary>
         /// The URL the client should use to fetch the next page (per server side paging).
         /// It&apos;s null for now, added for future use.

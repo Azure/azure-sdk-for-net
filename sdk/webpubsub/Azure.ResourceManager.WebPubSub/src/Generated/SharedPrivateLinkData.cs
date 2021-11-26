@@ -11,15 +11,15 @@ using Azure.ResourceManager.WebPubSub.Models;
 
 namespace Azure.ResourceManager.WebPubSub
 {
-    /// <summary> A class representing the SharedPrivateLinkResource data model. </summary>
-    public partial class SharedPrivateLinkResourceData : Resource
+    /// <summary> A class representing the SharedPrivateLink data model. </summary>
+    public partial class SharedPrivateLinkData : Resource
     {
-        /// <summary> Initializes a new instance of SharedPrivateLinkResourceData. </summary>
-        public SharedPrivateLinkResourceData()
+        /// <summary> Initializes a new instance of SharedPrivateLinkData. </summary>
+        public SharedPrivateLinkData()
         {
         }
 
-        /// <summary> Initializes a new instance of SharedPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of SharedPrivateLinkData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="provisioningState"> Provisioning state of the shared private link resource. </param>
         /// <param name="requestMessage"> The request message for requesting approval of the shared private link resource. </param>
         /// <param name="status"> Status of the shared private link resource. </param>
-        internal SharedPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string groupId, string privateLinkResourceId, ProvisioningState? provisioningState, string requestMessage, SharedPrivateLinkResourceStatus? status) : base(id, name, type)
+        internal SharedPrivateLinkData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string groupId, string privateLinkResourceId, ProvisioningState? provisioningState, string requestMessage, SharedPrivateLinkResourceStatus? status) : base(id, name, type)
         {
             SystemData = systemData;
             GroupId = groupId;

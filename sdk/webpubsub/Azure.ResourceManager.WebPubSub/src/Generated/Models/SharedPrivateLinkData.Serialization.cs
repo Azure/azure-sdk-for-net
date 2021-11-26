@@ -13,7 +13,7 @@ using Azure.ResourceManager.WebPubSub.Models;
 
 namespace Azure.ResourceManager.WebPubSub
 {
-    public partial class SharedPrivateLinkResourceData : IUtf8JsonSerializable
+    public partial class SharedPrivateLinkData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.WebPubSub
             writer.WriteEndObject();
         }
 
-        internal static SharedPrivateLinkResourceData DeserializeSharedPrivateLinkResourceData(JsonElement element)
+        internal static SharedPrivateLinkData DeserializeSharedPrivateLinkData(JsonElement element)
         {
             Optional<SystemData> systemData = default;
             ResourceIdentifier id = default;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.WebPubSub
                     continue;
                 }
             }
-            return new SharedPrivateLinkResourceData(id, name, type, systemData, groupId.Value, privateLinkResourceId.Value, Optional.ToNullable(provisioningState), requestMessage.Value, Optional.ToNullable(status));
+            return new SharedPrivateLinkData(id, name, type, systemData, groupId.Value, privateLinkResourceId.Value, Optional.ToNullable(provisioningState), requestMessage.Value, Optional.ToNullable(status));
         }
     }
 }

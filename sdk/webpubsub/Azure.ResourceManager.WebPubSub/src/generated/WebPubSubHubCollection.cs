@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.WebPubSub
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => WebPubSubResource.ResourceType;
+        protected override ResourceType ValidResourceType => WebPubSub.ResourceType;
 
         // Collection level operations.
 

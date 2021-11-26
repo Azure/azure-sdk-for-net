@@ -18,9 +18,9 @@ using Azure.ResourceManager.WebPubSub;
 namespace Azure.ResourceManager.WebPubSub.Models
 {
     /// <summary> Operation to update an exiting resource. </summary>
-    public partial class WebPubSubUpdateOperation : Operation<WebPubSubResource>, IOperationSource<WebPubSubResource>
+    public partial class WebPubSubUpdateOperation : Operation<WebPubSub>, IOperationSource<WebPubSub>
     {
-        private readonly OperationInternals<WebPubSubResource> _operation;
+        private readonly OperationInternals<WebPubSub> _operation;
 
         private readonly ArmResource _operationBase;
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         internal WebPubSubUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<WebPubSubResource>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "WebPubSubUpdateOperation");
+            _operation = new OperationInternals<WebPubSub>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "WebPubSubUpdateOperation");
             _operationBase = operationsBase;
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override WebPubSubResource Value => _operation.Value;
+        public override WebPubSub Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -57,21 +57,21 @@ namespace Azure.ResourceManager.WebPubSub.Models
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<WebPubSubResource>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<WebPubSub>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<WebPubSubResource>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<WebPubSub>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        WebPubSubResource IOperationSource<WebPubSubResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        WebPubSub IOperationSource<WebPubSub>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new WebPubSubResource(_operationBase, WebPubSubResourceData.DeserializeWebPubSubResourceData(document.RootElement));
+            return new WebPubSub(_operationBase, WebPubSubData.DeserializeWebPubSubData(document.RootElement));
         }
 
-        async ValueTask<WebPubSubResource> IOperationSource<WebPubSubResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<WebPubSub> IOperationSource<WebPubSub>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new WebPubSubResource(_operationBase, WebPubSubResourceData.DeserializeWebPubSubResourceData(document.RootElement));
+            return new WebPubSub(_operationBase, WebPubSubData.DeserializeWebPubSubData(document.RootElement));
         }
     }
 }

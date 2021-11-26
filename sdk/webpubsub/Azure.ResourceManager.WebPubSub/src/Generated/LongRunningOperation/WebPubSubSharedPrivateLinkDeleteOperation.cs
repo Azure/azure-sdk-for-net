@@ -15,18 +15,18 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.WebPubSub.Models
 {
     /// <summary> Delete the specified shared private link resource. </summary>
-    public partial class WebPubSubSharedPrivateLinkResourceDeleteOperation : Operation
+    public partial class WebPubSubSharedPrivateLinkDeleteOperation : Operation
     {
         private readonly OperationInternals _operation;
 
-        /// <summary> Initializes a new instance of WebPubSubSharedPrivateLinkResourceDeleteOperation for mocking. </summary>
-        protected WebPubSubSharedPrivateLinkResourceDeleteOperation()
+        /// <summary> Initializes a new instance of WebPubSubSharedPrivateLinkDeleteOperation for mocking. </summary>
+        protected WebPubSubSharedPrivateLinkDeleteOperation()
         {
         }
 
-        internal WebPubSubSharedPrivateLinkResourceDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal WebPubSubSharedPrivateLinkDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "WebPubSubSharedPrivateLinkResourceDeleteOperation");
+            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "WebPubSubSharedPrivateLinkDeleteOperation");
         }
 
         /// <inheritdoc />

@@ -12,14 +12,14 @@ namespace Azure.ResourceManager.WebPubSub
     /// <summary> A class to add extension methods to ArmClient. </summary>
     public static partial class ArmClientExtensions
     {
-        #region WebPubSubResource
-        /// <summary> Gets an object representing a WebPubSubResource along with the instance operations that can be performed on it but with no data. </summary>
+        #region WebPubSub
+        /// <summary> Gets an object representing a WebPubSub along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WebPubSubResource" /> object. </returns>
-        public static WebPubSubResource GetWebPubSubResource(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WebPubSub" /> object. </returns>
+        public static WebPubSub GetWebPubSub(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new WebPubSubResource(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new WebPubSub(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
@@ -45,14 +45,14 @@ namespace Azure.ResourceManager.WebPubSub
         }
         #endregion
 
-        #region SharedPrivateLinkResource
-        /// <summary> Gets an object representing a SharedPrivateLinkResource along with the instance operations that can be performed on it but with no data. </summary>
+        #region SharedPrivateLink
+        /// <summary> Gets an object representing a SharedPrivateLink along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SharedPrivateLinkResource" /> object. </returns>
-        public static SharedPrivateLinkResource GetSharedPrivateLinkResource(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SharedPrivateLink" /> object. </returns>
+        public static SharedPrivateLink GetSharedPrivateLink(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new SharedPrivateLinkResource(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new SharedPrivateLink(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
     }

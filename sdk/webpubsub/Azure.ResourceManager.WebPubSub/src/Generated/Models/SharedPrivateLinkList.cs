@@ -12,25 +12,25 @@ using Azure.ResourceManager.WebPubSub;
 namespace Azure.ResourceManager.WebPubSub.Models
 {
     /// <summary> A list of shared private link resources. </summary>
-    internal partial class SharedPrivateLinkResourceList
+    internal partial class SharedPrivateLinkList
     {
-        /// <summary> Initializes a new instance of SharedPrivateLinkResourceList. </summary>
-        internal SharedPrivateLinkResourceList()
+        /// <summary> Initializes a new instance of SharedPrivateLinkList. </summary>
+        internal SharedPrivateLinkList()
         {
-            Value = new ChangeTrackingList<SharedPrivateLinkResourceData>();
+            Value = new ChangeTrackingList<SharedPrivateLinkData>();
         }
 
-        /// <summary> Initializes a new instance of SharedPrivateLinkResourceList. </summary>
+        /// <summary> Initializes a new instance of SharedPrivateLinkList. </summary>
         /// <param name="value"> The list of the shared private link resources. </param>
         /// <param name="nextLink"> Request URL that can be used to query next page of private endpoint connections. Returned when the total number of requested private endpoint connections exceed maximum page size. </param>
-        internal SharedPrivateLinkResourceList(IReadOnlyList<SharedPrivateLinkResourceData> value, string nextLink)
+        internal SharedPrivateLinkList(IReadOnlyList<SharedPrivateLinkData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of the shared private link resources. </summary>
-        public IReadOnlyList<SharedPrivateLinkResourceData> Value { get; }
+        public IReadOnlyList<SharedPrivateLinkData> Value { get; }
         /// <summary> Request URL that can be used to query next page of private endpoint connections. Returned when the total number of requested private endpoint connections exceed maximum page size. </summary>
         public string NextLink { get; }
     }
