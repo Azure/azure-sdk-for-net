@@ -39,6 +39,59 @@ namespace Azure.ResourceManager.Storage.Tests
 
         [Test]
         [RecordedTest]
+        public async Task StorageAccountGetOperations()
+        {
+            RestApiCollection operationCollection = Client.GetRestApis("Microsoft.Storage");
+            List<RestApi> apiList = await operationCollection.GetAllAsync().ToEnumerableAsync();
+            Assert.IsTrue(apiList.Count() > 1);
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task StorageAccountOperations()
+        {
+            RestApiCollection operationCollection = Client.GetRestApis("Microsoft.Storage");
+            List<RestApi> apiList = await operationCollection.GetAllAsync().ToEnumerableAsync();
+            bool exist1 = false;
+            bool exist2 = false;
+            foreach (RestApi restApi in apiList)
+            {
+                if (CheckRestApi(restApi, "Microsoft.Storage/storageAccounts/write", "Microsoft Storage", "Storage Accounts", "Create/Update Storage Account"))
+                {
+                    exist1 = true;
+                }
+                if (CheckRestApi(restApi, "Microsoft.Storage/storageAccounts/delete", "Microsoft Storage", "Storage Accounts", "Delete Storage Account"))
+                {
+                    exist2 = true;
+                }
+            }
+            Assert.IsTrue(exist1);
+            Assert.IsTrue(exist2);
+        }
+
+        public bool CheckRestApi(RestApi restApi, string name, string provider, string resource, string operation)
+        {
+            if (restApi.Name != name)
+            {
+                return false;
+            }
+            if (restApi.Operation != operation)
+            {
+                return false;
+            }
+            if (restApi.Provider != provider)
+            {
+                return false;
+            }
+            if (restApi.Resource != resource)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        [Test]
+        [RecordedTest]
         public async Task ListSku()
         {
             List<SkuInformation> skulist = await DefaultSubscription.GetSkusAsync().ToEnumerableAsync();
