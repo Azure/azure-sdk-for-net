@@ -1,0 +1,1113 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/providers/Microsoft.Marketplace/privateStores/3bc6b734-0508-42db-849e-7a60818a96fc?api-version=2021-06-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFya2V0cGxhY2UvcHJpdmF0ZVN0b3Jlcy8zYmM2YjczNC0wNTA4LTQyZGItODQ5ZS03YTYwODE4YTk2ZmM/YXBpLXZlcnNpb249MjAyMS0wNi0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "affa57b0-564b-47ce-839c-7c056d3dfe59"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000.",
+          "Microsoft.Azure.Management.Marketplace.MarketplaceRPServiceClient/3.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 28 Nov 2021 12:56:40 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Set-Cookie": [
+          "ARRAffinity=1c5c29bcda1f855b3b361d64bb5c7ead5fec452c7427aa2499563d7dbfee3122;Path=/;HttpOnly;Secure;Domain=df.marketplacerp.azure-test.net",
+          "ARRAffinitySameSite=1c5c29bcda1f855b3b361d64bb5c7ead5fec452c7427aa2499563d7dbfee3122;Path=/;HttpOnly;SameSite=None;Secure;Domain=df.marketplacerp.azure-test.net"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-XSS-Protection": [
+          "1; mode=block"
+        ],
+        "x-ms-version": [
+          "6.0.01791.0001-ba6ad208"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-tenant-reads": [
+          "14997"
+        ],
+        "x-ms-request-id": [
+          "692c7ebf-e827-4bae-bbfb-c0c5157bbdf1"
+        ],
+        "x-ms-correlation-request-id": [
+          "692c7ebf-e827-4bae-bbfb-c0c5157bbdf1"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20211128T125641Z:692c7ebf-e827-4bae-bbfb-c0c5157bbdf1"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Cache": [
+          "CONFIG_NOCACHE"
+        ],
+        "X-MSEdge-Ref": [
+          "Ref A: 72173AB6D4C241B1AA2139D34CF8D6D4 Ref B: TLV30EDGE0114 Ref C: 2021-11-28T12:56:39Z"
+        ],
+        "Content-Length": [
+          "1068"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"systemData\": {\r\n    \"createdBy\": \"\",\r\n    \"createdByType\": \"User\",\r\n    \"createdAt\": \"2021-04-20T15:09:28.4534435Z\",\r\n    \"lastModifiedBy\": \"\",\r\n    \"lastModifiedByType\": \"User\",\r\n    \"lastModifiedAt\": \"2021-11-28T12:56:37.3890909Z\"\r\n  },\r\n  \"id\": \"/providers/Microsoft.Marketplace/privateStores/3bc6b734-0508-42db-849e-7a60818a96fc\",\r\n  \"name\": \"3bc6b734-0508-42db-849e-7a60818a96fc\",\r\n  \"type\": \"Microsoft.Marketplace/privateStores\",\r\n  \"properties\": {\r\n    \"privateStoreId\": \"3bc6b734-0508-42db-849e-7a60818a96fc\",\r\n    \"availability\": \"enabled\",\r\n    \"eTag\": \"\\\"9300ff26-0000-0100-0000-61a37c850000\\\"\",\r\n    \"privateStoreName\": \"JEDI\",\r\n    \"tenantId\": \"3bc6b734-0508-42db-849e-7a60818a96fc\",\r\n    \"isGov\": true,\r\n    \"collectionIds\": [\r\n      \"3bc6b734-0508-42db-849e-7a60818a96fc\",\r\n      \"e6b33686-78e6-4c57-bff7-e3d8c0eed070\",\r\n      \"05c73f76-4d19-4987-8787-a71e2258ad6d\",\r\n      \"a110934a-988b-44c2-a039-5c6bb2ec9401\",\r\n      \"a4e6c4e9-ad35-4ee8-9665-591cac5e43c0\",\r\n      \"3862029f-1a7e-4bff-b14b-6b53d7a501d0\",\r\n      \"fe038aee-798e-495f-998f-78779eb3b0c5\"\r\n    ],\r\n    \"branding\": {\r\n      \"newExperience\": \"True\"\r\n    },\r\n    \"notificationsSettings\": {\r\n      \"recipients\": [\r\n        {\r\n          \"principalId\": \"946963ca-d883-4eb5-9897-2791b2283035\"\r\n        }\r\n      ],\r\n      \"sendToAllMarketplaceAdmins\": false\r\n    }\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/providers/Microsoft.Marketplace/privateStores/3bc6b734-0508-42db-849e-7a60818a96fc/collections/6408057d-3c16-4c09-bd4b-4aa0f2bb6a17?api-version=2021-06-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFya2V0cGxhY2UvcHJpdmF0ZVN0b3Jlcy8zYmM2YjczNC0wNTA4LTQyZGItODQ5ZS03YTYwODE4YTk2ZmMvY29sbGVjdGlvbnMvNjQwODA1N2QtM2MxNi00YzA5LWJkNGItNGFhMGYyYmI2YTE3P2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "586252d9-21cd-4104-ba76-98cdfcc2a77a"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000.",
+          "Microsoft.Azure.Management.Marketplace.MarketplaceRPServiceClient/3.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 28 Nov 2021 12:56:41 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Set-Cookie": [
+          "ARRAffinity=05815e0557966c201dc16275542526907206bb509874c0c62f71bc49fbcaa301;Path=/;HttpOnly;Secure;Domain=df.marketplacerp.azure-test.net",
+          "ARRAffinitySameSite=05815e0557966c201dc16275542526907206bb509874c0c62f71bc49fbcaa301;Path=/;HttpOnly;SameSite=None;Secure;Domain=df.marketplacerp.azure-test.net"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-XSS-Protection": [
+          "1; mode=block"
+        ],
+        "x-ms-version": [
+          "6.0.01791.0001-ba6ad208"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-tenant-deletes": [
+          "14998"
+        ],
+        "x-ms-request-id": [
+          "4a14d81e-5936-4e81-bc4b-5128e4d62e3b"
+        ],
+        "x-ms-correlation-request-id": [
+          "4a14d81e-5936-4e81-bc4b-5128e4d62e3b"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20211128T125641Z:4a14d81e-5936-4e81-bc4b-5128e4d62e3b"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Cache": [
+          "CONFIG_NOCACHE"
+        ],
+        "X-MSEdge-Ref": [
+          "Ref A: 0D29484784F345D9B325E198EF909134 Ref B: TLV30EDGE0114 Ref C: 2021-11-28T12:56:41Z"
+        ],
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "/providers/Microsoft.Marketplace/privateStores/3bc6b734-0508-42db-849e-7a60818a96fc/collections/6408057d-3c16-4c09-bd4b-4aa0f2bb6a17?api-version=2021-06-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFya2V0cGxhY2UvcHJpdmF0ZVN0b3Jlcy8zYmM2YjczNC0wNTA4LTQyZGItODQ5ZS03YTYwODE4YTk2ZmMvY29sbGVjdGlvbnMvNjQwODA1N2QtM2MxNi00YzA5LWJkNGItNGFhMGYyYmI2YTE3P2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "39f27383-6a20-4e47-8285-fa40ba56a583"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000.",
+          "Microsoft.Azure.Management.Marketplace.MarketplaceRPServiceClient/3.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 28 Nov 2021 12:56:47 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Set-Cookie": [
+          "ARRAffinity=49a94ddcdeb25346ee3a2b6c760ba69b1e208509e94f78fe226be7730ca067b6;Path=/;HttpOnly;Secure;Domain=df.marketplacerp.azure-test.net",
+          "ARRAffinitySameSite=49a94ddcdeb25346ee3a2b6c760ba69b1e208509e94f78fe226be7730ca067b6;Path=/;HttpOnly;SameSite=None;Secure;Domain=df.marketplacerp.azure-test.net"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-XSS-Protection": [
+          "1; mode=block"
+        ],
+        "x-ms-version": [
+          "6.0.01791.0001-ba6ad208"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-tenant-deletes": [
+          "14996"
+        ],
+        "x-ms-request-id": [
+          "7bb001ca-2d7f-4bf8-b786-f2cc9f709af9"
+        ],
+        "x-ms-correlation-request-id": [
+          "7bb001ca-2d7f-4bf8-b786-f2cc9f709af9"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20211128T125648Z:7bb001ca-2d7f-4bf8-b786-f2cc9f709af9"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Cache": [
+          "CONFIG_NOCACHE"
+        ],
+        "X-MSEdge-Ref": [
+          "Ref A: 098A1D082391415784C212DEB6922A74 Ref B: TLV30EDGE0114 Ref C: 2021-11-28T12:56:47Z"
+        ],
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/providers/Microsoft.Marketplace/privateStores/3bc6b734-0508-42db-849e-7a60818a96fc/collections/1065c936-3533-4af5-b636-cc75136d696f?api-version=2021-06-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFya2V0cGxhY2UvcHJpdmF0ZVN0b3Jlcy8zYmM2YjczNC0wNTA4LTQyZGItODQ5ZS03YTYwODE4YTk2ZmMvY29sbGVjdGlvbnMvMTA2NWM5MzYtMzUzMy00YWY1LWI2MzYtY2M3NTEzNmQ2OTZmP2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "d8e6838b-e773-463b-b7f4-80c7ec0283f5"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000.",
+          "Microsoft.Azure.Management.Marketplace.MarketplaceRPServiceClient/3.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 28 Nov 2021 12:56:41 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Set-Cookie": [
+          "ARRAffinity=1440deb667c55969c63cb5e7b1f96587afe9a3ebd6ade131aa33ebc2ccbfbc1a;Path=/;HttpOnly;Secure;Domain=df.marketplacerp.azure-test.net",
+          "ARRAffinitySameSite=1440deb667c55969c63cb5e7b1f96587afe9a3ebd6ade131aa33ebc2ccbfbc1a;Path=/;HttpOnly;SameSite=None;Secure;Domain=df.marketplacerp.azure-test.net"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-XSS-Protection": [
+          "1; mode=block"
+        ],
+        "x-ms-version": [
+          "6.0.01791.0001-ba6ad208"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-tenant-deletes": [
+          "14997"
+        ],
+        "x-ms-request-id": [
+          "0694c706-e028-4bd8-a5f2-075c57280dcd"
+        ],
+        "x-ms-correlation-request-id": [
+          "0694c706-e028-4bd8-a5f2-075c57280dcd"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20211128T125642Z:0694c706-e028-4bd8-a5f2-075c57280dcd"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Cache": [
+          "CONFIG_NOCACHE"
+        ],
+        "X-MSEdge-Ref": [
+          "Ref A: B3D99A9A10AC41ED99C03104809DE55F Ref B: TLV30EDGE0114 Ref C: 2021-11-28T12:56:41Z"
+        ],
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "/providers/Microsoft.Marketplace/privateStores/3bc6b734-0508-42db-849e-7a60818a96fc/collections/1065c936-3533-4af5-b636-cc75136d696f?api-version=2021-06-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFya2V0cGxhY2UvcHJpdmF0ZVN0b3Jlcy8zYmM2YjczNC0wNTA4LTQyZGItODQ5ZS03YTYwODE4YTk2ZmMvY29sbGVjdGlvbnMvMTA2NWM5MzYtMzUzMy00YWY1LWI2MzYtY2M3NTEzNmQ2OTZmP2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "4d62b4f9-8311-4a19-88b0-d747fad2038b"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000.",
+          "Microsoft.Azure.Management.Marketplace.MarketplaceRPServiceClient/3.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 28 Nov 2021 12:56:48 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Set-Cookie": [
+          "ARRAffinity=0b5e99afed75398be21ff2ebf0c9dcb26e2ce57d603f1a5963cc771267dcb8fd;Path=/;HttpOnly;Secure;Domain=df.marketplacerp.azure-test.net",
+          "ARRAffinitySameSite=0b5e99afed75398be21ff2ebf0c9dcb26e2ce57d603f1a5963cc771267dcb8fd;Path=/;HttpOnly;SameSite=None;Secure;Domain=df.marketplacerp.azure-test.net"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-XSS-Protection": [
+          "1; mode=block"
+        ],
+        "x-ms-version": [
+          "6.0.01791.0001-ba6ad208"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-tenant-deletes": [
+          "14995"
+        ],
+        "x-ms-request-id": [
+          "f70f6e90-72e5-4c91-9233-be483653a54c"
+        ],
+        "x-ms-correlation-request-id": [
+          "f70f6e90-72e5-4c91-9233-be483653a54c"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20211128T125648Z:f70f6e90-72e5-4c91-9233-be483653a54c"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Cache": [
+          "CONFIG_NOCACHE"
+        ],
+        "X-MSEdge-Ref": [
+          "Ref A: 5ED15733052E4AB2BAF35BD08565DCEA Ref B: TLV30EDGE0114 Ref C: 2021-11-28T12:56:48Z"
+        ],
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/providers/Microsoft.Marketplace/privateStores/3bc6b734-0508-42db-849e-7a60818a96fc/collections/6408057d-3c16-4c09-bd4b-4aa0f2bb6a17?api-version=2021-06-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFya2V0cGxhY2UvcHJpdmF0ZVN0b3Jlcy8zYmM2YjczNC0wNTA4LTQyZGItODQ5ZS03YTYwODE4YTk2ZmMvY29sbGVjdGlvbnMvNjQwODA1N2QtM2MxNi00YzA5LWJkNGItNGFhMGYyYmI2YTE3P2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"collectionName\": \"TestCollection\",\r\n    \"allSubscriptions\": false,\r\n    \"subscriptionsList\": [\r\n      \"bc17bb69-1264-4f90-a9f6-0e51e29d5281\"\r\n    ]\r\n  }\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "8f9df4b6-aa5f-4c11-abd5-48ecc0ef2165"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000.",
+          "Microsoft.Azure.Management.Marketplace.MarketplaceRPServiceClient/3.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "182"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 28 Nov 2021 12:56:42 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Set-Cookie": [
+          "ARRAffinity=b17cc9a0532bdc564a29f04cf70a885ddef9f5d164f3cb03e2aff02fc053cee9;Path=/;HttpOnly;Secure;Domain=df.marketplacerp.azure-test.net",
+          "ARRAffinitySameSite=b17cc9a0532bdc564a29f04cf70a885ddef9f5d164f3cb03e2aff02fc053cee9;Path=/;HttpOnly;SameSite=None;Secure;Domain=df.marketplacerp.azure-test.net"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-XSS-Protection": [
+          "1; mode=block"
+        ],
+        "x-ms-version": [
+          "6.0.01791.0001-ba6ad208"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-tenant-writes": [
+          "1196"
+        ],
+        "x-ms-request-id": [
+          "77fd02bb-9e94-4172-baf8-0bd8580d4857"
+        ],
+        "x-ms-correlation-request-id": [
+          "77fd02bb-9e94-4172-baf8-0bd8580d4857"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20211128T125642Z:77fd02bb-9e94-4172-baf8-0bd8580d4857"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Cache": [
+          "CONFIG_NOCACHE"
+        ],
+        "X-MSEdge-Ref": [
+          "Ref A: 3BFAB770367B4A1E8481AD68BA264AD2 Ref B: TLV30EDGE0114 Ref C: 2021-11-28T12:56:42Z"
+        ],
+        "Content-Length": [
+          "672"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"systemData\": {\r\n    \"createdBy\": \"\",\r\n    \"createdByType\": \"User\",\r\n    \"createdAt\": \"2021-11-28T12:56:42.4687969Z\",\r\n    \"lastModifiedBy\": \"\",\r\n    \"lastModifiedByType\": \"User\",\r\n    \"lastModifiedAt\": \"2021-11-28T12:56:42.4759576Z\"\r\n  },\r\n  \"id\": \"providers/Microsoft.Marketplace/privateStores/3bc6b734-0508-42db-849e-7a60818a96fc/collections/6408057d-3c16-4c09-bd4b-4aa0f2bb6a17\",\r\n  \"name\": \"6408057d-3c16-4c09-bd4b-4aa0f2bb6a17\",\r\n  \"type\": \"Microsoft.Marketplace/privateStores/collections\",\r\n  \"properties\": {\r\n    \"collectionId\": \"6408057d-3c16-4c09-bd4b-4aa0f2bb6a17\",\r\n    \"collectionName\": \"TestCollection\",\r\n    \"claim\": null,\r\n    \"allSubscriptions\": false,\r\n    \"subscriptionsList\": [\r\n      \"bc17bb69-1264-4f90-a9f6-0e51e29d5281\"\r\n    ],\r\n    \"enabled\": false,\r\n    \"numberOfOffers\": 0\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/providers/Microsoft.Marketplace/privateStores/3bc6b734-0508-42db-849e-7a60818a96fc/collections/1065c936-3533-4af5-b636-cc75136d696f?api-version=2021-06-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFya2V0cGxhY2UvcHJpdmF0ZVN0b3Jlcy8zYmM2YjczNC0wNTA4LTQyZGItODQ5ZS03YTYwODE4YTk2ZmMvY29sbGVjdGlvbnMvMTA2NWM5MzYtMzUzMy00YWY1LWI2MzYtY2M3NTEzNmQ2OTZmP2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"collectionName\": \"TargetTestCollection\",\r\n    \"allSubscriptions\": false,\r\n    \"subscriptionsList\": [\r\n      \"bc17bb69-1264-4f90-a9f6-0e51e29d5281\"\r\n    ]\r\n  }\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "9b4c8033-3b5e-4f33-aa31-4e522d718101"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000.",
+          "Microsoft.Azure.Management.Marketplace.MarketplaceRPServiceClient/3.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "188"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 28 Nov 2021 12:56:42 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Set-Cookie": [
+          "ARRAffinity=776843fe20a803280ba2df556e4fb9a18d95357c92bbf5e1869cbfc03e7784d4;Path=/;HttpOnly;Secure;Domain=df.marketplacerp.azure-test.net",
+          "ARRAffinitySameSite=776843fe20a803280ba2df556e4fb9a18d95357c92bbf5e1869cbfc03e7784d4;Path=/;HttpOnly;SameSite=None;Secure;Domain=df.marketplacerp.azure-test.net"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-XSS-Protection": [
+          "1; mode=block"
+        ],
+        "x-ms-version": [
+          "6.0.01791.0001-ba6ad208"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-tenant-writes": [
+          "1186"
+        ],
+        "x-ms-request-id": [
+          "a9a5efac-1785-426e-94e4-89a785e9e40f"
+        ],
+        "x-ms-correlation-request-id": [
+          "a9a5efac-1785-426e-94e4-89a785e9e40f"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20211128T125643Z:a9a5efac-1785-426e-94e4-89a785e9e40f"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Cache": [
+          "CONFIG_NOCACHE"
+        ],
+        "X-MSEdge-Ref": [
+          "Ref A: B7CB83527C3A4B81A806B640847F153F Ref B: TLV30EDGE0114 Ref C: 2021-11-28T12:56:42Z"
+        ],
+        "Content-Length": [
+          "678"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"systemData\": {\r\n    \"createdBy\": \"\",\r\n    \"createdByType\": \"User\",\r\n    \"createdAt\": \"2021-11-28T12:56:43.2630269Z\",\r\n    \"lastModifiedBy\": \"\",\r\n    \"lastModifiedByType\": \"User\",\r\n    \"lastModifiedAt\": \"2021-11-28T12:56:43.2730279Z\"\r\n  },\r\n  \"id\": \"providers/Microsoft.Marketplace/privateStores/3bc6b734-0508-42db-849e-7a60818a96fc/collections/1065c936-3533-4af5-b636-cc75136d696f\",\r\n  \"name\": \"1065c936-3533-4af5-b636-cc75136d696f\",\r\n  \"type\": \"Microsoft.Marketplace/privateStores/collections\",\r\n  \"properties\": {\r\n    \"collectionId\": \"1065c936-3533-4af5-b636-cc75136d696f\",\r\n    \"collectionName\": \"TargetTestCollection\",\r\n    \"claim\": null,\r\n    \"allSubscriptions\": false,\r\n    \"subscriptionsList\": [\r\n      \"bc17bb69-1264-4f90-a9f6-0e51e29d5281\"\r\n    ],\r\n    \"enabled\": false,\r\n    \"numberOfOffers\": 0\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/providers/Microsoft.Marketplace/privateStores/3bc6b734-0508-42db-849e-7a60818a96fc/requestApprovals/data3-limited-1019419.d3_azure_managed_services?api-version=2021-06-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFya2V0cGxhY2UvcHJpdmF0ZVN0b3Jlcy8zYmM2YjczNC0wNTA4LTQyZGItODQ5ZS03YTYwODE4YTk2ZmMvcmVxdWVzdEFwcHJvdmFscy9kYXRhMy1saW1pdGVkLTEwMTk0MTkuZDNfYXp1cmVfbWFuYWdlZF9zZXJ2aWNlcz9hcGktdmVyc2lvbj0yMDIxLTA2LTAx",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"publisherId\": \"data3-limited-1019419\",\r\n    \"plansDetails\": [\r\n      {\r\n        \"planId\": \"d3-azure-health-check\",\r\n        \"justification\": \"because ...\",\r\n        \"subscriptionId\": \"bc17bb69-1264-4f90-a9f6-0e51e29d5281\",\r\n        \"subscriptionName\": \"Renamed JEDI Sub\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "0744960b-089b-48e7-ae37-517c5f625d33"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000.",
+          "Microsoft.Azure.Management.Marketplace.MarketplaceRPServiceClient/3.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "321"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 28 Nov 2021 12:56:44 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Set-Cookie": [
+          "ARRAffinity=0e620387664f656d9541c5bdbe8212bf1f49b6890c45c520fb65fba7c5240709;Path=/;HttpOnly;Secure;Domain=df.marketplacerp.azure-test.net",
+          "ARRAffinitySameSite=0e620387664f656d9541c5bdbe8212bf1f49b6890c45c520fb65fba7c5240709;Path=/;HttpOnly;SameSite=None;Secure;Domain=df.marketplacerp.azure-test.net"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-XSS-Protection": [
+          "1; mode=block"
+        ],
+        "x-ms-version": [
+          "6.0.01791.0001-ba6ad208"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-tenant-writes": [
+          "1185"
+        ],
+        "x-ms-request-id": [
+          "94e4a4f2-8feb-477c-a4b6-70acbb2d9c0e"
+        ],
+        "x-ms-correlation-request-id": [
+          "94e4a4f2-8feb-477c-a4b6-70acbb2d9c0e"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20211128T125644Z:94e4a4f2-8feb-477c-a4b6-70acbb2d9c0e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Cache": [
+          "CONFIG_NOCACHE"
+        ],
+        "X-MSEdge-Ref": [
+          "Ref A: 0C3D8A7AEADD4A63A1C10B111E6DAF8A Ref B: TLV30EDGE0114 Ref C: 2021-11-28T12:56:43Z"
+        ],
+        "Content-Length": [
+          "906"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"systemData\": {\r\n    \"createdBy\": \"\",\r\n    \"createdByType\": \"User\",\r\n    \"createdAt\": \"2021-11-28T14:56:43.7621289+02:00\",\r\n    \"lastModifiedBy\": \"\",\r\n    \"lastModifiedByType\": \"User\",\r\n    \"lastModifiedAt\": \"2021-11-28T14:56:43.7621289+02:00\"\r\n  },\r\n  \"id\": \"/providers/Microsoft.Marketplace/privateStores/3bc6b734-0508-42db-849e-7a60818a96fc/requestApprovals/data3-limited-1019419.d3_azure_managed_services\",\r\n  \"name\": \"data3-limited-1019419.d3_azure_managed_services\",\r\n  \"type\": \"Microsoft.Marketplace/privateStores/requestApprovals\",\r\n  \"properties\": {\r\n    \"offerId\": \"data3-limited-1019419.d3_azure_managed_services\",\r\n    \"publisherId\": \"data3-limited-1019419\",\r\n    \"offerDisplayName\": \"Data#3 Azure Managed Services\",\r\n    \"plansDetails\": [\r\n      {\r\n        \"planId\": \"d3-azure-health-check\",\r\n        \"requestDate\": \"2021-11-28T14:56:43.7621289+02:00\",\r\n        \"justification\": \"because ...\",\r\n        \"status\": \"Pending\",\r\n        \"subscriptionId\": \"bc17bb69-1264-4f90-a9f6-0e51e29d5281\",\r\n        \"subscriptionName\": null\r\n      }\r\n    ],\r\n    \"isClosed\": false,\r\n    \"messageCode\": 0\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/providers/Microsoft.Marketplace/privateStores/3bc6b734-0508-42db-849e-7a60818a96fc/queryNotificationsState?api-version=2021-06-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFya2V0cGxhY2UvcHJpdmF0ZVN0b3Jlcy8zYmM2YjczNC0wNTA4LTQyZGItODQ5ZS03YTYwODE4YTk2ZmMvcXVlcnlOb3RpZmljYXRpb25zU3RhdGU/YXBpLXZlcnNpb249MjAyMS0wNi0wMQ==",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "a2f759f6-eda3-4154-92a2-cadd00af1bb0"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000.",
+          "Microsoft.Azure.Management.Marketplace.MarketplaceRPServiceClient/3.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 28 Nov 2021 12:56:44 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Set-Cookie": [
+          "ARRAffinity=00593b72a6326708bd955dc8a5672cd38f665e78e203d775add20ddf6e1b7b28;Path=/;HttpOnly;Secure;Domain=df.marketplacerp.azure-test.net",
+          "ARRAffinitySameSite=00593b72a6326708bd955dc8a5672cd38f665e78e203d775add20ddf6e1b7b28;Path=/;HttpOnly;SameSite=None;Secure;Domain=df.marketplacerp.azure-test.net"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-XSS-Protection": [
+          "1; mode=block"
+        ],
+        "x-ms-version": [
+          "6.0.01791.0001-ba6ad208"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-tenant-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "1f747a26-4e97-48f1-9dd6-ddac4c62b83a"
+        ],
+        "x-ms-correlation-request-id": [
+          "1f747a26-4e97-48f1-9dd6-ddac4c62b83a"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20211128T125645Z:1f747a26-4e97-48f1-9dd6-ddac4c62b83a"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Cache": [
+          "CONFIG_NOCACHE"
+        ],
+        "X-MSEdge-Ref": [
+          "Ref A: FCE0DDDCE2E8400E93596C04A881C603 Ref B: TLV30EDGE0114 Ref C: 2021-11-28T12:56:44Z"
+        ],
+        "Content-Length": [
+          "2083"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"stopSellNotifications\": [],\r\n  \"newNotifications\": [],\r\n  \"approvalRequests\": [\r\n    {\r\n      \"publisherId\": \"aumatics\",\r\n      \"offerId\": \"aumatics.azure_managedservices\",\r\n      \"displayName\": \"Aumatics Azure Managed Services\",\r\n      \"plans\": [\r\n        {\r\n          \"planDisplayName\": \"Azure Managed Services - Professional\",\r\n          \"planId\": \"azure_managedservices_professional\"\r\n        }\r\n      ],\r\n      \"icon\": \"https://store-images.s-microsoft.com/image/apps.28502.8bd414a4-a646-44ba-b745-faf1acee99a2.5610b36b-a1d5-4ed6-a2ec-675fd8b46e6e.6ed46d56-5177-4b3b-b792-d171f21ac71e\",\r\n      \"messageCode\": 0\r\n    },\r\n    {\r\n      \"publisherId\": \"128technology\",\r\n      \"offerId\": \"128technology.128t_networking_platform\",\r\n      \"displayName\": \"128T Networking Platform\",\r\n      \"plans\": [\r\n        {\r\n          \"planDisplayName\": \"*\",\r\n          \"planId\": \"*\"\r\n        }\r\n      ],\r\n      \"icon\": \"https://store-images.s-microsoft.com/image/apps.61238.c521cd6f-9038-4f55-aaf2-913c547265cf.1cc99def-3ab2-421c-89fe-66039faec426.f5210ab8-510a-4cb8-8125-7a827f15a76f\",\r\n      \"messageCode\": 0\r\n    },\r\n    {\r\n      \"publisherId\": \"viacode_consulting-1089577\",\r\n      \"offerId\": \"viacode_consulting-1089577.viacodems\",\r\n      \"displayName\": \"VIAcode Managed Services for Azure\",\r\n      \"plans\": [\r\n        {\r\n          \"planDisplayName\": \"*\",\r\n          \"planId\": \"*\"\r\n        }\r\n      ],\r\n      \"icon\": \"https://store-images.s-microsoft.com/image/apps.11304.47605afb-1bc3-45f5-a78c-bf55cf92dc9c.7c6d203c-1d3f-4eed-b0f7-0ebf1489637f.d582093a-325f-40be-99c9-31ea23c6f388\",\r\n      \"messageCode\": 0\r\n    },\r\n    {\r\n      \"publisherId\": \"viacode_consulting-1089577\",\r\n      \"offerId\": \"viacode_consulting-1089577.viacodems\",\r\n      \"displayName\": \"VIAcode Managed Services for Azure\",\r\n      \"plans\": [\r\n        {\r\n          \"planDisplayName\": \"Azure Optimization Assessment \",\r\n          \"planId\": \"mgmt-assessment\"\r\n        }\r\n      ],\r\n      \"icon\": \"https://store-images.s-microsoft.com/image/apps.11304.47605afb-1bc3-45f5-a78c-bf55cf92dc9c.7c6d203c-1d3f-4eed-b0f7-0ebf1489637f.d582093a-325f-40be-99c9-31ea23c6f388\",\r\n      \"messageCode\": 0\r\n    },\r\n    {\r\n      \"publisherId\": \"data3-limited-1019419\",\r\n      \"offerId\": \"data3-limited-1019419.d3_azure_managed_services\",\r\n      \"displayName\": \"Data#3 Azure Managed Services\",\r\n      \"plans\": [\r\n        {\r\n          \"planDisplayName\": \"Azure Health Check\",\r\n          \"planId\": \"d3-azure-health-check\"\r\n        }\r\n      ],\r\n      \"icon\": \"https://store-images.s-microsoft.com/image/apps.33169.691280b6-4519-4532-a123-c106dc5495cc.98b4450b-a020-4e2f-9e57-c5c5fec0d33f.a331afc8-d85c-4af7-88d8-356589260747\",\r\n      \"messageCode\": 0\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/providers/Microsoft.Marketplace/privateStores/3bc6b734-0508-42db-849e-7a60818a96fc/queryNotificationsState?api-version=2021-06-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFya2V0cGxhY2UvcHJpdmF0ZVN0b3Jlcy8zYmM2YjczNC0wNTA4LTQyZGItODQ5ZS03YTYwODE4YTk2ZmMvcXVlcnlOb3RpZmljYXRpb25zU3RhdGU/YXBpLXZlcnNpb249MjAyMS0wNi0wMQ==",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "9a6c36d0-3932-4ec3-b25f-3941aa4aeeb1"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000.",
+          "Microsoft.Azure.Management.Marketplace.MarketplaceRPServiceClient/3.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 28 Nov 2021 12:56:47 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Set-Cookie": [
+          "ARRAffinity=b17cc9a0532bdc564a29f04cf70a885ddef9f5d164f3cb03e2aff02fc053cee9;Path=/;HttpOnly;Secure;Domain=df.marketplacerp.azure-test.net",
+          "ARRAffinitySameSite=b17cc9a0532bdc564a29f04cf70a885ddef9f5d164f3cb03e2aff02fc053cee9;Path=/;HttpOnly;SameSite=None;Secure;Domain=df.marketplacerp.azure-test.net"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-XSS-Protection": [
+          "1; mode=block"
+        ],
+        "x-ms-version": [
+          "6.0.01791.0001-ba6ad208"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-tenant-writes": [
+          "1190"
+        ],
+        "x-ms-request-id": [
+          "0fb39ab3-d6a9-4c93-9fcd-32535eeb88f9"
+        ],
+        "x-ms-correlation-request-id": [
+          "0fb39ab3-d6a9-4c93-9fcd-32535eeb88f9"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20211128T125647Z:0fb39ab3-d6a9-4c93-9fcd-32535eeb88f9"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Cache": [
+          "CONFIG_NOCACHE"
+        ],
+        "X-MSEdge-Ref": [
+          "Ref A: A3C5A4700CC740FCB90629500C2E1FA9 Ref B: TLV30EDGE0114 Ref C: 2021-11-28T12:56:47Z"
+        ],
+        "Content-Length": [
+          "1663"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"stopSellNotifications\": [],\r\n  \"newNotifications\": [],\r\n  \"approvalRequests\": [\r\n    {\r\n      \"publisherId\": \"aumatics\",\r\n      \"offerId\": \"aumatics.azure_managedservices\",\r\n      \"displayName\": \"Aumatics Azure Managed Services\",\r\n      \"plans\": [\r\n        {\r\n          \"planDisplayName\": \"Azure Managed Services - Professional\",\r\n          \"planId\": \"azure_managedservices_professional\"\r\n        }\r\n      ],\r\n      \"icon\": \"https://store-images.s-microsoft.com/image/apps.28502.8bd414a4-a646-44ba-b745-faf1acee99a2.5610b36b-a1d5-4ed6-a2ec-675fd8b46e6e.6ed46d56-5177-4b3b-b792-d171f21ac71e\",\r\n      \"messageCode\": 0\r\n    },\r\n    {\r\n      \"publisherId\": \"128technology\",\r\n      \"offerId\": \"128technology.128t_networking_platform\",\r\n      \"displayName\": \"128T Networking Platform\",\r\n      \"plans\": [\r\n        {\r\n          \"planDisplayName\": \"*\",\r\n          \"planId\": \"*\"\r\n        }\r\n      ],\r\n      \"icon\": \"https://store-images.s-microsoft.com/image/apps.61238.c521cd6f-9038-4f55-aaf2-913c547265cf.1cc99def-3ab2-421c-89fe-66039faec426.f5210ab8-510a-4cb8-8125-7a827f15a76f\",\r\n      \"messageCode\": 0\r\n    },\r\n    {\r\n      \"publisherId\": \"viacode_consulting-1089577\",\r\n      \"offerId\": \"viacode_consulting-1089577.viacodems\",\r\n      \"displayName\": \"VIAcode Managed Services for Azure\",\r\n      \"plans\": [\r\n        {\r\n          \"planDisplayName\": \"*\",\r\n          \"planId\": \"*\"\r\n        }\r\n      ],\r\n      \"icon\": \"https://store-images.s-microsoft.com/image/apps.11304.47605afb-1bc3-45f5-a78c-bf55cf92dc9c.7c6d203c-1d3f-4eed-b0f7-0ebf1489637f.d582093a-325f-40be-99c9-31ea23c6f388\",\r\n      \"messageCode\": 0\r\n    },\r\n    {\r\n      \"publisherId\": \"viacode_consulting-1089577\",\r\n      \"offerId\": \"viacode_consulting-1089577.viacodems\",\r\n      \"displayName\": \"VIAcode Managed Services for Azure\",\r\n      \"plans\": [\r\n        {\r\n          \"planDisplayName\": \"Azure Optimization Assessment \",\r\n          \"planId\": \"mgmt-assessment\"\r\n        }\r\n      ],\r\n      \"icon\": \"https://store-images.s-microsoft.com/image/apps.11304.47605afb-1bc3-45f5-a78c-bf55cf92dc9c.7c6d203c-1d3f-4eed-b0f7-0ebf1489637f.d582093a-325f-40be-99c9-31ea23c6f388\",\r\n      \"messageCode\": 0\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/providers/Microsoft.Marketplace/privateStores/3bc6b734-0508-42db-849e-7a60818a96fc/adminRequestApprovals/data3-limited-1019419.d3_azure_managed_services?publisherId=data3-limited-1019419&api-version=2021-06-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFya2V0cGxhY2UvcHJpdmF0ZVN0b3Jlcy8zYmM2YjczNC0wNTA4LTQyZGItODQ5ZS03YTYwODE4YTk2ZmMvYWRtaW5SZXF1ZXN0QXBwcm92YWxzL2RhdGEzLWxpbWl0ZWQtMTAxOTQxOS5kM19henVyZV9tYW5hZ2VkX3NlcnZpY2VzP3B1Ymxpc2hlcklkPWRhdGEzLWxpbWl0ZWQtMTAxOTQxOSZhcGktdmVyc2lvbj0yMDIxLTA2LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "4f09def7-4e9e-4ad7-9aff-d5dfb3d3ef94"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000.",
+          "Microsoft.Azure.Management.Marketplace.MarketplaceRPServiceClient/3.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 28 Nov 2021 12:56:45 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Set-Cookie": [
+          "ARRAffinity=1c5c29bcda1f855b3b361d64bb5c7ead5fec452c7427aa2499563d7dbfee3122;Path=/;HttpOnly;Secure;Domain=df.marketplacerp.azure-test.net",
+          "ARRAffinitySameSite=1c5c29bcda1f855b3b361d64bb5c7ead5fec452c7427aa2499563d7dbfee3122;Path=/;HttpOnly;SameSite=None;Secure;Domain=df.marketplacerp.azure-test.net"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-XSS-Protection": [
+          "1; mode=block"
+        ],
+        "x-ms-version": [
+          "6.0.01791.0001-ba6ad208"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-tenant-reads": [
+          "14996"
+        ],
+        "x-ms-request-id": [
+          "0aefd742-d95e-4778-8eeb-afffde92d58c"
+        ],
+        "x-ms-correlation-request-id": [
+          "0aefd742-d95e-4778-8eeb-afffde92d58c"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20211128T125646Z:0aefd742-d95e-4778-8eeb-afffde92d58c"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Cache": [
+          "CONFIG_NOCACHE"
+        ],
+        "X-MSEdge-Ref": [
+          "Ref A: 9D76B08928CF429884704E05D7B1AB1E Ref B: TLV30EDGE0114 Ref C: 2021-11-28T12:56:45Z"
+        ],
+        "Content-Length": [
+          "1024"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"systemData\": {\r\n    \"createdBy\": \"\",\r\n    \"createdByType\": \"User\",\r\n    \"createdAt\": \"2021-11-28T14:56:43.7621289+02:00\",\r\n    \"lastModifiedBy\": \"\",\r\n    \"lastModifiedByType\": \"User\",\r\n    \"lastModifiedAt\": \"2021-11-28T14:56:43.7621289+02:00\"\r\n  },\r\n  \"id\": \"/providers/Microsoft.Marketplace/privateStores/3bc6b734-0508-42db-849e-7a60818a96fc/adminRequestApprovals/data3-limited-1019419.d3_azure_managed_services\",\r\n  \"name\": \"data3-limited-1019419.d3_azure_managed_services\",\r\n  \"type\": \"/providers/Microsoft.Marketplace/privateStores/adminRequestApprovals\",\r\n  \"properties\": {\r\n    \"publisherId\": \"data3-limited-1019419\",\r\n    \"offerId\": \"data3-limited-1019419.d3_azure_managed_services\",\r\n    \"displayName\": \"Data#3 Azure Managed Services\",\r\n    \"plans\": [\r\n      {\r\n        \"planId\": \"d3-azure-health-check\",\r\n        \"planDisplayName\": \"Azure Health Check\",\r\n        \"requesters\": [\r\n          {\r\n            \"user\": \"Unknown\",\r\n            \"date\": \"2021-11-28T14:56:43.7621289+02:00\",\r\n            \"justification\": \"because ...\",\r\n            \"subscriptionId\": \"bc17bb69-1264-4f90-a9f6-0e51e29d5281\",\r\n            \"subscriptionName\": \"Renamed JEDI Sub\"\r\n          }\r\n        ]\r\n      }\r\n    ],\r\n    \"adminAction\": \"Pending\",\r\n    \"approvedPlans\": null,\r\n    \"comment\": null,\r\n    \"administrator\": null\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/providers/Microsoft.Marketplace/privateStores/3bc6b734-0508-42db-849e-7a60818a96fc/requestApprovals/data3-limited-1019419.d3_azure_managed_services/query?api-version=2021-06-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFya2V0cGxhY2UvcHJpdmF0ZVN0b3Jlcy8zYmM2YjczNC0wNTA4LTQyZGItODQ5ZS03YTYwODE4YTk2ZmMvcmVxdWVzdEFwcHJvdmFscy9kYXRhMy1saW1pdGVkLTEwMTk0MTkuZDNfYXp1cmVfbWFuYWdlZF9zZXJ2aWNlcy9xdWVyeT9hcGktdmVyc2lvbj0yMDIxLTA2LTAx",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"publisherId\": \"data3-limited-1019419\",\r\n    \"planIds\": [\r\n      \"d3-azure-health-check\",\r\n      \"data3-managed-azure-plan\",\r\n      \"data3-azure-optimiser-plan\"\r\n    ],\r\n    \"subscriptionId\": \"bc17bb69-1264-4f90-a9f6-0e51e29d5281\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "4f2c45e4-7169-4d54-a72b-03e38df0d278"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000.",
+          "Microsoft.Azure.Management.Marketplace.MarketplaceRPServiceClient/3.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "264"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 28 Nov 2021 12:56:45 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Set-Cookie": [
+          "ARRAffinity=05815e0557966c201dc16275542526907206bb509874c0c62f71bc49fbcaa301;Path=/;HttpOnly;Secure;Domain=df.marketplacerp.azure-test.net",
+          "ARRAffinitySameSite=05815e0557966c201dc16275542526907206bb509874c0c62f71bc49fbcaa301;Path=/;HttpOnly;SameSite=None;Secure;Domain=df.marketplacerp.azure-test.net"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-XSS-Protection": [
+          "1; mode=block"
+        ],
+        "x-ms-version": [
+          "6.0.01791.0001-ba6ad208"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-tenant-writes": [
+          "1198"
+        ],
+        "x-ms-request-id": [
+          "c2e1395f-c1a0-43cb-8ed5-c895a95ef49e"
+        ],
+        "x-ms-correlation-request-id": [
+          "c2e1395f-c1a0-43cb-8ed5-c895a95ef49e"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20211128T125646Z:c2e1395f-c1a0-43cb-8ed5-c895a95ef49e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Cache": [
+          "CONFIG_NOCACHE"
+        ],
+        "X-MSEdge-Ref": [
+          "Ref A: BC79CD72A6B143E7AB3AD6D6906ECE53 Ref B: TLV30EDGE0114 Ref C: 2021-11-28T12:56:46Z"
+        ],
+        "Content-Length": [
+          "595"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"uniqueOfferId\": \"data3-limited-1019419.d3_azure_managed_services\",\r\n  \"plansDetails\": {\r\n    \"d3-azure-health-check\": {\r\n      \"planId\": \"d3-azure-health-check\",\r\n      \"status\": \"Pending\",\r\n      \"requestDate\": \"2021-11-28T14:56:43.7621289+02:00\",\r\n      \"justification\": \"\",\r\n      \"subscriptionId\": \"bc17bb69-1264-4f90-a9f6-0e51e29d5281\",\r\n      \"subscriptionName\": \"Renamed JEDI Sub\"\r\n    },\r\n    \"data3-azure-optimiser-plan\": {\r\n      \"planId\": \"data3-azure-optimiser-plan\",\r\n      \"status\": \"None\",\r\n      \"requestDate\": null,\r\n      \"justification\": \"\"\r\n    },\r\n    \"data3-managed-azure-plan\": {\r\n      \"planId\": \"data3-managed-azure-plan\",\r\n      \"status\": \"None\",\r\n      \"requestDate\": null,\r\n      \"justification\": \"\"\r\n    }\r\n  },\r\n  \"etag\": null,\r\n  \"messageCode\": 0\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/providers/Microsoft.Marketplace/privateStores/3bc6b734-0508-42db-849e-7a60818a96fc/requestApprovals/data3-limited-1019419.d3_azure_managed_services/withdrawPlan?api-version=2021-06-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFya2V0cGxhY2UvcHJpdmF0ZVN0b3Jlcy8zYmM2YjczNC0wNTA4LTQyZGItODQ5ZS03YTYwODE4YTk2ZmMvcmVxdWVzdEFwcHJvdmFscy9kYXRhMy1saW1pdGVkLTEwMTk0MTkuZDNfYXp1cmVfbWFuYWdlZF9zZXJ2aWNlcy93aXRoZHJhd1BsYW4/YXBpLXZlcnNpb249MjAyMS0wNi0wMQ==",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"planId\": \"d3-azure-health-check\",\r\n    \"publisherId\": \"data3-limited-1019419\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "7bd240eb-6728-4cc8-86a1-9f45faba5990"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000.",
+          "Microsoft.Azure.Management.Marketplace.MarketplaceRPServiceClient/3.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "112"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 28 Nov 2021 12:56:46 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Set-Cookie": [
+          "ARRAffinity=1440deb667c55969c63cb5e7b1f96587afe9a3ebd6ade131aa33ebc2ccbfbc1a;Path=/;HttpOnly;Secure;Domain=df.marketplacerp.azure-test.net",
+          "ARRAffinitySameSite=1440deb667c55969c63cb5e7b1f96587afe9a3ebd6ade131aa33ebc2ccbfbc1a;Path=/;HttpOnly;SameSite=None;Secure;Domain=df.marketplacerp.azure-test.net"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-XSS-Protection": [
+          "1; mode=block"
+        ],
+        "x-ms-version": [
+          "6.0.01791.0001-ba6ad208"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-tenant-writes": [
+          "1197"
+        ],
+        "x-ms-request-id": [
+          "9f1a2e51-d994-4468-8fbe-4fd7c7ece328"
+        ],
+        "x-ms-correlation-request-id": [
+          "9f1a2e51-d994-4468-8fbe-4fd7c7ece328"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20211128T125646Z:9f1a2e51-d994-4468-8fbe-4fd7c7ece328"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Cache": [
+          "CONFIG_NOCACHE"
+        ],
+        "X-MSEdge-Ref": [
+          "Ref A: E7BD896B028549CF800D64A9595499EF Ref B: TLV30EDGE0114 Ref C: 2021-11-28T12:56:46Z"
+        ],
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "bc17bb69-1264-4f90-a9f6-0e51e29d5281"
+  }
+}
