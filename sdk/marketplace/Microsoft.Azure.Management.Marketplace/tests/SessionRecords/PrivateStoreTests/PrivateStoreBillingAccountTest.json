@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "2b13448d-0adf-4bcf-86dc-b100a43d6d66"
+          "039129ea-d5e6-42bc-bb73-7a9037f2348d"
         ],
         "accept-language": [
           "en-US"
@@ -24,14 +24,14 @@
           "no-cache"
         ],
         "Date": [
-          "Sun, 28 Nov 2021 12:56:04 GMT"
+          "Sun, 28 Nov 2021 14:15:11 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Set-Cookie": [
-          "ARRAffinity=b17cc9a0532bdc564a29f04cf70a885ddef9f5d164f3cb03e2aff02fc053cee9;Path=/;HttpOnly;Secure;Domain=df.marketplacerp.azure-test.net",
-          "ARRAffinitySameSite=b17cc9a0532bdc564a29f04cf70a885ddef9f5d164f3cb03e2aff02fc053cee9;Path=/;HttpOnly;SameSite=None;Secure;Domain=df.marketplacerp.azure-test.net"
+          "ARRAffinity=4fe8d51f56fadd33f6feed576117e27caa04e6c6da553f8349f3cbceb8f687fd;Path=/;HttpOnly;Secure;Domain=df.marketplacerp.azure-test.net",
+          "ARRAffinitySameSite=4fe8d51f56fadd33f6feed576117e27caa04e6c6da553f8349f3cbceb8f687fd;Path=/;HttpOnly;SameSite=None;Secure;Domain=df.marketplacerp.azure-test.net"
         ],
         "Vary": [
           "Accept-Encoding"
@@ -52,16 +52,16 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-tenant-writes": [
-          "1192"
+          "1199"
         ],
         "x-ms-request-id": [
-          "436d93d1-1766-4569-ac69-db2d5c540597"
+          "3f13ab88-4e65-4bce-93df-36d30acbd3c3"
         ],
         "x-ms-correlation-request-id": [
-          "436d93d1-1766-4569-ac69-db2d5c540597"
+          "3f13ab88-4e65-4bce-93df-36d30acbd3c3"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20211128T125604Z:436d93d1-1766-4569-ac69-db2d5c540597"
+          "NORTHEUROPE:20211128T141511Z:3f13ab88-4e65-4bce-93df-36d30acbd3c3"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -70,7 +70,7 @@
           "CONFIG_NOCACHE"
         ],
         "X-MSEdge-Ref": [
-          "Ref A: E691F64E9A1149A9BE0D9F86B9F68C50 Ref B: TLV30EDGE0315 Ref C: 2021-11-28T12:56:02Z"
+          "Ref A: 479EC95808D74D739664CA22DD3F7650 Ref B: TLV30EDGE0414 Ref C: 2021-11-28T14:15:09Z"
         ],
         "Content-Length": [
           "34"

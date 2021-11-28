@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Marketplace.Tests.ScenarioTests
         readonly string TargetcollectionId = "1065c936-3533-4af5-b636-cc75136d696f";
 
         readonly string offerId = "data3-limited-1019419.d3_azure_managed_services";     
-        readonly string requestAprrovalId = "data3-limited-1019419.d3_azure_managed_services";
+        readonly string requestApprovalId = "data3-limited-1019419.d3_azure_managed_services";
         readonly string publisherId = "data3-limited-1019419";
         readonly string planId = "d3-azure-health-check";
         readonly string managedAzurePlanId = "data3-managed-azure-plan";
@@ -166,6 +166,10 @@ namespace Microsoft.Azure.Management.Marketplace.Tests.ScenarioTests
                     Assert.NotNull(TestCollection);
                     Assert.True(TestCollection.Enabled);
 
+                    var targetTestCollection = client.PrivateStoreCollection.Get(PrivateStoreId, TargetcollectionId);
+                    Assert.NotNull(targetTestCollection);
+                    Assert.True(targetTestCollection.Enabled);
+
                     CleanUp(client);
                 }
             }
@@ -295,7 +299,7 @@ namespace Microsoft.Azure.Management.Marketplace.Tests.ScenarioTests
 
                     try
                     {
-                        var approvalRequest = client.PrivateStore.CreateApprovalRequest(PrivateStoreId, requestAprrovalId, requestApprovalResource);
+                        var approvalRequest = client.PrivateStore.CreateApprovalRequest(PrivateStoreId, requestApprovalId, requestApprovalResource);
                     }
                     catch (Exception ex)
                     {
@@ -307,9 +311,9 @@ namespace Microsoft.Azure.Management.Marketplace.Tests.ScenarioTests
 
                     // Assert notification arrived
                     var notificationState = client.PrivateStore.QueryNotificationsState(PrivateStoreId);
-                    Assert.Contains(notificationState.ApprovalRequests, x => x.OfferId == requestAprrovalId);
+                    Assert.Contains(notificationState.ApprovalRequests, x => x.OfferId == requestApprovalId);
 
-                    var adminRequestApproval = client.PrivateStore.GetAdminRequestApproval(publisherId, PrivateStoreId, requestAprrovalId);
+                    var adminRequestApproval = client.PrivateStore.GetAdminRequestApproval(publisherId, PrivateStoreId, requestApprovalId);
                     Assert.Equal("Pending", adminRequestApproval.AdminAction);
 
                     RequestDetails requestDetails = new RequestDetails
@@ -322,7 +326,7 @@ namespace Microsoft.Azure.Management.Marketplace.Tests.ScenarioTests
                     {
                         Properties = requestDetails
                     };
-                    var requestApproval = client.PrivateStore.QueryRequestApprovalMethod(PrivateStoreId, requestAprrovalId, queryRequestApprovalProperties);
+                    var requestApproval = client.PrivateStore.QueryRequestApprovalMethod(PrivateStoreId, requestApprovalId, queryRequestApprovalProperties);
                     Assert.Equal("Pending", requestApproval.PlansDetails[planId].Status);
 
                     // Withdraw request
@@ -331,10 +335,10 @@ namespace Microsoft.Azure.Management.Marketplace.Tests.ScenarioTests
                         PublisherId = publisherId,
                         PlanId = planId
                     };
-                    client.PrivateStore.WithdrawPlan(PrivateStoreId, requestAprrovalId, withdrawProperties);
+                    client.PrivateStore.WithdrawPlan(PrivateStoreId, requestApprovalId, withdrawProperties);
 
                     notificationState = client.PrivateStore.QueryNotificationsState(PrivateStoreId);
-                    Assert.DoesNotContain(notificationState.ApprovalRequests, x => x.OfferId == requestAprrovalId);
+                    Assert.DoesNotContain(notificationState.ApprovalRequests, x => x.OfferId == requestApprovalId);
 
                     CleanUp(client);
                 }
@@ -365,7 +369,7 @@ namespace Microsoft.Azure.Management.Marketplace.Tests.ScenarioTests
 
                     try
                     {
-                        var approvalRequest = client.PrivateStore.CreateApprovalRequest(PrivateStoreId, requestAprrovalId, requestApprovalResource);
+                        var approvalRequest = client.PrivateStore.CreateApprovalRequest(PrivateStoreId, requestApprovalId, requestApprovalResource);
                     }
                     catch (Exception ex)
                     {
@@ -374,8 +378,8 @@ namespace Microsoft.Azure.Management.Marketplace.Tests.ScenarioTests
                             throw;
                         }
                     }
-                    var notificationStateSecond = client.PrivateStore.QueryNotificationsState(PrivateStoreId);
-                    Assert.Contains(notificationStateSecond.ApprovalRequests, x => x.OfferId == requestAprrovalId);
+                    var notificationState = client.PrivateStore.QueryNotificationsState(PrivateStoreId);
+                    Assert.Contains(notificationState.ApprovalRequests, x => x.OfferId == requestApprovalId);
 
                     // Approve request by admin
                     AdminRequestApprovalsResource adminRequestApprovalsResource = new AdminRequestApprovalsResource
@@ -386,10 +390,13 @@ namespace Microsoft.Azure.Management.Marketplace.Tests.ScenarioTests
                         Comment = "I'm ok with that",
                         CollectionIds = new List<string>() { collectionId }
                     };
-                    client.PrivateStore.UpdateAdminRequestApproval(PrivateStoreId, requestAprrovalId, adminRequestApprovalsResource);
+                    client.PrivateStore.UpdateAdminRequestApproval(PrivateStoreId, requestApprovalId, adminRequestApprovalsResource);
 
                     var collectionOffers = client.PrivateStoreCollectionOffer.List(PrivateStoreId, collectionId);
-                    Assert.Contains(collectionOffers, x => x.UniqueOfferId == requestAprrovalId);
+                    Assert.Contains(collectionOffers, x => x.UniqueOfferId == requestApprovalId);
+
+                    notificationState = client.PrivateStore.QueryNotificationsState(PrivateStoreId);
+                    Assert.DoesNotContain(notificationState.ApprovalRequests, x => x.OfferId == requestApprovalId);
 
                     CleanUp(client);
                 }
