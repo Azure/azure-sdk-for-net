@@ -7,8 +7,8 @@ using System.ComponentModel;
 using System.IO;
 using System.Text;
 using Azure.Core;
-using Azure.Core.Amqp;
 using Azure.Core.Serialization;
+using Azure.Core.Amqp;
 using Azure.Messaging.EventHubs.Amqp;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Producer;
@@ -19,7 +19,7 @@ namespace Azure.Messaging.EventHubs
     ///   An Event Hubs event, encapsulating a set of data and its associated metadata.
     /// </summary>
     ///
-    public class EventData
+    public class EventData : IMessageWithContentType
     {
         /// <summary>The AMQP representation of the event, allowing access to additional protocol data elements not used directly by the Event Hubs client library.</summary>
         private readonly AmqpAnnotatedMessage _amqpMessage;
@@ -46,6 +46,15 @@ namespace Azure.Messaging.EventHubs
         {
             get => _amqpMessage.GetEventBody();
             set => _amqpMessage.Body = AmqpMessageBody.FromData(MessageBody.FromReadOnlyMemorySegment(value.ToMemory()));
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        public BinaryData Data
+        {
+            get => EventBody;
+            set => EventBody = value;
         }
 
         /// <summary>
