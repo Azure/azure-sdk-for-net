@@ -2,6 +2,9 @@ parameters:
   NuGetCacheKey: 'Build'
 
 steps:
+  - task: MSBuild@1
+    inputs:
+      solution: eng/scripts/InstallDevopsLogger.proj
 # Installation steps need to be uncommented when switching to a newer SDK that's not available on DevOps agents
 #   - task: UseDotNet@2
 #     displayName: 'Use .NET Core SDK'
