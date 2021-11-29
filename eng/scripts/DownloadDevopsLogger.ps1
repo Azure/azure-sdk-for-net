@@ -1,5 +1,5 @@
 New-Item -ItemType directory artifacts -Force
-Invoke-WebRequest -Uri https://vstsagenttools.blob.core.windows.net/tools/msbuildlogger/4/msbuildlogger.zip -OutFile artifacts/msbuildlogger.zip
+Invoke-WebRequest -Uri https://vstsagenttools.blob.core.windows.net/tools/msbuildlogger/5/msbuildlogger.zip -OutFile artifacts/msbuildlogger.zip
 Expand-Archive artifacts/msbuildlogger.zip -DestinationPath artifacts -Force
 $loggerAssembly = Resolve-Path artifacts/Microsoft.TeamFoundation.DistributedTask.MSBuild.Logger.dll
 $arguments = "/dl:CentralLogger,`"$loggerAssembly`";`"enableOrphanedProjectsLogs=true`"*ForwardingLogger,`"$loggerAssembly`""
