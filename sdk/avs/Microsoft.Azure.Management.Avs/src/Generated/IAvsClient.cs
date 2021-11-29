@@ -125,6 +125,16 @@ namespace Microsoft.Azure.Management.Avs
         IAddonsOperations Addons { get; }
 
         /// <summary>
+        /// Gets the IVirtualMachinesOperations.
+        /// </summary>
+        IVirtualMachinesOperations VirtualMachines { get; }
+
+        /// <summary>
+        /// Gets the IPlacementPoliciesOperations.
+        /// </summary>
+        IPlacementPoliciesOperations PlacementPolicies { get; }
+
+        /// <summary>
         /// Gets the IScriptPackagesOperations.
         /// </summary>
         IScriptPackagesOperations ScriptPackages { get; }

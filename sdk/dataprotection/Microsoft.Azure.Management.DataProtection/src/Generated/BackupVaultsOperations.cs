@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<BackupVaultResource>>> GetResourcesInSubscriptionWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<BackupVaultResource>>> GetInSubscriptionWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Management.DataProtection
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetResourcesInSubscription", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "GetInSubscription", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
@@ -255,7 +255,7 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<BackupVaultResource>>> GetResourcesInResourceGroupWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<BackupVaultResource>>> GetInResourceGroupWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -278,7 +278,7 @@ namespace Microsoft.Azure.Management.DataProtection
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetResourcesInResourceGroup", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "GetInResourceGroup", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
@@ -830,10 +830,10 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<BackupVaultResource>> PatchWithHttpMessagesAsync(string vaultName, string resourceGroupName, PatchResourceRequestInput parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<BackupVaultResource>> UpdateWithHttpMessagesAsync(string vaultName, string resourceGroupName, PatchResourceRequestInput parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<BackupVaultResource> _response = await BeginPatchWithHttpMessagesAsync(vaultName, resourceGroupName, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<BackupVaultResource> _response = await BeginUpdateWithHttpMessagesAsync(vaultName, resourceGroupName, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -1313,7 +1313,7 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<BackupVaultResource>> BeginPatchWithHttpMessagesAsync(string vaultName, string resourceGroupName, PatchResourceRequestInput parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<BackupVaultResource>> BeginUpdateWithHttpMessagesAsync(string vaultName, string resourceGroupName, PatchResourceRequestInput parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -1346,7 +1346,7 @@ namespace Microsoft.Azure.Management.DataProtection
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "BeginPatch", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "BeginUpdate", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
@@ -1517,7 +1517,7 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<BackupVaultResource>>> GetResourcesInSubscriptionNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<BackupVaultResource>>> GetInSubscriptionNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -1532,7 +1532,7 @@ namespace Microsoft.Azure.Management.DataProtection
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("nextPageLink", nextPageLink);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetResourcesInSubscriptionNext", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "GetInSubscriptionNext", tracingParameters);
             }
             // Construct URL
             string _url = "{nextLink}";
@@ -1690,7 +1690,7 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<BackupVaultResource>>> GetResourcesInResourceGroupNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<BackupVaultResource>>> GetInResourceGroupNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -1705,7 +1705,7 @@ namespace Microsoft.Azure.Management.DataProtection
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("nextPageLink", nextPageLink);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetResourcesInResourceGroupNext", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "GetInResourceGroupNext", tracingParameters);
             }
             // Construct URL
             string _url = "{nextLink}";

@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://tacanaryjava.cognitiveservices.azure.com/text/analytics/v3.2-preview.1/sentiment?showStats=false\u0026stringIndexType=Utf16CodeUnit",
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/text/analytics/v3.2-preview.2/sentiment?showStats=false\u0026stringIndexType=Utf16CodeUnit",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": [
@@ -11,10 +11,10 @@
         "Content-Length": "224",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-b4a247f4e0d1ef47ab122117a0666916-c4917e3c5420cc49-00",
+        "traceparent": "00-8632120c2bafb145be6853290dc936e2-d87d673c1a121d45-00",
         "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20210803.1",
-          "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
+          "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20211025.1",
+          "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "f4c1d2e666ddf215fcefdfedc5dd71c8",
         "x-ms-return-client-request-id": "true"
@@ -35,14 +35,14 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "9dadaf60-841f-4939-af65-774efc39abc2",
+        "apim-request-id": "3a35d0eb-d944-41c7-b16d-95d13be9ce5a",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2,CognitiveServices.TextAnalytics.TextRecords=2",
-        "Date": "Tue, 03 Aug 2021 18:39:27 GMT",
+        "Date": "Mon, 25 Oct 2021 21:13:20 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "120"
+        "x-envoy-upstream-service-time": "93"
       },
       "ResponseBody": {
         "documents": [
@@ -123,6 +123,6 @@
   "Variables": {
     "RandomSeed": "876796289",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://tacanaryjava.cognitiveservices.azure.com/"
+    "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com/"
   }
 }

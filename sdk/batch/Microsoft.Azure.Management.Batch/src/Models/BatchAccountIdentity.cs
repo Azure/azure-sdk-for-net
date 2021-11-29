@@ -8,9 +8,16 @@ namespace Microsoft.Azure.Management.Batch.Models
 {
     public partial class BatchAccountIdentity
     {
-        public BatchAccountIdentity(ResourceIdentityType type, string principalId = default(string), string tenantId = default(string), IDictionary<string, BatchAccountIdentityUserAssignedIdentitiesValue> userAssignedIdentities = default(IDictionary<string, BatchAccountIdentityUserAssignedIdentitiesValue>))
-        : this(type, principalId, tenantId, userAssignedIdentities as IDictionary<string, UserAssignedIdentities>)
+        public BatchAccountIdentity(ResourceIdentityType type, IDictionary<string, UserAssignedIdentities> userAssignedIdentities)
+        : this(type, default(string), default(string), userAssignedIdentities)
         {
+        }
+
+        [Obsolete("Please use BatchAccountIdentity(ResourceIdentityType type, IDictionary<string, UserAssignedIdentities> userAssignedIdentities) instead.")]
+        public BatchAccountIdentity(ResourceIdentityType type, IDictionary<string, BatchAccountIdentityUserAssignedIdentitiesValue> userAssignedIdentities)
+        : this(type, default(string), default(string), userAssignedIdentities.ToDictionary(k => k.Key, v => (UserAssignedIdentities)v.Value))
+        {
+            // This constructor exists for legacy support. Do not add anything here.
         }
     }
 }

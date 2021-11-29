@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Tests
 
         protected async Task<GenericResource> CreateGenericAvailabilitySetAsync(ResourceIdentifier rgId)
         {
-            var genericResources = Client.DefaultSubscription.GetGenericResources();
+            var genericResources = (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetGenericResources();
             GenericResourceData data = ConstructGenericAvailabilitySet();
             var asetId = rgId.AppendProviderResource("Microsoft.Compute", "availabilitySets", Recording.GenerateAssetName("test-aset"));
             var op = await genericResources.CreateOrUpdateAsync(asetId, data);
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Tests
 
         protected async Task<ResourceCreateOrUpdateByIdOperation> StartCreateGenericAvailabilitySetAsync(ResourceIdentifier rgId)
         {
-            var genericResources = Client.DefaultSubscription.GetGenericResources();
+            var genericResources = (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetGenericResources();
             GenericResourceData data = ConstructGenericAvailabilitySet();
             var asetId = rgId.AppendProviderResource("Microsoft.Compute", "availabilitySets", Recording.GenerateAssetName("test-aset"));
             return await genericResources.CreateOrUpdateAsync(asetId, data, false);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Tests
             //TODO: Add equal for Properties and Tags
         }
 
-        protected static async Task<int> GetResourceCountAsync(GenericResourceContainer genericResources, ResourceGroup rg = default)
+        protected static async Task<int> GetResourceCountAsync(GenericResourceCollection genericResources, ResourceGroup rg = default)
         {
             int result = 0;
             var pageable = rg == null ? genericResources.GetAllAsync() : genericResources.GetByResourceGroupAsync(rg.Id.Name);

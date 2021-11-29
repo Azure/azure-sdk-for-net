@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -360,7 +359,7 @@ namespace Azure.Identity.Tests
             using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", server.Address.AbsoluteUri } });
 
             // setting the delay to 1ms and retry mode to fixed to speed up test
-            var options = new TokenCredentialOptions() {  };
+            var options = new TokenCredentialOptions() { Retry = { Delay = TimeSpan.FromMilliseconds(0), Mode = RetryMode.Fixed } };
 
             var credential = InstrumentClient(new ManagedIdentityCredential(options: options));
 
@@ -377,7 +376,7 @@ namespace Azure.Identity.Tests
         {
             using var server = new TestServer(async context =>
             {
-                await Task.Delay(8000);
+                await Task.Delay(1000);
 
                 context.Response.StatusCode = 418;
             });
@@ -460,6 +459,58 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        public async Task VerifyClientAuthenticateReturnsInvalidJson([Values(200, 404)] int status)
+        {
+            using var environment = new TestEnvVar(
+                new()
+                {
+                    { "MSI_ENDPOINT", null },
+                    { "MSI_SECRET", null },
+                    { "IDENTITY_ENDPOINT", null },
+                    { "IDENTITY_HEADER", null },
+                    { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null }
+                });
+            var mockTransport = new MockTransport(request => CreateInvalidJsonResponse(status));
+            var options = new TokenCredentialOptions() { Transport = mockTransport };
+            options.Retry.MaxDelay = TimeSpan.Zero;
+            var pipeline = CredentialPipeline.GetInstance(options);
+
+            ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential("mock-client-id", pipeline));
+
+            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+            Assert.IsInstanceOf(typeof(RequestFailedException), ex.InnerException);
+            Assert.That(ex.Message, Does.Contain(ManagedIdentitySource.UnexpectedResponse));
+            await Task.CompletedTask;
+        }
+
+        [Test]
+        public async Task VerifyClientAuthenticateReturnsErrorResponse()
+        {
+            using var environment = new TestEnvVar(
+                new()
+                {
+                    { "MSI_ENDPOINT", null },
+                    { "MSI_SECRET", null },
+                    { "IDENTITY_ENDPOINT", null },
+                    { "IDENTITY_HEADER", null },
+                    { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null }
+                });
+            var errorMessage = "Some error happened";
+            var mockTransport = new MockTransport(request => CreateErrorMockResponse(404, errorMessage));
+            var options = new TokenCredentialOptions { Transport = mockTransport};
+            options.Retry.MaxDelay = TimeSpan.Zero;
+            var pipeline = CredentialPipeline.GetInstance(options);
+
+            ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential("mock-client-id", pipeline));
+
+            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+            Assert.IsInstanceOf(typeof(RequestFailedException), ex.InnerException);
+            Assert.That(ex.Message, Does.Contain(errorMessage));
+
+            await Task.CompletedTask;
+        }
+
+        [Test]
         [TestCaseSource("ExceptionalEnvironmentConfigs")]
         public async Task VerifyAuthenticationFailedExceptionsAreDeferredToGetToken(Dictionary<string, string> environmentVariables)
         {
@@ -501,6 +552,13 @@ namespace Azure.Identity.Tests
         {
             var response = new MockResponse(responseCode);
             response.SetContent($"{{\"StatusCode\":400,\"Message\":\"{message}\",\"CorrelationId\":\"f3c9aec0-7fa2-4184-ad0f-0c68ce5fc748\"}}");
+            return response;
+        }
+
+        private static MockResponse CreateInvalidJsonResponse(int status)
+        {
+            var response = new MockResponse(status);
+            response.SetContent("invalid json");
             return response;
         }
     }

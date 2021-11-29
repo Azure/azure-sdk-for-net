@@ -29,9 +29,12 @@ namespace Azure.Storage.Blobs.Test
 {
     public class BlobBaseClientTests : BlobTestBase
     {
+        public BlobAccessConditionConfigs BlobConditions { get; }
+
         public BlobBaseClientTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
             : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
+            BlobConditions = new BlobAccessConditionConfigs(this);
         }
 
         [RecordedTest]
@@ -300,6 +303,10 @@ namespace Azure.Storage.Blobs.Test
             Response<BlobDownloadStreamingResult> response = await blob.DownloadStreamingAsync();
 
             // Assert
+
+            // Ensure that we grab the whole ETag value from the service without removing the quotes
+            Assert.AreEqual(response.Value.Details.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag.ToString()}\"");
+
             Assert.AreEqual(data.Length, response.Value.Details.ContentLength);
             var actual = new MemoryStream();
             await response.Value.Content.CopyToAsync(actual);
@@ -1771,609 +1778,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        public async Task OpenReadAsync()
-        {
-            int size = Constants.KB;
-            await using DisposingContainer test = await GetTestContainerAsync();
-
-            // Arrange
-            var data = GetRandomBuffer(size);
-            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
-            using Stream stream = new MemoryStream(data);
-            await blob.UploadAsync(stream);
-
-            // Act
-            Stream outputStream = await blob.OpenReadAsync().ConfigureAwait(false);
-            byte[] outputBytes = new byte[size];
-            await outputStream.ReadAsync(outputBytes, 0, size);
-
-            // Assert
-            Assert.AreEqual(data.Length, outputStream.Length);
-            TestHelper.AssertSequenceEqual(data, outputBytes);
-        }
-
-        [RecordedTest]
-        public async Task OpenReadAsync_BufferSize()
-        {
-            int size = Constants.KB;
-            await using DisposingContainer test = await GetTestContainerAsync();
-
-            // Arrange
-            var data = GetRandomBuffer(size);
-            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
-            using Stream stream = new MemoryStream(data);
-            await blob.UploadAsync(stream);
-
-            BlobOpenReadOptions options = new BlobOpenReadOptions(allowModifications: false)
-            {
-                BufferSize = size / 8
-            };
-
-            // Act
-            Stream outputStream = await blob.OpenReadAsync(options).ConfigureAwait(false);
-            byte[] outputBytes = new byte[size];
-            int downloadedBytes = 0;
-
-            while (downloadedBytes < size)
-            {
-                downloadedBytes += await outputStream.ReadAsync(outputBytes, downloadedBytes, size / 4);
-            }
-
-            // Assert
-            Assert.AreEqual(data.Length, outputStream.Length);
-            TestHelper.AssertSequenceEqual(data, outputBytes);
-        }
-
-        [RecordedTest]
-        public async Task OpenReadAsync_OffsetAndBufferSize()
-        {
-            int size = Constants.KB;
-            await using DisposingContainer test = await GetTestContainerAsync();
-
-            // Arrange
-            var data = GetRandomBuffer(size);
-            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
-            using Stream stream = new MemoryStream(data);
-            await blob.UploadAsync(stream);
-
-            byte[] expected = new byte[size];
-            Array.Copy(data, size / 2, expected, size / 2, size / 2);
-
-            BlobOpenReadOptions options = new BlobOpenReadOptions(allowModifications: false)
-            {
-                Position = size / 2,
-                BufferSize = size / 8
-            };
-
-            // Act
-            Stream outputStream = await blob.OpenReadAsync(options).ConfigureAwait(false);
-            byte[] outputBytes = new byte[size];
-
-            int downloadedBytes = size / 2;
-
-            while (downloadedBytes < size)
-            {
-                downloadedBytes += await outputStream.ReadAsync(outputBytes, downloadedBytes, size / 4);
-            }
-
-            // Assert
-            Assert.AreEqual(data.Length, outputStream.Length);
-            TestHelper.AssertSequenceEqual(expected, outputBytes);
-        }
-
-        [RecordedTest]
-        public async Task OpenReadAsync_Error()
-        {
-            // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync();
-            BlobClient blobClient = test.Container.GetBlobClient(GetNewBlobName());
-
-            // Act
-            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                blobClient.OpenReadAsync(),
-                e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
-        }
-
-        [RecordedTest]
-        public async Task OpenReadAsync_AccessConditions()
-        {
-            // Arrange
-            int size = Constants.KB;
-            var garbageLeaseId = GetGarbageLeaseId();
-            await using DisposingContainer test = await GetTestContainerAsync();
-            foreach (AccessConditionParameters parameters in AccessConditions_Data)
-            {
-                var data = GetRandomBuffer(size);
-                BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
-                using Stream stream = new MemoryStream(data);
-                await blob.UploadAsync(stream);
-
-                parameters.Match = await SetupBlobMatchCondition(blob, parameters.Match);
-                parameters.LeaseId = await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
-                BlobRequestConditions accessConditions = BuildAccessConditions(
-                    parameters: parameters,
-                    lease: true);
-
-                BlobOpenReadOptions options = new BlobOpenReadOptions(allowModifications: false)
-                {
-                    Conditions = accessConditions,
-                    BufferSize = size / 4
-                };
-
-                // Act
-                Stream outputStream = await blob.OpenReadAsync(options).ConfigureAwait(false);
-                byte[] outputBytes = new byte[size];
-
-                int downloadedBytes = 0;
-
-                while (downloadedBytes < size)
-                {
-                    downloadedBytes += await outputStream.ReadAsync(outputBytes, downloadedBytes, size / 4);
-                }
-
-                // Assert
-                Assert.AreEqual(data.Length, outputStream.Length);
-                TestHelper.AssertSequenceEqual(data, outputBytes);
-            }
-        }
-
-        [RecordedTest]
-        public async Task OpenReadAsync_AccessConditionsFail()
-        {
-            // Arrange
-            int size = Constants.KB;
-            var garbageLeaseId = GetGarbageLeaseId();
-            foreach (AccessConditionParameters parameters in GetAccessConditionsFail_Data(garbageLeaseId))
-            {
-                await using DisposingContainer test = await GetTestContainerAsync();
-                var data = GetRandomBuffer(size);
-                BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
-                using Stream stream = new MemoryStream(data);
-                await blob.UploadAsync(stream);
-
-                parameters.NoneMatch = await SetupBlobMatchCondition(blob, parameters.NoneMatch);
-                BlobRequestConditions accessConditions = BuildAccessConditions(parameters);
-
-                BlobOpenReadOptions options = new BlobOpenReadOptions(allowModifications: false)
-                {
-                    Conditions = accessConditions,
-                    BufferSize = size / 4
-                };
-
-                // Act
-
-                await TestHelper.CatchAsync<Exception>(
-                    async () =>
-                    {
-                        var _ = await blob.OpenReadAsync(options).ConfigureAwait(false);
-                    });
-            }
-        }
-
-        [RecordedTest]
-        public async Task OpenReadAsync_StrangeOffsetsTest()
-        {
-            // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync();
-
-            int size = Constants.KB;
-            byte[] exectedData = GetRandomBuffer(size);
-            BlobClient blobClient = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
-            using Stream stream = new MemoryStream(exectedData);
-            await blobClient.UploadAsync(stream);
-
-            BlobOpenReadOptions options = new BlobOpenReadOptions(allowModifications: false)
-            {
-                Position = 0,
-                BufferSize = 157
-            };
-
-            Stream outputStream = await blobClient.OpenReadAsync(options);
-            byte[] actualData = new byte[size];
-            int offset = 0;
-
-            // Act
-            int count = 0;
-            int readBytes = -1;
-            while (readBytes != 0)
-            {
-                for (count = 6; count < 37; count += 6)
-                {
-                    readBytes = await outputStream.ReadAsync(actualData, offset, count);
-                    if (readBytes == 0)
-                    {
-                        break;
-                    }
-                    offset += readBytes;
-                }
-            }
-
-            // Assert
-            TestHelper.AssertSequenceEqual(exectedData, actualData);
-        }
-
-        [RecordedTest]
-        public async Task OpenReadAsync_Modified()
-        {
-            int size = Constants.KB;
-            await using DisposingContainer test = await GetTestContainerAsync();
-
-            // Arrange
-            var data = GetRandomBuffer(size);
-            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
-            using Stream stream = new MemoryStream(data);
-            await blob.UploadAsync(stream);
-
-            BlobOpenReadOptions options = new BlobOpenReadOptions(allowModifications: false)
-            {
-                BufferSize = size / 2
-            };
-
-            // Act
-            Stream outputStream = await blob.OpenReadAsync(options).ConfigureAwait(false);
-            byte[] outputBytes = new byte[size];
-            await outputStream.ReadAsync(outputBytes, 0, size / 2);
-
-            // Modify the blob.
-            stream.Position = 0;
-
-            string blockId = ToBase64(GetNewBlockName());
-            await blob.StageBlockAsync(
-                base64BlockId: blockId,
-                content: stream);
-
-            await blob.CommitBlockListAsync(new List<string>
-            {
-                blockId
-            });
-
-            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                outputStream.ReadAsync(outputBytes, size / 2, size / 2),
-                e => Assert.AreEqual(BlobErrorCode.ConditionNotMet.ToString(), e.ErrorCode));
-        }
-
-        [RecordedTest]
-        public async Task OpenReadAsync_ModifiedAllowBlobModifications()
-        {
-            int size = Constants.KB;
-            await using DisposingContainer test = await GetTestContainerAsync();
-
-            // Arrange
-            byte[] data0 = GetRandomBuffer(size);
-            byte[] data1 = GetRandomBuffer(size);
-            byte[] expectedData = new byte[2 * size];
-            Array.Copy(data0, 0, expectedData, 0, size);
-            Array.Copy(data1, 0, expectedData, size, size);
-            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
-            using Stream stream0 = new MemoryStream(data0);
-            string blockId0 = ToBase64(GetNewBlockName());
-
-            await blob.StageBlockAsync(
-                base64BlockId: blockId0,
-                content: stream0);
-
-            await blob.CommitBlockListAsync(new List<string> { blockId0 });
-
-            BlobOpenReadOptions options = new BlobOpenReadOptions(allowModifications: true);
-
-            // Act
-            Stream outputStream = await blob.OpenReadAsync(options).ConfigureAwait(false);
-            byte[] outputBytes = new byte[2 * size];
-            await outputStream.ReadAsync(outputBytes, 0, size);
-
-            // Modify the blob.
-            string blockId1 = ToBase64(GetNewBlockName());
-            using Stream stream1 = new MemoryStream(data1);
-            await blob.StageBlockAsync(
-                base64BlockId: blockId1,
-                content: stream1);
-
-            await blob.CommitBlockListAsync(new List<string> { blockId0, blockId1 });
-
-            await outputStream.ReadAsync(outputBytes, size, size);
-
-            // Assert
-            TestHelper.AssertSequenceEqual(expectedData, outputBytes);
-        }
-
-        [RecordedTest]
-        [Ignore("Don't want to record 1 GB of data.")]
-        public async Task OpenReadAsync_LargeData()
-        {
-            // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync();
-            int length = 1 * Constants.GB;
-            byte[] exectedData = GetRandomBuffer(length);
-            BlobClient blobClient = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
-            using Stream stream = new MemoryStream(exectedData);
-            await blobClient.UploadAsync(stream,
-                transferOptions: new StorageTransferOptions
-                {
-                    MaximumTransferLength = 8 * Constants.MB,
-                    MaximumConcurrency = 8
-                });
-
-            Stream outputStream = await blobClient.OpenReadAsync();
-            int readSize = 8 * Constants.MB;
-            byte[] actualData = new byte[readSize];
-            int offset = 0;
-
-            // Act
-            for (int i = 0; i < length / readSize; i++)
-            {
-                await outputStream.ReadAsync(actualData, 0, readSize);
-                for (int j = 0; j < readSize; j++)
-                {
-                    // Assert
-                    if (actualData[j] != exectedData[offset + j])
-                    {
-                        Assert.Fail($"Index {offset + j} does not match.  Expected: {exectedData[offset + j]} Actual: {actualData[j]}");
-                    }
-                }
-                offset += readSize;
-            }
-        }
-
-        [RecordedTest]
-        public async Task OpenReadAsync_CopyReadStreamToAnotherStream()
-        {
-            // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync();
-            long size = 4 * Constants.MB;
-            byte[] exectedData = GetRandomBuffer(size);
-            BlobClient blobClient = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
-            using Stream stream = new MemoryStream(exectedData);
-            await blobClient.UploadAsync(stream);
-
-            MemoryStream outputStream = new MemoryStream();
-
-            // Act
-            using Stream blobStream = await blobClient.OpenReadAsync();
-            await blobStream.CopyToAsync(outputStream);
-
-            TestHelper.AssertSequenceEqual(exectedData, outputStream.ToArray());
-        }
-
-        [RecordedTest]
-        public async Task OpenReadAsync_InvalidParameterTests()
-        {
-            int size = Constants.KB;
-            await using DisposingContainer test = await GetTestContainerAsync();
-
-            // Arrange
-            var data = GetRandomBuffer(size);
-            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
-            await blob.UploadAsync(new MemoryStream(data));
-            Stream stream = await blob.OpenReadAsync();
-
-            // Act
-            await TestHelper.AssertExpectedExceptionAsync<ArgumentNullException>(
-                stream.ReadAsync(buffer: null, offset: 0, count: 10),
-                new ArgumentNullException("buffer", $"buffer cannot be null."));
-
-            await TestHelper.AssertExpectedExceptionAsync<ArgumentOutOfRangeException>(
-                stream.ReadAsync(buffer: new byte[10], offset: -1, count: 10),
-                new ArgumentOutOfRangeException("offset", "offset cannot be less than 0."));
-
-            await TestHelper.AssertExpectedExceptionAsync<ArgumentOutOfRangeException>(
-                stream.ReadAsync(buffer: new byte[10], offset: 11, count: 10),
-                new ArgumentOutOfRangeException("offset", "offset cannot exceed buffer length."));
-
-            await TestHelper.AssertExpectedExceptionAsync<ArgumentOutOfRangeException>(
-                stream.ReadAsync(buffer: new byte[10], offset: 1, count: -1),
-                new ArgumentOutOfRangeException("count", "count cannot be less than 0."));
-        }
-
-        [RecordedTest]
-        public async Task OpenReadAsync_Seek_PositionUnchanged()
-        {
-            int size = Constants.KB;
-            await using DisposingContainer test = await GetTestContainerAsync();
-
-            // Arrange
-            var data = GetRandomBuffer(size);
-            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
-            using Stream stream = new MemoryStream(data);
-            await blob.UploadAsync(stream);
-
-            // Act
-            Stream outputStream = await blob.OpenReadAsync().ConfigureAwait(false);
-            byte[] outputBytes = new byte[size];
-            outputStream.Seek(0, SeekOrigin.Begin);
-
-            Assert.AreEqual(0, outputStream.Position);
-
-            await outputStream.ReadAsync(outputBytes, 0, size);
-
-            // Assert
-            Assert.AreEqual(data.Length, outputStream.Length);
-            TestHelper.AssertSequenceEqual(data, outputBytes);
-        }
-
-        [RecordedTest]
-        public async Task OpenReadAsync_Seek_NegativeNewPosition()
-        {
-            int size = Constants.KB;
-            await using DisposingContainer test = await GetTestContainerAsync();
-
-            // Arrange
-            var data = GetRandomBuffer(size);
-            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
-            using Stream stream = new MemoryStream(data);
-            await blob.UploadAsync(stream);
-
-            // Act
-            Stream outputStream = await blob.OpenReadAsync().ConfigureAwait(false);
-            TestHelper.AssertExpectedException<ArgumentException>(
-                () => outputStream.Seek(-10, SeekOrigin.Begin),
-                new ArgumentException("New offset cannot be less than 0.  Value was -10", "offset"));
-        }
-
-        [RecordedTest]
-        [TestCase(true)]
-        [TestCase(false)]
-        public async Task OpenReadAsync_Seek_NewPositionGreaterThanBlobLength(bool allowModifications)
-        {
-            int size = Constants.KB;
-            await using DisposingContainer test = await GetTestContainerAsync();
-
-            // Arrange
-            var data = GetRandomBuffer(size);
-            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
-            using Stream stream = new MemoryStream(data);
-            await blob.UploadAsync(stream);
-
-            BlobOpenReadOptions options = new BlobOpenReadOptions(allowModifications: allowModifications);
-
-            // Act
-            Stream outputStream = await blob.OpenReadAsync(options).ConfigureAwait(false);
-            TestHelper.AssertExpectedException<ArgumentException>(
-                () => outputStream.Seek(1025, SeekOrigin.Begin),
-                new ArgumentException("You cannot seek past the last known length of the underlying blob or file.", "offset"));
-
-            Assert.AreEqual(size, outputStream.Length);
-        }
-
-        [RecordedTest]
-        [TestCase(0, SeekOrigin.Begin)]
-        [TestCase(10, SeekOrigin.Begin)]
-        [TestCase(-10, SeekOrigin.Current)]
-        [TestCase(0, SeekOrigin.Current)]
-        [TestCase(10, SeekOrigin.Current)]
-        [TestCase(0, SeekOrigin.End)]
-        [TestCase(-10, SeekOrigin.End)]
-        public async Task OpenReadAsync_Seek_Position(long offset, SeekOrigin origin)
-        {
-            int size = Constants.KB;
-            await using DisposingContainer test = await GetTestContainerAsync();
-
-            // Arrange
-            var data = GetRandomBuffer(size);
-            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
-            using Stream stream = new MemoryStream(data);
-            await blob.UploadAsync(stream);
-
-            BlobOpenReadOptions options = new BlobOpenReadOptions(allowModifications: false);
-
-            Stream outputStream = await blob.OpenReadAsync(options: options).ConfigureAwait(false);
-            int readBytes = 512;
-            await outputStream.ReadAsync(new byte[readBytes], 0, readBytes);
-            Assert.AreEqual(512, outputStream.Position);
-
-            // Act
-            outputStream.Seek(offset, origin);
-
-            // Assert
-            if (origin == SeekOrigin.Begin)
-            {
-                Assert.AreEqual(offset, outputStream.Position);
-            }
-            else if (origin == SeekOrigin.Current)
-            {
-                Assert.AreEqual(readBytes + offset, outputStream.Position);
-            }
-            else
-            {
-                Assert.AreEqual(size + offset, outputStream.Position);
-            }
-
-            Assert.AreEqual(size, outputStream.Length);
-        }
-
-        [RecordedTest]
-        // lower position within _buffer
-        [TestCase(-50)]
-        // higher positiuon within _buffer
-        [TestCase(50)]
-        // lower position below _buffer
-        [TestCase(-100)]
-        // higher position above _buffer
-        [TestCase(100)]
-        public async Task OpenReadAsync_Seek(long offset)
-        {
-            int size = Constants.KB;
-            int initalPosition = 450;
-            await using DisposingContainer test = await GetTestContainerAsync();
-
-            // Arrange
-            byte[] data = GetRandomBuffer(size);
-            byte[] expectedData = new byte[size - (initalPosition + offset)];
-            Array.Copy(data, initalPosition + offset, expectedData, 0, size - (initalPosition + offset));
-            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
-            using Stream stream = new MemoryStream(data);
-            await blob.UploadAsync(stream);
-
-            BlobOpenReadOptions options = new BlobOpenReadOptions(allowModifications: false)
-            {
-                BufferSize = 128
-            };
-
-            // Act
-            Stream openReadStream = await blob.OpenReadAsync(options: options).ConfigureAwait(false);
-            int readbytes = initalPosition;
-            while (readbytes > 0)
-            {
-                readbytes -= await openReadStream.ReadAsync(new byte[readbytes], 0, readbytes);
-            }
-
-            openReadStream.Seek(offset, SeekOrigin.Current);
-
-            using MemoryStream outputStream = new MemoryStream();
-            await openReadStream.CopyToAsync(outputStream);
-
-            // Assert
-            Assert.AreEqual(expectedData.Length, outputStream.ToArray().Length);
-            Assert.AreEqual(size, openReadStream.Length);
-            TestHelper.AssertSequenceEqual(expectedData, outputStream.ToArray());
-        }
-
-        [RecordedTest]
-        // lower position within _buffer
-        [TestCase(400)]
-        // higher positiuon within _buffer
-        [TestCase(500)]
-        // lower position below _buffer
-        [TestCase(250)]
-        // higher position above _buffer
-        [TestCase(550)]
-        public async Task OpenReadAsync_SetPosition(long position)
-        {
-            int size = Constants.KB;
-            int initalPosition = 450;
-            await using DisposingContainer test = await GetTestContainerAsync();
-
-            // Arrange
-            byte[] data = GetRandomBuffer(size);
-            byte[] expectedData = new byte[size - position];
-            Array.Copy(data, position, expectedData, 0, size - position);
-            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
-            using Stream stream = new MemoryStream(data);
-            await blob.UploadAsync(stream);
-
-            BlobOpenReadOptions options = new BlobOpenReadOptions(allowModifications: false)
-            {
-                BufferSize = 128
-            };
-
-            // Act
-            Stream openReadStream = await blob.OpenReadAsync(options: options).ConfigureAwait(false);
-            int readbytes = initalPosition;
-            while (readbytes > 0)
-            {
-                readbytes -= await openReadStream.ReadAsync(new byte[readbytes], 0, readbytes);
-            }
-
-            openReadStream.Position = position;
-
-            using MemoryStream outputStream = new MemoryStream();
-            await openReadStream.CopyToAsync(outputStream);
-
-            // Assert
-            Assert.AreEqual(expectedData.Length, outputStream.ToArray().Length);
-            TestHelper.AssertSequenceEqual(expectedData, outputStream.ToArray());
-        }
-
-        [RecordedTest]
         public async Task StartCopyFromUriAsync()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -3119,7 +2523,8 @@ namespace Azure.Storage.Blobs.Test
             await destBlob.GetPropertiesAsync();
 
             // Assert
-            Assert.IsNotNull(copyResponse.Value.ETag);
+            // Ensure that we grab the whole ETag value from the service without removing the quotes
+            Assert.AreEqual(copyResponse.Value.ETag.ToString(), $"\"{copyResponse.GetRawResponse().Headers.ETag.ToString()}\"");
             Assert.IsNotNull(copyResponse.Value.LastModified);
             Assert.IsNotNull(copyResponse.Value.CopyId);
             Assert.AreEqual(CopyStatus.Success, copyResponse.Value.CopyStatus);
@@ -4259,6 +3664,8 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            // Ensure that we grab the whole ETag value from the service without removing the quotes
+            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
         }
 
         [RecordedTest]
@@ -4858,7 +4265,7 @@ namespace Azure.Storage.Blobs.Test
             BlobBaseClient blob = await GetNewBlobClient(test.Container);
 
             // Act
-            await blob.SetHttpHeadersAsync(new BlobHttpHeaders
+            Response<BlobInfo> response = await blob.SetHttpHeadersAsync(new BlobHttpHeaders
             {
                 CacheControl = constants.CacheControl,
                 ContentDisposition = constants.ContentDisposition,
@@ -4869,13 +4276,18 @@ namespace Azure.Storage.Blobs.Test
             });
 
             // Assert
-            Response<BlobProperties> response = await blob.GetPropertiesAsync();
-            Assert.AreEqual(constants.ContentType, response.Value.ContentType);
-            TestHelper.AssertSequenceEqual(constants.ContentMD5, response.Value.ContentHash);
-            Assert.AreEqual(constants.ContentEncoding, response.Value.ContentEncoding);
-            Assert.AreEqual(constants.ContentLanguage, response.Value.ContentLanguage);
-            Assert.AreEqual(constants.ContentDisposition, response.Value.ContentDisposition);
-            Assert.AreEqual(constants.CacheControl, response.Value.CacheControl);
+
+            // Ensure that we grab the whole ETag value from the service without removing the quotes
+            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+
+            // Ensure the values has been correctly set by doing a GetProperties call
+            Response<BlobProperties> propertiesResponse = await blob.GetPropertiesAsync();
+            Assert.AreEqual(constants.ContentType, propertiesResponse.Value.ContentType);
+            TestHelper.AssertSequenceEqual(constants.ContentMD5, propertiesResponse.Value.ContentHash);
+            Assert.AreEqual(constants.ContentEncoding, propertiesResponse.Value.ContentEncoding);
+            Assert.AreEqual(constants.ContentLanguage, propertiesResponse.Value.ContentLanguage);
+            Assert.AreEqual(constants.ContentDisposition, propertiesResponse.Value.ContentDisposition);
+            Assert.AreEqual(constants.CacheControl, propertiesResponse.Value.CacheControl);
         }
 
         [RecordedTest]
@@ -5022,11 +4434,16 @@ namespace Azure.Storage.Blobs.Test
             IDictionary<string, string> metadata = BuildMetadata();
 
             // Act
-            await blob.SetMetadataAsync(metadata);
+            Response<BlobInfo> response = await blob.SetMetadataAsync(metadata);
 
             // Assert
-            Response<BlobProperties> response = await blob.GetPropertiesAsync();
-            AssertDictionaryEquality(metadata, response.Value.Metadata);
+
+            // Ensure that we grab the whole ETag value from the service without removing the quotes
+            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+
+            // Ensure the value has been correctly set by doing a GetProperties call
+            Response<BlobProperties> getPropertiesResponse = await blob.GetPropertiesAsync();
+            AssertDictionaryEquality(metadata, getPropertiesResponse.Value.Metadata);
         }
 
         [RecordedTest]
@@ -5199,6 +4616,10 @@ namespace Azure.Storage.Blobs.Test
             Response<BlobSnapshotInfo> response = await blob.CreateSnapshotAsync();
 
             // Assert
+
+            // Ensure that we grab the whole ETag value from the service without removing the quotes
+            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
         }
 
@@ -5368,6 +4789,8 @@ namespace Azure.Storage.Blobs.Test
             Response<BlobLease> response = await leaseClient.AcquireAsync(duration);
 
             // Assert
+            // Ensure that we grab the whole ETag value from the service without removing the quotes
+            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
             Assert.AreEqual(response.Value.LeaseId, leaseClient.LeaseId);
         }
@@ -5530,6 +4953,9 @@ namespace Azure.Storage.Blobs.Test
             // Assert
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
             Assert.AreEqual(response.Value.LeaseId, lease.LeaseId);
+
+            // Ensure that we grab the whole ETag value from the service without removing the quotes
+            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
         }
 
         [RecordedTest]
@@ -5671,6 +5097,8 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            // Ensure that we grab the whole ETag value from the service without removing the quotes
+            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
         }
 
         [RecordedTest]
@@ -5976,6 +5404,9 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
             Assert.AreEqual(newLeaseId, response.Value.LeaseId);
             Assert.AreEqual(response.Value.LeaseId, lease.LeaseId);
+
+            // Ensure that we grab the whole ETag value from the service without removing the quotes
+            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
         }
 
         [RecordedTest]
@@ -7871,33 +7302,11 @@ namespace Azure.Storage.Blobs.Test
 
         private RequestConditions BuildRequestConditions(
             AccessConditionParameters parameters)
-            => new RequestConditions
-            {
-                IfModifiedSince = parameters.IfModifiedSince,
-                IfUnmodifiedSince = parameters.IfUnmodifiedSince,
-                IfMatch = parameters.Match != null ? new ETag(parameters.Match) : default(ETag?),
-                IfNoneMatch = parameters.NoneMatch != null ? new ETag(parameters.NoneMatch) : default(ETag?)
-            };
+            => BlobConditions.BuildRequestConditions(parameters);
 
         private BlobRequestConditions BuildAccessConditions(
             AccessConditionParameters parameters,
             bool lease = true)
-        {
-            var accessConditions = BuildRequestConditions(parameters).ToBlobRequestConditions();
-            if (lease)
-            {
-                accessConditions.LeaseId = parameters.LeaseId;
-            }
-            return accessConditions;
-        }
-
-        public class AccessConditionParameters
-        {
-            public DateTimeOffset? IfModifiedSince { get; set; }
-            public DateTimeOffset? IfUnmodifiedSince { get; set; }
-            public string Match { get; set; }
-            public string NoneMatch { get; set; }
-            public string LeaseId { get; set; }
-        }
+            => BlobConditions.BuildAccessConditions(parameters, lease);
     }
 }

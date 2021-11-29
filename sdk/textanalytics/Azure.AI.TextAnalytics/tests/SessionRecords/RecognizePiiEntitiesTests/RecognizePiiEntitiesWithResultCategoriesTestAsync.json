@@ -1,15 +1,21 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.2-preview.1/entities/recognition/pii?showStats=false\u0026stringIndexType=Utf16CodeUnit",
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/text/analytics/v3.2-preview.2/entities/recognition/pii?showStats=false\u0026stringIndexType=Utf16CodeUnit",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": "application/json, text/json",
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
         "Content-Length": "175",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-7aed81b01e93014b916ddff78b23f4ad-24114f0d5b562b42-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20210805.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "traceparent": "00-4394cdb88030244b99329f1236b07ff9-c2c2736dae16ee44-00",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20211025.1",
+          "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
+        ],
         "x-ms-client-request-id": "e02262f6cfb69307bfbaa46848a55889",
         "x-ms-return-client-request-id": "true"
       },
@@ -24,14 +30,14 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "0d2bd9bc-be5f-4407-8143-841298538aa5",
+        "apim-request-id": "74d069a3-4e3f-48ab-bef1-24d91a977a39",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=1,CognitiveServices.TextAnalytics.TextRecords=1",
-        "Date": "Fri, 06 Aug 2021 01:54:35 GMT",
+        "Date": "Mon, 25 Oct 2021 21:23:14 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "38"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "24"
       },
       "ResponseBody": {
         "documents": [
@@ -76,15 +82,21 @@
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.2-preview.1/entities/recognition/pii?showStats=false\u0026stringIndexType=Utf16CodeUnit\u0026piiCategories=PersonType%2CUSSocialSecurityNumber%2CPhoneNumber%2COrganization",
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/text/analytics/v3.2-preview.2/entities/recognition/pii?showStats=false\u0026stringIndexType=Utf16CodeUnit\u0026piiCategories=PersonType%2CUSSocialSecurityNumber%2CPhoneNumber%2COrganization",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": "application/json, text/json",
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
         "Content-Length": "175",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-dc57f6a963724e4aa9b17d939f6fe6f2-c9ca12227b5d604a-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20210805.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "traceparent": "00-159cb2e3f49e884abc6f6ab90cc869d4-6f406ac086305340-00",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20211025.1",
+          "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
+        ],
         "x-ms-client-request-id": "00989c492da9011d6ac87cc8741ed5c9",
         "x-ms-return-client-request-id": "true"
       },
@@ -99,14 +111,14 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "a16cdc08-c2fa-4c0c-80b9-02893c02136e",
+        "apim-request-id": "0da42c67-c20e-40c6-98d8-427200ab2add",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=1,CognitiveServices.TextAnalytics.TextRecords=1",
-        "Date": "Fri, 06 Aug 2021 01:54:35 GMT",
+        "Date": "Mon, 25 Oct 2021 21:23:14 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "33"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "27"
       },
       "ResponseBody": {
         "documents": [
@@ -154,6 +166,6 @@
   "Variables": {
     "RandomSeed": "298290517",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://mariari-westus2-s.cognitiveservices.azure.com"
+    "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com/"
   }
 }

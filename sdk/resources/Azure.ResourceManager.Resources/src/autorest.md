@@ -21,13 +21,17 @@ public-clients: false
 head-as-boolean: false
 payload-flattening-threshold: 2
 
+# temporary
+mgmt-debug:
+  suppress-list-exception: true
+
 operation-group-to-resource-type:
   DeploymentOperations: Microsoft.Resources/deployments/operations
   Deployments: Microsoft.Resources/deployments
   DeploymentScriptLogs: Microsoft.Resources/deploymentScripts/logs
 operation-group-to-resource:
   DeploymentOperations: DeploymentOperation
-  Deployments: DeploymentExtended
+  Deployments: Deployment
   DeploymentScripts: DeploymentScript
   ApplicationDefinitions: ApplicationDefinition
   DeploymentScriptLogs: ScriptLog
@@ -39,9 +43,15 @@ operation-groups-to-omit:
 merge-operations:
   WhatIf: Deployments_WhatIf_POST;Deployments_WhatIfAtTenantScope_POST;Deployments_WhatIfAtManagementGroupScope_POST;Deployments_WhatIfAtSubscriptionScope_POST
 directive:
+  - from: resources.json
+    where: $.definitions.DeploymentExtended
+    transform: $['x-ms-client-name'] = 'Deployment'
+  - from: resources.json
+    where: $.definitions.Deployment
+    transform: $['x-ms-client-name'] = 'DeploymentInput'
   - remove-operation: checkResourceName
   # Use AtScope methods to replace the following operations
-  # Keep the get method at each scope so that generator can know the possible values of container's parent
+  # Keep the get method at each scope so that generator can know the possible values of collection's parent
   - remove-operation: Deployments_DeleteAtTenantScope
   - remove-operation: Deployments_CheckExistenceAtTenantScope
   - remove-operation: Deployments_CreateOrUpdateAtTenantScope

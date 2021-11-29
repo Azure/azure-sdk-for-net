@@ -59,28 +59,27 @@ namespace Azure.Core.Experimental.Tests
             var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
 
             // TODO: When we move the IsError functionality into Core, we'll move the addition of ResponsePropertiesPolicy to the pipeline into HttpPipelineBuilder.
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy, new ResponsePropertiesPolicy(options) }, new ResponseClassifier());
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy, new ResponsePropertiesPolicy(options) }, null);
             this.endpoint = endpoint;
             apiVersion = options.Version;
         }
 
         /// <summary> Get a pet by its Id. </summary>
         /// <param name="id"> Id of pet to return. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetPetAsync(string id, RequestOptions options = null)
+        public virtual async Task<Response> GetPetAsync(string id, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using HttpMessage message = CreateGetPetRequest(id, options);
-            RequestOptions.Apply(options, message);
+            using HttpMessage message = CreateGetPetRequest(id, context);
             using var scope = _clientDiagnostics.CreateScope("PetStoreClient.GetPet");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options?.CancellationToken ?? default).ConfigureAwait(false);
-                var statusOption = options?.StatusOption ?? ResponseStatusOption.Default;
+                await Pipeline.SendAsync(message, context?.CancellationToken ?? default).ConfigureAwait(false);
+                var errorOptions = context?.ErrorOptions ?? ErrorOptions.Default;
 
-                if (statusOption == ResponseStatusOption.NoThrow)
+                if (errorOptions == ErrorOptions.NoThrow)
                 {
                     return message.Response;
                 }
@@ -107,19 +106,18 @@ namespace Azure.Core.Experimental.Tests
         /// <param name="id"> Id of pet to return. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response GetPet(string id, RequestOptions options = null)
+        public virtual Response GetPet(string id, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using HttpMessage message = CreateGetPetRequest(id, options);
-            RequestOptions.Apply(options, message);
+            using HttpMessage message = CreateGetPetRequest(id, context);
             using var scope = _clientDiagnostics.CreateScope("PetStoreClient.GetPet");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options?.CancellationToken ?? default);
-                var statusOption = options?.StatusOption ?? ResponseStatusOption.Default;
+                Pipeline.Send(message, context?.CancellationToken ?? default);
+                var errorOptions = context?.ErrorOptions ?? ErrorOptions.Default;
 
-                if (statusOption == ResponseStatusOption.NoThrow)
+                if (errorOptions == ErrorOptions.NoThrow)
                 {
                     return message.Response;
                 }
@@ -146,7 +144,7 @@ namespace Azure.Core.Experimental.Tests
         /// <summary> Create Request for <see cref="GetPet"/> and <see cref="GetPetAsync"/> operations. </summary>
         /// <param name="id"> Id of pet to return. </param>
         /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetPetRequest(string id, RequestOptions options = null)
+        private HttpMessage CreateGetPetRequest(string id, RequestContext context = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;

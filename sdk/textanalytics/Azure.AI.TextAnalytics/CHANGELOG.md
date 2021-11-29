@@ -1,15 +1,37 @@
 # Release History
 
-## 5.2.0-beta.2 (Unreleased)
+## 5.2.0-beta.3 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
+- Enum `EntityCategory.IPAddress` now uses the underlying string `IPAddress` value instead of `IP` to align with the Text Analytics service behavior.
+
+### Bugs Fixed
+- Long-Running operation rehydration has been patched to stop throwing a `NullReferenceException`. Issue [24692](https://github.com/Azure/azure-sdk-for-net/issues/24692).
+
+### Other Changes
+
+## 5.1.1 (2021-11-19)
+### Breaking changes
+- Enum `EntityCategory.IPAddress` now uses the underlying string `IPAddress` value instead of `IP` to align with the Text Analytics service behavior.
+
+### Bug Fixes
+- Long-Running operation rehydration has been patched to stop throwing a `NullReferenceException`. Issue [24692](https://github.com/Azure/azure-sdk-for-net/issues/24692).
+
+## 5.2.0-beta.2 (2021-11-02)
+
+### Features Added
+- Adding support for three new actions in `StartAnalyzeActions`: `RecognizeCustomEntities`, `SingleCategoryClassify`, and `MultiCategoriesClassify`. The new actions allow you to use custom models to perform entity recognition and category classification.
+- Added property `ActionName` to all `xxActions` input types so user can specify a name per action. If not provided, service will generate a name.
+- Added property `ActionName` to all `xxActionResult` output types that displays the name of each action.
+- Added suppport for multiple actions of the same type.
 
 ### Bugs Fixed
 - `AnalyzeActionsOperation.GetValuesAsync()` and `AnalyzeHealthcareEntitiesOperation.GetValuesAsync()` are now validating that the operation has completed successfully before attempting to return any values. An `InvalidOperationException` is thrown if this is not true.
 
 ### Other Changes
+- We are now targeting the service version `3.2-preview.2` API as the default instead of `3.2-preview.1`.
 
 ## 5.2.0-beta.1 (2021-08-09)
 

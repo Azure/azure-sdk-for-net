@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of P2SVpnGatewayData. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="vpnClientConnectionHealth"> All P2S VPN clients&apos; connection health status. </param>
         /// <param name="customDnsServers"> List of all customer specified DNS servers IP addresses. </param>
         /// <param name="isRoutingPreferenceInternet"> Enable Routing Preference property for the Public IP Interface of the P2SVpnGateway. </param>
-        internal P2SVpnGatewayData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, SubResource virtualHub, IList<P2SConnectionConfiguration> p2SConnectionConfigurations, ProvisioningState? provisioningState, int? vpnGatewayScaleUnit, SubResource vpnServerConfiguration, VpnClientConnectionHealth vpnClientConnectionHealth, IList<string> customDnsServers, bool? isRoutingPreferenceInternet) : base(id, name, type, location, tags)
+        internal P2SVpnGatewayData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, WritableSubResource virtualHub, IList<P2SConnectionConfiguration> p2SConnectionConfigurations, ProvisioningState? provisioningState, int? vpnGatewayScaleUnit, WritableSubResource vpnServerConfiguration, VpnClientConnectionHealth vpnClientConnectionHealth, IList<string> customDnsServers, bool? isRoutingPreferenceInternet) : base(id, name, type, location, tags)
         {
             Etag = etag;
             VirtualHub = virtualHub;
@@ -52,7 +53,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> The VirtualHub to which the gateway belongs. </summary>
-        public SubResource VirtualHub { get; set; }
+        public WritableSubResource VirtualHub { get; set; }
         /// <summary> List of all p2s connection configurations of the gateway. </summary>
         public IList<P2SConnectionConfiguration> P2SConnectionConfigurations { get; }
         /// <summary> The provisioning state of the P2S VPN gateway resource. </summary>
@@ -60,7 +61,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> The scale unit for this p2s vpn gateway. </summary>
         public int? VpnGatewayScaleUnit { get; set; }
         /// <summary> The VpnServerConfiguration to which the p2sVpnGateway is attached to. </summary>
-        public SubResource VpnServerConfiguration { get; set; }
+        public WritableSubResource VpnServerConfiguration { get; set; }
         /// <summary> All P2S VPN clients&apos; connection health status. </summary>
         public VpnClientConnectionHealth VpnClientConnectionHealth { get; }
         /// <summary> List of all customer specified DNS servers IP addresses. </summary>
