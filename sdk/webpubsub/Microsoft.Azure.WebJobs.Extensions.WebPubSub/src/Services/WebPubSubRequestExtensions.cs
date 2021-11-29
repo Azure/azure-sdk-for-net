@@ -151,12 +151,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             if (!string.IsNullOrEmpty(connectionStates))
             {
                 var states = new Dictionary<string, object>();
-                var parsedStates = Encoding.UTF8.GetString(Convert.FromBase64String(connectionStates));
-                var statesObj = JsonDocument.Parse(parsedStates);
-                foreach (var item in statesObj.RootElement.EnumerateObject())
+                var rawData = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(Convert.FromBase64String(connectionStates));
+                foreach (var state in rawData)
                 {
-                    // Use ToString() to set pure value without ValueKind.
-                    states.Add(item.Name, item.Value.ToString());
+                    states.Add(state.Key, state.Value);
                 }
                 return states;
             }

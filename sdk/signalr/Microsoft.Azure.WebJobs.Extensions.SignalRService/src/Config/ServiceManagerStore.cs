@@ -5,6 +5,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.Azure.SignalR;
 using Microsoft.Azure.SignalR.Management;
 using Microsoft.Extensions.Azure;
@@ -14,7 +15,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 {
-    internal class ServiceManagerStore : IServiceManagerStore
+    internal sealed class ServiceManagerStore : IServiceManagerStore
     {
         private readonly ILoggerFactory _loggerFactory;
         private readonly AzureComponentFactory _azureComponentFactory;
@@ -57,6 +58,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
                     }
                 })
                 .AddSignalRServiceManager()
+                .AddSingleton(sp => (ServiceManager)sp.GetService<IServiceManager>())
                 .AddSingleton(_loggerFactory)
                 .AddSingleton<IInternalServiceHubContextStore, ServiceHubContextStore>();
             if (_router != null)
@@ -67,6 +69,21 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
             services.AddSingleton(services.ToList() as IReadOnlyCollection<ServiceDescriptor>);
             return services.BuildServiceProvider()
                .GetRequiredService<IInternalServiceHubContextStore>();
+        }
+
+        public async ValueTask DisposeAsync()
+        {
+            foreach (var hubContextStore in _store.Values)
+            {
+                await hubContextStore.DisposeAsync().ConfigureAwait(false);
+            }
+        }
+
+        public void Dispose()
+        {
+#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
+            DisposeAsync().GetAwaiter().GetResult();
+#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
         }
     }
 }

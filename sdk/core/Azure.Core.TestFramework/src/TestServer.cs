@@ -46,7 +46,6 @@ namespace Azure.Core.TestFramework
                 })
                 .UseSetting(WebHostDefaults.ApplicationKey, typeof(TestServer).GetTypeInfo().Assembly.FullName)
                 .Build();
-
             _host.Start();
         }
 

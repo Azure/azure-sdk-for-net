@@ -94,15 +94,15 @@ namespace Azure.Core.Tests
                 context =>
                 {
                     contentLength = context.Request.ContentLength.Value;
+                    context.Abort();
                 });
 
-            var requestContentLength = long.MaxValue;
             var transport = GetTransport();
             Request request = transport.CreateRequest();
             request.Method = RequestMethod.Post;
             request.Uri.Reset(testServer.Address);
-            request.Content = RequestContent.Create(new byte[10]);
-            request.Headers.Add("Content-Length", requestContentLength.ToString());
+            var infiniteStream = new InfiniteStream();
+            request.Content = RequestContent.Create(infiniteStream);
 
             try
             {
@@ -113,7 +113,9 @@ namespace Azure.Core.Tests
                 // Sending the request would fail because of length mismatch
             }
 
-            Assert.AreEqual(requestContentLength, requestContentLength);
+            // InfiniteStream has a length of long.MaxValue check that it got sent correctly
+            Assert.AreEqual(infiniteStream.Length, contentLength);
+            Assert.Greater(infiniteStream.Length, int.MaxValue);
         }
 
         [Test]
@@ -537,25 +539,81 @@ namespace Azure.Core.Tests
             Assert.AreEqual(10*1024, requestBytes.Length);
         }
 
-        [Test]
-        public async Task ContentLength0WhenNoContent()
+        public static object[][] RequestMethods => new[]
         {
-            StringValues contentLengthHeader = default;
+            new object[] { RequestMethod.Delete },
+            new object[] { RequestMethod.Get },
+            new object[] { RequestMethod.Patch },
+            new object[] { RequestMethod.Post },
+            new object[] { RequestMethod.Put },
+            new object[] { RequestMethod.Head },
+            new object[] { new RequestMethod("custom") },
+        };
+
+        [Test]
+        [TestCaseSource(nameof(RequestMethods))]
+        public async Task ContentLengthSetCorrectlyWhenNoContent(RequestMethod method)
+        {
+            var transport = GetTransport();
+
+            long? contentLength = null;
             using TestServer testServer = new TestServer(
                 context =>
                 {
-                    Assert.True(context.Request.Headers.TryGetValue("Content-Length", out contentLengthHeader));
+                    contentLength = context.Request.ContentLength;
                 });
 
-            var transport = GetTransport();
-
             Request request = transport.CreateRequest();
-            request.Method = RequestMethod.Post;
+            request.Method = method;
+            request.Content = null;
             request.Uri.Reset(testServer.Address);
 
             await ExecuteRequest(request, transport);
 
-            Assert.AreEqual(contentLengthHeader.ToString(), "0");
+            // for NET461, HttpClient will include zero content-length for DELETEs
+#if NET461
+            if (transport is HttpClientTransport &&
+                method == RequestMethod.Delete)
+            {
+                Assert.AreEqual(0, contentLength);
+
+                return;
+            }
+#endif
+
+            if (method == RequestMethod.Delete ||
+                method == RequestMethod.Get ||
+                method == RequestMethod.Head)
+            {
+                Assert.Null(contentLength);
+            }
+            else
+            {
+                Assert.AreEqual(0, contentLength);
+            }
+        }
+
+        [Test]
+        [TestCaseSource(nameof(RequestMethods))]
+        public async Task ContentTypeNullWhenNoContent(RequestMethod method)
+        {
+            var transport = GetTransport();
+
+            string contentType = null;
+            using TestServer testServer = new TestServer(
+                context =>
+                {
+                    contentType = context.Request.ContentType;
+                });
+
+            Request request = transport.CreateRequest();
+            request.Method = method;
+            request.Content = null;
+            request.Headers.Add("Content-Type", "application/json");
+            request.Uri.Reset(testServer.Address);
+
+            await ExecuteRequest(request, transport);
+            Assert.Null(contentType);
         }
 
         [Test]

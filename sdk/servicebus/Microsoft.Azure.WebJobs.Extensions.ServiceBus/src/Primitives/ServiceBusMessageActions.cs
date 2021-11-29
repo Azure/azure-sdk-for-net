@@ -34,6 +34,17 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             _receiver = receiver;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ServiceBusMessageActions"/> class for mocking use in testing.
+        /// </summary>
+        /// <remarks>
+        /// This constructor exists only to support mocking. When used, class state is not fully initialized, and
+        /// will not function correctly; virtual members are meant to be mocked.
+        ///</remarks>
+        protected ServiceBusMessageActions()
+        {
+        }
+
         ///<inheritdoc cref="ServiceBusReceiver.AbandonMessageAsync(ServiceBusReceivedMessage, IDictionary{string, object}, CancellationToken)"/>
         public virtual async Task AbandonMessageAsync(
             ServiceBusReceivedMessage message,
