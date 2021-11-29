@@ -75,6 +75,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
 
         [Test]
         [RecordedTest]
+        [Ignore("exceed 8s")]
         public async Task CreateEventhubWithParameter()
         {
             //prepare a storage account

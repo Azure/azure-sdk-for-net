@@ -276,6 +276,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
 
         [Test]
         [RecordedTest]
+        [Ignore("exceed 8s")]
         public async Task SetGetNetworkRuleSets()
         {
             //create namespace
@@ -408,51 +409,6 @@ namespace Azure.ResourceManager.EventHubs.Tests
             //get private link resource
             IReadOnlyList<PrivateLinkResource> privateLinkResources = (await eventHubNamespace.GetPrivateLinkResourcesAsync()).Value;
             Assert.NotNull(privateLinkResources);
-        }
-
-        [Test]
-        [RecordedTest]
-        [Ignore("return 404")]
-        public async Task CreateGetDeletePrivateEndPointConnection()
-        {
-            //create namespace
-            _resourceGroup = await CreateResourceGroupAsync();
-            EventHubNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubNamespaces();
-            string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
-            EventHubNamespace eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(namespaceName, new EventHubNamespaceData(DefaultLocation))).Value;
-            PrivateEndpointConnectionCollection privateEndpointConnectionCollection = eventHubNamespace.GetPrivateEndpointConnections();
-
-            //create another namespace for connection
-            string namespaceName2 = await CreateValidNamespaceName("testnamespacemgmt");
-            EventHubNamespace eventHubNamespace2 = (await namespaceCollection.CreateOrUpdateAsync(namespaceName2, new EventHubNamespaceData(DefaultLocation))).Value;
-
-            //create an endpoint connection
-            string connectionName = Recording.GenerateAssetName("endpointconnection");
-            PrivateEndpointConnectionData parameter = new PrivateEndpointConnectionData()
-            {
-                PrivateEndpoint = new WritableSubResource()
-                {
-                    Id = eventHubNamespace2.Id.ToString()
-                }
-            };
-            PrivateEndpointConnection privateEndpointConnection = (await privateEndpointConnectionCollection.CreateOrUpdateAsync(connectionName, parameter)).Value;
-            Assert.NotNull(privateEndpointConnection);
-            Assert.AreEqual(privateEndpointConnection.Data.PrivateEndpoint.Id, eventHubNamespace2.Id.ToString());
-            connectionName = privateEndpointConnection.Id.Name;
-
-            //get the endpoint connection and validate
-            privateEndpointConnection = await privateEndpointConnectionCollection.GetAsync(connectionName);
-            Assert.NotNull(privateEndpointConnection);
-            Assert.AreEqual(privateEndpointConnection.Data.PrivateEndpoint.Id, eventHubNamespace2.Id.ToString());
-
-            //get all endpoint connections and validate
-            List<PrivateEndpointConnection> privateEndpointConnections = await privateEndpointConnectionCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.AreEqual(privateEndpointConnections, 1);
-            Assert.AreEqual(privateEndpointConnections.First().Data.PrivateEndpoint.Id, eventHubNamespace2.Id.ToString());
-
-            //delete endpoint connection and validate
-            await privateEndpointConnection.DeleteAsync();
-            Assert.IsFalse(await privateEndpointConnectionCollection.CheckIfExistsAsync(connectionName));
         }
     }
 }
