@@ -216,7 +216,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public async Task ThrowsIfUsePipelineConstructor()
+        public void ThrowsIfUsePipelineConstructor()
         {
             HttpPipeline pipeline = new HttpPipeline(new MockTransport());
 
@@ -224,18 +224,14 @@ namespace Azure.Core.Tests
             context.AddPolicy(new AddHeaderPolicy("PerCallHeader", "Value"), HttpPipelinePosition.PerCall);
 
             var message = pipeline.CreateMessage(context);
+            Assert.CatchAsync<InvalidOperationException>(async () => await pipeline.SendAsync(message, context.CancellationToken));
+        }
 
-            bool throws = false;
-            try
-            {
-                await pipeline.SendAsync(message, context.CancellationToken);
-            }
-            catch (InvalidOperationException)
-            {
-                throws = true;
-            }
-
-            Assert.IsTrue(throws);
+        [Test]
+        public void CreateMessage_ThrowsOnNullContext()
+        {
+            var pipeline = new HttpPipeline(new MockTransport());
+            Assert.Throws<ArgumentNullException>(() => pipeline.CreateMessage(null));
         }
 
         [Test]

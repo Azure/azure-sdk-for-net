@@ -82,7 +82,7 @@ namespace Azure.Core
 
         internal void AddPolicies(RequestContext context)
         {
-            if (context == null || context.Policies == null || context.Policies.Count == 0)
+            if (context.Policies == null || context.Policies.Count == 0)
             {
                 return;
             }

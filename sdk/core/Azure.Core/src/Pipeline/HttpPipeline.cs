@@ -103,6 +103,7 @@ namespace Azure.Core.Pipeline
         /// <returns>The message.</returns>
         public HttpMessage CreateMessage(RequestContext context)
         {
+            Argument.AssertNotNull(context, nameof(context));
             var message = CreateMessage();
             message.AddPolicies(context);
             return message;
