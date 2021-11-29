@@ -91,23 +91,23 @@
       }
     },
     {
-      "RequestUri": "https://acstestbot1.communication.azure.com/calling/callConnections/01201300-997f-49d3-8cc5-5269c0d381f3/participants?api-version=2021-11-15-preview",
+      "RequestUri": "https://acstelephonyportaltesting.communication.azure.com/calling/callConnections/c01f1300-97af-42d2-84e6-3bfc6f987e57/participants?api-version=2021-11-15-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "126",
         "Content-Type": "application/json",
-        "User-Agent": "azsdk-net-Communication.CallingServer/1.0.0-alpha.20211025.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "User-Agent": "azsdk-net-Communication.CallingServer/1.0.0-alpha.20211129.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
         "x-ms-client-request-id": "cb47f7341133b4af5a8fc2eb57796400",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Tue, 26 Oct 2021 03:05:08 GMT",
+        "x-ms-date": "Mon, 29 Nov 2021 11:12:31 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "participant": {
           "communicationUser": {
-            "id": "8:acs:016a7064-0581-40b9-be73-6dde64d69d72_0000000d-5a5f-2db9-ccd7-44482200049a"
+            "id": "8:acs:ab12b0ea-85ea-4f83-b0b6-84d90209c7c4_0000000e-0a80-0fdd-80f5-8b3a0d00a1c7"
           }
         }
       },
@@ -115,14 +115,14 @@
       "ResponseHeaders": {
         "Content-Length": "56",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 26 Oct 2021 03:05:08 GMT",
-        "X-Azure-Ref": "0ZHB3YQAAAAAR/O8pL/YnTaQ8\u002Bp3PaNY5V1NURURHRTA4MDgAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "Date": "Mon, 29 Nov 2021 11:12:29 GMT",
+        "X-Azure-Ref": "0nrWkYQAAAADl/xAdRYNiTLkpXOqJJgHJREVMMDFFREdFMDUxMwA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Microsoft-Skype-Chain-ID": "9ad29318-5d96-4990-80ec-723ed1cc062e",
+        "X-Microsoft-Skype-Chain-ID": "45ef950a-4066-4601-87bb-af257adbf2f0",
         "x-ms-client-request-id": "cb47f7341133b4af5a8fc2eb57796400"
       },
       "ResponseBody": {
-        "participantId": "b12917f1-ef9c-4c39-9e69-a9668071b658"
+        "participantId": "14cb73a5-2ce5-48f4-8e4c-1dcc55848959"
       }
     },
     {
