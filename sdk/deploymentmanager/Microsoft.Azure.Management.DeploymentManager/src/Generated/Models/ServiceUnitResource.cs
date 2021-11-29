@@ -42,12 +42,12 @@ namespace Microsoft.Azure.Management.DeploymentManager.Models
         /// <param name="deploymentMode">Describes the type of ARM deployment
         /// to be performed on the resource. Possible values include:
         /// 'Incremental', 'Complete'</param>
-        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource. Ex-
-        /// Microsoft.Compute/virtualMachines or
-        /// Microsoft.Storage/storageAccounts.</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="tags">Resource tags.</param>
         /// <param name="artifacts">The artifacts for the service unit.</param>
         public ServiceUnitResource(string location, string targetResourceGroup, DeploymentMode deploymentMode, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ServiceUnitArtifacts artifacts = default(ServiceUnitArtifacts))
