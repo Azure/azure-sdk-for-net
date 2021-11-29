@@ -8,10 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Dns.Models;
+using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Dns.Models
+namespace Azure.ResourceManager.Dns
 {
-    public partial class RecordSet : IUtf8JsonSerializable
+    public partial class RecordSetData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -42,7 +45,7 @@ namespace Azure.ResourceManager.Dns.Models
             if (Optional.IsDefined(TargetResource))
             {
                 writer.WritePropertyName("targetResource");
-                writer.WriteObjectValue(TargetResource);
+                JsonSerializer.Serialize(writer, TargetResource);
             }
             if (Optional.IsCollectionDefined(ARecords))
             {
@@ -138,17 +141,17 @@ namespace Azure.ResourceManager.Dns.Models
             writer.WriteEndObject();
         }
 
-        internal static RecordSet DeserializeRecordSet(JsonElement element)
+        internal static RecordSetData DeserializeRecordSetData(JsonElement element)
         {
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
             Optional<string> etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType type = default;
             Optional<IDictionary<string, string>> metadata = default;
             Optional<long> tTL = default;
             Optional<string> fqdn = default;
             Optional<string> provisioningState = default;
-            Optional<SubResource> targetResource = default;
+            Optional<WritableSubResource> targetResource = default;
             Optional<IList<ARecord>> aRecords = default;
             Optional<IList<AaaaRecord>> aAAARecords = default;
             Optional<IList<MxRecord>> mXRecords = default;
@@ -161,6 +164,11 @@ namespace Azure.ResourceManager.Dns.Models
             Optional<IList<CaaRecord>> caaRecords = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("etag"))
+                {
+                    etag = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("id"))
                 {
                     id = property.Value.GetString();
@@ -174,11 +182,6 @@ namespace Azure.ResourceManager.Dns.Models
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("etag"))
-                {
-                    etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -232,7 +235,7 @@ namespace Azure.ResourceManager.Dns.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            targetResource = SubResource.DeserializeSubResource(property0.Value);
+                            targetResource = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("ARecords"))
@@ -379,7 +382,7 @@ namespace Azure.ResourceManager.Dns.Models
                     continue;
                 }
             }
-            return new RecordSet(id.Value, name.Value, type.Value, etag.Value, Optional.ToDictionary(metadata), Optional.ToNullable(tTL), fqdn.Value, provisioningState.Value, targetResource.Value, Optional.ToList(aRecords), Optional.ToList(aAAARecords), Optional.ToList(mXRecords), Optional.ToList(nSRecords), Optional.ToList(pTRRecords), Optional.ToList(sRVRecords), Optional.ToList(tXTRecords), cNAMERecord.Value, sOARecord.Value, Optional.ToList(caaRecords));
+            return new RecordSetData(id, name, type, etag.Value, Optional.ToDictionary(metadata), Optional.ToNullable(tTL), fqdn.Value, provisioningState.Value, targetResource, Optional.ToList(aRecords), Optional.ToList(aAAARecords), Optional.ToList(mXRecords), Optional.ToList(nSRecords), Optional.ToList(pTRRecords), Optional.ToList(sRVRecords), Optional.ToList(tXTRecords), cNAMERecord.Value, sOARecord.Value, Optional.ToList(caaRecords));
         }
     }
 }

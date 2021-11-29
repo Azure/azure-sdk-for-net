@@ -7,14 +7,18 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Dns.Models;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Dns.Models
+namespace Azure.ResourceManager.Dns
 {
-    /// <summary> Describes a DNS record set (a collection of DNS records with the same name and type). </summary>
-    public partial class RecordSet
+    /// <summary> A class representing the RecordSet data model. </summary>
+    public partial class RecordSetData : Resource
     {
-        /// <summary> Initializes a new instance of RecordSet. </summary>
-        public RecordSet()
+        /// <summary> Initializes a new instance of RecordSetData. </summary>
+        public RecordSetData()
         {
             Metadata = new ChangeTrackingDictionary<string, string>();
             ARecords = new ChangeTrackingList<ARecord>();
@@ -27,10 +31,10 @@ namespace Azure.ResourceManager.Dns.Models
             CaaRecords = new ChangeTrackingList<CaaRecord>();
         }
 
-        /// <summary> Initializes a new instance of RecordSet. </summary>
-        /// <param name="id"> The ID of the record set. </param>
-        /// <param name="name"> The name of the record set. </param>
-        /// <param name="type"> The type of the record set. </param>
+        /// <summary> Initializes a new instance of RecordSetData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="type"> The type. </param>
         /// <param name="etag"> The etag of the record set. </param>
         /// <param name="metadata"> The metadata attached to the record set. </param>
         /// <param name="tTL"> The TTL (time-to-live) of the records in the record set. </param>
@@ -47,11 +51,8 @@ namespace Azure.ResourceManager.Dns.Models
         /// <param name="cnameRecord"> The CNAME record in the  record set. </param>
         /// <param name="soaRecord"> The SOA record in the record set. </param>
         /// <param name="caaRecords"> The list of CAA records in the record set. </param>
-        internal RecordSet(string id, string name, string type, string etag, IDictionary<string, string> metadata, long? tTL, string fqdn, string provisioningState, SubResource targetResource, IList<ARecord> aRecords, IList<AaaaRecord> aaaaRecords, IList<MxRecord> mxRecords, IList<NsRecord> nsRecords, IList<PtrRecord> ptrRecords, IList<SrvRecord> srvRecords, IList<TxtRecord> txtRecords, CnameRecord cnameRecord, SoaRecord soaRecord, IList<CaaRecord> caaRecords)
+        internal RecordSetData(ResourceIdentifier id, string name, ResourceType type, string etag, IDictionary<string, string> metadata, long? tTL, string fqdn, string provisioningState, WritableSubResource targetResource, IList<ARecord> aRecords, IList<AaaaRecord> aaaaRecords, IList<MxRecord> mxRecords, IList<NsRecord> nsRecords, IList<PtrRecord> ptrRecords, IList<SrvRecord> srvRecords, IList<TxtRecord> txtRecords, CnameRecord cnameRecord, SoaRecord soaRecord, IList<CaaRecord> caaRecords) : base(id, name, type)
         {
-            Id = id;
-            Name = name;
-            Type = type;
             Etag = etag;
             Metadata = metadata;
             TTL = tTL;
@@ -70,12 +71,6 @@ namespace Azure.ResourceManager.Dns.Models
             CaaRecords = caaRecords;
         }
 
-        /// <summary> The ID of the record set. </summary>
-        public string Id { get; }
-        /// <summary> The name of the record set. </summary>
-        public string Name { get; }
-        /// <summary> The type of the record set. </summary>
-        public string Type { get; }
         /// <summary> The etag of the record set. </summary>
         public string Etag { get; set; }
         /// <summary> The metadata attached to the record set. </summary>
@@ -87,7 +82,7 @@ namespace Azure.ResourceManager.Dns.Models
         /// <summary> provisioning State of the record set. </summary>
         public string ProvisioningState { get; }
         /// <summary> A reference to an azure resource from where the dns resource value is taken. </summary>
-        public SubResource TargetResource { get; set; }
+        public WritableSubResource TargetResource { get; set; }
         /// <summary> The list of A records in the record set. </summary>
         public IList<ARecord> ARecords { get; }
         /// <summary> The list of AAAA records in the record set. </summary>

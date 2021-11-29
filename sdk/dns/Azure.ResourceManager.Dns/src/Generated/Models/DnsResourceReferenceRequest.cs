@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Dns.Models
 {
@@ -16,10 +17,10 @@ namespace Azure.ResourceManager.Dns.Models
         /// <summary> Initializes a new instance of DnsResourceReferenceRequest. </summary>
         public DnsResourceReferenceRequest()
         {
-            TargetResources = new ChangeTrackingList<SubResource>();
+            TargetResources = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> A list of references to azure resources for which referencing dns records need to be queried. </summary>
-        public IList<SubResource> TargetResources { get; }
+        public IList<WritableSubResource> TargetResources { get; }
     }
 }

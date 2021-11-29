@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Dns.Models
                 writer.WriteStartArray();
                 foreach (var item in TargetResources)
                 {
-                    writer.WriteObjectValue(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
