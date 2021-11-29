@@ -37,13 +37,9 @@ namespace Azure.Core.Experimental.Tests.Models
             // [X] TODO: Use response.IsError
             // [X] TODO: Use throw new ResponseFailedException(response);
 
-            // TODO: When we move this functionality out of Experimental into Core, it will be replaced by
-            // > if (response.IsError)
-            if (response.IsError())
+            if (response.IsError)
             {
-                // TODO: When we move this functionality out of Experimental into Core, it will be replaced by
-                // > throw new RequestFailedException(response);
-                throw response.CreateRequestFailedException();
+                throw new RequestFailedException(response);
             }
 
             return DeserializePet(JsonDocument.Parse(response.Content.ToMemory()));
