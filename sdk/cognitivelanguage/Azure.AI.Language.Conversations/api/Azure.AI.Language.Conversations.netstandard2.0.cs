@@ -24,7 +24,7 @@ namespace Azure.AI.Language.Conversations
     public partial class AnswerSpan
     {
         internal AnswerSpan() { }
-        public double? ConfidenceScore { get { throw null; } }
+        public double? Confidence { get { throw null; } }
         public int? Length { get { throw null; } }
         public int? Offset { get { throw null; } }
         public string Text { get { throw null; } }
@@ -63,7 +63,7 @@ namespace Azure.AI.Language.Conversations
     {
         internal ConversationEntity() { }
         public string Category { get { throw null; } }
-        public float ConfidenceScore { get { throw null; } }
+        public float Confidence { get { throw null; } }
         public int Length { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> ListKeys { get { throw null; } }
         public int Offset { get { throw null; } }
@@ -73,7 +73,7 @@ namespace Azure.AI.Language.Conversations
     {
         internal ConversationIntent() { }
         public string Category { get { throw null; } }
-        public float ConfidenceScore { get { throw null; } }
+        public float Confidence { get { throw null; } }
     }
     public partial class ConversationParameters : Azure.AI.Language.Conversations.AnalysisParameters
     {
@@ -96,22 +96,22 @@ namespace Azure.AI.Language.Conversations
     public static partial class ConversationsModelFactory
     {
         public static Azure.AI.Language.Conversations.AnalyzeConversationResult AnalyzeConversationResult(string query = null, string detectedLanguage = null, Azure.AI.Language.Conversations.BasePrediction prediction = null) { throw null; }
-        public static Azure.AI.Language.Conversations.AnswerSpan AnswerSpan(string text = null, double? confidenceScore = default(double?), int? offset = default(int?), int? length = default(int?)) { throw null; }
+        public static Azure.AI.Language.Conversations.AnswerSpan AnswerSpan(string text = null, double? confidence = default(double?), int? offset = default(int?), int? length = default(int?)) { throw null; }
         public static Azure.AI.Language.Conversations.BasePrediction BasePrediction(Azure.AI.Language.Conversations.ProjectKind projectKind = default(Azure.AI.Language.Conversations.ProjectKind), string topIntent = null) { throw null; }
-        public static Azure.AI.Language.Conversations.ConversationEntity ConversationEntity(string category = null, string text = null, int offset = 0, int length = 0, float confidenceScore = 0f, System.Collections.Generic.IEnumerable<string> listKeys = null) { throw null; }
-        public static Azure.AI.Language.Conversations.ConversationIntent ConversationIntent(string category = null, float confidenceScore = 0f) { throw null; }
+        public static Azure.AI.Language.Conversations.ConversationEntity ConversationEntity(string category = null, string text = null, int offset = 0, int length = 0, float confidence = 0f, System.Collections.Generic.IEnumerable<string> listKeys = null) { throw null; }
+        public static Azure.AI.Language.Conversations.ConversationIntent ConversationIntent(string category = null, float confidence = 0f) { throw null; }
         public static Azure.AI.Language.Conversations.ConversationPrediction ConversationPrediction(Azure.AI.Language.Conversations.ProjectKind projectKind = default(Azure.AI.Language.Conversations.ProjectKind), string topIntent = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Conversations.ConversationIntent> intents = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Conversations.ConversationEntity> entities = null) { throw null; }
         public static Azure.AI.Language.Conversations.ConversationResult ConversationResult(string query = null, string detectedLanguage = null, Azure.AI.Language.Conversations.ConversationPrediction prediction = null) { throw null; }
-        public static Azure.AI.Language.Conversations.ConversationTargetIntentResult ConversationTargetIntentResult(Azure.AI.Language.Conversations.TargetKind targetKind = default(Azure.AI.Language.Conversations.TargetKind), string apiVersion = null, double confidenceScore = 0, Azure.AI.Language.Conversations.ConversationResult result = null) { throw null; }
-        public static Azure.AI.Language.Conversations.KnowledgeBaseAnswer KnowledgeBaseAnswer(System.Collections.Generic.IEnumerable<string> questions = null, string answer = null, double? confidenceScore = default(double?), int? id = default(int?), string source = null, System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null, Azure.AI.Language.Conversations.KnowledgeBaseAnswerDialog dialog = null, Azure.AI.Language.Conversations.AnswerSpan answerSpan = null) { throw null; }
+        public static Azure.AI.Language.Conversations.ConversationTargetIntentResult ConversationTargetIntentResult(Azure.AI.Language.Conversations.TargetKind targetKind = default(Azure.AI.Language.Conversations.TargetKind), string apiVersion = null, double confidence = 0, Azure.AI.Language.Conversations.ConversationResult result = null) { throw null; }
+        public static Azure.AI.Language.Conversations.KnowledgeBaseAnswer KnowledgeBaseAnswer(System.Collections.Generic.IEnumerable<string> questions = null, string answer = null, double? confidence = default(double?), int? id = default(int?), string source = null, System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null, Azure.AI.Language.Conversations.KnowledgeBaseAnswerDialog dialog = null, Azure.AI.Language.Conversations.AnswerSpan answerSpan = null) { throw null; }
         public static Azure.AI.Language.Conversations.KnowledgeBaseAnswerDialog KnowledgeBaseAnswerDialog(bool? isContextOnly = default(bool?), System.Collections.Generic.IEnumerable<Azure.AI.Language.Conversations.KnowledgeBaseAnswerPrompt> prompts = null) { throw null; }
         public static Azure.AI.Language.Conversations.KnowledgeBaseAnswerPrompt KnowledgeBaseAnswerPrompt(int? displayOrder = default(int?), int? qnaId = default(int?), string displayText = null) { throw null; }
         public static Azure.AI.Language.Conversations.KnowledgeBaseAnswers KnowledgeBaseAnswers(System.Collections.Generic.IEnumerable<Azure.AI.Language.Conversations.KnowledgeBaseAnswer> answers = null) { throw null; }
         public static Azure.AI.Language.Conversations.LuisTargetIntentResult LuisTargetIntentResult(Azure.AI.Language.Conversations.TargetKind targetKind = default(Azure.AI.Language.Conversations.TargetKind), string apiVersion = null, double confidenceScore = 0, object result = null) { throw null; }
-        public static Azure.AI.Language.Conversations.NoneLinkedTargetIntentResult NoneLinkedTargetIntentResult(Azure.AI.Language.Conversations.TargetKind targetKind = default(Azure.AI.Language.Conversations.TargetKind), string apiVersion = null, double confidenceScore = 0, Azure.AI.Language.Conversations.ConversationResult result = null) { throw null; }
+        public static Azure.AI.Language.Conversations.NoneLinkedTargetIntentResult NoneLinkedTargetIntentResult(Azure.AI.Language.Conversations.TargetKind targetKind = default(Azure.AI.Language.Conversations.TargetKind), string apiVersion = null, double confidence = 0, Azure.AI.Language.Conversations.ConversationResult result = null) { throw null; }
         public static Azure.AI.Language.Conversations.OrchestratorPrediction OrchestratorPrediction(Azure.AI.Language.Conversations.ProjectKind projectKind = default(Azure.AI.Language.Conversations.ProjectKind), string topIntent = null, System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.Language.Conversations.TargetIntentResult> intents = null) { throw null; }
-        public static Azure.AI.Language.Conversations.QuestionAnsweringTargetIntentResult QuestionAnsweringTargetIntentResult(Azure.AI.Language.Conversations.TargetKind targetKind = default(Azure.AI.Language.Conversations.TargetKind), string apiVersion = null, double confidenceScore = 0, Azure.AI.Language.Conversations.KnowledgeBaseAnswers result = null) { throw null; }
-        public static Azure.AI.Language.Conversations.TargetIntentResult TargetIntentResult(Azure.AI.Language.Conversations.TargetKind targetKind = default(Azure.AI.Language.Conversations.TargetKind), string apiVersion = null, double confidenceScore = 0) { throw null; }
+        public static Azure.AI.Language.Conversations.QuestionAnsweringTargetIntentResult QuestionAnsweringTargetIntentResult(Azure.AI.Language.Conversations.TargetKind targetKind = default(Azure.AI.Language.Conversations.TargetKind), string apiVersion = null, double confidence = 0, Azure.AI.Language.Conversations.KnowledgeBaseAnswers result = null) { throw null; }
+        public static Azure.AI.Language.Conversations.TargetIntentResult TargetIntentResult(Azure.AI.Language.Conversations.TargetKind targetKind = default(Azure.AI.Language.Conversations.TargetKind), string apiVersion = null, double confidence = 0) { throw null; }
     }
     public partial class ConversationsProject
     {
@@ -129,7 +129,7 @@ namespace Azure.AI.Language.Conversations
         internal KnowledgeBaseAnswer() { }
         public string Answer { get { throw null; } }
         public Azure.AI.Language.Conversations.AnswerSpan AnswerSpan { get { throw null; } }
-        public double? ConfidenceScore { get { throw null; } }
+        public double? Confidence { get { throw null; } }
         public Azure.AI.Language.Conversations.KnowledgeBaseAnswerDialog Dialog { get { throw null; } }
         public int? Id { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Metadata { get { throw null; } }
@@ -218,7 +218,7 @@ namespace Azure.AI.Language.Conversations
     {
         internal TargetIntentResult() { }
         public string ApiVersion { get { throw null; } }
-        public double ConfidenceScore { get { throw null; } }
+        public double Confidence { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TargetKind : System.IEquatable<Azure.AI.Language.Conversations.TargetKind>
