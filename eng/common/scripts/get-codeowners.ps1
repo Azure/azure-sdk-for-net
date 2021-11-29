@@ -1,7 +1,7 @@
 param (
   [string]$TargetDirectory = "", # Code path to code owners. e.g sdk/core/azure-amqp
   [string]$CodeOwnerFileLocation = (Resolve-Path $PSScriptRoot/../../../.github/CODEOWNERS), # The absolute path of CODEOWNERS file. 
-  [string]$ToolVersion = "1.0.0-dev.20211123.13", # Placeholder. Will update in next PR
+  [string]$ToolVersion = "1.0.0-dev.20211129.6", # Placeholder. Will update in next PR
   [string]$ToolPath = (Join-Path ([System.IO.Path]::GetTempPath()) "codeowners-tool-path"), # The place to check the tool existence. Put temp path as default
   [string]$DevOpsFeed = "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json", # DevOp tool feeds.
   [string]$VsoVariable = "", # Option of write code owners into devop variable
@@ -20,7 +20,10 @@ function Get-CodeOwnersTool()
     New-Item -ItemType Directory -Path $ToolPath | Out-Null
   }
   Write-Host "Installing the retrieve-codeowners tool under $ToolPath... "
-  Push-location $ToolPath
+
+  # Run command under tool path to avoid dotnet tool install command checking .csproj files. 
+  # This is a bug for dotnet tool command. Issue: https://github.com/dotnet/sdk/issues/9623
+  Push-Location $ToolPath
   dotnet tool install --tool-path $ToolPath --add-source $DevOpsFeed --version $ToolVersion "Azure.Sdk.Tools.RetrieveCodeOwners" | Out-Null
   Pop-Location
   # Test to see if the tool properly installed.
