@@ -24,7 +24,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             CreateProject(exportedProjectName);
 
             #region Snippet:QuestionAnsweringProjectsClient_ExportProject
-            string exportFormat = "excel"; // can also be tsv or excel
+            string exportFormat = "json"; // can also be tsv or excel
             Operation<BinaryData> exportOperation = client.Export(exportedProjectName, exportFormat);
 
             // Wait for operation completion
@@ -100,6 +100,71 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             Assert.AreEqual(200, projectDetails.Status);
 
             DeleteProject(importedProjectName);
+        }
+
+        [RecordedTest]
+        [AsyncOnly]
+        public async Task ExportAndImportAsync()
+        {
+            QuestionAnsweringProjectsClient client = Client;
+            string exportedProjectName = CreateTestProjectName();
+            await CreateProjectAsync(exportedProjectName);
+
+            #region Snippet:QuestionAnsweringProjectsClient_ExportProjectAsync
+            string exportFormat = "json"; // can also be tsv or excel
+            Operation<BinaryData> exportOperation = await client.ExportAsync(exportedProjectName, exportFormat);
+
+            // Wait for operation completion
+            await exportOperation.WaitForCompletionAsync();
+
+            // retrieve export operation response, and extract url of exported file
+            JsonDocument operationValueJson = JsonDocument.Parse(exportOperation.Value);
+            string exportedFileUrl = operationValueJson.RootElement.GetProperty("resultUrl").ToString();
+            #endregion
+
+            Assert.True(exportOperation.HasCompleted);
+            Assert.True(!String.IsNullOrEmpty(exportedFileUrl));
+
+            #region Snippet:QuestionAnsweringProjectsClient_ImportProject
+            // Set import project name and request content
+            string importedProjectName = "importedProject";
+            string importFormat = "json";
+            RequestContent importRequestContent = RequestContent.Create(new
+            {
+                Metadata = new
+                {
+                    ProjectName = "NewProjectForExport",
+                    Description = "This is the description for a test project",
+                    Language = "en",
+                    DefaultAnswer = "No answer found for your question.",
+                    MultilingualResource = false,
+                    CreatedDateTime = "2021-11-25T09=35=33Z",
+                    LastModifiedDateTime = "2021-11-25T09=35=33Z",
+                    Settings = new
+                    {
+                        DefaultAnswer = "No answer found for your question."
+                    }
+                }
+            });
+
+            Operation<BinaryData> importOperation = await client.ImportAsync(importedProjectName, importRequestContent, importFormat);
+
+            // Wait for completion with manual polling
+            await importOperation.WaitForCompletionAsync();
+            #endregion
+
+            Assert.True(importOperation.HasCompleted);
+            Assert.AreEqual(200, importOperation.GetRawResponse().Status);
+
+            #region Snippet:QuestionAnsweringProjectsClient_GetProjectDetails
+            Response projectDetails = await client.GetProjectDetailsAsync(importedProjectName);
+
+            Console.WriteLine(projectDetails.Content);
+            #endregion
+
+            Assert.AreEqual(200, projectDetails.Status);
+
+            await DeleteProjectAsync(importedProjectName);
         }
     }
 }
