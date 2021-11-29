@@ -66,4 +66,7 @@ directive:
               "$ref": "#/definitions/RegenerateKeyOptions"
             }
         }
+  - from: swagger-document
+    where: $.definitions.ResourceIdentity.properties.type["x-ms-enum"]["name"]
+    transform: return "ResourceIdentityType"
 ````

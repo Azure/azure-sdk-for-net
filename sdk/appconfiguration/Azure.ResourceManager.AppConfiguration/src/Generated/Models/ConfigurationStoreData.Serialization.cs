@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppConfiguration
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity");
-                writer.WriteObjectValue(Identity);
+                JsonSerializer.Serialize(writer, Identity);
             }
             writer.WritePropertyName("sku");
             writer.WriteObjectValue(Sku);
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppConfiguration
 
         internal static ConfigurationStoreData DeserializeConfigurationStoreData(JsonElement element)
         {
-            Optional<Models.ResourceIdentity> identity = default;
+            Optional<ResourceIdentity> identity = default;
             Sku sku = default;
             IDictionary<string, string> tags = default;
             Location location = default;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.AppConfiguration
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = Models.ResourceIdentity.DeserializeResourceIdentity(property.Value);
+                    identity = JsonSerializer.Deserialize<ResourceIdentity>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("sku"))
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.AppConfiguration
                     continue;
                 }
             }
-            return new ConfigurationStoreData(id, name, type, tags, location, identity.Value, sku, Optional.ToNullable(provisioningState), Optional.ToNullable(creationDate), endpoint.Value, encryption.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess));
+            return new ConfigurationStoreData(id, name, type, tags, location, identity, sku, Optional.ToNullable(provisioningState), Optional.ToNullable(creationDate), endpoint.Value, encryption.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess));
         }
     }
 }
