@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
@@ -310,21 +309,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             return options;
         }
 
+        // support JToken for backward compatiblity.
         private static BinaryData FromObjectAsJsonExtended<T>(T item, JsonSerializerOptions? options = null)
         {
-            try
+            if (item is JToken)
+            {
+                return BinaryData.FromString(Newtonsoft.Json.JsonConvert.SerializeObject(item));
+            }
+            else
             {
                 return BinaryData.FromObjectAsJson(item, options);
-            }
-            catch (NotSupportedException e)
-            {
-                return item is IJEnumerable<JToken> ?
-                    BinaryData.FromString(item.ToString()) :
-                    throw e;
-            }
-            catch (Exception)
-            {
-                throw;
             }
         }
     }
