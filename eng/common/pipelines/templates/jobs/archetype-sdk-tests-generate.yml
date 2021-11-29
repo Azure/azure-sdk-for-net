@@ -56,7 +56,7 @@ jobs:
             Paths: ${{ parameters.SparseCheckoutPaths }}
           ${{ if and(eq(length(parameters.SparseCheckoutPaths), 0), ne(parameters.AdditionalParameters.ServiceDirectory, '')) }}:
             Paths:
-              - ${{ parameters.AdditionalParameters.ServiceDirectory }}
+              - "sdk/${{ parameters.AdditionalParameters.ServiceDirectory }}"
 
     - ${{ each config in parameters.MatrixConfigs }}:
       - ${{ if eq(config.GenerateVMJobs, 'true') }}:

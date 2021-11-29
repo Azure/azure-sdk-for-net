@@ -2,7 +2,7 @@
     "Name": "AuthenticationTokenSettings",
     "ProtocolName": "Models.AuthenticationTokenSettings",
     "SummaryComment": "The settings for an authentication token that the task can use to perform Batch service operations.",
-    "IsConstructorPublic": true,
+    "ConstructorAccess": "public",
     "Properties": [
         {
             "Key": {

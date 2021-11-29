@@ -48,6 +48,7 @@ For detailed information about the Event Grid client library concepts: [Event Gr
 
 ## Examples
 
+### Publish to an Event Grid topic
 ```C# Snippet:CloudNativePublish
 EventGridPublisherClient client = new EventGridPublisherClient(
         new Uri(TestEnvironment.CloudEventTopicHost),
@@ -61,6 +62,23 @@ var cloudEvent =
         Source = new Uri("http://www.contoso.com"),
         Data = "data"
     };
+await client.SendCloudNativeCloudEventAsync(cloudEvent);
+```
+
+### Publish to an Event Grid Domain
+When publishing to an Event Grid Domain with CloudEvents, the CloudEvent `source` is used as the domain topic. The Event Grid service doesn't support using an absolute URI for a domain topic, so you would need to do something like the following to integrate with the CloudNative CloudEvents:
+```C# Snippet:CloudNativePublishToDomain
+CloudEvent cloudEvent =
+    new CloudEvent
+    {
+        Type = "record",
+        // Event Grid does not allow absolute URIs as the domain topic
+        Source = new Uri("test", UriKind.Relative),
+        Id = "eventId",
+        Time = DateTimeOffset.Now,
+        Data = new TestPayload("name", 0)
+    };
+
 await client.SendCloudNativeCloudEventAsync(cloudEvent);
 ```
 

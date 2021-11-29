@@ -81,6 +81,7 @@ var resourceGroupName = "your_resource_group_name";
 var workspaceName = "your_quantum_workspace_name";
 var location = "your_location";
 var storageContainerName = "your_container_name";
+
 var credential = new DefaultAzureCredential(true);
 
 var quantumJobClient =
@@ -104,22 +105,59 @@ var containerUri = (quantumJobClient.GetStorageSasUri(
 
 ### Upload Input Data
 
-Using the SAS URI, upload the json input data to the blob client.
+Using the SAS URI, upload the compressed json input data to the blob client.
+Note that we need to compress the json input data before uploading it to the blob storage.
 This contains the parameters to be used with [Quantum Inspired Optimizations](https://docs.microsoft.com/azure/quantum/optimization-overview-introduction)
 
 ```C# Snippet:Azure_Quantum_Jobs_UploadInputData
+string problemFilePath = "./problem.json";
+
 // Get input data blob Uri with SAS key
-string blobName = $"myjobinput.json";
+string blobName = Path.GetFileName(problemFilePath);
 var inputDataUri = (quantumJobClient.GetStorageSasUri(
     new BlobDetails(storageContainerName)
     {
         BlobName = blobName,
     })).Value.SasUri;
 
-// Upload input data to blob
-var blobClient = new BlobClient(new Uri(inputDataUri));
-var problemFilename = "problem.json";
-blobClient.Upload(problemFilename, overwrite: true);
+using (var problemStreamToUpload = new MemoryStream())
+{
+    using (FileStream problemFileStream = File.OpenRead(problemFilePath))
+    {
+        // Check if problem file is a gzip file.
+        // If it is, just read its contents.
+        // If not, read and compress the content.
+        var fileExtension = Path.GetExtension(problemFilePath).ToLower();
+        if (fileExtension == ".gz" ||
+            fileExtension == ".gzip")
+        {
+            problemFileStream.CopyTo(problemStreamToUpload);
+        }
+        else
+        {
+            using (var gzip = new GZipStream(problemStreamToUpload, CompressionMode.Compress, leaveOpen: true))
+            {
+                byte[] buffer = new byte[8192];
+                int count;
+                while ((count = problemFileStream.Read(buffer, 0, buffer.Length)) > 0)
+                {
+                    gzip.Write(buffer, 0, count);
+                }
+            }
+        }
+    }
+    problemStreamToUpload.Position = 0;
+
+    // Upload input data to blob
+    var blobClient = new BlobClient(new Uri(inputDataUri));
+    var blobHeaders = new BlobHttpHeaders
+    {
+        ContentType = "application/json",
+        ContentEncoding = "gzip"
+    };
+    var blobUploadOptions = new BlobUploadOptions { HttpHeaders = blobHeaders };
+    blobClient.Upload(problemStreamToUpload, options: blobUploadOptions);
+}
 ```
 
 ### Create The Job
@@ -134,14 +172,17 @@ var inputDataFormat = "microsoft.qio.v2";
 var outputDataFormat = "microsoft.qio-results.v2";
 var providerId = "microsoft";
 var target = "microsoft.paralleltempering-parameterfree.cpu";
+var inputParams = new Dictionary<string, object>() { { "params", new Dictionary<string, object>() } };
 var createJobDetails = new JobDetails(containerUri, inputDataFormat, providerId, target)
 {
     Id = jobId,
     InputDataUri = inputDataUri,
     Name = jobName,
+    InputParams = inputParams,
     OutputDataFormat = outputDataFormat
 };
-JobDetails createdJob = (quantumJobClient.CreateJob(jobId, createJobDetails)).Value;
+
+JobDetails myJob = (quantumJobClient.CreateJob(jobId, createJobDetails)).Value;
 ```
 
 ### Get Job
@@ -150,7 +191,7 @@ JobDetails createdJob = (quantumJobClient.CreateJob(jobId, createJobDetails)).Va
 
 ```C# Snippet:Azure_Quantum_Jobs_GetJob
 // Get the job that we've just created based on its jobId
-JobDetails myJob = (quantumJobClient.GetJob(jobId)).Value;
+myJob = (quantumJobClient.GetJob(jobId)).Value;
 ```
 
 ### Get Jobs
@@ -160,10 +201,9 @@ To enumerate all the jobs in the workspace, use the `GetJobs` method.
 ```C# Snippet:Azure_Quantum_Jobs_GetJobs
 foreach (JobDetails job in quantumJobClient.GetJobs())
 {
-    Console.WriteLine($"{job.Name}");
+   Console.WriteLine($"{job.Name}");
 }
 ```
-
 
 ## Troubleshooting
 

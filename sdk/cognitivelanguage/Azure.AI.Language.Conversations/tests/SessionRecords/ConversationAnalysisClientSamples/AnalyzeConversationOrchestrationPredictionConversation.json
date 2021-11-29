@@ -1,0 +1,94 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://antischsdktest.cognitiveservices.azure.com/language/:analyze-conversations?projectName=antischTwo\u0026deploymentName=production\u0026api-version=2021-11-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "61",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20211028.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "fb4af1292add5289e7bfb167d8f03774",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "query": "We\u0027ll have 2 plates of seared salmon nigiri."
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "a3d0c532-0aa4-47a8-90ae-48a893a2c7fe",
+        "Cache-Control": [
+          "no-store",
+          "proxy-revalidate",
+          "no-cache",
+          "max-age=0",
+          "private"
+        ],
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 28 Oct 2021 16:04:25 GMT",
+        "pragma": "no-cache",
+        "request-id": "a3d0c532-0aa4-47a8-90ae-48a893a2c7fe",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "337"
+      },
+      "ResponseBody": {
+        "query": "We\u0027ll have 2 plates of seared salmon nigiri.",
+        "prediction": {
+          "topIntent": "SushiOrder",
+          "projectKind": "workflow",
+          "intents": {
+            "SushiOrder": {
+              "confidenceScore": 0.82421875,
+              "targetKind": "conversation",
+              "result": {
+                "query": "We\u0027ll have 2 plates of seared salmon nigiri.",
+                "prediction": {
+                  "intents": [
+                    {
+                      "category": "Order",
+                      "confidenceScore": 1
+                    }
+                  ],
+                  "entities": [
+                    {
+                      "category": "OrderItem",
+                      "text": "2 plates",
+                      "offset": 11,
+                      "length": 8,
+                      "confidenceScore": 1
+                    },
+                    {
+                      "category": "OrderItem",
+                      "text": "seared salmon nigiri",
+                      "offset": 23,
+                      "length": 20,
+                      "confidenceScore": 1
+                    }
+                  ],
+                  "topIntent": "Order",
+                  "projectKind": "conversation"
+                }
+              }
+            },
+            "SushiMaking": {
+              "confidenceScore": 0.7317708,
+              "targetKind": "question_answering"
+            },
+            "None": {
+              "confidenceScore": 0,
+              "targetKind": "non_linked"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "CONVERSATIONS_KEY": "Sanitized",
+    "CONVERSATIONS_URI": "https://antischsdktest.cognitiveservices.azure.com",
+    "RandomSeed": "772935208"
+  }
+}

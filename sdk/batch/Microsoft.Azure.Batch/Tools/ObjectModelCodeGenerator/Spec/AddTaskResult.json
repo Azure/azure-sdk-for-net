@@ -1,7 +1,7 @@
     {
       "Name": "AddTaskResult",
       "ProtocolName": "Models.TaskAddResult",
-      "IsConstructorPublic": false,
+      "ConstructorAccess": "internal",
       "SummaryComment": "Result for a single task added as part of a collection of tasks.",
       "Properties": [
         {

@@ -22,8 +22,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             {
                 return BinaryData.FromBytes(bytes);
             }
-            // message should be stringify
-            throw new ArgumentException("Message should be string, please stringify object.");
+            // message data should be stringify
+            throw new ArgumentException("Message data should be string, please stringify object.");
         }
 
         public override void WriteJson(JsonWriter writer, BinaryData value, JsonSerializer serializer)

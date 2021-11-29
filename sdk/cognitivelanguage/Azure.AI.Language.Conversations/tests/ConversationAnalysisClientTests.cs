@@ -3,7 +3,6 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.AI.Language.Conversations.Models;
 using NUnit.Framework;
 
 namespace Azure.AI.Language.Conversations.Tests
@@ -31,22 +30,25 @@ namespace Azure.AI.Language.Conversations.Tests
                 () => new ConversationAnalysisClient(endpoint, null));
             Assert.AreEqual("credential", ex.ParamName);
         }
+        [Test]
+        public void ValidateConversationsProject()
+        {
+            // Validate query parameter first given the order the constructors get called.
+            Assert.That<ConversationsProject>(() => new ConversationsProject(null, "test"), Throws.ArgumentNullException.WithParamName("projectName"));
+            Assert.That<ConversationsProject>(() => new ConversationsProject("test", null), Throws.ArgumentNullException.WithParamName("deploymentName"));
+        }
 
         [Test]
         public void ValidateAnalyzeConversation()
         {
+            ConversationsProject conversationsProject = new ConversationsProject("project","deployment");
+
             // Validate query parameter first given the order the constructors get called.
-            Assert.That<Response<AnalyzeConversationResult>>(() => Client.AnalyzeConversation(null, null, null), Throws.ArgumentNullException.WithParamName("query"));
-            Assert.That<Task<Response<AnalyzeConversationResult>>>(async () => await Client.AnalyzeConversationAsync(null, null, null), Throws.ArgumentNullException.WithParamName("query"));
+            Assert.That<Response<AnalyzeConversationResult>>(() => Client.AnalyzeConversation(null, conversationsProject), Throws.ArgumentNullException.WithParamName("utterance"));
+            Assert.That<Task<Response<AnalyzeConversationResult>>>(async () => await Client.AnalyzeConversationAsync(null, conversationsProject), Throws.ArgumentNullException.WithParamName("utterance"));
 
-            Assert.That<Response<AnalyzeConversationResult>>(() => Client.AnalyzeConversation(null, null, "test"), Throws.ArgumentNullException.WithParamName("projectName"));
-            Assert.That<Task<Response<AnalyzeConversationResult>>>(async () => await Client.AnalyzeConversationAsync(null, null, "test"), Throws.ArgumentNullException.WithParamName("projectName"));
-
-            Assert.That<Response<AnalyzeConversationResult>>(() => Client.AnalyzeConversation("test", null, "test"), Throws.ArgumentNullException.WithParamName("deploymentName"));
-            Assert.That<Task<Response<AnalyzeConversationResult>>>(async () => await Client.AnalyzeConversationAsync("test", null, "test"), Throws.ArgumentNullException.WithParamName("deploymentName"));
-
-            Assert.That<Response<AnalyzeConversationResult>>(() => Client.AnalyzeConversation(null), Throws.ArgumentNullException.WithParamName("options"));
-            Assert.That<Task<Response<AnalyzeConversationResult>>>(async () => await Client.AnalyzeConversationAsync(null), Throws.ArgumentNullException.WithParamName("options"));
+            Assert.That<Response<AnalyzeConversationResult>>(() => Client.AnalyzeConversation("test", null), Throws.ArgumentNullException.WithParamName("project"));
+            Assert.That<Task<Response<AnalyzeConversationResult>>>(async () => await Client.AnalyzeConversationAsync("test", null), Throws.ArgumentNullException.WithParamName("project"));
         }
     }
 }

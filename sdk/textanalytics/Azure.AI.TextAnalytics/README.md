@@ -25,9 +25,9 @@ This table shows the relationship between SDK versions and supported API version
 |SDK version|Supported API version of service
 |-|- |
 |5.2.0-beta.2 | 3.0, 3.1, 3.2-preview.2 (default)
-|5.1.0  | 3.0, 3.1 (default)
+|5.1.X  | 3.0, 3.1 (default)
 |5.0.0  | 3.0
-|1.0.X | 3.0
+|1.0.X  | 3.0
 
 ### Prerequisites
 * An [Azure subscription][azure_sub].
@@ -797,7 +797,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [textanalytics_refdocs]: https://aka.ms/azsdk-net-textanalytics-ref-docs
 [textanalytics_nuget_package]: https://www.nuget.org/packages/Azure.AI.TextAnalytics
 [textanalytics_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/README.md
-[textanalytics_rest_api]: https://westcentralus.dev.cognitive.microsoft.com/docs/services/TextAnalytics-v3-1/operations/Languages
+[textanalytics_rest_api]: https://aka.ms/azsdk/textanalytics/restapi
 [cognitive_resource_portal]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account
 [cognitive_resource_cli]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account-cli
 [dotnet_lro_guidelines]: https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning

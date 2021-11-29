@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Tests
         {
             var tagName = Recording.GenerateAssetName("tagName");
             var collection = (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetPredefinedTags();
-            var preDefinedTagOp = await collection.CreateOrUpdateAsync(tagName).ConfigureAwait(false);
+            var preDefinedTagOp = InstrumentOperation(await collection.CreateOrUpdateAsync(tagName).ConfigureAwait(false));
             _predefinedTag = preDefinedTagOp.Value;
             await _predefinedTag.DeleteAsync(tagName, false).ConfigureAwait(false);
             var listResult = await collection.GetAllAsync().ToEnumerableAsync();
