@@ -334,7 +334,7 @@ namespace Microsoft.Azure.Management.Marketplace
             PrivateStoreCollection = new PrivateStoreCollectionOperations(this);
             PrivateStoreCollectionOffer = new PrivateStoreCollectionOfferOperations(this);
             Operations = new Operations(this);
-            BaseUri = new System.Uri("https://api-dogfood.resources.windows-int.net/");
+            BaseUri = new System.Uri("https://management.azure.com");
             ApiVersion = "2021-06-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
