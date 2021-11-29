@@ -1336,7 +1336,10 @@ namespace Azure.Storage.Files.Shares.Tests
             {
                 ReplaceIfExists = true,
                 IgnoreReadOnly = ignoreReadOnly,
-                FileAttributes = NtfsFileAttributes.Directory
+                SmbProperties = new FileSmbProperties
+                {
+                    FileAttributes = NtfsFileAttributes.Directory
+                }
             };
 
             // Act

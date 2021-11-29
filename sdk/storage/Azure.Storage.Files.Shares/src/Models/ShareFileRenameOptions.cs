@@ -34,39 +34,24 @@ namespace Azure.Storage.Files.Shares.Models
         public ShareFileRequestConditions SourceRequestConditions { get; set; }
 
         /// <summary>
-        ///  Destination request conditions.
+        /// Destination request conditions.
         /// </summary>
         public ShareFileRequestConditions DestinationRequestConditions { get; set; }
 
         /// <summary>
-        /// The file system attributes for this file.
+        /// Optional SMB properties to set on the destination file or directory.
         /// </summary>
-        public NtfsFileAttributes? FileAttributes { get; set; }
+        public FileSmbProperties SmbProperties { get; set; }
 
         /// <summary>
-        /// The creation time of the file.
-        /// </summary>
-        public DateTimeOffset? FileCreatedOn { get; set; }
-
-        /// <summary>
-        /// The last write time of the file.
-        /// </summary>
-        public DateTimeOffset? FileLastWrittenOn { get; set; }
-
-        /// <summary>
-        /// Optional file permission to set on the destination.
+        /// Optional file permission to set on the destination file or directory.
         /// </summary>
         public string FilePermission { get; set; }
 
         /// <summary>
-        /// Optional if FilePermission is not specified. This can only be specified if FilePermission is not specified.
-        /// </summary>
-        public string FilePermissionKey { get; set; }
-
-        /// <summary>
-        /// Optional. Sets the file’s content type. If this property is not specified on the request, then the property will
-        /// be cleared for the file. Subsequent calls to Get File Properties will not return this property, unless it is explicitly
-        /// set on the file again.
+        /// Optional. Not applicable for directories.  Sets the file’s content type. If this property is not specified on the request,
+        /// then the property will be cleared for the file. Subsequent calls to Get File Properties will not return this property,
+        /// unless it is explicitly set on the file again.
         /// </summary>
         public string ContentType { get; set; }
     }

@@ -797,13 +797,10 @@ namespace Azure.Storage.Files.Shares.Models
         public ShareFileRenameOptions() { }
         public string ContentType { get { throw null; } set { } }
         public Azure.Storage.Files.Shares.Models.ShareFileRequestConditions DestinationRequestConditions { get { throw null; } set { } }
-        public Azure.Storage.Files.Shares.Models.NtfsFileAttributes? FileAttributes { get { throw null; } set { } }
-        public System.DateTimeOffset? FileCreatedOn { get { throw null; } set { } }
-        public System.DateTimeOffset? FileLastWrittenOn { get { throw null; } set { } }
         public string FilePermission { get { throw null; } set { } }
-        public string FilePermissionKey { get { throw null; } set { } }
         public bool? IgnoreReadOnly { get { throw null; } set { } }
         public bool? ReplaceIfExists { get { throw null; } set { } }
+        public Azure.Storage.Files.Shares.Models.FileSmbProperties SmbProperties { get { throw null; } set { } }
         public Azure.Storage.Files.Shares.Models.ShareFileRequestConditions SourceRequestConditions { get { throw null; } set { } }
     }
     public partial class ShareFileRequestConditions

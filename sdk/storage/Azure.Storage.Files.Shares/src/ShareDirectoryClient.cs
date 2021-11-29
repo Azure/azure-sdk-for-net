@@ -2458,15 +2458,10 @@ namespace Azure.Storage.Files.Shares
 
                     CopyFileSmbInfo copyFileSmbInfo = new CopyFileSmbInfo
                     {
-                        FileAttributes = options?.FileAttributes?.ToAttributesString(),
-                        FileCreationTime = options?.FileCreatedOn.ToFileDateTimeString(),
-                        FileLastWriteTime = options?.FileLastWrittenOn.ToFileDateTimeString(),
+                        FileAttributes = options?.SmbProperties?.FileAttributes?.ToAttributesString(),
+                        FileCreationTime = options?.SmbProperties?.FileCreatedOn.ToFileDateTimeString(),
+                        FileLastWriteTime = options?.SmbProperties?.FileLastWrittenOn.ToFileDateTimeString(),
                         IgnoreReadOnly = options?.IgnoreReadOnly
-                    };
-
-                    FileHttpHeaders fileHttpHeaders = new FileHttpHeaders
-                    {
-                        FileContentType = options?.ContentType
                     };
 
                     if (async)
@@ -2478,9 +2473,8 @@ namespace Azure.Storage.Files.Shares
                             sourceLeaseId: options?.SourceRequestConditions?.LeaseId,
                             destinationLeaseId: options?.DestinationRequestConditions?.LeaseId,
                             filePermission: options?.FilePermission,
-                            filePermissionKey: options?.FilePermissionKey,
+                            filePermissionKey: options?.SmbProperties?.FilePermissionKey,
                             copyFileSmbInfo: copyFileSmbInfo,
-                            fileHttpHeaders: fileHttpHeaders,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -2493,9 +2487,8 @@ namespace Azure.Storage.Files.Shares
                             sourceLeaseId: options?.SourceRequestConditions?.LeaseId,
                             destinationLeaseId: options?.DestinationRequestConditions?.LeaseId,
                             filePermission: options?.FilePermission,
-                            filePermissionKey: options?.FilePermissionKey,
+                            filePermissionKey: options?.SmbProperties?.FilePermissionKey,
                             copyFileSmbInfo: copyFileSmbInfo,
-                            fileHttpHeaders: fileHttpHeaders,
                             cancellationToken: cancellationToken);
                     }
 
