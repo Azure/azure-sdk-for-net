@@ -14,7 +14,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="confidence"> The prediction score and it ranges from 0.0 to 1.0. </param>
         internal NoneLinkedTargetIntentResult(double confidence) : base(confidence)
         {
-            TargetKind = TargetKind.NonLinked;
+            TargetKind = Conversations.TargetKind.NonLinked;
         }
 
         /// <summary> Initializes a new instance of NoneLinkedTargetIntentResult. </summary>

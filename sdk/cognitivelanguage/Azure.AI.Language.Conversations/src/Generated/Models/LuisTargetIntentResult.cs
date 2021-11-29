@@ -14,7 +14,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="confidence"> The prediction score and it ranges from 0.0 to 1.0. </param>
         internal LuisTargetIntentResult(double confidence) : base(confidence)
         {
-            TargetKind = TargetKind.Luis;
+            TargetKind = Conversations.TargetKind.Luis;
         }
 
         /// <summary> Initializes a new instance of LuisTargetIntentResult. </summary>
