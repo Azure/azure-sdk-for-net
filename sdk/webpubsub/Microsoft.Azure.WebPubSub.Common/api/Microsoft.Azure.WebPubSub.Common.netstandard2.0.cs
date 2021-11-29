@@ -109,6 +109,7 @@ namespace Microsoft.Azure.WebPubSub.Common
         public System.Collections.Generic.IReadOnlyDictionary<string, object> States { get { throw null; } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("userId")]
         public string UserId { get { throw null; } }
+        public bool TryGetState<T>(string stateKey, out T value) { throw null; }
     }
     public enum WebPubSubDataType
     {

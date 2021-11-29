@@ -359,7 +359,7 @@ namespace Azure.Identity.Tests
             using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", server.Address.AbsoluteUri } });
 
             // setting the delay to 1ms and retry mode to fixed to speed up test
-            var options = new TokenCredentialOptions() {  };
+            var options = new TokenCredentialOptions() { Retry = { Delay = TimeSpan.FromMilliseconds(0), Mode = RetryMode.Fixed } };
 
             var credential = InstrumentClient(new ManagedIdentityCredential(options: options));
 
@@ -376,7 +376,7 @@ namespace Azure.Identity.Tests
         {
             using var server = new TestServer(async context =>
             {
-                await Task.Delay(8000);
+                await Task.Delay(1000);
 
                 context.Response.StatusCode = 418;
             });
