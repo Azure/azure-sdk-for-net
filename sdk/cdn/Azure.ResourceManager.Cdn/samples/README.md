@@ -11,5 +11,5 @@ description: Samples for the Azure.ResourceManager.Cdn client library
 
 # Azure.ResourceManager.Cdn Samples
 
-- [Managing Origin Groups](https://github.com/Yao725/azure-sdk-for-net/tree/feature/mgmt-track2-cdn/sdk/cdn/Azure.ResourceManager.Cdn/samples/Sample1_ManagingOriginGroups.md)
-- [Managing Azure Front Door Rules](https://github.com/Yao725/azure-sdk-for-net/tree/feature/mgmt-track2-cdn/sdk/cdn/Azure.ResourceManager.Cdn/samples/Sample2_ManagingAFDRules.md)
+- [Managing Cdn Origin Groups](https://github.com/Yao725/azure-sdk-for-net/tree/feature/mgmt-track2-cdn/sdk/cdn/Azure.ResourceManager.Cdn/samples/Sample1_ManagingCdnOriginGroups.md)
+- [Managing Azure Front Door Rules](https://github.com/Yao725/azure-sdk-for-net/tree/feature/mgmt-track2-cdn/sdk/cdn/Azure.ResourceManager.Cdn/samples/Sample2_ManagingAfdRules.md)

@@ -21,16 +21,16 @@ namespace Azure.ResourceManager.Cdn.Tests
         public async Task CheckNameAvailabilityWithSub()
         {
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();
-            string endpointName = Recording.GenerateAssetName("endpoint-");
-            CheckNameAvailabilityInput checkNameAvailabilityInput = new CheckNameAvailabilityInput(endpointName);
+            string cdnEndpointName = Recording.GenerateAssetName("endpoint-");
+            CheckNameAvailabilityInput checkNameAvailabilityInput = new CheckNameAvailabilityInput(cdnEndpointName);
             CheckNameAvailabilityOutput checkNameAvailabilityOutput  = await subscription.CheckNameAvailabilityWithSubscriptionAsync(checkNameAvailabilityInput);
             Assert.True(checkNameAvailabilityOutput.NameAvailable);
             ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
-            string profileName = Recording.GenerateAssetName("profile-");
-            Profile profile = await CreateProfile(rg, profileName, SkuName.StandardMicrosoft);
-            endpointName = Recording.GenerateAssetName("endpoint-");
-            Endpoint endpoint = await CreateEndpoint(profile, endpointName);
-            CheckNameAvailabilityInput checkNameAvailabilityInput2 = new CheckNameAvailabilityInput(endpoint.Data.Name);
+            string cdnProfileName = Recording.GenerateAssetName("profile-");
+            Profile cdnProfile = await CreateCdnProfile(rg, cdnProfileName, SkuName.StandardMicrosoft);
+            cdnEndpointName = Recording.GenerateAssetName("endpoint-");
+            CdnEndpoint cdnEndpoint = await CreateCdnEndpoint(cdnProfile, cdnEndpointName);
+            CheckNameAvailabilityInput checkNameAvailabilityInput2 = new CheckNameAvailabilityInput(cdnEndpoint.Data.Name);
             checkNameAvailabilityOutput = await subscription.CheckNameAvailabilityWithSubscriptionAsync(checkNameAvailabilityInput2);
             Assert.False(checkNameAvailabilityOutput.NameAvailable);
         }

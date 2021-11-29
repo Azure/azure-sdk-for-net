@@ -41,32 +41,32 @@ namespace Azure.ResourceManager.Cdn.Tests
             return lro.Value;
         }
 
-        protected async Task<Profile> CreateProfile(ResourceGroup rg, string profileName, SkuName skuName)
+        protected async Task<Profile> CreateCdnProfile(ResourceGroup rg, string profileName, SkuName skuName)
         {
             ProfileData input = ResourceDataHelper.CreateProfileData(skuName);
             var lro = await rg.GetProfiles().CreateOrUpdateAsync(profileName, input);
             return lro.Value;
         }
 
-        protected async Task<Profile> CreateAFDProfile(ResourceGroup rg, string profileName, SkuName skuName)
+        protected async Task<Profile> CreateAfdProfile(ResourceGroup rg, string profileName, SkuName skuName)
         {
-            ProfileData input = ResourceDataHelper.CreateAFDProfileData(skuName);
+            ProfileData input = ResourceDataHelper.CreateAfdProfileData(skuName);
             var lro = await rg.GetProfiles().CreateOrUpdateAsync(profileName, input);
             return lro.Value;
         }
 
-        protected async Task<Endpoint> CreateEndpoint(Profile profile, string endpointName)
+        protected async Task<CdnEndpoint> CreateCdnEndpoint(Profile profile, string endpointName)
         {
-            EndpointData input = ResourceDataHelper.CreateEndpointData();
+            CdnEndpointData input = ResourceDataHelper.CreateEndpointData();
             DeepCreatedOrigin deepCreatedOrigin = ResourceDataHelper.CreateDeepCreatedOrigin();
             input.Origins.Add(deepCreatedOrigin);
-            var lro = await profile.GetEndpoints().CreateOrUpdateAsync(endpointName, input);
+            var lro = await profile.GetCdnEndpoints().CreateOrUpdateAsync(endpointName, input);
             return lro.Value;
         }
 
-        protected async Task<Endpoint> CreateEndpointWithOriginGroup(Profile profile, string endpointName)
+        protected async Task<CdnEndpoint> CreateCdnEndpointWithOriginGroup(Profile profile, string endpointName)
         {
-            EndpointData input = ResourceDataHelper.CreateEndpointData();
+            CdnEndpointData input = ResourceDataHelper.CreateEndpointData();
             DeepCreatedOrigin deepCreatedOrigin = ResourceDataHelper.CreateDeepCreatedOrigin();
             DeepCreatedOriginGroup deepCreatedOriginGroup = ResourceDataHelper.CreateDeepCreatedOriginGroup();
             deepCreatedOriginGroup.Origins.Add(new WritableSubResource
@@ -79,95 +79,95 @@ namespace Azure.ResourceManager.Cdn.Tests
             {
                 Id = $"{profile.Id}/endpoints/{endpointName}/originGroups/{deepCreatedOriginGroup.Name}"
             };
-            var lro = await profile.GetEndpoints().CreateOrUpdateAsync(endpointName, input);
+            var lro = await profile.GetCdnEndpoints().CreateOrUpdateAsync(endpointName, input);
             return lro.Value;
         }
 
-        protected async Task<AFDEndpoint> CreateAFDEndpoint(Profile profile, string endpointName)
+        protected async Task<AfdEndpoint> CreateAfdEndpoint(Profile profile, string endpointName)
         {
-            AFDEndpointData input = ResourceDataHelper.CreateAFDEndpointData();
-            var lro = await profile.GetAFDEndpoints().CreateOrUpdateAsync(endpointName, input);
+            AfdEndpointData input = ResourceDataHelper.CreateAfdEndpointData();
+            var lro = await profile.GetAfdEndpoints().CreateOrUpdateAsync(endpointName, input);
             return lro.Value;
         }
 
-        protected async Task<Origin> CreateOrigin(Endpoint endpoint, string originName)
+        protected async Task<CdnOrigin> CreateCdnOrigin(CdnEndpoint endpoint, string originName)
         {
-            OriginData input = ResourceDataHelper.CreateOriginData();
-            var lro = await endpoint.GetOrigins().CreateOrUpdateAsync(originName, input);
+            CdnOriginData input = ResourceDataHelper.CreateOriginData();
+            var lro = await endpoint.GetCdnOrigins().CreateOrUpdateAsync(originName, input);
             return lro.Value;
         }
 
-        protected async Task<AFDOrigin> CreateAFDOrigin(AFDOriginGroup originGroup, string originName)
+        protected async Task<AfdOrigin> CreateAfdOrigin(AfdOriginGroup originGroup, string originName)
         {
-            AFDOriginData input = ResourceDataHelper.CreateAFDOriginData();
-            var lro = await originGroup.GetAFDOrigins().CreateOrUpdateAsync(originName, input);
+            AfdOriginData input = ResourceDataHelper.CreateAfdOriginData();
+            var lro = await originGroup.GetAfdOrigins().CreateOrUpdateAsync(originName, input);
             return lro.Value;
         }
 
-        protected async Task<OriginGroup> CreateOriginGroup(Endpoint endpoint, string originGroupName, string originName)
+        protected async Task<CdnOriginGroup> CreateCdnOriginGroup(CdnEndpoint endpoint, string originGroupName, string originName)
         {
-            OriginGroupData input = ResourceDataHelper.CreateOriginGroupData();
+            CdnOriginGroupData input = ResourceDataHelper.CreateOriginGroupData();
             input.Origins.Add(new WritableSubResource
             {
                 Id = $"{endpoint.Id}/origins/{originName}"
             });
-            var lro = await endpoint.GetOriginGroups().CreateOrUpdateAsync(originGroupName, input);
+            var lro = await endpoint.GetCdnOriginGroups().CreateOrUpdateAsync(originGroupName, input);
             return lro.Value;
         }
 
-        protected async Task<AFDOriginGroup> CreateAFDOriginGroup(Profile profile, string originGroupName)
+        protected async Task<AfdOriginGroup> CreateAfdOriginGroup(Profile profile, string originGroupName)
         {
-            AFDOriginGroupData input = ResourceDataHelper.CreateAFDOriginGroupData();
-            var lro = await profile.GetAFDOriginGroups().CreateOrUpdateAsync(originGroupName, input);
+            AfdOriginGroupData input = ResourceDataHelper.CreateAfdOriginGroupData();
+            var lro = await profile.GetAfdOriginGroups().CreateOrUpdateAsync(originGroupName, input);
             return lro.Value;
         }
 
-        protected async Task<CustomDomain> CreateCustomDomain(Endpoint endpoint, string customDomainName, string hostName)
+        protected async Task<CdnCustomDomain> CreateCdnCustomDomain(CdnEndpoint endpoint, string customDomainName, string hostName)
         {
-            CustomDomainParameters input = ResourceDataHelper.CreateCustomDomainParameters(hostName);
-            var lro = await endpoint.GetCustomDomains().CreateOrUpdateAsync(customDomainName, input);
+            CustomDomainOptions input = ResourceDataHelper.CreateCdnCustomDomainData(hostName);
+            var lro = await endpoint.GetCdnCustomDomains().CreateOrUpdateAsync(customDomainName, input);
             return lro.Value;
         }
 
-        protected async Task<AFDCustomDomain> CreateAFDCustomDomain(Profile profile, string customDomainName, string hostName)
+        protected async Task<AfdCustomDomain> CreateAfdCustomDomain(Profile profile, string customDomainName, string hostName)
         {
-            AFDCustomDomainData input = ResourceDataHelper.CreateAFDCustomDomainData(hostName);
-            var lro = await profile.GetAFDCustomDomains().CreateOrUpdateAsync(customDomainName, input);
+            AfdCustomDomainData input = ResourceDataHelper.CreateAfdCustomDomainData(hostName);
+            var lro = await profile.GetAfdCustomDomains().CreateOrUpdateAsync(customDomainName, input);
             return lro.Value;
         }
 
-        protected async Task<RuleSet> CreateRuleSet(Profile profile, string ruleSetName)
+        protected async Task<AfdRuleSet> CreateAfdRuleSet(Profile profile, string ruleSetName)
         {
-            var lro = await profile.GetRuleSets().CreateOrUpdateAsync(ruleSetName);
+            var lro = await profile.GetAfdRuleSets().CreateOrUpdateAsync(ruleSetName);
             return lro.Value;
         }
 
-        protected async Task<Rule> CreateRule(RuleSet ruleSet, string ruleName)
+        protected async Task<AfdRule> CreateAfdRule(AfdRuleSet ruleSet, string ruleName)
         {
-            RuleData input = ResourceDataHelper.CreateRuleData();
+            AfdRuleData input = ResourceDataHelper.CreateAfdRuleData();
             DeliveryRuleCondition deliveryRuleCondition = ResourceDataHelper.CreateDeliveryRuleCondition();
             DeliveryRuleActionAutoGenerated deliveryRuleAction = ResourceDataHelper.CreateDeliveryRuleOperation();
             input.Conditions.Add(deliveryRuleCondition);
             input.Actions.Add(deliveryRuleAction);
-            var lro = await ruleSet.GetRules().CreateOrUpdateAsync(ruleName, input);
+            var lro = await ruleSet.GetAfdRules().CreateOrUpdateAsync(ruleName, input);
             return lro.Value;
         }
 
-        protected async Task<Route> CreateRoute(AFDEndpoint endpoint, string routeName, AFDOriginGroup originGroup, RuleSet ruleSet)
+        protected async Task<AfdRoute> CreateAfdRoute(AfdEndpoint endpoint, string routeName, AfdOriginGroup originGroup, AfdRuleSet ruleSet)
         {
-            RouteData input = ResourceDataHelper.CreateRouteData(originGroup);
+            AfdRouteData input = ResourceDataHelper.CreateAfdRouteData(originGroup);
             input.RuleSets.Add(new WritableSubResource
             {
                 Id = ruleSet.Id
             });
             input.PatternsToMatch.Add("/*");
-            var lro = await endpoint.GetRoutes().CreateOrUpdateAsync(routeName, input);
+            var lro = await endpoint.GetAfdRoutes().CreateOrUpdateAsync(routeName, input);
             return lro.Value;
         }
 
-        protected async Task<SecurityPolicy> CreateSecurityPolicy(Profile profile, AFDEndpoint endpoint, string securityPolicyName)
+        protected async Task<AfdSecurityPolicy> CreateAfdSecurityPolicy(Profile profile, AfdEndpoint endpoint, string securityPolicyName)
         {
-            SecurityPolicyData input = ResourceDataHelper.CreateSecurityPolicyData(endpoint);
+            AfdSecurityPolicyData input = ResourceDataHelper.CreateAfdSecurityPolicyData(endpoint);
             SecurityPolicyWebApplicationFirewallAssociation securityPolicyWebApplicationFirewallAssociation = new SecurityPolicyWebApplicationFirewallAssociation();
             securityPolicyWebApplicationFirewallAssociation.Domains.Add(new WritableSubResource
             {
@@ -175,14 +175,14 @@ namespace Azure.ResourceManager.Cdn.Tests
             });
             securityPolicyWebApplicationFirewallAssociation.PatternsToMatch.Add("/*");
             ((SecurityPolicyWebApplicationFirewallParameters)input.Parameters).Associations.Add(securityPolicyWebApplicationFirewallAssociation);
-            var lro = await profile.GetSecurityPolicies().CreateOrUpdateAsync(securityPolicyName, input);
+            var lro = await profile.GetAfdSecurityPolicies().CreateOrUpdateAsync(securityPolicyName, input);
             return lro.Value;
         }
 
-        protected async Task<Secret> CreateSecret(Profile profile, string secretName)
+        protected async Task<AfdSecret> CreateAfdSecret(Profile profile, string secretName)
         {
-            SecretData input = ResourceDataHelper.CreateSecretData();
-            var lro = await profile.GetSecrets().CreateOrUpdateAsync(secretName, input);
+            AfdSecretData input = ResourceDataHelper.CreateAfdSecretData();
+            var lro = await profile.GetAfdSecrets().CreateOrUpdateAsync(secretName, input);
             return lro.Value;
         }
 

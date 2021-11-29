@@ -172,23 +172,26 @@ directive:
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}'].put.parameters[3]
     transform: $['x-ms-client-name'] = 'endpointInput'
   - rename-operation:
+      from: AFDProfiles_ListResourceUsage
+      to: AfdProfiles_ListResourceUsage
+  - rename-operation:
       from: LogAnalytics_GetLogAnalyticsMetrics
-      to: AFDProfiles_GetLogAnalyticsMetrics
+      to: AfdProfiles_GetLogAnalyticsMetrics
   - rename-operation:
       from: LogAnalytics_GetLogAnalyticsRankings
-      to: AFDProfiles_GetLogAnalyticsRankings
+      to: AfdProfiles_GetLogAnalyticsRankings
   - rename-operation:
       from: LogAnalytics_GetLogAnalyticsLocations
-      to: AFDProfiles_GetLogAnalyticsLocations
+      to: AfdProfiles_GetLogAnalyticsLocations
   - rename-operation:
       from: LogAnalytics_GetLogAnalyticsResources
-      to: AFDProfiles_GetLogAnalyticsResources
+      to: AfdProfiles_GetLogAnalyticsResources
   - rename-operation:
       from: LogAnalytics_GetWafLogAnalyticsMetrics
-      to: AFDProfiles_GetWafLogAnalyticsMetrics
+      to: AfdProfiles_GetWafLogAnalyticsMetrics
   - rename-operation:
       from: LogAnalytics_GetWafLogAnalyticsRankings
-      to: AFDProfiles_GetWafLogAnalyticsRankings
+      to: AfdProfiles_GetWafLogAnalyticsRankings
   - from: swagger-document
     where: $.definitions
     transform: >
