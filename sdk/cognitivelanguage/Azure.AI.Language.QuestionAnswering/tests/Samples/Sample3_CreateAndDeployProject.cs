@@ -127,12 +127,23 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             Assert.True(deploymentOperation.HasCompleted);
             Assert.That(deployments.Any(deployment => deployment.ToString().Contains(newDeploymentName)));
 
-            // TODO: This section is prone to change since the delete API will become an LRO
             #region Snippet:QuestionAnsweringProjectsClient_DeleteProject
-            Response deletionResponse = client.DeleteProject(newProjectName);
+            Operation<BinaryData> deletionOperation = client.DeleteProject(newProjectName);
+            while (true)
+            {
+                deletionOperation.UpdateStatus();
+                if (deletionOperation.HasCompleted)
+                {
+                    Console.WriteLine($"Delete operation value: \n{deletionOperation.Value}");
+                    break;
+                }
+
+                Thread.Sleep(pollingInterval);
+            }
             #endregion
 
-            Assert.AreEqual(202, deletionResponse.Status);
+            Assert.True(deletionOperation.HasCompleted);
+            Assert.AreEqual(202, deletionOperation.GetRawResponse().Status);
         }
 
         [RecordedTest]
@@ -235,10 +246,12 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
 
             // TODO: This section is prone to change since the delete API will become an LRO
             #region Snippet:QuestionAnsweringProjectsClient_DeleteProjectAsync
-            Response deletionResponse = await client.DeleteProjectAsync(newProjectName);
+            Operation<BinaryData> deletionOperation = await client.DeleteProjectAsync(newProjectName);
+            await deletionOperation.WaitForCompletionAsync();
             #endregion
 
-            Assert.AreEqual(202, deletionResponse.Status);
+            Assert.True(deletionOperation.HasCompleted);
+            Assert.AreEqual(202, deletionOperation.GetRawResponse().Status);
         }
     }
 }
