@@ -12,7 +12,7 @@ using System.Threading;
 
 namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
 {
-    public partial class QuestionAnsweringProjectsClientSamples
+    public partial class QuestionAnsweringProjectsClientSamples : QuestionAnsweringProjectsLiveTestBase
     {
         [RecordedTest]
         [SyncOnly]

@@ -13,30 +13,18 @@ using System.Text.Json;
 
 namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
 {
-    public partial class QuestionAnsweringProjectsClientSamples
+    public partial class QuestionAnsweringProjectsClientSamples : QuestionAnsweringProjectsLiveTestBase
     {
         [RecordedTest]
         [SyncOnly]
         public void ExportAndImport()
         {
-            #region Creating new project for testing purposes
             QuestionAnsweringProjectsClient client = Client;
-            string exportedProjectName = "NewProjectForExport";
-            RequestContent creationRequestContent = RequestContent.Create(
-                new {
-                    description = "This is the description for a test project",
-                    language = "en",
-                    multilingualResource = false,
-                    settings = new {
-                        defaultAnswer = "No answer found for your question."
-                        }
-                    }
-                );
-            Response creationResponse = client.CreateProject(exportedProjectName, creationRequestContent);
-            #endregion
+            string exportedProjectName = CreateTestProjectName();
+            CreateProject(exportedProjectName);
 
             #region Snippet:QuestionAnsweringProjectsClient_ExportProject
-            string exportFormat = "json"; // can also be tsv or excel
+            string exportFormat = "excel"; // can also be tsv or excel
             Operation<BinaryData> exportOperation = client.Export(exportedProjectName, exportFormat);
 
             // Wait for operation completion
@@ -59,8 +47,6 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             string exportedFileUrl = operationValueJson.RootElement.GetProperty("resultUrl").ToString();
             #endregion
 
-            // TODO: remove this when api-version parameter bug is resolved
-            exportedFileUrl = exportedFileUrl + ""; //+ "?api-version=2021-10-01";
             Assert.True(exportOperation.HasCompleted);
             Assert.True(!String.IsNullOrEmpty(exportedFileUrl));
 
@@ -70,24 +56,20 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             string importFormat = "json";
             RequestContent importRequestContent = RequestContent.Create(new
                 {
-                //Metadata = new {
-                //       ProjectName= "NewProjectForExport",
-                //       Description= "This is the description for a test project",
-                //       Language= "en",
-                //       DefaultAnswer= "No answer found for your question.",
-                //       MultilingualResource= false,
-                //       CreatedDateTime= "2021-11-25T09=35=33Z",
-                //       LastModifiedDateTime= "2021-11-25T09=35=33Z",
-                //       Settings= new {
-                //                   DefaultAnswer= "No answer found for your question."
-                //       }
-                //           }
-                //,
-                //Assets= new {
-                //            Synonyms= new[] { },
-                //    Qnas= new[] {}
-                //},
-                fileUri = exportedFileUrl
+                Metadata = new
+                {
+                    ProjectName = "NewProjectForExport",
+                    Description = "This is the description for a test project",
+                    Language = "en",
+                    DefaultAnswer = "No answer found for your question.",
+                    MultilingualResource = false,
+                    CreatedDateTime = "2021-11-25T09=35=33Z",
+                    LastModifiedDateTime = "2021-11-25T09=35=33Z",
+                    Settings = new
+                    {
+                        DefaultAnswer = "No answer found for your question."
+                    }
+                }
             });
 
             Operation<BinaryData> importOperation = client.Import(importedProjectName, importRequestContent, importFormat);
@@ -98,136 +80,26 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                 importOperation.UpdateStatus();
                 if (importOperation.HasCompleted)
                 {
-                    Console.WriteLine($"Deployment operation value: \n{importOperation.Value}");
+                    Console.WriteLine($"Import operation value: \n{importOperation.Value}");
                     break;
                 }
 
                 Thread.Sleep(pollingInterval);
             }
-
-            // Deployments can be retrieved as follows
-            //Pageable<BinaryData> deployments = client.GetDeployments(newProjectName);
-            //Console.WriteLine("Deployments: ");
-            //foreach (BinaryData deployment in deployments)
-            //{
-            //    Console.WriteLine(deployment);
-            //}
             #endregion
 
-            //Assert.True(deploymentOperation.HasCompleted);
-            //Assert.That(deployments.Any(deployment => deployment.ToString().Contains(newDeploymentName)));
+            Assert.True(importOperation.HasCompleted);
+            Assert.AreEqual(200, importOperation.GetRawResponse().Status);
 
-            // TODO: This section is prone to change since the delete API will become an LRO
+            #region Snippet:QuestionAnsweringProjectsClient_GetProjectDetails
+            Response projectDetails = client.GetProjectDetails(importedProjectName);
 
-            Response deletionImResponse = client.DeleteProject(importedProjectName);
+            Console.WriteLine(projectDetails.Content);
+            #endregion
 
-            Assert.AreEqual(202, deletionImResponse.Status);
+            Assert.AreEqual(200, projectDetails.Status);
+
+            DeleteProject(importedProjectName);
         }
-
-        //[RecordedTest]
-        //[AsyncOnly]
-        //public async Task ExportAndImportAsync()
-        //{
-        //    QuestionAnsweringProjectsClient client = Client;
-
-        //    #region Snippet:QuestionAnsweringProjectsClient_CreateProjectAsync
-        //    // Set project name and request content parameters
-        //    string newProjectName = "NewFAQ";
-        //    RequestContent creationRequestContent = RequestContent.Create(
-        //        new
-        //        {
-        //            description = "This is the description for a test project",
-        //            language = "en",
-        //            multilingualResource = false,
-        //            settings = new
-        //            {
-        //                defaultAnswer = "No answer found for your question."
-        //            }
-        //        }
-        //        );
-
-        //    Response creationResponse = await client.CreateProjectAsync(newProjectName, creationRequestContent);
-
-        //    // Projects can be retrieved as follows
-        //    AsyncPageable<BinaryData> projects = client.GetProjectsAsync();
-
-        //    Console.WriteLine("Projects: ");
-        //    await foreach (BinaryData project in projects)
-        //    {
-        //        Console.WriteLine(project);
-        //    }
-        //    #endregion
-
-        //    Assert.AreEqual(201, creationResponse.Status);
-        //    Assert.That((await projects.ToEnumerableAsync()).Any(project => project.ToString().Contains(newProjectName)));
-
-        //    #region Snippet:QuestionAnsweringProjectsClient_UpdateSourcesAsync
-
-        //    // Set request content parameters for updating our new project's sources
-        //    string sourceUri = "https://www.microsoft.com/en-in/software-download/faq";
-        //    RequestContent updateSourcesRequestContent = RequestContent.Create(
-        //        new[] {
-        //            new {
-        //                    op = "add",
-        //                    value = new
-        //                    {
-        //                        displayName = "MicrosoftFAQ",
-        //                        source = sourceUri,
-        //                        sourceUri = sourceUri,
-        //                        sourceKind = "url",
-        //                        contentStructureKind = "unstructured",
-        //                        refresh = false
-        //                    }
-        //                }
-        //        });
-
-        //    Operation<BinaryData> updateSourcesOperation = await client.UpdateSourcesAsync(newProjectName, updateSourcesRequestContent);
-
-        //    // Wait for operation completion
-        //    Response<BinaryData> updateSourcesOperationResult = await updateSourcesOperation.WaitForCompletionAsync();
-
-        //    Console.WriteLine($"Update Sources operation result: \n{updateSourcesOperationResult}");
-
-        //    // Deployments can be retrieved as follows
-        //    AsyncPageable<BinaryData> sources = client.GetSourcesAsync(newProjectName);
-        //    Console.WriteLine("Sources: ");
-        //    await foreach (BinaryData source in sources)
-        //    {
-        //        Console.WriteLine(source);
-        //    }
-        //    #endregion
-
-        //    Assert.True(updateSourcesOperation.HasCompleted);
-        //    Assert.That((await sources.ToEnumerableAsync()).Any(source => source.ToString().Contains(sourceUri)));
-
-        //    #region Snippet:QuestionAnsweringProjectsClient_DeployProjectAsync
-        //    // Set deployment name and start operation
-        //    string newDeploymentName = "production";
-        //    Operation<BinaryData> deploymentOperation = await client.DeployProjectAsync(newProjectName, newDeploymentName);
-
-        //    // Wait for operation completion
-        //    Response<BinaryData> deploymentOperationResult = await deploymentOperation.WaitForCompletionAsync();
-
-        //    Console.WriteLine($"Update Sources operation result: \n{deploymentOperationResult}");
-
-        //    // Deployments can be retrieved as follows
-        //    AsyncPageable<BinaryData> deployments = client.GetDeploymentsAsync(newProjectName);
-        //    Console.WriteLine("Deployments: ");
-        //    await foreach (BinaryData deployment in deployments)
-        //    {
-        //        Console.WriteLine(deployment);
-        //    }
-        //    #endregion
-
-        //    Assert.True(deploymentOperation.HasCompleted);
-        //    Assert.That((await deployments.ToEnumerableAsync()).Any(deployment => deployment.ToString().Contains(newDeploymentName)));
-
-        //    // TODO: This section is prone to change since the delete API will become an LRO
-        //    #region Snippet:QuestionAnsweringProjectsClient_DeleteProjectAsync
-        //    Response deletionResponse = await client.DeleteProjectAsync(newProjectName);
-        //    #endregion
-
-        //    Assert.AreEqual(202, deletionResponse.Status);
-        //}
     }
 }
