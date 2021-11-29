@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.TestFramework;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Test.Shared;
 
@@ -15,7 +16,18 @@ namespace Azure.Storage.Blobs.Tests
     public class BlobClientOpenWriteTests : BlobBaseClientOpenWriteTests<BlobClient>
     {
         public BlobClientOpenWriteTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
-            : base(async, serviceVersion, Core.TestFramework.RecordedTestMode.Playback /* RecordedTestMode.Record /* to re-record */)
+            : base(async, serviceVersion, RecordedTestMode.Live /* RecordedTestMode.Record /* to re-record */)
+        {
+        }
+
+        /// <summary>
+        /// For derived classes to mimic <see cref="BlobClientOpenWriteTests(bool, BlobClientOptions.ServiceVersion)"/>
+        /// and have a place to pass a <see cref="RecordedTestMode"/> through.
+        /// </summary>
+        /// <param name="async"></param>
+        /// <param name="serviceVersion"></param>
+        protected BlobClientOpenWriteTests(bool async, BlobClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode)
+            : base(async, serviceVersion, mode)
         {
         }
 
