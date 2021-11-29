@@ -125,7 +125,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             Assert.True(exportOperation.HasCompleted);
             Assert.True(!String.IsNullOrEmpty(exportedFileUrl));
 
-            #region Snippet:QuestionAnsweringProjectsClient_ImportProject
+            #region Snippet:QuestionAnsweringProjectsClient_ImportProjectAsync
             // Set import project name and request content
             string importedProjectName = "importedProject";
             string importFormat = "json";
@@ -156,7 +156,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             Assert.True(importOperation.HasCompleted);
             Assert.AreEqual(200, importOperation.GetRawResponse().Status);
 
-            #region Snippet:QuestionAnsweringProjectsClient_GetProjectDetails
+            #region Snippet:QuestionAnsweringProjectsClient_GetProjectDetailsAsync
             Response projectDetails = await client.GetProjectDetailsAsync(importedProjectName);
 
             Console.WriteLine(projectDetails.Content);

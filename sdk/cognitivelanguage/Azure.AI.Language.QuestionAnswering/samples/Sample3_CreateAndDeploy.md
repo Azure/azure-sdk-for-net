@@ -17,7 +17,7 @@ Once you have created a client, you can call synchronous or asynchronous methods
 
 ### Creating a Project
 
-To create a new Question Answering projects, you will need to set your project name as well as the request content and call `CreateProject()` as shown below:
+To create a new Question Answering project, you will need to set your project name as well as the request content and call `CreateProject()` as shown below:
 
 ```C# Snippet:QuestionAnsweringProjectsClient_CreateProject
 // Set project name and request content parameters
