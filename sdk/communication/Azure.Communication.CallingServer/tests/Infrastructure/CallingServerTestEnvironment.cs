@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Net;
 using Azure.Communication.Tests;
 using Azure.Core.TestFramework;
@@ -15,6 +16,27 @@ namespace Azure.Communication.CallingServer.Tests
         public const string AlternateCallerId = "ALTERNATE_CALLERID";
 
         public const string ResourceId = "COMMUNICATION_LIVETEST_STATIC_RESOURCE_IDENTIFIER";
+
+        public const string DownloadUrl = "DOWNLOAD_ENDPOINT";
+
+        public const string UserId = "USER_IDENTIFIER";
+
+        public const string TargetCallConnectionId = "TARGET_CALL_CONNECTION_ID";
+
+        /// <summary>
+        /// The download url required to download the file.
+        /// </summary>
+        public Uri DownloadEndPoint => new Uri (GetRecordedVariable(DownloadUrl, options => options.IsSecret()));
+
+        /// <summary>
+        /// The user id required to add the paticipant in a call.
+        /// </summary>
+        public string UserIdentifier => GetRecordedVariable(UserId, options => options.IsSecret());
+
+        /// <summary>
+        /// The target call connection id required to transfer the call to another call.
+        /// </summary>
+        public string TargetCallConnectionIdentifier => GetRecordedVariable(TargetCallConnectionId, options => options.IsSecret());
 
         /// <summary>
         /// The phone number required to make a pstn call.
