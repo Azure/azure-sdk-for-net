@@ -196,6 +196,6 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         }
 
         private void TrackMessageAsSettled(ServiceBusReceivedMessage message)
-            => SettledMessages.AddOrUpdate(message, 0, (_, _) => 0);
+            => SettledMessages[message] = 0;
     }
 }
