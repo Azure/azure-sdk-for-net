@@ -1622,6 +1622,7 @@ namespace Azure.Storage.Blobs
             bool async = true,
             CancellationToken cancellationToken = default)
         {
+            long? expectedContentLength = null;
             if (UsingClientSideEncryption)
             {
                 if (UsingClientSideEncryption && options.TransactionalHashingOptions != default)
@@ -1629,7 +1630,12 @@ namespace Azure.Storage.Blobs
                     throw Errors.TransactionalHashingNotSupportedWithClientSideEncryption();
                 }
 
-                // content is now unseekable, so PartitionedUploader will be forced to do a buffered multipart upload
+                // if content length was known, we retain that for dividing REST requests appropriately
+                expectedContentLength = content.GetLengthOrDefault();
+                if (expectedContentLength.HasValue)
+                {
+                    expectedContentLength = ClientSideEncryptor.ExpectedCiphertextLength(expectedContentLength.Value);
+                }
                 (content, options.Metadata) = await new BlobClientSideEncryptor(new ClientSideEncryptor(ClientSideEncryption))
                     .ClientSideEncryptInternal(content, options.Metadata, async, cancellationToken).ConfigureAwait(false);
             }
@@ -1641,6 +1647,7 @@ namespace Azure.Storage.Blobs
 
             return await uploader.UploadInternal(
                 content,
+                expectedContentLength,
                 options,
                 options?.ProgressHandler,
                 async,
