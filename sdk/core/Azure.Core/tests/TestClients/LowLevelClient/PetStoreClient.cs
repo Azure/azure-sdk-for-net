@@ -58,7 +58,7 @@ namespace Azure.Core.Experimental.Tests
             _tokenCredential = credential;
             var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
 
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, ResponseClassifier.Shared);
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy, new ResponsePropertiesPolicy(options) }, null);
             this.endpoint = endpoint;
             apiVersion = options.Version;
         }

@@ -81,11 +81,17 @@ namespace Azure.Core.Pipeline
                         message.Request.Content.WriteTo(requestStream, message.CancellationToken);
                     }
                 }
-                else if (message.Request.Method != RequestMethod.Head &&
+                else
+                {
+                    // match the behavior of HttpClient
+                    if (message.Request.Method != RequestMethod.Head &&
                          message.Request.Method != RequestMethod.Get &&
                          message.Request.Method != RequestMethod.Delete)
-                {
-                    request.ContentLength = 0;
+                    {
+                        request.ContentLength = 0;
+                    }
+
+                    request.ContentType = null;
                 }
 
                 WebResponse webResponse;
