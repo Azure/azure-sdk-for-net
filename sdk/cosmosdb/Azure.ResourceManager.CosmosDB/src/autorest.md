@@ -10,7 +10,7 @@ csharp: true
 library-name: CosmosDB
 skip-csproj: true
 namespace: Azure.ResourceManager.CosmosDB
-require: https://github.com/Azure/azure-rest-api-specs/blob/main/specification/cosmos-db/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/5405df1424664d1c6ef9cdcda426eb85e59a02cc/specification/cosmos-db/resource-manager/readme.md
 tag: package-2021-06-csharp
 output-folder: Generated/
 clear-output-folder: true
@@ -335,8 +335,8 @@ These settings apply only when `--tag=package-2021-06-csharp` is specified on th
 
 ```yaml $(tag) == 'package-2021-06-csharp'
 input-file:
-  - https://github.com/Azure/azure-rest-api-specs/blob/main/specification/cosmos-db/resource-manager/Microsoft.DocumentDB/stable/2021-06-15/cosmos-db.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/main/specification/cosmos-db/resource-manager/Microsoft.DocumentDB/stable/2021-06-15/privateEndpointConnection.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/main/specification/cosmos-db/resource-manager/Microsoft.DocumentDB/stable/2021-06-15/privateLinkResources.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/main/specification/cosmos-db/resource-manager/Microsoft.DocumentDB/stable/2021-06-15/restorable.json
+  - https://github.com/Azure/azure-rest-api-specs/blob/5405df1424664d1c6ef9cdcda426eb85e59a02cc/specification/cosmos-db/resource-manager/Microsoft.DocumentDB/stable/2021-06-15/cosmos-db.json
+  - https://github.com/Azure/azure-rest-api-specs/blob/5405df1424664d1c6ef9cdcda426eb85e59a02cc/specification/cosmos-db/resource-manager/Microsoft.DocumentDB/stable/2021-06-15/privateEndpointConnection.json
+  - https://github.com/Azure/azure-rest-api-specs/blob/5405df1424664d1c6ef9cdcda426eb85e59a02cc/specification/cosmos-db/resource-manager/Microsoft.DocumentDB/stable/2021-06-15/privateLinkResources.json
+  - https://github.com/Azure/azure-rest-api-specs/blob/5405df1424664d1c6ef9cdcda426eb85e59a02cc/specification/cosmos-db/resource-manager/Microsoft.DocumentDB/stable/2021-06-15/restorable.json
 ```
