@@ -87,7 +87,7 @@ while (true)
 
 ### Getting Project Details
 
-To get information regarding a specific project, the `GetProjectDetails()` method can be used as follows:sss
+To get information regarding a specific project, the `GetProjectDetails()` method can be used as follows:
 
 ```C# Snippet:QuestionAnsweringProjectsClient_GetProjectDetails
 Response projectDetails = client.GetProjectDetails(importedProjectName);
