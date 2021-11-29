@@ -8,14 +8,14 @@
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> ARM usage. </summary>
-    public partial class Usage
+    public partial class InstancePoolUsage
     {
-        /// <summary> Initializes a new instance of Usage. </summary>
-        internal Usage()
+        /// <summary> Initializes a new instance of InstancePoolUsage. </summary>
+        internal InstancePoolUsage()
         {
         }
 
-        /// <summary> Initializes a new instance of Usage. </summary>
+        /// <summary> Initializes a new instance of InstancePoolUsage. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="currentValue"> Usage current value. </param>
         /// <param name="limit"> Usage limit. </param>
         /// <param name="requestedLimit"> Usage requested limit. </param>
-        internal Usage(string id, Name name, string type, string unit, int? currentValue, int? limit, int? requestedLimit)
+        internal InstancePoolUsage(string id, UsageName name, string type, string unit, int? currentValue, int? limit, int? requestedLimit)
         {
             Id = id;
             Name = name;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Resource ID. </summary>
         public string Id { get; }
         /// <summary> Resource name. </summary>
-        public Name Name { get; }
+        public UsageName Name { get; }
         /// <summary> Resource type. </summary>
         public string Type { get; }
         /// <summary> Usage unit. </summary>

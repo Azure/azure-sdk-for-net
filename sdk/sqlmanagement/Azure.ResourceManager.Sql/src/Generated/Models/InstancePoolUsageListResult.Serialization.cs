@@ -11,11 +11,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    internal partial class UsageListResult
+    internal partial class InstancePoolUsageListResult
     {
-        internal static UsageListResult DeserializeUsageListResult(JsonElement element)
+        internal static InstancePoolUsageListResult DeserializeInstancePoolUsageListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<Usage>> value = default;
+            Optional<IReadOnlyList<InstancePoolUsage>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Usage> array = new List<Usage>();
+                    List<InstancePoolUsage> array = new List<InstancePoolUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Usage.DeserializeUsage(item));
+                        array.Add(InstancePoolUsage.DeserializeInstancePoolUsage(item));
                     }
                     value = array;
                     continue;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new UsageListResult(Optional.ToList(value), nextLink.Value);
+            return new InstancePoolUsageListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Sql
             Optional<CreateMode> createMode = default;
             Optional<string> collation = default;
             Optional<long> maxSizeBytes = default;
-            Optional<SampleName> sampleName = default;
+            Optional<SampleSchemaName> sampleName = default;
             Optional<string> elasticPoolId = default;
             Optional<string> sourceDatabaseId = default;
             Optional<DatabaseStatus> status = default;
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Sql
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            sampleName = new SampleName(property0.Value.GetString());
+                            sampleName = new SampleSchemaName(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("elasticPoolId"))

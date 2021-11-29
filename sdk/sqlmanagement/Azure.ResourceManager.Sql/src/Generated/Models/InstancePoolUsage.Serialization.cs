@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class Usage
+    public partial class InstancePoolUsage
     {
-        internal static Usage DeserializeUsage(JsonElement element)
+        internal static InstancePoolUsage DeserializeInstancePoolUsage(JsonElement element)
         {
             Optional<string> id = default;
-            Optional<Name> name = default;
+            Optional<UsageName> name = default;
             Optional<string> type = default;
             Optional<string> unit = default;
             Optional<int> currentValue = default;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    name = Name.DeserializeName(property.Value);
+                    name = UsageName.DeserializeUsageName(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new Usage(id.Value, name.Value, type.Value, unit.Value, Optional.ToNullable(currentValue), Optional.ToNullable(limit), Optional.ToNullable(requestedLimit));
+            return new InstancePoolUsage(id.Value, name.Value, type.Value, unit.Value, Optional.ToNullable(currentValue), Optional.ToNullable(limit), Optional.ToNullable(requestedLimit));
         }
     }
 }

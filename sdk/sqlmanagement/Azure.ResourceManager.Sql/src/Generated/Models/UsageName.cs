@@ -8,17 +8,17 @@
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> ARM Usage Name. </summary>
-    public partial class Name
+    public partial class UsageName
     {
-        /// <summary> Initializes a new instance of Name. </summary>
-        internal Name()
+        /// <summary> Initializes a new instance of UsageName. </summary>
+        internal UsageName()
         {
         }
 
-        /// <summary> Initializes a new instance of Name. </summary>
+        /// <summary> Initializes a new instance of UsageName. </summary>
         /// <param name="value"> Usage name value. </param>
         /// <param name="localizedValue"> Usage name localized value. </param>
-        internal Name(string value, string localizedValue)
+        internal UsageName(string value, string localizedValue)
         {
             Value = value;
             LocalizedValue = localizedValue;

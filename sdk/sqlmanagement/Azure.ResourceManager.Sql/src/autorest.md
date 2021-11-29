@@ -3,7 +3,8 @@
 Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
-
+# csharpgen:
+#   attach: true
 azure-arm: true
 use: $(this-folder)/../../../../../autorest.csharp/artifacts/bin/AutoRest.CSharp/Debug/netcoreapp3.1/
 require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/47e46d4eab3ea98d7578d51c404b1ca4405fdb76/specification/sql/resource-manager/readme.md
@@ -50,6 +51,15 @@ directive:
     - rename-model:
         from: UpdateLongTermRetentionBackupParameters
         to: UpdateLongTermRetentionBackupOptions
+    - rename-model:
+        from: Name
+        to: UsageName
+    - rename-model:
+        from: Usage
+        to: InstancePoolUsage
+    - rename-model:
+        from: UsageListResult
+        to: InstancePoolUsageListResult
     - from: BlobAuditing.json
       where: $.parameters.BlobAuditingPolicyNameParameter
       transform: >
@@ -64,4 +74,8 @@ directive:
               "name": "SyncGroupLogType",
               "modelAsString": true
           }
+    - from: Databases.json
+      where: $.definitions.DatabaseProperties.properties.sampleName['x-ms-enum']
+      transform: >
+          $['name'] = "SampleSchemaName"
 ```

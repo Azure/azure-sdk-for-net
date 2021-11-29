@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="expandChildren"> Optional request parameter to include managed instance usages within the instance pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="instancePoolName"/> is null. </exception>
-        public async Task<Response<UsageListResult>> ListByInstancePoolAsync(string resourceGroupName, string instancePoolName, bool? expandChildren = null, CancellationToken cancellationToken = default)
+        public async Task<Response<InstancePoolUsageListResult>> ListByInstancePoolAsync(string resourceGroupName, string instancePoolName, bool? expandChildren = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.Sql
             {
                 case 200:
                     {
-                        UsageListResult value = default;
+                        InstancePoolUsageListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = UsageListResult.DeserializeUsageListResult(document.RootElement);
+                        value = InstancePoolUsageListResult.DeserializeInstancePoolUsageListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="expandChildren"> Optional request parameter to include managed instance usages within the instance pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="instancePoolName"/> is null. </exception>
-        public Response<UsageListResult> ListByInstancePool(string resourceGroupName, string instancePoolName, bool? expandChildren = null, CancellationToken cancellationToken = default)
+        public Response<InstancePoolUsageListResult> ListByInstancePool(string resourceGroupName, string instancePoolName, bool? expandChildren = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -122,9 +122,9 @@ namespace Azure.ResourceManager.Sql
             {
                 case 200:
                     {
-                        UsageListResult value = default;
+                        InstancePoolUsageListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = UsageListResult.DeserializeUsageListResult(document.RootElement);
+                        value = InstancePoolUsageListResult.DeserializeInstancePoolUsageListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="expandChildren"> Optional request parameter to include managed instance usages within the instance pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="instancePoolName"/> is null. </exception>
-        public async Task<Response<UsageListResult>> ListByInstancePoolNextPageAsync(string nextLink, string resourceGroupName, string instancePoolName, bool? expandChildren = null, CancellationToken cancellationToken = default)
+        public async Task<Response<InstancePoolUsageListResult>> ListByInstancePoolNextPageAsync(string nextLink, string resourceGroupName, string instancePoolName, bool? expandChildren = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -174,9 +174,9 @@ namespace Azure.ResourceManager.Sql
             {
                 case 200:
                     {
-                        UsageListResult value = default;
+                        InstancePoolUsageListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = UsageListResult.DeserializeUsageListResult(document.RootElement);
+                        value = InstancePoolUsageListResult.DeserializeInstancePoolUsageListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="expandChildren"> Optional request parameter to include managed instance usages within the instance pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="instancePoolName"/> is null. </exception>
-        public Response<UsageListResult> ListByInstancePoolNextPage(string nextLink, string resourceGroupName, string instancePoolName, bool? expandChildren = null, CancellationToken cancellationToken = default)
+        public Response<InstancePoolUsageListResult> ListByInstancePoolNextPage(string nextLink, string resourceGroupName, string instancePoolName, bool? expandChildren = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -212,9 +212,9 @@ namespace Azure.ResourceManager.Sql
             {
                 case 200:
                     {
-                        UsageListResult value = default;
+                        InstancePoolUsageListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = UsageListResult.DeserializeUsageListResult(document.RootElement);
+                        value = InstancePoolUsageListResult.DeserializeInstancePoolUsageListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
