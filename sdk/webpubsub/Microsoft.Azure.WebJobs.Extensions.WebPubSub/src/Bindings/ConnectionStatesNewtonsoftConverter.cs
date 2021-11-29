@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Azure.WebPubSub.Common;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -18,9 +17,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
     {
         public override IReadOnlyDictionary<string, BinaryData> ReadJson(JsonReader reader, Type objectType, IReadOnlyDictionary<string, BinaryData> existingValue, bool hasExistingValue, JsonSerializer serializer)
         {
-            var rawJson = JObject.Load(reader).ToString();
+            var dic = new Dictionary<string, BinaryData>();
+            var jdic = JToken.Load(reader).ToObject<Dictionary<string, JToken>>();
+            foreach (var item in jdic)
+            {
+                dic.Add(item.Key, BinaryData.FromString(JsonConvert.SerializeObject(item.Value)));
+            }
 
-            return LoadWithSystemJson(rawJson);
+            return dic;
         }
 
         public override void WriteJson(JsonWriter writer, IReadOnlyDictionary<string, BinaryData> value, JsonSerializer serializer)
@@ -35,17 +39,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 }
             }
             writer.WriteEndObject();
-        }
-
-        private static IReadOnlyDictionary<string, BinaryData> LoadWithSystemJson(string rawJson)
-        {
-            var dic = new Dictionary<string, BinaryData>();
-            var element = SystemJson.JsonDocument.Parse(rawJson).RootElement;
-            foreach (var elementInfo in element.EnumerateObject())
-            {
-                dic.Add(elementInfo.Name, BinaryData.FromString(elementInfo.Value.GetRawText()));
-            }
-            return dic;
         }
     }
 }

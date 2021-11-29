@@ -23,6 +23,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
     /// </summary>
     internal static class WebPubSubRequestExtensions
     {
+        private static JsonSerializerOptions _innerSerializer => CreateSystemTextJsonSerializer();
         /// <summary>
         /// Parse request to system/user type ServiceRequest.
         /// </summary>
@@ -155,7 +156,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         {
             if (!string.IsNullOrEmpty(connectionStates))
             {
-                var strongTyped = JsonSerializer.Deserialize<IReadOnlyDictionary<string, BinaryData>>(connectionStates);
+                var strongTyped = JsonSerializer.Deserialize<IReadOnlyDictionary<string, BinaryData>>(Convert.FromBase64String(connectionStates), _innerSerializer);
                 return new Dictionary<string, BinaryData>(strongTyped);
             }
             return null;
@@ -194,9 +195,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
 
         internal static string EncodeConnectionStates(this IReadOnlyDictionary<string, BinaryData> value)
         {
-            JsonSerializerOptions options = new();
-            options.Converters.Add(new ConnectionStatesConverter());
-            return Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonSerializer.Serialize(value, options)));
+            return Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonSerializer.Serialize(value, _innerSerializer)));
         }
 
         private static bool TryParseCloudEvents(this HttpRequest request, out WebPubSubConnectionContext connectionContext)
@@ -300,5 +299,12 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                 Constants.ContentTypes.JsonContentType => WebPubSubDataType.Json,
                 _ => throw new ArgumentException($"Invalid content type: {mediaType}")
             };
+
+        private static JsonSerializerOptions CreateSystemTextJsonSerializer()
+        {
+            var options = new JsonSerializerOptions();
+            options.Converters.Add(new ConnectionStatesConverter());
+            return options;
+        }
     }
 }

@@ -68,8 +68,8 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             var decoded = encoded.DecodeConnectionStates();
 
             CollectionAssert.AreEquivalent(
-                state.Values.Select(d => d.ToString()),
-                decoded.Values.Select(d => d.ToString()));
+                state.Values.Select(d => d.ToObjectFromJson<string>()),
+                decoded.Values.Select(d => d.ToObjectFromJson<string>()));
         }
 
         [Test]

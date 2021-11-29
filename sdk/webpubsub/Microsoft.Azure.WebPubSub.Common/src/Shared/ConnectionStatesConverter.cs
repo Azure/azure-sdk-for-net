@@ -23,8 +23,7 @@ namespace Microsoft.Azure.WebPubSub.Common
             var element = JsonDocument.ParseValue(ref reader).RootElement;
             foreach (var elementInfo in element.EnumerateObject())
             {
-                var encoded = elementInfo.Value.GetString();
-                var decoded = Convert.FromBase64String(encoded);
+                var decoded = elementInfo.Value.GetBytesFromBase64();
                 dic.Add(elementInfo.Name, BinaryData.FromBytes(decoded));
             }
             return dic;

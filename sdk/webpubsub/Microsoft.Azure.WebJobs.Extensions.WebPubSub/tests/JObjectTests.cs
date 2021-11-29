@@ -514,29 +514,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         }
 
         [TestCase]
-        public void TestConnectionStatesConverter_Newtonsoft()
-        {
-            WebPubSubConfigProvider.RegisterJsonConverter();
-            var states =
-                new Dictionary<string, object>
-                {
-                    { "aKey", "aValue"},
-                    { "bKey", 123 },
-                    { "cKey", new StateTestClass() },
-                    { "dKey", JObject.FromObject(new StateTestClass())}
-                };
-            IReadOnlyDictionary<string, BinaryData> input = states.ToDictionary(x => x.Key, y => BinaryDataExtensions.FromObjectAsJsonExtended(y.Value));
-            var serialized = JsonConvert.SerializeObject(input);
-            var deserialized = JsonConvert.DeserializeObject<IReadOnlyDictionary<string, BinaryData>>(serialized);
-
-            Assert.AreEqual(4, deserialized.Count);
-            Assert.AreEqual("aValue", deserialized["aKey"].ToObjectFromJson<string>());
-            Assert.AreEqual(123, deserialized["bKey"].ToObjectFromJson<int>());
-            Assert.NotNull(deserialized["cKey"].ToObjectFromJson<StateTestClass>());
-            Assert.NotNull(deserialized["dKey"].ToObjectFromJson<StateTestClass>());
-        }
-
-        [TestCase]
         public void TestConnectionStatesConverter_SystemText()
         {
             var jsonOption = new SystemJson.JsonSerializerOptions();
@@ -559,22 +536,25 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         [TestCase]
         public void TestConnectionStatesEncodeDecode()
         {
+            var testTime = DateTime.Parse("2021-11-10 4:23:55");
             var input =
                 new Dictionary<string, object>
                 {
                     { "aKey", BinaryData.FromString("aValue") },
                     { "bKey", BinaryData.FromObjectAsJson(123) },
                     { "cKey", BinaryData.FromObjectAsJson(new StateTestClass()) },
-                    { "dKey", JObject.FromObject(new StateTestClass()) }
+                    { "dKey", JObject.FromObject(new StateTestClass()) },
+                    { "eKey", BinaryData.FromObjectAsJson(testTime) }
                 };
             var encoded = input.EncodeConnectionStates();
             var decoded = encoded.DecodeConnectionStates();
 
-            Assert.AreEqual(4, decoded.Count);
+            Assert.AreEqual(5, decoded.Count);
             Assert.AreEqual("aValue", decoded["aKey"].ToString());
             Assert.AreEqual(123, ((BinaryData)decoded["bKey"]).ToObjectFromJson<int>());
             Assert.NotNull(((BinaryData)decoded["cKey"]).ToObjectFromJson<StateTestClass>());
             Assert.NotNull(((BinaryData)decoded["dKey"]).ToObjectFromJson<StateTestClass>());
+            Assert.AreEqual(testTime, ((BinaryData)decoded["eKey"]).ToObjectFromJson<DateTime>());
         }
 
         private static HttpResponseMessage BuildResponse(string input, RequestType requestType, bool hasTestStates = false)

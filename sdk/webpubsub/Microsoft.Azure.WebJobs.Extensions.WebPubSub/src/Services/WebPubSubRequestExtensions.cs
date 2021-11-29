@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Azure.WebPubSub.Common;
 using Microsoft.Extensions.Primitives;
+using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
@@ -22,7 +23,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
     /// </summary>
     internal static class WebPubSubRequestExtensions
     {
-        private static JsonSerializerOptions _innerSerializer => CreateSystemTestJsonSerializer();
+        private static JsonSerializerOptions _innerSerializer => CreateSystemTextJsonSerializer();
         /// <summary>
         /// Parse request to system/user type ServiceRequest.
         /// </summary>
@@ -196,7 +197,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
         internal static string EncodeConnectionStates(this Dictionary<string, object> value)
         {
-            IReadOnlyDictionary<string, BinaryData> readOnlyDic = value.ToDictionary(x => x.Key, y => y.Value is BinaryData data ? data : BinaryDataExtensions.FromObjectAsJsonExtended(y.Value));
+            IReadOnlyDictionary<string, BinaryData> readOnlyDic = value.ToDictionary(x => x.Key, y => y.Value is BinaryData data ? data : FromObjectAsJsonExtended(y.Value));
             return Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonSerializer.Serialize(readOnlyDic, _innerSerializer)));
         }
 
@@ -302,11 +303,29 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 _ => throw new ArgumentException($"Invalid content type: {mediaType}")
             };
 
-        private static JsonSerializerOptions CreateSystemTestJsonSerializer()
+        private static JsonSerializerOptions CreateSystemTextJsonSerializer()
         {
             var options = new JsonSerializerOptions();
             options.Converters.Add(new ConnectionStatesConverter());
             return options;
+        }
+
+        private static BinaryData FromObjectAsJsonExtended<T>(T item, JsonSerializerOptions? options = null)
+        {
+            try
+            {
+                return BinaryData.FromObjectAsJson(item, options);
+            }
+            catch (NotSupportedException e)
+            {
+                return item is IJEnumerable<JToken> ?
+                    BinaryData.FromString(item.ToString()) :
+                    throw e;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

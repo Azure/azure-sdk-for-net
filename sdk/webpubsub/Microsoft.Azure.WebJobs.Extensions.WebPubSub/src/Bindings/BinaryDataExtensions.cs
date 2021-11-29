@@ -39,23 +39,5 @@ namespace System
 
             return null;
         }
-
-        public static BinaryData FromObjectAsJsonExtended<T>(T item, JsonSerializerOptions? options = null)
-        {
-            try
-            {
-                return BinaryData.FromObjectAsJson(item, options);
-            }
-            catch (NotSupportedException e)
-            {
-                return item is IJEnumerable<JToken> ?
-                    BinaryData.FromString(item.ToString()) :
-                    throw e;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
     }
 }
