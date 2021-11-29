@@ -219,6 +219,7 @@ namespace Azure.AI.Language.Conversations
         internal TargetIntentResult() { }
         public string ApiVersion { get { throw null; } }
         public double Confidence { get { throw null; } }
+        public Azure.AI.Language.Conversations.TargetKind TargetKind { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TargetKind : System.IEquatable<Azure.AI.Language.Conversations.TargetKind>
