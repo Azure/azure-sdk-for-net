@@ -3,7 +3,6 @@
 
 using System;
 using System.IO;
-using Azure.Core.Pipeline;
 
 namespace Azure.Core
 {
