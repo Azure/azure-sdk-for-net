@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
@@ -13,43 +14,37 @@ using Azure.ResourceManager.WebPubSub.Models;
 
 namespace Azure.ResourceManager.WebPubSub
 {
-    public partial class SharedPrivateLinkData : IUtf8JsonSerializable
+    public partial class PrivateEndpointConnectionData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(GroupId))
+            if (Optional.IsDefined(PrivateEndpoint))
             {
-                writer.WritePropertyName("groupId");
-                writer.WriteStringValue(GroupId);
+                writer.WritePropertyName("privateEndpoint");
+                writer.WriteObjectValue(PrivateEndpoint);
             }
-            if (Optional.IsDefined(PrivateLinkResourceId))
+            if (Optional.IsDefined(PrivateLinkServiceConnectionState))
             {
-                writer.WritePropertyName("privateLinkResourceId");
-                writer.WriteStringValue(PrivateLinkResourceId);
-            }
-            if (Optional.IsDefined(RequestMessage))
-            {
-                writer.WritePropertyName("requestMessage");
-                writer.WriteStringValue(RequestMessage);
+                writer.WritePropertyName("privateLinkServiceConnectionState");
+                writer.WriteObjectValue(PrivateLinkServiceConnectionState);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
-        internal static SharedPrivateLinkData DeserializeSharedPrivateLinkData(JsonElement element)
+        internal static PrivateEndpointConnectionData DeserializePrivateEndpointConnectionData(JsonElement element)
         {
             Optional<SystemData> systemData = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<string> groupId = default;
-            Optional<string> privateLinkResourceId = default;
             Optional<ProvisioningState> provisioningState = default;
-            Optional<string> requestMessage = default;
-            Optional<SharedPrivateLinkStatus> status = default;
+            Optional<PrivateEndpoint> privateEndpoint = default;
+            Optional<IReadOnlyList<string>> groupIds = default;
+            Optional<PrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("systemData"))
@@ -86,16 +81,6 @@ namespace Azure.ResourceManager.WebPubSub
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("groupId"))
-                        {
-                            groupId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("privateLinkResourceId"))
-                        {
-                            privateLinkResourceId = property0.Value.GetString();
-                            continue;
-                        }
                         if (property0.NameEquals("provisioningState"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -106,26 +91,46 @@ namespace Azure.ResourceManager.WebPubSub
                             provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("requestMessage"))
-                        {
-                            requestMessage = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("status"))
+                        if (property0.NameEquals("privateEndpoint"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            status = new SharedPrivateLinkStatus(property0.Value.GetString());
+                            privateEndpoint = PrivateEndpoint.DeserializePrivateEndpoint(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("groupIds"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            groupIds = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("privateLinkServiceConnectionState"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            privateLinkServiceConnectionState = PrivateLinkServiceConnectionState.DeserializePrivateLinkServiceConnectionState(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new SharedPrivateLinkData(id, name, type, systemData, groupId.Value, privateLinkResourceId.Value, Optional.ToNullable(provisioningState), requestMessage.Value, Optional.ToNullable(status));
+            return new PrivateEndpointConnectionData(id, name, type, systemData, Optional.ToNullable(provisioningState), privateEndpoint.Value, Optional.ToList(groupIds), privateLinkServiceConnectionState.Value);
         }
     }
 }

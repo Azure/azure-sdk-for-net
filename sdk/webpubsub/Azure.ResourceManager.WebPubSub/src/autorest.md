@@ -12,6 +12,10 @@ skip-csproj: true
 namespace: Azure.ResourceManager.WebPubSub
 modelerfour:
   lenient-model-deduplication: true
+  naming:
+    override:
+      ACLAction: AclAction
+      SharedPrivateLinkResourceStatus: SharedPrivateLinkStatus
 model-namespace: false
 no-property-type-replacement: PrivateEndpoint
 list-exception:
@@ -28,9 +32,9 @@ directive:
   - rename-model:
       from: SharedPrivateLinkResourceProperties
       to: SharedPrivateLinkProperties 
-  - rename-model:
-      from: SharedPrivateLinkResourceStatus
-      to: SharedPrivateLinkStatus 
+  # - rename-model:
+  #     from: SharedPrivateLinkResourceStatus
+  #     to: SharedPrivateLinkStatus 
   - rename-model:
       from: sharedPrivateLinkResources
       to: sharedPrivateLinks 
@@ -40,9 +44,9 @@ directive:
   - from: swagger-document
     where: $.definitions.SharedPrivateLinkList
     transform: $.properties.value.items.$ref = "#/definitions/SharedPrivateLink" 
-  - from: swagger-document
-    where: $.definitions.SharedPrivateLinkProperties
-    transform: $.properties.status.$ref = "#/definitions/SharedPrivateLinkStatus" 
+  # - from: swagger-document
+  #   where: $.definitions.SharedPrivateLinkProperties
+  #   transform: $.properties.status.$ref = "#/definitions/SharedPrivateLinkStatus" 
   # - from: swagger-document
   #   where: $.definitions.SharedPrivateLinkStatus
   #   transform: $.x-ms-enum.name = "SharedPrivateLinkStatus" 
@@ -160,10 +164,10 @@ directive:
     transform: $.$ref = "#/definitions/WebPubSub"
  
   # Change ACLAction to AclAction
-  - rename-model:
-      from: ACLAction
-      to: AclAction
-  - from: swagger-document
-    where: $.definitions.WebPubSubNetworkACLs
-    transform: $.properties.defaultAction.$ref = "#/definitions/AclAction"
+  # - rename-model:
+  #     from: ACLAction
+  #     to: AclAction
+  # - from: swagger-document
+  #   where: $.definitions.WebPubSubNetworkACLs
+  #   transform: $.properties.defaultAction.$ref = "#/definitions/AclAction"
 ```
