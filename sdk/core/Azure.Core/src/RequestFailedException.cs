@@ -76,7 +76,7 @@ namespace Azure
         /// with an error message, HTTP status code, error code obtained from the specified response.</summary>
         /// <param name="response">The response to obtain error details from.</param>
         public RequestFailedException(Response response)
-            : this(response.Status, ResponseClassifier.GetErrorDetails(response))
+            : this(response.Status, GetErrorDetails(response))
         {
         }
 
@@ -86,6 +86,24 @@ namespace Azure
         {
             Status = info.GetInt32(nameof(Status));
             ErrorCode = info.GetString(nameof(ErrorCode));
+        }
+
+        private static (string Message, string? ErrorCode) GetErrorDetails(Response response)
+        {
+            string? message = null;
+            string? errorCode = null;
+
+            string? content = ClientDiagnostics.ReadContentAsync(response, false).EnsureCompleted();
+            ClientDiagnostics.ExtractAzureErrorContent(content, ref message, ref errorCode);
+            string exceptionMessage = ClientDiagnostics.CreateRequestFailedMessageWithContent(
+                response,
+                message,
+                content,
+                errorCode,
+                null,
+                response.Sanitizer!);
+
+            return (exceptionMessage, errorCode);
         }
 
         /// <inheritdoc />
