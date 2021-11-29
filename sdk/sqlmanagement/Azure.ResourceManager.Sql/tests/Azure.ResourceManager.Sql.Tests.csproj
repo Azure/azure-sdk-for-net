@@ -9,6 +9,7 @@
   </ItemGroup>
   
   <ItemGroup>
+    <Folder Include="NewFolder\" />
     <Folder Include="SessionRecords\ServerTrustGroupTests\" />
   </ItemGroup>
 </Project>

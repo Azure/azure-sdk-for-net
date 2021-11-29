@@ -6,12 +6,12 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-f8ecfa8d45e1684f8fad56a9928b7eda-1386792c43fa204b-00",
+        "traceparent": "00-dd4a339518951c409f92ecae939d41e3-e7762f5209483048-00",
         "User-Agent": [
           "azsdk-net-ResourceManager/1.0.0-beta.5",
           "(.NET Core 3.1.21; Microsoft Windows 10.0.22000)"
         ],
-        "x-ms-client-request-id": "282d1a8b31345ec17f3e19a1f6abd586",
+        "x-ms-client-request-id": "04b4d112eaad1ba70d3234b92ea82e8a",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -20,15 +20,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "468",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 23 Nov 2021 04:45:52 GMT",
+        "Date": "Fri, 26 Nov 2021 03:18:26 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "91605cbe-7da5-46a9-8d15-aa7933b5cd84",
+        "x-ms-correlation-request-id": "c523409a-1f61-49c9-9820-640c441b032f",
         "x-ms-ratelimit-remaining-subscription-reads": "11999",
-        "x-ms-request-id": "91605cbe-7da5-46a9-8d15-aa7933b5cd84",
-        "x-ms-routing-request-id": "KOREASOUTH:20211123T044552Z:91605cbe-7da5-46a9-8d15-aa7933b5cd84"
+        "x-ms-request-id": "c523409a-1f61-49c9-9820-640c441b032f",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20211126T031827Z:c523409a-1f61-49c9-9820-640c441b032f"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
@@ -50,7 +50,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/Sql-RG-1814?api-version=2019-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/Sql-RG-1833?api-version=2019-10-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -61,7 +61,7 @@
           "azsdk-net-ResourceManager/1.0.0-beta.5",
           "(.NET Core 3.1.21; Microsoft Windows 10.0.22000)"
         ],
-        "x-ms-client-request-id": "9c3eea863a727df8c75433f21c9f10c9",
+        "x-ms-client-request-id": "1d369184638ab612fff5e99ffadd0aaf",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -72,19 +72,19 @@
         "Cache-Control": "no-cache",
         "Content-Length": "220",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 23 Nov 2021 04:45:54 GMT",
+        "Date": "Fri, 26 Nov 2021 03:18:30 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "ce96001c-144f-46ea-b2c7-a0aa9838d6db",
+        "x-ms-correlation-request-id": "74d12c40-db86-4c40-8ce1-8ce743d9644a",
         "x-ms-ratelimit-remaining-subscription-writes": "1199",
-        "x-ms-request-id": "ce96001c-144f-46ea-b2c7-a0aa9838d6db",
-        "x-ms-routing-request-id": "KOREASOUTH:20211123T044554Z:ce96001c-144f-46ea-b2c7-a0aa9838d6db"
+        "x-ms-request-id": "74d12c40-db86-4c40-8ce1-8ce743d9644a",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20211126T031831Z:74d12c40-db86-4c40-8ce1-8ce743d9644a"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-1814",
-        "name": "Sql-RG-1814",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-1833",
+        "name": "Sql-RG-1833",
         "type": "Microsoft.Resources/resourceGroups",
         "location": "westus2",
         "properties": {
@@ -94,7 +94,7 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1377836194",
+    "RandomSeed": "145722673",
     "RESOURCE_MANAGER_URL": null,
     "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
   }

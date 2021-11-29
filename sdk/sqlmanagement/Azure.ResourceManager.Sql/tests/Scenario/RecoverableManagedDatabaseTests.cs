@@ -43,6 +43,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         }
 
         [Test]
+        [Ignore("issue:https://github.com/Azure/azure-rest-api-specs/issues/16850")]
         [RecordedTest]
         public async Task GetAll()
         {

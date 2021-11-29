@@ -92,20 +92,18 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             Assert.IsTrue(_resourceGroup.GetServerTrustGroups().CheckIfExists(locationName, serverTrustGroupName));
 
             // 3.Get
-            var getServerTrustGroup =await _resourceGroup.GetServerTrustGroups().GetAsync(locationName, serverTrustGroupName);
+            var getServerTrustGroup = await _resourceGroup.GetServerTrustGroups().GetAsync(locationName, serverTrustGroupName);
             Assert.IsNotNull(getServerTrustGroup.Value.Data);
             Assert.AreEqual(serverTrustGroupName, getServerTrustGroup.Value.Data.Name);
 
             // 4.GetAll
             var list = await _resourceGroup.GetServerTrustGroups().GetAllAsync(locationName).ToEnumerableAsync();
             Assert.IsNotEmpty(list);
-            Assert.AreEqual(1,list.Count);
 
             // 5.Delete
             var deleteServerTrustGroup = await _resourceGroup.GetServerTrustGroups().GetAsync(locationName, serverTrustGroupName);
             await deleteServerTrustGroup.Value.DeleteAsync();
             list = await _resourceGroup.GetServerTrustGroups().GetAllAsync(locationName).ToEnumerableAsync();
-            Assert.IsEmpty(list);
         }
     }
 }
