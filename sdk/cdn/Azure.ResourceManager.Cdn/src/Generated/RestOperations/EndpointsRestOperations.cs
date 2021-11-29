@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string resourceGroupName, string profileName, string endpointName, EndpointUpdateParameters endpointUpdateProperties)
+        internal HttpMessage CreateUpdateRequest(string resourceGroupName, string profileName, string endpointName, EndpointUpdateOptions endpointUpdateProperties)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="endpointUpdateProperties"> Endpoint update properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, or <paramref name="endpointUpdateProperties"/> is null. </exception>
-        public async Task<Response> UpdateAsync(string resourceGroupName, string profileName, string endpointName, EndpointUpdateParameters endpointUpdateProperties, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string resourceGroupName, string profileName, string endpointName, EndpointUpdateOptions endpointUpdateProperties, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="endpointUpdateProperties"> Endpoint update properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, or <paramref name="endpointUpdateProperties"/> is null. </exception>
-        public Response Update(string resourceGroupName, string profileName, string endpointName, EndpointUpdateParameters endpointUpdateProperties, CancellationToken cancellationToken = default)
+        public Response Update(string resourceGroupName, string profileName, string endpointName, EndpointUpdateOptions endpointUpdateProperties, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -701,7 +701,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal HttpMessage CreatePurgeContentRequest(string resourceGroupName, string profileName, string endpointName, PurgeParameters contentFilePaths)
+        internal HttpMessage CreatePurgeContentRequest(string resourceGroupName, string profileName, string endpointName, PurgeOptions contentFilePaths)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -735,7 +735,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="contentFilePaths"> The path to the content to be purged. Path can be a full URL, e.g. &apos;/pictures/city.png&apos; which removes a single file, or a directory with a wildcard, e.g. &apos;/pictures/*&apos; which removes all folders and files in the directory. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, or <paramref name="contentFilePaths"/> is null. </exception>
-        public async Task<Response> PurgeContentAsync(string resourceGroupName, string profileName, string endpointName, PurgeParameters contentFilePaths, CancellationToken cancellationToken = default)
+        public async Task<Response> PurgeContentAsync(string resourceGroupName, string profileName, string endpointName, PurgeOptions contentFilePaths, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -773,7 +773,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="contentFilePaths"> The path to the content to be purged. Path can be a full URL, e.g. &apos;/pictures/city.png&apos; which removes a single file, or a directory with a wildcard, e.g. &apos;/pictures/*&apos; which removes all folders and files in the directory. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, or <paramref name="contentFilePaths"/> is null. </exception>
-        public Response PurgeContent(string resourceGroupName, string profileName, string endpointName, PurgeParameters contentFilePaths, CancellationToken cancellationToken = default)
+        public Response PurgeContent(string resourceGroupName, string profileName, string endpointName, PurgeOptions contentFilePaths, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -804,7 +804,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal HttpMessage CreateLoadContentRequest(string resourceGroupName, string profileName, string endpointName, LoadParameters contentFilePaths)
+        internal HttpMessage CreateLoadContentRequest(string resourceGroupName, string profileName, string endpointName, LoadOptions contentFilePaths)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -838,7 +838,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="contentFilePaths"> The path to the content to be loaded. Path should be a full URL, e.g. ‘/pictures/city.png&apos; which loads a single file. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, or <paramref name="contentFilePaths"/> is null. </exception>
-        public async Task<Response> LoadContentAsync(string resourceGroupName, string profileName, string endpointName, LoadParameters contentFilePaths, CancellationToken cancellationToken = default)
+        public async Task<Response> LoadContentAsync(string resourceGroupName, string profileName, string endpointName, LoadOptions contentFilePaths, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -876,7 +876,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="contentFilePaths"> The path to the content to be loaded. Path should be a full URL, e.g. ‘/pictures/city.png&apos; which loads a single file. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, or <paramref name="contentFilePaths"/> is null. </exception>
-        public Response LoadContent(string resourceGroupName, string profileName, string endpointName, LoadParameters contentFilePaths, CancellationToken cancellationToken = default)
+        public Response LoadContent(string resourceGroupName, string profileName, string endpointName, LoadOptions contentFilePaths, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="originGroupUpdateProperties"/> is null. </exception>
-        public async virtual Task<OriginGroupUpdateOperation> UpdateAsync(OriginGroupUpdateParameters originGroupUpdateProperties, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<OriginGroupUpdateOperation> UpdateAsync(OriginGroupUpdateOptions originGroupUpdateProperties, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (originGroupUpdateProperties == null)
             {
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="originGroupUpdateProperties"/> is null. </exception>
-        public virtual OriginGroupUpdateOperation Update(OriginGroupUpdateParameters originGroupUpdateProperties, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual OriginGroupUpdateOperation Update(OriginGroupUpdateOptions originGroupUpdateProperties, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (originGroupUpdateProperties == null)
             {

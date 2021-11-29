@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointUpdateProperties"/> is null. </exception>
-        public async virtual Task<EndpointUpdateOperation> UpdateAsync(EndpointUpdateParameters endpointUpdateProperties, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<EndpointUpdateOperation> UpdateAsync(EndpointUpdateOptions endpointUpdateProperties, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (endpointUpdateProperties == null)
             {
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointUpdateProperties"/> is null. </exception>
-        public virtual EndpointUpdateOperation Update(EndpointUpdateParameters endpointUpdateProperties, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual EndpointUpdateOperation Update(EndpointUpdateOptions endpointUpdateProperties, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (endpointUpdateProperties == null)
             {
@@ -507,7 +507,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contentFilePaths"/> is null. </exception>
-        public async virtual Task<EndpointPurgeContentOperation> PurgeContentAsync(PurgeParameters contentFilePaths, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<EndpointPurgeContentOperation> PurgeContentAsync(PurgeOptions contentFilePaths, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (contentFilePaths == null)
             {
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contentFilePaths"/> is null. </exception>
-        public virtual EndpointPurgeContentOperation PurgeContent(PurgeParameters contentFilePaths, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual EndpointPurgeContentOperation PurgeContent(PurgeOptions contentFilePaths, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (contentFilePaths == null)
             {
@@ -565,7 +565,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contentFilePaths"/> is null. </exception>
-        public async virtual Task<EndpointLoadContentOperation> LoadContentAsync(LoadParameters contentFilePaths, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<EndpointLoadContentOperation> LoadContentAsync(LoadOptions contentFilePaths, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (contentFilePaths == null)
             {
@@ -594,7 +594,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contentFilePaths"/> is null. </exception>
-        public virtual EndpointLoadContentOperation LoadContent(LoadParameters contentFilePaths, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual EndpointLoadContentOperation LoadContent(LoadOptions contentFilePaths, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (contentFilePaths == null)
             {

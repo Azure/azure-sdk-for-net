@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="customDomainHttpsParameters"> The configuration specifying how to enable HTTPS for the custom domain - using CDN managed certificate or user&apos;s own certificate. If not specified, enabling ssl uses CDN managed certificate by default. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<CustomDomainEnableCustomHttpsOperation> EnableCustomHttpsAsync(CustomDomainHttpsParameters customDomainHttpsParameters = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<CustomDomainEnableCustomHttpsOperation> EnableCustomHttpsAsync(CustomDomainHttpsOptions customDomainHttpsParameters = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("CdnCustomDomain.EnableCustomHttps");
             scope.Start();
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="customDomainHttpsParameters"> The configuration specifying how to enable HTTPS for the custom domain - using CDN managed certificate or user&apos;s own certificate. If not specified, enabling ssl uses CDN managed certificate by default. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual CustomDomainEnableCustomHttpsOperation EnableCustomHttps(CustomDomainHttpsParameters customDomainHttpsParameters = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual CustomDomainEnableCustomHttpsOperation EnableCustomHttps(CustomDomainHttpsOptions customDomainHttpsParameters = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("CdnCustomDomain.EnableCustomHttps");
             scope.Start();

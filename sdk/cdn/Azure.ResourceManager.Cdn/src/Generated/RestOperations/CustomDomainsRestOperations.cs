@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string resourceGroupName, string profileName, string endpointName, string customDomainName, CustomDomainParameters customDomainProperties)
+        internal HttpMessage CreateCreateRequest(string resourceGroupName, string profileName, string endpointName, string customDomainName, CustomDomainOptions customDomainProperties)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="customDomainProperties"> Properties required to create a new custom domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, <paramref name="customDomainName"/>, or <paramref name="customDomainProperties"/> is null. </exception>
-        public async Task<Response> CreateAsync(string resourceGroupName, string profileName, string endpointName, string customDomainName, CustomDomainParameters customDomainProperties, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateAsync(string resourceGroupName, string profileName, string endpointName, string customDomainName, CustomDomainOptions customDomainProperties, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="customDomainProperties"> Properties required to create a new custom domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, <paramref name="customDomainName"/>, or <paramref name="customDomainProperties"/> is null. </exception>
-        public Response Create(string resourceGroupName, string profileName, string endpointName, string customDomainName, CustomDomainParameters customDomainProperties, CancellationToken cancellationToken = default)
+        public Response Create(string resourceGroupName, string profileName, string endpointName, string customDomainName, CustomDomainOptions customDomainProperties, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -572,7 +572,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal HttpMessage CreateEnableCustomHttpsRequest(string resourceGroupName, string profileName, string endpointName, string customDomainName, CustomDomainHttpsParameters customDomainHttpsParameters)
+        internal HttpMessage CreateEnableCustomHttpsRequest(string resourceGroupName, string profileName, string endpointName, string customDomainName, CustomDomainHttpsOptions customDomainHttpsParameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -612,7 +612,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="customDomainHttpsParameters"> The configuration specifying how to enable HTTPS for the custom domain - using CDN managed certificate or user&apos;s own certificate. If not specified, enabling ssl uses CDN managed certificate by default. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, or <paramref name="customDomainName"/> is null. </exception>
-        public async Task<Response> EnableCustomHttpsAsync(string resourceGroupName, string profileName, string endpointName, string customDomainName, CustomDomainHttpsParameters customDomainHttpsParameters = null, CancellationToken cancellationToken = default)
+        public async Task<Response> EnableCustomHttpsAsync(string resourceGroupName, string profileName, string endpointName, string customDomainName, CustomDomainHttpsOptions customDomainHttpsParameters = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -651,7 +651,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="customDomainHttpsParameters"> The configuration specifying how to enable HTTPS for the custom domain - using CDN managed certificate or user&apos;s own certificate. If not specified, enabling ssl uses CDN managed certificate by default. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, or <paramref name="customDomainName"/> is null. </exception>
-        public Response EnableCustomHttps(string resourceGroupName, string profileName, string endpointName, string customDomainName, CustomDomainHttpsParameters customDomainHttpsParameters = null, CancellationToken cancellationToken = default)
+        public Response EnableCustomHttps(string resourceGroupName, string profileName, string endpointName, string customDomainName, CustomDomainHttpsOptions customDomainHttpsParameters = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

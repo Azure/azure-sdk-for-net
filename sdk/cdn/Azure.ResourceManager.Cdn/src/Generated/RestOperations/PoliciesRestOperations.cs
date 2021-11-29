@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string resourceGroupName, string policyName, CdnWebApplicationFirewallPolicyPatchParameters cdnWebApplicationFirewallPolicyPatchParameters)
+        internal HttpMessage CreateUpdateRequest(string resourceGroupName, string policyName, CdnWebApplicationFirewallPolicyPatchOptions cdnWebApplicationFirewallPolicyPatchParameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cdnWebApplicationFirewallPolicyPatchParameters"> CdnWebApplicationFirewallPolicy parameters to be patched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="policyName"/>, or <paramref name="cdnWebApplicationFirewallPolicyPatchParameters"/> is null. </exception>
-        public async Task<Response> UpdateAsync(string resourceGroupName, string policyName, CdnWebApplicationFirewallPolicyPatchParameters cdnWebApplicationFirewallPolicyPatchParameters, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string resourceGroupName, string policyName, CdnWebApplicationFirewallPolicyPatchOptions cdnWebApplicationFirewallPolicyPatchParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cdnWebApplicationFirewallPolicyPatchParameters"> CdnWebApplicationFirewallPolicy parameters to be patched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="policyName"/>, or <paramref name="cdnWebApplicationFirewallPolicyPatchParameters"/> is null. </exception>
-        public Response Update(string resourceGroupName, string policyName, CdnWebApplicationFirewallPolicyPatchParameters cdnWebApplicationFirewallPolicyPatchParameters, CancellationToken cancellationToken = default)
+        public Response Update(string resourceGroupName, string policyName, CdnWebApplicationFirewallPolicyPatchOptions cdnWebApplicationFirewallPolicyPatchParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

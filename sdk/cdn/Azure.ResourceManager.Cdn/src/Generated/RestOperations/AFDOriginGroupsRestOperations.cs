@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string resourceGroupName, string profileName, string originGroupName, AfdOriginGroupUpdateParameters originGroupUpdateProperties)
+        internal HttpMessage CreateUpdateRequest(string resourceGroupName, string profileName, string originGroupName, AFDOriginGroupUpdateOptions originGroupUpdateProperties)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="originGroupUpdateProperties"> Origin group properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="originGroupName"/>, or <paramref name="originGroupUpdateProperties"/> is null. </exception>
-        public async Task<Response> UpdateAsync(string resourceGroupName, string profileName, string originGroupName, AfdOriginGroupUpdateParameters originGroupUpdateProperties, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string resourceGroupName, string profileName, string originGroupName, AFDOriginGroupUpdateOptions originGroupUpdateProperties, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="originGroupUpdateProperties"> Origin group properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="originGroupName"/>, or <paramref name="originGroupUpdateProperties"/> is null. </exception>
-        public Response Update(string resourceGroupName, string profileName, string originGroupName, AfdOriginGroupUpdateParameters originGroupUpdateProperties, CancellationToken cancellationToken = default)
+        public Response Update(string resourceGroupName, string profileName, string originGroupName, AFDOriginGroupUpdateOptions originGroupUpdateProperties, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="originUpdateProperties"/> is null. </exception>
-        public async virtual Task<AFDOriginUpdateOperation> UpdateAsync(AfdOriginUpdateParameters originUpdateProperties, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<AFDOriginUpdateOperation> UpdateAsync(AFDOriginUpdateOptions originUpdateProperties, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (originUpdateProperties == null)
             {
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="originUpdateProperties"/> is null. </exception>
-        public virtual AFDOriginUpdateOperation Update(AfdOriginUpdateParameters originUpdateProperties, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual AFDOriginUpdateOperation Update(AFDOriginUpdateOptions originUpdateProperties, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (originUpdateProperties == null)
             {

@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleUpdateProperties"/> is null. </exception>
-        public async virtual Task<RuleUpdateOperation> UpdateAsync(RuleUpdateParameters ruleUpdateProperties, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<RuleUpdateOperation> UpdateAsync(RuleUpdateOptions ruleUpdateProperties, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (ruleUpdateProperties == null)
             {
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleUpdateProperties"/> is null. </exception>
-        public virtual RuleUpdateOperation Update(RuleUpdateParameters ruleUpdateProperties, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual RuleUpdateOperation Update(RuleUpdateOptions ruleUpdateProperties, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (ruleUpdateProperties == null)
             {

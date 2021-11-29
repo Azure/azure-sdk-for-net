@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> or <paramref name="customDomainProperties"/> is null. </exception>
-        public virtual CustomDomainCreateOperation CreateOrUpdate(string customDomainName, CustomDomainParameters customDomainProperties, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual CustomDomainCreateOperation CreateOrUpdate(string customDomainName, CustomDomainOptions customDomainProperties, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (customDomainName == null)
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> or <paramref name="customDomainProperties"/> is null. </exception>
-        public async virtual Task<CustomDomainCreateOperation> CreateOrUpdateAsync(string customDomainName, CustomDomainParameters customDomainProperties, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<CustomDomainCreateOperation> CreateOrUpdateAsync(string customDomainName, CustomDomainOptions customDomainProperties, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (customDomainName == null)
             {

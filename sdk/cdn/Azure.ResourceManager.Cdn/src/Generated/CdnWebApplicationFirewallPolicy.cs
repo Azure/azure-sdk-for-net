@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cdnWebApplicationFirewallPolicyPatchParameters"/> is null. </exception>
-        public async virtual Task<PolicyUpdateOperation> UpdateAsync(CdnWebApplicationFirewallPolicyPatchParameters cdnWebApplicationFirewallPolicyPatchParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<PolicyUpdateOperation> UpdateAsync(CdnWebApplicationFirewallPolicyPatchOptions cdnWebApplicationFirewallPolicyPatchParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (cdnWebApplicationFirewallPolicyPatchParameters == null)
             {
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cdnWebApplicationFirewallPolicyPatchParameters"/> is null. </exception>
-        public virtual PolicyUpdateOperation Update(CdnWebApplicationFirewallPolicyPatchParameters cdnWebApplicationFirewallPolicyPatchParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual PolicyUpdateOperation Update(CdnWebApplicationFirewallPolicyPatchOptions cdnWebApplicationFirewallPolicyPatchParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (cdnWebApplicationFirewallPolicyPatchParameters == null)
             {

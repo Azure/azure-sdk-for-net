@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="profileUpdateParameters"/> is null. </exception>
-        public async virtual Task<ProfileUpdateOperation> UpdateAsync(ProfileUpdateParameters profileUpdateParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ProfileUpdateOperation> UpdateAsync(ProfileUpdateOptions profileUpdateParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (profileUpdateParameters == null)
             {
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="profileUpdateParameters"/> is null. </exception>
-        public virtual ProfileUpdateOperation Update(ProfileUpdateParameters profileUpdateParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ProfileUpdateOperation Update(ProfileUpdateOptions profileUpdateParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (profileUpdateParameters == null)
             {

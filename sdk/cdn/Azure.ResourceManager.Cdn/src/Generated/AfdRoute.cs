@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="routeUpdateProperties"/> is null. </exception>
-        public async virtual Task<RouteUpdateOperation> UpdateAsync(RouteUpdateParameters routeUpdateProperties, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<RouteUpdateOperation> UpdateAsync(RouteUpdateOptions routeUpdateProperties, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (routeUpdateProperties == null)
             {
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="routeUpdateProperties"/> is null. </exception>
-        public virtual RouteUpdateOperation Update(RouteUpdateParameters routeUpdateProperties, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual RouteUpdateOperation Update(RouteUpdateOptions routeUpdateProperties, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (routeUpdateProperties == null)
             {

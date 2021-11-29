@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string resourceGroupName, string profileName, ProfileUpdateParameters profileUpdateParameters)
+        internal HttpMessage CreateUpdateRequest(string resourceGroupName, string profileName, ProfileUpdateOptions profileUpdateParameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="profileUpdateParameters"> Profile properties needed to update an existing profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="profileUpdateParameters"/> is null. </exception>
-        public async Task<Response> UpdateAsync(string resourceGroupName, string profileName, ProfileUpdateParameters profileUpdateParameters, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string resourceGroupName, string profileName, ProfileUpdateOptions profileUpdateParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="profileUpdateParameters"> Profile properties needed to update an existing profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="profileUpdateParameters"/> is null. </exception>
-        public Response Update(string resourceGroupName, string profileName, ProfileUpdateParameters profileUpdateParameters, CancellationToken cancellationToken = default)
+        public Response Update(string resourceGroupName, string profileName, ProfileUpdateOptions profileUpdateParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

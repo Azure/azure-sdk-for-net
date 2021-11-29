@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string resourceGroupName, string profileName, string ruleSetName, string ruleName, RuleUpdateParameters ruleUpdateProperties)
+        internal HttpMessage CreateUpdateRequest(string resourceGroupName, string profileName, string ruleSetName, string ruleName, RuleUpdateOptions ruleUpdateProperties)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="ruleUpdateProperties"> Delivery rule properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="ruleSetName"/>, <paramref name="ruleName"/>, or <paramref name="ruleUpdateProperties"/> is null. </exception>
-        public async Task<Response> UpdateAsync(string resourceGroupName, string profileName, string ruleSetName, string ruleName, RuleUpdateParameters ruleUpdateProperties, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string resourceGroupName, string profileName, string ruleSetName, string ruleName, RuleUpdateOptions ruleUpdateProperties, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="ruleUpdateProperties"> Delivery rule properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="ruleSetName"/>, <paramref name="ruleName"/>, or <paramref name="ruleUpdateProperties"/> is null. </exception>
-        public Response Update(string resourceGroupName, string profileName, string ruleSetName, string ruleName, RuleUpdateParameters ruleUpdateProperties, CancellationToken cancellationToken = default)
+        public Response Update(string resourceGroupName, string profileName, string ruleSetName, string ruleName, RuleUpdateOptions ruleUpdateProperties, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
