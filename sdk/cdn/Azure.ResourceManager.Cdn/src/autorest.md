@@ -196,6 +196,10 @@ directive:
           if (key.startsWith('AFD')) {
               const newKey = key.replace('AFD', 'Afd');
               $[key]['x-ms-client-name'] = newKey
+              if (['AFDEndpointUpdateParameters', 'AFDOriginGroupUpdateParameters', 'AFDOriginUpdateParameters'].includes(key)) {
+                  const newerKey = newKey.replace('Parameters', 'Options');
+                  $[key]['x-ms-client-name'] = newerKey
+              }
           }
           if (key.startsWith('AFDDomain')) {
               const newKey = key.replace('AFDDomain', 'AfdCustomDomain');
@@ -213,7 +217,7 @@ directive:
               const newKey = 'Afd' + key;
               $[key]['x-ms-client-name'] = newKey
           }
-          if (['AFDEndpointUpdateParameters', 'AFDOriginGroupUpdateParameters', 'AFDOriginUpdateParameters', 'AfdPurgeParameters', 'CdnManagedHttpsParameters', 'CdnWebApplicationFirewallPolicyPatchParameters', 'CustomDomainHttpsParameters', 'CustomDomainParameters', 'EndpointUpdateParameters', 'LoadParameters', 'OriginGroupUpdateParameters', 'OriginUpdateParameters', 'ProfileUpdateParameters', 'PurgeParameters', 'RouteUpdateParameters', 'RuleUpdateParameters', 'UserManagedHttpsParameters'].includes(key)) {
+          if (['AfdPurgeParameters', 'CdnManagedHttpsParameters', 'CdnWebApplicationFirewallPolicyPatchParameters', 'CustomDomainHttpsParameters', 'CustomDomainParameters', 'EndpointUpdateParameters', 'LoadParameters', 'OriginGroupUpdateParameters', 'OriginUpdateParameters', 'ProfileUpdateParameters', 'PurgeParameters', 'RouteUpdateParameters', 'RuleUpdateParameters', 'UserManagedHttpsParameters'].includes(key)) {
               const newKey = key.replace('Parameters', 'Options');
               $[key]['x-ms-client-name'] = newKey
           }

@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
 
         public static ProfileData CreateAFDProfileData(SkuName skuName) => new ProfileData("Global", new Sku { Name = skuName });
 
-        public static EndpointData CreateEndpointData() => new EndpointData(Location.WestUS)
+        public static CdnEndpointData CreateEndpointData() => new CdnEndpointData(Location.WestUS)
         {
             IsHttpAllowed = true,
             IsHttpsAllowed = true,
             OptimizationType = OptimizationType.GeneralWebDelivery
         };
 
-        public static AFDEndpointData CreateAFDEndpointData() => new AFDEndpointData(Location.WestUS)
+        public static AfdEndpointData CreateAFDEndpointData() => new AfdEndpointData(Location.WestUS)
         {
             OriginResponseTimeoutSeconds = 60
         };
@@ -45,21 +45,21 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             }
         };
 
-        public static OriginData CreateOriginData() => new OriginData
+        public static CdnOriginData CreateOriginData() => new CdnOriginData
         {
             HostName = "testsa4dotnetsdk.blob.core.windows.net",
             Priority = 1,
             Weight = 150
         };
 
-        public static AFDOriginData CreateAFDOriginData() => new AFDOriginData
+        public static AfdOriginData CreateAFDOriginData() => new AfdOriginData
         {
             HostName = "testsa4dotnetsdk.blob.core.windows.net"
         };
 
-        public static OriginGroupData CreateOriginGroupData() => new OriginGroupData();
+        public static CdnOriginGroupData CreateOriginGroupData() => new CdnOriginGroupData();
 
-        public static AFDOriginGroupData CreateAFDOriginGroupData() => new AFDOriginGroupData
+        public static AfdOriginGroupData CreateAFDOriginGroupData() => new AfdOriginGroupData
         {
             HealthProbeSettings = new HealthProbeParameters
             {
@@ -76,15 +76,15 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             }
         };
 
-        public static CustomDomainParameters CreateCustomDomainParameters(string hostName) => new CustomDomainParameters
+        public static CustomDomainOptions CreateCustomDomainParameters(string hostName) => new CustomDomainOptions
         {
             HostName = hostName
         };
 
-        public static AFDCustomDomainData CreateAFDCustomDomainData(string hostName) => new AFDCustomDomainData
+        public static AfdCustomDomainData CreateAFDCustomDomainData(string hostName) => new AfdCustomDomainData
         {
             HostName = hostName,
-            TlsSettings = new AFDDomainHttpsParameters(AfdCertificateType.ManagedCertificate)
+            TlsSettings = new AfdCustomDomainHttpsParameters(AfdCertificateType.ManagedCertificate)
             {
                 MinimumTlsVersion = AfdMinimumTlsVersion.TLS12
             },
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             }
         };
 
-        public static RuleData CreateRuleData() => new RuleData
+        public static AfdRuleData CreateRuleData() => new AfdRuleData
         {
             Order = 1
         };
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             CacheDuration = "00:00:30"
         });
 
-        public static RouteData CreateRouteData(AFDOriginGroup originGroup) => new RouteData
+        public static AfdRouteData CreateRouteData(AfdOriginGroup originGroup) => new AfdRouteData
         {
             OriginGroup = new WritableSubResource
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             EnabledState = EnabledState.Enabled
         };
 
-        public static SecurityPolicyData CreateSecurityPolicyData(AFDEndpoint endpoint) => new SecurityPolicyData
+        public static AfdSecurityPolicyData CreateSecurityPolicyData(AfdEndpoint endpoint) => new AfdSecurityPolicyData
         {
             Parameters = new SecurityPolicyWebApplicationFirewallParameters
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             }
         };
 
-        public static SecretData CreateSecretData() => new SecretData
+        public static AfdSecretData CreateSecretData() => new AfdSecretData
         {
             Parameters = new CustomerCertificateParameters(new WritableSubResource
             {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             Assert.AreEqual(model.Data.FrontdoorId, getResult.Data.FrontdoorId);
         }
 
-        public static void AssertProfileUpdate(Profile updatedProfile, ProfileUpdateParameters updateParameters)
+        public static void AssertProfileUpdate(Profile updatedProfile, ProfileUpdateOptions updateParameters)
         {
             Assert.AreEqual(updatedProfile.Data.Tags.Count, updateParameters.Tags.Count);
             foreach (var kv in updatedProfile.Data.Tags)
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             }
         }
 
-        public static void AssertValidEndpoint(Endpoint model, Endpoint getResult)
+        public static void AssertValidEndpoint(CdnEndpoint model, CdnEndpoint getResult)
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
@@ -188,14 +188,14 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             //Todo: ContentTypesToCompress, GeoFilters, DefaultOriginGroup, UrlSigningKeys, DeliveryPolicy, WebApplicationFirewallPolicyLink, Origins, OriginGroups
         }
 
-        public static void AssertEndpointUpdate(Endpoint updatedEndpoint, EndpointUpdateParameters updateParameters)
+        public static void AssertEndpointUpdate(CdnEndpoint updatedEndpoint, EndpointUpdateOptions updateParameters)
         {
             Assert.AreEqual(updatedEndpoint.Data.IsHttpAllowed, updateParameters.IsHttpAllowed);
             Assert.AreEqual(updatedEndpoint.Data.OriginPath, updateParameters.OriginPath);
             Assert.AreEqual(updatedEndpoint.Data.OriginHostHeader, updateParameters.OriginHostHeader);
         }
 
-        public static void AssertValidAFDEndpoint(AFDEndpoint model, AFDEndpoint getResult)
+        public static void AssertValidAFDEndpoint(AfdEndpoint model, AfdEndpoint getResult)
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             Assert.AreEqual(model.Data.HostName, getResult.Data.HostName);
         }
 
-        public static void AssertAFDEndpointUpdate(AFDEndpoint updatedAFDEndpoint, AFDEndpointUpdateParameters updateParameters)
+        public static void AssertAFDEndpointUpdate(AfdEndpoint updatedAFDEndpoint, AFDEndpointUpdateOptions updateParameters)
         {
             Assert.AreEqual(updatedAFDEndpoint.Data.OriginResponseTimeoutSeconds, updateParameters.OriginResponseTimeoutSeconds);
             Assert.AreEqual(updatedAFDEndpoint.Data.Tags.Count, updateParameters.Tags.Count);

@@ -6,7 +6,7 @@
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The json object that contains properties required to create a security policy. </summary>
-    public partial class SecurityPolicyProperties : AFDStateProperties
+    public partial class SecurityPolicyProperties : AfdStateProperties
     {
         /// <summary> Initializes a new instance of SecurityPolicyProperties. </summary>
         public SecurityPolicyProperties()
