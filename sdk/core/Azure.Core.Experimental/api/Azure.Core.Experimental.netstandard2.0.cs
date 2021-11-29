@@ -96,3 +96,11 @@ namespace Azure.Messaging
         public abstract bool IsReadOnly { get; }
     }
 }
+namespace Azure.Messaging
+{
+    public partial interface IMessageWithContentType
+    {
+        string ContentType { get; set; }
+        System.BinaryData Data { get; set; }
+    }
+}

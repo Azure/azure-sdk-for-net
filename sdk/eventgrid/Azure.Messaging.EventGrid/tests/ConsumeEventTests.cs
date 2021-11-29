@@ -447,7 +447,7 @@ namespace Azure.Messaging.EventGrid.Tests
 
             Assert.NotNull(events);
             Assert.True(events[0].TryGetSystemEventData(out object eventData));
-            Assert.AreEqual("AzureBlockBlob", (eventData as EventHubCaptureFileCreatedEventData).FileType);
+            Assert.AreEqual("AzureBlockBlob", (eventData as EventHubCaptureFileCreatedEventData).Fileurl);
         }
         #endregion
 
