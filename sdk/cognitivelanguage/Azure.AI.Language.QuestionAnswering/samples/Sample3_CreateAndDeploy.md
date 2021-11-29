@@ -125,25 +125,6 @@ foreach (BinaryData deployment in deployments)
 }
 ```
 
-### Delete a Project
-
-If you wish to delete a project, you can simply call the `DeleteProject()` method as follows:
-
-```C# Snippet:QuestionAnsweringProjectsClient_DeleteProject
-Operation<BinaryData> deletionOperation = client.DeleteProject(newProjectName);
-while (true)
-{
-    deletionOperation.UpdateStatus();
-    if (deletionOperation.HasCompleted)
-    {
-        Console.WriteLine($"Delete operation value: \n{deletionOperation.Value}");
-        break;
-    }
-
-    Thread.Sleep(pollingInterval);
-}
-```
-
 ## Asynchronous
 
 ### Creating a Project
@@ -232,11 +213,4 @@ await foreach (BinaryData deployment in deployments)
 {
     Console.WriteLine(deployment);
 }
-```
-
-### Delete a Project
-
-```C# Snippet:QuestionAnsweringProjectsClient_DeleteProjectAsync
-Operation<BinaryData> deletionOperation = await client.DeleteProjectAsync(newProjectName);
-await deletionOperation.WaitForCompletionAsync();
 ```
