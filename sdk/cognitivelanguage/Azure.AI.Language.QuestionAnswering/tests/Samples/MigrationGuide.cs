@@ -18,7 +18,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
         private async Task CognitiveServices_QnA_MigrationGuide_Authoring()
         {
             #region Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_CreateClient
-            QnAMakerClient client = new QnAMakerClient(new ApiKeyServiceClientCredentials("<QnAMakerSubscriptionKey>"), new HttpClient(), false)
+            QnAMakerClient client = new QnAMakerClient(new ApiKeyServiceClientCredentials("{QnAMakerSubscriptionKey}"), new HttpClient(), false)
             {
                 Endpoint = "https://westus.api.cognitive.microsoft.com"
             };
@@ -41,8 +41,8 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             });
             #endregion Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_CreateKnowledgeBase
 
-            #region Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_UpdateKnowledeBase
-            Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models.Operation updateOp = await client.Knowledgebase.UpdateAsync("<KnowledgeBaseID>",
+            #region Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_UpdateKnowledgeBase
+            Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models.Operation updateOp = await client.Knowledgebase.UpdateAsync("{KnowledgeBaseID}",
                 new UpdateKbOperationDTO
                 {
                     Add = new UpdateKbOperationDTOAdd
@@ -60,15 +60,15 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                         }
                     }
                 });
-            #endregion Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_UpdateKnowledeBase
+            #endregion Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_UpdateKnowledgeBase
 
-            #region Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_DownloadKnowledeBase
-            QnADocumentsDTO kbdata = await client.Knowledgebase.DownloadAsync("<KnowledgeBaseID>", EnvironmentType.Test);
-            #endregion Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_UpdateKnowledeBase
+            #region Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_DownloadKnowledgeBase
+            QnADocumentsDTO kbdata = await client.Knowledgebase.DownloadAsync("{KnowledgeBaseID}", EnvironmentType.Test);
+            #endregion Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_UpdateKnowledgeBase
 
-            #region Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_DeleteKnowledeBase
-            await client.Knowledgebase.DeleteAsync("<KnowledgeBaseID>");
-            #endregion Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_DeleteKnowledeBase
+            #region Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_DeleteKnowledgeBase
+            await client.Knowledgebase.DeleteAsync("{KnowledgeBaseID}");
+            #endregion Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_DeleteKnowledgeBase
 
         }
 
@@ -81,7 +81,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             QuestionAnsweringProjectsClient client = new QuestionAnsweringProjectsClient(endpoint, credential);
             #endregion Snippet:Language_QnA_Maker_Snippets_MigrationGuide_CreateClient
 
-            #region Snippet:Language_QnA_Maker_Snippets_MigrationGuide_CreateKnowledgeBase
+            #region Snippet:Language_QnA_Maker_Snippets_MigrationGuide_CreateProject
             string newProjectName = "testqna";
             RequestContent creationRequestContent = RequestContent.Create(
                 new {
@@ -96,17 +96,59 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                 );
 
             Response creationResponse = await client.CreateProjectAsync(newProjectName, creationRequestContent);
-            #endregion Snippet:Language_QnA_Maker_Snippets_MigrationGuide_CreateKnowledgeBase
+            #endregion Snippet:Language_QnA_Maker_Snippets_MigrationGuide_CreateProject
 
-            #region Snippet:Language_QnA_Maker_Snippets_MigrationGuide_UpdateKnowledeBase
+            #region Snippet:Language_QnA_Maker_Snippets_MigrationGuide_UpdateKnowledgeSource
+            string sourceUri = "{SourceURI}";
+            RequestContent updateSourcesRequestContent = RequestContent.Create(
+                new[] {
+                    new {
+                            op = "add",
+                            value = new
+                            {
+                                displayName = "MicrosoftFAQ",
+                                source = sourceUri,
+                                sourceUri = sourceUri,
+                                sourceKind = "url",
+                                contentStructureKind = "unstructured",
+                                refresh = false
+                            }
+                        }
+                });
 
-            #endregion Snippet:Language_QnA_Maker_Snippets_MigrationGuide_UpdateKnowledeBase
+            Operation<BinaryData> updateSourcesOperation = await client.UpdateSourcesAsync("{ProjectName}", updateSourcesRequestContent);
+            Response<BinaryData> updateSourcesOperationResult = await updateSourcesOperation.WaitForCompletionAsync();
+            #endregion Snippet:Language_QnA_Maker_Snippets_MigrationGuide_UpdateKnowledgeSource
 
-            // export project
+            #region Snippet:Language_QnA_Maker_Snippets_MigrationGuide_UpdateQnas
+            RequestContent updateQnasRequestContent = RequestContent.Create(
+                new[] {
+                    new {
+                            op = "add",
+                            value = new
+                            {
+                                questions = new[]
+                                    {
+                                        "What is the easiest way to use Azure services in my .NET project?"
+                                    },
+                                answer = "Refer to the Azure SDKs"
+                            }
+                        }
+                });
 
-            #region Snippet:Language_QnA_Maker_Snippets_MigrationGuide_DeleteKnowledeBase
+            Operation<BinaryData> updateQnasOperation = await client.UpdateQnasAsync("{ProjectName}", updateQnasRequestContent);
+            Response<BinaryData> updateQnasResult = await updateQnasOperation.WaitForCompletionAsync();
+            #endregion Snippet:Language_QnA_Maker_Snippets_MigrationGuide_UpdateQnas
 
-            #endregion Snippet:Language_QnA_Maker_Snippets_MigrationGuide_DeleteKnowledeBase
+            #region Snippet:Language_QnA_Maker_Snippets_MigrationGuide_ExportProject
+            Operation<BinaryData> exportOperation = client.Export("{ProjectName}", "{ExportFormat}");
+            Response<BinaryData> exportResult = await exportOperation.WaitForCompletionAsync();
+            #endregion Snippet:Language_QnA_Maker_Snippets_MigrationGuide_ExportProject
+
+            #region Snippet:Language_QnA_Maker_Snippets_MigrationGuide_DeleteProject
+            Operation<BinaryData> deletionOperation = await client.DeleteProjectAsync("{ProjectName}");
+            Response<BinaryData> deleteResult = await deletionOperation.WaitForCompletionAsync();
+            #endregion Snippet:Language_QnA_Maker_Snippets_MigrationGuide_DeleteProject
         }
 
         private async Task Language_QnA_MigrationGuide_Runtime()
@@ -154,14 +196,14 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             QueryDTO queryDTO = new QueryDTO();
             queryDTO.Question = "{question}";
 
-            QnASearchResultList response = await client.Runtime.GenerateAnswerAsync("{knowladgebase-id}", queryDTO);
+            QnASearchResultList response = await client.Runtime.GenerateAnswerAsync("{knowledgebase-id}", queryDTO);
             #endregion Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_QueryKnowledgeBase
 
             #region Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_Chat
             QueryDTO queryDTOFollowUp = new QueryDTO();
             queryDTOFollowUp.Context = new QueryDTOContext(previousQnaId: 1);
 
-            QnASearchResultList responseFollowUp = await client.Runtime.GenerateAnswerAsync("{knowladgebase-id}", queryDTO);
+            QnASearchResultList responseFollowUp = await client.Runtime.GenerateAnswerAsync("{knowledgebase-id}", queryDTO);
             #endregion Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_Chat
         }
     }
