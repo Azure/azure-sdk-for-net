@@ -187,7 +187,156 @@ namespace Azure.Communication.CallingServer.Tests
 
             try
             {
-                string userId = GetFixedUserId("0000000d-5a5f-2db9-ccd7-44482200049a");
+                string userId = GetFixedUserId(TestEnvironment.UserIdentifier);
+
+                // Add Participant
+                await SleepIfNotInPlaybackModeAsync().ConfigureAwait(false);
+                AddParticipantResult addParticipantResult = await AddParticipantOperation(callConnection, userId).ConfigureAwait(false);
+                Assert.NotNull(addParticipantResult);
+
+                // Get Call
+                await SleepIfNotInPlaybackModeAsync().ConfigureAwait(false);
+                var getCallConnection = await GetCallOperation(callConnection).ConfigureAwait(false);
+                Assert.AreEqual(getCallConnection.CallConnectionId, callConnection.Value.CallConnectionId);
+
+                // Hold Participant
+                await SleepIfNotInPlaybackModeAsync().ConfigureAwait(false);
+                await HoldParticipantOperation(callConnection, userId).ConfigureAwait(false);
+
+                // Resume Participant
+                await SleepIfNotInPlaybackModeAsync().ConfigureAwait(false);
+                await ResumeParticipantOperation(callConnection, userId).ConfigureAwait(false);
+
+                // Remove Participant
+                await SleepIfNotInPlaybackModeAsync().ConfigureAwait(false);
+                await RemoveParticipantOperation(callConnection, userId).ConfigureAwait(false);
+            }
+            catch (RequestFailedException ex)
+            {
+                Console.WriteLine(ex.Message);
+                Assert.Fail($"Unexpected error: {ex}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Assert.Fail($"Unexpected error: {ex}");
+            }
+            finally
+            {
+                // Hang up the Call, there is one call leg in this test case, hangup the call will also delete the call as the result.
+                await SleepIfNotInPlaybackModeAsync().ConfigureAwait(false);
+                await HangupOperation(callConnection).ConfigureAwait(false);
+            }
+        }
+
+        [Test]
+        public async Task RunCreateKeepAliveHangupScenarioTests()
+        {
+            if (SkipCallingServerInteractionLiveTests)
+                Assert.Ignore("Skip callingserver interaction live tests flag is on.");
+
+            CallingServerClient client = CreateInstrumentedCallingServerClientWithConnectionString();
+
+            // Establish a call
+            var callConnection = await CreateCallConnectionOperation(client).ConfigureAwait(false);
+
+            try
+            {
+                // Keep Alive
+                await SleepIfNotInPlaybackModeAsync().ConfigureAwait(false);
+                await KeepAliveOperation(callConnection).ConfigureAwait(false);
+
+                // Delete Call
+                await SleepIfNotInPlaybackModeAsync().ConfigureAwait(false);
+                await DeleteCallOperation(callConnection).ConfigureAwait(false);
+            }
+            catch (RequestFailedException ex)
+            {
+                Console.WriteLine(ex.Message);
+                Assert.Fail($"Unexpected error: {ex}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Assert.Fail($"Unexpected error: {ex}");
+            }
+        }
+
+        [Test]
+        public async Task RunCreateTransferToParticipantHangupScenarioTests()
+        {
+            if (SkipCallingServerInteractionLiveTests)
+                Assert.Ignore("Skip callingserver interaction live tests flag is on.");
+
+            CallingServerClient client = CreateInstrumentedCallingServerClientWithConnectionString();
+
+            // Establish a call
+            var callConnection = await CreateCallConnectionOperation(client).ConfigureAwait(false);
+
+            try
+            {
+                string targetParticipant = GetFixedUserId(TestEnvironment.UserIdentifier);
+
+                // Transfer Call
+                await SleepIfNotInPlaybackModeAsync().ConfigureAwait(false);
+                await TransferCallToParticipantOperation(callConnection, targetParticipant).ConfigureAwait(false);
+            }
+            catch (RequestFailedException ex)
+            {
+                Console.WriteLine(ex.Message);
+                Assert.Fail($"Unexpected error: {ex}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Assert.Fail($"Unexpected error: {ex}");
+            }
+        }
+
+        [Test]
+        public async Task RunCreateTransferCallHangupScenarioTests()
+        {
+            if (SkipCallingServerInteractionLiveTests)
+                Assert.Ignore("Skip callingserver interaction live tests flag is on.");
+
+            CallingServerClient client = CreateInstrumentedCallingServerClientWithConnectionString();
+
+            // Establish a call
+            var callConnection = await CreateCallConnectionOperation(client).ConfigureAwait(false);
+
+            try
+            {
+                string targetCallConnectionId = TestEnvironment.TargetCallConnectionIdentifier;
+
+                // Transfer Call
+                await SleepIfNotInPlaybackModeAsync().ConfigureAwait(false);
+                var transferCallResult = await TransferCallOperation(callConnection, targetCallConnectionId).ConfigureAwait(false);
+            }
+            catch (RequestFailedException ex)
+            {
+                Console.WriteLine(ex.Message);
+                Assert.Fail($"Unexpected error: {ex}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Assert.Fail($"Unexpected error: {ex}");
+            }
+        }
+
+        public async Task RunCreateAddPlayAudioToParticipantRemoveHangupScenarioTests()
+        {
+            if (SkipCallingServerInteractionLiveTests)
+                Assert.Ignore("Skip callingserver interaction live tests flag is on.");
+
+            CallingServerClient client = CreateInstrumentedCallingServerClientWithConnectionString();
+
+            // Establish a call
+            var callConnection = await CreateCallConnectionOperation(client).ConfigureAwait(false);
+
+            try
+            {
+                string userId = GetFixedUserId(TestEnvironment.UserIdentifier);
 
                 // Add Participant
                 await SleepIfNotInPlaybackModeAsync().ConfigureAwait(false);
