@@ -98,7 +98,7 @@ namespace Compute.Tests
                     Assert.NotNull(getInstanceViewResponse);
                     ValidateVMScaleSetInstanceView(inputVMScaleSet, getInstanceViewResponse);
 
-                    m_CrpClient.VirtualMachineScaleSets.Delete(rgName, vmssName);
+                    //m_CrpClient.VirtualMachineScaleSets.Delete(rgName, vmssName);
                 }
                 finally
                 {
@@ -391,7 +391,7 @@ namespace Compute.Tests
                     };
 
                     var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
-                    m_CrpClient.VirtualMachineScaleSets.Delete(rgName, "VMScaleSetDoesNotExist");
+                    //m_CrpClient.VirtualMachineScaleSets.Delete(rgName, "VMScaleSetDoesNotExist");
 
                     var getResponse = CreateVMScaleSet_NoAsyncTracking(
                         rgName,
