@@ -109,6 +109,14 @@ namespace Microsoft.Azure.Batch
             this.IdentityReference = identityReference;
         }
 
+        /// <summary>
+        /// Default constructor to support mocking the <see cref="AzureBlobFileSystemConfiguration"/> class.
+        /// </summary>
+        protected AzureBlobFileSystemConfiguration()
+        {
+            this.propertyContainer = new PropertyContainer();
+        }
+
         internal AzureBlobFileSystemConfiguration(Models.AzureBlobFileSystemConfiguration protocolObject)
         {
             this.propertyContainer = new PropertyContainer(protocolObject);

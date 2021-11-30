@@ -43,7 +43,6 @@
     "sdk/objectanchors/*/api/*.cs",
     "sdk/purview/*/api/*.cs",
     "sdk/remoterendering/*/api/*.cs",
-    "sdk/sqlmanagement/*/api/*.cs",
     "sdk/synapse/*/api/*.cs",
     "sdk/videoanalyzer/*/api/*.cs"
   ],
@@ -120,35 +119,44 @@
       ]
     },
     {
+      "filename": "**/sdk/deviceupdate/**/*.cs",
+      "words": ["Fqdns"]
+    },
+    {
       "filename": "**/sdk/formrecognizer/**/*.cs",
       "words": ["ZhHant"]
     },
     {
       "filename": "**/sdk/network/**/*.cs",
       "words": [
+        "Azfw",
+        "Conditon",
         "Ddos",
         "ddos",
+        "Dnat",
         "Dscp",
         "dscp",
-        "Mbps",
-        "Snat",
-        "Nics",
-        "Fqdns",
-        "Unprepare",
-        "Skus",
-        "WAFV",
         "Eapmscha",
         "Eaptls",
-        "TLSDHEDSS", 
-        "TLSDHERSA",
-        "Dnat",
-        "Azfw",
-        "Vxlan",
+        "Fqdns",
+        "Gcmaes",
         "Ipconfiguration",
+        "Mbps",
+        "Nics",
         "Owasp",
-        "Conditon",
         "Pfsmm",
-        "Sstp"
+        "Snat",
+        "Skus",
+        "Sstp",
+        "TLSDHEDSS",
+        "TLSDHERSA",
+        "Unprepare",
+        "Vmss",
+        "vmssip",
+        "Vnets",
+        "Vxlan",
+        "WAFV",
+        "Wans"
       ]
     },
     {
@@ -168,10 +176,20 @@
       "words": ["Puid"]
     },
     {
+      "filename": "**/sdk/sqlmanagement/**/*.cs",
+      "words": [
+        "Droppeded",
+        "CIAS",
+        "Vcores",
+        "Unrestorable"
+      ]
+    },
+    {
       "filename": "**/sdk/search/**/*.cs",
       "words": [
         "Adls",
         "Bangla",
+        "Beider",
         "Bokmaal",
         "Cyrl",
         "Decompounder",
@@ -187,7 +205,8 @@
         "Rslp",
         "Soundex",
         "Sorani",
-        "Unprocessable"
+        "Unprocessable",
+        "Beider"
       ]
     },
     {

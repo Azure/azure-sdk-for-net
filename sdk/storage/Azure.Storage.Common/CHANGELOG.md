@@ -1,6 +1,9 @@
 # Release History
 
-## 12.10.0-beta.1 (Unreleased)
+## 12.10.0-beta.2 (2021-11-29)
+- This release contains bug fixes to improve quality.
+
+## 12.10.0-beta.1 (2021-11-03)
 - Added support for SDK-calculated transactional hash checksums on data transfer.
 - This release contains bug fixes to improve quality.
 

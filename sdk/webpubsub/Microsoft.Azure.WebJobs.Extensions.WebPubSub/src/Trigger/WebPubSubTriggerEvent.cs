@@ -15,9 +15,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         /// </summary>
         public WebPubSubConnectionContext ConnectionContext { get; set; }
 
-        public BinaryData Message { get; set; }
+        public BinaryData Data { get; set; }
 
-        public MessageDataType DataType { get; set; }
+        public WebPubSubDataType DataType { get; set; }
 
         public IList<string> Subprotocols { get; set; }
 

@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// managed HSM Pool should be created.</param>
         /// <param name="sku">SKU details</param>
         /// <param name="tags">Resource tags</param>
-        public ManagedHsmResource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), ManagedHsmSku sku = default(ManagedHsmSku), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public ManagedHsmResource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), ManagedHsmSku sku = default(ManagedHsmSku), IDictionary<string, string> tags = default(IDictionary<string, string>), SystemData systemData = default(SystemData))
         {
             Id = id;
             Name = name;
@@ -50,6 +50,7 @@ namespace Microsoft.Azure.Management.KeyVault.Models
             Location = location;
             Sku = sku;
             Tags = tags;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -95,6 +96,11 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; set; }
 
         /// <summary>
         /// Validate the object.

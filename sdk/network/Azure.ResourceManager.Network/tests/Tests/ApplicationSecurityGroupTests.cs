@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Network.Tests
             // patch
             var tags = new TagsObject();
             tags.Tags.Add("tag2", "value2");
-            applicationSecurityGroupData = (await applicationSecurityGroupResponse.Value.UpdateTagsAsync(tags)).Value.Data;
+            applicationSecurityGroupData = (await applicationSecurityGroupResponse.Value.UpdateAsync(tags)).Value.Data;
 
             ValidateCommon(applicationSecurityGroupData, name);
             Assert.That(applicationSecurityGroupData.Tags, Has.Count.EqualTo(1));

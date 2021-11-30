@@ -10,16 +10,16 @@
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.8.4300.0",
+          "FxVersion/5.0.1121.47308",
           "OSName/Windows",
-          "OSVersion/10.0.19042.0",
-          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/7.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/7.1.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "150"
+          "148"
         ]
       },
       "ResponseHeaders": {
@@ -27,19 +27,19 @@
           "CognitiveServices.ComputerVision.Describe=1,CognitiveServices.ComputerVision.Transaction=1"
         ],
         "x-envoy-upstream-service-time": [
-          "476"
+          "411"
         ],
         "apim-request-id": [
-          "1d1cd36c-42ba-4a27-92ff-1fd87bd57f62"
+          "29e40acc-c9d9-43c2-bea6-4acdd6328506"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
         ],
-        "x-content-type-options": [
+        "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 24 Mar 2021 06:45:01 GMT"
+          "Thu, 04 Nov 2021 04:51:42 GMT"
         ],
         "Content-Length": [
           "429"
@@ -48,7 +48,7 @@
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"description\": {\r\n    \"tags\": [\r\n      \"犬\",\r\n      \"屋外\",\r\n      \"座る\",\r\n      \"動物\",\r\n      \"哺乳類\",\r\n      \"探す\",\r\n      \"茶色\",\r\n      \"ベンチ\",\r\n      \"フロント\",\r\n      \"木製\",\r\n      \"大きい\",\r\n      \"小さい\",\r\n      \"立つ\",\r\n      \"閉じる\",\r\n      \"テーブル\",\r\n      \"オレンジ\",\r\n      \"横たわる\",\r\n      \"公園\",\r\n      \"頭\"\r\n    ],\r\n    \"captions\": [\r\n      {\r\n        \"text\": \"犬の顔\",\r\n        \"confidence\": 0.79938099007893149\r\n      }\r\n    ]\r\n  },\r\n  \"requestId\": \"1d1cd36c-42ba-4a27-92ff-1fd87bd57f62\",\r\n  \"metadata\": {\r\n    \"height\": 599,\r\n    \"width\": 455,\r\n    \"format\": \"Jpeg\"\r\n  },\r\n  \"modelVersion\": \"2021-04-01\"\r\n}",
+      "ResponseBody": "{\r\n  \"description\": {\r\n    \"tags\": [\r\n      \"犬\",\r\n      \"屋外\",\r\n      \"座る\",\r\n      \"動物\",\r\n      \"哺乳類\",\r\n      \"探す\",\r\n      \"茶色\",\r\n      \"ベンチ\",\r\n      \"フロント\",\r\n      \"木製\",\r\n      \"大きい\",\r\n      \"小さい\",\r\n      \"立つ\",\r\n      \"閉じる\",\r\n      \"テーブル\",\r\n      \"オレンジ\",\r\n      \"横たわる\",\r\n      \"公園\",\r\n      \"頭\"\r\n    ],\r\n    \"captions\": [\r\n      {\r\n        \"text\": \"犬の顔\",\r\n        \"confidence\": 0.7993810249143286\r\n      }\r\n    ]\r\n  },\r\n  \"requestId\": \"29e40acc-c9d9-43c2-bea6-4acdd6328506\",\r\n  \"metadata\": {\r\n    \"height\": 599,\r\n    \"width\": 455,\r\n    \"format\": \"Jpeg\"\r\n  },\r\n  \"modelVersion\": \"2021-05-01\"\r\n}",
       "StatusCode": 200
     }
   ],

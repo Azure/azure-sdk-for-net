@@ -2479,6 +2479,23 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2021_02_12)]
+        public async Task ListBlobsFlatSegmentAsync_EncodedBlobName()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            string blobName = "dir1/dir2/file\uFFFF.blob";
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
+            await blob.CreateAsync();
+
+            // Act
+            BlobItem blobItem = await test.Container.GetBlobsAsync().FirstAsync();
+
+            // Assert
+            Assert.AreEqual(blobName, blobItem.Name);
+        }
+
+        [RecordedTest]
         [PlaybackOnly("Service bug - https://github.com/Azure/azure-sdk-for-net/issues/16516")]
         public async Task ListBlobsHierarchySegmentAsync()
         {
@@ -2830,6 +2847,39 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(1, blobHierarchyItems.Count);
             Assert.AreEqual(blob.Name, blobHierarchyItems[0].Blob.Name);
             Assert.IsTrue(blobHierarchyItems[0].Blob.HasVersionsOnly);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2021_02_12)]
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task ListBlobsHierarchySegmentAsync_EncodedBlobName(bool delimiter)
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            string blobName = "dir1/dir2/file\uFFFF.blob";
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
+            await blob.CreateAsync();
+
+            // Act
+            BlobHierarchyItem item;
+            if (delimiter)
+            {
+                item = await test.Container.GetBlobsByHierarchyAsync().FirstAsync();
+
+                // Assert
+                Assert.IsTrue(item.IsBlob);
+                Assert.AreEqual(blobName, item.Blob.Name);
+            }
+            else
+            {
+                item = await test.Container.GetBlobsByHierarchyAsync(
+                    delimiter: ".b").FirstAsync();
+
+                // Assert
+                Assert.IsTrue(item.IsPrefix);
+                Assert.AreEqual("dir1/dir2/file\uffff.b", item.Prefix);
+            }
         }
 
         [RecordedTest]

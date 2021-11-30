@@ -270,6 +270,14 @@ namespace Microsoft.Azure.Batch
             InheritUtil.InheritClientBehaviorsAndSetPublicProperty(this, baseBehaviors);
         }
 
+        /// <summary>
+        /// Default constructor to support mocking the <see cref="CloudPool"/> class.
+        /// </summary>
+        protected CloudPool()
+        {
+            this.propertyContainer = new PropertyContainer();
+        }
+
         internal CloudPool(
             BatchClient parentBatchClient,
             Models.CloudPool protocolObject,
@@ -640,7 +648,8 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets or sets the maximum number of tasks that can run concurrently on a single compute node in the pool.
+        /// Gets or sets the number of task slots that can be used to run concurrent tasks on a single compute node in the 
+        /// pool.
         /// </summary>
         /// <remarks>
         /// The default value is 1. The maximum value is the smaller of 4 times the number of cores of the <see cref="VirtualMachineSize"/> 

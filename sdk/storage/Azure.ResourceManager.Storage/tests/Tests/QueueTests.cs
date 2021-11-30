@@ -7,13 +7,12 @@ using NUnit.Framework;
 using Azure.ResourceManager.Storage.Models;
 using Azure.ResourceManager.Storage.Tests.Helpers;
 
-namespace Azure.ResourceManager.Storage.Tests.Tests
+namespace Azure.ResourceManager.Storage.Tests
 {
     public class QueueTests : StorageTestBase
     {
         private ResourceGroup _resourceGroup;
         private StorageAccount _storageAccount;
-        private QueueServiceCollection _queueServiceCollection;
         private QueueService _queueService;
         private StorageQueueCollection _storageQueueCollection;
         public QueueTests(bool async) : base(async)
@@ -27,8 +26,8 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             string accountName = await CreateValidAccountNameAsync("teststoragemgmt");
             StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
             _storageAccount = (await storageAccountCollection.CreateOrUpdateAsync(accountName, GetDefaultStorageAccountParameters())).Value;
-            _queueServiceCollection = _storageAccount.GetQueueServices();
-            _queueService = await _queueServiceCollection.GetAsync("default");
+            _queueService = _storageAccount.GetQueueService();
+            _queueService = await _queueService.GetAsync();
             _storageQueueCollection = _queueService.GetStorageQueues();
         }
 
@@ -139,7 +138,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             {
                 Cors = cors,
             };
-            _queueService = await _queueService.SetServicePropertiesAsync(parameter);
+            _queueService = (await _queueService.CreateOrUpdateAsync(parameter)).Value;
 
             //validate
             Assert.AreEqual(_queueService.Data.Cors.CorsRulesValue.Count, 1);

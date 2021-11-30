@@ -55,6 +55,14 @@ namespace Microsoft.Azure.Batch
             this.LoginMode = loginMode;
         }
 
+        /// <summary>
+        /// Default constructor to support mocking the <see cref="WindowsUserConfiguration"/> class.
+        /// </summary>
+        protected WindowsUserConfiguration()
+        {
+            this.propertyContainer = new PropertyContainer();
+        }
+
         internal WindowsUserConfiguration(Models.WindowsUserConfiguration protocolObject)
         {
             this.propertyContainer = new PropertyContainer(protocolObject);

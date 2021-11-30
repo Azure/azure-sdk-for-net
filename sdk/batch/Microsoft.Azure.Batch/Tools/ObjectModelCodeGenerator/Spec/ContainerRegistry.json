@@ -2,7 +2,7 @@
   "Name": "ContainerRegistry",
   "ProtocolName": "Models.ContainerRegistry",
   "SummaryComment": "A private container registry.",
-  "IsConstructorPublic": true,
+  "ConstructorAccess": "public",
   "IsUsedInCollections": true,
   "Properties": [
     {

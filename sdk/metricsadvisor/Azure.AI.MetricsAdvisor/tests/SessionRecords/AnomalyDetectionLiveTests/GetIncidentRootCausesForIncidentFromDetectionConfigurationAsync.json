@@ -1,112 +1,84 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://js-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/enrichment/anomalyDetection/configurations/fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c/incidents/query",
+      "RequestUri": "https://ga-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/enrichment/anomalyDetection/configurations/efaee305-f049-43ec-9f9b-76026d55c14a/incidents/query",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "169",
+        "Content-Length": "171",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-8fbef2607c7a0441ab04af9131701382-390135f1aa78634c-00",
-        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20210512.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "traceparent": "00-c1590344d9bc0340b4b41db9748df711-92a92151fb6adb42-00",
+        "User-Agent": [
+          "azsdk-net-AI.MetricsAdvisor/1.2.0-alpha.20211118.1",
+          "(.NET 5.0.12; Microsoft Windows 10.0.22000)"
+        ],
         "x-api-key": "Sanitized",
         "x-ms-client-request-id": "09d01c2b3e286c9e5e1372a5ce786a87",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": "{\u0022startTime\u0022:\u00222020-10-01T00:00:00Z\u0022,\u0022endTime\u0022:\u00222020-10-31T00:00:00Z\u0022,\u0022filter\u0022:{\u0022dimensionFilter\u0022:[{\u0022dimension\u0022:{\u0022city\u0022:\u0022__SUM__\u0022,\u0022category\u0022:\u0022Grocery \u0026 Gourmet Food\u0022}}]}}",
+      "RequestBody": "{\u0022startTime\u0022:\u00222021-10-01T00:00:00Z\u0022,\u0022endTime\u0022:\u00222021-10-31T00:00:00Z\u0022,\u0022filter\u0022:{\u0022dimensionFilter\u0022:[{\u0022dimension\u0022:{\u0022region\u0022:\u0022__SUM__\u0022,\u0022category\u0022:\u0022Grocery \u0026 Gourmet Food\u0022}}]}}",
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "187c90ea-3d86-446b-b8c7-fca09ce556ed",
-        "Content-Length": "1402",
+        "apim-request-id": "717bad2d-1bf5-4816-bdbb-a31dd392833a",
+        "Content-Length": "717",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 12 May 2021 23:59:45 GMT",
+        "Date": "Thu, 18 Nov 2021 17:48:32 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "379",
-        "x-request-id": "187c90ea-3d86-446b-b8c7-fca09ce556ed"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "277",
+        "X-Request-ID": "717bad2d-1bf5-4816-bdbb-a31dd392833a"
       },
       "ResponseBody": {
         "value": [
           {
-            "incidentId": "736eed64368bb6a372e855322a15a736-17552c14800",
-            "startTime": "2020-10-23T00:00:00Z",
-            "lastTime": "2020-10-23T00:00:00Z",
+            "incidentId": "aaa0ff1cfe41d89ed481f9ac19dbcd8e-17c76f2dc00",
+            "startTime": "2021-10-13T00:00:00Z",
+            "lastTime": "2021-10-13T00:00:00Z",
             "rootNode": {
               "dimension": {
-                "city": "__SUM__",
+                "region": "__SUM__",
                 "category": "Grocery \u0026 Gourmet Food"
               }
             },
             "property": {
               "maxSeverity": "Low",
               "incidentStatus": "Active",
-              "valueOfRootNode": 63.400000000000006,
-              "expectedValueOfRootNode": 48.22158178606567
+              "valueOfRootNode": 57.199999999999996,
+              "expectedValueOfRootNode": 36.86452522588014
             }
           },
           {
-            "incidentId": "736eed64368bb6a372e855322a15a736-175434e3400",
-            "startTime": "2020-10-20T00:00:00Z",
-            "lastTime": "2020-10-20T00:00:00Z",
+            "incidentId": "aaa0ff1cfe41d89ed481f9ac19dbcd8e-17c52e65800",
+            "startTime": "2021-10-06T00:00:00Z",
+            "lastTime": "2021-10-06T00:00:00Z",
             "rootNode": {
               "dimension": {
-                "city": "__SUM__",
+                "region": "__SUM__",
                 "category": "Grocery \u0026 Gourmet Food"
               }
             },
             "property": {
               "maxSeverity": "Low",
               "incidentStatus": "Active",
-              "valueOfRootNode": 71.000000000000028,
-              "expectedValueOfRootNode": 61.915694193472881
-            }
-          },
-          {
-            "incidentId": "736eed64368bb6a372e855322a15a736-175005b8800",
-            "startTime": "2020-10-07T00:00:00Z",
-            "lastTime": "2020-10-07T00:00:00Z",
-            "rootNode": {
-              "dimension": {
-                "city": "__SUM__",
-                "category": "Grocery \u0026 Gourmet Food"
-              }
-            },
-            "property": {
-              "maxSeverity": "Low",
-              "incidentStatus": "Active",
-              "valueOfRootNode": 75.800000000000026,
-              "expectedValueOfRootNode": 64.1102219457623
-            }
-          },
-          {
-            "incidentId": "736eed64368bb6a372e855322a15a736-174e1756000",
-            "startTime": "2020-10-01T00:00:00Z",
-            "lastTime": "2020-10-01T00:00:00Z",
-            "rootNode": {
-              "dimension": {
-                "city": "__SUM__",
-                "category": "Grocery \u0026 Gourmet Food"
-              }
-            },
-            "property": {
-              "maxSeverity": "Low",
-              "incidentStatus": "Active",
-              "valueOfRootNode": 82.6,
-              "expectedValueOfRootNode": 65.562350570350375
+              "valueOfRootNode": 63.600000000000016,
+              "expectedValueOfRootNode": 38.92879742764329
             }
           }
         ]
       }
     },
     {
-      "RequestUri": "https://js-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/enrichment/anomalyDetection/configurations/fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c/incidents/736eed64368bb6a372e855322a15a736-174e1756000/rootCause",
+      "RequestUri": "https://ga-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/enrichment/anomalyDetection/configurations/efaee305-f049-43ec-9f9b-76026d55c14a/incidents/aaa0ff1cfe41d89ed481f9ac19dbcd8e-17c76f2dc00/rootCause",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-52d295e2298c6b4aabd838dd64eb608b-777295ac89dd0d43-00",
-        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20210512.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "traceparent": "00-0b72471377aa9942aca21ba4cce1176a-fdad764572ac3e4f-00",
+        "User-Agent": [
+          "azsdk-net-AI.MetricsAdvisor/1.2.0-alpha.20211118.1",
+          "(.NET 5.0.12; Microsoft Windows 10.0.22000)"
+        ],
         "x-api-key": "Sanitized",
         "x-ms-client-request-id": "603b1ca0f9cb9cd3a1e422c02c8dda64",
         "x-ms-return-client-request-id": "true"
@@ -114,101 +86,34 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "3950db43-bcd0-47e6-847b-9ce53300bad0",
-        "Content-Length": "1630",
+        "apim-request-id": "f1d4270e-3884-437c-bf41-d3f7a9923208",
+        "Content-Length": "220",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 12 May 2021 23:59:45 GMT",
+        "Date": "Thu, 18 Nov 2021 17:48:33 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "345",
-        "x-request-id": "3950db43-bcd0-47e6-847b-9ce53300bad0"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "274",
+        "X-Request-ID": "f1d4270e-3884-437c-bf41-d3f7a9923208"
       },
       "ResponseBody": {
         "value": [
           {
             "rootCause": {
               "dimension": {
-                "category": "Grocery \u0026 Gourmet Food",
-                "city": "Houston"
+                "region": "__SUM__",
+                "category": "Grocery \u0026 Gourmet Food"
               }
             },
-            "path": [
-              "city"
-            ],
-            "score": 0.093254247542794377,
-            "description": "Several potential root causes has been identified, most contributors are: category = Grocery \u0026 Gourmet Food | city = Houston"
-          },
-          {
-            "rootCause": {
-              "dimension": {
-                "category": "Grocery \u0026 Gourmet Food",
-                "city": "Manila"
-              }
-            },
-            "path": [
-              "city"
-            ],
-            "score": 0.070565102895706833,
-            "description": "Several potential root causes has been identified, most contributors are: category = Grocery \u0026 Gourmet Food | city = Manila"
-          },
-          {
-            "rootCause": {
-              "dimension": {
-                "category": "Grocery \u0026 Gourmet Food",
-                "city": "Tianjin"
-              }
-            },
-            "path": [
-              "city"
-            ],
-            "score": 0.03432394626357288,
-            "description": "Several potential root causes has been identified, most contributors are: category = Grocery \u0026 Gourmet Food | city = Tianjin"
-          },
-          {
-            "rootCause": {
-              "dimension": {
-                "category": "Grocery \u0026 Gourmet Food",
-                "city": "Shanghai"
-              }
-            },
-            "path": [
-              "city"
-            ],
-            "score": 0.032546005599616568,
-            "description": "Several potential root causes has been identified, most contributors are: category = Grocery \u0026 Gourmet Food | city = Shanghai"
-          },
-          {
-            "rootCause": {
-              "dimension": {
-                "category": "Grocery \u0026 Gourmet Food",
-                "city": "Los Angeles"
-              }
-            },
-            "path": [
-              "city"
-            ],
-            "score": 0.016092267995932552,
-            "description": "Several potential root causes has been identified, most contributors are: category = Grocery \u0026 Gourmet Food | city = Los Angeles"
-          },
-          {
-            "rootCause": {
-              "dimension": {
-                "category": "Grocery \u0026 Gourmet Food",
-                "city": "Madrid"
-              }
-            },
-            "path": [
-              "city"
-            ],
-            "score": 0.011665019248226383,
-            "description": "Several potential root causes has been identified, most contributors are: category = Grocery \u0026 Gourmet Food | city = Madrid"
+            "path": [],
+            "score": 1.0,
+            "description": "All sub series contribute to current incident under category = Grocery \u0026 Gourmet Food"
           }
         ]
       }
     }
   ],
   "Variables": {
-    "METRICSADVISOR_ACCOUNT_NAME": "js-metrics-advisor",
+    "METRICSADVISOR_ACCOUNT_NAME": "ga-metrics-advisor",
     "METRICSADVISOR_ENDPOINT_SUFFIX": null,
     "METRICSADVISOR_PRIMARY_API_KEY": "Sanitized",
     "METRICSADVISOR_SUBSCRIPTION_KEY": "Sanitized",

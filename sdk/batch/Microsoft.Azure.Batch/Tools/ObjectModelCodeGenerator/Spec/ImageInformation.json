@@ -2,7 +2,7 @@
   "Name": "ImageInformation",
   "ProtocolName": "Models.ImageInformation",
   "SummaryComment": "A reference to an Azure Virtual Machines Marketplace Image and additional information about the Image.",
-  "IsConstructorPublic": false,
+  "ConstructorAccess": "internal",
   "Properties": [
     {
       "Key": {
