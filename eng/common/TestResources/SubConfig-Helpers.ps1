@@ -10,7 +10,7 @@ function ShouldMarkValueAsSecret([string]$serviceDirectoryPrefix, [string]$key, 
         "RESOURCE_GROUP",
         "LOCATION",
         "ENVIRONMENT",
-        "AZURE_AUTHORITY_HOST",
+        "AUTHORITY_HOST",
         "RESOURCE_MANAGER_URL",
         "SERVICE_MANAGEMENT_URL",
         "ENDPOINT_SUFFIX",
@@ -79,15 +79,15 @@ function UpdateSubscriptionConfiguration([object]$subscriptionConfigurationBase,
                     }
                     $subscriptionConfigurationBase[$pair.Name][$nestedPair.Name] = $nestedPair.Value
                 }
-              } else {
-                    if (ShouldMarkValueAsSecret "AZURE_" $nestedPair.Name $nestedPair.Value) {
-                        Write-Host "##vso[task.setvariable variable=_$($pair.Name);issecret=true;]$($pair.Value)"
-                    }
-                    $subscriptionConfigurationBase[$pair.Name] = $pair.Value
-              }
+            } else {
+                if (ShouldMarkValueAsSecret "AZURE_" $pair.Name $pair.Value) {
+                    Write-Host "##vso[task.setvariable variable=_$($pair.Name);issecret=true;]$($pair.Value)"
+                }
+                $subscriptionConfigurationBase[$pair.Name] = $pair.Value
+            }
         }
 
-      $serialized = $subscriptionConfigurationBase | ConvertTo-Json -Compress
-      Write-Host ($subscriptionConfigurationBase | ConvertTo-Json)
-      Write-Host "##vso[task.setvariable variable=SubscriptionConfiguration;]$serialized"
+        $serialized = $subscriptionConfigurationBase | ConvertTo-Json -Compress
+        Write-Host ($subscriptionConfigurationBase | ConvertTo-Json)
+        Write-Host "##vso[task.setvariable variable=SubscriptionConfiguration;]$serialized"
 }
