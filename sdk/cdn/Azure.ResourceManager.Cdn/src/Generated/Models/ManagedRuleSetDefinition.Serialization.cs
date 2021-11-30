@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static ManagedRuleSetDefinition DeserializeManagedRuleSetDefinition(JsonElement element)
         {
-            Optional<Sku> sku = default;
+            Optional<ProfileSku> sku = default;
             Optional<SystemData> systemData = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = Sku.DeserializeSku(property.Value);
+                    sku = ProfileSku.DeserializeProfileSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("systemData"))

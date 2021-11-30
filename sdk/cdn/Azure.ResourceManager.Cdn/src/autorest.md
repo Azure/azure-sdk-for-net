@@ -225,6 +225,30 @@ directive:
               $[key]['x-ms-client-name'] = newKey
           }
       }
+  - from: swagger-document
+    where: $.definitions.UrlSigningActionParameters.properties.algorithm
+    transform: >
+      $['x-ms-enum'] = {
+          "name": "urlSigningAlgorithm",
+          "modelAsString": true
+      }
+  - from: swagger-document
+    where: $.definitions.MatchCondition.properties.operator
+    transform: >
+      $['x-ms-enum'] = {
+          "name": "matchOperator",
+          "modelAsString": true
+      }
+  - from: swagger-document
+    where: $.definitions.transform
+    transform: >
+      $['x-ms-enum'] = {
+          "name": "transformCategory",
+          "modelAsString": true
+      }
+  - from: swagger-document
+    where: $.definitions.Sku
+    transform: $['x-ms-client-name'] = 'ProfileSku'
   - remove-operation: AFDProfiles_CheckHostNameAvailability
   - remove-operation: Secrets_Update
   - remove-operation: Validate_Secret

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="location"> Resource location. </param>
         /// <param name="sku"> The pricing tier (defines a CDN provider, feature list and rate) of the CDN profile. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="sku"/> is null. </exception>
-        public ProfileData(string location, Sku sku) : base(location)
+        public ProfileData(string location, ProfileSku sku) : base(location)
         {
             if (location == null)
             {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="resourceState"> Resource status of the profile. </param>
         /// <param name="provisioningState"> Provisioning status of the profile. </param>
         /// <param name="frontdoorId"> The Id of the frontdoor. </param>
-        internal ProfileData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string location, IDictionary<string, string> tags, Sku sku, ProfileResourceState? resourceState, string provisioningState, string frontdoorId) : base(id, name, type, systemData, location, tags)
+        internal ProfileData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string location, IDictionary<string, string> tags, ProfileSku sku, ProfileResourceState? resourceState, string provisioningState, string frontdoorId) : base(id, name, type, systemData, location, tags)
         {
             Sku = sku;
             ResourceState = resourceState;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> The pricing tier (defines a CDN provider, feature list and rate) of the CDN profile. </summary>
-        public Sku Sku { get; set; }
+        public ProfileSku Sku { get; set; }
         /// <summary> Resource status of the profile. </summary>
         public ProfileResourceState? ResourceState { get; }
         /// <summary> Provisioning status of the profile. </summary>

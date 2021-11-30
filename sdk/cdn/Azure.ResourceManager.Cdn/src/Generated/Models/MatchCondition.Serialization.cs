@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             MatchVariable matchVariable = default;
             Optional<string> selector = default;
-            Operator @operator = default;
+            MatchOperator @operator = default;
             Optional<bool> negateCondition = default;
             IList<string> matchValue = default;
             Optional<IList<TransformType>> transforms = default;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (property.NameEquals("operator"))
                 {
-                    @operator = new Operator(property.Value.GetString());
+                    @operator = new MatchOperator(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("negateCondition"))

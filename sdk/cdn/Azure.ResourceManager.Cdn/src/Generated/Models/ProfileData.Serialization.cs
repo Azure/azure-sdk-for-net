@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Cdn
 
         internal static ProfileData DeserializeProfileData(JsonElement element)
         {
-            Sku sku = default;
+            ProfileSku sku = default;
             string location = default;
             Optional<IDictionary<string, string>> tags = default;
             Optional<SystemData> systemData = default;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 if (property.NameEquals("sku"))
                 {
-                    sku = Sku.DeserializeSku(property.Value);
+                    sku = ProfileSku.DeserializeProfileSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("location"))

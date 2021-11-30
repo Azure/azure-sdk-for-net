@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Cdn.Models
         internal static UrlSigningActionParameters DeserializeUrlSigningActionParameters(JsonElement element)
         {
             UrlSigningActionParametersOdataType odataType = default;
-            Optional<Algorithm> algorithm = default;
+            Optional<UrlSigningAlgorithm> algorithm = default;
             Optional<IList<UrlSigningParamIdentifier>> parameterNameOverride = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    algorithm = new Algorithm(property.Value.GetString());
+                    algorithm = new UrlSigningAlgorithm(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("parameterNameOverride"))

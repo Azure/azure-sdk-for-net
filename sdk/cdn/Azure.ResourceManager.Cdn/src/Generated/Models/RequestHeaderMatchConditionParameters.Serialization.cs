@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Cdn.Models
             RequestHeaderOperator @operator = default;
             Optional<bool> negateCondition = default;
             Optional<IList<string>> matchValues = default;
-            Optional<IList<Transform>> transforms = default;
+            Optional<IList<TransformCategory>> transforms = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@odata.type"))
@@ -110,10 +110,10 @@ namespace Azure.ResourceManager.Cdn.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Transform> array = new List<Transform>();
+                    List<TransformCategory> array = new List<TransformCategory>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new Transform(item.GetString()));
+                        array.Add(new TransformCategory(item.GetString()));
                     }
                     transforms = array;
                     continue;

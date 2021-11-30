@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="operator"> Describes operator to be matched. </param>
         /// <param name="matchValue"> List of possible match values. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="matchValue"/> is null. </exception>
-        public MatchCondition(MatchVariable matchVariable, Operator @operator, IEnumerable<string> matchValue)
+        public MatchCondition(MatchVariable matchVariable, MatchOperator @operator, IEnumerable<string> matchValue)
         {
             if (matchValue == null)
             {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="negateCondition"> Describes if the result of this condition should be negated. </param>
         /// <param name="matchValue"> List of possible match values. </param>
         /// <param name="transforms"> List of transforms. </param>
-        internal MatchCondition(MatchVariable matchVariable, string selector, Operator @operator, bool? negateCondition, IList<string> matchValue, IList<TransformType> transforms)
+        internal MatchCondition(MatchVariable matchVariable, string selector, MatchOperator @operator, bool? negateCondition, IList<string> matchValue, IList<TransformType> transforms)
         {
             MatchVariable = matchVariable;
             Selector = selector;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Selector can used to match a specific key for QueryString, Cookies, RequestHeader or PostArgs. </summary>
         public string Selector { get; set; }
         /// <summary> Describes operator to be matched. </summary>
-        public Operator Operator { get; set; }
+        public MatchOperator Operator { get; set; }
         /// <summary> Describes if the result of this condition should be negated. </summary>
         public bool? NegateCondition { get; set; }
         /// <summary> List of possible match values. </summary>
