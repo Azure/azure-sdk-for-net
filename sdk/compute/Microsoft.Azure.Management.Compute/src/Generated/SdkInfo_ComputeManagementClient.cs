@@ -27,6 +27,9 @@ namespace Microsoft.Azure.Management.Compute
                 new Tuple<string, string, string>("Compute", "CloudServiceRoles", "2021-03-01"),
                 new Tuple<string, string, string>("Compute", "CloudServices", "2021-03-01"),
                 new Tuple<string, string, string>("Compute", "CloudServicesUpdateDomain", "2021-03-01"),
+                new Tuple<string, string, string>("Compute", "CommunityGalleries", "2021-07-01"),
+                new Tuple<string, string, string>("Compute", "CommunityGalleryImageVersions", "2021-07-01"),
+                new Tuple<string, string, string>("Compute", "CommunityGalleryImages", "2021-07-01"),
                 new Tuple<string, string, string>("Compute", "DedicatedHostGroups", "2021-07-01"),
                 new Tuple<string, string, string>("Compute", "DedicatedHosts", "2021-07-01"),
                 new Tuple<string, string, string>("Compute", "DiskAccesses", "2021-04-01"),
@@ -68,5 +71,16 @@ namespace Microsoft.Azure.Management.Compute
               }.AsEnumerable();
           }
       }
+      // BEGIN: Code Generation Metadata Section
+      public static readonly String AutoRestVersion = "v2";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/compute/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=C:\\git\\azure-sdk-for-net\\sdk";
+      public static readonly String GithubForkName = "Azure";
+      public static readonly String GithubBranchName = "main";
+      public static readonly String GithubCommidId = "a02ebc4d9669ad447c42463cd65dffecc3e598d4";
+      public static readonly String CodeGenerationErrors = "";
+      public static readonly String GithubRepoName = "azure-rest-api-specs";
+      // END: Code Generation Metadata Section
   }
 }
+

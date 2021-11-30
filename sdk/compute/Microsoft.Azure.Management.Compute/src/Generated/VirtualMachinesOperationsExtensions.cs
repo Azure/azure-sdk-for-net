@@ -214,7 +214,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the virtual machine.
             /// </param>
             /// <param name='forceDeletion'>
-            /// Optional parameter to force delete virtual machines.(Feature in Preview)
+            /// Optional parameter to force delete virtual machines.
             /// </param>
             public static void Delete(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, bool? forceDeletion = default(bool?))
             {
@@ -234,7 +234,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the virtual machine.
             /// </param>
             /// <param name='forceDeletion'>
-            /// Optional parameter to force delete virtual machines.(Feature in Preview)
+            /// Optional parameter to force delete virtual machines.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -1254,7 +1254,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the virtual machine.
             /// </param>
             /// <param name='forceDeletion'>
-            /// Optional parameter to force delete virtual machines.(Feature in Preview)
+            /// Optional parameter to force delete virtual machines.
             /// </param>
             public static void BeginDelete(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, bool? forceDeletion = default(bool?))
             {
@@ -1274,7 +1274,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the virtual machine.
             /// </param>
             /// <param name='forceDeletion'>
-            /// Optional parameter to force delete virtual machines.(Feature in Preview)
+            /// Optional parameter to force delete virtual machines.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
