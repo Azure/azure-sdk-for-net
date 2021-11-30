@@ -77,7 +77,7 @@ namespace Compute.Tests.DiskRPTests
         [Fact]
         public void Snapshot_CRUD_WithAcceleratedNetwork()
         {
-            Snapshot_CRUD_WithAcceleratedNetwork_Execute(DiskCreateOption.Empty, "Snapshot_CRUD_WithAcceleratedNetwork", diskSizeGB: 5);
+            Snapshot_CRUD_WithAcceleratedNetwork_Execute(DiskCreateOption.Empty, "Snapshot_CRUD_WithAcceleratedNetwork", diskSizeGB: 5, location: "eastus2");
         }
 
         [Fact]

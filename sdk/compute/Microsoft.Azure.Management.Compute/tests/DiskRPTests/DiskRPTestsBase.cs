@@ -397,6 +397,7 @@ namespace Compute.Tests.DiskRPTests
             using (MockContext context = MockContext.Start(this.GetType(), methodName))
             {
                 EnsureClientsInitialized(context);
+                DiskRPLocation = location ?? DiskRPLocation;
 
                 var rgName = TestUtilities.GenerateName(TestPrefix);
                 var diskName = TestUtilities.GenerateName(DiskNamePrefix);
@@ -407,7 +408,7 @@ namespace Compute.Tests.DiskRPTests
 
                 try
                 {
-                    m_ResourcesClient.ResourceGroups.CreateOrUpdate(rgName, new ResourceGroup { Location = location });
+                    m_ResourcesClient.ResourceGroups.CreateOrUpdate(rgName, new ResourceGroup { Location = DiskRPLocation });
 
                     //put disk
                     m_CrpClient.Disks.CreateOrUpdate(rgName, diskName, disk);
