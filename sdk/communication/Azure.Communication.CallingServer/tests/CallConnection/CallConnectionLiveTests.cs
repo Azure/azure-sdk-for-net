@@ -324,6 +324,7 @@ namespace Azure.Communication.CallingServer.Tests
             }
         }
 
+        [Test]
         public async Task RunCreateAddPlayAudioToParticipantRemoveHangupScenarioTests()
         {
             if (SkipCallingServerInteractionLiveTests)
