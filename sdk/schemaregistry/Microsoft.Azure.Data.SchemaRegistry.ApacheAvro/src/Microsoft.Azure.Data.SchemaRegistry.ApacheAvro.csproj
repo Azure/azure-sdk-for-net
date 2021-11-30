@@ -10,6 +10,7 @@
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="Apache.Avro" VersionOverride="1.10.0" />
+    <PackageReference Include="Azure.Data.SchemaRegistry" />
   </ItemGroup>
 
   <!-- Shared source from Azure.Core -->
