@@ -12,12 +12,11 @@ namespace Microsoft.Azure.Management.Sql.Models
 {
 
     /// <summary>
-    /// Defines values for TargetBackupStorageRedundancy.
+    /// Defines values for ServicePrincipalType.
     /// </summary>
-    public static class TargetBackupStorageRedundancy
+    public static class ServicePrincipalType
     {
-        public const string Geo = "Geo";
-        public const string Local = "Local";
-        public const string Zone = "Zone";
+        public const string None = "None";
+        public const string SystemAssigned = "SystemAssigned";
     }
 }
