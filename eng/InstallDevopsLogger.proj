@@ -3,8 +3,8 @@
     <Target Name="Build">
         <ItemGroup>
             <!-- The MSBuild task we use to execute this project carries the logger, let's find and use it -->
-            <_Logger Include="$(WorkFolder)/**/msbuildhelpers/Microsoft.TeamFoundation.DistributedTask.MSBuild.Logger.dll" />
+            <_Logger Include="$(WorkFolder)/**/Microsoft.TeamFoundation.DistributedTask.MSBuild.Logger.dll" />
         </ItemGroup>
-        <WriteLinestoFile File="$(BuildDirectory)/Directory.Build.rsp" Lines="/dl:CentralLogger,&quot;%(_Logger.Identity)&quot;;&quot;enableOrphanedProjectsLogs=true&quot;*ForwardingLogger,&quot;%(_Logger.Identity)&quot;"
+        <WriteLinestoFile File="$(BuildDirectory)/Directory.Build.rsp" Lines="/dl:CentralLogger,&quot;%(_Logger.Identity)&quot;%3B&quot;enableOrphanedProjectsLogs=true&quot;*ForwardingLogger,&quot;%(_Logger.Identity)&quot;" />
     </Target>
 </Project>
