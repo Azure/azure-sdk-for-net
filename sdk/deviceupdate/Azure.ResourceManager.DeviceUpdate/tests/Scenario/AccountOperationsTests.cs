@@ -31,26 +31,27 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests
             Assert.AreEqual(404, ex.Status);
         }
 
-        [TestCase]
-        [RecordedTest]
-        [Ignore("Need fix in OperationInternals")]
-        public async Task Update()
-        {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroup rg = await subscription.GetResourceGroups().GetAsync("DeviceUpdateResourceGroup");
-            DeviceUpdateAccount account = await rg.GetDeviceUpdateAccounts().GetAsync("AzureDeviceUpdateAccount");
-            DeviceUpdateAccountUpdateOptions updateOptions = new DeviceUpdateAccountUpdateOptions()
-            {
-                Location = Location.WestUS2,
-                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.None)
-            };
-            var lro = await account.UpdateAsync(updateOptions);
-            DeviceUpdateAccount updatedAccount = lro.Value;
-            ResourceDataHelper.AssertAccountUpdate(updatedAccount, updateOptions);
-            updateOptions.Identity.Type = ManagedServiceIdentityType.SystemAssigned;
-            lro = await account.UpdateAsync(updateOptions);
-            updatedAccount = lro.Value;
-            ResourceDataHelper.AssertAccountUpdate(updatedAccount, updateOptions);
-        }
+        // Temporarily remove
+        //[TestCase]
+        //[RecordedTest]
+        //[Ignore("Need fix in OperationInternals")]
+        //public async Task Update()
+        //{
+        //    Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+        //    ResourceGroup rg = await subscription.GetResourceGroups().GetAsync("DeviceUpdateResourceGroup");
+        //    DeviceUpdateAccount account = await rg.GetDeviceUpdateAccounts().GetAsync("AzureDeviceUpdateAccount");
+        //    DeviceUpdateAccountUpdateOptions updateOptions = new DeviceUpdateAccountUpdateOptions()
+        //    {
+        //        Location = Location.WestUS2,
+        //        Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.None)
+        //    };
+        //    var lro = await account.UpdateAsync(updateOptions);
+        //    DeviceUpdateAccount updatedAccount = lro.Value;
+        //    ResourceDataHelper.AssertAccountUpdate(updatedAccount, updateOptions);
+        //    updateOptions.Identity.Type = ManagedServiceIdentityType.SystemAssigned;
+        //    lro = await account.UpdateAsync(updateOptions);
+        //    updatedAccount = lro.Value;
+        //    ResourceDataHelper.AssertAccountUpdate(updatedAccount, updateOptions);
+        //}
     }
 }

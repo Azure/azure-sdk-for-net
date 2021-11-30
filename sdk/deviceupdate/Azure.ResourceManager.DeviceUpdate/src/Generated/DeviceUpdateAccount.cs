@@ -356,64 +356,6 @@ namespace Azure.ResourceManager.DeviceUpdate
             }
         }
 
-        /// <summary> Updates account&apos;s patchable properties. </summary>
-        /// <param name="accountUpdatePayload"> Updated Account. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="accountUpdatePayload"/> is null. </exception>
-        public async virtual Task<DeviceUpdateAccountUpdateOperation> UpdateAsync(DeviceUpdateAccountUpdateOptions accountUpdatePayload, bool waitForCompletion = true, CancellationToken cancellationToken = default)
-        {
-            if (accountUpdatePayload == null)
-            {
-                throw new ArgumentNullException(nameof(accountUpdatePayload));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("DeviceUpdateAccount.Update");
-            scope.Start();
-            try
-            {
-                var response = await _deviceUpdateAccountsRestClient.UpdateAsync(Id.ResourceGroupName, Id.Name, accountUpdatePayload, cancellationToken).ConfigureAwait(false);
-                var operation = new DeviceUpdateAccountUpdateOperation(this, _clientDiagnostics, Pipeline, _deviceUpdateAccountsRestClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, accountUpdatePayload).Request, response);
-                if (waitForCompletion)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Updates account&apos;s patchable properties. </summary>
-        /// <param name="accountUpdatePayload"> Updated Account. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="accountUpdatePayload"/> is null. </exception>
-        public virtual DeviceUpdateAccountUpdateOperation Update(DeviceUpdateAccountUpdateOptions accountUpdatePayload, bool waitForCompletion = true, CancellationToken cancellationToken = default)
-        {
-            if (accountUpdatePayload == null)
-            {
-                throw new ArgumentNullException(nameof(accountUpdatePayload));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("DeviceUpdateAccount.Update");
-            scope.Start();
-            try
-            {
-                var response = _deviceUpdateAccountsRestClient.Update(Id.ResourceGroupName, Id.Name, accountUpdatePayload, cancellationToken);
-                var operation = new DeviceUpdateAccountUpdateOperation(this, _clientDiagnostics, Pipeline, _deviceUpdateAccountsRestClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, accountUpdatePayload).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         #region DeviceUpdateInstance
 
         /// <summary> Gets a collection of DeviceUpdateInstances in the DeviceUpdateAccount. </summary>

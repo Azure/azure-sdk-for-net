@@ -57,6 +57,8 @@ directive:
       to: DeviceUpdateInstances_Update
   - remove-operation: Accounts_Head
   - remove-operation: Instances_Head
+  - remove-operation: Operations_List
+  - remove-operation: DeviceUpdateAccounts_Update
   - rename-model:
       from: AccountUpdate
       to: DeviceUpdateAccountUpdateOptions
