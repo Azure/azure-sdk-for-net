@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateGetAllRequest(string resourceGroupName)
+        internal HttpMessage CreateListRequest(string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -429,14 +429,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<NetworkWatcherListResult>> GetAllAsync(string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<NetworkWatcherListResult>> ListAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName);
+            using var message = CreateListRequest(resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -456,14 +456,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<NetworkWatcherListResult> GetAll(string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<NetworkWatcherListResult> List(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName);
+            using var message = CreateListRequest(resourceGroupName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateGetBySubscriptionRequest()
+        internal HttpMessage CreateListAllRequest()
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -498,9 +498,9 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets all network watchers by subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<NetworkWatcherListResult>> GetBySubscriptionAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<NetworkWatcherListResult>> ListAllAsync(CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetBySubscriptionRequest();
+            using var message = CreateListAllRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -518,9 +518,9 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets all network watchers by subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<NetworkWatcherListResult> GetBySubscription(CancellationToken cancellationToken = default)
+        public Response<NetworkWatcherListResult> ListAll(CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetBySubscriptionRequest();
+            using var message = CreateListAllRequest();
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1454,7 +1454,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateGetAvailableProvidersRequest(string resourceGroupName, string networkWatcherName, AvailableProvidersListParameters parameters)
+        internal HttpMessage CreateListAvailableProvidersRequest(string resourceGroupName, string networkWatcherName, AvailableProvidersListParameters parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1485,7 +1485,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that scope the list of available providers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response> GetAvailableProvidersAsync(string resourceGroupName, string networkWatcherName, AvailableProvidersListParameters parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> ListAvailableProvidersAsync(string resourceGroupName, string networkWatcherName, AvailableProvidersListParameters parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -1500,7 +1500,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var message = CreateGetAvailableProvidersRequest(resourceGroupName, networkWatcherName, parameters);
+            using var message = CreateListAvailableProvidersRequest(resourceGroupName, networkWatcherName, parameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1518,7 +1518,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that scope the list of available providers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response GetAvailableProviders(string resourceGroupName, string networkWatcherName, AvailableProvidersListParameters parameters, CancellationToken cancellationToken = default)
+        public Response ListAvailableProviders(string resourceGroupName, string networkWatcherName, AvailableProvidersListParameters parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -1533,7 +1533,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var message = CreateGetAvailableProvidersRequest(resourceGroupName, networkWatcherName, parameters);
+            using var message = CreateListAvailableProvidersRequest(resourceGroupName, networkWatcherName, parameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

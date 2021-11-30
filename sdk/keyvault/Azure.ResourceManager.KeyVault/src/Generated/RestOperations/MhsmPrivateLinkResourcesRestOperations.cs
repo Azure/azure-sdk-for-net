@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.KeyVault
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateGetAllByMhsmResourceRequest(string resourceGroupName, string name)
+        internal HttpMessage CreateListByMhsmResourceRequest(string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="name"> Name of the managed HSM Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
-        public async Task<Response<MhsmPrivateLinkResourceListResult>> GetAllByMhsmResourceAsync(string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public async Task<Response<MhsmPrivateLinkResourceListResult>> ListByMhsmResourceAsync(string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var message = CreateGetAllByMhsmResourceRequest(resourceGroupName, name);
+            using var message = CreateListByMhsmResourceRequest(resourceGroupName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="name"> Name of the managed HSM Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
-        public Response<MhsmPrivateLinkResourceListResult> GetAllByMhsmResource(string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public Response<MhsmPrivateLinkResourceListResult> ListByMhsmResource(string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var message = CreateGetAllByMhsmResourceRequest(resourceGroupName, name);
+            using var message = CreateListByMhsmResourceRequest(resourceGroupName, name);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

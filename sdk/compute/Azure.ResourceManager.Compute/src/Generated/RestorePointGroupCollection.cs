@@ -21,11 +21,12 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A class representing collection of RestorePointGroup and their operations over a ResourceGroup. </summary>
+    /// <summary> A class representing collection of RestorePointGroup and their operations over its parent. </summary>
     public partial class RestorePointGroupCollection : ArmCollection, IEnumerable<RestorePointGroup>, IAsyncEnumerable<RestorePointGroup>
+
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly RestorePointCollectionsRestOperations _restClient;
+        private readonly RestorePointCollectionsRestOperations _restorePointCollectionsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="RestorePointGroupCollection"/> class for mocking. </summary>
         protected RestorePointGroupCollection()
@@ -37,22 +38,7 @@ namespace Azure.ResourceManager.Compute
         internal RestorePointGroupCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new RestorePointCollectionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-        }
-
-        IEnumerator<RestorePointGroup> IEnumerable<RestorePointGroup>.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IAsyncEnumerator<RestorePointGroup> IAsyncEnumerable<RestorePointGroup>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            _restorePointCollectionsRestClient = new RestorePointCollectionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -81,7 +67,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, restorePointCollectionName, parameters, cancellationToken);
+                var response = _restorePointCollectionsRestClient.CreateOrUpdate(Id.ResourceGroupName, restorePointCollectionName, parameters, cancellationToken);
                 var operation = new RestorePointCollectionCreateOrUpdateOperation(Parent, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
@@ -115,7 +101,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, restorePointCollectionName, parameters, cancellationToken).ConfigureAwait(false);
+                var response = await _restorePointCollectionsRestClient.CreateOrUpdateAsync(Id.ResourceGroupName, restorePointCollectionName, parameters, cancellationToken).ConfigureAwait(false);
                 var operation = new RestorePointCollectionCreateOrUpdateOperation(Parent, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -128,22 +114,23 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> The operation to get the restore point collection. </summary>
         /// <param name="restorePointCollectionName"> The name of the restore point collection. </param>
         /// <param name="expand"> The expand expression to apply on the operation. If expand=restorePoints, server will return all contained restore points in the restorePointCollection. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="restorePointCollectionName"/> is null. </exception>
         public virtual Response<RestorePointGroup> Get(string restorePointCollectionName, RestorePointCollectionExpandOptions? expand = null, CancellationToken cancellationToken = default)
         {
+            if (restorePointCollectionName == null)
+            {
+                throw new ArgumentNullException(nameof(restorePointCollectionName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("RestorePointGroupCollection.Get");
             scope.Start();
             try
             {
-                if (restorePointCollectionName == null)
-                {
-                    throw new ArgumentNullException(nameof(restorePointCollectionName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, restorePointCollectionName, expand, cancellationToken: cancellationToken);
+                var response = _restorePointCollectionsRestClient.Get(Id.ResourceGroupName, restorePointCollectionName, expand, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new RestorePointGroup(Parent, response.Value), response.GetRawResponse());
@@ -155,22 +142,23 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> The operation to get the restore point collection. </summary>
         /// <param name="restorePointCollectionName"> The name of the restore point collection. </param>
         /// <param name="expand"> The expand expression to apply on the operation. If expand=restorePoints, server will return all contained restore points in the restorePointCollection. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="restorePointCollectionName"/> is null. </exception>
         public async virtual Task<Response<RestorePointGroup>> GetAsync(string restorePointCollectionName, RestorePointCollectionExpandOptions? expand = null, CancellationToken cancellationToken = default)
         {
+            if (restorePointCollectionName == null)
+            {
+                throw new ArgumentNullException(nameof(restorePointCollectionName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("RestorePointGroupCollection.Get");
             scope.Start();
             try
             {
-                if (restorePointCollectionName == null)
-                {
-                    throw new ArgumentNullException(nameof(restorePointCollectionName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, restorePointCollectionName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _restorePointCollectionsRestClient.GetAsync(Id.ResourceGroupName, restorePointCollectionName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new RestorePointGroup(Parent, response.Value), response.GetRawResponse());
@@ -185,19 +173,20 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="restorePointCollectionName"> The name of the restore point collection. </param>
         /// <param name="expand"> The expand expression to apply on the operation. If expand=restorePoints, server will return all contained restore points in the restorePointCollection. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="restorePointCollectionName"/> is null. </exception>
         public virtual Response<RestorePointGroup> GetIfExists(string restorePointCollectionName, RestorePointCollectionExpandOptions? expand = null, CancellationToken cancellationToken = default)
         {
+            if (restorePointCollectionName == null)
+            {
+                throw new ArgumentNullException(nameof(restorePointCollectionName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("RestorePointGroupCollection.GetIfExists");
             scope.Start();
             try
             {
-                if (restorePointCollectionName == null)
-                {
-                    throw new ArgumentNullException(nameof(restorePointCollectionName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, restorePointCollectionName, expand, cancellationToken: cancellationToken);
+                var response = _restorePointCollectionsRestClient.Get(Id.ResourceGroupName, restorePointCollectionName, expand, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<RestorePointGroup>(null, response.GetRawResponse())
                     : Response.FromValue(new RestorePointGroup(this, response.Value), response.GetRawResponse());
@@ -212,19 +201,20 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="restorePointCollectionName"> The name of the restore point collection. </param>
         /// <param name="expand"> The expand expression to apply on the operation. If expand=restorePoints, server will return all contained restore points in the restorePointCollection. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="restorePointCollectionName"/> is null. </exception>
         public async virtual Task<Response<RestorePointGroup>> GetIfExistsAsync(string restorePointCollectionName, RestorePointCollectionExpandOptions? expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("RestorePointGroupCollection.GetIfExists");
+            if (restorePointCollectionName == null)
+            {
+                throw new ArgumentNullException(nameof(restorePointCollectionName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("RestorePointGroupCollection.GetIfExistsAsync");
             scope.Start();
             try
             {
-                if (restorePointCollectionName == null)
-                {
-                    throw new ArgumentNullException(nameof(restorePointCollectionName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, restorePointCollectionName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _restorePointCollectionsRestClient.GetAsync(Id.ResourceGroupName, restorePointCollectionName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<RestorePointGroup>(null, response.GetRawResponse())
                     : Response.FromValue(new RestorePointGroup(this, response.Value), response.GetRawResponse());
@@ -239,18 +229,19 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="restorePointCollectionName"> The name of the restore point collection. </param>
         /// <param name="expand"> The expand expression to apply on the operation. If expand=restorePoints, server will return all contained restore points in the restorePointCollection. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="restorePointCollectionName"/> is null. </exception>
         public virtual Response<bool> CheckIfExists(string restorePointCollectionName, RestorePointCollectionExpandOptions? expand = null, CancellationToken cancellationToken = default)
         {
+            if (restorePointCollectionName == null)
+            {
+                throw new ArgumentNullException(nameof(restorePointCollectionName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("RestorePointGroupCollection.CheckIfExists");
             scope.Start();
             try
             {
-                if (restorePointCollectionName == null)
-                {
-                    throw new ArgumentNullException(nameof(restorePointCollectionName));
-                }
-
                 var response = GetIfExists(restorePointCollectionName, expand, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -264,18 +255,19 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="restorePointCollectionName"> The name of the restore point collection. </param>
         /// <param name="expand"> The expand expression to apply on the operation. If expand=restorePoints, server will return all contained restore points in the restorePointCollection. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="restorePointCollectionName"/> is null. </exception>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(string restorePointCollectionName, RestorePointCollectionExpandOptions? expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("RestorePointGroupCollection.CheckIfExists");
+            if (restorePointCollectionName == null)
+            {
+                throw new ArgumentNullException(nameof(restorePointCollectionName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("RestorePointGroupCollection.CheckIfExistsAsync");
             scope.Start();
             try
             {
-                if (restorePointCollectionName == null)
-                {
-                    throw new ArgumentNullException(nameof(restorePointCollectionName));
-                }
-
                 var response = await GetIfExistsAsync(restorePointCollectionName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -297,7 +289,7 @@ namespace Azure.ResourceManager.Compute
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAll(Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _restorePointCollectionsRestClient.List(Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new RestorePointGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -312,7 +304,7 @@ namespace Azure.ResourceManager.Compute
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAllNextPage(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _restorePointCollectionsRestClient.ListNextPage(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new RestorePointGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -335,7 +327,7 @@ namespace Azure.ResourceManager.Compute
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllAsync(Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restorePointCollectionsRestClient.ListAsync(Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new RestorePointGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -350,7 +342,7 @@ namespace Azure.ResourceManager.Compute
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllNextPageAsync(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restorePointCollectionsRestClient.ListNextPageAsync(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new RestorePointGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -408,7 +400,22 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
+        IEnumerator<RestorePointGroup> IEnumerable<RestorePointGroup>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<RestorePointGroup> IAsyncEnumerable<RestorePointGroup>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
+
         // Builders.
-        // public ArmBuilder<ResourceIdentifier, RestorePointGroup, RestorePointGroupData> Construct() { }
+        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, RestorePointGroup, RestorePointGroupData> Construct() { }
     }
 }

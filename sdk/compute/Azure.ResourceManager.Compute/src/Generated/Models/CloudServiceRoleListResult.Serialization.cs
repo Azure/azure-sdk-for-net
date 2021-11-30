@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -15,16 +16,16 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static CloudServiceRoleListResult DeserializeCloudServiceRoleListResult(JsonElement element)
         {
-            IReadOnlyList<CloudServiceRole> value = default;
+            IReadOnlyList<CloudServiceRoleData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<CloudServiceRole> array = new List<CloudServiceRole>();
+                    List<CloudServiceRoleData> array = new List<CloudServiceRoleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CloudServiceRole.DeserializeCloudServiceRole(item));
+                        array.Add(CloudServiceRoleData.DeserializeCloudServiceRoleData(item));
                     }
                     value = array;
                     continue;

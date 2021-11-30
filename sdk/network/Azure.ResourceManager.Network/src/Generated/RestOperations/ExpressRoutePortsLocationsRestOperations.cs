@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateGetAllRequest()
+        internal HttpMessage CreateListRequest()
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -63,9 +63,9 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Retrieves all ExpressRoutePort peering locations. Does not return available bandwidths for each location. Available bandwidths can only be obtained when retrieving a specific peering location. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<ExpressRoutePortsLocationListResult>> GetAllAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<ExpressRoutePortsLocationListResult>> ListAsync(CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetAllRequest();
+            using var message = CreateListRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -83,9 +83,9 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Retrieves all ExpressRoutePort peering locations. Does not return available bandwidths for each location. Available bandwidths can only be obtained when retrieving a specific peering location. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<ExpressRoutePortsLocationListResult> GetAll(CancellationToken cancellationToken = default)
+        public Response<ExpressRoutePortsLocationListResult> List(CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetAllRequest();
+            using var message = CreateListRequest();
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="locationName"> Name of the requested ExpressRoutePort peering location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        public async Task<Response<ExpressRoutePortsLocation>> GetAsync(string locationName, CancellationToken cancellationToken = default)
+        public async Task<Response<ExpressRoutePortsLocationData>> GetAsync(string locationName, CancellationToken cancellationToken = default)
         {
             if (locationName == null)
             {
@@ -136,11 +136,13 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        ExpressRoutePortsLocation value = default;
+                        ExpressRoutePortsLocationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ExpressRoutePortsLocation.DeserializeExpressRoutePortsLocation(document.RootElement);
+                        value = ExpressRoutePortsLocationData.DeserializeExpressRoutePortsLocationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((ExpressRoutePortsLocationData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -150,7 +152,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="locationName"> Name of the requested ExpressRoutePort peering location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        public Response<ExpressRoutePortsLocation> Get(string locationName, CancellationToken cancellationToken = default)
+        public Response<ExpressRoutePortsLocationData> Get(string locationName, CancellationToken cancellationToken = default)
         {
             if (locationName == null)
             {
@@ -163,17 +165,19 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        ExpressRoutePortsLocation value = default;
+                        ExpressRoutePortsLocationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ExpressRoutePortsLocation.DeserializeExpressRoutePortsLocation(document.RootElement);
+                        value = ExpressRoutePortsLocationData.DeserializeExpressRoutePortsLocationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((ExpressRoutePortsLocationData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateGetAllNextPageRequest(string nextLink)
+        internal HttpMessage CreateListNextPageRequest(string nextLink)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -191,14 +195,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<ExpressRoutePortsLocationListResult>> GetAllNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<ExpressRoutePortsLocationListResult>> ListNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink);
+            using var message = CreateListNextPageRequest(nextLink);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -218,14 +222,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<ExpressRoutePortsLocationListResult> GetAllNextPage(string nextLink, CancellationToken cancellationToken = default)
+        public Response<ExpressRoutePortsLocationListResult> ListNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink);
+            using var message = CreateListNextPageRequest(nextLink);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

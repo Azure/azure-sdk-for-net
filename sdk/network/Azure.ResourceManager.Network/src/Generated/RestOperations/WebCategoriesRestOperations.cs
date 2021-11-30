@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="expand"> Expands resourceIds back referenced by the azureWebCategory resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public async Task<Response<AzureWebCategory>> GetAsync(string name, string expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<AzureWebCategoryData>> GetAsync(string name, string expand = null, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -84,11 +84,13 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        AzureWebCategory value = default;
+                        AzureWebCategoryData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AzureWebCategory.DeserializeAzureWebCategory(document.RootElement);
+                        value = AzureWebCategoryData.DeserializeAzureWebCategoryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((AzureWebCategoryData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -99,7 +101,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="expand"> Expands resourceIds back referenced by the azureWebCategory resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public Response<AzureWebCategory> Get(string name, string expand = null, CancellationToken cancellationToken = default)
+        public Response<AzureWebCategoryData> Get(string name, string expand = null, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -112,17 +114,19 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        AzureWebCategory value = default;
+                        AzureWebCategoryData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AzureWebCategory.DeserializeAzureWebCategory(document.RootElement);
+                        value = AzureWebCategoryData.DeserializeAzureWebCategoryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((AzureWebCategoryData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateGetAllBySubscriptionRequest()
+        internal HttpMessage CreateListBySubscriptionRequest()
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -141,9 +145,9 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets all the Azure Web Categories in a subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<AzureWebCategoryListResult>> GetAllBySubscriptionAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<AzureWebCategoryListResult>> ListBySubscriptionAsync(CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetAllBySubscriptionRequest();
+            using var message = CreateListBySubscriptionRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -161,9 +165,9 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets all the Azure Web Categories in a subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<AzureWebCategoryListResult> GetAllBySubscription(CancellationToken cancellationToken = default)
+        public Response<AzureWebCategoryListResult> ListBySubscription(CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetAllBySubscriptionRequest();
+            using var message = CreateListBySubscriptionRequest();
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -179,7 +183,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateGetAllBySubscriptionNextPageRequest(string nextLink)
+        internal HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -197,14 +201,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<AzureWebCategoryListResult>> GetAllBySubscriptionNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<AzureWebCategoryListResult>> ListBySubscriptionNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateGetAllBySubscriptionNextPageRequest(nextLink);
+            using var message = CreateListBySubscriptionNextPageRequest(nextLink);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -224,14 +228,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<AzureWebCategoryListResult> GetAllBySubscriptionNextPage(string nextLink, CancellationToken cancellationToken = default)
+        public Response<AzureWebCategoryListResult> ListBySubscriptionNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateGetAllBySubscriptionNextPageRequest(nextLink);
+            using var message = CreateListBySubscriptionNextPageRequest(nextLink);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
