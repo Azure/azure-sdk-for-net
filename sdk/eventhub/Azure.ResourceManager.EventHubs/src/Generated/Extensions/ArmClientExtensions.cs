@@ -67,14 +67,14 @@ namespace Azure.ResourceManager.EventHubs
         }
         #endregion
 
-        #region ArmDisasterRecoveryAuthorizationRule
-        /// <summary> Gets an object representing a ArmDisasterRecoveryAuthorizationRule along with the instance operations that can be performed on it but with no data. </summary>
+        #region DisasterRecoveryAuthorizationRule
+        /// <summary> Gets an object representing a DisasterRecoveryAuthorizationRule along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ArmDisasterRecoveryAuthorizationRule" /> object. </returns>
-        public static ArmDisasterRecoveryAuthorizationRule GetArmDisasterRecoveryAuthorizationRule(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DisasterRecoveryAuthorizationRule" /> object. </returns>
+        public static DisasterRecoveryAuthorizationRule GetDisasterRecoveryAuthorizationRule(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ArmDisasterRecoveryAuthorizationRule(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DisasterRecoveryAuthorizationRule(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
@@ -100,14 +100,14 @@ namespace Azure.ResourceManager.EventHubs
         }
         #endregion
 
-        #region ArmDisasterRecovery
-        /// <summary> Gets an object representing a ArmDisasterRecovery along with the instance operations that can be performed on it but with no data. </summary>
+        #region DisasterRecovery
+        /// <summary> Gets an object representing a DisasterRecovery along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ArmDisasterRecovery" /> object. </returns>
-        public static ArmDisasterRecovery GetArmDisasterRecovery(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DisasterRecovery" /> object. </returns>
+        public static DisasterRecovery GetDisasterRecovery(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ArmDisasterRecovery(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DisasterRecovery(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 

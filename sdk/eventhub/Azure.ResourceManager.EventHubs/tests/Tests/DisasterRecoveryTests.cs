@@ -62,25 +62,25 @@ namespace Azure.ResourceManager.EventHubs.Tests
 
             //create a disaster recovery
             string disasterRecoveryName = Recording.GenerateAssetName("disasterrecovery");
-            ArmDisasterRecoveryData parameter = new ArmDisasterRecoveryData()
+            DisasterRecoveryData parameter = new DisasterRecoveryData()
             {
                 PartnerNamespace = eHNamespace2.Id
             };
-            ArmDisasterRecovery armDisasterRecovery = (await eHNamespace1.GetArmDisasterRecoveries().CreateOrUpdateAsync(disasterRecoveryName, parameter)).Value;
+            DisasterRecovery armDisasterRecovery = (await eHNamespace1.GetDisasterRecoveries().CreateOrUpdateAsync(disasterRecoveryName, parameter)).Value;
             Assert.NotNull(armDisasterRecovery);
             Assert.AreEqual(armDisasterRecovery.Id.Name, disasterRecoveryName);
             Assert.AreEqual(armDisasterRecovery.Data.PartnerNamespace, eHNamespace2.Id.ToString());
 
             //get the disaster recovery - primary
-            armDisasterRecovery = await eHNamespace1.GetArmDisasterRecoveries().GetAsync(disasterRecoveryName);
+            armDisasterRecovery = await eHNamespace1.GetDisasterRecoveries().GetAsync(disasterRecoveryName);
             Assert.AreEqual(armDisasterRecovery.Data.Role, RoleDisasterRecovery.Primary);
 
             //get the disaster recovery - secondary
-            ArmDisasterRecovery armDisasterRecoverySec = await eHNamespace2.GetArmDisasterRecoveries().GetAsync(disasterRecoveryName);
+            DisasterRecovery armDisasterRecoverySec = await eHNamespace2.GetDisasterRecoveries().GetAsync(disasterRecoveryName);
             Assert.AreEqual(armDisasterRecoverySec.Data.Role, RoleDisasterRecovery.Secondary);
 
             //wait for completion, this may take several minutes in live and record mode
-            armDisasterRecovery = await eHNamespace1.GetArmDisasterRecoveries().GetAsync(disasterRecoveryName);
+            armDisasterRecovery = await eHNamespace1.GetDisasterRecoveries().GetAsync(disasterRecoveryName);
             int i = 0;
             while (armDisasterRecovery.Data.ProvisioningState != ProvisioningStateDR.Succeeded && i < 100)
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
                     await Task.Delay(5000);
                 }
                 i++;
-                armDisasterRecovery = await eHNamespace1.GetArmDisasterRecoveries().GetAsync(disasterRecoveryName);
+                armDisasterRecovery = await eHNamespace1.GetDisasterRecoveries().GetAsync(disasterRecoveryName);
             }
             System.Console.WriteLine(i);
 
@@ -97,17 +97,17 @@ namespace Azure.ResourceManager.EventHubs.Tests
             CheckNameAvailabilityResult nameAvailability = await eHNamespace1.CheckNameAvailabilityDisasterRecoveryConfigAsync(new CheckNameAvailabilityOptions(disasterRecoveryName));
             Assert.IsFalse(nameAvailability.NameAvailable);
 
-            List<ArmDisasterRecoveryAuthorizationRule> rules = await armDisasterRecovery.GetArmDisasterRecoveryAuthorizationRules().GetAllAsync().ToEnumerableAsync();
+            List<DisasterRecoveryAuthorizationRule> rules = await armDisasterRecovery.GetDisasterRecoveryAuthorizationRules().GetAllAsync().ToEnumerableAsync();
             Assert.IsTrue(rules.Count > 0);
 
             //get access keys of the authorization rule
-            ArmDisasterRecoveryAuthorizationRule rule = rules.First();
+            DisasterRecoveryAuthorizationRule rule = rules.First();
             AccessKeys keys = await rule.GetKeysAsync();
             Assert.NotNull(keys);
 
             //break pairing and wait for completion
             await armDisasterRecovery.BreakPairingAsync();
-            armDisasterRecovery = await eHNamespace1.GetArmDisasterRecoveries().GetAsync(disasterRecoveryName);
+            armDisasterRecovery = await eHNamespace1.GetDisasterRecoveries().GetAsync(disasterRecoveryName);
             i = 0;
             while (armDisasterRecovery.Data.ProvisioningState != ProvisioningStateDR.Succeeded && i < 100)
             {
@@ -116,11 +116,11 @@ namespace Azure.ResourceManager.EventHubs.Tests
                     await Task.Delay(5000);
                 }
                 i++;
-                armDisasterRecovery = await eHNamespace1.GetArmDisasterRecoveries().GetAsync(disasterRecoveryName);
+                armDisasterRecovery = await eHNamespace1.GetDisasterRecoveries().GetAsync(disasterRecoveryName);
             }
 
             //get all disaster recoveries for a name space
-            List<ArmDisasterRecovery> disasterRcoveries = await eHNamespace1.GetArmDisasterRecoveries().GetAllAsync().ToEnumerableAsync();
+            List<DisasterRecovery> disasterRcoveries = await eHNamespace1.GetDisasterRecoveries().GetAllAsync().ToEnumerableAsync();
             Assert.IsTrue(disasterRcoveries.Count >= 1);
 
             //delete disaster recovery;

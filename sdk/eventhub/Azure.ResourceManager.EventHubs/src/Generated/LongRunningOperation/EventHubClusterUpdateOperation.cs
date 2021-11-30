@@ -18,20 +18,20 @@ using Azure.ResourceManager.EventHubs;
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> Modifies mutable properties on the Event Hubs Cluster. This operation is idempotent. </summary>
-    public partial class ClusterUpdateOperation : Operation<EventHubCluster>, IOperationSource<EventHubCluster>
+    public partial class EventHubClusterUpdateOperation : Operation<EventHubCluster>, IOperationSource<EventHubCluster>
     {
         private readonly OperationInternals<EventHubCluster> _operation;
 
         private readonly ArmResource _operationBase;
 
-        /// <summary> Initializes a new instance of ClusterUpdateOperation for mocking. </summary>
-        protected ClusterUpdateOperation()
+        /// <summary> Initializes a new instance of EventHubClusterUpdateOperation for mocking. </summary>
+        protected EventHubClusterUpdateOperation()
         {
         }
 
-        internal ClusterUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal EventHubClusterUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<EventHubCluster>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ClusterUpdateOperation");
+            _operation = new OperationInternals<EventHubCluster>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "EventHubClusterUpdateOperation");
             _operationBase = operationsBase;
         }
 

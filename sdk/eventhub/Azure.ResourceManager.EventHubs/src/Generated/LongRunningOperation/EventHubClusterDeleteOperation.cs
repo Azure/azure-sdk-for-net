@@ -10,22 +10,23 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    /// <summary> Deletes an Alias(Disaster Recovery configuration). </summary>
-    public partial class DisasterRecoveryConfigDeleteOperation : Operation
+    /// <summary> Deletes an existing Event Hubs Cluster. This operation is idempotent. </summary>
+    public partial class EventHubClusterDeleteOperation : Operation
     {
-        private readonly OperationOrResponseInternals _operation;
+        private readonly OperationInternals _operation;
 
-        /// <summary> Initializes a new instance of DisasterRecoveryConfigDeleteOperation for mocking. </summary>
-        protected DisasterRecoveryConfigDeleteOperation()
+        /// <summary> Initializes a new instance of EventHubClusterDeleteOperation for mocking. </summary>
+        protected EventHubClusterDeleteOperation()
         {
         }
 
-        internal DisasterRecoveryConfigDeleteOperation(Response response)
+        internal EventHubClusterDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationOrResponseInternals(response);
+            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "EventHubClusterDeleteOperation");
         }
 
         /// <inheritdoc />

@@ -18,20 +18,20 @@ using Azure.ResourceManager.EventHubs;
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> Creates or updates an instance of an Event Hubs Cluster. </summary>
-    public partial class ClusterCreateOrUpdateOperation : Operation<EventHubCluster>, IOperationSource<EventHubCluster>
+    public partial class EventHubClusterCreateOrUpdateOperation : Operation<EventHubCluster>, IOperationSource<EventHubCluster>
     {
         private readonly OperationInternals<EventHubCluster> _operation;
 
         private readonly ArmResource _operationBase;
 
-        /// <summary> Initializes a new instance of ClusterCreateOrUpdateOperation for mocking. </summary>
-        protected ClusterCreateOrUpdateOperation()
+        /// <summary> Initializes a new instance of EventHubClusterCreateOrUpdateOperation for mocking. </summary>
+        protected EventHubClusterCreateOrUpdateOperation()
         {
         }
 
-        internal ClusterCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal EventHubClusterCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<EventHubCluster>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ClusterCreateOrUpdateOperation");
+            _operation = new OperationInternals<EventHubCluster>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "EventHubClusterCreateOrUpdateOperation");
             _operationBase = operationsBase;
         }
 

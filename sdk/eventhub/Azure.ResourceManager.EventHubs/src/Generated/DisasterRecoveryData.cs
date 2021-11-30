@@ -11,15 +11,15 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    /// <summary> A class representing the ArmDisasterRecovery data model. </summary>
-    public partial class ArmDisasterRecoveryData : ProxyResource
+    /// <summary> A class representing the DisasterRecovery data model. </summary>
+    public partial class DisasterRecoveryData : ProxyResource
     {
-        /// <summary> Initializes a new instance of ArmDisasterRecoveryData. </summary>
-        public ArmDisasterRecoveryData()
+        /// <summary> Initializes a new instance of DisasterRecoveryData. </summary>
+        public DisasterRecoveryData()
         {
         }
 
-        /// <summary> Initializes a new instance of ArmDisasterRecoveryData. </summary>
+        /// <summary> Initializes a new instance of DisasterRecoveryData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="alternateName"> Alternate name specified when alias and namespace names are same. </param>
         /// <param name="role"> role of namespace in GEO DR - possible values &apos;Primary&apos; or &apos;PrimaryNotReplicating&apos; or &apos;Secondary&apos;. </param>
         /// <param name="pendingReplicationOperationsCount"> Number of entities pending to be replicated. </param>
-        internal ArmDisasterRecoveryData(ResourceIdentifier id, string name, ResourceType type, string location, SystemData systemData, ProvisioningStateDR? provisioningState, string partnerNamespace, string alternateName, RoleDisasterRecovery? role, long? pendingReplicationOperationsCount) : base(id, name, type, location)
+        internal DisasterRecoveryData(ResourceIdentifier id, string name, ResourceType type, string location, SystemData systemData, ProvisioningStateDR? provisioningState, string partnerNamespace, string alternateName, RoleDisasterRecovery? role, long? pendingReplicationOperationsCount) : base(id, name, type, location)
         {
             SystemData = systemData;
             ProvisioningState = provisioningState;

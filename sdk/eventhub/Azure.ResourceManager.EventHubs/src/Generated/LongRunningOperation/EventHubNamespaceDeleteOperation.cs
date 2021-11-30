@@ -14,19 +14,19 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    /// <summary> Deletes an existing Event Hubs Cluster. This operation is idempotent. </summary>
-    public partial class ClusterDeleteOperation : Operation
+    /// <summary> Deletes an existing namespace. This operation also removes all associated resources under the namespace. </summary>
+    public partial class EventHubNamespaceDeleteOperation : Operation
     {
         private readonly OperationInternals _operation;
 
-        /// <summary> Initializes a new instance of ClusterDeleteOperation for mocking. </summary>
-        protected ClusterDeleteOperation()
+        /// <summary> Initializes a new instance of EventHubNamespaceDeleteOperation for mocking. </summary>
+        protected EventHubNamespaceDeleteOperation()
         {
         }
 
-        internal ClusterDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal EventHubNamespaceDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ClusterDeleteOperation");
+            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "EventHubNamespaceDeleteOperation");
         }
 
         /// <inheritdoc />

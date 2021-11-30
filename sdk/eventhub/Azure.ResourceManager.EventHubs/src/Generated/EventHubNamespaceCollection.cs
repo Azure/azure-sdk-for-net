@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.EventHubs
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly NamespacesRestOperations _namespacesRestClient;
+        private readonly EventHubNamespacesRestOperations _eventHubNamespacesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="EventHubNamespaceCollection"/> class for mocking. </summary>
         protected EventHubNamespaceCollection()
@@ -39,6 +40,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _namespacesRestClient = new NamespacesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _eventHubNamespacesRestClient = new EventHubNamespacesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -52,7 +54,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual NamespaceCreateOrUpdateOperation CreateOrUpdate(string namespaceName, EventHubNamespaceData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual EventHubNamespaceCreateOrUpdateOperation CreateOrUpdate(string namespaceName, EventHubNamespaceData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (namespaceName == null)
             {
@@ -67,8 +69,8 @@ namespace Azure.ResourceManager.EventHubs
             scope.Start();
             try
             {
-                var response = _namespacesRestClient.CreateOrUpdate(Id.ResourceGroupName, namespaceName, parameters, cancellationToken);
-                var operation = new NamespaceCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _namespacesRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, namespaceName, parameters).Request, response);
+                var response = _eventHubNamespacesRestClient.CreateOrUpdate(Id.ResourceGroupName, namespaceName, parameters, cancellationToken);
+                var operation = new EventHubNamespaceCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _eventHubNamespacesRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, namespaceName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -86,7 +88,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<NamespaceCreateOrUpdateOperation> CreateOrUpdateAsync(string namespaceName, EventHubNamespaceData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<EventHubNamespaceCreateOrUpdateOperation> CreateOrUpdateAsync(string namespaceName, EventHubNamespaceData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (namespaceName == null)
             {
@@ -101,8 +103,8 @@ namespace Azure.ResourceManager.EventHubs
             scope.Start();
             try
             {
-                var response = await _namespacesRestClient.CreateOrUpdateAsync(Id.ResourceGroupName, namespaceName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NamespaceCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _namespacesRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, namespaceName, parameters).Request, response);
+                var response = await _eventHubNamespacesRestClient.CreateOrUpdateAsync(Id.ResourceGroupName, namespaceName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new EventHubNamespaceCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _eventHubNamespacesRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, namespaceName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;

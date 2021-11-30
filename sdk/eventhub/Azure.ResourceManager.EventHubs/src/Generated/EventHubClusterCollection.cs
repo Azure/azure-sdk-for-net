@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.EventHubs
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ClustersRestOperations _clustersRestClient;
+        private readonly EventHubClustersRestOperations _eventHubClustersRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="EventHubClusterCollection"/> class for mocking. </summary>
         protected EventHubClusterCollection()
@@ -39,6 +40,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _clustersRestClient = new ClustersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _eventHubClustersRestClient = new EventHubClustersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -52,7 +54,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ClusterCreateOrUpdateOperation CreateOrUpdate(string clusterName, EventHubClusterData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual EventHubClusterCreateOrUpdateOperation CreateOrUpdate(string clusterName, EventHubClusterData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (clusterName == null)
             {
@@ -67,8 +69,8 @@ namespace Azure.ResourceManager.EventHubs
             scope.Start();
             try
             {
-                var response = _clustersRestClient.CreateOrUpdate(Id.ResourceGroupName, clusterName, parameters, cancellationToken);
-                var operation = new ClusterCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _clustersRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, clusterName, parameters).Request, response);
+                var response = _eventHubClustersRestClient.CreateOrUpdate(Id.ResourceGroupName, clusterName, parameters, cancellationToken);
+                var operation = new EventHubClusterCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _eventHubClustersRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, clusterName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -86,7 +88,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ClusterCreateOrUpdateOperation> CreateOrUpdateAsync(string clusterName, EventHubClusterData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<EventHubClusterCreateOrUpdateOperation> CreateOrUpdateAsync(string clusterName, EventHubClusterData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (clusterName == null)
             {
@@ -101,8 +103,8 @@ namespace Azure.ResourceManager.EventHubs
             scope.Start();
             try
             {
-                var response = await _clustersRestClient.CreateOrUpdateAsync(Id.ResourceGroupName, clusterName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ClusterCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _clustersRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, clusterName, parameters).Request, response);
+                var response = await _eventHubClustersRestClient.CreateOrUpdateAsync(Id.ResourceGroupName, clusterName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new EventHubClusterCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _eventHubClustersRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, clusterName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;

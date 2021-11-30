@@ -10,23 +10,22 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    /// <summary> Deletes an existing namespace. This operation also removes all associated resources under the namespace. </summary>
-    public partial class NamespaceDeleteOperation : Operation
+    /// <summary> Deletes an Alias(Disaster Recovery configuration). </summary>
+    public partial class DisasterRecoveryDeleteOperation : Operation
     {
-        private readonly OperationInternals _operation;
+        private readonly OperationOrResponseInternals _operation;
 
-        /// <summary> Initializes a new instance of NamespaceDeleteOperation for mocking. </summary>
-        protected NamespaceDeleteOperation()
+        /// <summary> Initializes a new instance of DisasterRecoveryDeleteOperation for mocking. </summary>
+        protected DisasterRecoveryDeleteOperation()
         {
         }
 
-        internal NamespaceDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal DisasterRecoveryDeleteOperation(Response response)
         {
-            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NamespaceDeleteOperation");
+            _operation = new OperationOrResponseInternals(response);
         }
 
         /// <inheritdoc />

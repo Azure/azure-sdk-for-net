@@ -18,20 +18,20 @@ using Azure.ResourceManager.EventHubs;
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> Creates or updates a namespace. Once created, this namespace&apos;s resource manifest is immutable. This operation is idempotent. </summary>
-    public partial class NamespaceCreateOrUpdateOperation : Operation<EventHubNamespace>, IOperationSource<EventHubNamespace>
+    public partial class EventHubNamespaceCreateOrUpdateOperation : Operation<EventHubNamespace>, IOperationSource<EventHubNamespace>
     {
         private readonly OperationInternals<EventHubNamespace> _operation;
 
         private readonly ArmResource _operationBase;
 
-        /// <summary> Initializes a new instance of NamespaceCreateOrUpdateOperation for mocking. </summary>
-        protected NamespaceCreateOrUpdateOperation()
+        /// <summary> Initializes a new instance of EventHubNamespaceCreateOrUpdateOperation for mocking. </summary>
+        protected EventHubNamespaceCreateOrUpdateOperation()
         {
         }
 
-        internal NamespaceCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal EventHubNamespaceCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<EventHubNamespace>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NamespaceCreateOrUpdateOperation");
+            _operation = new OperationInternals<EventHubNamespace>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "EventHubNamespaceCreateOrUpdateOperation");
             _operationBase = operationsBase;
         }
 

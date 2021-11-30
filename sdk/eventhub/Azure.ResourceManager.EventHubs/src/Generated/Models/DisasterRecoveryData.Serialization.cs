@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    public partial class ArmDisasterRecoveryData : IUtf8JsonSerializable
+    public partial class DisasterRecoveryData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.EventHubs
             writer.WriteEndObject();
         }
 
-        internal static ArmDisasterRecoveryData DeserializeArmDisasterRecoveryData(JsonElement element)
+        internal static DisasterRecoveryData DeserializeDisasterRecoveryData(JsonElement element)
         {
             Optional<SystemData> systemData = default;
             Optional<string> location = default;
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.EventHubs
                     continue;
                 }
             }
-            return new ArmDisasterRecoveryData(id, name, type, location.Value, systemData, Optional.ToNullable(provisioningState), partnerNamespace.Value, alternateName.Value, Optional.ToNullable(role), Optional.ToNullable(pendingReplicationOperationsCount));
+            return new DisasterRecoveryData(id, name, type, location.Value, systemData, Optional.ToNullable(provisioningState), partnerNamespace.Value, alternateName.Value, Optional.ToNullable(role), Optional.ToNullable(pendingReplicationOperationsCount));
         }
     }
 }

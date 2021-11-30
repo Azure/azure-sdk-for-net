@@ -16,16 +16,16 @@ using Azure.ResourceManager.EventHubs;
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> Creates or updates a namespace. Once created, this namespace&apos;s resource manifest is immutable. This operation is idempotent. </summary>
-    public partial class NamespaceUpdateOperation : Operation<EventHubNamespace>
+    public partial class EventHubNamespaceUpdateOperation : Operation<EventHubNamespace>
     {
         private readonly OperationOrResponseInternals<EventHubNamespace> _operation;
 
-        /// <summary> Initializes a new instance of NamespaceUpdateOperation for mocking. </summary>
-        protected NamespaceUpdateOperation()
+        /// <summary> Initializes a new instance of EventHubNamespaceUpdateOperation for mocking. </summary>
+        protected EventHubNamespaceUpdateOperation()
         {
         }
 
-        internal NamespaceUpdateOperation(ArmResource operationsBase, Response<EventHubNamespaceData> response)
+        internal EventHubNamespaceUpdateOperation(ArmResource operationsBase, Response<EventHubNamespaceData> response)
         {
             _operation = new OperationOrResponseInternals<EventHubNamespace>(Response.FromValue(new EventHubNamespace(operationsBase, response.Value), response.GetRawResponse()));
         }

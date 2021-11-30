@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.EventHubs
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly NamespacesRestOperations _namespacesRestClient;
+        private readonly EventHubNamespacesRestOperations _eventHubNamespacesRestClient;
         private readonly PrivateLinkResourcesRestOperations _privateLinkResourcesRestClient;
         private readonly DisasterRecoveryConfigsRestOperations _disasterRecoveryConfigsRestClient;
         private readonly EventHubNamespaceData _data;
@@ -42,6 +43,7 @@ namespace Azure.ResourceManager.EventHubs
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _namespacesRestClient = new NamespacesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _eventHubNamespacesRestClient = new EventHubNamespacesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
             _privateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
             _disasterRecoveryConfigsRestClient = new DisasterRecoveryConfigsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
@@ -53,6 +55,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _namespacesRestClient = new NamespacesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _eventHubNamespacesRestClient = new EventHubNamespacesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
             _privateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
             _disasterRecoveryConfigsRestClient = new DisasterRecoveryConfigsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
@@ -67,6 +70,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _namespacesRestClient = new NamespacesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _eventHubNamespacesRestClient = new EventHubNamespacesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
             _privateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
             _disasterRecoveryConfigsRestClient = new DisasterRecoveryConfigsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
@@ -151,14 +155,14 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Deletes an existing namespace. This operation also removes all associated resources under the namespace. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<NamespaceDeleteOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<EventHubNamespaceDeleteOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("EventHubNamespace.Delete");
             scope.Start();
             try
             {
-                var response = await _namespacesRestClient.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NamespaceDeleteOperation(_clientDiagnostics, Pipeline, _namespacesRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = await _eventHubNamespacesRestClient.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new EventHubNamespaceDeleteOperation(_clientDiagnostics, Pipeline, _eventHubNamespacesRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -173,14 +177,14 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Deletes an existing namespace. This operation also removes all associated resources under the namespace. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual NamespaceDeleteOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual EventHubNamespaceDeleteOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("EventHubNamespace.Delete");
             scope.Start();
             try
             {
-                var response = _namespacesRestClient.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new NamespaceDeleteOperation(_clientDiagnostics, Pipeline, _namespacesRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = _eventHubNamespacesRestClient.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new EventHubNamespaceDeleteOperation(_clientDiagnostics, Pipeline, _eventHubNamespacesRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -379,7 +383,7 @@ namespace Azure.ResourceManager.EventHubs
             scope.Start();
             try
             {
-                var response = await _namespacesRestClient.UpdateAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var response = await _eventHubNamespacesRestClient.UpdateAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new EventHubNamespace(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -404,7 +408,7 @@ namespace Azure.ResourceManager.EventHubs
             scope.Start();
             try
             {
-                var response = _namespacesRestClient.Update(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                var response = _eventHubNamespacesRestClient.Update(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
                 return Response.FromValue(new EventHubNamespace(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -540,13 +544,13 @@ namespace Azure.ResourceManager.EventHubs
         }
         #endregion
 
-        #region ArmDisasterRecovery
+        #region DisasterRecovery
 
-        /// <summary> Gets a collection of ArmDisasterRecoveries in the EventHubNamespace. </summary>
-        /// <returns> An object representing collection of ArmDisasterRecoveries and their operations over a EventHubNamespace. </returns>
-        public ArmDisasterRecoveryCollection GetArmDisasterRecoveries()
+        /// <summary> Gets a collection of DisasterRecoveries in the EventHubNamespace. </summary>
+        /// <returns> An object representing collection of DisasterRecoveries and their operations over a EventHubNamespace. </returns>
+        public DisasterRecoveryCollection GetDisasterRecoveries()
         {
-            return new ArmDisasterRecoveryCollection(this);
+            return new DisasterRecoveryCollection(this);
         }
         #endregion
 
