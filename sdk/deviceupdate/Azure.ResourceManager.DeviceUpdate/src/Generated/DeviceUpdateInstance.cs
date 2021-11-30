@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DeviceUpdate
     public partial class DeviceUpdateInstance : ArmResource
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly InstancesRestOperations _instancesRestClient;
+        private readonly DeviceUpdateInstancesRestOperations _deviceUpdateInstancesRestClient;
         private readonly DeviceUpdateInstanceData _data;
 
         /// <summary> Initializes a new instance of the <see cref="DeviceUpdateInstance"/> class for mocking. </summary>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _instancesRestClient = new InstancesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _deviceUpdateInstancesRestClient = new DeviceUpdateInstancesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="DeviceUpdateInstance"/> class. </summary>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         internal DeviceUpdateInstance(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _instancesRestClient = new InstancesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _deviceUpdateInstancesRestClient = new DeviceUpdateInstancesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="DeviceUpdateInstance"/> class. </summary>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         internal DeviceUpdateInstance(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _instancesRestClient = new InstancesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _deviceUpdateInstancesRestClient = new DeviceUpdateInstancesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             scope.Start();
             try
             {
-                var response = await _instancesRestClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _deviceUpdateInstancesRestClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new DeviceUpdateInstance(this, response.Value), response.GetRawResponse());
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             scope.Start();
             try
             {
-                var response = _instancesRestClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _deviceUpdateInstancesRestClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DeviceUpdateInstance(this, response.Value), response.GetRawResponse());
@@ -143,14 +143,14 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <summary> Deletes instance. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<InstanceDeleteOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<DeviceUpdateInstanceDeleteOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DeviceUpdateInstance.Delete");
             scope.Start();
             try
             {
-                var response = await _instancesRestClient.DeleteAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new InstanceDeleteOperation(_clientDiagnostics, Pipeline, _instancesRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = await _deviceUpdateInstancesRestClient.DeleteAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new DeviceUpdateInstanceDeleteOperation(_clientDiagnostics, Pipeline, _deviceUpdateInstancesRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -165,14 +165,14 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <summary> Deletes instance. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual InstanceDeleteOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual DeviceUpdateInstanceDeleteOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DeviceUpdateInstance.Delete");
             scope.Start();
             try
             {
-                var response = _instancesRestClient.Delete(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new InstanceDeleteOperation(_clientDiagnostics, Pipeline, _instancesRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = _deviceUpdateInstancesRestClient.Delete(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new DeviceUpdateInstanceDeleteOperation(_clientDiagnostics, Pipeline, _deviceUpdateInstancesRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
                 await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _instancesRestClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _deviceUpdateInstancesRestClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new DeviceUpdateInstance(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
                 TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _instancesRestClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var originalResponse = _deviceUpdateInstancesRestClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return Response.FromValue(new DeviceUpdateInstance(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
                 await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _instancesRestClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _deviceUpdateInstancesRestClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new DeviceUpdateInstance(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
                 TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _instancesRestClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var originalResponse = _deviceUpdateInstancesRestClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return Response.FromValue(new DeviceUpdateInstance(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
                 await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _instancesRestClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _deviceUpdateInstancesRestClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new DeviceUpdateInstance(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
                 TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _instancesRestClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var originalResponse = _deviceUpdateInstancesRestClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return Response.FromValue(new DeviceUpdateInstance(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="tagUpdatePayload"> Updated tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tagUpdatePayload"/> is null. </exception>
-        public async virtual Task<Response<DeviceUpdateInstance>> UpdateAsync(TagUpdate tagUpdatePayload, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<DeviceUpdateInstance>> UpdateAsync(TagUpdateOptions tagUpdatePayload, CancellationToken cancellationToken = default)
         {
             if (tagUpdatePayload == null)
             {
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             scope.Start();
             try
             {
-                var response = await _instancesRestClient.UpdateAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, tagUpdatePayload, cancellationToken).ConfigureAwait(false);
+                var response = await _deviceUpdateInstancesRestClient.UpdateAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, tagUpdatePayload, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new DeviceUpdateInstance(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="tagUpdatePayload"> Updated tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tagUpdatePayload"/> is null. </exception>
-        public virtual Response<DeviceUpdateInstance> Update(TagUpdate tagUpdatePayload, CancellationToken cancellationToken = default)
+        public virtual Response<DeviceUpdateInstance> Update(TagUpdateOptions tagUpdatePayload, CancellationToken cancellationToken = default)
         {
             if (tagUpdatePayload == null)
             {
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             scope.Start();
             try
             {
-                var response = _instancesRestClient.Update(Id.ResourceGroupName, Id.Parent.Name, Id.Name, tagUpdatePayload, cancellationToken);
+                var response = _deviceUpdateInstancesRestClient.Update(Id.ResourceGroupName, Id.Parent.Name, Id.Name, tagUpdatePayload, cancellationToken);
                 return Response.FromValue(new DeviceUpdateInstance(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

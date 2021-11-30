@@ -14,19 +14,19 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.DeviceUpdate.Models
 {
-    /// <summary> Deletes instance. </summary>
-    public partial class InstanceDeleteOperation : Operation
+    /// <summary> Deletes account. </summary>
+    public partial class DeviceUpdateAccountDeleteOperation : Operation
     {
         private readonly OperationInternals _operation;
 
-        /// <summary> Initializes a new instance of InstanceDeleteOperation for mocking. </summary>
-        protected InstanceDeleteOperation()
+        /// <summary> Initializes a new instance of DeviceUpdateAccountDeleteOperation for mocking. </summary>
+        protected DeviceUpdateAccountDeleteOperation()
         {
         }
 
-        internal InstanceDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal DeviceUpdateAccountDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "InstanceDeleteOperation");
+            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DeviceUpdateAccountDeleteOperation");
         }
 
         /// <inheritdoc />

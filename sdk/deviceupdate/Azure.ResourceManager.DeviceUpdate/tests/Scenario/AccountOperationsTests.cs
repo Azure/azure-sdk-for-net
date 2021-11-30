@@ -39,18 +39,18 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroup rg = await subscription.GetResourceGroups().GetAsync("DeviceUpdateResourceGroup");
             DeviceUpdateAccount account = await rg.GetDeviceUpdateAccounts().GetAsync("AzureDeviceUpdateAccount");
-            AccountUpdate updateParameters = new AccountUpdate()
+            DeviceUpdateAccountUpdateOptions updateOptions = new DeviceUpdateAccountUpdateOptions()
             {
                 Location = Location.WestUS2,
                 Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.None)
             };
-            var lro = await account.UpdateAsync(updateParameters);
+            var lro = await account.UpdateAsync(updateOptions);
             DeviceUpdateAccount updatedAccount = lro.Value;
-            ResourceDataHelper.AssertAccountUpdate(updatedAccount, updateParameters);
-            updateParameters.Identity.Type = ManagedServiceIdentityType.SystemAssigned;
-            lro = await account.UpdateAsync(updateParameters);
+            ResourceDataHelper.AssertAccountUpdate(updatedAccount, updateOptions);
+            updateOptions.Identity.Type = ManagedServiceIdentityType.SystemAssigned;
+            lro = await account.UpdateAsync(updateOptions);
             updatedAccount = lro.Value;
-            ResourceDataHelper.AssertAccountUpdate(updatedAccount, updateParameters);
+            ResourceDataHelper.AssertAccountUpdate(updatedAccount, updateOptions);
         }
     }
 }

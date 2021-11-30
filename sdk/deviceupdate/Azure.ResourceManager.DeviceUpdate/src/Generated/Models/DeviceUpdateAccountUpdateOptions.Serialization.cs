@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DeviceUpdate.Models
 {
-    public partial class AccountUpdate : IUtf8JsonSerializable
+    public partial class DeviceUpdateAccountUpdateOptions : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

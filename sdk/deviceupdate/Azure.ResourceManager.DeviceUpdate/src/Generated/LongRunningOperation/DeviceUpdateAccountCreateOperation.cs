@@ -18,20 +18,20 @@ using Azure.ResourceManager.DeviceUpdate;
 namespace Azure.ResourceManager.DeviceUpdate.Models
 {
     /// <summary> Creates or updates Account. </summary>
-    public partial class AccountCreateOperation : Operation<DeviceUpdateAccount>, IOperationSource<DeviceUpdateAccount>
+    public partial class DeviceUpdateAccountCreateOperation : Operation<DeviceUpdateAccount>, IOperationSource<DeviceUpdateAccount>
     {
         private readonly OperationInternals<DeviceUpdateAccount> _operation;
 
         private readonly ArmResource _operationBase;
 
-        /// <summary> Initializes a new instance of AccountCreateOperation for mocking. </summary>
-        protected AccountCreateOperation()
+        /// <summary> Initializes a new instance of DeviceUpdateAccountCreateOperation for mocking. </summary>
+        protected DeviceUpdateAccountCreateOperation()
         {
         }
 
-        internal AccountCreateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal DeviceUpdateAccountCreateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<DeviceUpdateAccount>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "AccountCreateOperation");
+            _operation = new OperationInternals<DeviceUpdateAccount>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "DeviceUpdateAccountCreateOperation");
             _operationBase = operationsBase;
         }
 

@@ -18,20 +18,20 @@ using Azure.ResourceManager.DeviceUpdate;
 namespace Azure.ResourceManager.DeviceUpdate.Models
 {
     /// <summary> Updates account&apos;s patchable properties. </summary>
-    public partial class AccountUpdateOperation : Operation<DeviceUpdateAccount>, IOperationSource<DeviceUpdateAccount>
+    public partial class DeviceUpdateAccountUpdateOperation : Operation<DeviceUpdateAccount>, IOperationSource<DeviceUpdateAccount>
     {
         private readonly OperationInternals<DeviceUpdateAccount> _operation;
 
         private readonly ArmResource _operationBase;
 
-        /// <summary> Initializes a new instance of AccountUpdateOperation for mocking. </summary>
-        protected AccountUpdateOperation()
+        /// <summary> Initializes a new instance of DeviceUpdateAccountUpdateOperation for mocking. </summary>
+        protected DeviceUpdateAccountUpdateOperation()
         {
         }
 
-        internal AccountUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal DeviceUpdateAccountUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<DeviceUpdateAccount>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "AccountUpdateOperation");
+            _operation = new OperationInternals<DeviceUpdateAccount>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "DeviceUpdateAccountUpdateOperation");
             _operationBase = operationsBase;
         }
 

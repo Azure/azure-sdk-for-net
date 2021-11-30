@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests.Helper
             }
         }
 
-        public static void AssertAccountUpdate(DeviceUpdateAccount updatedAccount, AccountUpdate updateParameters)
+        public static void AssertAccountUpdate(DeviceUpdateAccount updatedAccount, DeviceUpdateAccountUpdateOptions updateParameters)
         {
             Assert.AreEqual(updatedAccount.Data.Location, updateParameters.Location);
             if (updatedAccount.Data.Identity != null || updateParameters.Identity != null)
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests.Helper
             }
         }
 
-        public static void AssertInstanceUpdate(DeviceUpdateInstance updatedInstance, TagUpdate updateParameters)
+        public static void AssertInstanceUpdate(DeviceUpdateInstance updatedInstance, TagUpdateOptions updateParameters)
         {
             foreach (var kv in updatedInstance.Data.Tags)
             {

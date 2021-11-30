@@ -8,10 +8,10 @@
 namespace Azure.ResourceManager.DeviceUpdate.Models
 {
     /// <summary> Request payload used to update and existing Accounts. </summary>
-    public partial class AccountUpdate : TagUpdate
+    public partial class DeviceUpdateAccountUpdateOptions : TagUpdateOptions
     {
-        /// <summary> Initializes a new instance of AccountUpdate. </summary>
-        public AccountUpdate()
+        /// <summary> Initializes a new instance of DeviceUpdateAccountUpdateOptions. </summary>
+        public DeviceUpdateAccountUpdateOptions()
         {
         }
 

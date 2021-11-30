@@ -18,20 +18,20 @@ using Azure.ResourceManager.DeviceUpdate;
 namespace Azure.ResourceManager.DeviceUpdate.Models
 {
     /// <summary> Creates or updates instance. </summary>
-    public partial class InstanceCreateOperation : Operation<DeviceUpdateInstance>, IOperationSource<DeviceUpdateInstance>
+    public partial class DeviceUpdateInstanceCreateOperation : Operation<DeviceUpdateInstance>, IOperationSource<DeviceUpdateInstance>
     {
         private readonly OperationInternals<DeviceUpdateInstance> _operation;
 
         private readonly ArmResource _operationBase;
 
-        /// <summary> Initializes a new instance of InstanceCreateOperation for mocking. </summary>
-        protected InstanceCreateOperation()
+        /// <summary> Initializes a new instance of DeviceUpdateInstanceCreateOperation for mocking. </summary>
+        protected DeviceUpdateInstanceCreateOperation()
         {
         }
 
-        internal InstanceCreateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal DeviceUpdateInstanceCreateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<DeviceUpdateInstance>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "InstanceCreateOperation");
+            _operation = new OperationInternals<DeviceUpdateInstance>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "DeviceUpdateInstanceCreateOperation");
             _operationBase = operationsBase;
         }
 

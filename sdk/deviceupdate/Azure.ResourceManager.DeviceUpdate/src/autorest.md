@@ -25,7 +25,42 @@ directive:
   - rename-operation:
       from: Accounts_ListBySubscription
       to: DeviceUpdateAccounts_ListBySubscription
+  - rename-operation:
+      from: Accounts_ListByResourceGroup
+      to: DeviceUpdateAccounts_ListByResourceGroup
+  - rename-operation:
+      from: Accounts_Get
+      to: DeviceUpdateAccounts_Get
+  - rename-operation:
+      from: Accounts_Create
+      to: DeviceUpdateAccounts_Create
+  - rename-operation:
+      from: Accounts_Delete
+      to: DeviceUpdateAccounts_Delete
+  - rename-operation:
+      from: Accounts_Update
+      to: DeviceUpdateAccounts_Update
+  - rename-operation:
+      from: Instances_ListByAccount
+      to: DeviceUpdateInstances_ListByAccount
+  - rename-operation:
+      from: Instances_Get
+      to: DeviceUpdateInstances_Get
+  - rename-operation:
+      from: Instances_Create
+      to: DeviceUpdateInstances_Create
+  - rename-operation:
+      from: Instances_Delete
+      to: DeviceUpdateInstances_Delete
+  - rename-operation:
+      from: Instances_Update
+      to: DeviceUpdateInstances_Update
   - remove-operation: Accounts_Head
   - remove-operation: Instances_Head
-
+  - rename-model:
+      from: AccountUpdate
+      to: DeviceUpdateAccountUpdateOptions
+  - rename-model:
+      from: TagUpdate
+      to: TagUpdateOptions
 ```

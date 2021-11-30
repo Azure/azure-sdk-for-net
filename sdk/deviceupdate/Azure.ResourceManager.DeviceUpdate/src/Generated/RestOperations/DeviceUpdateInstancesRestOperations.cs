@@ -17,7 +17,7 @@ using Azure.ResourceManager.DeviceUpdate.Models;
 
 namespace Azure.ResourceManager.DeviceUpdate
 {
-    internal partial class InstancesRestOperations
+    internal partial class DeviceUpdateInstancesRestOperations
     {
         private string subscriptionId;
         private Uri endpoint;
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         private HttpPipeline _pipeline;
         private readonly string _userAgent;
 
-        /// <summary> Initializes a new instance of InstancesRestOperations. </summary>
+        /// <summary> Initializes a new instance of DeviceUpdateInstancesRestOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="options"> The client options used to construct the current client. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
-        public InstancesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null, string apiVersion = "2020-03-01-preview")
+        public DeviceUpdateInstancesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null, string apiVersion = "2020-03-01-preview")
         {
             this.subscriptionId = subscriptionId ?? throw new ArgumentNullException(nameof(subscriptionId));
             this.endpoint = endpoint ?? new Uri("https://management.azure.com");
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string resourceGroupName, string accountName, string instanceName, TagUpdate tagUpdatePayload)
+        internal HttpMessage CreateUpdateRequest(string resourceGroupName, string accountName, string instanceName, TagUpdateOptions tagUpdatePayload)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="tagUpdatePayload"> Updated tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="instanceName"/>, or <paramref name="tagUpdatePayload"/> is null. </exception>
-        public async Task<Response<DeviceUpdateInstanceData>> UpdateAsync(string resourceGroupName, string accountName, string instanceName, TagUpdate tagUpdatePayload, CancellationToken cancellationToken = default)
+        public async Task<Response<DeviceUpdateInstanceData>> UpdateAsync(string resourceGroupName, string accountName, string instanceName, TagUpdateOptions tagUpdatePayload, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="tagUpdatePayload"> Updated tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="instanceName"/>, or <paramref name="tagUpdatePayload"/> is null. </exception>
-        public Response<DeviceUpdateInstanceData> Update(string resourceGroupName, string accountName, string instanceName, TagUpdate tagUpdatePayload, CancellationToken cancellationToken = default)
+        public Response<DeviceUpdateInstanceData> Update(string resourceGroupName, string accountName, string instanceName, TagUpdateOptions tagUpdatePayload, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

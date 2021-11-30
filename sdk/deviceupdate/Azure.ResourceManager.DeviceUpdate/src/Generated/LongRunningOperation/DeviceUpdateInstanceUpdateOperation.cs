@@ -16,16 +16,16 @@ using Azure.ResourceManager.DeviceUpdate;
 namespace Azure.ResourceManager.DeviceUpdate.Models
 {
     /// <summary> Updates instance&apos;s tags. </summary>
-    public partial class InstanceUpdateOperation : Operation<DeviceUpdateInstance>
+    public partial class DeviceUpdateInstanceUpdateOperation : Operation<DeviceUpdateInstance>
     {
         private readonly OperationOrResponseInternals<DeviceUpdateInstance> _operation;
 
-        /// <summary> Initializes a new instance of InstanceUpdateOperation for mocking. </summary>
-        protected InstanceUpdateOperation()
+        /// <summary> Initializes a new instance of DeviceUpdateInstanceUpdateOperation for mocking. </summary>
+        protected DeviceUpdateInstanceUpdateOperation()
         {
         }
 
-        internal InstanceUpdateOperation(ArmResource operationsBase, Response<DeviceUpdateInstanceData> response)
+        internal DeviceUpdateInstanceUpdateOperation(ArmResource operationsBase, Response<DeviceUpdateInstanceData> response)
         {
             _operation = new OperationOrResponseInternals<DeviceUpdateInstance>(Response.FromValue(new DeviceUpdateInstance(operationsBase, response.Value), response.GetRawResponse()));
         }

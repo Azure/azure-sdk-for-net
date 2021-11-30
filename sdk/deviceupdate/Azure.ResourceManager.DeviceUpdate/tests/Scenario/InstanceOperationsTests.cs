@@ -40,15 +40,15 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests
             ResourceGroup rg = await subscription.GetResourceGroups().GetAsync("DeviceUpdateResourceGroup");
             DeviceUpdateAccount account = await rg.GetDeviceUpdateAccounts().GetAsync("AzureDeviceUpdateAccount");
             DeviceUpdateInstance instance = await account.GetDeviceUpdateInstances().GetAsync("Instance");
-            TagUpdate updateParameters = new TagUpdate();
-            updateParameters.Tags.Add("newTag", "newValue");
-            var lro = await instance.UpdateAsync(updateParameters);
+            TagUpdateOptions updateOptions = new TagUpdateOptions();
+            updateOptions.Tags.Add("newTag", "newValue");
+            var lro = await instance.UpdateAsync(updateOptions);
             DeviceUpdateInstance updatedInstance = lro.Value;
-            ResourceDataHelper.AssertInstanceUpdate(updatedInstance, updateParameters);
-            updateParameters.Tags.Clear();
-            lro = await instance.UpdateAsync(updateParameters);
+            ResourceDataHelper.AssertInstanceUpdate(updatedInstance, updateOptions);
+            updateOptions.Tags.Clear();
+            lro = await instance.UpdateAsync(updateOptions);
             updatedInstance = lro.Value;
-            ResourceDataHelper.AssertInstanceUpdate(updatedInstance, updateParameters);
+            ResourceDataHelper.AssertInstanceUpdate(updatedInstance, updateOptions);
         }
     }
 }
