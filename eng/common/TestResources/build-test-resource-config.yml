@@ -13,7 +13,7 @@ steps:
           ${{ parameters.SubscriptionConfiguration }}
         '@ | ConvertFrom-Json -AsHashtable
 
-        . ./eng/common/TestResources/config-functions.ps1
+        . ./eng/common/TestResources/SubConfig-Helpers.ps1
         SetSubscriptionConfiguration $config
       displayName: Initialize SubscriptionConfiguration variable
 
@@ -32,7 +32,7 @@ steps:
             ${{ config }}
           '@ | ConvertFrom-Json -AsHashtable
 
-          . ./eng/common/TestResources/config-functions.ps1
+          . ./eng/common/TestResources/SubConfig-Helpers.ps1
           UpdateSubscriptionConfiguration $configBase $config
 
         displayName: Merge Test Resource Configurations

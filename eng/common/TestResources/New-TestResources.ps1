@@ -79,7 +79,7 @@ param (
     [switch] $OutFile
 )
 
-. $PSScriptRoot/config-functions.ps1
+. $PSScriptRoot/SubConfig-Helpers.ps1
 
 # By default stop for any error.
 if (!$PSBoundParameters.ContainsKey('ErrorAction')) {
