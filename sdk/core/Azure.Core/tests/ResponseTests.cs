@@ -35,7 +35,10 @@ namespace Azure.Core.Tests
         public void ImplicitCastFromResponseTToNullFails()
         {
             Response<string> response = null;
-            var exception = Assert.Throws<ArgumentNullException>(() => _ = (string)response);
+            var exception = Assert.Throws<ArgumentNullException>(() =>
+            {
+                string s = response;
+            });
             StringAssert.StartsWith("The implicit cast from Response<System.String> to System.String failed because the Response<System.String> was null.", exception.Message);
         }
 
