@@ -50,6 +50,15 @@
     <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs">
       <LinkBase>Shared\Azure.Core</LinkBase>
     </Compile>
+    <Compile Include="$(AzureCoreSharedSources)OperationInternal.cs">
+      <LinkBase>Shared\Azure.Core</LinkBase>
+    </Compile>
+    <Compile Include="$(AzureCoreSharedSources)OperationInternalBase.cs">
+      <LinkBase>Shared\Azure.Core</LinkBase>
+    </Compile>
+    <Compile Include="$(AzureCoreSharedSources)OperationInternalOfT.cs">
+      <LinkBase>Shared\Azure.Core</LinkBase>
+    </Compile>
   </ItemGroup>
 
 </Project>

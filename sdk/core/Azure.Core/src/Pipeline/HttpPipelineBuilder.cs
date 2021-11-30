@@ -150,7 +150,7 @@ namespace Azure.Core.Pipeline
                 }
             }
 
-            policies.Add(new HttpPipelineTransportPolicy(transport));
+            policies.Add(new HttpPipelineTransportPolicy(transport, sanitizer));
 
             responseClassifier ??= ResponseClassifier.Shared;
 

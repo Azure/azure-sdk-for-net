@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateGetAllRequest(string resourceGroupName, string expressRouteGatewayName)
+        internal HttpMessage CreateListRequest(string resourceGroupName, string expressRouteGatewayName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="expressRouteGatewayName"> The name of the ExpressRoute gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="expressRouteGatewayName"/> is null. </exception>
-        public async Task<Response<ExpressRouteConnectionList>> GetAllAsync(string resourceGroupName, string expressRouteGatewayName, CancellationToken cancellationToken = default)
+        public async Task<Response<ExpressRouteConnectionList>> ListAsync(string resourceGroupName, string expressRouteGatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(expressRouteGatewayName));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName, expressRouteGatewayName);
+            using var message = CreateListRequest(resourceGroupName, expressRouteGatewayName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="expressRouteGatewayName"> The name of the ExpressRoute gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="expressRouteGatewayName"/> is null. </exception>
-        public Response<ExpressRouteConnectionList> GetAll(string resourceGroupName, string expressRouteGatewayName, CancellationToken cancellationToken = default)
+        public Response<ExpressRouteConnectionList> List(string resourceGroupName, string expressRouteGatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(expressRouteGatewayName));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName, expressRouteGatewayName);
+            using var message = CreateListRequest(resourceGroupName, expressRouteGatewayName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

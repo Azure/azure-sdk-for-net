@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Storage
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateGetAllRequest()
+        internal HttpMessage CreateListRequest()
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -63,9 +63,9 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Lists deleted accounts under the subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<DeletedAccountListResult>> GetAllAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<DeletedAccountListResult>> ListAsync(CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetAllRequest();
+            using var message = CreateListRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -83,9 +83,9 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Lists deleted accounts under the subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<DeletedAccountListResult> GetAll(CancellationToken cancellationToken = default)
+        public Response<DeletedAccountListResult> List(CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetAllRequest();
+            using var message = CreateListRequest();
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="deletedAccountName"> Name of the deleted storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="deletedAccountName"/> is null. </exception>
-        public async Task<Response<DeletedAccount>> GetAsync(string location, string deletedAccountName, CancellationToken cancellationToken = default)
+        public async Task<Response<DeletedAccountData>> GetAsync(string location, string deletedAccountName, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -143,11 +143,13 @@ namespace Azure.ResourceManager.Storage
             {
                 case 200:
                     {
-                        DeletedAccount value = default;
+                        DeletedAccountData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DeletedAccount.DeserializeDeletedAccount(document.RootElement);
+                        value = DeletedAccountData.DeserializeDeletedAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((DeletedAccountData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -158,7 +160,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="deletedAccountName"> Name of the deleted storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="deletedAccountName"/> is null. </exception>
-        public Response<DeletedAccount> Get(string location, string deletedAccountName, CancellationToken cancellationToken = default)
+        public Response<DeletedAccountData> Get(string location, string deletedAccountName, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -175,17 +177,19 @@ namespace Azure.ResourceManager.Storage
             {
                 case 200:
                     {
-                        DeletedAccount value = default;
+                        DeletedAccountData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DeletedAccount.DeserializeDeletedAccount(document.RootElement);
+                        value = DeletedAccountData.DeserializeDeletedAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((DeletedAccountData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateGetAllNextPageRequest(string nextLink)
+        internal HttpMessage CreateListNextPageRequest(string nextLink)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -203,14 +207,14 @@ namespace Azure.ResourceManager.Storage
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<DeletedAccountListResult>> GetAllNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<DeletedAccountListResult>> ListNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink);
+            using var message = CreateListNextPageRequest(nextLink);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -230,14 +234,14 @@ namespace Azure.ResourceManager.Storage
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<DeletedAccountListResult> GetAllNextPage(string nextLink, CancellationToken cancellationToken = default)
+        public Response<DeletedAccountListResult> ListNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink);
+            using var message = CreateListNextPageRequest(nextLink);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

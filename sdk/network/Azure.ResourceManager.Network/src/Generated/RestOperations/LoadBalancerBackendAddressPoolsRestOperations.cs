@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateGetAllRequest(string resourceGroupName, string loadBalancerName)
+        internal HttpMessage CreateListRequest(string resourceGroupName, string loadBalancerName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="loadBalancerName"> The name of the load balancer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="loadBalancerName"/> is null. </exception>
-        public async Task<Response<LoadBalancerBackendAddressPoolListResult>> GetAllAsync(string resourceGroupName, string loadBalancerName, CancellationToken cancellationToken = default)
+        public async Task<Response<LoadBalancerBackendAddressPoolListResult>> ListAsync(string resourceGroupName, string loadBalancerName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(loadBalancerName));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName, loadBalancerName);
+            using var message = CreateListRequest(resourceGroupName, loadBalancerName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="loadBalancerName"> The name of the load balancer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="loadBalancerName"/> is null. </exception>
-        public Response<LoadBalancerBackendAddressPoolListResult> GetAll(string resourceGroupName, string loadBalancerName, CancellationToken cancellationToken = default)
+        public Response<LoadBalancerBackendAddressPoolListResult> List(string resourceGroupName, string loadBalancerName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(loadBalancerName));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName, loadBalancerName);
+            using var message = CreateListRequest(resourceGroupName, loadBalancerName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateGetAllNextPageRequest(string nextLink, string resourceGroupName, string loadBalancerName)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string resourceGroupName, string loadBalancerName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="loadBalancerName"> The name of the load balancer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="loadBalancerName"/> is null. </exception>
-        public async Task<Response<LoadBalancerBackendAddressPoolListResult>> GetAllNextPageAsync(string nextLink, string resourceGroupName, string loadBalancerName, CancellationToken cancellationToken = default)
+        public async Task<Response<LoadBalancerBackendAddressPoolListResult>> ListNextPageAsync(string nextLink, string resourceGroupName, string loadBalancerName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(loadBalancerName));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, loadBalancerName);
+            using var message = CreateListNextPageRequest(nextLink, resourceGroupName, loadBalancerName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="loadBalancerName"> The name of the load balancer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="loadBalancerName"/> is null. </exception>
-        public Response<LoadBalancerBackendAddressPoolListResult> GetAllNextPage(string nextLink, string resourceGroupName, string loadBalancerName, CancellationToken cancellationToken = default)
+        public Response<LoadBalancerBackendAddressPoolListResult> ListNextPage(string nextLink, string resourceGroupName, string loadBalancerName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(loadBalancerName));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, loadBalancerName);
+            using var message = CreateListNextPageRequest(nextLink, resourceGroupName, loadBalancerName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

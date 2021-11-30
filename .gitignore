@@ -64,7 +64,7 @@ ipch/
 *.vsp
 
 # VS Code
-.vscode/*
+**/.vscode/*
 !.vscode/cspell.json
 
 # Code analysis
