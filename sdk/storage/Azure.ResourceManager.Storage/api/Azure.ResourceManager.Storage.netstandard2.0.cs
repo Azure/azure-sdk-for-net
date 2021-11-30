@@ -340,9 +340,6 @@ namespace Azure.ResourceManager.Storage
         public int? ImmutabilityPeriodSinceCreationInDays { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.ImmutabilityPolicyState? State { get { throw null; } }
     }
-    public static partial class ManagementGroupExtensions
-    {
-    }
     public partial class ManagementPolicy : Azure.ResourceManager.Core.ArmResource
     {
         public static readonly Azure.ResourceManager.ResourceType ResourceType;
@@ -693,9 +690,6 @@ namespace Azure.ResourceManager.Storage
     {
         public TableServiceData() { }
         public Azure.ResourceManager.Storage.Models.CorsRules Cors { get { throw null; } set { } }
-    }
-    public static partial class TenantExtensions
-    {
     }
 }
 namespace Azure.ResourceManager.Storage.Models
