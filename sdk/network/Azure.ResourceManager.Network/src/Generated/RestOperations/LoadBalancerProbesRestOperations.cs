@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateGetAllRequest(string resourceGroupName, string loadBalancerName)
+        internal HttpMessage CreateListRequest(string resourceGroupName, string loadBalancerName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="loadBalancerName"> The name of the load balancer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="loadBalancerName"/> is null. </exception>
-        public async Task<Response<LoadBalancerProbeListResult>> GetAllAsync(string resourceGroupName, string loadBalancerName, CancellationToken cancellationToken = default)
+        public async Task<Response<LoadBalancerProbeListResult>> ListAsync(string resourceGroupName, string loadBalancerName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(loadBalancerName));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName, loadBalancerName);
+            using var message = CreateListRequest(resourceGroupName, loadBalancerName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="loadBalancerName"> The name of the load balancer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="loadBalancerName"/> is null. </exception>
-        public Response<LoadBalancerProbeListResult> GetAll(string resourceGroupName, string loadBalancerName, CancellationToken cancellationToken = default)
+        public Response<LoadBalancerProbeListResult> List(string resourceGroupName, string loadBalancerName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(loadBalancerName));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName, loadBalancerName);
+            using var message = CreateListRequest(resourceGroupName, loadBalancerName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="probeName"> The name of the probe. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="loadBalancerName"/>, or <paramref name="probeName"/> is null. </exception>
-        public async Task<Response<Probe>> GetAsync(string resourceGroupName, string loadBalancerName, string probeName, CancellationToken cancellationToken = default)
+        public async Task<Response<ProbeData>> GetAsync(string resourceGroupName, string loadBalancerName, string probeName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -178,11 +178,13 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        Probe value = default;
+                        ProbeData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Probe.DeserializeProbe(document.RootElement);
+                        value = ProbeData.DeserializeProbeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((ProbeData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -194,7 +196,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="probeName"> The name of the probe. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="loadBalancerName"/>, or <paramref name="probeName"/> is null. </exception>
-        public Response<Probe> Get(string resourceGroupName, string loadBalancerName, string probeName, CancellationToken cancellationToken = default)
+        public Response<ProbeData> Get(string resourceGroupName, string loadBalancerName, string probeName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -215,17 +217,19 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        Probe value = default;
+                        ProbeData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Probe.DeserializeProbe(document.RootElement);
+                        value = ProbeData.DeserializeProbeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((ProbeData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateGetAllNextPageRequest(string nextLink, string resourceGroupName, string loadBalancerName)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string resourceGroupName, string loadBalancerName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -245,7 +249,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="loadBalancerName"> The name of the load balancer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="loadBalancerName"/> is null. </exception>
-        public async Task<Response<LoadBalancerProbeListResult>> GetAllNextPageAsync(string nextLink, string resourceGroupName, string loadBalancerName, CancellationToken cancellationToken = default)
+        public async Task<Response<LoadBalancerProbeListResult>> ListNextPageAsync(string nextLink, string resourceGroupName, string loadBalancerName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -260,7 +264,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(loadBalancerName));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, loadBalancerName);
+            using var message = CreateListNextPageRequest(nextLink, resourceGroupName, loadBalancerName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -282,7 +286,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="loadBalancerName"> The name of the load balancer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="loadBalancerName"/> is null. </exception>
-        public Response<LoadBalancerProbeListResult> GetAllNextPage(string nextLink, string resourceGroupName, string loadBalancerName, CancellationToken cancellationToken = default)
+        public Response<LoadBalancerProbeListResult> ListNextPage(string nextLink, string resourceGroupName, string loadBalancerName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -297,7 +301,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(loadBalancerName));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, loadBalancerName);
+            using var message = CreateListNextPageRequest(nextLink, resourceGroupName, loadBalancerName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

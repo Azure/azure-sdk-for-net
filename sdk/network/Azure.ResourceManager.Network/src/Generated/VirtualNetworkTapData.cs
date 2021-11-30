@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="destinationNetworkInterfaceIPConfiguration"> The reference to the private IP Address of the collector nic that will receive the tap. </param>
         /// <param name="destinationLoadBalancerFrontEndIPConfiguration"> The reference to the private IP address on the internal Load Balancer that will receive the tap. </param>
         /// <param name="destinationPort"> The VXLAN destination port that will receive the tapped traffic. </param>
-        internal VirtualNetworkTapData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, IReadOnlyList<NetworkInterfaceTapConfigurationData> networkInterfaceTapConfigurations, string resourceGuid, ProvisioningState? provisioningState, NetworkInterfaceIPConfiguration destinationNetworkInterfaceIPConfiguration, FrontendIPConfiguration destinationLoadBalancerFrontEndIPConfiguration, int? destinationPort) : base(id, name, type, location, tags)
+        internal VirtualNetworkTapData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, IReadOnlyList<NetworkInterfaceTapConfigurationData> networkInterfaceTapConfigurations, string resourceGuid, ProvisioningState? provisioningState, NetworkInterfaceIPConfigurationData destinationNetworkInterfaceIPConfiguration, FrontendIPConfigurationData destinationLoadBalancerFrontEndIPConfiguration, int? destinationPort) : base(id, name, type, location, tags)
         {
             Etag = etag;
             NetworkInterfaceTapConfigurations = networkInterfaceTapConfigurations;
@@ -53,9 +53,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> The provisioning state of the virtual network tap resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> The reference to the private IP Address of the collector nic that will receive the tap. </summary>
-        public NetworkInterfaceIPConfiguration DestinationNetworkInterfaceIPConfiguration { get; set; }
+        public NetworkInterfaceIPConfigurationData DestinationNetworkInterfaceIPConfiguration { get; set; }
         /// <summary> The reference to the private IP address on the internal Load Balancer that will receive the tap. </summary>
-        public FrontendIPConfiguration DestinationLoadBalancerFrontEndIPConfiguration { get; set; }
+        public FrontendIPConfigurationData DestinationLoadBalancerFrontEndIPConfiguration { get; set; }
         /// <summary> The VXLAN destination port that will receive the tapped traffic. </summary>
         public int? DestinationPort { get; set; }
     }

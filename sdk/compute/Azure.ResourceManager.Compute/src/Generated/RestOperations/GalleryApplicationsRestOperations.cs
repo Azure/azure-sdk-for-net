@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateGetAllByGalleryRequest(string resourceGroupName, string galleryName)
+        internal HttpMessage CreateListByGalleryRequest(string resourceGroupName, string galleryName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryName"> The name of the Shared Application Gallery from which Application Definitions are to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="galleryName"/> is null. </exception>
-        public async Task<Response<GalleryApplicationList>> GetAllByGalleryAsync(string resourceGroupName, string galleryName, CancellationToken cancellationToken = default)
+        public async Task<Response<GalleryApplicationList>> ListByGalleryAsync(string resourceGroupName, string galleryName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(galleryName));
             }
 
-            using var message = CreateGetAllByGalleryRequest(resourceGroupName, galleryName);
+            using var message = CreateListByGalleryRequest(resourceGroupName, galleryName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryName"> The name of the Shared Application Gallery from which Application Definitions are to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="galleryName"/> is null. </exception>
-        public Response<GalleryApplicationList> GetAllByGallery(string resourceGroupName, string galleryName, CancellationToken cancellationToken = default)
+        public Response<GalleryApplicationList> ListByGallery(string resourceGroupName, string galleryName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -504,7 +504,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(galleryName));
             }
 
-            using var message = CreateGetAllByGalleryRequest(resourceGroupName, galleryName);
+            using var message = CreateListByGalleryRequest(resourceGroupName, galleryName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateGetAllByGalleryNextPageRequest(string nextLink, string resourceGroupName, string galleryName)
+        internal HttpMessage CreateListByGalleryNextPageRequest(string nextLink, string resourceGroupName, string galleryName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryName"> The name of the Shared Application Gallery from which Application Definitions are to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="galleryName"/> is null. </exception>
-        public async Task<Response<GalleryApplicationList>> GetAllByGalleryNextPageAsync(string nextLink, string resourceGroupName, string galleryName, CancellationToken cancellationToken = default)
+        public async Task<Response<GalleryApplicationList>> ListByGalleryNextPageAsync(string nextLink, string resourceGroupName, string galleryName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(galleryName));
             }
 
-            using var message = CreateGetAllByGalleryNextPageRequest(nextLink, resourceGroupName, galleryName);
+            using var message = CreateListByGalleryNextPageRequest(nextLink, resourceGroupName, galleryName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -577,7 +577,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryName"> The name of the Shared Application Gallery from which Application Definitions are to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="galleryName"/> is null. </exception>
-        public Response<GalleryApplicationList> GetAllByGalleryNextPage(string nextLink, string resourceGroupName, string galleryName, CancellationToken cancellationToken = default)
+        public Response<GalleryApplicationList> ListByGalleryNextPage(string nextLink, string resourceGroupName, string galleryName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -592,7 +592,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(galleryName));
             }
 
-            using var message = CreateGetAllByGalleryNextPageRequest(nextLink, resourceGroupName, galleryName);
+            using var message = CreateListByGalleryNextPageRequest(nextLink, resourceGroupName, galleryName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

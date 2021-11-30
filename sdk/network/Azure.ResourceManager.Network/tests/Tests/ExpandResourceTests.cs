@@ -10,7 +10,6 @@ using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Helpers;
 using NUnit.Framework;
-using SubResource = Azure.ResourceManager.Network.Models.SubResource;
 
 namespace Azure.ResourceManager.Network.Tests
 {
@@ -99,7 +98,7 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 Location = location,
                 FrontendIPConfigurations = {
-                    new FrontendIPConfiguration()
+                    new FrontendIPConfigurationData()
                     {
                         Name = frontendIpConfigName,
                         PublicIPAddress = new PublicIPAddressData()
@@ -115,7 +114,7 @@ namespace Azure.ResourceManager.Network.Tests
                     }
                 },
                 LoadBalancingRules = {
-                    new LoadBalancingRule()
+                    new LoadBalancingRuleData()
                     {
                         Name = loadBalancingRuleName,
                         FrontendIPConfiguration = new WritableSubResource()
@@ -141,7 +140,7 @@ namespace Azure.ResourceManager.Network.Tests
                     }
                 },
                 Probes = {
-                    new Probe()
+                    new ProbeData()
                     {
                         Name = probeName,
                         Protocol = ProbeProtocol.Http,
@@ -219,7 +218,7 @@ namespace Azure.ResourceManager.Network.Tests
             // Get lb with expanded nics from nat rules
             loadBalancer = await loadBalancerCollection.GetAsync(lbName, "InboundNatRules/backendIPConfiguration");
 
-            foreach (InboundNatRule natRule in loadBalancer.GetInboundNatRules().GetAll())
+            foreach (var natRule in loadBalancer.GetInboundNatRules())
             {
                 Assert.NotNull(natRule.Data.BackendIPConfiguration);
                 Assert.NotNull(natRule.Data.BackendIPConfiguration.Id);
@@ -231,9 +230,9 @@ namespace Azure.ResourceManager.Network.Tests
             // Get lb with expanded nics from pools
             loadBalancer = await loadBalancerCollection.GetAsync(lbName, "BackendAddressPools/backendIPConfigurations");
 
-            foreach (BackendAddressPool pool in loadBalancer.GetBackendAddressPools().GetAll())
+            foreach (var pool in loadBalancer.GetBackendAddressPools())
             {
-                foreach (NetworkInterfaceIPConfiguration ipconfig in loadBalancer.GetBackendAddressPools().GetAll().First().Data.BackendIPConfigurations)
+                foreach (var ipconfig in loadBalancer.GetBackendAddressPools().First().Data.BackendIPConfigurations)
                 {
                     Assert.NotNull(ipconfig.Id);
                     //Assert.NotNull(ipconfig.Name);
@@ -244,7 +243,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Get lb with expanded publicip
             loadBalancer = await loadBalancerCollection.GetAsync(lbName, "FrontendIPConfigurations/PublicIPAddress");
-            foreach (FrontendIPConfiguration ipconfig in loadBalancer.Data.FrontendIPConfigurations)
+            foreach (var ipconfig in loadBalancer.Data.FrontendIPConfigurations)
             {
                 Assert.NotNull(ipconfig.PublicIPAddress);
                 Assert.NotNull(ipconfig.PublicIPAddress.Id);
@@ -257,8 +256,8 @@ namespace Azure.ResourceManager.Network.Tests
             nic1 = await networkInterfaceCollection.GetAsync(nic1name, "IPConfigurations/Subnet");
             foreach (NetworkInterfaceIPConfiguration ipconfig in nic1.GetNetworkInterfaceIPConfigurations())
             {
-                Assert.NotNull(ipconfig.Subnet);
-                Assert.NotNull(ipconfig.Subnet.Id);
+                Assert.NotNull(ipconfig.Data.Subnet);
+                Assert.NotNull(ipconfig.Data.Subnet.Id);
                 //Assert.NotNull(ipconfig.Subnet.Name);
                 //Assert.NotNull(ipconfig.Subnet.Etag);
                 //Assert.IsNotEmpty(ipconfig.Subnet.IpConfigurations);

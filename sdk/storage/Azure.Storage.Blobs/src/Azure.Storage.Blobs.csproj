@@ -42,6 +42,9 @@
     <Compile Include="$(AzureCoreSharedSources)HttpMessageSanitizer.cs" LinkBase="SharedCore" />
     <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" LinkBase="SharedCore" />
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="SharedCore" />
+    <Compile Include="$(AzureCoreSharedSources)OperationInternal.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)OperationInternalBase.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)OperationInternalOfT.cs" LinkBase="Shared" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(AzureStorageSharedSources)ClientsideEncryption\*.cs" LinkBase="Shared" />
