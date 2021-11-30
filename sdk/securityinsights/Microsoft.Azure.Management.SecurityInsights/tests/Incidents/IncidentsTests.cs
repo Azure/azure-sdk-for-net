@@ -130,6 +130,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                 { 
                     TeamName = Guid.NewGuid().ToString()
                 };
+                //Error email sent to PM team
                 var IncidentTeam = SecurityInsightsClient.Incidents.CreateTeam(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, IncidentId, IncidentTeamProperties);
                 ValidateIncidentTeam(IncidentTeam);
                 SecurityInsightsClient.Incidents.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, IncidentId);
