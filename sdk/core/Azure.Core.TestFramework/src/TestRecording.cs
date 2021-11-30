@@ -98,14 +98,14 @@ namespace Azure.Core.TestFramework
                     switch (Mode)
                     {
                         case RecordedTestMode.Live:
-                            #if NET6_0_OR_GREATER
+#if NET6_0_OR_GREATER
                             var liveSeed = RandomNumberGenerator.GetInt32(int.MaxValue);
-                            #else
+#else
                             var csp = new RNGCryptoServiceProvider();
                             var bytes = new byte[4];
                             csp.GetBytes(bytes);
                             var liveSeed = BitConverter.ToInt32(bytes, 0);
-                            #endif
+#endif
                             _random = new TestRandom(Mode, liveSeed);
                             break;
                         case RecordedTestMode.Record:

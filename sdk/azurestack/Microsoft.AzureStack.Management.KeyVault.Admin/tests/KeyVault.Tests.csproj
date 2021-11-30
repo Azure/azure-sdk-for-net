@@ -7,7 +7,6 @@
     <VersionPrefix>1.0.0</VersionPrefix>    
   </PropertyGroup>
 
-
   <ItemGroup>
     <ProjectReference Include="..\src\Microsoft.AzureStack.Management.KeyVault.Admin.csproj" />
   </ItemGroup>
