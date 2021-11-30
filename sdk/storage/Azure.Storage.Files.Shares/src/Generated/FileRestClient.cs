@@ -1525,7 +1525,7 @@ namespace Azure.Storage.Files.Shares
             }
             if (ignoreReadOnly != null)
             {
-                request.Headers.Add("x-ms-file-rename-ignore-read-only", ignoreReadOnly.Value);
+                request.Headers.Add("x-ms-file-rename-ignore-readonly", ignoreReadOnly.Value);
             }
             if (sourceLeaseId != null)
             {

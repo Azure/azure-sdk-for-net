@@ -1309,7 +1309,6 @@ namespace Azure.Storage.Files.Shares.Tests
             }
         }
 
-        [Ignore("service bug")]
         [RecordedTest]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
         [TestCase(true)]
@@ -1350,7 +1349,7 @@ namespace Azure.Storage.Files.Shares.Tests
                     options: options);
 
                 // Assert
-                Response<ShareFileProperties> response = await destFile.GetPropertiesAsync();
+                Response<ShareDirectoryProperties> response = await destDirectory.GetPropertiesAsync();
             }
             else
             {
