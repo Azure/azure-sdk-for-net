@@ -162,7 +162,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
             return null;
         }
 
-        internal static Dictionary<string,BinaryData> UpdateStates(this WebPubSubConnectionContext connectionContext, IReadOnlyDictionary<string, BinaryData> newStates)
+        internal static Dictionary<string, BinaryData> UpdateStates(this WebPubSubConnectionContext connectionContext, IReadOnlyDictionary<string, BinaryData> newStates)
         {
             // states cleared.
             if (newStates == null)

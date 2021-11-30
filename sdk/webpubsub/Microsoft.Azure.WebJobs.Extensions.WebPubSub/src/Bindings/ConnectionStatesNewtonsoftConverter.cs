@@ -17,14 +17,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
     {
         public override IReadOnlyDictionary<string, BinaryData> ReadJson(JsonReader reader, Type objectType, IReadOnlyDictionary<string, BinaryData> existingValue, bool hasExistingValue, JsonSerializer serializer)
         {
-            var dic = new Dictionary<string, BinaryData>();
-            var jdic = JToken.Load(reader).ToObject<Dictionary<string, JToken>>();
-            foreach (var item in jdic)
+            var dict = new Dictionary<string, BinaryData>();
+            var jDict = JToken.Load(reader).ToObject<Dictionary<string, JToken>>();
+            foreach (var item in jDict)
             {
-                dic.Add(item.Key, BinaryData.FromString(JsonConvert.SerializeObject(item.Value)));
+                dict.Add(item.Key, BinaryData.FromString(JsonConvert.SerializeObject(item.Value)));
             }
 
-            return dic;
+            return dict;
         }
 
         public override void WriteJson(JsonWriter writer, IReadOnlyDictionary<string, BinaryData> value, JsonSerializer serializer)

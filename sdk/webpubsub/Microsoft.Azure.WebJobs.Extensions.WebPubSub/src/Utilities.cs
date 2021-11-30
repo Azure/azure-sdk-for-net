@@ -8,10 +8,11 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Reflection;
-using System.Text.Json;
 using Microsoft.Azure.WebPubSub.Common;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
-using NewtonsoftJson = Newtonsoft.Json;
+using SystemJson = System.Text.Json;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
@@ -89,7 +90,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             object response, RequestType requestType,
             WebPubSubConnectionContext context)
         {
-            JsonDocument converted = null;
+            JObject jResponse = null;
             string originStr = null;
             bool needConvert = true;
             if (response is WebPubSubEventResponse)
@@ -98,17 +99,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             }
             else
             {
-                // JObject or string type, use string to convert between JObject and JsonDocument.
+                // JObject or string type, use string to convert between NewtonsoftJson and SystemTextJson.
                 originStr = response.ToString();
-                converted = JsonDocument.Parse(originStr);
+                jResponse = response is JObject jObj ? jObj : JObject.Parse(originStr);
             }
 
             try
             {
                 // Check error, errorCode is required for json convert, otherwise, ignored.
-                if (needConvert && converted.RootElement.TryGetProperty("code", out var code))
+                if (needConvert && jResponse.TryGetValue("code", out var code))
                 {
-                    var error = JsonSerializer.Deserialize<EventErrorResponse>(originStr);
+                    var error = SystemJson.JsonSerializer.Deserialize<EventErrorResponse>(originStr);
                     return BuildErrorResponse(error);
                 }
                 else if (response is EventErrorResponse errorResponse)
@@ -120,23 +121,23 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 {
                     if (needConvert)
                     {
-                        var states = GetStatesFromJson(converted);
+                        var states = GetStatesFromJson(jResponse);
                         var mergedStates = context.UpdateStates(states);
                         return BuildConnectEventResponse(originStr, mergedStates);
                     }
                     else if (response is ConnectEventResponse connectResponse)
                     {
                         var mergedStates = context.UpdateStates(connectResponse.States);
-                        return BuildConnectEventResponse(JsonSerializer.Serialize(response), mergedStates);
+                        return BuildConnectEventResponse(SystemJson.JsonSerializer.Serialize(response), mergedStates);
                     }
                 }
                 if (requestType == RequestType.User)
                 {
                     if (needConvert)
                     {
-                        var states = GetStatesFromJson(converted);
+                        var states = GetStatesFromJson(jResponse);
                         var mergedStates = context.UpdateStates(states);
-                        return BuildUserEventResponse(JsonSerializer.Deserialize<UserEventResponse>(originStr), mergedStates);
+                        return BuildUserEventResponse(SystemJson.JsonSerializer.Deserialize<UserEventResponse>(originStr), mergedStates);
                     }
                     else if (response is UserEventResponse messageResponse)
                     {
@@ -218,15 +219,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             return false;
         }
 
-        private static Dictionary<string, object> GetStatesFromJson(JsonDocument converted)
+        private static Dictionary<string, object> GetStatesFromJson(JObject response)
         {
             var states = new Dictionary<string, object>();
-            if (converted.RootElement.TryGetProperty("states", out var val))
+            if (response.TryGetValue("states", out var val))
             {
-                if (val.ValueKind == JsonValueKind.Object)
+                // val should be a JSON object of <key,value> pairs
+                if (val.Type == JTokenType.Object)
                 {
-                    var rawJson = val.GetRawText();
-                    var strongType = NewtonsoftJson.JsonConvert.DeserializeObject<IReadOnlyDictionary<string, BinaryData>>(rawJson);
+                    var strongType = JsonConvert.DeserializeObject<IReadOnlyDictionary<string, BinaryData>>(val.ToString());
                     foreach (var item in strongType)
                     {
                         states.Add(item.Key, item.Value);
