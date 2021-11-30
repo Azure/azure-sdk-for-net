@@ -171,11 +171,32 @@ directive:
   #   where: $.definitions.WebPubSubNetworkACLs
   #   transform: $.properties.defaultAction.$ref = "#/definitions/AclAction"
 
-  # Change Sku to WebPubSubSku
+  # Remove Sku
+  # - remove-operation: "Sku"
+  # - remove-operation: "GetSku"
+  # - remove-operation: "GetSkus"
+  # - remove-operation: "Getskus"
+  # - remove-operation: "ListSku"
+  # - remove-operation: "ListSkus"
+  - from: swagger-document
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/skus']
+    transform: $ = {}
+  # - remove-model: Sku
+  # - remove-model: SkuCapacity
+  # - remove-model: SkuList
+  - from: swagger-document
+    where: $.definitions.Sku
+    transform: $ = {}
+  - from: swagger-document
+    where: $.definitions.SkuCapacity
+    transform: $ = {}
+  - from: swagger-document
+    where: $.definitions.SkuList
+    transform: $ = {}
+
+  # # Change ResourceSku to WebPubSubSku
   # - rename-model:
-  #     from: Sku
-  #     to: WebPubSubSku
-  # - from: swagger-document
-  #   where: $.definitions.SkuList
-  #   transform: $.properties.value.items.$ref = "#/definitions/WebPubSubSku"
+  #   from: ResourceSku
+  #   to: WebPubSubSku
+
 ```

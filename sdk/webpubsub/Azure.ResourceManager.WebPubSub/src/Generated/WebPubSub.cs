@@ -556,42 +556,6 @@ namespace Azure.ResourceManager.WebPubSub
             }
         }
 
-        /// <summary> List all available skus of the resource. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<IReadOnlyList<Sku>>> GetSkusAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("WebPubSub.GetSkus");
-            scope.Start();
-            try
-            {
-                var response = await _webPubSubRestClient.ListSkusAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value.Value, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> List all available skus of the resource. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IReadOnlyList<Sku>> GetSkus(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("WebPubSub.GetSkus");
-            scope.Start();
-            try
-            {
-                var response = _webPubSubRestClient.ListSkus(Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(response.Value.Value, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> Get the private link resources that need to be created for a resource. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>

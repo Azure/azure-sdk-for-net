@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.WebPubSub.Models
 {
     /// <summary> The scale type applicable to the sku. </summary>
-    public readonly partial struct ScaleType : IEquatable<ScaleType>
+    internal readonly partial struct ScaleType : IEquatable<ScaleType>
     {
         private readonly string _value;
 
