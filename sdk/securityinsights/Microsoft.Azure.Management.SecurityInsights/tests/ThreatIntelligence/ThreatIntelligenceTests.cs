@@ -53,12 +53,13 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                    PatternType = "ipv4-addr",
                    Pattern = "[ipv4-addr:value = '1.1.1.2']",
                    ThreatTypes = ThreatTypes,
-                   ValidFrom = DateTime.Now.ToString()
+                   ValidFrom = DateTime.Now.ToString(),
+                   Source = "Azure Sentinel",
+                   Confidence = 10
                 };
-
-                var ThreatIntelligence = SecurityInsightsClient.ThreatIntelligenceIndicator.Create(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, ThreatIntelligenceId, ThreatIntelligenceProperties);
+                
+                var ThreatIntelligence = SecurityInsightsClient.ThreatIntelligenceIndicator.CreateIndicator(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, ThreatIntelligenceProperties);
                 ValidateThreatIntelligence(ThreatIntelligence);
-                SecurityInsightsClient.ThreatIntelligenceIndicator.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, ThreatIntelligenceId);
             }
         }
 
@@ -77,13 +78,18 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                     PatternType = "ipv4-addr",
                     Pattern = "[ipv4-addr:value = '1.1.1.2']",
                     ThreatTypes = ThreatTypes,
-                    ValidFrom = DateTime.Now.ToString()
+                    ValidFrom = DateTime.Now.ToString(),
+                    Source = "Azure Sentinel",
+                    Confidence = 10
                 };
 
-                SecurityInsightsClient.ThreatIntelligenceIndicator.Create(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, ThreatIntelligenceId, ThreatIntelligenceProperties);
-                var ThreatIntelligence = SecurityInsightsClient.ThreatIntelligenceIndicator.Get(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, ThreatIntelligenceId);
+                var FilteringCriteria = new ThreatIntelligenceFilteringCriteria()
+                { PageSize = 10 };
+
+                var Indicator = SecurityInsightsClient.ThreatIntelligenceIndicator.CreateIndicator(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, ThreatIntelligenceProperties);
+                var ThreatIntelligence = SecurityInsightsClient.ThreatIntelligenceIndicator.Get(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, Indicator.Name);
                 ValidateThreatIntelligence(ThreatIntelligence);
-                SecurityInsightsClient.ThreatIntelligenceIndicator.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, ThreatIntelligenceId);
+                SecurityInsightsClient.ThreatIntelligenceIndicator.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, Indicator.Name);
 
             }
         }
@@ -103,11 +109,12 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                     PatternType = "ipv4-addr",
                     Pattern = "[ipv4-addr:value = '1.1.1.2']",
                     ThreatTypes = ThreatTypes,
-                    ValidFrom = DateTime.Now.ToString()
+                    ValidFrom = DateTime.Now.ToString(),
+                    Source = "Azure Sentinel"
                 };
 
-                SecurityInsightsClient.ThreatIntelligenceIndicator.Create(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, ThreatIntelligenceId, ThreatIntelligenceProperties);
-                SecurityInsightsClient.ThreatIntelligenceIndicator.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, ThreatIntelligenceId);
+                var Indicator = SecurityInsightsClient.ThreatIntelligenceIndicator.CreateIndicator(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, ThreatIntelligenceProperties);
+                SecurityInsightsClient.ThreatIntelligenceIndicator.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, Indicator.Name);
             }
         }
 
@@ -126,7 +133,8 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                     PatternType = "ipv4-addr",
                     Pattern = "[ipv4-addr:value = '1.1.1.2']",
                     ThreatTypes = ThreatTypes,
-                    ValidFrom = DateTime.Now.ToString()
+                    ValidFrom = DateTime.Now.ToString(),
+                    Source = "Azure Sentinel"
                 };
                 var ThreatIntelligenceFilter = new ThreatIntelligenceFilteringCriteria()
                 { 
@@ -134,10 +142,10 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                 };
 
 
-                SecurityInsightsClient.ThreatIntelligenceIndicator.Create(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, ThreatIntelligenceId, ThreatIntelligenceProperties);
+                var Indicator = SecurityInsightsClient.ThreatIntelligenceIndicator.CreateIndicator(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, ThreatIntelligenceProperties);
                 var ThreatIntelligences = SecurityInsightsClient.ThreatIntelligenceIndicator.QueryIndicators(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, ThreatIntelligenceFilter);
                 ValidateThreatIntelligences(ThreatIntelligences);
-                SecurityInsightsClient.ThreatIntelligenceIndicator.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, ThreatIntelligenceId);
+                SecurityInsightsClient.ThreatIntelligenceIndicator.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, Indicator.Name);
             }
         }
 
@@ -156,13 +164,14 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                     PatternType = "ipv4-addr",
                     Pattern = "[ipv4-addr:value = '1.1.1.2']",
                     ThreatTypes = ThreatTypes,
-                    ValidFrom = DateTime.Now.ToString()
+                    ValidFrom = DateTime.Now.ToString(),
+                    Source = "Azure Sentinel"
                 };
 
-                SecurityInsightsClient.ThreatIntelligenceIndicator.Create(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, ThreatIntelligenceId, ThreatIntelligenceProperties);
+                var Indicator = SecurityInsightsClient.ThreatIntelligenceIndicator.CreateIndicator(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, ThreatIntelligenceProperties);
                 var ThreatIntelligenceMetrics = SecurityInsightsClient.ThreatIntelligenceIndicatorMetrics.List(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName);
                 ValidateThreatIntelligenceMetrics(ThreatIntelligenceMetrics);
-                SecurityInsightsClient.ThreatIntelligenceIndicator.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, ThreatIntelligenceId);
+                SecurityInsightsClient.ThreatIntelligenceIndicator.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, Indicator.Name);
             }
         }
 
@@ -181,18 +190,19 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                     PatternType = "ipv4-addr",
                     Pattern = "[ipv4-addr:value = '1.1.1.2']",
                     ThreatTypes = ThreatTypes,
-                    ValidFrom = DateTime.Now.ToString()
+                    ValidFrom = DateTime.Now.ToString(),
+                    Source = "Azure Sentinel"
                 };
 
-                SecurityInsightsClient.ThreatIntelligenceIndicator.Create(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, ThreatIntelligenceId, ThreatIntelligenceProperties);
+                var Indicator = SecurityInsightsClient.ThreatIntelligenceIndicator.CreateIndicator(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, ThreatIntelligenceProperties);
 
                 IList<string> ThreatIntelligenceTags = new List<string>
                 {
                     "sdktest"
                 };
 
-                SecurityInsightsClient.ThreatIntelligenceIndicator.AppendTags(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, ThreatIntelligenceId, ThreatIntelligenceTags);
-                SecurityInsightsClient.ThreatIntelligenceIndicator.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, ThreatIntelligenceId);
+                SecurityInsightsClient.ThreatIntelligenceIndicator.AppendTags(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, Indicator.Name, ThreatIntelligenceTags);
+                SecurityInsightsClient.ThreatIntelligenceIndicator.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, Indicator.Name);
 
             }
         }
@@ -212,18 +222,19 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                     PatternType = "ipv4-addr",
                     Pattern = "[ipv4-addr:value = '1.1.1.2']",
                     ThreatTypes = ThreatTypes,
-                    ValidFrom = DateTime.Now.ToString()
+                    ValidFrom = DateTime.Now.ToString(),
+                    Source = "Azure Sentinel"
                 };
 
-                SecurityInsightsClient.ThreatIntelligenceIndicator.Create(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, ThreatIntelligenceId, ThreatIntelligenceProperties);
+                var Indicator = SecurityInsightsClient.ThreatIntelligenceIndicator.CreateIndicator(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, ThreatIntelligenceProperties);
 
                 IList<string> ThreatIntelligenceTags = new List<string>
                 {
                     "sdktest"
                 };
 
-                SecurityInsightsClient.ThreatIntelligenceIndicator.ReplaceTags(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, ThreatIntelligenceId, ThreatIntelligenceProperties);
-                SecurityInsightsClient.ThreatIntelligenceIndicator.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, ThreatIntelligenceId);
+                SecurityInsightsClient.ThreatIntelligenceIndicator.ReplaceTags(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, Indicator.Name, ThreatIntelligenceProperties);
+                SecurityInsightsClient.ThreatIntelligenceIndicator.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, Indicator.Name);
 
             }
         }

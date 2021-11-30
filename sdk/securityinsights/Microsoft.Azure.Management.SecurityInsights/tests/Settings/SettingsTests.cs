@@ -44,12 +44,13 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var SecurityInsightsClient = TestHelper.GetSecurityInsightsClient(context);
-                var SettingId = Guid.NewGuid().ToString();
+                var SettingId = "Ueba";
                 var UebaDataSources = new List<string>();
                 UebaDataSources.Add("AuditLogs");
                 var SettingsProperties = new Ueba()
                 { 
-                   DataSources = UebaDataSources
+                   DataSources = UebaDataSources,
+                   Etag = "*"
                 };
 
                 var Setting = SecurityInsightsClient.ProductSettings.Update(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, SettingId, SettingsProperties);
@@ -64,12 +65,13 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var SecurityInsightsClient = TestHelper.GetSecurityInsightsClient(context);
-                var SettingId = Guid.NewGuid().ToString();
+                var SettingId = "Ueba";
                 var UebaDataSources = new List<string>();
                 UebaDataSources.Add("AuditLogs");
                 var SettingsProperties = new Ueba()
                 {
-                    DataSources = UebaDataSources
+                    DataSources = UebaDataSources,
+                    Etag = "*"
                 };
 
                 SecurityInsightsClient.ProductSettings.Update(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, SettingId, SettingsProperties);
@@ -86,12 +88,13 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var SecurityInsightsClient = TestHelper.GetSecurityInsightsClient(context);
-                var SettingId = Guid.NewGuid().ToString();
+                var SettingId = "Ueba";
                 var UebaDataSources = new List<string>();
                 UebaDataSources.Add("AuditLogs");
                 var SettingsProperties = new Ueba()
                 {
-                    DataSources = UebaDataSources
+                    DataSources = UebaDataSources,
+                    Etag = "*"
                 };
 
                 SecurityInsightsClient.ProductSettings.Update(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, SettingId, SettingsProperties);

@@ -48,7 +48,8 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                 {
                     DisplayName = "SDKTestBookmark",
                     Query = "SecurityEvent | take 10",
-                    Labels = Labels
+                    Labels = Labels,
+                    EventTime = DateTime.Now,
                 };
                 var Bookmark = SecurityInsightsClient.Bookmarks.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, BookmarkId, BookmarkBody);
                 
@@ -87,7 +88,8 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                 {
                     DisplayName = "SDKTestBookmark",
                     Query = "SecurityEvent | take 10",
-                    Labels = Labels
+                    Labels = Labels,
+                    EventTime = DateTime.Now,
                 };
                 var Bookmark = SecurityInsightsClient.Bookmarks.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, BookmarkId, BookmarkBody);
 
@@ -123,7 +125,8 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                 {
                     DisplayName = "SDKTestBookmark",
                     Query = "SecurityEvent | take 10",
-                    Labels = Labels
+                    Labels = Labels,
+                    EventTime = DateTime.Now,
                 };
                 var Bookmark = SecurityInsightsClient.Bookmarks.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, BookmarkId, BookmarkBody);
 
@@ -161,7 +164,8 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                 {
                     DisplayName = "SDKTestBookmark",
                     Query = "SecurityEvent | take 10",
-                    Labels = Labels
+                    Labels = Labels,
+                    EventTime = DateTime.Now,
                 };
                 var Bookmark = SecurityInsightsClient.Bookmarks.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, BookmarkId, BookmarkBody);
 

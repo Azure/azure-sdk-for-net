@@ -23,6 +23,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
         #region Test setup
 
         public static string IPAddress = "8.8.8.8";
+        public static string Domain = "google.com";
 
         #endregion
 
@@ -45,7 +46,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var SecurityInsightsClient = TestHelper.GetSecurityInsightsClient(context);
-                var Enrichment = SecurityInsightsClient.DomainWhois.Get(TestHelper.ResourceGroup, IPAddress);
+                var Enrichment = SecurityInsightsClient.DomainWhois.Get(TestHelper.ResourceGroup, Domain);
                 ValidateDomainWhois(Enrichment);
             }
         }

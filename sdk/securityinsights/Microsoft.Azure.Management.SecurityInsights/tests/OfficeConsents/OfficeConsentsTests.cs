@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading;
 using Microsoft.Azure.Management.SecurityInsights;
@@ -41,10 +42,11 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var SecurityInsightsClient = TestHelper.GetSecurityInsightsClient(context);
-                //Might need to create a data connector?
+                //No way to create one, as its for multi-teanant which isnt supported.
                 var OfficeConsents = SecurityInsightsClient.OfficeConsents.List(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName);
-                var OfficeConsent = SecurityInsightsClient.OfficeConsents.Get(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, OfficeConsents.GetEnumerator().Current.Name);
-                ValidateOfficeConsent(OfficeConsent);
+                ValidateOfficeConsents(OfficeConsents);
+                //var OfficeConsent = SecurityInsightsClient.OfficeConsents.Get(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, OfficeConsents.GetEnumerator().Current.Name);
+                //ValidateOfficeConsent(OfficeConsent);
             }
         }
 
@@ -54,11 +56,11 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var SecurityInsightsClient = TestHelper.GetSecurityInsightsClient(context);
-                //Might need to create data connector
-
+                //No way to create one, as its for multi-teanant which isnt supported.
                 var OfficeConsents = SecurityInsightsClient.OfficeConsents.List(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName);
-                var OfficeConsent = SecurityInsightsClient.OfficeConsents.Get(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, OfficeConsents.GetEnumerator().Current.Name);
-                SecurityInsightsClient.OfficeConsents.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, OfficeConsent.Name);
+                ValidateOfficeConsents(OfficeConsents);
+                //var OfficeConsent = SecurityInsightsClient.OfficeConsents.Get(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, OfficeConsents.GetEnumerator().Current.Name);
+                //SecurityInsightsClient.OfficeConsents.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, OfficeConsent.Name);
             }
         }
 
@@ -68,7 +70,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
 
         private void ValidateOfficeConsents(IPage<OfficeConsent> OfficeConsents)
         {
-            Assert.True(OfficeConsents.IsAny());
+            Assert.True(OfficeConsents.Count() >= 0);
 
             OfficeConsents.ForEach(ValidateOfficeConsent);
         }

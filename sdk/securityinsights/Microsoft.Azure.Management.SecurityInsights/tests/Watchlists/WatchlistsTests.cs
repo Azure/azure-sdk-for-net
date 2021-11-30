@@ -30,8 +30,21 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var SecurityInsightsClient = TestHelper.GetSecurityInsightsClient(context);
+                var WatchlistId = Guid.NewGuid().ToString();
+                var WatchlistProperties = new Watchlist()
+                {
+                    DisplayName = "SDK Test",
+                    Provider = "SDK Test",
+                    Source = "sdktest",
+                    ItemsSearchKey = "ipaddress"
+                };
+
+                var Watchlist = SecurityInsightsClient.Watchlists.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, WatchlistId, WatchlistProperties);
+                
                 var Watchlists = SecurityInsightsClient.Watchlists.List(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName);
                 ValidateWatchlists(Watchlists);
+                SecurityInsightsClient.Watchlists.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, WatchlistId);
+
             }
         }
 

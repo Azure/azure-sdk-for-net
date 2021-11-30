@@ -50,7 +50,8 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                 {
                     DisplayName = "SDKTestBookmark",
                     Query = "SecurityEvent | take 10",
-                    Labels = Labels
+                    Labels = Labels,
+                    EventTime = DateTime.Now
                 };
 
                 var Bookmark = SecurityInsightsClient.Bookmarks.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, BookmarkId, BookmarkBody);
@@ -71,7 +72,8 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                 {
                     DisplayName = "SDKTestBookmark",
                     Query = "SecurityEvent | take 10",
-                    Labels = Labels
+                    Labels = Labels,
+                    EventTime = DateTime.Now
                 };
                 SecurityInsightsClient.Bookmarks.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, BookmarkId, BookmarkBody);
                 var Bookmark = SecurityInsightsClient.Bookmarks.Get(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, BookmarkId);
@@ -92,7 +94,8 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                 {
                     DisplayName = "SDKTestBookmark",
                     Query = "SecurityEvent | take 10",
-                    Labels = Labels
+                    Labels = Labels,
+                    EventTime = DateTime.Now
                 };
                 SecurityInsightsClient.Bookmarks.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, BookmarkId, BookmarkBody);
                 SecurityInsightsClient.Bookmarks.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, BookmarkId);
@@ -108,24 +111,27 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
 
                 var Labels = new List<string>();
                 var BookmarkId = Guid.NewGuid().ToString();
+                var EndTime = DateTime.Now;
                 var BookmarkBody = new Bookmark()
                 {
                     DisplayName = "SDKTestBookmark",
                     Query = "SecurityEvent | take 10",
                     Labels = Labels,
+                    EventTime = DateTime.Now,
                     QueryStartTime = DateTime.Now.AddDays(-1),
-                    QueryEndTime = DateTime.Now,
+                    QueryEndTime = EndTime,
                 };
                 SecurityInsightsClient.Bookmarks.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, BookmarkId, BookmarkBody);
 
                 var BookmarkExpandParameters = new BookmarkExpandParameters()
                 {
                     StartTime = DateTime.Now.AddDays(-2),
-                    EndTime = DateTime.Now,
+                    EndTime = EndTime,
                     ExpansionId = Guid.NewGuid()
                 };
 
-                var BookmarkExpand = SecurityInsightsClient.Bookmark.Expand(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.ResourceGroup, BookmarkId, BookmarkExpandParameters);
+                //Bug?
+                var BookmarkExpand = SecurityInsightsClient.Bookmark.Expand(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, BookmarkId, BookmarkExpandParameters);
                 ValidateBookmarkExpand(BookmarkExpand);
                 SecurityInsightsClient.Bookmarks.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, BookmarkId);
             }

@@ -47,9 +47,15 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                 { 
                     IsEnabled = false
                 };
-                var AutomationRuleAction = new AutomationRuleAction()
+                var ActionConfiguration = new AutomationRuleRunPlaybookActionActionConfiguration()
                 { 
-                    Order = 1
+                    LogicAppResourceId = TestHelper.ActionLAResourceID,
+                    TenantId = TestHelper.TestEnvironment.Tenant
+                };
+                var AutomationRuleAction = new AutomationRuleRunPlaybookAction()
+                { 
+                    Order = 1,
+                    ActionConfiguration = ActionConfiguration
                 };
                 var AutomationRuleActions = new List<AutomationRuleAction>();
                 AutomationRuleActions.Add(AutomationRuleAction);
@@ -80,9 +86,15 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                 {
                     IsEnabled = false
                 };
-                var AutomationRuleAction = new AutomationRuleAction()
+                var ActionConfiguration = new AutomationRuleRunPlaybookActionActionConfiguration()
                 {
-                    Order = 1
+                    LogicAppResourceId = TestHelper.ActionLAResourceID,
+                    TenantId = TestHelper.TestEnvironment.Tenant
+                };
+                var AutomationRuleAction = new AutomationRuleRunPlaybookAction()
+                {
+                    Order = 1,
+                    ActionConfiguration = ActionConfiguration
                 };
                 var AutomationRuleActions = new List<AutomationRuleAction>();
                 AutomationRuleActions.Add(AutomationRuleAction);
@@ -114,9 +126,15 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                 {
                     IsEnabled = false
                 };
-                var AutomationRuleAction = new AutomationRuleAction()
+                var ActionConfiguration = new AutomationRuleRunPlaybookActionActionConfiguration()
                 {
-                    Order = 1
+                    LogicAppResourceId = TestHelper.ActionLAResourceID,
+                    TenantId = TestHelper.TestEnvironment.Tenant
+                };
+                var AutomationRuleAction = new AutomationRuleRunPlaybookAction()
+                {
+                    Order = 1,
+                    ActionConfiguration = ActionConfiguration
                 };
                 var AutomationRuleActions = new List<AutomationRuleAction>();
                 AutomationRuleActions.Add(AutomationRuleAction);

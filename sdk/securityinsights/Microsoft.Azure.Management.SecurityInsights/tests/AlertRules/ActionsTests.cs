@@ -17,8 +17,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
     {
         #region Test setup
 
-        private static string ActionLAResourceID = "/subscriptions/1c61ccbf-70b3-45a3-a1fb-848ce46d70a6/resourceGroups/ndicola-pfsense/providers/Microsoft.Logic/workflows/aaduserinfo";
-        private static string ActionLATriggerUri = "https://prod-100.westus.logic.azure.com:443/workflows/7730de943c5746e3b1f202de83be93d0/triggers/When_a_response_to_an_Azure_Sentinel_alert_is_triggered/paths/invoke?api-version=2018-07-01-preview&sp=%2Ftriggers%2FWhen_a_response_to_an_Azure_Sentinel_alert_is_triggered%2Frun&sv=1.0&sig=m3QgR_GOY29-AFc-2MaP987Nca_9zlfdXB8DEhrfLxA";
+        
 
         #endregion
 
@@ -42,8 +41,8 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                 var ActionId = Guid.NewGuid().ToString();
                 var Action = new ActionRequest
                 {
-                    LogicAppResourceId = ActionLAResourceID,
-                    TriggerUri = ActionLATriggerUri
+                    LogicAppResourceId = TestHelper.ActionLAResourceID,
+                    TriggerUri = TestHelper.ActionLATriggerUri
                 };
                 SecurityInsightsClient.Actions.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, RuleId, ActionId, Action);
                 var Actions = SecurityInsightsClient.Actions.ListByAlertRule(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, RuleId);
@@ -70,8 +69,8 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                 var ActionId = Guid.NewGuid().ToString();
                 var Action = new ActionRequest
                 {
-                    LogicAppResourceId = ActionLAResourceID,
-                    TriggerUri = ActionLATriggerUri
+                    LogicAppResourceId = TestHelper.ActionLAResourceID,
+                    TriggerUri = TestHelper.ActionLATriggerUri
                 };
 
                 var alertRuleAction = SecurityInsightsClient.Actions.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, RuleId, ActionId, Action);
@@ -98,8 +97,8 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                 var ActionId = Guid.NewGuid().ToString();
                 var Action = new ActionRequest
                 {
-                    LogicAppResourceId = ActionLAResourceID,
-                    TriggerUri = ActionLATriggerUri
+                    LogicAppResourceId = TestHelper.ActionLAResourceID,
+                    TriggerUri = TestHelper.ActionLATriggerUri
                 };
 
                 SecurityInsightsClient.Actions.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, RuleId, ActionId, Action);
@@ -127,8 +126,8 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                 var ActionId = Guid.NewGuid().ToString();
                 var Action = new ActionRequest
                 {
-                    LogicAppResourceId = ActionLAResourceID,
-                    TriggerUri = ActionLATriggerUri
+                    LogicAppResourceId = TestHelper.ActionLAResourceID,
+                    TriggerUri = TestHelper.ActionLATriggerUri
                 };
 
                 SecurityInsightsClient.Actions.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, RuleId, ActionId, Action);

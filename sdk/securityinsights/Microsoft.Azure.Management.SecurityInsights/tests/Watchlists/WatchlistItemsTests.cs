@@ -154,7 +154,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
             {
                 Assert.True(WatchlistItems.IsAny());
 
-            WatchlistItems.ForEach(ValidateWatchlistItem);
+                WatchlistItems.ForEach(ValidateWatchlistItem);
             }
 
             private void ValidateWatchlistItem(WatchlistItem WatchlistItem)

@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
     /// <summary>
     /// Threat intelligence information object.
     /// </summary>
-    public partial class ThreatIntelligenceInformation
+    public partial class ThreatIntelligenceInformation : ResourceWithEtag
     {
         /// <summary>
         /// Initializes a new instance of the ThreatIntelligenceInformation
@@ -32,9 +32,9 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// class.
         /// </summary>
         /// <param name="etag">Etag of the azure resource</param>
-        public ThreatIntelligenceInformation(string etag = default(string))
+        public ThreatIntelligenceInformation(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string etag = default(string))
+            : base(id, name, type, systemData, etag)
         {
-            Etag = etag;
             CustomInit();
         }
 
@@ -42,12 +42,6 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets etag of the azure resource
-        /// </summary>
-        [JsonProperty(PropertyName = "etag")]
-        public string Etag { get; set; }
 
     }
 }

@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
     {
         #region Test setup
 
+
         #endregion
 
         #region AlertRules

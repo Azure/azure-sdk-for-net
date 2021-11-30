@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var SecurityInsightsClient = TestHelper.GetSecurityInsightsClient(context);
-                var OnboardingStateId = Guid.NewGuid().ToString();
+                var OnboardingStateId = "default";
 
                 var OnboardingState = SecurityInsightsClient.SentinelOnboardingStates.Create(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, OnboardingStateId, null, false);
                 ValidateOnboardingState(OnboardingState);
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var SecurityInsightsClient = TestHelper.GetSecurityInsightsClient(context);
-                var OnboardingStateId = Guid.NewGuid().ToString();
+                var OnboardingStateId = "default";
 
                 SecurityInsightsClient.SentinelOnboardingStates.Create(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, OnboardingStateId, null, false);
                 var OnboardingState = SecurityInsightsClient.SentinelOnboardingStates.Get(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, OnboardingStateId);
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var SecurityInsightsClient = TestHelper.GetSecurityInsightsClient(context);
-                var OnboardingStateId = Guid.NewGuid().ToString();
+                var OnboardingStateId = "default";
 
                 SecurityInsightsClient.SentinelOnboardingStates.Create(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, OnboardingStateId, null, false);
                 SecurityInsightsClient.SentinelOnboardingStates.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, OnboardingStateId);

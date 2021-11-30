@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
             {
                 var SecurityInsightsClient = TestHelper.GetSecurityInsightsClient(context);
                 var AlertRuleTemplates = SecurityInsightsClient.AlertRuleTemplates.List(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName);
-                var AlertRuleTemplateId = AlertRuleTemplates.First().Id;
+                var AlertRuleTemplateId = AlertRuleTemplates.First().Name;
                 var AlertRuleTemplate = SecurityInsightsClient.AlertRuleTemplates.Get(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, AlertRuleTemplateId);
                 ValidateAlertRuleTemplate(AlertRuleTemplate);
             }
