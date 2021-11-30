@@ -4,6 +4,7 @@
 using System;
 using System.Runtime.Serialization;
 using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure
 {
@@ -66,12 +67,43 @@ namespace Azure
             ErrorCode = errorCode;
         }
 
+        internal RequestFailedException(int status, (string Message, string? ErrorCode) details):
+            this(status, details.Message, details.ErrorCode, null)
+        {
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="RequestFailedException"></see> class
+        /// with an error message, HTTP status code, error code obtained from the specified response.</summary>
+        /// <param name="response">The response to obtain error details from.</param>
+        public RequestFailedException(Response response)
+            : this(response.Status, GetErrorDetails(response))
+        {
+        }
+
         /// <inheritdoc />
         protected RequestFailedException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
             Status = info.GetInt32(nameof(Status));
             ErrorCode = info.GetString(nameof(ErrorCode));
+        }
+
+        private static (string Message, string? ErrorCode) GetErrorDetails(Response response)
+        {
+            string? message = null;
+            string? errorCode = null;
+
+            string? content = ClientDiagnostics.ReadContentAsync(response, false).EnsureCompleted();
+            ClientDiagnostics.ExtractAzureErrorContent(content, ref message, ref errorCode);
+            string exceptionMessage = ClientDiagnostics.CreateRequestFailedMessageWithContent(
+                response,
+                message,
+                content,
+                errorCode,
+                null,
+                response.Sanitizer!);
+
+            return (exceptionMessage, errorCode);
         }
 
         /// <inheritdoc />

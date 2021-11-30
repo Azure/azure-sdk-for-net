@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateGetAllRequest(string resourceGroupName, string virtualNetworkName)
+        internal HttpMessage CreateListRequest(string resourceGroupName, string virtualNetworkName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -574,7 +574,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualNetworkName"> The name of the virtual network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkName"/> is null. </exception>
-        public async Task<Response<SubnetListResult>> GetAllAsync(string resourceGroupName, string virtualNetworkName, CancellationToken cancellationToken = default)
+        public async Task<Response<SubnetListResult>> ListAsync(string resourceGroupName, string virtualNetworkName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -585,7 +585,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(virtualNetworkName));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName, virtualNetworkName);
+            using var message = CreateListRequest(resourceGroupName, virtualNetworkName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -606,7 +606,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualNetworkName"> The name of the virtual network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkName"/> is null. </exception>
-        public Response<SubnetListResult> GetAll(string resourceGroupName, string virtualNetworkName, CancellationToken cancellationToken = default)
+        public Response<SubnetListResult> List(string resourceGroupName, string virtualNetworkName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -617,7 +617,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(virtualNetworkName));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName, virtualNetworkName);
+            using var message = CreateListRequest(resourceGroupName, virtualNetworkName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -633,7 +633,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateGetAllNextPageRequest(string nextLink, string resourceGroupName, string virtualNetworkName)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string resourceGroupName, string virtualNetworkName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -653,7 +653,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualNetworkName"> The name of the virtual network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="virtualNetworkName"/> is null. </exception>
-        public async Task<Response<SubnetListResult>> GetAllNextPageAsync(string nextLink, string resourceGroupName, string virtualNetworkName, CancellationToken cancellationToken = default)
+        public async Task<Response<SubnetListResult>> ListNextPageAsync(string nextLink, string resourceGroupName, string virtualNetworkName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -668,7 +668,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(virtualNetworkName));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, virtualNetworkName);
+            using var message = CreateListNextPageRequest(nextLink, resourceGroupName, virtualNetworkName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -690,7 +690,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualNetworkName"> The name of the virtual network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="virtualNetworkName"/> is null. </exception>
-        public Response<SubnetListResult> GetAllNextPage(string nextLink, string resourceGroupName, string virtualNetworkName, CancellationToken cancellationToken = default)
+        public Response<SubnetListResult> ListNextPage(string nextLink, string resourceGroupName, string virtualNetworkName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -705,7 +705,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(virtualNetworkName));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, virtualNetworkName);
+            using var message = CreateListNextPageRequest(nextLink, resourceGroupName, virtualNetworkName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
