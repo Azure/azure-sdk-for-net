@@ -1,6 +1,6 @@
 # Release History
 
-## 12.0.0-preview.18 (2021-11-29)
+## 12.0.0-preview.18 (2021-11-30)
 - Added support for service version 2021-02-12.
 
 ## 12.0.0-preview.17 (2021-11-03)
