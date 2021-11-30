@@ -194,9 +194,11 @@ directive:
     where: $.definitions.SkuList
     transform: $ = {}
 
-  # # Change ResourceSku to WebPubSubSku
-  # - rename-model:
-  #   from: ResourceSku
-  #   to: WebPubSubSku
-
+  # Change ResourceSku to WebPubSubSku
+  - rename-model:
+      from: ResourceSku
+      to: WebPubSubSku
+  - from: swagger-document
+    where: $.WebPubSubResource.properties.sku
+    transform: $.$ref = "#/definitions/WebPubSubSku"
 ```

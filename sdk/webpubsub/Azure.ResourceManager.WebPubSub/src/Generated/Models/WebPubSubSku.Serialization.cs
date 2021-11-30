@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
-    public partial class ResourceSku : IUtf8JsonSerializable
+    public partial class WebPubSubSku : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             writer.WriteEndObject();
         }
 
-        internal static ResourceSku DeserializeResourceSku(JsonElement element)
+        internal static WebPubSubSku DeserializeWebPubSubSku(JsonElement element)
         {
             string name = default;
             Optional<WebPubSubSkuTier> tier = default;
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     continue;
                 }
             }
-            return new ResourceSku(name, Optional.ToNullable(tier), size.Value, family.Value, Optional.ToNullable(capacity));
+            return new WebPubSubSku(name, Optional.ToNullable(tier), size.Value, family.Value, Optional.ToNullable(capacity));
         }
     }
 }

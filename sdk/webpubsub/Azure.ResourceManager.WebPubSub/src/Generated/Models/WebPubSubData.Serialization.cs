@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.WebPubSub
 
         internal static WebPubSubData DeserializeWebPubSubData(JsonElement element)
         {
-            Optional<ResourceSku> sku = default;
+            Optional<WebPubSubSku> sku = default;
             Optional<ManagedIdentity> identity = default;
             Optional<SystemData> systemData = default;
             IDictionary<string, string> tags = default;
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.WebPubSub
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = ResourceSku.DeserializeResourceSku(property.Value);
+                    sku = WebPubSubSku.DeserializeWebPubSubSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("identity"))

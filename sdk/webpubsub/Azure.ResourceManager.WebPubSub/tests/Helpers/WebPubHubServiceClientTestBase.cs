@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Helpers
 
             WebPubSubData data = new WebPubSubData(Location.WestUS2)
             {
-                Sku = new ResourceSku("Standard_S1"),
+                Sku = new WebPubSubSku("Standard_S1"),
                 LiveTraceConfiguration = new LiveTraceConfiguration("true", categories),
                 NetworkACLs = new WebPubSubNetworkACLs(aCLAction, publicNetwork, privateEndpoints),
                 ResourceLogConfiguration = new ResourceLogConfiguration(resourceLogCategory),

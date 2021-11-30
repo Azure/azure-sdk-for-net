@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
 
             WebPubSubData data = new WebPubSubData(Location.WestUS2)
             {
-                Sku = new ResourceSku("Standard_S1"),
+                Sku = new WebPubSubSku("Standard_S1"),
                 LiveTraceConfiguration = new LiveTraceConfiguration("true", categories),
                 //EventHandler = new EventHandlerSettings(items),
                 NetworkACLs = new WebPubSubNetworkACLs(aCLAction, publicNetwork, privateEndpoints),
