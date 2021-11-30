@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.DeviceUpdate.Tests.Samples
 {
-    public class Sample2_ManagingInstances
+    public class Sample2_ManagingDeviceUpdateInstances
     {
         private ResourceGroup resourceGroup;
 

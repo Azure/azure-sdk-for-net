@@ -39,13 +39,13 @@ Now that we have the resource group created, we can manage the instances inside 
 // Create a new account
 string accountName = "myAccount";
 DeviceUpdateAccountData input1 = new DeviceUpdateAccountData(Location.WestUS2);
-AccountCreateOperation lro1 = await resourceGroup.GetDeviceUpdateAccounts().CreateOrUpdateAsync(accountName, input1);
+DeviceUpdateAccountCreateOperation lro1 = await resourceGroup.GetDeviceUpdateAccounts().CreateOrUpdateAsync(accountName, input1);
 DeviceUpdateAccount account = lro1.Value;
 // Get the instance collection from the specific account and create an instance
 string instanceName = "myInstance";
 DeviceUpdateInstanceData input2 = new DeviceUpdateInstanceData(Location.WestUS2);
 input2.IotHubs.Add(new IotHubSettings("/subscriptions/.../resourceGroups/.../providers/Microsoft.Devices/IotHubs/..."));
-InstanceCreateOperation lro2 = await account.GetDeviceUpdateInstances().CreateOrUpdateAsync(instanceName, input2);
+DeviceUpdateInstanceCreateOperation lro2 = await account.GetDeviceUpdateInstances().CreateOrUpdateAsync(instanceName, input2);
 DeviceUpdateInstance instance = lro2.Value;
 ```
 
@@ -72,9 +72,9 @@ DeviceUpdateInstanceCollection instanceCollection = account.GetDeviceUpdateInsta
 // Now we can get the instance with GetAsync()
 DeviceUpdateInstance instance = await instanceCollection.GetAsync("myInstance");
 // With UpdateAsync(), we can update the instance
-TagUpdate updateParameters = new TagUpdate();
-updateParameters.Tags.Add("newTag", "newValue");
-instance = await instance.UpdateAsync(updateParameters);
+TagUpdateOptions updateOptions = new TagUpdateOptions();
+updateOptions.Tags.Add("newTag", "newValue");
+instance = await instance.UpdateAsync(updateOptions);
 ```
 
 ***Delete an instance***

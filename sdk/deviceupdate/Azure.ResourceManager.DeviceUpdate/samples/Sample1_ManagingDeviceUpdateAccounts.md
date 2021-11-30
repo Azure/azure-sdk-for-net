@@ -39,7 +39,7 @@ Now that we have the resource group created, we can manage the accounts inside t
 // Get the account collection from the specific resource group and create an account
 string accountName = "myAccount";
 DeviceUpdateAccountData input = new DeviceUpdateAccountData(Location.WestUS2);
-AccountCreateOperation lro = await resourceGroup.GetDeviceUpdateAccounts().CreateOrUpdateAsync(accountName, input);
+DeviceUpdateAccountCreateOperation lro = await resourceGroup.GetDeviceUpdateAccounts().CreateOrUpdateAsync(accountName, input);
 DeviceUpdateAccount account = lro.Value;
 ```
 
@@ -75,4 +75,4 @@ await account.DeleteAsync();
 
 
 ## Next steps
-Take a look at the [Managing Instances](https://github.com/Yao725/azure-sdk-for-net/tree/feature/mgmt-track2-deviceupdate/sdk/deviceupdate/Azure.ResourceManager.DeviceUpdate/samples/Sample2_ManagingInstances.md) samples.
+Take a look at the [Managing Device Update Instances](https://github.com/Yao725/azure-sdk-for-net/tree/feature/mgmt-track2-deviceupdate/sdk/deviceupdate/Azure.ResourceManager.DeviceUpdate/samples/Sample2_ManagingInstances.md) samples.

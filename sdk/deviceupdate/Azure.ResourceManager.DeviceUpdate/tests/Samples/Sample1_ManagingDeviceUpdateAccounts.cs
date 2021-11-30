@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.DeviceUpdate.Tests.Samples
 {
-    public class Sample1_ManagingAccounts
+    public class Sample1_ManagingDeviceUpdateAccounts
     {
         private Subscription subscription;
         private ResourceGroup resourceGroup;
