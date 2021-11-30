@@ -23,7 +23,7 @@ dotnet add package Azure.AI.Language.QuestionAnswering --prerelease
 
 ### Authenticate the client
 
-In order to interact with the Question Answering service, you'll need to create an instance of the [`QuestionAnsweringClient`][questionanswering_client_class] class. You will need an **endpoint**, and an **API key** to instantiate a client object. For more information regarding authenticating with Cognitive Services, see [Authenticate requests to Azure Cognitive Services][cognitive_auth].
+In order to interact with the Question Answering service, you'll need to either create an instance of the [`QuestionAnsweringClient`][questionanswering_client_class] class for querying existing projects or an instance of the [`QuestionAnsweringProjectsClient`][questionansweringprojects_client_class] for managing projects within your resource. You will need an **endpoint**, and an **API key** to instantiate a client object. For more information regarding authenticating with Cognitive Services, see [Authenticate requests to Azure Cognitive Services][cognitive_auth].
 
 #### Get an API key
 
@@ -46,11 +46,26 @@ AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 QuestionAnsweringClient client = new QuestionAnsweringClient(endpoint, credential);
 ```
 
+#### Create a QuestionAnsweringProjectsClient
+
+With your **endpoint** and **API key**, you can instantiate a `QuestionAnsweringProjectsClient`:
+
+```C# Snippet:QuestionAnsweringProjectsClient_Create
+Uri endpoint = new Uri("https://myaccount.api.cognitive.microsoft.com");
+AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
+
+QuestionAnsweringProjectsClient client = new QuestionAnsweringProjectsClient(endpoint, credential);
+```
+
 ## Key concepts
 
 ### QuestionAnsweringClient
 
 The [`QuestionAnsweringClient`][questionanswering_client_class] is the primary interface for asking questions using a knowledge base with your own information, or text input using pre-trained models. It provides both synchronous and asynchronous APIs to ask questions.
+
+### QuestionAnsweringProjectsClient
+
+The [`QuestionAnsweringProjectsClient`][questionansweringprojects_client_class] provides an interface for managing Question Answering projects. Examples of the available operations include creating and deploying projects, updating your knowledge sources, and updating question and answer pairs. It provides both synchronous and asynchronous APIs.
 
 ### Thread safety
 
@@ -68,7 +83,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 [Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
 <!-- CLIENT COMMON BAR -->
 
-## Examples
+## Examples - QuestionAnsweringClient
 
 The Azure.AI.Language.QuestionAnswering client library provides both synchronous and asynchronous APIs.
 
@@ -116,6 +131,104 @@ foreach (KnowledgeBaseAnswer answer in response.Value.Answers)
     Console.WriteLine($"({answer.Confidence:P2}) {answer.Answer}");
     Console.WriteLine($"Source: {answer.Source}");
     Console.WriteLine();
+}
+```
+
+## Examples - QuestionAnsweringProjectsClient
+
+The following examples show common scenarios using the `QuestionAnsweringProjectsClient` instance [created in this section](#create-a-questionansweringprojectsclient).
+
+### Create a new project
+
+To create a new project, you must specify the project's name and a create a `RequestContent` instance with the parameters needed to set up the project.
+
+```C# Snippet:QuestionAnsweringProjectsClient_CreateProjectAsync
+// Set project name and request content parameters
+string newProjectName = "NewFAQ";
+RequestContent creationRequestContent = RequestContent.Create(
+    new
+    {
+        description = "This is the description for a test project",
+        language = "en",
+        multilingualResource = false,
+        settings = new
+        {
+            defaultAnswer = "No answer found for your question."
+        }
+    }
+    );
+
+Response creationResponse = await client.CreateProjectAsync(newProjectName, creationRequestContent);
+
+// Projects can be retrieved as follows
+AsyncPageable<BinaryData> projects = client.GetProjectsAsync();
+
+Console.WriteLine("Projects: ");
+await foreach (BinaryData project in projects)
+{
+    Console.WriteLine(project);
+}
+```
+
+### Deploy your project
+
+Your projects can be deployed using the `DeployProjectAsync` or the synchronous `DeployProject`. All you need to specify is the project's name and the deployment name that you wish to use. Please note that the service will not allow you to deploy empty projects.
+
+```C# Snippet:QuestionAnsweringProjectsClient_DeployProjectAsync
+// Set deployment name and start operation
+string newDeploymentName = "production";
+Operation<BinaryData> deploymentOperation = await client.DeployProjectAsync(newProjectName, newDeploymentName);
+
+// Wait for operation completion
+Response<BinaryData> deploymentOperationResult = await deploymentOperation.WaitForCompletionAsync();
+
+Console.WriteLine($"Update Sources operation result: \n{deploymentOperationResult}");
+
+// Deployments can be retrieved as follows
+AsyncPageable<BinaryData> deployments = client.GetDeploymentsAsync(newProjectName);
+Console.WriteLine("Deployments: ");
+await foreach (BinaryData deployment in deployments)
+{
+    Console.WriteLine(deployment);
+}
+```
+
+### Add a knowledge source
+
+One way to add content to your project is to add a knowledge source. The following example shows how you can set up a `RequestContent` instance to add a new knowledge source of the type "url".
+
+```C# Snippet:QuestionAnsweringProjectsClient_UpdateSourcesAsync
+// Set request content parameters for updating our new project's sources
+string sourceUri = "https://www.microsoft.com/en-in/software-download/faq";
+RequestContent updateSourcesRequestContent = RequestContent.Create(
+    new[] {
+        new {
+                op = "add",
+                value = new
+                {
+                    displayName = "MicrosoftFAQ",
+                    source = sourceUri,
+                    sourceUri = sourceUri,
+                    sourceKind = "url",
+                    contentStructureKind = "unstructured",
+                    refresh = false
+                }
+            }
+    });
+
+Operation<BinaryData> updateSourcesOperation = await client.UpdateSourcesAsync(newProjectName, updateSourcesRequestContent);
+
+// Wait for operation completion
+Response<BinaryData> updateSourcesOperationResult = await updateSourcesOperation.WaitForCompletionAsync();
+
+Console.WriteLine($"Update Sources operation result: \n{updateSourcesOperationResult}");
+
+// Knowledge Sources can be retrieved as follows
+AsyncPageable<BinaryData> sources = client.GetSourcesAsync(newProjectName);
+Console.WriteLine("Sources: ");
+await foreach (BinaryData source in sources)
+{
+    Console.WriteLine(source);
 }
 ```
 
@@ -214,5 +327,6 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [questionanswering_rest_docs]: https://docs.microsoft.com/rest/api/cognitiveservices-qnamaker/
 [questionanswering_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering/samples/README.md
 [migration_guide]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering/MigrationGuide.md
+[questionansweringprojects_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering/src/Generated/QuestionAnsweringProjectsClient.cs
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fcognitivelanguage%2FAzure.AI.Language.QuestionAnswering%2FREADME.png)
