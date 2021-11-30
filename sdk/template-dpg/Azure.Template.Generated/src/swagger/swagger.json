@@ -5,7 +5,16 @@
     "description": "Template Service",
     "version": "1.0.0"
   },
-  "host": "localhost:3000",
+  "x-ms-parameterized-host": {
+    "hostTemplate": "{endpoint}",
+    "useSchemePrefix": false,
+    "positionInOperation": "first",
+    "parameters": [
+      {
+        "$ref": "#/parameters/endpoint"
+      }
+    ]
+  },
   "schemes": [
     "http"
   ],
@@ -127,6 +136,18 @@
         "value"
       ],
       "description": "The List resource operation response."
+    }
+  },
+  "parameters": {
+    "endpoint": {
+      "name": "endpoint",
+      "description": "The endpoint of your template service.",
+      "x-ms-parameter-location": "client",
+      "required": true,
+      "type": "string",
+      "in": "path",
+      "x-ms-skip-url-encoding": true,
+      "format": "url"
     }
   }
 }
