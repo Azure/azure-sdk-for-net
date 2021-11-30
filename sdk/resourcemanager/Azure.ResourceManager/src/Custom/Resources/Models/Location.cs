@@ -269,6 +269,11 @@ namespace Azure.ResourceManager.Resources.Models
         public Location(string name)
         {
             Name = name;
+            Location loc;
+            if (PublicCloudLocations.TryGetValue(name, out loc))
+            {
+                DisplayName = loc.DisplayName;
+            }
         }
 
         private static string GetNameFromDisplayName(string name)

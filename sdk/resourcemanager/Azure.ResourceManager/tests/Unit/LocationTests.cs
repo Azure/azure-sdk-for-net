@@ -26,6 +26,31 @@ namespace Azure.ResourceManager.Tests
             Assert.Throws<ArgumentNullException>(() => Location.FromDisplayName(null));
         }
 
+        [TestCase("West US", "West US", null)]
+        [TestCase("west-us", "west-us", null)]
+        [TestCase("westus", "westus", "West US")]
+        [TestCase("Private Cloud", "Private Cloud", null)]
+        [TestCase("private-cloud", "private-cloud", null)]
+        [TestCase("privatecloud", "privatecloud", null)]
+        [TestCase("1$S#@$%^", "1$S#@$%^", null)]
+        [TestCase("", "", null)]
+        [TestCase(" ", " ", null)]
+        [TestCase(null, null, null)]
+        public void CanConstructLocationFromString(string name, string expectedName, string expectedDisplayName)
+        {
+            Location location = name;
+            if (name == null)
+            {
+                Assert.IsNull(location);
+            }
+            else
+            {
+                string strLocation = location;
+                Assert.AreEqual(name, strLocation);
+                Assert.AreEqual(expectedDisplayName, location.DisplayName);
+            }
+        }
+
         [TestCase("northcentralus", "northcentralus", "North Central US")]
         [TestCase("westus2", "westus2", "West US 2")]
         [TestCase("uswest1a", "uswest1a", null)]
