@@ -238,5 +238,31 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
 
             await DeleteProjectAsync(testProjectName);
         }
+
+        [RecordedTest]
+        public async Task AddFeedback()
+        {
+            string testProjectName = CreateTestProjectName();
+            await CreateProjectAsync(testProjectName);
+
+            RequestContent addFeedbackRequestContent = RequestContent.Create(
+                new
+                {
+                    records = new[]
+                    {
+                        new
+                        {
+                            userId = "userX",
+                            userQuestion = "what do you mean?",
+                            qnaId = 1
+                        }
+                    }
+                });
+
+            Response addFeedbackResponse = await Client.AddFeedbackAsync(testProjectName, addFeedbackRequestContent);
+
+            Assert.AreEqual(200, addFeedbackResponse.Status);
+            await DeleteProjectAsync(testProjectName);
+        }
     }
 }
