@@ -142,7 +142,7 @@ namespace Azure.Core.Tests
 
             Assert.IsFalse(response.IsError);
 
-            response.IsError = true;
+            response.SetIsError(true);
 
             Assert.IsTrue(response.IsError);
         }
