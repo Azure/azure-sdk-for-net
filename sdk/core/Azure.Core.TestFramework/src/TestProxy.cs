@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
@@ -40,7 +41,7 @@ namespace Azure.Core.TestFramework
         static TestProxy()
         {
             string installDir = Environment.GetEnvironmentVariable("DOTNET_INSTALL_DIR");
-            var dotNetExeName = "dotnet" + (Path.DirectorySeparatorChar == '/' ? "" : ".exe");
+            var dotNetExeName = "dotnet" + (RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? ".exe" : "");
             if (!HasDotNetExe(installDir))
             {
                 installDir = Environment.GetEnvironmentVariable("PATH")?.Split(Path.PathSeparator).FirstOrDefault(HasDotNetExe);
