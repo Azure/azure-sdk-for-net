@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 ```
 
-When you first create your ARM client, choose the subscription you're going to work in. There's a convenient `DefaultSubscription` property that returns the default subscription configured for your user:
+When you first create your ARM client, choose the subscription you're going to work in. There's a convenient `GetDefaultSubscription` method that returns the default subscription configured for your user:
 
 ```C# Snippet:Managing_EventHubs_DefaultSubscription
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
@@ -40,14 +40,14 @@ EventHubCollection eventHubCollection = eHNamespace.GetEventHubs();
 
 Now that we have the namespace, we can manage the event hubs inside this namespace.
 
-***Create an event hub***
+***Create an eventhub***
 
 ```C# Snippet:Managing_EventHubs_CreateEventHub
 string eventhubName = "myEventhub";
 EventHub eventHub = (await eventHubCollection.CreateOrUpdateAsync(eventhubName, new EventHubData())).Value;
 ```
 
-***List all event hubs***
+***List all eventhubs***
 
 ```C# Snippet:Managing_EventHubs_ListEventHubs
 await foreach (EventHub eventHub in eventHubCollection.GetAllAsync())
@@ -56,13 +56,13 @@ await foreach (EventHub eventHub in eventHubCollection.GetAllAsync())
 }
 ```
 
-***Get an event hub***
+***Get an eventhub***
 
 ```C# Snippet:Managing_EventHubs_GetEventHub
 EventHub eventHub = await eventHubCollection.GetAsync("myEventHub");
 ```
 
-***Try to get an event hub if it exists***
+***Try to get an eventhub if it exists***
 
 ```C# Snippet:Managing_EventHubs_GetEventHubIfExists
 EventHub eventHub = await eventHubCollection.GetIfExistsAsync("foo");
@@ -76,7 +76,7 @@ if (await eventHubCollection.CheckIfExistsAsync("bar"))
 }
 ```
 
-***Delete an event hub***
+***Delete an eventhub***
 
 ```C# Snippet:Managing_EventHubs_DeleteEventHub
 EventHub eventHub = await eventHubCollection.GetAsync("myEventhub");
