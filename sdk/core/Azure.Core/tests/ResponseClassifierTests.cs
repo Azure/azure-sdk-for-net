@@ -18,7 +18,7 @@ namespace Azure.Core.Tests
         [TestCase(504)]
         public void RetriesStatusCodes(int code)
         {
-            var httpMessage = new HttpMessage(new MockRequest(), new ResponseClassifier());
+            var httpMessage = new HttpMessage(new MockRequest(), ResponseClassifier.Shared);
             httpMessage.Response = new MockResponse(code);
 
             Assert.True(httpMessage.ResponseClassifier.IsRetriableResponse(httpMessage));
@@ -27,7 +27,7 @@ namespace Azure.Core.Tests
         [Test]
         public void RetriesRequestFailedExceptionsWithoutCode()
         {
-            var classifier = new ResponseClassifier();
+            var classifier = ResponseClassifier.Shared;
 
             Assert.True(classifier.IsRetriableException(new RequestFailedException(0, "IO Exception")));
         }
@@ -35,7 +35,7 @@ namespace Azure.Core.Tests
         [Test]
         public void DoesntRetryRequestFailedExceptionsWithStatusCode()
         {
-            var classifier = new ResponseClassifier();
+            var classifier = ResponseClassifier.Shared;
 
             Assert.False(classifier.IsRetriableException(new RequestFailedException(500, "IO Exception")));
         }
@@ -43,7 +43,7 @@ namespace Azure.Core.Tests
         [Test]
         public void RetriesNonCustomerOperationCancelledExceptions()
         {
-            var httpMessage = new HttpMessage(new MockRequest(), new ResponseClassifier());
+            var httpMessage = new HttpMessage(new MockRequest(), ResponseClassifier.Shared);
 
             Assert.True(httpMessage.ResponseClassifier.IsRetriable(httpMessage, new OperationCanceledException()));
         }

@@ -1265,7 +1265,7 @@ namespace Azure.Search.Documents.Tests
                     new SearchIndexingBufferedSenderOptions<SimpleDocument>()
                     {
                         MaxRetriesPerIndexAction = 5,
-                        MaxThrottlingDelay = TimeSpan.FromSeconds(1)
+                        MaxThrottlingDelay = Mode == RecordedTestMode.Playback ? TimeSpan.Zero : TimeSpan.FromSeconds(1)
                     });
 
             // Keep 503ing to count the retries
@@ -1294,7 +1294,7 @@ namespace Azure.Search.Documents.Tests
                     new SearchIndexingBufferedSenderOptions<SimpleDocument>()
                     {
                         MaxRetriesPerIndexAction = 1,
-                        ThrottlingDelay = TimeSpan.FromSeconds(3)
+                        ThrottlingDelay = Mode == RecordedTestMode.Playback ? TimeSpan.Zero : TimeSpan.FromSeconds(3)
                     });
 
             // Keep 503ing to trigger delays
@@ -1306,9 +1306,16 @@ namespace Azure.Search.Documents.Tests
             await indexer.FlushAsync();
             watch.Stop();
 
-            Assert.IsTrue(
-                2000 <= watch.ElapsedMilliseconds && watch.ElapsedMilliseconds <= 10000,
-                $"Expected a delay between 2000ms and 10000ms, not {watch.ElapsedMilliseconds}");
+            if (Mode != RecordedTestMode.Playback)
+            {
+                Assert.IsTrue(
+                    2000 <= watch.ElapsedMilliseconds && watch.ElapsedMilliseconds <= 10000,
+                    $"Expected a delay between 2000ms and 10000ms, not {watch.ElapsedMilliseconds}");
+            }
+            else
+            {
+                Assert.IsTrue(watch.ElapsedMilliseconds < 1000);
+            }
         }
 
         [Test]
@@ -1326,7 +1333,7 @@ namespace Azure.Search.Documents.Tests
                     new SearchIndexingBufferedSenderOptions<SimpleDocument>()
                     {
                         MaxRetriesPerIndexAction = 10,
-                        MaxThrottlingDelay = TimeSpan.FromSeconds(1)
+                        MaxThrottlingDelay = Mode == RecordedTestMode.Playback ? TimeSpan.Zero : TimeSpan.FromSeconds(1)
                     });
 
             // Keep 503ing to trigger delays

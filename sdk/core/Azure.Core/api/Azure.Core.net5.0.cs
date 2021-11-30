@@ -194,10 +194,12 @@ namespace Azure
         public RequestContext() { }
         public System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
         public Azure.ErrorOptions ErrorOptions { get { throw null; } set { } }
+        public void AddPolicy(Azure.Core.Pipeline.HttpPipelinePolicy policy, Azure.Core.HttpPipelinePosition position) { }
         public static implicit operator Azure.RequestContext (Azure.ErrorOptions options) { throw null; }
     }
     public partial class RequestFailedException : System.Exception, System.Runtime.Serialization.ISerializable
     {
+        public RequestFailedException(Azure.Response response) { }
         public RequestFailedException(int status, string message) { }
         public RequestFailedException(int status, string message, System.Exception? innerException) { }
         public RequestFailedException(int status, string message, string? errorCode, System.Exception? innerException) { }
@@ -215,6 +217,7 @@ namespace Azure
         public virtual System.BinaryData Content { get { throw null; } }
         public abstract System.IO.Stream? ContentStream { get; set; }
         public virtual Azure.Core.ResponseHeaders Headers { get { throw null; } }
+        public bool IsError { get { throw null; } }
         public abstract string ReasonPhrase { get; }
         public abstract int Status { get; }
         protected internal abstract bool ContainsHeader(string name);
@@ -764,6 +767,7 @@ namespace Azure.Core.Pipeline
         public static System.IDisposable CreateClientRequestIdScope(string? clientRequestId) { throw null; }
         public static System.IDisposable CreateHttpMessagePropertiesScope(System.Collections.Generic.IDictionary<string, object?> messageProperties) { throw null; }
         public Azure.Core.HttpMessage CreateMessage() { throw null; }
+        public Azure.Core.HttpMessage CreateMessage(Azure.RequestContext context) { throw null; }
         public Azure.Core.Request CreateRequest() { throw null; }
         public void Send(Azure.Core.HttpMessage message, System.Threading.CancellationToken cancellationToken) { }
         public System.Threading.Tasks.ValueTask SendAsync(Azure.Core.HttpMessage message, System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -773,8 +777,8 @@ namespace Azure.Core.Pipeline
     public static partial class HttpPipelineBuilder
     {
         public static Azure.Core.Pipeline.HttpPipeline Build(Azure.Core.ClientOptions options, params Azure.Core.Pipeline.HttpPipelinePolicy[] perRetryPolicies) { throw null; }
-        public static Azure.Core.Pipeline.HttpPipeline Build(Azure.Core.ClientOptions options, Azure.Core.Pipeline.HttpPipelinePolicy[] perCallPolicies, Azure.Core.Pipeline.HttpPipelinePolicy[] perRetryPolicies, Azure.Core.ResponseClassifier responseClassifier) { throw null; }
-        public static Azure.Core.Pipeline.HttpPipeline Build(Azure.Core.ClientOptions options, Azure.Core.Pipeline.HttpPipelinePolicy[] perCallPolicies, Azure.Core.Pipeline.HttpPipelinePolicy[] perRetryPolicies, Azure.Core.ResponseClassifier responseClassifier, Azure.Core.Pipeline.HttpPipelineTransportOptions? defaultTransportOptions) { throw null; }
+        public static Azure.Core.Pipeline.HttpPipeline Build(Azure.Core.ClientOptions options, Azure.Core.Pipeline.HttpPipelinePolicy[] perCallPolicies, Azure.Core.Pipeline.HttpPipelinePolicy[] perRetryPolicies, Azure.Core.ResponseClassifier? responseClassifier) { throw null; }
+        public static Azure.Core.Pipeline.HttpPipeline Build(Azure.Core.ClientOptions options, Azure.Core.Pipeline.HttpPipelinePolicy[] perCallPolicies, Azure.Core.Pipeline.HttpPipelinePolicy[] perRetryPolicies, Azure.Core.ResponseClassifier? responseClassifier, Azure.Core.Pipeline.HttpPipelineTransportOptions? defaultTransportOptions) { throw null; }
     }
     public abstract partial class HttpPipelinePolicy
     {

@@ -6,6 +6,12 @@
 
 ### Breaking Changes
 
+- The following types were removed:
+    - `ClassifiedResponse`
+    - `ExceptionFormattingResponseClassifier`
+    - `ResponseExtensions`
+    - `ResponsePropertiesPolicy`
+
 ### Bugs Fixed
 
 ### Other Changes

@@ -163,6 +163,7 @@ stages:
                           SkipDefaultCheckout: true
                           Paths:
                             - sdk/**/*.md
+                            - .github/CODEOWNERS
                       - download: current
                       - template: /eng/common/pipelines/templates/steps/update-docsms-metadata.yml
                         parameters:
@@ -282,6 +283,7 @@ stages:
             SkipDefaultCheckout: true
             Paths:
               - sdk/**/*.md
+              - .github/CODEOWNERS
         - download: current
         - pwsh: |
             Get-ChildItem -Recurse $(Pipeline.Workspace)/${{parameters.ArtifactName}}/
