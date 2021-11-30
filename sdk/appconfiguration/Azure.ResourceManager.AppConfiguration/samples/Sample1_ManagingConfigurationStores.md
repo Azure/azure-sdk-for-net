@@ -19,17 +19,17 @@ When you first create your ARM client, choose the subscription you're going to w
 
 ```C# Snippet:Readme_DefaultSubscription
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-Subscription subscription = armClient.DefaultSubscription;
+Subscription subscription = armClient.GetDefaultSubscriptionAsync().Result;
 ```
 
-This is a scoped operations object, and any operations you perform will be done under that subscription. From this object, you have access to all children via container objects. Or you can access individual children by ID.
+This is a scoped operations object, and any operations you perform will be done under that subscription. From this object, you have access to all children via Collection objects. Or you can access individual children by ID.
 
-```C# Snippet:Readme_GetResourceGroupContainer
-ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
-// With the container, we can create a new resource group with an specific name
+```C# Snippet:Readme_GetResourceGroupCollection
+ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
+// With the Collection, we can create a new resource group with an specific name
 string rgName = "myRgName";
 Location location = Location.WestUS2;
-ResourceGroup resourceGroup = await rgContainer.CreateOrUpdate(rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
+ResourceGroup resourceGroup = await rgCollection.CreateOrUpdate(rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
 ```
 
 Now that we have the resource group created, we can manage the ConfigurationStore inside this resource group.
@@ -66,15 +66,15 @@ Console.WriteLine(configurationStore.Data.Name);
 ***Try to get a configurationStore if it exists***
 
 ```C# Snippet:Managing_ConfigurationStores_GetAConfigurationStoreIfExists
-ConfigurationStoreContainer configurationStoreContainer = resourceGroup.GetConfigurationStores();
+ConfigurationStoreCollection configurationStoreCollection = resourceGroup.GetConfigurationStores();
 
-ConfigurationStore configurationStore = await configurationStoreContainer.GetIfExistsAsync("foo");
+ConfigurationStore configurationStore = await configurationStoreCollection.GetIfExistsAsync("foo");
 if (configurationStore != null)
 {
     Console.WriteLine(configurationStore.Data.Name);
 }
 
-if (await configurationStoreContainer.CheckIfExistsAsync("myApp"))
+if (await configurationStoreCollection.CheckIfExistsAsync("myApp"))
 {
     Console.WriteLine("ConfigurationStore 'myApp' exists.");
 }
@@ -83,8 +83,8 @@ if (await configurationStoreContainer.CheckIfExistsAsync("myApp"))
 ***Delete a configurationStore***
 
 ```C# Snippet:Managing_ConfigurationStores_DeleteAConfigurationStore
-ConfigurationStoreContainer configurationStoreContainer = resourceGroup.GetConfigurationStores();
+ConfigurationStoreCollection configurationStoreCollection = resourceGroup.GetConfigurationStores();
 
-ConfigurationStore configStore = await configurationStoreContainer.GetAsync("myApp");
+ConfigurationStore configStore = await configurationStoreCollection.GetAsync("myApp");
 await (await configStore.DeleteAsync()).WaitForCompletionResponseAsync();
 ```
