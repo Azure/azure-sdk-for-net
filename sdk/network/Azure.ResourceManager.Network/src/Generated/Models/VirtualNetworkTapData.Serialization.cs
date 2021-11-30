@@ -70,8 +70,8 @@ namespace Azure.ResourceManager.Network
             Optional<IReadOnlyList<NetworkInterfaceTapConfigurationData>> networkInterfaceTapConfigurations = default;
             Optional<string> resourceGuid = default;
             Optional<ProvisioningState> provisioningState = default;
-            Optional<NetworkInterfaceIPConfiguration> destinationNetworkInterfaceIPConfiguration = default;
-            Optional<FrontendIPConfiguration> destinationLoadBalancerFrontEndIPConfiguration = default;
+            Optional<NetworkInterfaceIPConfigurationData> destinationNetworkInterfaceIPConfiguration = default;
+            Optional<FrontendIPConfigurationData> destinationLoadBalancerFrontEndIPConfiguration = default;
             Optional<int> destinationPort = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            destinationNetworkInterfaceIPConfiguration = NetworkInterfaceIPConfiguration.DeserializeNetworkInterfaceIPConfiguration(property0.Value);
+                            destinationNetworkInterfaceIPConfiguration = NetworkInterfaceIPConfigurationData.DeserializeNetworkInterfaceIPConfigurationData(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("destinationLoadBalancerFrontEndIPConfiguration"))
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            destinationLoadBalancerFrontEndIPConfiguration = FrontendIPConfiguration.DeserializeFrontendIPConfiguration(property0.Value);
+                            destinationLoadBalancerFrontEndIPConfiguration = FrontendIPConfigurationData.DeserializeFrontendIPConfigurationData(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("destinationPort"))

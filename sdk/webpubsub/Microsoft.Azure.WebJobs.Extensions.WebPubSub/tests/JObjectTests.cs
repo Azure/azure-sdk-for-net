@@ -6,8 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebPubSub.Common;
 using Newtonsoft.Json.Linq;
@@ -348,6 +346,39 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             Assert.AreEqual(url, json["url"].ToString());
         }
 
+        [TestCase]
+        public void TestWebPubSubContext_UserEventStates()
+        {
+            WebPubSubConfigProvider.RegisterJsonConverter();
+            var states = new Dictionary<string, object>
+            {
+                { "aKey", "aValue"},
+                { "bKey", 123 },
+                { "cKey", new StateTestClass() }
+            };
+            var decodedStates = states.EncodeConnectionStates().DecodeConnectionStates();
+            var context = new WebPubSubConnectionContext(connectionId: "connectionId", userId: "userA", eventName: "connected", eventType: WebPubSubEventType.System, hub: null, states: decodedStates);
+            var test = new WebPubSubContext(new UserEventRequest(context, BinaryData.FromString("test"), WebPubSubDataType.Text));
+
+            var jObj = JObject.FromObject(test);
+            var request = jObj["request"];
+
+            Assert.NotNull(request);
+            Assert.AreEqual("test", request["data"].ToString());
+            Assert.NotNull(jObj["response"]);
+            Assert.AreEqual("", jObj["errorMessage"].ToString());
+            Assert.AreEqual("False", jObj["hasError"].ToString());
+            Assert.AreEqual("False", jObj["isPreflight"].ToString());
+
+            var context1 = request["connectionContext"];
+            Assert.NotNull(context1);
+            var states1 = context1["states"].ToObject<IReadOnlyDictionary<string, object>>();
+            Assert.NotNull(states1);
+            Assert.AreEqual("aValue", states1["aKey"]);
+            Assert.NotNull(states1);
+            Assert.AreEqual(123, states1["bKey"]);
+        }
+
         private static HttpResponseMessage BuildResponse(string input, RequestType requestType, bool hasTestStates = false)
         {
             Dictionary<string, object> states = null;
@@ -360,6 +391,29 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             }
             var context = new WebPubSubConnectionContext(WebPubSubEventType.System, "connect", "testhub", "Connection-Id1", states: states);
             return Utilities.BuildValidResponse(input, requestType, context);
+        }
+
+        private sealed class StateTestClass
+        {
+            public DateTime Timestamp { get; set; }
+
+            public string Title { get; set; }
+
+            public int Version { get; set; }
+
+            public StateTestClass()
+            {
+                Timestamp = DateTime.Parse("2021-11-10");
+                Title = "GA";
+                Version = 1;
+            }
+
+            public StateTestClass(DateTime timestamp, string title, int version)
+            {
+                Timestamp = timestamp;
+                Title = title;
+                Version = version;
+            }
         }
     }
 }

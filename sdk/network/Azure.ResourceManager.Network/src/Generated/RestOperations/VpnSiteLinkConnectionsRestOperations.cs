@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="linkConnectionName"> The name of the vpn connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, <paramref name="connectionName"/>, or <paramref name="linkConnectionName"/> is null. </exception>
-        public async Task<Response<VpnSiteLinkConnection>> GetAsync(string resourceGroupName, string gatewayName, string connectionName, string linkConnectionName, CancellationToken cancellationToken = default)
+        public async Task<Response<VpnSiteLinkConnectionData>> GetAsync(string resourceGroupName, string gatewayName, string connectionName, string linkConnectionName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -100,11 +99,13 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        VpnSiteLinkConnection value = default;
+                        VpnSiteLinkConnectionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = VpnSiteLinkConnection.DeserializeVpnSiteLinkConnection(document.RootElement);
+                        value = VpnSiteLinkConnectionData.DeserializeVpnSiteLinkConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((VpnSiteLinkConnectionData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -117,7 +118,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="linkConnectionName"> The name of the vpn connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, <paramref name="connectionName"/>, or <paramref name="linkConnectionName"/> is null. </exception>
-        public Response<VpnSiteLinkConnection> Get(string resourceGroupName, string gatewayName, string connectionName, string linkConnectionName, CancellationToken cancellationToken = default)
+        public Response<VpnSiteLinkConnectionData> Get(string resourceGroupName, string gatewayName, string connectionName, string linkConnectionName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -142,11 +143,13 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        VpnSiteLinkConnection value = default;
+                        VpnSiteLinkConnectionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = VpnSiteLinkConnection.DeserializeVpnSiteLinkConnection(document.RootElement);
+                        value = VpnSiteLinkConnectionData.DeserializeVpnSiteLinkConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((VpnSiteLinkConnectionData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }

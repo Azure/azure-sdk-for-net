@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Network.Tests
             // update tags
             var tags = new TagsObject();
             tags.Tags.Add("tag2", "value2");
-            prefixData = (await prefix.UpdateTagsAsync(tags)).Value.Data;
+            prefixData = (await prefix.UpdateAsync(tags)).Value.Data;
 
             ValidateCommon(prefixData, name);
             Assert.That(prefixData.Tags, Has.Count.EqualTo(1));

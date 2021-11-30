@@ -12,9 +12,10 @@
 		<PackageReleaseNotes>
 			<![CDATA[
 New features:
-- Update SQL DB Databases (2021-02-01-preview), Ledger Digest Upload (2021-02-01-preview), Outbound Firewall Rules APIs (2021-02-01-preview), Long Term Retention Backups (2020-11-01-preview), Update Encryption Protector (2020-11-01-preview), SQL v5 SDK release,
-Update ResourceIdentity model.
-- Add a new version SQL DB Short Term Retention Policy API (2021-02-01-preview) with a new parameter Diff Backup Frequency. 
+- Update TDE operations to use "2021-02-01-preview" API version
+- Backup storage redundancy now has GeoZone option and this is why API version upgrade was needed (2021-05-01-preview) for following operations: ManagedInstances, Databases, LongTermRetentionBackups, LongTermRetentionManagedInstanceBackups,
+RestorableDroppedDatabases, RestorableDroppedManagedDatabases, ServerConnecionPolicies
+- ManagedInstances StorageAccountType parameter is now replaced with RequestedBackupStorageRedundancy and CurrentBackupStorageRedundancy
       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>
