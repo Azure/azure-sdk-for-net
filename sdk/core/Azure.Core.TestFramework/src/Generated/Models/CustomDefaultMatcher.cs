@@ -14,8 +14,9 @@ namespace Azure.Core.TestFramework.Models
     {
         /// <summary> Initializes a new instance of CustomDefaultMatcher. </summary>
         /// <param name="nonDefaultHeaderExclusions"></param>
+        /// <param name="compareBodies"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="nonDefaultHeaderExclusions"/> is null. </exception>
-        public CustomDefaultMatcher(string nonDefaultHeaderExclusions)
+        public CustomDefaultMatcher(string nonDefaultHeaderExclusions, bool compareBodies)
         {
             if (nonDefaultHeaderExclusions == null)
             {
@@ -23,9 +24,12 @@ namespace Azure.Core.TestFramework.Models
             }
 
             NonDefaultHeaderExclusions = nonDefaultHeaderExclusions;
+            CompareBodies = compareBodies;
         }
 
         /// <summary> Gets the non default header exclusions. </summary>
         public string NonDefaultHeaderExclusions { get; }
+        /// <summary> Gets the compare bodies. </summary>
+        public bool CompareBodies { get; }
     }
 }

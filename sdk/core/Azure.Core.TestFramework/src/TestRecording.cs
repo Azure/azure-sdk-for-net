@@ -95,13 +95,13 @@ namespace Azure.Core.TestFramework
                         _variables = new SortedDictionary<string, string>((Dictionary<string, string>)playbackResponse.Value);
                         RecordingId = playbackResponse.Headers.XRecordingId;
                         AddProxySanitizers();
-                        if (!_matcher.CompareBodies)
-                        {
-                            _proxy.Client.AddBodilessMatcher(RecordingId);
-                        }
 
                         // temporary until Azure.Core fix is shipped
-                        _proxy.Client.AddCustomMatcher(new CustomDefaultMatcher("Content-Type,Content-Length"), RecordingId);
+                        // if (!_matcher.CompareBodies)
+                        // {
+                        //     _proxy.Client.AddBodilessMatcher(RecordingId);
+                        // }
+                        _proxy.Client.AddCustomMatcher(new CustomDefaultMatcher("Content-Type,Content-Length", _matcher.CompareBodies), RecordingId);
                         break;
                 }
             }

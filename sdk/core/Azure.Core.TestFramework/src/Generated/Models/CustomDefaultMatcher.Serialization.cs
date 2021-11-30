@@ -17,6 +17,8 @@ namespace Azure.Core.TestFramework.Models
             writer.WriteStartObject();
             writer.WritePropertyName("nonDefaultHeaderExclusions");
             writer.WriteStringValue(NonDefaultHeaderExclusions);
+            writer.WritePropertyName("compareBodies");
+            writer.WriteBooleanValue(CompareBodies);
             writer.WriteEndObject();
         }
     }

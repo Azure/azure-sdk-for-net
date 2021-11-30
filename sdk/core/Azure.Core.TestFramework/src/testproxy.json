@@ -464,10 +464,14 @@
       "properties": {
         "nonDefaultHeaderExclusions" : {
           "type": "string"
+        },
+        "compareBodies" : {
+          "type": "boolean"
         }
       },
       "required": [
-        "nonDefaultHeaderExclusions"
+        "nonDefaultHeaderExclusions",
+        "compareBodies"
       ]
     },
     "BodyKeySanitizer": {
