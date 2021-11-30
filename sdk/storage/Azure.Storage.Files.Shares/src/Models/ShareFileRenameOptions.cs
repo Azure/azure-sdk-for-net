@@ -29,7 +29,7 @@ namespace Azure.Storage.Files.Shares.Models
         public bool? IgnoreReadOnly { get; set; }
 
         /// <summary>
-        /// Source request conditions.
+        /// Source request conditions.  This parameter is only applicable if the source is a file.
         /// </summary>
         public ShareFileRequestConditions SourceRequestConditions { get; set; }
 

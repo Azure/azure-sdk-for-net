@@ -2431,6 +2431,8 @@ namespace Azure.Storage.Files.Shares
                 {
                     scope.Start();
 
+                    ShareExtensions.AssertValidFilePermissionAndKey(options?.FilePermission, options?.SmbProperties?.FilePermissionKey);
+
                     // Build destination URI
                     ShareUriBuilder destUriBuilder = new ShareUriBuilder(Uri)
                     {

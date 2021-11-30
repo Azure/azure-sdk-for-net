@@ -1416,16 +1416,141 @@ namespace Azure.Storage.Files.Shares.Tests
         {
             // Arrange
             await using DisposingShare test = await SharesClientBuilder.GetTestShareAsync();
-            ShareDirectoryClient SourceDir = InstrumentClient(test.Share.GetDirectoryClient(GetNewNonAsciiDirectoryName()));
-            await SourceDir.CreateAsync();
+            ShareDirectoryClient sourceDir = InstrumentClient(test.Share.GetDirectoryClient(GetNewNonAsciiDirectoryName()));
+            await sourceDir.CreateAsync();
 
             string destDirName = GetNewNonAsciiDirectoryName();
 
             // Act
-            ShareDirectoryClient destDir = await SourceDir.RenameAsync(destinationPath: destDirName);
+            ShareDirectoryClient destDir = await sourceDir.RenameAsync(destinationPath: destDirName);
 
             // Assert
             await destDir.GetPropertiesAsync();
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
+        public async Task RenameAsync_FilePermission()
+        {
+            // Arrange
+            await using DisposingShare test = await SharesClientBuilder.GetTestShareAsync();
+            ShareDirectoryClient sourceDir = InstrumentClient(test.Share.GetDirectoryClient(GetNewNonAsciiDirectoryName()));
+            await sourceDir.CreateAsync();
+
+            string destDirName = GetNewDirectoryName();
+
+            ShareFileRenameOptions options = new ShareFileRenameOptions
+            {
+                FilePermission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)"
+            };
+
+            // Act
+            ShareDirectoryClient destDir = await sourceDir.RenameAsync(
+                destinationPath: destDirName,
+                options: options);
+
+            Response<ShareDirectoryProperties> propertiesResponse = await destDir.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(propertiesResponse.Value.SmbProperties.FilePermissionKey);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
+        public async Task RenameAsync_FilePermissionAndFilePermissionKeySet()
+        {
+            // Arrange
+            await using DisposingShare test = await SharesClientBuilder.GetTestShareAsync();
+            ShareDirectoryClient sourceDir = InstrumentClient(test.Share.GetDirectoryClient(GetNewNonAsciiDirectoryName()));
+            await sourceDir.CreateAsync();
+
+            string destDirName = GetNewDirectoryName();
+
+            ShareFileRenameOptions options = new ShareFileRenameOptions
+            {
+                FilePermission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)",
+                SmbProperties = new FileSmbProperties
+                {
+                    FilePermissionKey = "filePermissionKey"
+                }
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                sourceDir.RenameAsync(
+                    destinationPath: destDirName,
+                    options: options),
+                e => Assert.AreEqual("filePermission and filePermissionKey cannot both be set", e.Message));
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
+        public async Task RenameAsync_FilePermissionTooLarge()
+        {
+            // Arrange
+            await using DisposingShare test = await SharesClientBuilder.GetTestShareAsync();
+            ShareDirectoryClient sourceDir = InstrumentClient(test.Share.GetDirectoryClient(GetNewNonAsciiDirectoryName()));
+            await sourceDir.CreateAsync();
+
+            string destDirName = GetNewDirectoryName();
+
+            string filePermission = new string('*', 9 * Constants.KB);
+
+            ShareFileRenameOptions options = new ShareFileRenameOptions
+            {
+                FilePermission = filePermission
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                sourceDir.RenameAsync(
+                    destinationPath: destDirName,
+                    options: options),
+                e =>
+                {
+                    Assert.AreEqual("filePermission", e.ParamName);
+                    StringAssert.StartsWith("Value must be less than or equal to 8192", e.Message);
+                });
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
+        public async Task RenameAsync_SmbPropertie()
+        {
+            // Arrange
+            await using DisposingShare test = await SharesClientBuilder.GetTestShareAsync();
+            ShareDirectoryClient sourceDir = InstrumentClient(test.Share.GetDirectoryClient(GetNewNonAsciiDirectoryName()));
+            await sourceDir.CreateAsync();
+
+            string destDirName = GetNewDirectoryName();
+
+            string permission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)";
+            Response<PermissionInfo> createPermissionResponse = await test.Share.CreatePermissionAsync(permission);
+
+            FileSmbProperties smbProperties = new FileSmbProperties
+            {
+                FilePermissionKey = createPermissionResponse.Value.FilePermissionKey,
+                FileAttributes = ShareExtensions.ToFileAttributes("Directory|ReadOnly"),
+                FileCreatedOn = new DateTimeOffset(2019, 8, 15, 5, 15, 25, 60, TimeSpan.Zero),
+                FileLastWrittenOn = new DateTimeOffset(2019, 8, 26, 5, 15, 25, 60, TimeSpan.Zero),
+            };
+
+            ShareFileRenameOptions options = new ShareFileRenameOptions
+            {
+                SmbProperties = smbProperties
+            };
+
+            // Act
+            ShareDirectoryClient destDir = await sourceDir.RenameAsync(
+                destinationPath: destDirName,
+                options: options);
+
+            Response<ShareDirectoryProperties> propertiesResponse = await destDir.GetPropertiesAsync();
+
+            // Assert
+            Assert.AreEqual(smbProperties.FileAttributes, propertiesResponse.Value.SmbProperties.FileAttributes);
+            Assert.AreEqual(smbProperties.FileCreatedOn, propertiesResponse.Value.SmbProperties.FileCreatedOn);
+            Assert.AreEqual(smbProperties.FileLastWrittenOn, propertiesResponse.Value.SmbProperties.FileLastWrittenOn);
         }
 
         [RecordedTest]
