@@ -72,7 +72,7 @@ param(
 
 Set-StrictMode -Version 3.0
 
-if ((Get-Command npm | Measure-Object).Count -eq 0) {
+if (!(Get-Command npm -ErrorAction SilentlyContinue)) {
   LogError "Could not locate npm. Install NodeJS (includes npm) https://nodejs.org/en/download/"
   exit 1
 }
@@ -159,7 +159,7 @@ Set-Content `
   -Path $CSpellConfigPath `
   -Value (ConvertTo-Json $cspellConfig -Depth 100)
 
-# Before chaning the run location, resolve paths specified in parameters
+# Before changing the run location, resolve paths specified in parameters
 $CSpellConfigPath = Resolve-Path $CSpellConfigPath
 $SpellCheckRoot = Resolve-Path $SpellCheckRoot
 
