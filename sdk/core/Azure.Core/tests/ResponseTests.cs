@@ -134,6 +134,18 @@ namespace Azure.Core.Tests
             CollectionAssert.AreEqual(responseBody, response.Content.ToArray());
         }
 
+        [Test]
+        public void CanMockIsError()
+        {
+            var response = new MockResponse(500);
+
+            Assert.IsFalse(response.IsError);
+
+            response.IsError = true;
+
+            Assert.IsTrue(response.IsError);
+        }
+
         internal class TestPayload
         {
             public string Name { get; }

@@ -27,6 +27,8 @@ namespace Azure.Core.TestFramework
 
         public override string ClientRequestId { get; set; }
 
+        public bool IsError { get; set; }
+
         public bool IsDisposed { get; private set; }
 
         public void SetContent(byte[] content)
