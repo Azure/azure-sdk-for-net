@@ -59,6 +59,25 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public void FormatsResponseWithoutSanitizer_ResponseCtor()
+        {
+            var formattedResponse =
+                "Service request failed." + s_nl +
+                "Status: 210 (Reason)" + s_nl +
+                s_nl +
+                "Headers:" + s_nl +
+                "Custom-Header: REDACTED" + s_nl +
+                "x-ms-requestId: REDACTED" + s_nl;
+
+            var response = new MockResponse(210, "Reason");
+            response.AddHeader(new HttpHeader("Custom-Header", "Value"));
+            response.AddHeader(new HttpHeader("x-ms-requestId", "123"));
+
+            RequestFailedException exception = new RequestFailedException(response);
+            Assert.AreEqual(formattedResponse, exception.Message);
+        }
+
+        [Test]
         public async Task HeadersAreSanitized()
         {
             var formattedResponse =

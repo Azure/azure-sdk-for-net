@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using Moq;
 
 namespace Azure.Core.Tests
 {
@@ -144,6 +145,18 @@ namespace Azure.Core.Tests
             response.IsError = true;
 
             Assert.IsTrue(response.IsError);
+        }
+
+        [Test]
+        public void CanMoqIsError()
+        {
+            var response = new Mock<Response>();
+
+            Assert.IsFalse(response.Object.IsError);
+
+            response.SetupGet(x => x.IsError).Returns(true);
+
+            Assert.IsTrue(response.Object.IsError);
         }
 
         internal class TestPayload
