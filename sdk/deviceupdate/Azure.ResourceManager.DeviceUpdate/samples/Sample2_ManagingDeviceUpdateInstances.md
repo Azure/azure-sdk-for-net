@@ -1,4 +1,4 @@
-# Example: Managing the instances
+# Example: Managing the device update instances
 
 >Note: Before getting started with the samples, go through the [prerequisites](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/resourcemanager/Azure.ResourceManager#prerequisites).
 

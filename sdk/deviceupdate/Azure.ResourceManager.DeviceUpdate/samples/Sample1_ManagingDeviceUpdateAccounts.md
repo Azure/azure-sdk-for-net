@@ -1,4 +1,4 @@
-# Example: Managing the accounts
+# Example: Managing the device update accounts
 
 >Note: Before getting started with the samples, go through the [prerequisites](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/resourcemanager/Azure.ResourceManager#prerequisites).
 
@@ -75,4 +75,4 @@ await account.DeleteAsync();
 
 
 ## Next steps
-Take a look at the [Managing Device Update Instances](https://github.com/Yao725/azure-sdk-for-net/tree/feature/mgmt-track2-deviceupdate/sdk/deviceupdate/Azure.ResourceManager.DeviceUpdate/samples/Sample2_ManagingInstances.md) samples.
+Take a look at the [Managing Device Update Instances](https://github.com/Yao725/azure-sdk-for-net/tree/feature/mgmt-track2-deviceupdate/sdk/deviceupdate/Azure.ResourceManager.DeviceUpdate/samples/Sample2_ManagingDeviceUpdateInstances.md) samples.

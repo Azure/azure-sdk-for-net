@@ -11,5 +11,5 @@ description: Samples for the Azure.ResourceManager.DeviceUpdate client library
 
 # Azure.ResourceManager.DeviceUpdate Samples
 
-- [Managing Accounts](https://github.com/Yao725/azure-sdk-for-net/tree/feature/mgmt-track2-deviceupdate/sdk/deviceupdate/Azure.ResourceManager.DeviceUpdate/samples/Sample1_ManagingAccounts.md)
-- [Managing Instances](https://github.com/Yao725/azure-sdk-for-net/tree/feature/mgmt-track2-deviceupdate/sdk/deviceupdate/Azure.ResourceManager.DeviceUpdate/samples/Sample2_ManagingInstances.md)
+- [Managing Device Update Accounts](https://github.com/Yao725/azure-sdk-for-net/tree/feature/mgmt-track2-deviceupdate/sdk/deviceupdate/Azure.ResourceManager.DeviceUpdate/samples/Sample1_ManagingDeviceUpdateAccounts.md)
+- [Managing Device Update Instances](https://github.com/Yao725/azure-sdk-for-net/tree/feature/mgmt-track2-deviceupdate/sdk/deviceupdate/Azure.ResourceManager.DeviceUpdate/samples/Sample2_ManagingDeviceUpdateInstances.md)
