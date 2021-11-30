@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateGetAllRequest(string location, string galleryUniqueName, SharedToValues? sharedTo)
+        internal HttpMessage CreateListRequest(string location, string galleryUniqueName, SharedToValues? sharedTo)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="sharedTo"> The query parameter to decide what shared galleries to fetch when doing listing operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="galleryUniqueName"/> is null. </exception>
-        public async Task<Response<SharedGalleryImageList>> GetAllAsync(string location, string galleryUniqueName, SharedToValues? sharedTo = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SharedGalleryImageList>> ListAsync(string location, string galleryUniqueName, SharedToValues? sharedTo = null, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(galleryUniqueName));
             }
 
-            using var message = CreateGetAllRequest(location, galleryUniqueName, sharedTo);
+            using var message = CreateListRequest(location, galleryUniqueName, sharedTo);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="sharedTo"> The query parameter to decide what shared galleries to fetch when doing listing operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="galleryUniqueName"/> is null. </exception>
-        public Response<SharedGalleryImageList> GetAll(string location, string galleryUniqueName, SharedToValues? sharedTo = null, CancellationToken cancellationToken = default)
+        public Response<SharedGalleryImageList> List(string location, string galleryUniqueName, SharedToValues? sharedTo = null, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(galleryUniqueName));
             }
 
-            using var message = CreateGetAllRequest(location, galleryUniqueName, sharedTo);
+            using var message = CreateListRequest(location, galleryUniqueName, sharedTo);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateGetAllNextPageRequest(string nextLink, string location, string galleryUniqueName, SharedToValues? sharedTo)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string location, string galleryUniqueName, SharedToValues? sharedTo)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="sharedTo"> The query parameter to decide what shared galleries to fetch when doing listing operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="location"/>, or <paramref name="galleryUniqueName"/> is null. </exception>
-        public async Task<Response<SharedGalleryImageList>> GetAllNextPageAsync(string nextLink, string location, string galleryUniqueName, SharedToValues? sharedTo = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SharedGalleryImageList>> ListNextPageAsync(string nextLink, string location, string galleryUniqueName, SharedToValues? sharedTo = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(galleryUniqueName));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, location, galleryUniqueName, sharedTo);
+            using var message = CreateListNextPageRequest(nextLink, location, galleryUniqueName, sharedTo);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="sharedTo"> The query parameter to decide what shared galleries to fetch when doing listing operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="location"/>, or <paramref name="galleryUniqueName"/> is null. </exception>
-        public Response<SharedGalleryImageList> GetAllNextPage(string nextLink, string location, string galleryUniqueName, SharedToValues? sharedTo = null, CancellationToken cancellationToken = default)
+        public Response<SharedGalleryImageList> ListNextPage(string nextLink, string location, string galleryUniqueName, SharedToValues? sharedTo = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(galleryUniqueName));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, location, galleryUniqueName, sharedTo);
+            using var message = CreateListNextPageRequest(nextLink, location, galleryUniqueName, sharedTo);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Storage.Shared;
 
+#pragma warning disable SA1402  // File may only contain a single type
+
 namespace Azure.Storage
 {
     internal class PartitionedUploader<TServiceSpecificArgs, TCompleteUploadReturn>
@@ -162,6 +164,7 @@ namespace Azure.Storage
 
         public async Task<Response<TCompleteUploadReturn>> UploadInternal(
             Stream content,
+            long? expectedContentLength,
             TServiceSpecificArgs args,
             IProgress<long> progressHandler,
             bool async,
@@ -184,11 +187,27 @@ namespace Azure.Storage
             // some strategies are unavailable if we don't know the stream length, and some can still work
             // we may introduce separately provided stream lengths in the future for unseekable streams with
             // an expected length
-            long? length = GetLengthOrDefault(content);
+            long? length = expectedContentLength ?? content.GetLengthOrDefault();
 
             // If we know the length and it's small enough
             if (length < _singleUploadThreshold)
             {
+                // may not be seekable. buffer if that's the case
+                if (!content.CanSeek)
+                {
+                    content = await PooledMemoryStream.BufferStreamPartitionInternal(
+                        content,
+                        // we've passed a comparison on length; we know there is a value
+                        length.Value,
+                        length.Value,
+                        // for the purposes of a one-shot, absolutePosition is always zero
+                        absolutePosition: 0,
+                        _arrayPool,
+                        maxArrayPoolRentalSize: default,
+                        async,
+                        cancellationToken).ConfigureAwait(false);
+                }
+
                 // Upload it in a single request
                 return await _singleUploadInternal(
                     content,
@@ -472,25 +491,6 @@ namespace Azure.Storage
             }
         }
 
-        /// <summary>
-        /// Some streams will throw if you try to access their length so we wrap
-        /// the check in a TryGet helper.
-        /// </summary>
-        private static long? GetLengthOrDefault(Stream content)
-        {
-            try
-            {
-                if (content.CanSeek)
-                {
-                    return content.Length - content.Position;
-                }
-            }
-            catch (NotSupportedException)
-            {
-            }
-            return default;
-        }
-
         #region Stream Splitters
         /// <summary>
         /// Partition a stream into a series of blocks buffered as needed by an array pool.
@@ -629,5 +629,27 @@ namespace Azure.Storage
             CancellationToken cancellationToken)
             => Task.FromResult((SlicedStream)WindowStream.GetWindow(stream, maxCount, absolutePosition));
         #endregion
+    }
+
+    internal static partial class StreamExtensions
+    {
+        /// <summary>
+        /// Some streams will throw if you try to access their length so we wrap
+        /// the check in a TryGet helper.
+        /// </summary>
+        public static long? GetLengthOrDefault(this Stream content)
+        {
+            try
+            {
+                if (content.CanSeek)
+                {
+                    return content.Length - content.Position;
+                }
+            }
+            catch (NotSupportedException)
+            {
+            }
+            return default;
+        }
     }
 }

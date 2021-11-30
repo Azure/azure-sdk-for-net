@@ -58,6 +58,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="kind">Kind of database. This is metadata used for the
         /// Azure portal experience.</param>
         /// <param name="managedBy">Resource that manages the database.</param>
+        /// <param name="identity">The Azure Active Directory identity of the
+        /// database.</param>
         /// <param name="createMode">Specifies the mode of database creation.
         ///
         /// Default: regular database creation.
@@ -116,7 +118,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// 'AutoClosed', 'Copying', 'Creating', 'Inaccessible',
         /// 'OfflineSecondary', 'Pausing', 'Paused', 'Resuming', 'Scaling',
         /// 'OfflineChangingDwPerformanceTiers',
-        /// 'OnlineChangingDwPerformanceTiers', 'Disabled'</param>
+        /// 'OnlineChangingDwPerformanceTiers', 'Disabled', 'Stopping',
+        /// 'Stopped', 'Starting'</param>
         /// <param name="databaseId">The ID of the database.</param>
         /// <param name="creationDate">The creation date of the database
         /// (ISO8601 format).</param>
@@ -178,10 +181,10 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// is disabled</param>
         /// <param name="currentBackupStorageRedundancy">The storage account
         /// type used to store backups for this database. Possible values
-        /// include: 'Geo', 'Local', 'Zone'</param>
+        /// include: 'Geo', 'Local', 'Zone', 'GeoZone'</param>
         /// <param name="requestedBackupStorageRedundancy">The storage account
         /// type to be used to store backups for this database. Possible values
-        /// include: 'Geo', 'Local', 'Zone'</param>
+        /// include: 'Geo', 'Local', 'Zone', 'GeoZone'</param>
         /// <param name="minCapacity">Minimal capacity that database will
         /// always have allocated, if not paused</param>
         /// <param name="pausedDate">The date when database was paused by user
@@ -199,12 +202,18 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// database has been created.</param>
         /// <param name="isInfraEncryptionEnabled">Infra encryption is enabled
         /// for this database.</param>
-        public Database(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string kind = default(string), string managedBy = default(string), string createMode = default(string), string collation = default(string), long? maxSizeBytes = default(long?), string sampleName = default(string), string elasticPoolId = default(string), string sourceDatabaseId = default(string), string status = default(string), System.Guid? databaseId = default(System.Guid?), System.DateTime? creationDate = default(System.DateTime?), string currentServiceObjectiveName = default(string), string requestedServiceObjectiveName = default(string), string defaultSecondaryLocation = default(string), string failoverGroupId = default(string), System.DateTime? restorePointInTime = default(System.DateTime?), System.DateTime? sourceDatabaseDeletionDate = default(System.DateTime?), string recoveryServicesRecoveryPointId = default(string), string longTermRetentionBackupResourceId = default(string), string recoverableDatabaseId = default(string), string restorableDroppedDatabaseId = default(string), string catalogCollation = default(string), bool? zoneRedundant = default(bool?), string licenseType = default(string), long? maxLogSizeBytes = default(long?), System.DateTime? earliestRestoreDate = default(System.DateTime?), string readScale = default(string), int? highAvailabilityReplicaCount = default(int?), string secondaryType = default(string), Sku currentSku = default(Sku), int? autoPauseDelay = default(int?), string currentBackupStorageRedundancy = default(string), string requestedBackupStorageRedundancy = default(string), double? minCapacity = default(double?), System.DateTime? pausedDate = default(System.DateTime?), System.DateTime? resumedDate = default(System.DateTime?), string maintenanceConfigurationId = default(string), bool? isLedgerOn = default(bool?), bool? isInfraEncryptionEnabled = default(bool?))
+        /// <param name="federatedClientId">The Client id used for cross tenant
+        /// per database CMK scenario</param>
+        /// <param name="primaryDelegatedIdentityClientId">The Primary
+        /// Delegated Identity Client id used for per database CMK - for
+        /// internal use only</param>
+        public Database(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string kind = default(string), string managedBy = default(string), DatabaseIdentity identity = default(DatabaseIdentity), string createMode = default(string), string collation = default(string), long? maxSizeBytes = default(long?), string sampleName = default(string), string elasticPoolId = default(string), string sourceDatabaseId = default(string), string status = default(string), System.Guid? databaseId = default(System.Guid?), System.DateTime? creationDate = default(System.DateTime?), string currentServiceObjectiveName = default(string), string requestedServiceObjectiveName = default(string), string defaultSecondaryLocation = default(string), string failoverGroupId = default(string), System.DateTime? restorePointInTime = default(System.DateTime?), System.DateTime? sourceDatabaseDeletionDate = default(System.DateTime?), string recoveryServicesRecoveryPointId = default(string), string longTermRetentionBackupResourceId = default(string), string recoverableDatabaseId = default(string), string restorableDroppedDatabaseId = default(string), string catalogCollation = default(string), bool? zoneRedundant = default(bool?), string licenseType = default(string), long? maxLogSizeBytes = default(long?), System.DateTime? earliestRestoreDate = default(System.DateTime?), string readScale = default(string), int? highAvailabilityReplicaCount = default(int?), string secondaryType = default(string), Sku currentSku = default(Sku), int? autoPauseDelay = default(int?), string currentBackupStorageRedundancy = default(string), string requestedBackupStorageRedundancy = default(string), double? minCapacity = default(double?), System.DateTime? pausedDate = default(System.DateTime?), System.DateTime? resumedDate = default(System.DateTime?), string maintenanceConfigurationId = default(string), bool? isLedgerOn = default(bool?), bool? isInfraEncryptionEnabled = default(bool?), System.Guid? federatedClientId = default(System.Guid?), System.Guid? primaryDelegatedIdentityClientId = default(System.Guid?))
             : base(location, id, name, type, tags)
         {
             Sku = sku;
             Kind = kind;
             ManagedBy = managedBy;
+            Identity = identity;
             CreateMode = createMode;
             Collation = collation;
             MaxSizeBytes = maxSizeBytes;
@@ -242,6 +251,8 @@ namespace Microsoft.Azure.Management.Sql.Models
             MaintenanceConfigurationId = maintenanceConfigurationId;
             IsLedgerOn = isLedgerOn;
             IsInfraEncryptionEnabled = isInfraEncryptionEnabled;
+            FederatedClientId = federatedClientId;
+            PrimaryDelegatedIdentityClientId = primaryDelegatedIdentityClientId;
             CustomInit();
         }
 
@@ -283,6 +294,12 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         [JsonProperty(PropertyName = "managedBy")]
         public string ManagedBy { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the Azure Active Directory identity of the database.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public DatabaseIdentity Identity { get; set; }
 
         /// <summary>
         /// Gets or sets specifies the mode of database creation.
@@ -370,7 +387,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// 'Creating', 'Inaccessible', 'OfflineSecondary', 'Pausing',
         /// 'Paused', 'Resuming', 'Scaling',
         /// 'OfflineChangingDwPerformanceTiers',
-        /// 'OnlineChangingDwPerformanceTiers', 'Disabled'
+        /// 'OnlineChangingDwPerformanceTiers', 'Disabled', 'Stopping',
+        /// 'Stopped', 'Starting'
         /// </summary>
         [JsonProperty(PropertyName = "properties.status")]
         public string Status { get; private set; }
@@ -529,14 +547,16 @@ namespace Microsoft.Azure.Management.Sql.Models
 
         /// <summary>
         /// Gets the storage account type used to store backups for this
-        /// database. Possible values include: 'Geo', 'Local', 'Zone'
+        /// database. Possible values include: 'Geo', 'Local', 'Zone',
+        /// 'GeoZone'
         /// </summary>
         [JsonProperty(PropertyName = "properties.currentBackupStorageRedundancy")]
         public string CurrentBackupStorageRedundancy { get; private set; }
 
         /// <summary>
         /// Gets or sets the storage account type to be used to store backups
-        /// for this database. Possible values include: 'Geo', 'Local', 'Zone'
+        /// for this database. Possible values include: 'Geo', 'Local', 'Zone',
+        /// 'GeoZone'
         /// </summary>
         [JsonProperty(PropertyName = "properties.requestedBackupStorageRedundancy")]
         public string RequestedBackupStorageRedundancy { get; set; }
@@ -584,6 +604,20 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.isInfraEncryptionEnabled")]
         public bool? IsInfraEncryptionEnabled { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the Client id used for cross tenant per database CMK
+        /// scenario
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.federatedClientId")]
+        public System.Guid? FederatedClientId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Primary Delegated Identity Client id used for per
+        /// database CMK - for internal use only
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.primaryDelegatedIdentityClientId")]
+        public System.Guid? PrimaryDelegatedIdentityClientId { get; set; }
 
         /// <summary>
         /// Validate the object.

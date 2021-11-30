@@ -119,6 +119,10 @@
       ]
     },
     {
+      "filename": "**/sdk/deviceupdate/**/*.cs",
+      "words": ["Fqdns"]
+    },
+    {
       "filename": "**/sdk/formrecognizer/**/*.cs",
       "words": ["ZhHant"]
     },
@@ -152,6 +156,7 @@
         "Vnets",
         "Vxlan",
         "WAFV",
+        "Wans"
       ]
     },
     {

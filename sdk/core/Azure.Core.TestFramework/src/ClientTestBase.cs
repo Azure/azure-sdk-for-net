@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Reflection;
 using Castle.DynamicProxy;
 using NUnit.Framework;
@@ -35,7 +36,7 @@ namespace Azure.Core.TestFramework
         {
             var executionContext = TestExecutionContext.CurrentContext;
             var duration = DateTime.UtcNow - executionContext.StartTime;
-            if (duration > TimeSpan.FromSeconds(GLOBAL_TEST_TIMEOUT_IN_SECONDS))
+            if (duration > TimeSpan.FromSeconds(GLOBAL_TEST_TIMEOUT_IN_SECONDS) && !Debugger.IsAttached)
             {
                 executionContext.CurrentResult.SetResult(ResultState.Failure, $"Test exceeded global time limit of {GLOBAL_TEST_TIMEOUT_IN_SECONDS} seconds. Duration: {duration}");
             }

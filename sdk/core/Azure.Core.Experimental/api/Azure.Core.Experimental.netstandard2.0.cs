@@ -1,20 +1,5 @@
 namespace Azure.Core
 {
-    public partial class ClassifiedResponse : Azure.Response
-    {
-        public ClassifiedResponse(Azure.Response response) { }
-        public override string ClientRequestId { get { throw null; } set { } }
-        public override System.IO.Stream? ContentStream { get { throw null; } set { } }
-        public bool IsError { get { throw null; } }
-        public override string ReasonPhrase { get { throw null; } }
-        public override int Status { get { throw null; } }
-        protected override bool ContainsHeader(string name) { throw null; }
-        public override void Dispose() { }
-        protected virtual void Dispose(bool disposing) { }
-        protected override System.Collections.Generic.IEnumerable<Azure.Core.HttpHeader> EnumerateHeaders() { throw null; }
-        protected override bool TryGetHeader(string name, out string? value) { throw null; }
-        protected override bool TryGetHeaderValues(string name, out System.Collections.Generic.IEnumerable<string>? values) { throw null; }
-    }
     [System.Diagnostics.DebuggerDisplayAttribute("{DebuggerDisplay,nq}")]
     public partial class JsonData : System.Dynamic.IDynamicMetaObjectProvider, System.IEquatable<Azure.Core.JsonData>
     {
@@ -99,19 +84,5 @@ namespace Azure.Core
         public T To<T>(System.Text.Json.JsonSerializerOptions options) { throw null; }
         public long WriteTo(System.IO.Stream stream) { throw null; }
         public System.Threading.Tasks.Task<long> WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken) { throw null; }
-    }
-    public partial class ResponsePropertiesPolicy : Azure.Core.Pipeline.HttpPipelinePolicy
-    {
-        public ResponsePropertiesPolicy(Azure.Core.ClientOptions options) { }
-        public override void Process(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { }
-        public override System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { throw null; }
-    }
-}
-namespace Azure.Core.Pipeline
-{
-    public static partial class ResponseExtensions
-    {
-        public static Azure.RequestFailedException CreateRequestFailedException(this Azure.Response response) { throw null; }
-        public static bool IsError(this Azure.Response response) { throw null; }
     }
 }

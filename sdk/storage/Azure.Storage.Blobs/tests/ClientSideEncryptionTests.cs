@@ -1070,6 +1070,61 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
+        [Test]
+        [LiveOnly]
+        /// <summary>
+        /// Crypto transform streams are unseekable and have no <see cref="Stream.Length"/>.
+        /// When length is unknown, <see cref="PartitionedUploader{TServiceSpecificArgs, TCompleteUploadReturn}"/>
+        /// doesn't even attempt a one-shot upload.
+        /// This tests if we correctly inform the uploader of an expected stream length so it
+        /// can respect the given <see cref="StorageTransferOptions"/>.
+        /// </summary>
+        public async Task PutBlobPutBlockSwitch([Values(true, false)] bool oneshot)
+        {
+            const int dataSize = 1 * Constants.KB;
+
+            // Arrange
+            byte[] data = GetRandomBuffer(dataSize);
+            int transferSize = oneshot
+                    ? 2 * dataSize // big enough for put blob even after AES-CBC PKCS7 padding
+                    : dataSize / 2;
+            StorageTransferOptions transferOptions = new StorageTransferOptions
+            {
+                InitialTransferSize = transferSize,
+                MaximumTransferSize = transferSize
+            };
+
+            IKeyEncryptionKey key = GetIKeyEncryptionKey().Object;
+            await using var disposable = await GetTestContainerEncryptionAsync(
+                new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+                {
+                    KeyEncryptionKey = key,
+                    KeyWrapAlgorithm = s_algorithmName
+                });
+            var blob = disposable.Container.GetBlobClient(GetNewBlobName());
+
+            // Act
+            await blob.UploadAsync(
+                new MemoryStream(data),
+                new BlobUploadOptions { TransferOptions = transferOptions },
+                cancellationToken: s_cancellationToken);
+
+            // Assert
+            Assert.IsTrue(await blob.ExistsAsync());
+            Assert.Greater((await blob.GetPropertiesAsync()).Value.ContentLength, 0);
+            // block list will return empty when putblob was used
+            BlockList blockList = await BlobsClientBuilder.ToBlockBlobClient(blob).GetBlockListAsync();
+            Assert.IsEmpty(blockList.UncommittedBlocks);
+            if (oneshot)
+            {
+                Assert.IsEmpty(blockList.CommittedBlocks);
+            }
+            else
+            {
+                Assert.IsNotEmpty(blockList.CommittedBlocks);
+            }
+        }
+
         [RecordedTest]
         public void CanGenerateSas_WithClientSideEncryptionOptions_True()
         {
