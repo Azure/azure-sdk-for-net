@@ -41,9 +41,15 @@ namespace Azure.Monitor.Query.Models
         /// <returns> A new <see cref="Models.LogsTableColumn"/> instance for mocking. </returns>
         public static LogsTableRow LogsTableRow(IReadOnlyList<LogsTableColumn> columns, Object[] rows)
         {
-            var columnMap = ; //TODO
+            Dictionary<string, int> columnDictionary = new();
+
+            for (var index = 0; index < columns.Count; index++)
+            {
+                columnDictionary[columns[index].Name] = index;
+            }
+
             JsonElement row = JsonElementFromObject(rows);
-            return new LogsTableRow(columnMap, columns, row);
+            return new LogsTableRow(columnDictionary, columns, row);
         }
 
         /// <summary> Initializes a new instance of LogsTable. </summary>

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -191,6 +192,25 @@ namespace Azure.Monitor.Query.Tests
             Assert.AreEqual(result.GetVisualization().ToString(), "42");
             Assert.AreEqual("PartialError", result.Error.Code);
             Assert.AreEqual("There were some errors when processing your query.", result.Error.Message);
+        }
+
+        [Test]
+        public void ValidateMonitorModelFactoryTableCreation()
+        {
+            LogsTableColumn logsTableColumn1 = MonitorQueryModelFactory.LogsTableColumn("column1", LogsColumnType.String);
+            LogsTableColumn logsTableColumn2 = MonitorQueryModelFactory.LogsTableColumn("column2", LogsColumnType.String);
+            LogsTableColumn[] logsTableColumns = new LogsTableColumn[] { logsTableColumn1, logsTableColumn2 };
+            Object[] rowValues = new Object[] { "row1", "row2" };
+            LogsTableRow logsTableRow = MonitorQueryModelFactory.LogsTableRow(logsTableColumns, rowValues);
+            LogsTableRow[] rowArray = new LogsTableRow[] { logsTableRow };
+            LogsTable logsTable = MonitorQueryModelFactory.LogsTable("tester", rowArray.AsEnumerable(), logsTableColumns.AsEnumerable());
+
+            Assert.AreEqual(logsTable.Name, "tester");
+            Assert.AreEqual(logsTable.Rows.Count, 1);
+            Assert.AreEqual(logsTable.Rows[0].ToString(), "[\"row1\",\"row2\"]");
+            Assert.AreEqual(logsTable.Columns.Count, 2);
+            Assert.AreEqual(logsTable.Columns[0].Name, "column1");
+            Assert.AreEqual(logsTable.Columns[1].Name, "column2");
         }
     }
 }
