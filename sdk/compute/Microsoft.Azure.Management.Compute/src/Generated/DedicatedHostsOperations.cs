@@ -542,9 +542,12 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Reboot the dedicated host. The operation will complete successfully once
-        /// the dedicated host has booted and is running. For VM health after the
-        /// reboot, please check the Resource Health Center in the Azure Portal.
+        /// Restart the dedicated host. The operation will complete successfully once
+        /// the dedicated host has restarted and is running. For VM health after the
+        /// restart, please check the Resource Health Center in the Azure Portal.
+        /// Please refer to
+        /// https://docs.microsoft.com/en-us/azure/service-health/resource-health-overview
+        /// for more information.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -573,7 +576,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> RebootWithHttpMessagesAsync(string resourceGroupName, string hostGroupName, string hostName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> RestartWithHttpMessagesAsync(string resourceGroupName, string hostGroupName, string hostName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -604,11 +607,11 @@ namespace Microsoft.Azure.Management.Compute
                 tracingParameters.Add("hostName", hostName);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "Reboot", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "Restart", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/hostGroups/{hostGroupName}/hosts/{hostName}/reboot").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/hostGroups/{hostGroupName}/hosts/{hostName}/restart").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{hostGroupName}", System.Uri.EscapeDataString(hostGroupName));
             _url = _url.Replace("{hostName}", System.Uri.EscapeDataString(hostName));

@@ -271,9 +271,12 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// Reboot the dedicated host. The operation will complete successfully once
-            /// the dedicated host has booted and is running. For VM health after the
-            /// reboot, please check the Resource Health Center in the Azure Portal.
+            /// Restart the dedicated host. The operation will complete successfully once
+            /// the dedicated host has restarted and is running. For VM health after the
+            /// restart, please check the Resource Health Center in the Azure Portal.
+            /// Please refer to
+            /// https://docs.microsoft.com/en-us/azure/service-health/resource-health-overview
+            /// for more information.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -287,15 +290,18 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='hostName'>
             /// The name of the dedicated host.
             /// </param>
-            public static void Reboot(this IDedicatedHostsOperations operations, string resourceGroupName, string hostGroupName, string hostName)
+            public static void Restart(this IDedicatedHostsOperations operations, string resourceGroupName, string hostGroupName, string hostName)
             {
-                operations.RebootAsync(resourceGroupName, hostGroupName, hostName).GetAwaiter().GetResult();
+                operations.RestartAsync(resourceGroupName, hostGroupName, hostName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Reboot the dedicated host. The operation will complete successfully once
-            /// the dedicated host has booted and is running. For VM health after the
-            /// reboot, please check the Resource Health Center in the Azure Portal.
+            /// Restart the dedicated host. The operation will complete successfully once
+            /// the dedicated host has restarted and is running. For VM health after the
+            /// restart, please check the Resource Health Center in the Azure Portal.
+            /// Please refer to
+            /// https://docs.microsoft.com/en-us/azure/service-health/resource-health-overview
+            /// for more information.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -312,9 +318,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task RebootAsync(this IDedicatedHostsOperations operations, string resourceGroupName, string hostGroupName, string hostName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task RestartAsync(this IDedicatedHostsOperations operations, string resourceGroupName, string hostGroupName, string hostName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.RebootWithHttpMessagesAsync(resourceGroupName, hostGroupName, hostName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.RestartWithHttpMessagesAsync(resourceGroupName, hostGroupName, hostName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

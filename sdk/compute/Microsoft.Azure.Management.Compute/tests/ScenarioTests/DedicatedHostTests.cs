@@ -126,7 +126,7 @@ namespace Compute.Tests
         }
 
         [Fact]
-        public void TestDedicatedHostReboot()
+        public void TestDedicatedHostRestart()
         {
             string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
             using (MockContext context = MockContext.Start(this.GetType()))
@@ -155,13 +155,12 @@ namespace Compute.Tests
                     DedicatedHostGroup returnedDHGWithInstanceView = m_CrpClient.DedicatedHostGroups.Get(rgName, dhgName, InstanceViewTypes.InstanceView);
                     ValidateDedicatedHostGroupInstanceView(returnedDHGWithInstanceView, createdDH);
 
-                    // Reboot the DedicatedHost
-                    m_CrpClient.DedicatedHosts.Reboot(rgName, dhgName, dhName);
+                    // Restart the DedicatedHost
+                    m_CrpClient.DedicatedHosts.Restart(rgName, dhgName, dhName);
 
-                    // Delete DedicatedHosts and DedicatedHostGroups
+                    // Delete DedicatedHost and DedicatedHostGroup
                     m_CrpClient.DedicatedHosts.Delete(rgName, dhgName, dhName);
                     m_CrpClient.DedicatedHostGroups.Delete(rgName, dhgName);
-
                 }
                 finally
                 {
