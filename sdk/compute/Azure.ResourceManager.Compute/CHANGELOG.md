@@ -207,7 +207,7 @@ var nicData = new NetworkInterfaceData()
     Location = location,
     IpConfigurations =
     {
-        new NetworkInterfaceIPConfiguration()
+        new NetworkInterfaceIPConfigurationData()
         {
             Name = "Primary",
             Primary = true,

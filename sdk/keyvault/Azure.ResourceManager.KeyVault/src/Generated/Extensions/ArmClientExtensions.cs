@@ -56,6 +56,17 @@ namespace Azure.ResourceManager.KeyVault
         }
         #endregion
 
+        #region DeletedManagedHsm
+        /// <summary> Gets an object representing a DeletedManagedHsm along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DeletedManagedHsm" /> object. </returns>
+        public static DeletedManagedHsm GetDeletedManagedHsm(this ArmClient armClient, ResourceIdentifier id)
+        {
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DeletedManagedHsm(clientOptions, credential, uri, pipeline, id));
+        }
+        #endregion
+
         #region MhsmPrivateEndpointConnection
         /// <summary> Gets an object representing a MhsmPrivateEndpointConnection along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
