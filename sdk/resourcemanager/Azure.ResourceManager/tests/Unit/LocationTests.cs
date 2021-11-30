@@ -7,6 +7,8 @@ namespace Azure.ResourceManager.Tests
     [Parallelizable]
     public class LocationTests
     {
+        [TestCase("WestUS2", "westus2", "West US 2")]
+        [TestCase("WestUS4", "westus4", "WestUS4")]
         [TestCase("West US 2", "westus2", "West US 2")]
         [TestCase("West Us 3", "westus3", "West Us 3")]
         [TestCase("West-Us 2", "west-us2", "West-Us 2")]

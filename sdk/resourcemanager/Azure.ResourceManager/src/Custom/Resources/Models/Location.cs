@@ -278,19 +278,15 @@ namespace Azure.ResourceManager.Resources.Models
 
         private static string GetNameFromDisplayName(string name)
         {
-            bool foundSpace = false;
             StringBuilder sb = new StringBuilder();
             foreach (char c in name)
             {
                 if (c == Space)
-                {
-                    foundSpace = true;
                     continue;
-                }
 
                 sb.Append(char.ToLowerInvariant(c));
             }
-            return foundSpace ? sb.ToString() : name;
+            return sb.ToString();
         }
 
         /// <summary>
