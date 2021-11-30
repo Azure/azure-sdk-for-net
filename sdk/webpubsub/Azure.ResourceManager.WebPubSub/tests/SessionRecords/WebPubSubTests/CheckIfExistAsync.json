@@ -2533,7 +2533,7 @@
       "ResponseBody": {
         "error": {
           "code": "ResourceNotFound",
-          "message": "The Resource \u0027Microsoft.SignalRService/WebPubSub/webpubsub-79671\u0027 under resource group \u0027WebPubSubRG-9869\u0027 was not found. For more details please go to https://aka.ms/ARMResourceNotFoundFix"
+          "message": "The Resource 'Microsoft.SignalRService/WebPubSub/webpubsub-79671' under resource group 'WebPubSubRG-9869' was not found. For more details please go to https://aka.ms/ARMResourceNotFoundFix"
         }
       }
     },

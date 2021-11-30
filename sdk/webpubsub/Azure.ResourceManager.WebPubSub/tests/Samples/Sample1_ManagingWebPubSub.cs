@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Samples
             Subscription subscription = armClient.GetDefaultSubscription();
             #endregion
 
-            #region Snippet:Readme_GetResourceGroupContainer
-            ResourceGroupCollection rgContainer = subscription.GetResourceGroups();
-            // With the container, we can create a new resource group with an specific name
+            #region Snippet:Readme_GetResourceGroupColletion
+            ResourceGroupCollection rgColletion = subscription.GetResourceGroups();
+            // With the Colletion, we can create a new resource group with an specific name
             string rgName = "myRgName";
             Location location = Location.WestUS2;
-            ResourceGroup resourceGroup = await rgContainer.CreateOrUpdate(rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
+            ResourceGroup resourceGroup = await rgColletion.CreateOrUpdate(rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
             #endregion
 
             this.resourceGroup = resourceGroup;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Samples
         public async Task CreateOrUpdate()
         {
             #region Snippet:Managing_WebPubSub_CreateWebPubSub
-            WebPubSubCollection WebPubSubContainer = resourceGroup.GetWebPubSubs();
+            WebPubSubCollection WebPubSubColletion = resourceGroup.GetWebPubSubs();
 
             string webPubSubName = "myWebPubSubName";
 
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Samples
             IList<LiveTraceCategory> categories = new List<LiveTraceCategory>();
             categories.Add(new LiveTraceCategory("category-01", "true"));
 
-            AclAction aCLAction = new AclAction("Deny");
+            AclAction aclAction = new AclAction("Deny");
             IList<WebPubSubRequestType> allow = new List<WebPubSubRequestType>();
             IList<WebPubSubRequestType> deny = new List<WebPubSubRequestType>();
             deny.Add(new WebPubSubRequestType("RESTAPI"));
@@ -65,11 +65,11 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Samples
             {
                 Sku = new WebPubSubSku("Standard_S1"),
                 LiveTraceConfiguration = new LiveTraceConfiguration("true", categories),
-                NetworkACLs = new WebPubSubNetworkACLs(aCLAction, publicNetwork, privateEndpoints),
+                NetworkACLs = new WebPubSubNetworkACLs(aclAction, publicNetwork, privateEndpoints),
                 ResourceLogConfiguration = new ResourceLogConfiguration(resourceLogCategory),
             };
 
-            WebPubSub webPubSub = await (await WebPubSubContainer.CreateOrUpdateAsync(webPubSubName, data)).WaitForCompletionAsync();
+            WebPubSub webPubSub = await (await WebPubSubColletion.CreateOrUpdateAsync(webPubSubName, data)).WaitForCompletionAsync();
 
             #endregion
         }
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Samples
         public async Task List()
         {
             #region Snippet:Managing_WebPubSub_ListAllWebPubSub
-            WebPubSubCollection WebPubSubContainer = resourceGroup.GetWebPubSubs();
+            WebPubSubCollection WebPubSubColletion = resourceGroup.GetWebPubSubs();
 
-            AsyncPageable<WebPubSub> response = WebPubSubContainer.GetAllAsync();
+            AsyncPageable<WebPubSub> response = WebPubSubColletion.GetAllAsync();
             await foreach (WebPubSub WebPubSub in response)
             {
                 Console.WriteLine(WebPubSub.Data.Name);
@@ -94,9 +94,9 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Samples
         public async Task Get()
         {
             #region Snippet:Managing_WebPubSub_GetWebPubSub
-            WebPubSubCollection WebPubSubContainer = resourceGroup.GetWebPubSubs();
+            WebPubSubCollection WebPubSubColletion = resourceGroup.GetWebPubSubs();
 
-            WebPubSub webPubSub = await WebPubSubContainer.GetAsync("myWebPubSubName");
+            WebPubSub webPubSub = await WebPubSubColletion.GetAsync("myWebPubSubName");
             Console.WriteLine(webPubSub.Data.Name);
             #endregion
         }
@@ -106,15 +106,15 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Samples
         public async Task GetIfExists()
         {
             #region Snippet:Managing_WebPubSub_GetWebPubSubIfExists
-            WebPubSubCollection WebPubSubContainer = resourceGroup.GetWebPubSubs();
+            WebPubSubCollection WebPubSubColletion = resourceGroup.GetWebPubSubs();
 
-            WebPubSub webPubSub = await WebPubSubContainer.GetIfExistsAsync("foo");
+            WebPubSub webPubSub = await WebPubSubColletion.GetIfExistsAsync("foo");
             if (webPubSub != null)
             {
                 Console.WriteLine(webPubSub.Data.Name);
             }
 
-            if (await WebPubSubContainer.CheckIfExistsAsync("bar"))
+            if (await WebPubSubColletion.CheckIfExistsAsync("bar"))
             {
                 Console.WriteLine("WebPubSub 'bar' exists.");
             }
@@ -126,9 +126,9 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Samples
         public async Task DeleteVirtualWebPubSub()
         {
             #region Snippet:Managing_WebPubSub_DeleteWebPubSub
-            WebPubSubCollection WebPubSubContainer = resourceGroup.GetWebPubSubs();
+            WebPubSubCollection WebPubSubColletion = resourceGroup.GetWebPubSubs();
 
-            WebPubSub webPubSub = await WebPubSubContainer.GetAsync("myWebPubSubName");
+            WebPubSub webPubSub = await WebPubSubColletion.GetAsync("myWebPubSubName");
             await webPubSub.DeleteAsync();
             #endregion
         }
