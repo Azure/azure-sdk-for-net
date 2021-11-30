@@ -1,0 +1,314 @@
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using System.Threading.Tasks;
+using Azure.Core.TestFramework;
+using NUnit.Framework;
+using Azure.AI.Language.QuestionAnswering.Projects;
+using Azure.Core;
+using System.Linq;
+using System.Threading;
+using System.Text.Json;
+
+namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
+{
+    public partial class QuestionAnsweringProjectsClientSamples : QuestionAnsweringProjectsLiveTestBase
+    {
+        [RecordedTest]
+        [SyncOnly]
+        public void KnowledgeSources()
+        {
+            QuestionAnsweringProjectsClient client = Client;
+            string testProjectName = CreateTestProjectName();
+            CreateProject(testProjectName);
+
+            #region QuestionAnsweringProjectsClient_UpdateSources
+            // Set request content parameters for updating our new project's sources
+            string sourceUri = "https://www.microsoft.com/en-in/software-download/faq";
+            RequestContent updateSourcesRequestContent = RequestContent.Create(
+                new[] {
+                    new {
+                            op = "add",
+                            value = new
+                            {
+                                displayName = "MicrosoftFAQ",
+                                source = sourceUri,
+                                sourceUri = sourceUri,
+                                sourceKind = "url",
+                                contentStructureKind = "unstructured",
+                                refresh = false
+                            }
+                        }
+                });
+
+            Operation<BinaryData> updateSourcesOperation = client.UpdateSources(testProjectName, updateSourcesRequestContent);
+
+            // Wait for operation completion
+            TimeSpan pollingInterval = new TimeSpan(1000);
+
+            while (true)
+            {
+                updateSourcesOperation.UpdateStatus();
+                if (updateSourcesOperation.HasCompleted)
+                {
+                    Console.WriteLine($"Update Sources operation value: \n{updateSourcesOperation.Value}");
+                    break;
+                }
+
+                Thread.Sleep(pollingInterval);
+            }
+
+            // Knowledge Sources can be retrieved as follows
+            Pageable<BinaryData> sources = client.GetSources(testProjectName);
+            Console.WriteLine("Sources: ");
+            foreach (BinaryData source in sources)
+            {
+                Console.WriteLine(source);
+            }
+            #endregion
+
+            Assert.True(updateSourcesOperation.HasCompleted);
+            Assert.That(sources.Any(source => source.ToString().Contains(sourceUri)));
+
+            #region Snippet:QuestionAnsweringProjectsClient_UpdateQnas
+            string question = "What is the easiest way to use azure services in my .NET project?";
+            string answer = "Using Microsoft's Azure SDKs";
+            RequestContent updateQnasRequestContent = RequestContent.Create(
+                new[] {
+                    new {
+                            op = "add",
+                            value = new
+                            {
+                                questions = new[]
+                                    {
+                                        question
+                                    },
+                                answer = answer
+                            }
+                        }
+                });
+
+            Operation<BinaryData> updateQnasOperation = Client.UpdateQnas(testProjectName, updateQnasRequestContent);
+
+            while (true)
+            {
+                updateQnasOperation.UpdateStatus();
+                if (updateQnasOperation.HasCompleted)
+                {
+                    Console.WriteLine($"Update Qnas operation value: \n{updateQnasOperation.Value}");
+                    break;
+                }
+
+                Thread.Sleep(pollingInterval);
+            }
+
+            Pageable<BinaryData> qnas = Client.GetQnas(testProjectName);
+            #endregion
+
+            Assert.True(updateQnasOperation.HasCompleted);
+            Assert.AreEqual(200, updateQnasOperation.GetRawResponse().Status);
+            Assert.That(qnas.Any(qna => qna.ToString().Contains(question)));
+            Assert.That(qnas.Any(qna => qna.ToString().Contains(answer)));
+
+            #region Snippet:QuestionAnsweringProjectsClient_UpdateSynonyms
+            RequestContent updateSynonymsRequestContent = RequestContent.Create(
+                new
+                {
+                    value = new[] {
+                        new  {
+                                alterations = new[]
+                                {
+                                    "qnamaker",
+                                    "qna maker",
+                                }
+                             },
+                        new  {
+                                alterations = new[]
+                                {
+                                    "qna",
+                                    "question and answer",
+                                }
+                             }
+                    }
+                });
+
+            Response updateSynonymsResponse = Client.UpdateSynonyms(testProjectName, updateSynonymsRequestContent);
+
+            // Synonyms can be retrieved as follows
+            Pageable<BinaryData> synonyms = Client.GetSynonyms(testProjectName);
+
+            Console.WriteLine("Synonyms: ");
+            foreach (BinaryData synonym in synonyms)
+            {
+                Console.WriteLine(synonym);
+            }
+            #endregion
+
+            // Recieve status 204
+            // Assert.AreEqual(200, updateSynonymsResponse.Status);
+            // Assert.That(synonyms.Any(synonym => synonym.ToString().Contains("bad")));
+
+            #region Snippet:QuestionAnsweringProjectsClient_AddFeedback
+            RequestContent addFeedbackRequestContent = RequestContent.Create(
+                new
+                {
+                    records = new[]
+                    {
+                        new
+                        {
+                            userId = "userX",
+                            userQuestion = "what do you mean?",
+                            qnaId = 1
+                        }
+                    }
+                });
+
+            Response addFeedbackResponse = Client.AddFeedback(testProjectName, addFeedbackRequestContent);
+            #endregion
+
+            // Recieve status 204
+            // Assert.AreEqual(200, addFeedbackResponse.Status);
+
+            DeleteProject(testProjectName);
+        }
+
+        [RecordedTest]
+        [AsyncOnly]
+        public async Task KnowledgeSourcesAsync()
+        {
+            QuestionAnsweringProjectsClient client = Client;
+            string testProjectName = CreateTestProjectName();
+            await CreateProjectAsync(testProjectName);
+
+            #region QuestionAnsweringProjectsClient_UpdateSourcesAsync
+            // Set request content parameters for updating our new project's sources
+            string sourceUri = "https://www.microsoft.com/en-in/software-download/faq";
+            RequestContent updateSourcesRequestContent = RequestContent.Create(
+                new[] {
+                    new {
+                            op = "add",
+                            value = new
+                            {
+                                displayName = "MicrosoftFAQ",
+                                source = sourceUri,
+                                sourceUri = sourceUri,
+                                sourceKind = "url",
+                                contentStructureKind = "unstructured",
+                                refresh = false
+                            }
+                        }
+                });
+
+            Operation<BinaryData> updateSourcesOperation = await client.UpdateSourcesAsync(testProjectName, updateSourcesRequestContent);
+
+            // Wait for operation completion
+            Response<BinaryData> updateSourcesOperationResult = await updateSourcesOperation.WaitForCompletionAsync();
+
+            Console.WriteLine($"Update Sources operation result: \n{updateSourcesOperationResult}");
+
+            // Knowledge Sources can be retrieved as follows
+            AsyncPageable<BinaryData> sources = client.GetSourcesAsync(testProjectName);
+            Console.WriteLine("Sources: ");
+            await foreach (BinaryData source in sources)
+            {
+                Console.WriteLine(source);
+            }
+            #endregion
+
+            Assert.True(updateSourcesOperation.HasCompleted);
+            Assert.That((await sources.ToEnumerableAsync()).Any(source => source.ToString().Contains(sourceUri)));
+
+            #region Snippet:QuestionAnsweringProjectsClient_UpdateQnasAsync
+            string question = "What is the easiest way to use azure services in my .NET project?";
+            string answer = "Using Microsoft's Azure SDKs";
+            RequestContent updateQnasRequestContent = RequestContent.Create(
+                new[] {
+                    new {
+                            op = "add",
+                            value = new
+                            {
+                                questions = new[]
+                                    {
+                                        question
+                                    },
+                                answer = answer
+                            }
+                        }
+                });
+
+            Operation<BinaryData> updateQnasOperation = await Client.UpdateQnasAsync(testProjectName, updateQnasRequestContent);
+            await updateQnasOperation.WaitForCompletionAsync();
+
+            AsyncPageable<BinaryData> qnas = Client.GetQnasAsync(testProjectName);
+
+            #endregion
+
+            Assert.True(updateQnasOperation.HasCompleted);
+            Assert.AreEqual(200, updateQnasOperation.GetRawResponse().Status);
+            Assert.That((await sources.ToEnumerableAsync()).Any(source => source.ToString().Contains(question)));
+            Assert.That((await sources.ToEnumerableAsync()).Any(source => source.ToString().Contains(answer)));
+
+            #region Snippet:QuestionAnsweringProjectsClient_UpdateSynonymsAsync
+            RequestContent updateSynonymsRequestContent = RequestContent.Create(
+                new
+                {
+                    value = new[] {
+                        new  {
+                                alterations = new[]
+                                {
+                                    "qnamaker",
+                                    "qna maker",
+                                }
+                             },
+                        new  {
+                                alterations = new[]
+                                {
+                                    "qna",
+                                    "question and answer",
+                                }
+                             }
+                    }
+                });
+
+            Response updateSynonymsResponse = await Client.UpdateSynonymsAsync(testProjectName, updateSynonymsRequestContent);
+
+            // Synonyms can be retrieved as follows
+            AsyncPageable<BinaryData> synonyms = Client.GetSynonymsAsync(testProjectName);
+
+            Console.WriteLine("Synonyms: ");
+            await foreach (BinaryData synonym in synonyms)
+            {
+                Console.WriteLine(synonym);
+            }
+            #endregion
+
+            // Recieve status 204
+            // Assert.AreEqual(200, updateSynonymsResponse.Status);
+            // Assert.That((await synonyms.ToEnumerableAsync()).Any(synonym => synonym.ToString().Contains("bad")));
+
+            #region Snippet:QuestionAnsweringProjectsClient_AddFeedbackAsync
+            RequestContent addFeedbackRequestContent = RequestContent.Create(
+                new
+                {
+                    records = new[]
+                    {
+                        new
+                        {
+                            userId = "userX",
+                            userQuestion = "what do you mean?",
+                            qnaId = 1
+                        }
+                    }
+                });
+
+            Response addFeedbackResponse = await Client.AddFeedbackAsync(testProjectName, addFeedbackRequestContent);
+            #endregion
+
+            // Recieve status 204
+            // Assert.AreEqual(200, addFeedbackResponse.Status);
+
+            DeleteProject(testProjectName);
+        }
+    }
+}

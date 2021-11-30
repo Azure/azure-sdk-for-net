@@ -2,7 +2,7 @@
 
 This sample demonstrates how to create and deploy Question Answering projects. To get started, you'll need to create a Question Answering service endpoint and an API key. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering/README.md) for links and instructions.
 
-To create, deploy or perform any other authoring actions for Question Answering projects, you need to first create a `QuestionAnsweringProjectsClient` using an endpoint and API key. These can be stored in an environment variable, configuration setting, or any way that works for your application.
+To create, deploy, or perform any other authoring actions for Question Answering projects, you need to first create a `QuestionAnsweringProjectsClient` using an endpoint and API key. These can be stored in an environment variable, configuration setting, or any way that works for your application.
 
 ```C# Snippet:QuestionAnsweringProjectsClient_Create
 Uri endpoint = new Uri("https://myaccount.api.cognitive.microsoft.com");
@@ -87,7 +87,7 @@ while (true)
     Thread.Sleep(pollingInterval);
 }
 
-// Deployments can be retrieved as follows
+// Knowledge Sources can be retrieved as follows
 Pageable<BinaryData> sources = client.GetSources(newProjectName);
 Console.WriteLine("Sources: ");
 foreach (BinaryData source in sources)
@@ -185,7 +185,7 @@ Response<BinaryData> updateSourcesOperationResult = await updateSourcesOperation
 
 Console.WriteLine($"Update Sources operation result: \n{updateSourcesOperationResult}");
 
-// Deployments can be retrieved as follows
+// Knowledge Sources can be retrieved as follows
 AsyncPageable<BinaryData> sources = client.GetSourcesAsync(newProjectName);
 Console.WriteLine("Sources: ");
 await foreach (BinaryData source in sources)
