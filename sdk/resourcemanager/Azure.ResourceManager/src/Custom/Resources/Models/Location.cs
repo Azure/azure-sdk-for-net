@@ -22,254 +22,253 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary>
         /// Public cloud location for East Asia.
         /// </summary>
-        public static readonly Location EastAsia = new Location { Name = "eastasia", DisplayName = "East Asia", RegionalDisplayName = "(Asia Pacific) East Asia" };
+        public static readonly Location EastAsia = new Location { Name = "eastasia", DisplayName = "East Asia" };
 
         /// <summary>
         /// Public cloud location for Southeast Asia.
         /// </summary>
-        public static readonly Location SoutheastAsia = new Location { Name = "southeastasia", DisplayName = "Southeast Asia", RegionalDisplayName = "(Asia Pacific) Southeast Asia" };
+        public static readonly Location SoutheastAsia = new Location { Name = "southeastasia", DisplayName = "Southeast Asia" };
 
         /// <summary>
         /// Public cloud location for Central US.
         /// </summary>
-        public static readonly Location CentralUS = new Location { Name = "centralus", DisplayName = "Central US", RegionalDisplayName = "(US) Central US" };
+        public static readonly Location CentralUS = new Location { Name = "centralus", DisplayName = "Central US" };
 
         /// <summary>
         /// Public cloud location for East US.
         /// </summary>
-        public static readonly Location EastUS = new Location { Name = "eastus", DisplayName = "East US", RegionalDisplayName = "(US) East US" };
+        public static readonly Location EastUS = new Location { Name = "eastus", DisplayName = "East US" };
 
         /// <summary>
         /// Public cloud location for East US 2.
         /// </summary>
-        public static readonly Location EastUS2 = new Location { Name = "eastus2", DisplayName = "East US 2", RegionalDisplayName = "(US) East US 2" };
+        public static readonly Location EastUS2 = new Location { Name = "eastus2", DisplayName = "East US 2" };
 
         /// <summary>
         /// Public cloud location for West US.
         /// </summary>
-        public static readonly Location WestUS = new Location { Name = "westus", DisplayName = "West US", RegionalDisplayName = "(US) West US" };
+        public static readonly Location WestUS = new Location { Name = "westus", DisplayName = "West US" };
 
         /// <summary>
         /// Public cloud location for North Central US.
         /// </summary>
-        public static readonly Location NorthCentralUS = new Location { Name = "northcentralus", DisplayName = "North Central US", RegionalDisplayName = "(US) North Central US" };
+        public static readonly Location NorthCentralUS = new Location { Name = "northcentralus", DisplayName = "North Central US" };
 
         /// <summary>
         /// Public cloud location for South Central US.
         /// </summary>
-        public static readonly Location SouthCentralUS = new Location { Name = "southcentralus", DisplayName = "South Central US", RegionalDisplayName = "(US) South Central US" };
+        public static readonly Location SouthCentralUS = new Location { Name = "southcentralus", DisplayName = "South Central US" };
 
         /// <summary>
         /// Public cloud location for North Europe.
         /// </summary>
-        public static readonly Location NorthEurope = new Location { Name = "northeurope", DisplayName = "North Europe", RegionalDisplayName = "(Europe) North Europe" };
+        public static readonly Location NorthEurope = new Location { Name = "northeurope", DisplayName = "North Europe" };
 
         /// <summary>
         /// Public cloud location for West Europe.
         /// </summary>
-        public static readonly Location WestEurope = new Location { Name = "westeurope", DisplayName = "West Europe", RegionalDisplayName = "(Europe) West Europe" };
+        public static readonly Location WestEurope = new Location { Name = "westeurope", DisplayName = "West Europe" };
 
         /// <summary>
         /// Public cloud location for Japan West.
         /// </summary>
-        public static readonly Location JapanWest = new Location { Name = "japanwest", DisplayName = "Japan West", RegionalDisplayName = "(Asia Pacific) Japan West" };
+        public static readonly Location JapanWest = new Location { Name = "japanwest", DisplayName = "Japan West" };
 
         /// <summary>
         /// Public cloud location for Japan East.
         /// </summary>
-        public static readonly Location JapanEast = new Location { Name = "japaneast", DisplayName = "Japan East", RegionalDisplayName = "(Asia Pacific) Japan East" };
+        public static readonly Location JapanEast = new Location { Name = "japaneast", DisplayName = "Japan East" };
 
         /// <summary>
         /// Public cloud location for Brazil South.
         /// </summary>
-        public static readonly Location BrazilSouth = new Location { Name = "brazilsouth", DisplayName = "Brazil South", RegionalDisplayName = "(South America) Brazil South" };
+        public static readonly Location BrazilSouth = new Location { Name = "brazilsouth", DisplayName = "Brazil South" };
 
         /// <summary>
         /// Public cloud location for Australia East.
         /// </summary>
-        public static readonly Location AustraliaEast = new Location { Name = "australiaeast", DisplayName = "Australia East", RegionalDisplayName = "(Asia Pacific) Australia East" };
+        public static readonly Location AustraliaEast = new Location { Name = "australiaeast", DisplayName = "Australia East" };
 
         /// <summary>
         /// Public cloud location for Australia Southeast.
         /// </summary>
-        public static readonly Location AustraliaSoutheast = new Location { Name = "australiasoutheast", DisplayName = "Australia Southeast", RegionalDisplayName = "(Asia Pacific) Australia Southeast" };
+        public static readonly Location AustraliaSoutheast = new Location { Name = "australiasoutheast", DisplayName = "Australia Southeast" };
 
         /// <summary>
         /// Public cloud location for South India.
         /// </summary>
-        public static readonly Location SouthIndia = new Location { Name = "southindia", DisplayName = "South India", RegionalDisplayName = "(Asia Pacific) South India" };
+        public static readonly Location SouthIndia = new Location { Name = "southindia", DisplayName = "South India" };
 
         /// <summary>
         /// Public cloud location for Central India.
         /// </summary>
-        public static readonly Location CentralIndia = new Location { Name = "centralindia", DisplayName = "Central India", RegionalDisplayName = "(Asia Pacific) Central India" };
+        public static readonly Location CentralIndia = new Location { Name = "centralindia", DisplayName = "Central India" };
 
         /// <summary>
         /// Public cloud location for West India.
         /// </summary>
-        public static readonly Location WestIndia = new Location { Name = "westindia", DisplayName = "West India", RegionalDisplayName = "(Asia Pacific) West India" };
+        public static readonly Location WestIndia = new Location { Name = "westindia", DisplayName = "West India" };
 
         /// <summary>
         /// Public cloud location for Canada Central.
         /// </summary>
-        public static readonly Location CanadaCentral = new Location { Name = "canadacentral", DisplayName = "Canada Central", RegionalDisplayName = "(Canada) Canada Central" };
+        public static readonly Location CanadaCentral = new Location { Name = "canadacentral", DisplayName = "Canada Central" };
 
         /// <summary>
         /// Public cloud location for Canada East.
         /// </summary>
-        public static readonly Location CanadaEast = new Location { Name = "canadaeast", DisplayName = "Canada East", RegionalDisplayName = "(Canada) Canada East" };
+        public static readonly Location CanadaEast = new Location { Name = "canadaeast", DisplayName = "Canada East" };
 
         /// <summary>
         /// Public cloud location for UK South.
         /// </summary>
-        public static readonly Location UKSouth = new Location { Name = "uksouth", DisplayName = "UK South", RegionalDisplayName = "(Europe) UK South" };
+        public static readonly Location UKSouth = new Location { Name = "uksouth", DisplayName = "UK South" };
 
         /// <summary>
         /// Public cloud location for UK West.
         /// </summary>
-        public static readonly Location UKWest = new Location { Name = "ukwest", DisplayName = "UK West", RegionalDisplayName = "(Europe) UK West" };
+        public static readonly Location UKWest = new Location { Name = "ukwest", DisplayName = "UK West" };
 
         /// <summary>
         /// Public cloud location for West Central US.
         /// </summary>
-        public static readonly Location WestCentralUS = new Location { Name = "westcentralus", DisplayName = "West Central US", RegionalDisplayName = "(US) West Central US" };
+        public static readonly Location WestCentralUS = new Location { Name = "westcentralus", DisplayName = "West Central US" };
 
         /// <summary>
         /// Public cloud location for West US 2.
         /// </summary>
-        public static readonly Location WestUS2 = new Location { Name = "westus2", DisplayName = "West US 2", RegionalDisplayName = "(US) West US 2" };
+        public static readonly Location WestUS2 = new Location { Name = "westus2", DisplayName = "West US 2" };
 
         /// <summary>
         /// Public cloud location for Korea Central.
         /// </summary>
-        public static readonly Location KoreaCentral = new Location { Name = "koreacentral", DisplayName = "Korea Central", RegionalDisplayName = "(Asia Pacific) Korea Central" };
+        public static readonly Location KoreaCentral = new Location { Name = "koreacentral", DisplayName = "Korea Central" };
 
         /// <summary>
         /// Public cloud location for Korea South.
         /// </summary>
-        public static readonly Location KoreaSouth = new Location { Name = "koreasouth", DisplayName = "Korea South", RegionalDisplayName = "(Asia Pacific) Korea South" };
+        public static readonly Location KoreaSouth = new Location { Name = "koreasouth", DisplayName = "Korea South" };
 
         /// <summary>
         /// Public cloud location for France Central.
         /// </summary>
-        public static readonly Location FranceCentral = new Location { Name = "francecentral", DisplayName = "France Central", RegionalDisplayName = "(Europe) France Central" };
+        public static readonly Location FranceCentral = new Location { Name = "francecentral", DisplayName = "France Central" };
 
         /// <summary>
         /// Public cloud location for France South.
         /// </summary>
-        public static readonly Location FranceSouth = new Location { Name = "francesouth", DisplayName = "France South", RegionalDisplayName = "(Europe) France South" };
+        public static readonly Location FranceSouth = new Location { Name = "francesouth", DisplayName = "France South" };
 
         /// <summary>
         /// Public cloud location for Australia Central.
         /// </summary>
-        public static readonly Location AustraliaCentral = new Location { Name = "australiacentral", DisplayName = "Australia Central", RegionalDisplayName = "(Asia Pacific) Australia Central" };
+        public static readonly Location AustraliaCentral = new Location { Name = "australiacentral", DisplayName = "Australia Central" };
 
         /// <summary>
         /// Public cloud location for Australia Central 2.
         /// </summary>
-        public static readonly Location AustraliaCentral2 = new Location { Name = "australiacentral2", DisplayName = "Australia Central 2", RegionalDisplayName = "(Asia Pacific) Australia Central 2" };
+        public static readonly Location AustraliaCentral2 = new Location { Name = "australiacentral2", DisplayName = "Australia Central 2" };
 
         /// <summary>
         /// Public cloud location for UAE Central.
         /// </summary>
-        public static readonly Location UAECentral = new Location { Name = "uaecentral", DisplayName = "UAE Central", RegionalDisplayName = "(Middle East) UAE Central" };
+        public static readonly Location UAECentral = new Location { Name = "uaecentral", DisplayName = "UAE Central" };
 
         /// <summary>
         /// Public cloud location for UAE North.
         /// </summary>
-        public static readonly Location UAENorth = new Location { Name = "uaenorth", DisplayName = "UAE North", RegionalDisplayName = "(Middle East) UAE North" };
+        public static readonly Location UAENorth = new Location { Name = "uaenorth", DisplayName = "UAE North" };
 
         /// <summary>
         /// Public cloud location for South Africa North.
         /// </summary>
-        public static readonly Location SouthAfricaNorth = new Location { Name = "southafricanorth", DisplayName = "South Africa North", RegionalDisplayName = "(Africa) South Africa North" };
+        public static readonly Location SouthAfricaNorth = new Location { Name = "southafricanorth", DisplayName = "South Africa North" };
 
         /// <summary>
         /// Public cloud location for South Africa West.
         /// </summary>
-        public static readonly Location SouthAfricaWest = new Location { Name = "southafricawest", DisplayName = "South Africa West", RegionalDisplayName = "(Africa) South Africa West" };
+        public static readonly Location SouthAfricaWest = new Location { Name = "southafricawest", DisplayName = "South Africa West" };
 
         /// <summary>
         /// Public cloud location for Switzerland North.
         /// </summary>
-        public static readonly Location SwitzerlandNorth = new Location { Name = "switzerlandnorth", DisplayName = "Switzerland North", RegionalDisplayName = "(Europe) Switzerland North" };
+        public static readonly Location SwitzerlandNorth = new Location { Name = "switzerlandnorth", DisplayName = "Switzerland North" };
 
         /// <summary>
         /// Public cloud location for Switzerland West.
         /// </summary>
-        public static readonly Location SwitzerlandWest = new Location { Name = "switzerlandwest", DisplayName = "Switzerland West", RegionalDisplayName = "(Europe) Switzerland West" };
+        public static readonly Location SwitzerlandWest = new Location { Name = "switzerlandwest", DisplayName = "Switzerland West" };
 
         /// <summary>
         /// Public cloud location for Germany North.
         /// </summary>
-        public static readonly Location GermanyNorth = new Location { Name = "germanynorth", DisplayName = "Germany North", RegionalDisplayName = "(Europe) Germany North" };
+        public static readonly Location GermanyNorth = new Location { Name = "germanynorth", DisplayName = "Germany North" };
 
         /// <summary>
         /// Public cloud location for Germany West Central.
         /// </summary>
-        public static readonly Location GermanyWestCentral = new Location { Name = "germanywestcentral", DisplayName = "Germany West Central", RegionalDisplayName = "(Europe) Germany West Central" };
+        public static readonly Location GermanyWestCentral = new Location { Name = "germanywestcentral", DisplayName = "Germany West Central" };
 
         /// <summary>
         /// Public cloud location for Norway West.
         /// </summary>
-        public static readonly Location NorwayWest = new Location { Name = "norwaywest", DisplayName = "Norway West", RegionalDisplayName = "(Europe) Norway West" };
+        public static readonly Location NorwayWest = new Location { Name = "norwaywest", DisplayName = "Norway West" };
 
         /// <summary>
         /// Public cloud location for Brazil Southeast.
         /// </summary>
-        public static readonly Location BrazilSoutheast = new Location { Name = "brazilsoutheast", DisplayName = "Brazil Southeast", RegionalDisplayName = "(South America) Brazil Southeast" };
+        public static readonly Location BrazilSoutheast = new Location { Name = "brazilsoutheast", DisplayName = "Brazil Southeast" };
 
         #endregion
         private static readonly Dictionary<string, Location> PublicCloudLocations = new Dictionary<string, Location>()
         {
-            { "EASTASIA", EastAsia },
-            { "SOUTHEASTASIA", SoutheastAsia },
-            { "CENTRALUS", CentralUS },
-            { "EASTUS", EastUS },
-            { "EASTUS2", EastUS2 },
-            { "WESTUS", WestUS },
-            { "NORTHCENTRALUS", NorthCentralUS },
-            { "SOUTHCENTRALUS", SouthCentralUS },
-            { "NORTHEUROPE", NorthEurope },
-            { "WESTEUROPE", WestEurope },
-            { "JAPANWEST", JapanWest },
-            { "JAPANEAST", JapanEast },
-            { "BRAZILSOUTH", BrazilSouth },
-            { "AUSTRALIAEAST", AustraliaEast },
-            { "AUSTRALIASOUTHEAST", AustraliaSoutheast },
-            { "SOUTHINDIA", SouthIndia },
-            { "CENTRALINDIA", CentralIndia },
-            { "WESTINDIA", WestIndia },
-            { "CANADACENTRAL", CanadaCentral },
-            { "CANADAEAST", CanadaEast },
-            { "UKSOUTH", UKSouth },
-            { "UKWEST", UKWest },
-            { "WESTCENTRALUS", WestCentralUS },
-            { "WESTUS2", WestUS2 },
-            { "KOREACENTRAL", KoreaCentral },
-            { "KOREASOUTH", KoreaSouth },
-            { "FRANCECENTRAL", FranceCentral },
-            { "FRANCESOUTH", FranceSouth },
-            { "AUSTRALIACENTRAL", AustraliaCentral },
-            { "AUSTRALIACENTRAL2", AustraliaCentral2 },
-            { "UAECENTRAL", UAECentral },
-            { "UAENORTH", UAENorth },
-            { "SOUTHAFRICANORTH", SouthAfricaNorth },
-            { "SOUTHAFRICAWEST", SouthAfricaWest },
-            { "SWITZERLANDNORTH", SwitzerlandNorth },
-            { "SWITZERLANDWEST", SwitzerlandWest },
-            { "GERMANYNORTH", GermanyNorth },
-            { "GERMANYWESTCENTRAL", GermanyWestCentral },
-            { "NORWAYWEST", NorwayWest },
-            { "BRAZILSOUTHEAST", BrazilSoutheast },
+            { "eastasia", EastAsia },
+            { "southeastasia", SoutheastAsia },
+            { "centralus", CentralUS },
+            { "eastus", EastUS },
+            { "eastus2", EastUS2 },
+            { "westus", WestUS },
+            { "northcentralus", NorthCentralUS },
+            { "southcentralus", SouthCentralUS },
+            { "northeurope", NorthEurope },
+            { "westeurope", WestEurope },
+            { "japanwest", JapanWest },
+            { "japaneast", JapanEast },
+            { "brazilsouth", BrazilSouth },
+            { "australiaeast", AustraliaEast },
+            { "australiasoutheast", AustraliaSoutheast },
+            { "southindia", SouthIndia },
+            { "centralindia", CentralIndia },
+            { "westindia", WestIndia },
+            { "canadacentral", CanadaCentral },
+            { "canadaeast", CanadaEast },
+            { "uksouth", UKSouth },
+            { "ukwest", UKWest },
+            { "westcentralus", WestCentralUS },
+            { "westus2", WestUS2 },
+            { "koreacentral", KoreaCentral },
+            { "koreasouth", KoreaSouth },
+            { "francecentral", FranceCentral },
+            { "francesouth", FranceSouth },
+            { "australiacentral", AustraliaCentral },
+            { "australiacentral2", AustraliaCentral2 },
+            { "uaecentral", UAECentral },
+            { "uaenorth", UAENorth },
+            { "southafricanorth", SouthAfricaNorth },
+            { "southafricawest", SouthAfricaWest },
+            { "switzerlandnorth", SwitzerlandNorth },
+            { "switzerlandwest", SwitzerlandWest },
+            { "germanynorth", GermanyNorth },
+            { "germanywestcentral", GermanyWestCentral },
+            { "norwaywest", NorwayWest },
+            { "brazilsoutheast", BrazilSoutheast },
         };
 
         /// <summary> Initializes a new instance of Location. </summary>
-        /// <param name="location"> The location name or the display name. </param>
-        public Location(string location)
+        /// <param name="name"> The location name or the display name. </param>
+        public Location(string name)
         {
-            Name = GetNameFromDisplayName(location);
-            DisplayName = location;
+            Name = name;
         }
 
         private static string GetNameFromDisplayName(string name)
@@ -301,28 +300,28 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary>
         /// Creates a new location from a string.
         /// </summary>
-        /// <param name="name"> String to convert to Location from. </param>
+        /// <param name="displayName"> String to convert to Location from. </param>
         /// <exception cref="ArgumentNullException"> Throws if name is null. </exception>
         /// <exception cref="ArgumentException"> Throws if name is not a known public cloud. </exception>
-        public static Location FromName(string name)
+        public static Location FromDisplayName(string displayName)
         {
-            if (ReferenceEquals(name, null))
-                throw new ArgumentNullException(nameof(name));
+            if (ReferenceEquals(displayName, null))
+                throw new ArgumentNullException(nameof(displayName));
 
-            var normalizedName = NormalizationUtility(name);
+            string name = GetNameFromDisplayName(displayName);
             Location value;
-            if (PublicCloudLocations.TryGetValue(normalizedName, out value))
+            if (PublicCloudLocations.TryGetValue(name, out value))
             {
                 return value;
             }
 
-            return new Location(name);
+            return new Location(name, displayName);
         }
 
         /// <summary>
         /// Creates a new location implicitly from a string.
         /// </summary>
-        /// <param name="other"> String to be assigned in the Name, CanonicalName or DisplayName form. </param>
+        /// <param name="other"> String to be assigned in the Name form </param>
         public static implicit operator Location(string other)
         {
             if (ReferenceEquals(other, null))
@@ -330,7 +329,13 @@ namespace Azure.ResourceManager.Resources.Models
                 return null;
             }
 
-            return FromName(other);
+            Location value;
+            if (PublicCloudLocations.TryGetValue(other, out value))
+            {
+                return value;
+            }
+
+            return new Location(other);
         }
 
         /// <summary>
@@ -343,7 +348,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (ReferenceEquals(other, null))
                 return false;
 
-            return Name == other.Name && DisplayName == other.DisplayName;
+            return Name == other.Name;
         }
 
         /// <summary>
@@ -373,26 +378,6 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             return string.Compare(Name, other.Name, StringComparison.InvariantCulture);
-        }
-
-        private static string NormalizationUtility(string value)
-        {
-            if (string.IsNullOrEmpty(value))
-            {
-                return value;
-            }
-
-            var sb = new StringBuilder(value.Length);
-            for (var index = 0; index < value.Length; ++index)
-            {
-                var c = value[index];
-                if (char.IsLetterOrDigit(c))
-                {
-                    sb.Append(char.ToUpperInvariant(c));
-                }
-            }
-
-            return sb.ToString();
         }
 
         /// <inheritdoc/>

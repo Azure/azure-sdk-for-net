@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.Resources.Models
         {
             Optional<string> name = default;
             Optional<string> displayName = default;
-            Optional<string> regionalDisplayName = default;
             Optional<LocationMetadata> metadata = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -30,11 +29,6 @@ namespace Azure.ResourceManager.Resources.Models
                     displayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("regionalDisplayName"))
-                {
-                    regionalDisplayName = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("metadata"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -46,7 +40,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new Location(name.Value, displayName.Value, regionalDisplayName.Value);
+            return new Location(name.Value, displayName.Value);
         }
     }
 }

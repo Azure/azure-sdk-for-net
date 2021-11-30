@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Core
             var theResource = resourcePageableProvider.ResourceTypes.FirstOrDefault(r => resourceType.Type.Equals(r.ResourceType));
             if (theResource is null)
                 throw new InvalidOperationException($"{resourceType.Type} not found for {resourceType.Type}");
-            return theResource.Locations.Select(l => (Location)l);
+            return theResource.Locations.Select(l => Location.FromDisplayName(l));
         }
 
         /// <summary>
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Core
             var theResource = resourcePageableProvider.ResourceTypes.FirstOrDefault(r => resourceType.Type.Equals(r.ResourceType));
             if (theResource is null)
                 throw new InvalidOperationException($"{resourceType.Type} not found for {resourceType.Type}");
-            return theResource.Locations.Select(l => (Location)l);
+            return theResource.Locations.Select(l => Location.FromDisplayName(l));
         }
     }
 }

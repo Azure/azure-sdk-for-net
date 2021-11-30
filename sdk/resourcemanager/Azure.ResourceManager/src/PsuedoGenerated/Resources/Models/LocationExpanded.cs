@@ -29,12 +29,13 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="id"></param>
         /// <param name="subscriptionId"></param>
         internal LocationExpanded(string id, string subscriptionId, string name, string displayName, string regionalDisplayName, LocationMetadata metadata)
-            : base(name, displayName, regionalDisplayName)
+            : base(name, displayName)
         {
             Metadata = metadata;
             Id = id;
             ResourceIdentifier subId = new ResourceIdentifier(id);
             SubscriptionId = subscriptionId ?? subId.SubscriptionId;
+            RegionalDisplayName = regionalDisplayName;
         }
 
         /// <summary> Metadata of the location, such as lat/long, paired region, and others. </summary>
@@ -45,5 +46,8 @@ namespace Azure.ResourceManager.Resources.Models
 
         /// <summary> SubscriptionId the Location is under. </summary>
         public string SubscriptionId { get; }
+
+        /// <summary> The display name of the location and its region. </summary>
+        public string RegionalDisplayName { get; }
     }
 }

@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<LocationMetadata> metadata = default;
             Optional<string> id = default;
             Optional<string> subscriptionId = default;
+            Optional<string> regionalDisplayName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -28,6 +29,11 @@ namespace Azure.ResourceManager.Resources.Models
                 if (property.NameEquals("subscriptionId"))
                 {
                     subscriptionId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("regionalDisplayName"))
+                {
+                    regionalDisplayName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("metadata"))
@@ -41,7 +47,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new LocationExpanded(id.Value, subscriptionId.Value, loc.Name, loc.DisplayName, loc.RegionalDisplayName, metadata.Value);
+            return new LocationExpanded(id.Value, subscriptionId.Value, loc.Name, loc.DisplayName, regionalDisplayName.Value, metadata.Value);
         }
     }
 }

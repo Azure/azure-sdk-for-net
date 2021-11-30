@@ -24,16 +24,11 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of Location. </summary>
         /// <param name="name"> The location name. </param>
         /// <param name="displayName"> The display name of the location. </param>
-        /// <param name="regionalDisplayName"> The display name of the location and its region. </param>
-        public Location(string name, string displayName, string regionalDisplayName)
+        public Location(string name, string displayName)
         {
             Name = name;
             DisplayName = displayName;
-            RegionalDisplayName = regionalDisplayName;
         }
-
-        /// <summary> The display name of the location and its region. </summary>
-        public string RegionalDisplayName { get; private set; }
 
         /// <summary>
         /// Gets a location name consisting of only lowercase characters without white spaces or any separation character between words, e.g. "westus".
