@@ -170,4 +170,12 @@ directive:
   # - from: swagger-document
   #   where: $.definitions.WebPubSubNetworkACLs
   #   transform: $.properties.defaultAction.$ref = "#/definitions/AclAction"
+
+  # Change Sku to WebPubSubSku
+  # - rename-model:
+  #     from: Sku
+  #     to: WebPubSubSku
+  # - from: swagger-document
+  #   where: $.definitions.SkuList
+  #   transform: $.properties.value.items.$ref = "#/definitions/WebPubSubSku"
 ```
