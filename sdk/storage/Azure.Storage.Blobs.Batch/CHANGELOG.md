@@ -1,6 +1,6 @@
 # Release History
 
-## 12.8.0-beta.2 (2021-11-29)
+## 12.8.0-beta.2 (2021-11-30)
 - Added support for service vesrion 2021-02-12.
 
 ## 12.8.0-beta.1 (2021-11-03)
