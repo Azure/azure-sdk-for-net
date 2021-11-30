@@ -11,7 +11,6 @@
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
-    <PackageDownload Include="Azure.Sdk.Tools.Testproxy" Version="[1.0.0-dev.20211104.2]" />
     <PackageReference Include="Moq" />
     <Reference Include="System.Web" Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'net47'" />
     <!-- 
@@ -36,4 +35,11 @@
     <Compile Include="$(AzureCoreSharedSources)HttpMessageSanitizer.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="Shared" />
   </ItemGroup>
+    
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
+      <_Parameter1>TestProxyPath</_Parameter1>
+      <_Parameter2>$(NuGetPackageRoot)azure.sdk.tools.testproxy\$(TestProxyVersion)\tools\net5.0\any\Azure.Sdk.Tools.TestProxy.dll</_Parameter2>
+    </AssemblyAttribute>
+  </ItemGroup>  
 </Project>

@@ -22,9 +22,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.FunctionalTests
     {
         public int FlushTimeoutMilliseconds = 15000;
 
-        public AzureMonitorTestBase(bool isAsync) : base(isAsync) { }
+        public AzureMonitorTestBase(bool isAsync) : base(isAsync, useLegacyTransport: true) { }
 
-        public AzureMonitorTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode) { }
+        public AzureMonitorTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode, useLegacyTransport: true) { }
 
         [SetUp]
         public void SetUp()
@@ -66,7 +66,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.FunctionalTests
         protected async Task<ApplicationInsightsDataClient> GetApplicationInsightsDataClientAsync()
         {
             var creds = await TestEnvironment.GetServiceClientCredentialsAsync();
-            var handler = new HttpPipelineMessageHandler(new HttpPipeline((new HttpClientTransport())));
+            var handler = new HttpPipelineMessageHandler(new HttpPipeline(Recording.CreateTransport(new HttpClientTransport())));
             var httpClient = new HttpClient(handler);
 
             var client = new ApplicationInsightsDataClient(credentials: creds, httpClient: httpClient, disposeHttpClient: true);

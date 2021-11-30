@@ -3,9 +3,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text.Json;
@@ -24,58 +24,101 @@ namespace Azure.Core.TestFramework
         private const string charsLower = "abcdefghijklmnopqrstuvwxyz0123456789";
         private const string Sanitized = "Sanitized";
         internal const string DateTimeOffsetNowVariableKey = "DateTimeOffsetNow";
-        public SortedDictionary<string, string> Variables { get; } = new SortedDictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
-        public TestRecording(RecordedTestMode mode, string sessionFile, RecordedTestSanitizer sanitizer, int proxyPortHttp = default, int proxyPortHttps = default, bool ignoreBody = false)
+        public SortedDictionary<string, string> Variables => _useLegacyTransport ? Session.Variables : _variables;
+        private readonly SortedDictionary<string, string> _variables = new();
+
+        public TestRecording(RecordedTestMode mode, string sessionFile, RecordedTestSanitizer sanitizer, RecordMatcher matcher, TestProxy proxy = default, bool useLegacyTransport = false)
         {
             Mode = mode;
             _sessionFile = sessionFile;
             _sanitizer = sanitizer;
-            ProxyPortHttp = proxyPortHttp;
-            ProxyPortHttps = proxyPortHttps;
-            var options = ClientOptions.Default;
-            var handler = new HttpClientHandler
+            _matcher = matcher;
+
+            _useLegacyTransport = useLegacyTransport;
+            _proxy = proxy;
+
+            if (_useLegacyTransport)
             {
-                ServerCertificateCustomValidationCallback = ((message, certificate2, arg3, arg4) => certificate2.Issuer == "CN=localhost")
-            };
-            options.Transport = new HttpClientTransport(handler);
-            ProxyClient = new TestProxyRestClient(new ClientDiagnostics(options), HttpPipelineBuilder.Build(options), new Uri($"https://127.0.0.1:{proxyPortHttps}"));
-            switch (Mode)
+                switch (Mode)
+                {
+                    case RecordedTestMode.Record:
+                        Session = new RecordSession();
+                        if (File.Exists(_sessionFile))
+                        {
+                            try
+                            {
+                                _previousSession = Load();
+                            }
+                            catch (Exception)
+                            {
+                                // ignore
+                            }
+                        }
+
+                        break;
+                    case RecordedTestMode.Playback:
+                        try
+                        {
+                            Session = Load();
+                        }
+                        catch (Exception ex) when (ex is FileNotFoundException || ex is DirectoryNotFoundException)
+                        {
+                            _mismatchException = new TestRecordingMismatchException(ex.Message, ex);
+                        }
+
+                        break;
+                }
+            }
+            else
             {
-                case RecordedTestMode.Record:
-                    ResponseWithHeaders<TestProxyStartRecordHeaders> recordResponse = ProxyClient.StartRecord(_sessionFile);
-                    RecordingId = recordResponse.Headers.XRecordingId;
-                    break;
-                case RecordedTestMode.Playback:
-                    ResponseWithHeaders<IReadOnlyDictionary<string, string>, TestProxyStartPlaybackHeaders> playbackResponse = ProxyClient.StartPlayback(_sessionFile);
-                    Variables = new SortedDictionary<string, string>((Dictionary<string, string>) playbackResponse.Value);
-                    RecordingId = playbackResponse.Headers.XRecordingId;
-                    foreach (string header in _sanitizer.SanitizedHeaders)
-                    {
-                        ProxyClient.AddHeaderSanitizer(new HeaderRegexSanitizer(header, Sanitized), RecordingId);
-                    }
+                switch (Mode)
+                {
+                    case RecordedTestMode.Record:
+                        var recordResponse = _proxy.Client.StartRecord(_sessionFile);
+                        RecordingId = recordResponse.Headers.XRecordingId;
+                        AddProxySanitizers();
 
-                    foreach (string jsonPath in _sanitizer.JsonPathSanitizers.Select(s => s.JsonPath))
-                    {
-                        ProxyClient.AddBodyKeySanitizer(new BodyKeySanitizer(Sanitized) { JsonPath = jsonPath}, RecordingId);
-                    }
+                        break;
+                    case RecordedTestMode.Playback:
+                        ResponseWithHeaders<IReadOnlyDictionary<string, string>, TestProxyStartPlaybackHeaders> playbackResponse = null;
+                        try
+                        {
+                            playbackResponse = _proxy.Client.StartPlayback(_sessionFile);
+                        }
+                        catch (RequestFailedException ex)
+                            when (ex.Status == 500)
+                        {
+                            throw new TestRecordingMismatchException(ex.Message, ex);
+                        }
 
-                    if (ignoreBody)
-                    {
-                        ProxyClient.AddBodilessMatcher(RecordingId);
-                    }
+                        _variables = new SortedDictionary<string, string>((Dictionary<string, string>)playbackResponse.Value);
+                        RecordingId = playbackResponse.Headers.XRecordingId;
+                        AddProxySanitizers();
+                        if (!_matcher.CompareBodies)
+                        {
+                            _proxy.Client.AddBodilessMatcher(RecordingId);
+                        }
 
-                    break;
-                case RecordedTestMode.Live:
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
+                        // temporary until Azure.Core fix is shipped
+                        _proxy.Client.AddCustomMatcher(new CustomDefaultMatcher("Content-Type,Content-Length"), RecordingId);
+                        break;
+                }
             }
         }
 
-        public int ProxyPortHttp { get; set; }
+        private void AddProxySanitizers()
+        {
+            foreach (string header in _sanitizer.SanitizedHeaders)
+            {
+                _proxy.Client.AddHeaderSanitizer(new HeaderRegexSanitizer(header, Sanitized), RecordingId);
+            }
 
-        public int ProxyPortHttps { get; set; }
+            foreach (string jsonPath in _sanitizer.JsonPathSanitizers.Select(s => s.JsonPath))
+            {
+                _proxy.Client.AddBodyKeySanitizer(new BodyKeySanitizer(Sanitized) { JsonPath = jsonPath }, RecordingId);
+            }
+        }
 
         public RecordedTestMode Mode { get; }
 
@@ -84,6 +127,28 @@ namespace Azure.Core.TestFramework
         private readonly string _sessionFile;
 
         private readonly RecordedTestSanitizer _sanitizer;
+
+        private readonly RecordMatcher _matcher;
+        private RecordSession _sessionInternal;
+        private RecordSession Session
+        {
+            get
+            {
+                return _mismatchException switch
+                {
+                    null => _sessionInternal,
+                    _ => throw _mismatchException
+                };
+            }
+            set
+            {
+                _sessionInternal = value;
+            }
+        }
+
+        private readonly TestRecordingMismatchException _mismatchException;
+
+        private RecordSession _previousSession;
 
         private TestRandom _random;
 
@@ -107,14 +172,30 @@ namespace Azure.Core.TestFramework
                             _random = new TestRandom(Mode, liveSeed);
                             break;
                         case RecordedTestMode.Record:
-                            _random = new TestRandom(Mode);
-                            int seed = _random.Next();
+                            // Try get the seed from existing session
+                            if (!(_previousSession != null &&
+                                  _previousSession.Variables.TryGetValue(RandomSeedVariableKey, out string seedString) &&
+                                  int.TryParse(seedString, out int seed)
+                                ))
+                            {
+                                _random = new TestRandom(Mode);
+                                seed = _random.Next();
+                            }
                             Variables[RandomSeedVariableKey] = seed.ToString();
                             _random = new TestRandom(Mode, seed);
                             break;
                         case RecordedTestMode.Playback:
+                            if (IsTrack1SessionRecord())
+                            {
+                                //random is not really used for track 1 playback, so randomly pick one as seed
+                                _random = new TestRandom(Mode, (int)DateTime.UtcNow.Ticks);
+                            }
+                            else
+                            {
                                 _random = new TestRandom(Mode, int.Parse(Variables[RandomSeedVariableKey]));
-                                break;
+                            }
+
+                            break;
                         default:
                             throw new ArgumentOutOfRangeException();
                     }
@@ -123,9 +204,9 @@ namespace Azure.Core.TestFramework
             }
         }
 
-        public void AddBodySanitizer(BodyRegexSanitizer sanitizer)
+        public void AddBodySanitizer(string regex, string replacement, string groupForReplace = default)
         {
-            ProxyClient.AddBodyRegexSanitizer(sanitizer, RecordingId);
+            _proxy.Client.AddBodyRegexSanitizer(new BodyRegexSanitizer(replacement, regex) { GroupForReplace = groupForReplace }, RecordingId);
         }
 
         /// <summary>
@@ -133,7 +214,10 @@ namespace Azure.Core.TestFramework
         /// </summary>
         private DateTimeOffset? _now;
 
-        internal TestProxyRestClient ProxyClient { get; }
+        private readonly bool _useLegacyTransport;
+
+        private readonly TestProxy _proxy;
+
         public string RecordingId { get; }
 
         /// <summary>
@@ -184,15 +268,50 @@ namespace Azure.Core.TestFramework
 
         public void Dispose(bool save)
         {
-            if (Mode == RecordedTestMode.Record && save)
+            if (_useLegacyTransport)
             {
-                ProxyClient.StopRecord(RecordingId, Variables);
+                if (Mode == RecordedTestMode.Record && save && !Session.IsEmpty)
+                {
+                    var directory = Path.GetDirectoryName(_sessionFile);
+                    Directory.CreateDirectory(directory);
+
+                    Session.Sanitize(_sanitizer);
+
+                    using FileStream fileStream = File.Create(_sessionFile);
+                    var utf8JsonWriter = new Utf8JsonWriter(fileStream, new JsonWriterOptions()
+                    {
+                        Indented = true
+                    });
+                    Session.Serialize(utf8JsonWriter);
+                    utf8JsonWriter.Flush();
+                }
+            }
+
+            else if (Mode == RecordedTestMode.Record && save)
+            {
+                _proxy.Client.StopRecord(RecordingId, Variables);
             }
         }
 
         public void Dispose()
         {
             Dispose(true);
+        }
+
+        public HttpPipelineTransport CreateTransport(HttpPipelineTransport currentTransport)
+        {
+            if (!_useLegacyTransport)
+            {
+                return new ProxyTransport(_proxy, currentTransport, this);
+            }
+            return Mode switch
+            {
+                RecordedTestMode.Live => currentTransport,
+                RecordedTestMode.Record => new RecordTransport(Session, currentTransport, entry => _disableRecording.Value, Random),
+                RecordedTestMode.Playback => new PlaybackTransport(Session, _matcher, _sanitizer, Random,
+                    entry => _disableRecording.Value == EntryRecordModel.RecordWithoutRequestBody),
+                _ => throw new ArgumentOutOfRangeException(nameof(Mode), Mode, null),
+            };
         }
 
         public string GenerateId()
@@ -235,7 +354,19 @@ namespace Azure.Core.TestFramework
 
         public string GenerateAssetName(string prefix, [CallerMemberName] string callerMethodName = "testframework_failed")
         {
-            return prefix + Random.Next(9999);
+            if (Mode == RecordedTestMode.Playback && IsTrack1SessionRecord())
+            {
+                return Session.Names[callerMethodName].Dequeue();
+            }
+            else
+            {
+                return prefix + Random.Next(9999);
+            }
+        }
+
+        public bool IsTrack1SessionRecord()
+        {
+            return Session?.Entries.FirstOrDefault()?.IsTrack1Recording ?? false;
         }
 
         public string GetVariable(string variableName, string defaultValue, Func<string, string> sanitizer = default)
@@ -267,15 +398,16 @@ namespace Azure.Core.TestFramework
             }
         }
 
-        public bool HasRequests { get; internal set; }
+        public void DisableIdReuse()
+        {
+            _previousSession = null;
+        }
+
+        public bool HasRequests => _sessionInternal?.Entries.Count > 0;
 
         public DisableRecordingScope DisableRecording()
         {
             return new DisableRecordingScope(this, EntryRecordModel.DoNotRecord);
-        }
-
-        public void DisableIdReuse()
-        {
         }
 
         public DisableRecordingScope DisableRequestBodyRecording()

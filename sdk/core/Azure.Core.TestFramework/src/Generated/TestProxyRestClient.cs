@@ -556,5 +556,72 @@ namespace Azure.Core.TestFramework
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
+
+        internal HttpMessage CreateAddCustomMatcherRequest(CustomDefaultMatcher matcher, string xRecordingId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/admin/setmatcher", false);
+            request.Uri = uri;
+            request.Headers.Add("x-abstraction-identifier", "CustomDefaultMatcher");
+            if (xRecordingId != null)
+            {
+                request.Headers.Add("x-recording-id", xRecordingId);
+            }
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(matcher);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Add a custom matcher. </summary>
+        /// <param name="matcher"> The body for a custom matcher. </param>
+        /// <param name="xRecordingId"> The recording ID to apply the matcher to. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="matcher"/> is null. </exception>
+        public async Task<Response> AddCustomMatcherAsync(CustomDefaultMatcher matcher, string xRecordingId = null, CancellationToken cancellationToken = default)
+        {
+            if (matcher == null)
+            {
+                throw new ArgumentNullException(nameof(matcher));
+            }
+
+            using var message = CreateAddCustomMatcherRequest(matcher, xRecordingId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Add a custom matcher. </summary>
+        /// <param name="matcher"> The body for a custom matcher. </param>
+        /// <param name="xRecordingId"> The recording ID to apply the matcher to. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="matcher"/> is null. </exception>
+        public Response AddCustomMatcher(CustomDefaultMatcher matcher, string xRecordingId = null, CancellationToken cancellationToken = default)
+        {
+            if (matcher == null)
+            {
+                throw new ArgumentNullException(nameof(matcher));
+            }
+
+            using var message = CreateAddCustomMatcherRequest(matcher, xRecordingId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
     }
 }

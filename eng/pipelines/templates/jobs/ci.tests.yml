@@ -41,6 +41,9 @@ jobs:
       container: $[ variables['Container'] ]
     steps:
       - pwsh: |
+          $(Build.SourcesDirectory)/eng/common/scripts/trust-proxy-certificate.ps1
+        displayName: 'Language Specific Certificate Trust'
+      - pwsh: |
           Write-Host "##vso[task.setvariable variable=ASPNETCORE_Kestrel__Certificates__Default__Path]$(Build.SourcesDirectory)/eng/common/testproxy/dotnet-devcert.pfx"
           Write-Host "##vso[task.setvariable variable=ASPNETCORE_Kestrel__Certificates__Default__Password]password"
         displayName: 'Configure Kestrel Environment Variables'

@@ -1,8 +1,8 @@
-﻿{
+{
   "swagger": "2.0",
   "info": {
     "title": "Test Proxy",
-    "version": "2021-10",
+    "version": "2021-11",
     "description": "The Test Proxy is used to record and playback live tests."
   },
   "schemes": [
@@ -382,6 +382,58 @@
           }
         }
       }
+    },
+    "/admin/setmatcher?overload=CustomDefaultMatcher": {
+      "post": {
+        "summary": "Add a custom matcher.",
+        "description": "Add a custom matcher.",
+        "operationId": "TestProxy_AddCustomMatcher",
+        "parameters": [
+          {
+            "name": "x-abstraction-identifier",
+            "in": "header",
+            "description": "The type of matcher.",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "CustomDefaultMatcher"
+            ],
+            "x-ms-enum": {
+              "name": "MatcherType",
+              "modelAsString": false
+            }
+          },
+          {
+            "name": "x-recording-id",
+            "in": "header",
+            "description": "The recording ID to apply the matcher to.",
+            "type": "string"
+          },
+          {
+            "name": "matcher",
+            "in": "body",
+            "description": "The body for a custom matcher.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CustomDefaultMatcher"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "default": {
+            "description": "An error response received from the Test Proxy.",
+            "headers": {
+              "x-ms-error-code": {
+                "type": "string",
+                "description": "Error code for specific error that occurred."
+              }
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -399,12 +451,24 @@
     "MatcherType": {
       "type": "string",
       "enum": [
-        "BodilessMatcher"
+        "BodilessMatcher",
+        "CustomDefaultMatcher"
       ],
       "x-ms-enum": {
         "name": "MatcherType",
         "modelAsString": false
       }
+    },
+    "CustomDefaultMatcher": {
+      "type": "object",
+      "properties": {
+        "nonDefaultHeaderExclusions" : {
+          "type": "string"
+        }
+      },
+      "required": [
+        "nonDefaultHeaderExclusions"
+      ]
     },
     "BodyKeySanitizer": {
       "type": "object",

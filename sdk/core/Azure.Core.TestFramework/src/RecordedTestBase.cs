@@ -7,10 +7,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using Azure.Core.Pipeline;
 using System.Threading.Tasks;
 using Castle.DynamicProxy;
 using NUnit.Framework;
@@ -22,16 +18,9 @@ namespace Azure.Core.TestFramework
     {
         static RecordedTestBase()
         {
-            var installDir = Environment.GetEnvironmentVariable("DOTNET_INSTALL_DIR");
-            if (!HasDotNetExe(installDir))
-            {
-                installDir = Environment.GetEnvironmentVariable("PATH")?.Split(Path.PathSeparator).FirstOrDefault(HasDotNetExe);
-            }
-
-            s_dotNetExe = Path.Combine(installDir, s_dotNetExeName);
-            // ServicePointManager.Expect100Continue = false;
+            // remove once https://github.com/Azure/azure-sdk-for-net/pull/25328 is shipped
+            ServicePointManager.Expect100Continue = false;
         }
-        private static bool HasDotNetExe(string dotnetDir) => dotnetDir != null && File.Exists(Path.Combine(dotnetDir, s_dotNetExeName));
 
         protected RecordedTestSanitizer Sanitizer { get; set; }
 
@@ -39,7 +28,6 @@ namespace Azure.Core.TestFramework
 
         public TestRecording Recording { get; private set; }
 
-        private static readonly string s_dotNetExeName = "dotnet" + (Path.DirectorySeparatorChar == '/' ? "" : ".exe");
         public RecordedTestMode Mode { get; set; }
 
         // copied the Windows version https://github.com/dotnet/runtime/blob/master/src/libraries/System.Private.CoreLib/src/System/IO/Path.Windows.cs
@@ -74,28 +62,28 @@ namespace Azure.Core.TestFramework
             }
         }
         private bool _saveDebugRecordingsOnFailure;
-        private Process _testProxyProcess;
-        private static readonly string s_dotNetExe;
-        private int _proxyPortHttps;
-        private int _proxyPortHttp;
+
+        private TestProxy _proxy;
+
+        private readonly bool _useLegacyTransport;
+
         protected bool ValidateClientInstrumentation { get; set; }
 
-        protected RecordedTestBase(bool isAsync, RecordedTestMode? mode = null) : base(isAsync)
+        protected RecordedTestBase(bool isAsync, RecordedTestMode? mode = null, bool useLegacyTransport = false) : base(isAsync)
         {
             Sanitizer = new RecordedTestSanitizer();
             Matcher = new RecordMatcher();
             Mode = mode ?? TestEnvironment.GlobalTestMode;
+            _useLegacyTransport = useLegacyTransport;
         }
+
+        protected TestRecording CreateTestRecording(RecordedTestMode mode, string sessionFile, RecordedTestSanitizer sanitizer, RecordMatcher matcher) =>
+            new TestRecording(mode, sessionFile, sanitizer, matcher, _proxy, _useLegacyTransport);
 
         public T InstrumentClientOptions<T>(T clientOptions, TestRecording recording = default) where T : ClientOptions
         {
             recording ??= Recording;
-            // clientOptions.Transport = recording.CreateTransport(clientOptions.Transport);
-            var handler = new HttpClientHandler
-            {
-                ServerCertificateCustomValidationCallback = ((message, certificate2, arg3, arg4) => certificate2.Issuer == "CN=localhost")
-            };
-            clientOptions.Transport = new HttpClientTransport(handler);
+
             if (Mode == RecordedTestMode.Playback)
             {
                 // Not making the timeout zero so retry code still goes async
@@ -103,10 +91,7 @@ namespace Azure.Core.TestFramework
                 clientOptions.Retry.Mode = RetryMode.Fixed;
             }
 
-            if (Mode is RecordedTestMode.Playback or RecordedTestMode.Record)
-            {
-                clientOptions.AddPolicy(new ProxyPolicy(recording), HttpPipelinePosition.PerCall);
-            }
+            clientOptions.Transport = recording.CreateTransport(clientOptions.Transport);
 
             return clientOptions;
         }
@@ -154,72 +139,29 @@ namespace Azure.Core.TestFramework
         /// This will run once before any tests.
         /// </summary>
         [OneTimeSetUp]
-        public void StartLoggingEvents()
+        public void InitializeRecordedTestClass()
         {
-            TestContext.Progress.WriteLine($"starting up {GetType().FullName}");
-
             if (Mode == RecordedTestMode.Live || Debugger.IsAttached)
             {
                 Logger = new TestLogger();
             }
 
-            var certPath = Path.Combine(TestEnvironment.RepositoryRoot, "eng", "common", "testproxy", "dotnet-devcert.pfx");
-            var processInfo = new ProcessStartInfo(
-                s_dotNetExe,
-                $"dev-certs https --clean --import {certPath} --password=\"password\"")
+            if (!_useLegacyTransport)
             {
-                UseShellExecute = false,
-                RedirectStandardOutput = true,
-                RedirectStandardError = true
-            };
-            Process.Start(processInfo).WaitForExit();
-
-            var testProxyPath = GetType().Assembly.GetCustomAttributes<AssemblyMetadataAttribute>().Single(a => a.Key == "TestProxyPath")
-                .Value;
-            processInfo = new ProcessStartInfo(
-                s_dotNetExe,
-                testProxyPath)
-            {
-                UseShellExecute = false,
-                EnvironmentVariables = { {"ASPNETCORE_URLS", "http://0.0.0.0:0;https://0.0.0.0:0"},  {"Logging__LogLevel__Microsoft", "Information"} },
-                RedirectStandardOutput = true,
-                RedirectStandardError = true,
-            };
-            _testProxyProcess = Process.Start(processInfo);
-            while (true)
-            {
-                string outputLine = _testProxyProcess.StandardOutput.ReadLine();
-                var index = outputLine.IndexOf("Now listening on: http:");
-                if (index > -1)
-                {
-                    var start = index + "Now listening on: ".Length;
-                    var uri = outputLine.Substring(start, outputLine.Length - start).Trim();
-                    _proxyPortHttp = new Uri(uri).Port;
-                    continue;
-                }
-                index = outputLine.IndexOf("Now listening on: https:");
-                if (index > -1)
-                {
-                    var start = index + "Now listening on: ".Length;
-                    var uri = outputLine.Substring(start, outputLine.Length - start).Trim();
-                    _proxyPortHttps = new Uri(uri).Port;
-                    _testProxyProcess.StandardOutput.Close();
-                    break;
-                }
+                _proxy = TestProxy.Start();
             }
         }
 
         /// <summary>
-        /// Stop logging events and do necessary cleanup.
+        /// Do necessary cleanup.
         /// This will run once after all tests have finished.
         /// </summary>
         [OneTimeTearDown]
-        public void StopLoggingEvents()
+        public void TearDownRecordedTestClass()
         {
             Logger?.Dispose();
             Logger = null;
-            TestContext.Progress.WriteLine($"tearing down {GetType().FullName}");
-            _testProxyProcess?.Kill();
+            _proxy?.Stop();
         }
 
         [SetUp]
@@ -239,8 +181,8 @@ namespace Azure.Core.TestFramework
                 throw new IgnoreException((string) test.Properties.Get("_SkipLive"));
             }
 
-            Recording = new TestRecording(Mode, GetSessionFilePath(), Sanitizer, _proxyPortHttp, _proxyPortHttps, !Matcher.CompareBodies);
-            // ValidateClientInstrumentation = Recording.HasRequests;
+            Recording = CreateTestRecording(Mode, GetSessionFilePath(), Sanitizer, Matcher);
+            ValidateClientInstrumentation = Recording.HasRequests;
         }
 
         [TearDown]
@@ -257,6 +199,7 @@ namespace Azure.Core.TestFramework
             save |= SaveDebugRecordingsOnFailure;
 #endif
             Recording?.Dispose(save);
+            _proxy?.CheckForErrors();
         }
 
         protected internal override object InstrumentClient(Type clientType, object client, IEnumerable<IInterceptor> preInterceptors)

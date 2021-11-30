@@ -35,13 +35,15 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
         public void AddSanitizers()
         {
             Recording.AddBodySanitizer(
-                new BodyRegexSanitizer(
-                    $"\u003CPrimaryKey\u003E{SanitizedKeyValue}\u003C/PrimaryKey\u003E",
-                    "\\u003CPrimaryKey\\u003E.*\\u003C/PrimaryKey\\u003E"));
+                "\\u003CPrimaryKey\\u003E.*\\u003C/PrimaryKey\\u003E",
+                $"\u003CPrimaryKey\u003E{SanitizedKeyValue}\u003C/PrimaryKey\u003E");
             Recording.AddBodySanitizer(
-                new BodyRegexSanitizer(
-                    $"\u003CSecondaryKey\u003E{SanitizedKeyValue}\u003C/SecondaryKey\u003E",
-                    "\\u003CSecondaryKey\\u003E.*\\u003C/SecondaryKey\\u003E"));
+                "\\u003CSecondaryKey\\u003E.*\\u003C/SecondaryKey\\u003E",
+                $"\u003CSecondaryKey\u003E{SanitizedKeyValue}\u003C/SecondaryKey\u003E");
+            Recording.AddBodySanitizer(
+                "[^\\r](?<break>\\n)",
+                "\r\n",
+                "break");
         }
 
         private string GetConnectionString(bool premium = false) => premium ? TestEnvironment.ServiceBusPremiumNamespaceConnectionString : TestEnvironment.ServiceBusConnectionString;

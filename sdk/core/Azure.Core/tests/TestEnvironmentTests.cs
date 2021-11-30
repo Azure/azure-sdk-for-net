@@ -117,46 +117,46 @@ namespace Azure.Core.Tests
             Assert.AreEqual("2", MockTestEnvironment.Instance.NotRecordedValue);
         }
 
-        // [Test]
-        // public void RecordedVariableSanitized()
-        // {
-        //     var tempFile = Path.GetTempFileName();
-        //     var env = new MockTestEnvironment();
-        //     var testRecording = new TestRecording(RecordedTestMode.Record, tempFile, new RecordedTestSanitizer(), new RecordMatcher());
-        //     env.Mode = RecordedTestMode.Record;
-        //     env.SetRecording(testRecording);
-        //
-        //     Assert.AreEqual("1", env.Base64Secret);
-        //     Assert.AreEqual("1", env.CustomSecret);
-        //     Assert.AreEqual("1", env.DefaultSecret);
-        //     Assert.AreEqual("endpoint=1;key=2", env.ConnectionStringWithSecret);
-        //
-        //     testRecording.Dispose();
-        //
-        //     testRecording = new TestRecording(RecordedTestMode.Playback, tempFile, new RecordedTestSanitizer(), new RecordMatcher());
-        //
-        //     Assert.AreEqual("Kg==", testRecording.GetVariable("Base64Secret", ""));
-        //     Assert.AreEqual("Custom", testRecording.GetVariable("CustomSecret", ""));
-        //     Assert.AreEqual("Sanitized", testRecording.GetVariable("DefaultSecret", ""));
-        //     Assert.AreEqual("endpoint=1;key=Sanitized", testRecording.GetVariable("ConnectionStringWithSecret", ""));
-        // }
+        [Test]
+        public void RecordedVariableSanitized()
+        {
+            var tempFile = Path.GetTempFileName();
+            var env = new MockTestEnvironment();
+            var testRecording = new TestRecording(RecordedTestMode.Record, tempFile, new RecordedTestSanitizer(), new RecordMatcher(), useLegacyTransport: true);
+            env.Mode = RecordedTestMode.Record;
+            env.SetRecording(testRecording);
 
-        // [Test]
-        // public void RecordedOptionalVariableNotSanitizedIfMissing()
-        // {
-        //     var tempFile = Path.GetTempFileName();
-        //     var env = new MockTestEnvironment();
-        //     var testRecording = new TestRecording(RecordedTestMode.Record, tempFile, new RecordedTestSanitizer(), new RecordMatcher());
-        //     env.Mode = RecordedTestMode.Record;
-        //     env.SetRecording(testRecording);
-        //
-        //     Assert.IsNull(env.MissingOptionalSecret);
-        //
-        //     testRecording.Dispose();
-        //     testRecording = new TestRecording(RecordedTestMode.Playback, tempFile, new RecordedTestSanitizer(), new RecordMatcher());
-        //
-        //     Assert.IsNull(testRecording.GetVariable(nameof(env.MissingOptionalSecret), null));
-        // }
+            Assert.AreEqual("1", env.Base64Secret);
+            Assert.AreEqual("1", env.CustomSecret);
+            Assert.AreEqual("1", env.DefaultSecret);
+            Assert.AreEqual("endpoint=1;key=2", env.ConnectionStringWithSecret);
+
+            testRecording.Dispose();
+
+            testRecording = new TestRecording(RecordedTestMode.Playback, tempFile, new RecordedTestSanitizer(), new RecordMatcher(), useLegacyTransport: true);
+
+            Assert.AreEqual("Kg==", testRecording.GetVariable("Base64Secret", ""));
+            Assert.AreEqual("Custom", testRecording.GetVariable("CustomSecret", ""));
+            Assert.AreEqual("Sanitized", testRecording.GetVariable("DefaultSecret", ""));
+            Assert.AreEqual("endpoint=1;key=Sanitized", testRecording.GetVariable("ConnectionStringWithSecret", ""));
+        }
+
+        [Test]
+        public void RecordedOptionalVariableNotSanitizedIfMissing()
+        {
+            var tempFile = Path.GetTempFileName();
+            var env = new MockTestEnvironment();
+            var testRecording = new TestRecording(RecordedTestMode.Record, tempFile, new RecordedTestSanitizer(), new RecordMatcher(), useLegacyTransport: true);
+            env.Mode = RecordedTestMode.Record;
+            env.SetRecording(testRecording);
+
+            Assert.IsNull(env.MissingOptionalSecret);
+
+            testRecording.Dispose();
+            testRecording = new TestRecording(RecordedTestMode.Playback, tempFile, new RecordedTestSanitizer(), new RecordMatcher(), useLegacyTransport: true);
+
+            Assert.IsNull(testRecording.GetVariable(nameof(env.MissingOptionalSecret), null));
+        }
 
         [Test]
         public void RecordedOptionalVariablePrefersPrefix()
