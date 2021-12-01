@@ -93,8 +93,9 @@ namespace Compute.Tests
                     VerifyRestorePointDetails(createdRP, rpName, osDisk, 1,
                         excludeDiskId: dataDiskId, vmSize: vmSize);
                     RestorePoint getRP = GetRP(rgName, rpcName, rpName);
-                    VerifyRestorePointDetails(createdRP, rpName, osDisk, 1,
+                    VerifyRestorePointDetails(getRP, rpName, osDisk, 1,
                         excludeDiskId: dataDiskId, vmSize: vmSize);
+                    VerifyDiskRestorePoint(rgName, rpcName, rpName);
 
                     // get RPC without $expand=restorePoints
                     RestorePointCollection returnedRpc = GetRpc(rgName, rpcName);
@@ -110,6 +111,7 @@ namespace Compute.Tests
                     RestorePoint rpInRpc = returnedRpc.RestorePoints[0];
                     VerifyRestorePointDetails(rpInRpc, rpName, osDisk, 1,
                         excludeDiskId: dataDiskId, vmSize: vmSize);
+                    VerifyDiskRestorePoint(rgName, rpcName, rpName);
 
                     // delete the restore point
                     DeleteRP(rgName, rpcName, rpName);
@@ -270,6 +272,33 @@ namespace Compute.Tests
                 m_CrpClient.RestorePointCollections.CreateOrUpdate(rgName, rpcName,
                 inputRpc);
             return restorePointCollection;
+        }
+
+        // Verify disk restore points.
+        private void VerifyDiskRestorePoint(string rgName, string rpcName, string rpName)
+        {
+            IPage<DiskRestorePoint> listDiskRestorePoint = m_CrpClient.DiskRestorePoint.ListByRestorePoint(rgName, rpcName, rpName);
+            GrantAccessData accessData = new GrantAccessData { Access = AccessLevel.Read, DurationInSeconds = 1000 };
+            foreach (DiskRestorePoint drp in listDiskRestorePoint)
+            {
+                var getDrp = m_CrpClient.DiskRestorePoint.Get(rgName, rpcName, rpName, drp.Name);
+                ValidateDiskRestorePoint(getDrp, drp.Name);
+
+                AccessUri accessUri = m_CrpClient.DiskRestorePoint.GrantAccess(rgName, rpcName, rpName, getDrp.Name, accessData);
+                Assert.NotNull(accessUri.AccessSAS);
+
+                getDrp = m_CrpClient.DiskRestorePoint.Get(rgName, rpcName, rpName, drp.Name);
+                ValidateDiskRestorePoint(getDrp, drp.Name);
+
+                m_CrpClient.DiskRestorePoint.RevokeAccess(rgName, rpcName, rpName, drp.Name);
+            }
+        }
+
+        private void ValidateDiskRestorePoint(DiskRestorePoint drp, string rpName)
+        {
+            Assert.NotNull(drp);
+            Assert.NotNull(drp.Id);
+            Assert.Equal(rpName, drp.Name);
         }
     }
 }

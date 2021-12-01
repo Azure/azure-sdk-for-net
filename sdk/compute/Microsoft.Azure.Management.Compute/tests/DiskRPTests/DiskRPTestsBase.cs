@@ -392,6 +392,50 @@ namespace Compute.Tests.DiskRPTests
             }
         }
 
+        protected void Snapshot_CRUD_WithAcceleratedNetwork_Execute(string diskCreateOption, string methodName, int? diskSizeGB = null, string location = null)
+        {
+            using (MockContext context = MockContext.Start(this.GetType(), methodName))
+            {
+                EnsureClientsInitialized(context);
+                DiskRPLocation = location ?? DiskRPLocation;
+
+                var rgName = TestUtilities.GenerateName(TestPrefix);
+                var diskName = TestUtilities.GenerateName(DiskNamePrefix);
+                var snapshotName = TestUtilities.GenerateName(DiskNamePrefix);
+
+                Disk disk = GenerateDefaultDisk(diskCreateOption, rgName, diskSizeGB);
+                disk.SupportedCapabilities = new SupportedCapabilities { AcceleratedNetwork = true };
+
+                try
+                {
+                    m_ResourcesClient.ResourceGroups.CreateOrUpdate(rgName, new ResourceGroup { Location = DiskRPLocation });
+
+                    //put disk
+                    m_CrpClient.Disks.CreateOrUpdate(rgName, diskName, disk);
+                    Disk diskOut = m_CrpClient.Disks.Get(rgName, diskName);
+
+                    Validate(disk, diskOut, disk.Location);
+
+                    // Generate snapshot using disk info
+                    Snapshot snapshot = GenerateDefaultSnapshot(diskOut.Id, location: location);
+
+                    // **********
+                    // TEST
+                    // **********
+
+                    Snapshot snapshotOut = m_CrpClient.Snapshots.CreateOrUpdate(rgName, snapshotName, snapshot);
+                    Validate(snapshot, snapshotOut);
+                    Assert.NotNull(snapshotOut.SupportedCapabilities.AcceleratedNetwork);
+                    Assert.Equal(disk.SupportedCapabilities.AcceleratedNetwork, snapshotOut.SupportedCapabilities.AcceleratedNetwork);
+                    OperateSnapshot(snapshot, rgName, snapshotName);
+                }
+                finally
+                {
+                    m_ResourcesClient.ResourceGroups.Delete(rgName);
+                }
+            }
+        }
+
         protected void DiskEncryptionSet_CRUD_Execute(string methodName, string encryptionType, string location = null)
         {
             using (MockContext context = MockContext.Start(this.GetType(), methodName))
@@ -1474,13 +1518,11 @@ namespace Compute.Tests.DiskRPTests
                     m_ResourcesClient.ResourceGroups.Delete(rgName);
                 }
             }
-
         }
-
 
         #endregion
 
-        #region Generation
+            #region Generation
         public static readonly GrantAccessData AccessDataDefault = new GrantAccessData { Access = AccessLevel.Read, DurationInSeconds = 1000 };
 
         protected Disk GenerateDefaultDisk(string diskCreateOption, string rgName, int? diskSizeGB = null, IList<string> zones = null, string location = null)
