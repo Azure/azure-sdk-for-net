@@ -217,7 +217,7 @@ namespace Azure
         public virtual System.BinaryData Content { get { throw null; } }
         public abstract System.IO.Stream? ContentStream { get; set; }
         public virtual Azure.Core.ResponseHeaders Headers { get { throw null; } }
-        public bool IsError { get { throw null; } }
+        public virtual bool IsError { get { throw null; } }
         public abstract string ReasonPhrase { get; }
         public abstract int Status { get; }
         protected internal abstract bool ContainsHeader(string name);

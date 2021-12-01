@@ -27,6 +27,10 @@ namespace Azure.Core.TestFramework
 
         public override string ClientRequestId { get; set; }
 
+        private bool? _isError;
+        public override bool IsError { get => _isError ?? base.IsError; }
+        public void SetIsError(bool value) => _isError = value;
+
         public bool IsDisposed { get; private set; }
 
         public void SetContent(byte[] content)
