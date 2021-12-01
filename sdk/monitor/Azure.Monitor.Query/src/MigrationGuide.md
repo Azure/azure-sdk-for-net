@@ -56,8 +56,24 @@ In `Microsoft.Azure.OperationalInsights` v1.1.0:
 
 ```.NET
 using Microsoft.Azure.OperationalInsights;
+using Microsoft.Rest.Azure.Authentication;
 
-OperationalInsightsDataClient _dataClient = new OperationalInsightsDataClient(ServicePrincipal); //WIP
+string clientId = "clientId";
+string clientSecret = "clientSecret";
+string domain = "domain"; //tenantId
+
+var authEndpoint = "https://login.microsoftonline.com";
+var tokenAudience = "https://api.loganalytics.io/";
+
+var adSettings = new ActiveDirectoryServiceSettings
+{
+    AuthenticationEndpoint = new Uri(authEndpoint),
+    TokenAudience = new Uri(tokenAudience),
+    ValidateAuthority = true
+};
+
+ServiceClientCredentials credentials = ApplicationTokenProvider.LoginSilentAsync(domain, clientId, clientSecret, adSettings).GetAwaiter().GetResult();
+OperationalInsightsDataClient client = new OperationalInsightsDataClient(credentials);
 ```
 
 In `Azure.Monitor.Query` v1.0.x:
@@ -79,8 +95,8 @@ In version 1.0 of the Monitor Query library:
 In `Microsoft.Azure.OperationalInsights` v1.1.0:
 
 ```.NET
-var query = client.QueryWithHttpMessagesAsync($"endtoendlogs_CL | where Message == '{testIdentifierEntries}'"); //WIP
-var entry = query.Results;
+QueryResults queryResults = client.Query($"endtoendlogs_CL | where Message == '{testIdentifierEntries}'");
+HttpOperationResponse httpResponse = client.QueryWithHttpMessagesAsync($"endtoendlogs_CL | where Message == '{testIdentifierEntries}'").Result;
 ```
 
 In `Azure.Monitor.Query` v1.0.x:
