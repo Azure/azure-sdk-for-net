@@ -64,7 +64,7 @@ namespace Azure.Core.TestFramework
                         }
                         catch (Exception ex) when (ex is FileNotFoundException || ex is DirectoryNotFoundException)
                         {
-                            _mismatchException = new TestRecordingMismatchException(ex.Message, ex);
+                            MismatchException = new TestRecordingMismatchException(ex.Message, ex);
                         }
 
                         break;
@@ -89,7 +89,8 @@ namespace Azure.Core.TestFramework
                         catch (RequestFailedException ex)
                             when (ex.Status == 404)
                         {
-                            throw new TestRecordingMismatchException(ex.Message, ex);
+                            MismatchException = new TestRecordingMismatchException(ex.Message, ex);
+                            return;
                         }
 
                         _variables = new SortedDictionary<string, string>((Dictionary<string, string>)playbackResponse.Value);
@@ -139,10 +140,10 @@ namespace Azure.Core.TestFramework
         {
             get
             {
-                return _mismatchException switch
+                return MismatchException switch
                 {
                     null => _sessionInternal,
-                    _ => throw _mismatchException
+                    _ => throw MismatchException
                 };
             }
             set
@@ -151,7 +152,7 @@ namespace Azure.Core.TestFramework
             }
         }
 
-        private readonly TestRecordingMismatchException _mismatchException;
+        internal readonly TestRecordingMismatchException MismatchException;
 
         private RecordSession _previousSession;
 

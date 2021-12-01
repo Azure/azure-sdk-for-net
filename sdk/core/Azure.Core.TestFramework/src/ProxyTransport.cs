@@ -89,6 +89,11 @@ namespace Azure.Core.TestFramework
 
         public override Request CreateRequest()
         {
+            if (_recording.MismatchException != null)
+            {
+                throw _recording.MismatchException;
+            }
+
             var request = _innerTransport.CreateRequest();
             lock (_recording.Random)
             {
