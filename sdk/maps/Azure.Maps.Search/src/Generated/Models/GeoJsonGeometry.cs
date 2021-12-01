@@ -13,14 +13,14 @@ namespace Azure.Maps.Search.Models
         /// <summary> Initializes a new instance of GeoJsonGeometry. </summary>
         public GeoJsonGeometry()
         {
-            Type = 0;
+            Type = "GeoJsonGeometry";
         }
 
         /// <summary> Initializes a new instance of GeoJsonGeometry. </summary>
         /// <param name="type"> Specifies the `GeoJSON` type. Must be one of the nine valid GeoJSON object types - Point, MultiPoint, LineString, MultiLineString, Polygon, MultiPolygon, GeometryCollection, Feature and FeatureCollection. </param>
-        internal GeoJsonGeometry(GeoJsonObjectType type) : base(type)
+        internal GeoJsonGeometry(string type) : base(type)
         {
-            Type = type;
+            Type = type ?? "GeoJsonGeometry";
         }
     }
 }

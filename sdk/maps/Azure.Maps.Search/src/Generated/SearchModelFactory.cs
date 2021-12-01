@@ -27,7 +27,7 @@ namespace Azure.Maps.Search.Models
         /// <param name="providerID"> ID of the returned entity. </param>
         /// <param name="geometryData"> Geometry data in GeoJSON format. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946) for details. Present only if &quot;error&quot; is not present. </param>
         /// <returns> A new <see cref="Models.Polygon"/> instance for mocking. </returns>
-        public static Polygon Polygon(string providerID = null, GeoJsonObject geometryData = null)
+        public static Polygon Polygon(string providerID = null, GeoJsonFeatureCollection geometryData = null)
         {
             return new Polygon(providerID, geometryData);
         }

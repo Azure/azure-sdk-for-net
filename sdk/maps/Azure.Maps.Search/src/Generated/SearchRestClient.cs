@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -245,7 +246,7 @@ namespace Azure.Maps.Search
         /// **Applies to**: S0 and S1 pricing tiers.
         /// 
         /// 
-        /// The basic default API is Free Form Search which handles the most fuzzy of inputs handling any combination of address or POI tokens. This search API is the canonical &apos;single line search&apos;. The Free Form Search API is a seamless combination of POI search and geocoding. The API can also be weighted with a contextual position (lat./lon. pair), or fully constrained by a a pair of coordinates and radius, or it can be executed more generally without any geo biasing anchor point.&lt;br&gt;&lt;br&gt;We strongly advise you to use the &apos;countrySet&apos; parameter to specify only the countries for which your application needs coverage, as the default behavior will be to search the entire world, potentially returning unnecessary results.&lt;br&gt;&lt;br&gt; E.g.: `countrySet`=US,FR &lt;br&gt;&lt;br&gt;Please see [Search Coverage](https://docs.microsoft.com/azure/location-based-services/geocoding-coverage) for a complete list of all the supported countries.&lt;br&gt;&lt;br&gt;Most Search queries default to `maxFuzzyLevel`=2 to gain performance and also reduce unusual results. This new default can be overridden as needed per request by passing in the query param `maxFuzzyLevel`=3 or 4.
+        /// The basic default API is Free Form Search which handles the most fuzzy of inputs handling any combination of address or POI tokens. This search API is the canonical &apos;single line search&apos;. The Free Form Search API is a seamless combination of POI search and geocoding. The API can also be weighted with a contextual position (lat./lon. pair), or fully constrained by a coordinate and radius, or it can be executed more generally without any geo biasing anchor point.&lt;br&gt;&lt;br&gt;We strongly advise you to use the &apos;countrySet&apos; parameter to specify only the countries for which your application needs coverage, as the default behavior will be to search the entire world, potentially returning unnecessary results.&lt;br&gt;&lt;br&gt; E.g.: `countrySet`=US,FR &lt;br&gt;&lt;br&gt;Please see [Search Coverage](https://docs.microsoft.com/azure/location-based-services/geocoding-coverage) for a complete list of all the supported countries.&lt;br&gt;&lt;br&gt;Most Search queries default to `maxFuzzyLevel`=2 to gain performance and also reduce unusual results. This new default can be overridden as needed per request by passing in the query param `maxFuzzyLevel`=3 or 4.
         /// </summary>
         /// <param name="query"> The applicable query string (e.g., &quot;seattle&quot;, &quot;pizza&quot;). Can _also_ be specified as a comma separated string composed by latitude followed by longitude (e.g., &quot;47.641268, -122.125679&quot;). Must be properly URL encoded. </param>
         /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. </param>
@@ -415,7 +416,7 @@ namespace Azure.Maps.Search
         /// **Applies to**: S0 and S1 pricing tiers.
         /// 
         /// 
-        /// The basic default API is Free Form Search which handles the most fuzzy of inputs handling any combination of address or POI tokens. This search API is the canonical &apos;single line search&apos;. The Free Form Search API is a seamless combination of POI search and geocoding. The API can also be weighted with a contextual position (lat./lon. pair), or fully constrained by a a pair of coordinates and radius, or it can be executed more generally without any geo biasing anchor point.&lt;br&gt;&lt;br&gt;We strongly advise you to use the &apos;countrySet&apos; parameter to specify only the countries for which your application needs coverage, as the default behavior will be to search the entire world, potentially returning unnecessary results.&lt;br&gt;&lt;br&gt; E.g.: `countrySet`=US,FR &lt;br&gt;&lt;br&gt;Please see [Search Coverage](https://docs.microsoft.com/azure/location-based-services/geocoding-coverage) for a complete list of all the supported countries.&lt;br&gt;&lt;br&gt;Most Search queries default to `maxFuzzyLevel`=2 to gain performance and also reduce unusual results. This new default can be overridden as needed per request by passing in the query param `maxFuzzyLevel`=3 or 4.
+        /// The basic default API is Free Form Search which handles the most fuzzy of inputs handling any combination of address or POI tokens. This search API is the canonical &apos;single line search&apos;. The Free Form Search API is a seamless combination of POI search and geocoding. The API can also be weighted with a contextual position (lat./lon. pair), or fully constrained by a coordinate and radius, or it can be executed more generally without any geo biasing anchor point.&lt;br&gt;&lt;br&gt;We strongly advise you to use the &apos;countrySet&apos; parameter to specify only the countries for which your application needs coverage, as the default behavior will be to search the entire world, potentially returning unnecessary results.&lt;br&gt;&lt;br&gt; E.g.: `countrySet`=US,FR &lt;br&gt;&lt;br&gt;Please see [Search Coverage](https://docs.microsoft.com/azure/location-based-services/geocoding-coverage) for a complete list of all the supported countries.&lt;br&gt;&lt;br&gt;Most Search queries default to `maxFuzzyLevel`=2 to gain performance and also reduce unusual results. This new default can be overridden as needed per request by passing in the query param `maxFuzzyLevel`=3 or 4.
         /// </summary>
         /// <param name="query"> The applicable query string (e.g., &quot;seattle&quot;, &quot;pizza&quot;). Can _also_ be specified as a comma separated string composed by latitude followed by longitude (e.g., &quot;47.641268, -122.125679&quot;). Must be properly URL encoded. </param>
         /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. </param>
@@ -669,7 +670,7 @@ namespace Azure.Maps.Search
         /// **Applies to**: S0 and S1 pricing tiers.
         /// 
         /// 
-        /// Points of Interest (POI) Search allows you to request POI results by name.  Search supports additional query parameters such as language and filtering results by area of interest driven by country or bounding box.  Endpoint will return only POI results matching the query string. Response includes POI details such as address, a pair of coordinates location and category.
+        /// Points of Interest (POI) Search allows you to request POI results by name.  Search supports additional query parameters such as language and filtering results by area of interest driven by country or bounding box.  Endpoint will return only POI results matching the query string. Response includes POI details such as address, coordinate location and category.
         /// </summary>
         /// <param name="query"> The POI name to search for (e.g., &quot;statue of liberty&quot;, &quot;starbucks&quot;), must be properly URL encoded. </param>
         /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. </param>
@@ -786,7 +787,7 @@ namespace Azure.Maps.Search
         /// **Applies to**: S0 and S1 pricing tiers.
         /// 
         /// 
-        /// Points of Interest (POI) Search allows you to request POI results by name.  Search supports additional query parameters such as language and filtering results by area of interest driven by country or bounding box.  Endpoint will return only POI results matching the query string. Response includes POI details such as address, a pair of coordinates location and category.
+        /// Points of Interest (POI) Search allows you to request POI results by name.  Search supports additional query parameters such as language and filtering results by area of interest driven by country or bounding box.  Endpoint will return only POI results matching the query string. Response includes POI details such as address, coordinate location and category.
         /// </summary>
         /// <param name="query"> The POI name to search for (e.g., &quot;statue of liberty&quot;, &quot;starbucks&quot;), must be properly URL encoded. </param>
         /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. </param>
@@ -1280,7 +1281,7 @@ namespace Azure.Maps.Search
         /// **Applies to**: S0 and S1 pricing tiers.
         /// 
         /// 
-        /// Points of Interest (POI) Category Search allows you to request POI results from given category. Search allows to query POIs from one category at a time.  Endpoint will only return POI results which are categorized as specified.  Response includes POI details such as address, a pair of coordinates location and classification.
+        /// Points of Interest (POI) Category Search allows you to request POI results from given category. Search allows to query POIs from one category at a time.  Endpoint will only return POI results which are categorized as specified.  Response includes POI details such as address, coordinate location and classification.
         /// </summary>
         /// <param name="query"> The POI category to search for (e.g., &quot;AIRPORT&quot;, &quot;RESTAURANT&quot;), must be properly URL encoded. Supported main categories can be requested by calling [Get Search POI Category Tree API](https://aka.ms/AzureMapsPOICategoryTree). List of available categories can also be found [here](https://docs.microsoft.com/azure/azure-maps/supported-search-categories). We recommend to use POI Search Category Tree API to request the supported categories. </param>
         /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. </param>
@@ -1409,7 +1410,7 @@ namespace Azure.Maps.Search
         /// **Applies to**: S0 and S1 pricing tiers.
         /// 
         /// 
-        /// Points of Interest (POI) Category Search allows you to request POI results from given category. Search allows to query POIs from one category at a time.  Endpoint will only return POI results which are categorized as specified.  Response includes POI details such as address, a pair of coordinates location and classification.
+        /// Points of Interest (POI) Category Search allows you to request POI results from given category. Search allows to query POIs from one category at a time.  Endpoint will only return POI results which are categorized as specified.  Response includes POI details such as address, coordinate location and classification.
         /// </summary>
         /// <param name="query"> The POI category to search for (e.g., &quot;AIRPORT&quot;, &quot;RESTAURANT&quot;), must be properly URL encoded. Supported main categories can be requested by calling [Get Search POI Category Tree API](https://aka.ms/AzureMapsPOICategoryTree). List of available categories can also be found [here](https://docs.microsoft.com/azure/azure-maps/supported-search-categories). We recommend to use POI Search Category Tree API to request the supported categories. </param>
         /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. </param>
@@ -1959,7 +1960,7 @@ namespace Azure.Maps.Search
         /// **Applies to**: S0 and S1 pricing tiers.
         /// 
         /// 
-        /// There may be times when you need to translate a  a pair of coordinates (example: 37.786505, -122.3862) into a human understandable street address. Most often  this is needed in tracking applications where you  receive a GPS feed from the device or asset and  wish to know what address where the a pair of coordinates is  located. This endpoint will return address  information for a given coordinate.
+        /// There may be times when you need to translate a  coordinate (example: 37.786505, -122.3862) into a human understandable street address. Most often  this is needed in tracking applications where you  receive a GPS feed from the device or asset and  wish to know what address where the coordinate is  located. This endpoint will return address  information for a given coordinate.
         /// </summary>
         /// <param name="query"> The applicable query specified as a comma separated string composed by latitude followed by longitude e.g. &quot;47.641268,-122.125679&quot;. </param>
         /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. </param>
@@ -2028,7 +2029,7 @@ namespace Azure.Maps.Search
         /// **Applies to**: S0 and S1 pricing tiers.
         /// 
         /// 
-        /// There may be times when you need to translate a  a pair of coordinates (example: 37.786505, -122.3862) into a human understandable street address. Most often  this is needed in tracking applications where you  receive a GPS feed from the device or asset and  wish to know what address where the a pair of coordinates is  located. This endpoint will return address  information for a given coordinate.
+        /// There may be times when you need to translate a  coordinate (example: 37.786505, -122.3862) into a human understandable street address. Most often  this is needed in tracking applications where you  receive a GPS feed from the device or asset and  wish to know what address where the coordinate is  located. This endpoint will return address  information for a given coordinate.
         /// </summary>
         /// <param name="query"> The applicable query specified as a comma separated string composed by latitude followed by longitude e.g. &quot;47.641268,-122.125679&quot;. </param>
         /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. </param>
@@ -2137,7 +2138,7 @@ namespace Azure.Maps.Search
         /// **Applies to**: S0 and S1 pricing tiers.
         /// 
         /// 
-        /// There may be times when you need to translate a  a pair of coordinates (example: 37.786505, -122.3862) into a human understandable cross street. Most often this  is needed in tracking applications where you  receive a GPS feed from the device or asset and wish to know what address where the a pair of coordinates is  located.
+        /// There may be times when you need to translate a  coordinate (example: 37.786505, -122.3862) into a human understandable cross street. Most often this  is needed in tracking applications where you  receive a GPS feed from the device or asset and wish to know what address where the coordinate is  located.
         /// This endpoint will return cross street information  for a given coordinate.
         /// </summary>
         /// <param name="query"> The applicable query specified as a comma separated string composed by latitude followed by longitude e.g. &quot;47.641268,-122.125679&quot;. </param>
@@ -2187,7 +2188,7 @@ namespace Azure.Maps.Search
         /// **Applies to**: S0 and S1 pricing tiers.
         /// 
         /// 
-        /// There may be times when you need to translate a pair of coordinates (example: 37.786505, -122.3862) into a human understandable cross street. Most often this  is needed in tracking applications where you  receive a GPS feed from the device or asset and wish to know what address where the a pair of coordinates is  located.
+        /// There may be times when you need to translate a  coordinate (example: 37.786505, -122.3862) into a human understandable cross street. Most often this  is needed in tracking applications where you  receive a GPS feed from the device or asset and wish to know what address where the coordinate is  located.
         /// This endpoint will return cross street information  for a given coordinate.
         /// </summary>
         /// <param name="query"> The applicable query specified as a comma separated string composed by latitude followed by longitude e.g. &quot;47.641268,-122.125679&quot;. </param>
@@ -2555,6 +2556,11 @@ namespace Azure.Maps.Search
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(geometry);
+            content.JsonWriter.Flush();
+            
+            // string json = Encoding.UTF8.GetString(content._stream.ToArray());
+            // Console.Write(json);
+
             request.Content = content;
             return message;
         }

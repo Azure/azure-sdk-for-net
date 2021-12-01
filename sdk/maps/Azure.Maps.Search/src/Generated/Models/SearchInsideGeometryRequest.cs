@@ -16,6 +16,6 @@ namespace Azure.Maps.Search.Models
         }
 
         /// <summary> A valid `GeoJSON` object. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3) for details. </summary>
-        public GeoJsonObject Geometry { get; set; }
+        public PolygonOrGeometryCollectionOrFeatureCollection Geometry { get; set; }
     }
 }
