@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             Optional<string> groupId = default;
             Optional<IList<string>> requiredMembers = default;
             Optional<IList<string>> requiredZoneNames = default;
-            Optional<IList<ShareablePrivateLinkResourceType>> shareablePrivateLinkResourceTypes = default;
+            Optional<IList<ShareablePrivateLinkType>> shareablePrivateLinkResourceTypes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -135,10 +135,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ShareablePrivateLinkResourceType> array = new List<ShareablePrivateLinkResourceType>();
+                            List<ShareablePrivateLinkType> array = new List<ShareablePrivateLinkType>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ShareablePrivateLinkResourceType.DeserializeShareablePrivateLinkResourceType(item));
+                                array.Add(ShareablePrivateLinkType.DeserializeShareablePrivateLinkType(item));
                             }
                             shareablePrivateLinkResourceTypes = array;
                             continue;

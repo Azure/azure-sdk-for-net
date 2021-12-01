@@ -15,7 +15,18 @@ modelerfour:
   naming:
     override:
       ACLAction: AclAction
+      networkACLs: networkAcls
+      NetworkACL: NetworkAcl
+      PrivateEndpointACL: PrivateEndpointAcl
+      WebPubSubNetworkACLs: WebPubSubNetworkAcls
       SharedPrivateLinkResourceStatus: SharedPrivateLinkStatus
+      PrivateLinkResource: PrivateLink
+      PrivateLinkResourceList: PrivateLinkList
+      PrivateLinkResourceProperties: PrivateLinkProperties
+      shareablePrivateLinkResourceTypes: shareablePrivateLinkTypes
+      ShareablePrivateLinkResourceType: ShareablePrivateLinkType
+      ShareablePrivateLinkResourceProperties: ShareablePrivateLinkProperties
+      ResourceSku: WebPubSubSku
 model-namespace: false
 no-property-type-replacement: PrivateEndpoint
 list-exception:
@@ -172,33 +183,63 @@ directive:
   #   transform: $.properties.defaultAction.$ref = "#/definitions/AclAction"
 
   # Remove Sku
-  # - remove-operation: "Sku"
-  # - remove-operation: "GetSku"
-  # - remove-operation: "GetSkus"
-  # - remove-operation: "Getskus"
-  # - remove-operation: "ListSku"
-  # - remove-operation: "ListSkus"
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/skus']
-    transform: $ = {}
-  # - remove-model: Sku
-  # - remove-model: SkuCapacity
-  # - remove-model: SkuList
-  - from: swagger-document
-    where: $.definitions.Sku
-    transform: $ = {}
-  - from: swagger-document
-    where: $.definitions.SkuCapacity
-    transform: $ = {}
-  - from: swagger-document
-    where: $.definitions.SkuList
-    transform: $ = {}
+  # # - remove-operation: "Sku"
+  # # - remove-operation: "GetSku"
+  # # - remove-operation: "GetSkus"
+  # # - remove-operation: "Getskus"
+  # # - remove-operation: "ListSku"
+  # # - remove-operation: "ListSkus"
+  # - from: swagger-document
+  #   where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/skus']
+  #   transform: $ = {}
+  # # - remove-model: Sku
+  # # - remove-model: SkuCapacity
+  # # - remove-model: SkuList
+  # - from: swagger-document
+  #   where: $.definitions.Sku
+  #   transform: $ = {}
+  # - from: swagger-document
+  #   where: $.definitions.SkuCapacity
+  #   transform: $ = {}
+  # - from: swagger-document
+  #   where: $.definitions.SkuList
+  #   transform: $ = {}
 
-  # Change ResourceSku to WebPubSubSku
-  - rename-model:
-      from: ResourceSku
-      to: WebPubSubSku
+  # # Change ResourceSku to WebPubSubSku
+  # - rename-model:
+  #     from: ResourceSku
+  #     to: WebPubSubSku
+  # - from: swagger-document
+  #   where: $.WebPubSubResource.properties.sku
+  #   transform: $.$ref = "#/definitions/WebPubSubSku"
+
+  # Change NetworkACL to NetworkAcl
+  # - rename-model:
+  #     from: NetworkACL
+  #     to: NetworkAcl
+  # - from: swagger-document
+  #   where: $.definitions.PrivateEndpointACL
+  #   transform: $.allOf[0].$ref = "#/definitions/NetworkAcl"
   - from: swagger-document
-    where: $.WebPubSubResource.properties.sku
-    transform: $.$ref = "#/definitions/WebPubSubSku"
+    where: $.definitions.WebPubSubProperties.properties.networkACLs
+    transform: $.description = "Network Acls"
+
+  # Delete LRO [WebPubSub] prefix
+  - from: swagger-document
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/sharedPrivateLinkResources'].get
+    transform: $.operationId = "SharedPrivateLinks_List"
+  - from: swagger-document
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/sharedPrivateLinkResources/{sharedPrivateLinkName}'].get
+    transform: $.operationId = "SharedPrivateLinks_Get"
+  - from: swagger-document
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/sharedPrivateLinkResources/{sharedPrivateLinkName}'].put
+    transform: $.operationId = "SharedPrivateLinks_CreateOrUpdate"
+  - from: swagger-document
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/sharedPrivateLinkResources/{sharedPrivateLinkName}'].delete
+    transform: $.operationId = "SharedPrivateLinks_Delete"
+
+
+
+
+
 ```

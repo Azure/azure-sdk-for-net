@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
-    public partial class ShareablePrivateLinkResourceProperties : IUtf8JsonSerializable
+    public partial class ShareablePrivateLinkProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             writer.WriteEndObject();
         }
 
-        internal static ShareablePrivateLinkResourceProperties DeserializeShareablePrivateLinkResourceProperties(JsonElement element)
+        internal static ShareablePrivateLinkProperties DeserializeShareablePrivateLinkProperties(JsonElement element)
         {
             Optional<string> description = default;
             Optional<string> groupId = default;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     continue;
                 }
             }
-            return new ShareablePrivateLinkResourceProperties(description.Value, groupId.Value, type.Value);
+            return new ShareablePrivateLinkProperties(description.Value, groupId.Value, type.Value);
         }
     }
 }

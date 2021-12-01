@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
-            ShareablePrivateLinkTypes = new ChangeTrackingList<ShareablePrivateLinkResourceType>();
+            ShareablePrivateLinkTypes = new ChangeTrackingList<ShareablePrivateLinkType>();
         }
 
         /// <summary> Initializes a new instance of PrivateLink. </summary>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <param name="requiredMembers"> Required members of the private link resource. </param>
         /// <param name="requiredZoneNames"> Required private DNS zone names. </param>
         /// <param name="shareablePrivateLinkTypes"> The list of resources that are onboarded to private link service. </param>
-        internal PrivateLink(ResourceIdentifier id, string name, ResourceType type, string groupId, IList<string> requiredMembers, IList<string> requiredZoneNames, IList<ShareablePrivateLinkResourceType> shareablePrivateLinkTypes) : base(id, name, type)
+        internal PrivateLink(ResourceIdentifier id, string name, ResourceType type, string groupId, IList<string> requiredMembers, IList<string> requiredZoneNames, IList<ShareablePrivateLinkType> shareablePrivateLinkTypes) : base(id, name, type)
         {
             GroupId = groupId;
             RequiredMembers = requiredMembers;
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <summary> Required private DNS zone names. </summary>
         public IList<string> RequiredZoneNames { get; }
         /// <summary> The list of resources that are onboarded to private link service. </summary>
-        public IList<ShareablePrivateLinkResourceType> ShareablePrivateLinkTypes { get; }
+        public IList<ShareablePrivateLinkType> ShareablePrivateLinkTypes { get; }
     }
 }

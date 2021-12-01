@@ -18,20 +18,20 @@ using Azure.ResourceManager.WebPubSub;
 namespace Azure.ResourceManager.WebPubSub.Models
 {
     /// <summary> Create or update a shared private link resource. </summary>
-    public partial class WebPubSubSharedPrivateLinkCreateOrUpdateOperation : Operation<SharedPrivateLink>, IOperationSource<SharedPrivateLink>
+    public partial class SharedPrivateLinkCreateOrUpdateOperation : Operation<SharedPrivateLink>, IOperationSource<SharedPrivateLink>
     {
         private readonly OperationInternals<SharedPrivateLink> _operation;
 
         private readonly ArmResource _operationBase;
 
-        /// <summary> Initializes a new instance of WebPubSubSharedPrivateLinkCreateOrUpdateOperation for mocking. </summary>
-        protected WebPubSubSharedPrivateLinkCreateOrUpdateOperation()
+        /// <summary> Initializes a new instance of SharedPrivateLinkCreateOrUpdateOperation for mocking. </summary>
+        protected SharedPrivateLinkCreateOrUpdateOperation()
         {
         }
 
-        internal WebPubSubSharedPrivateLinkCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal SharedPrivateLinkCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<SharedPrivateLink>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "WebPubSubSharedPrivateLinkCreateOrUpdateOperation");
+            _operation = new OperationInternals<SharedPrivateLink>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "SharedPrivateLinkCreateOrUpdateOperation");
             _operationBase = operationsBase;
         }
 

@@ -8,18 +8,18 @@
 namespace Azure.ResourceManager.WebPubSub.Models
 {
     /// <summary> Describes the properties of a resource type that has been onboarded to private link service. </summary>
-    public partial class ShareablePrivateLinkResourceProperties
+    public partial class ShareablePrivateLinkProperties
     {
-        /// <summary> Initializes a new instance of ShareablePrivateLinkResourceProperties. </summary>
-        public ShareablePrivateLinkResourceProperties()
+        /// <summary> Initializes a new instance of ShareablePrivateLinkProperties. </summary>
+        public ShareablePrivateLinkProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ShareablePrivateLinkResourceProperties. </summary>
+        /// <summary> Initializes a new instance of ShareablePrivateLinkProperties. </summary>
         /// <param name="description"> The description of the resource type that has been onboarded to private link service. </param>
         /// <param name="groupId"> The resource provider group id for the resource that has been onboarded to private link service. </param>
         /// <param name="type"> The resource provider type for the resource that has been onboarded to private link service. </param>
-        internal ShareablePrivateLinkResourceProperties(string description, string groupId, string type)
+        internal ShareablePrivateLinkProperties(string description, string groupId, string type)
         {
             Description = description;
             GroupId = groupId;
