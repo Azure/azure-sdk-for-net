@@ -13,7 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\..\Microsoft.Azure.WebPubSub.Common\src\Shared\ConnectionStatesConverter.cs" Link="Bindings\ConnectionStatesConverter.cs" />
+    <Compile Include="..\..\Microsoft.Azure.WebPubSub.Common\src\Shared\ConnectionStatesConverter.cs" LinkBase="Bindings\Shared" />
   </ItemGroup>
 
   <ItemGroup>

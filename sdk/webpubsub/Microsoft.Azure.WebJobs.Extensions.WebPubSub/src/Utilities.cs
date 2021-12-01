@@ -12,8 +12,6 @@ using Microsoft.Azure.WebPubSub.Common;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-using SystemJson = System.Text.Json;
-
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
     internal static class Utilities
@@ -100,21 +98,20 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             else
             {
                 // JObject or string type, use string to convert between NewtonsoftJson and SystemTextJson.
-                originStr = response.ToString();
-                jResponse = response is JObject jObj ? jObj : JObject.Parse(originStr);
+                jResponse = response is JObject jObj ? jObj : throw new NotSupportedException("");
             }
 
             try
             {
                 // Check error, errorCode is required for json convert, otherwise, ignored.
-                if (needConvert && jResponse.TryGetValue("code", out var code))
-                {
-                    var error = SystemJson.JsonSerializer.Deserialize<EventErrorResponse>(originStr);
-                    return BuildErrorResponse(error);
-                }
-                else if (response is EventErrorResponse errorResponse)
+                if (response is EventErrorResponse errorResponse)
                 {
                     return BuildErrorResponse(errorResponse);
+                }
+                if (needConvert && jResponse.TryGetValue("code", out var code) && code.Value<WebPubSubStatusCode>() != WebPubSubStatusCode.Success)
+                {
+                    var error = jResponse.ToObject<EventErrorResponse>();
+                    return BuildErrorResponse(error);
                 }
 
                 if (requestType == RequestType.Connect)
@@ -128,7 +125,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                     else if (response is ConnectEventResponse connectResponse)
                     {
                         var mergedStates = context.UpdateStates(connectResponse.States);
-                        return BuildConnectEventResponse(SystemJson.JsonSerializer.Serialize(response), mergedStates);
+                        return BuildConnectEventResponse(JsonConvert.SerializeObject(response), mergedStates);
                     }
                 }
                 if (requestType == RequestType.User)
@@ -137,7 +134,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                     {
                         var states = GetStatesFromJson(jResponse);
                         var mergedStates = context.UpdateStates(states);
-                        return BuildUserEventResponse(SystemJson.JsonSerializer.Deserialize<UserEventResponse>(originStr), mergedStates);
+                        return BuildUserEventResponse(JsonConvert.DeserializeObject<UserEventResponse>(originStr), mergedStates);
                     }
                     else if (response is UserEventResponse messageResponse)
                     {
@@ -146,12 +143,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // Ignore invalid response.
+                return BuildErrorResponse(new EventErrorResponse(WebPubSubErrorCode.ServerError, ex.Message));
             }
 
-            return null;
+            throw new Exception($"Invalid request type, {requestType}");
         }
 
         public static HttpStatusCode GetStatusCode(WebPubSubErrorCode errorCode) =>
@@ -227,7 +224,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 // val should be a JSON object of <key,value> pairs
                 if (val.Type == JTokenType.Object)
                 {
-                    var strongType = JsonConvert.DeserializeObject<IReadOnlyDictionary<string, BinaryData>>(val.ToString());
+                    var strongType = val.ToObject<IReadOnlyDictionary<string, BinaryData>>();
                     foreach (var item in strongType)
                     {
                         states.Add(item.Key, item.Value);

@@ -23,6 +23,7 @@ namespace Microsoft.Azure.WebPubSub.Common
             var element = JsonDocument.ParseValue(ref reader).RootElement;
             foreach (var elementInfo in element.EnumerateObject())
             {
+                // Use Base64 decode mapping to encode to avoid data loss.
                 var decoded = elementInfo.Value.GetBytesFromBase64();
                 dic.Add(elementInfo.Name, BinaryData.FromBytes(decoded));
             }
@@ -37,6 +38,7 @@ namespace Microsoft.Azure.WebPubSub.Common
             {
                 foreach (KeyValuePair<string, BinaryData> pair in value)
                 {
+                    // Use Base64 encode to avoid data loss when source is pure binary/string instead of object.
                     writer.WriteBase64String(pair.Key, pair.Value.ToArray());
                 }
             }

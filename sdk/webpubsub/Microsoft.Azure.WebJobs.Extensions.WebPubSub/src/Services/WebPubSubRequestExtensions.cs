@@ -22,13 +22,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
     /// </summary>
     internal static class WebPubSubRequestExtensions
     {
-        private static JsonSerializerOptions _innerSerializer => CreateSystemTextJsonSerializer();
-        /// <summary>
-        /// Parse request to system/user type ServiceRequest.
-        /// </summary>
-        /// <param name="request">Upstream HttpRequest.</param>
-        /// <param name="options"></param>
-        /// <returns>Deserialize <see cref="WebPubSubEventRequest"/></returns>
+        private static JsonSerializerOptions _innerSerializerOptions => CreateSystemJsonSerializerOptions();
+
         public static async Task<WebPubSubEventRequest> ReadWebPubSubRequestAsync(this HttpRequest request, WebPubSubValidationOptions options)
         {
             if (request == null)
@@ -153,7 +148,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             if (!string.IsNullOrEmpty(connectionStates))
             {
                 var states = new Dictionary<string, object>();
-                var rawValue = JsonSerializer.Deserialize<IReadOnlyDictionary<string, BinaryData>>(Convert.FromBase64String(connectionStates), _innerSerializer);
+                var rawValue = JsonSerializer.Deserialize<IReadOnlyDictionary<string, BinaryData>>(Convert.FromBase64String(connectionStates), _innerSerializerOptions);
                 foreach (var item in rawValue)
                 {
                     states.Add(item.Key, item.Value);
@@ -197,7 +192,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         internal static string EncodeConnectionStates(this Dictionary<string, object> value)
         {
             IReadOnlyDictionary<string, BinaryData> readOnlyDic = value.ToDictionary(x => x.Key, y => y.Value is BinaryData data ? data : FromObjectAsJsonExtended(y.Value));
-            return Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonSerializer.Serialize(readOnlyDic, _innerSerializer)));
+            return Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonSerializer.Serialize(readOnlyDic, _innerSerializerOptions)));
         }
 
         private static bool TryParseCloudEvents(this HttpRequest request, out WebPubSubConnectionContext connectionContext)
@@ -302,7 +297,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 _ => throw new ArgumentException($"Invalid content type: {mediaType}")
             };
 
-        private static JsonSerializerOptions CreateSystemTextJsonSerializer()
+        private static JsonSerializerOptions CreateSystemJsonSerializerOptions()
         {
             var options = new JsonSerializerOptions();
             options.Converters.Add(new ConnectionStatesConverter());

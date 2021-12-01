@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text.Json;
+using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
 namespace Microsoft.Azure.WebPubSub.Common
@@ -12,6 +12,7 @@ namespace Microsoft.Azure.WebPubSub.Common
     /// <summary>
     /// Response for message events.
     /// </summary>
+    [DataContract]
     public class UserEventResponse : WebPubSubEventResponse
     {
         private Dictionary<string, BinaryData> _states;
@@ -19,23 +20,27 @@ namespace Microsoft.Azure.WebPubSub.Common
         /// <summary>
         /// The connection states.
         /// </summary>
+        [IgnoreDataMember]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public IReadOnlyDictionary<string, object> States { get; private set; }
 
         /// <summary>
         /// The connection states.
         /// </summary>
+        [IgnoreDataMember]
         public IReadOnlyDictionary<string, BinaryData> ConnectionStates => _states;
 
         /// <summary>
         /// Message.
         /// </summary>
+        [DataMember(Name = "data")]
         [JsonPropertyName("data"), JsonConverter(typeof(BinaryDataJsonConverter))]
         public BinaryData Data { get; set; }
 
         /// <summary>
         /// Message data type.
         /// </summary>
+        [DataMember(Name = "dataType")]
         [JsonPropertyName("dataType"), JsonConverter(typeof(JsonStringEnumConverter))]
         public WebPubSubDataType DataType { get; set; }
 

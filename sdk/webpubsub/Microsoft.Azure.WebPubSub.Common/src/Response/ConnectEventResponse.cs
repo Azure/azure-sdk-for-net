@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
 namespace Microsoft.Azure.WebPubSub.Common
@@ -12,6 +13,7 @@ namespace Microsoft.Azure.WebPubSub.Common
     /// <summary>
     /// Response for connect event.
     /// </summary>
+    [DataContract]
     public class ConnectEventResponse : WebPubSubEventResponse
     {
         private Dictionary<string, BinaryData> _states;
@@ -19,35 +21,41 @@ namespace Microsoft.Azure.WebPubSub.Common
         /// <summary>
         /// The connection states.
         /// </summary>
+        [IgnoreDataMember]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public IReadOnlyDictionary<string, object> States { get; private set; }
 
         /// <summary>
         /// The connection states.
         /// </summary>
+        [IgnoreDataMember]
         public IReadOnlyDictionary<string, BinaryData> ConnectionStates => _states;
 
         /// <summary>
         /// UserId.
         /// </summary>
+        [DataMember(Name = "userId")]
         [JsonPropertyName("userId")]
         public string UserId { get; set; }
 
         /// <summary>
         /// Groups.
         /// </summary>
+        [DataMember(Name = "groups")]
         [JsonPropertyName("groups")]
         public string[] Groups { get; set; }
 
         /// <summary>
         /// Subprotocol.
         /// </summary>
+        [DataMember(Name = "subprotocol")]
         [JsonPropertyName("subprotocol")]
         public string Subprotocol { get; set; }
 
         /// <summary>
         /// User roles.
         /// </summary>
+        [DataMember(Name = "roles")]
         [JsonPropertyName("roles")]
         public string[] Roles { get; set; }
 
