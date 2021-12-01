@@ -11,11 +11,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
-    internal partial class PrivateLinkResourceList
+    internal partial class PrivateLinkList
     {
-        internal static PrivateLinkResourceList DeserializePrivateLinkResourceList(JsonElement element)
+        internal static PrivateLinkList DeserializePrivateLinkList(JsonElement element)
         {
-            Optional<IReadOnlyList<PrivateLinkResource>> value = default;
+            Optional<IReadOnlyList<PrivateLink>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<PrivateLinkResource> array = new List<PrivateLinkResource>();
+                    List<PrivateLink> array = new List<PrivateLink>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrivateLinkResource.DeserializePrivateLinkResource(item));
+                        array.Add(PrivateLink.DeserializePrivateLink(item));
                     }
                     value = array;
                     continue;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     continue;
                 }
             }
-            return new PrivateLinkResourceList(Optional.ToList(value), nextLink.Value);
+            return new PrivateLinkList(Optional.ToList(value), nextLink.Value);
         }
     }
 }

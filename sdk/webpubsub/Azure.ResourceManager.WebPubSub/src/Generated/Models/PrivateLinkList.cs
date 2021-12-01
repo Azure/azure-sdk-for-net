@@ -11,28 +11,28 @@ using Azure.Core;
 namespace Azure.ResourceManager.WebPubSub.Models
 {
     /// <summary> Contains a list of PrivateLinkResource and a possible link to query more results. </summary>
-    internal partial class PrivateLinkResourceList
+    internal partial class PrivateLinkList
     {
-        /// <summary> Initializes a new instance of PrivateLinkResourceList. </summary>
-        internal PrivateLinkResourceList()
+        /// <summary> Initializes a new instance of PrivateLinkList. </summary>
+        internal PrivateLinkList()
         {
-            Value = new ChangeTrackingList<PrivateLinkResource>();
+            Value = new ChangeTrackingList<PrivateLink>();
         }
 
-        /// <summary> Initializes a new instance of PrivateLinkResourceList. </summary>
+        /// <summary> Initializes a new instance of PrivateLinkList. </summary>
         /// <param name="value"> List of PrivateLinkResource. </param>
         /// <param name="nextLink">
         /// The URL the client should use to fetch the next page (per server side paging).
         /// It&apos;s null for now, added for future use.
         /// </param>
-        internal PrivateLinkResourceList(IReadOnlyList<PrivateLinkResource> value, string nextLink)
+        internal PrivateLinkList(IReadOnlyList<PrivateLink> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of PrivateLinkResource. </summary>
-        public IReadOnlyList<PrivateLinkResource> Value { get; }
+        public IReadOnlyList<PrivateLink> Value { get; }
         /// <summary>
         /// The URL the client should use to fetch the next page (per server side paging).
         /// It&apos;s null for now, added for future use.

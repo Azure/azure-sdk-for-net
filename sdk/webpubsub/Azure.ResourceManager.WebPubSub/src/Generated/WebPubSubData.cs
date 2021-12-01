@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// If resourceLogConfiguration isn&apos;t null or empty, it will override options &quot;EnableConnectivityLog&quot; and &quot;EnableMessagingLogs&quot; in features.
         /// Otherwise, use options &quot;EnableConnectivityLog&quot; and &quot;EnableMessagingLogs&quot; in features.
         /// </param>
-        /// <param name="networkAcls"> Network ACLs. </param>
+        /// <param name="networkAcls"> Network Acls. </param>
         /// <param name="publicNetworkAccess">
         /// Enable or disable public network access. Default to &quot;Enabled&quot;.
         /// When it&apos;s Enabled, network ACLs still apply.
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// Enable or disable aad auth
         /// When set as true, connection with AuthType=aad won&apos;t work.
         /// </param>
-        internal WebPubSubData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, ResourceSku sku, ManagedIdentity identity, SystemData systemData, ProvisioningState? provisioningState, string externalIP, string hostName, int? publicPort, int? serverPort, string version, IReadOnlyList<PrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<SharedPrivateLinkData> sharedPrivateLinkResources, WebPubSubTlsSettings tls, string hostNamePrefix, LiveTraceConfiguration liveTraceConfiguration, ResourceLogConfiguration resourceLogConfiguration, WebPubSubNetworkAcls networkAcls, string publicNetworkAccess, bool? disableLocalAuth, bool? disableAadAuth) : base(id, name, type, tags, location)
+        internal WebPubSubData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, WebPubSubSku sku, ManagedIdentity identity, SystemData systemData, ProvisioningState? provisioningState, string externalIP, string hostName, int? publicPort, int? serverPort, string version, IReadOnlyList<PrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<SharedPrivateLinkData> sharedPrivateLinkResources, WebPubSubTlsSettings tls, string hostNamePrefix, LiveTraceConfiguration liveTraceConfiguration, ResourceLogConfiguration resourceLogConfiguration, WebPubSubNetworkAcls networkAcls, string publicNetworkAccess, bool? disableLocalAuth, bool? disableAadAuth) : base(id, name, type, tags, location)
         {
             Sku = sku;
             Identity = identity;
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.WebPubSub
         }
 
         /// <summary> The billing information of the resource.(e.g. Free, Standard). </summary>
-        public ResourceSku Sku { get; set; }
+        public WebPubSubSku Sku { get; set; }
         /// <summary> The managed identity response. </summary>
         public ManagedIdentity Identity { get; set; }
         /// <summary> Metadata pertaining to creation and last modification of the resource. </summary>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// Otherwise, use options &quot;EnableConnectivityLog&quot; and &quot;EnableMessagingLogs&quot; in features.
         /// </summary>
         public ResourceLogConfiguration ResourceLogConfiguration { get; set; }
-        /// <summary> Network ACLs. </summary>
+        /// <summary> Network Acls. </summary>
         public WebPubSubNetworkAcls NetworkAcls { get; set; }
         /// <summary>
         /// Enable or disable public network access. Default to &quot;Enabled&quot;.

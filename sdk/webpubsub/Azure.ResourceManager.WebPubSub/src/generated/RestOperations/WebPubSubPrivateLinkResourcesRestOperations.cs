@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
-        public async Task<Response<PrivateLinkResourceList>> ListAsync(string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
+        public async Task<Response<PrivateLinkList>> ListAsync(string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -87,9 +87,9 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 case 200:
                     {
-                        PrivateLinkResourceList value = default;
+                        PrivateLinkList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PrivateLinkResourceList.DeserializePrivateLinkResourceList(document.RootElement);
+                        value = PrivateLinkList.DeserializePrivateLinkList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
-        public Response<PrivateLinkResourceList> List(string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
+        public Response<PrivateLinkList> List(string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -119,9 +119,9 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 case 200:
                     {
-                        PrivateLinkResourceList value = default;
+                        PrivateLinkList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PrivateLinkResourceList.DeserializePrivateLinkResourceList(document.RootElement);
+                        value = PrivateLinkList.DeserializePrivateLinkList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="resourceName"/> is null. </exception>
-        public async Task<Response<PrivateLinkResourceList>> ListNextPageAsync(string nextLink, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
+        public async Task<Response<PrivateLinkList>> ListNextPageAsync(string nextLink, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -170,9 +170,9 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 case 200:
                     {
-                        PrivateLinkResourceList value = default;
+                        PrivateLinkList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PrivateLinkResourceList.DeserializePrivateLinkResourceList(document.RootElement);
+                        value = PrivateLinkList.DeserializePrivateLinkList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="resourceName"/> is null. </exception>
-        public Response<PrivateLinkResourceList> ListNextPage(string nextLink, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
+        public Response<PrivateLinkList> ListNextPage(string nextLink, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -207,9 +207,9 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 case 200:
                     {
-                        PrivateLinkResourceList value = default;
+                        PrivateLinkList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PrivateLinkResourceList.DeserializePrivateLinkResourceList(document.RootElement);
+                        value = PrivateLinkList.DeserializePrivateLinkList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

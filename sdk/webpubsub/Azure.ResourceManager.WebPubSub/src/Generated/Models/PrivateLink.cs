@@ -13,30 +13,30 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.WebPubSub.Models
 {
     /// <summary> Private link resource. </summary>
-    public partial class PrivateLinkResource : Resource
+    public partial class PrivateLink : Resource
     {
-        /// <summary> Initializes a new instance of PrivateLinkResource. </summary>
-        public PrivateLinkResource()
+        /// <summary> Initializes a new instance of PrivateLink. </summary>
+        public PrivateLink()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
-            ShareablePrivateLinkResourceTypes = new ChangeTrackingList<ShareablePrivateLinkResourceType>();
+            ShareablePrivateLinkTypes = new ChangeTrackingList<ShareablePrivateLinkResourceType>();
         }
 
-        /// <summary> Initializes a new instance of PrivateLinkResource. </summary>
+        /// <summary> Initializes a new instance of PrivateLink. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
         /// <param name="groupId"> Group Id of the private link resource. </param>
         /// <param name="requiredMembers"> Required members of the private link resource. </param>
         /// <param name="requiredZoneNames"> Required private DNS zone names. </param>
-        /// <param name="shareablePrivateLinkResourceTypes"> The list of resources that are onboarded to private link service. </param>
-        internal PrivateLinkResource(ResourceIdentifier id, string name, ResourceType type, string groupId, IList<string> requiredMembers, IList<string> requiredZoneNames, IList<ShareablePrivateLinkResourceType> shareablePrivateLinkResourceTypes) : base(id, name, type)
+        /// <param name="shareablePrivateLinkTypes"> The list of resources that are onboarded to private link service. </param>
+        internal PrivateLink(ResourceIdentifier id, string name, ResourceType type, string groupId, IList<string> requiredMembers, IList<string> requiredZoneNames, IList<ShareablePrivateLinkResourceType> shareablePrivateLinkTypes) : base(id, name, type)
         {
             GroupId = groupId;
             RequiredMembers = requiredMembers;
             RequiredZoneNames = requiredZoneNames;
-            ShareablePrivateLinkResourceTypes = shareablePrivateLinkResourceTypes;
+            ShareablePrivateLinkTypes = shareablePrivateLinkTypes;
         }
 
         /// <summary> Group Id of the private link resource. </summary>
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <summary> Required private DNS zone names. </summary>
         public IList<string> RequiredZoneNames { get; }
         /// <summary> The list of resources that are onboarded to private link service. </summary>
-        public IList<ShareablePrivateLinkResourceType> ShareablePrivateLinkResourceTypes { get; }
+        public IList<ShareablePrivateLinkResourceType> ShareablePrivateLinkTypes { get; }
     }
 }

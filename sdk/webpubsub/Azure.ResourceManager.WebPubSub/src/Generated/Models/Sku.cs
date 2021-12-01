@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <param name="resourceType"> The resource type that this object applies to. </param>
         /// <param name="skuValue"> The exact set of keys that define this sku. </param>
         /// <param name="capacity"> Specifies the unit of the resource. </param>
-        internal Sku(string resourceType, ResourceSku skuValue, SkuCapacity capacity)
+        internal Sku(string resourceType, WebPubSubSku skuValue, SkuCapacity capacity)
         {
             ResourceType = resourceType;
             SkuValue = skuValue;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <summary> The resource type that this object applies to. </summary>
         public string ResourceType { get; }
         /// <summary> The exact set of keys that define this sku. </summary>
-        public ResourceSku SkuValue { get; }
+        public WebPubSubSku SkuValue { get; }
         /// <summary> Specifies the unit of the resource. </summary>
         public SkuCapacity Capacity { get; }
     }

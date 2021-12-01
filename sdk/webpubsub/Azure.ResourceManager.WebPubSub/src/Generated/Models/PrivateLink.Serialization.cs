@@ -12,7 +12,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
-    public partial class PrivateLinkResource : IUtf8JsonSerializable
+    public partial class PrivateLink : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -44,11 +44,11 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ShareablePrivateLinkResourceTypes))
+            if (Optional.IsCollectionDefined(ShareablePrivateLinkTypes))
             {
                 writer.WritePropertyName("shareablePrivateLinkResourceTypes");
                 writer.WriteStartArray();
-                foreach (var item in ShareablePrivateLinkResourceTypes)
+                foreach (var item in ShareablePrivateLinkTypes)
                 {
                     writer.WriteObjectValue(item);
                 }
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             writer.WriteEndObject();
         }
 
-        internal static PrivateLinkResource DeserializePrivateLinkResource(JsonElement element)
+        internal static PrivateLink DeserializePrivateLink(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     continue;
                 }
             }
-            return new PrivateLinkResource(id, name, type, groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames), Optional.ToList(shareablePrivateLinkResourceTypes));
+            return new PrivateLink(id, name, type, groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames), Optional.ToList(shareablePrivateLinkResourceTypes));
         }
     }
 }

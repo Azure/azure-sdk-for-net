@@ -594,10 +594,10 @@ namespace Azure.ResourceManager.WebPubSub
 
         /// <summary> Get the private link resources that need to be created for a resource. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PrivateLinkResource> GetWebPubSubPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="PrivateLink" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PrivateLink> GetWebPubSubPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<PrivateLinkResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<PrivateLink>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("WebPubSub.GetWebPubSubPrivateLinkResources");
                 scope.Start();
@@ -612,7 +612,7 @@ namespace Azure.ResourceManager.WebPubSub
                     throw;
                 }
             }
-            async Task<Page<PrivateLinkResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<PrivateLink>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("WebPubSub.GetWebPubSubPrivateLinkResources");
                 scope.Start();
@@ -632,10 +632,10 @@ namespace Azure.ResourceManager.WebPubSub
 
         /// <summary> Get the private link resources that need to be created for a resource. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PrivateLinkResource> GetWebPubSubPrivateLinkResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PrivateLink" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PrivateLink> GetWebPubSubPrivateLinkResources(CancellationToken cancellationToken = default)
         {
-            Page<PrivateLinkResource> FirstPageFunc(int? pageSizeHint)
+            Page<PrivateLink> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("WebPubSub.GetWebPubSubPrivateLinkResources");
                 scope.Start();
@@ -650,7 +650,7 @@ namespace Azure.ResourceManager.WebPubSub
                     throw;
                 }
             }
-            Page<PrivateLinkResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<PrivateLink> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("WebPubSub.GetWebPubSubPrivateLinkResources");
                 scope.Start();

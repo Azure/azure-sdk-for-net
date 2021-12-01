@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         internal static Sku DeserializeSku(JsonElement element)
         {
             Optional<string> resourceType = default;
-            Optional<ResourceSku> sku = default;
+            Optional<WebPubSubSku> sku = default;
             Optional<SkuCapacity> capacity = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = ResourceSku.DeserializeResourceSku(property.Value);
+                    sku = WebPubSubSku.DeserializeWebPubSubSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("capacity"))
