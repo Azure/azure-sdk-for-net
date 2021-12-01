@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
@@ -16,6 +17,7 @@ namespace Azure.Core.Tests
     {
         private static readonly string s_nl = Environment.NewLine;
         private static ClientDiagnostics ClientDiagnostics = new ClientDiagnostics(new TestClientOption());
+        private static HttpMessageSanitizer Sanitizer = new TestClientOption().Sanitizer;
 
         [Test]
         public async Task FormatsResponse()
@@ -37,6 +39,45 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public void FormatsResponse_ResponseCtor()
+        {
+            var formattedResponse =
+                "Service request failed." + s_nl +
+                "Status: 210 (Reason)" + s_nl +
+                s_nl +
+                "Headers:" + s_nl +
+                "Custom-Header: Value" + s_nl +
+                "x-ms-requestId: 123" + s_nl;
+
+            var response = new MockResponse(210, "Reason");
+            response.AddHeader(new HttpHeader("Custom-Header", "Value"));
+            response.AddHeader(new HttpHeader("x-ms-requestId", "123"));
+            response.Sanitizer = Sanitizer;
+
+            RequestFailedException exception = new RequestFailedException(response);
+            Assert.AreEqual(formattedResponse, exception.Message);
+        }
+
+        [Test]
+        public void FormatsResponseWithoutSanitizer_ResponseCtor()
+        {
+            var formattedResponse =
+                "Service request failed." + s_nl +
+                "Status: 210 (Reason)" + s_nl +
+                s_nl +
+                "Headers:" + s_nl +
+                "Custom-Header: REDACTED" + s_nl +
+                "x-ms-requestId: REDACTED" + s_nl;
+
+            var response = new MockResponse(210, "Reason");
+            response.AddHeader(new HttpHeader("Custom-Header", "Value"));
+            response.AddHeader(new HttpHeader("x-ms-requestId", "123"));
+
+            RequestFailedException exception = new RequestFailedException(response);
+            Assert.AreEqual(formattedResponse, exception.Message);
+        }
+
+        [Test]
         public async Task HeadersAreSanitized()
         {
             var formattedResponse =
@@ -52,6 +93,25 @@ namespace Azure.Core.Tests
             response.AddHeader(new HttpHeader("x-ms-requestId-2", "123"));
 
             RequestFailedException exception = await ClientDiagnostics.CreateRequestFailedExceptionAsync(response);
+            Assert.AreEqual(formattedResponse, exception.Message);
+        }
+
+        [Test]
+        public void HeadersAreSanitized_ResponseCtor()
+        {
+            var formattedResponse =
+                "Service request failed." + s_nl +
+                "Status: 210 (Reason)" + s_nl +
+                s_nl +
+                "Headers:" + s_nl +
+                "Custom-Header-2: REDACTED" + s_nl +
+                "x-ms-requestId-2: REDACTED" + s_nl;
+
+            var response = new MockResponse(210, "Reason");
+            response.AddHeader(new HttpHeader("Custom-Header-2", "Value"));
+            response.AddHeader(new HttpHeader("x-ms-requestId-2", "123"));
+
+            RequestFailedException exception = new RequestFailedException(response);
             Assert.AreEqual(formattedResponse, exception.Message);
         }
 
@@ -176,7 +236,7 @@ namespace Azure.Core.Tests
             using var memoryStream = new MemoryStream();
             dataContractSerializer.WriteObject(memoryStream, exception);
             memoryStream.Position = 0;
-            deserialized = (RequestFailedException) dataContractSerializer.ReadObject(memoryStream);
+            deserialized = (RequestFailedException)dataContractSerializer.ReadObject(memoryStream);
 
             Assert.AreEqual(exception.Message, deserialized.Message);
             Assert.AreEqual(exception.Status, deserialized.Status);
@@ -202,6 +262,30 @@ namespace Azure.Core.Tests
             response.AddHeader(new HttpHeader("Content-Type", "text/json"));
 
             RequestFailedException exception = await ClientDiagnostics.CreateRequestFailedExceptionAsync(response);
+            Assert.AreEqual(formattedResponse, exception.Message);
+            Assert.AreEqual("StatusCode", exception.ErrorCode);
+        }
+
+        [Test]
+        public void ParsesJsonErrors_ResponseCtor()
+        {
+            var formattedResponse =
+                "Custom message" + s_nl +
+                "Status: 210 (Reason)" + s_nl +
+                "ErrorCode: StatusCode" + s_nl +
+                s_nl +
+                "Content:" + s_nl +
+                "{ \"error\": { \"code\":\"StatusCode\", \"message\":\"Custom message\" }}" + s_nl +
+                s_nl +
+                "Headers:" + s_nl +
+                "Content-Type: text/json" + s_nl;
+
+            var response = new MockResponse(210, "Reason");
+            response.SetContent("{ \"error\": { \"code\":\"StatusCode\", \"message\":\"Custom message\" }}");
+            response.AddHeader(new HttpHeader("Content-Type", "text/json"));
+            response.Sanitizer = Sanitizer;
+
+            RequestFailedException exception = new RequestFailedException(response);
             Assert.AreEqual(formattedResponse, exception.Message);
             Assert.AreEqual("StatusCode", exception.ErrorCode);
         }
@@ -250,6 +334,8 @@ namespace Azure.Core.Tests
 
         private class TestClientOption : ClientOptions
         {
+            public HttpMessageSanitizer Sanitizer => new HttpMessageSanitizer(Diagnostics.LoggedQueryParameters.ToArray(), Diagnostics.LoggedHeaderNames.ToArray());
+
             public TestClientOption()
             {
                 Diagnostics.LoggedHeaderNames.Add("x-ms-requestId");

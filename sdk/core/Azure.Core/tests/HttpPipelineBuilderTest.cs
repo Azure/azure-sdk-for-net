@@ -216,7 +216,7 @@ namespace Azure.Core.Tests
                 options,
                 Array.Empty<HttpPipelinePolicy>(),
                 Array.Empty<HttpPipelinePolicy>(),
-                new ResponseClassifier(),
+                ResponseClassifier.Shared,
                 new HttpPipelineTransportOptions());
 
             HttpPipelineTransport transportField = pipeline.GetType().GetField("_transport", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.GetField).GetValue(pipeline) as HttpPipelineTransport;

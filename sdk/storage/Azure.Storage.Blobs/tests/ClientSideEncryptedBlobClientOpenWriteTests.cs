@@ -36,7 +36,7 @@ namespace Azure.Storage.Blobs.Tests
             options ??= ClientBuilder.GetOptions();
             options._clientSideEncryptionOptions = new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
             {
-                KeyEncryptionKey = this.GetIKeyEncryptionKey().Object,
+                KeyEncryptionKey = this.GetIKeyEncryptionKey(expectedCancellationToken: default).Object,
                 KeyWrapAlgorithm = ClientSideEncryptionTestExtensions.s_algorithmName
             };
 

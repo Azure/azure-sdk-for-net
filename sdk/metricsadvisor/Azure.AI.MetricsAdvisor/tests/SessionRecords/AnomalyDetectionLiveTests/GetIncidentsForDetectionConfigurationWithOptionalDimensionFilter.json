@@ -1,33 +1,36 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://js-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/enrichment/anomalyDetection/configurations/fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c/incidents/query",
+      "RequestUri": "https://ga-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/enrichment/anomalyDetection/configurations/efaee305-f049-43ec-9f9b-76026d55c14a/incidents/query",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "186",
+        "Content-Length": "190",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-ea5e2c5c1712ab45918eaa09794cdee2-5d90d5453114d047-00",
-        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20210512.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "traceparent": "00-fbc3837c8d166944a3917185c151c624-b2cbeb5d0795b046-00",
+        "User-Agent": [
+          "azsdk-net-AI.MetricsAdvisor/1.2.0-alpha.20211118.1",
+          "(.NET 5.0.12; Microsoft Windows 10.0.22000)"
+        ],
         "x-api-key": "Sanitized",
         "x-ms-client-request-id": "3a428ccbc3d0bdd40c6c03e4982a6f1b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "startTime": "2020-10-01T00:00:00Z",
-        "endTime": "2020-10-31T00:00:00Z",
+        "startTime": "2021-10-01T00:00:00Z",
+        "endTime": "2021-10-31T00:00:00Z",
         "filter": {
           "dimensionFilter": [
             {
               "dimension": {
-                "city": "Delhi",
+                "region": "Delhi",
                 "category": "Handmade"
               }
             },
             {
               "dimension": {
-                "city": "Kolkata"
+                "region": "Kolkata"
               }
             }
           ]
@@ -35,151 +38,49 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "ec39f3af-654e-402e-ba8b-228279332cde",
-        "Content-Length": "2668",
+        "apim-request-id": "d0bb3190-ee65-4944-8121-254074d8788f",
+        "Content-Length": "672",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 12 May 2021 23:59:17 GMT",
+        "Date": "Thu, 18 Nov 2021 17:48:29 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "261",
-        "x-request-id": "ec39f3af-654e-402e-ba8b-228279332cde"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "273",
+        "X-Request-ID": "d0bb3190-ee65-4944-8121-254074d8788f"
       },
       "ResponseBody": {
         "value": [
           {
-            "incidentId": "413f3b759eaa97e2fb39f46b08f5fab4-17576cdcc00",
-            "startTime": "2020-10-23T00:00:00Z",
-            "lastTime": "2020-10-30T00:00:00Z",
+            "incidentId": "5dd4e2ae7218115fea669ce9d33161a6-17cce7ef800",
+            "startTime": "2021-10-22T00:00:00Z",
+            "lastTime": "2021-10-30T00:00:00Z",
             "rootNode": {
               "dimension": {
-                "city": "Delhi",
-                "category": "Handmade"
-              }
-            },
-            "property": {
-              "maxSeverity": "Low",
-              "incidentStatus": "Active",
-              "valueOfRootNode": 503106.4,
-              "expectedValueOfRootNode": 548623.43471338938
-            }
-          },
-          {
-            "incidentId": "6c8e86ac860d59b4069ee3545e427500-1756c811400",
-            "startTime": "2020-10-27T00:00:00Z",
-            "lastTime": "2020-10-28T00:00:00Z",
-            "rootNode": {
-              "dimension": {
-                "city": "Kolkata",
-                "category": "Office Products"
-              }
-            },
-            "property": {
-              "maxSeverity": "Medium",
-              "incidentStatus": "Active",
-              "valueOfRootNode": 16421.2,
-              "expectedValueOfRootNode": 21204.543526424892
-            }
-          },
-          {
-            "incidentId": "3c400b43bdbbe8260df3ad63f0566df7-175675ab800",
-            "startTime": "2020-10-27T00:00:00Z",
-            "lastTime": "2020-10-27T00:00:00Z",
-            "rootNode": {
-              "dimension": {
-                "city": "Kolkata",
-                "category": "Cell Phones"
-              }
-            },
-            "property": {
-              "maxSeverity": "Low",
-              "incidentStatus": "Active",
-              "valueOfRootNode": 5.8,
-              "expectedValueOfRootNode": 0.92021188765560236
-            }
-          },
-          {
-            "incidentId": "3c400b43bdbbe8260df3ad63f0566df7-1752eb4c400",
-            "startTime": "2020-10-16T00:00:00Z",
-            "lastTime": "2020-10-16T00:00:00Z",
-            "rootNode": {
-              "dimension": {
-                "city": "Kolkata",
-                "category": "Cell Phones"
-              }
-            },
-            "property": {
-              "maxSeverity": "Low",
-              "incidentStatus": "Active",
-              "valueOfRootNode": 3.8,
-              "expectedValueOfRootNode": 1.1539873645678127
-            }
-          },
-          {
-            "incidentId": "c62a15cf3232c642502f0b291f5d9be1-175298e6800",
-            "startTime": "2020-10-15T00:00:00Z",
-            "lastTime": "2020-10-15T00:00:00Z",
-            "rootNode": {
-              "dimension": {
-                "city": "Kolkata",
-                "category": "Device Accessories"
-              }
-            },
-            "property": {
-              "maxSeverity": "Low",
-              "incidentStatus": "Active",
-              "valueOfRootNode": 0.6,
-              "expectedValueOfRootNode": 0.20817944044181544
-            }
-          },
-          {
-            "incidentId": "7aeb41547126fc9e80bccc9a0349b561-175005b8800",
-            "startTime": "2020-10-07T00:00:00Z",
-            "lastTime": "2020-10-07T00:00:00Z",
-            "rootNode": {
-              "dimension": {
-                "city": "Kolkata",
-                "category": "Shoes Handbags \u0026 Sunglasses"
-              }
-            },
-            "property": {
-              "maxSeverity": "Medium",
-              "incidentStatus": "Active",
-              "valueOfRootNode": 606448.2,
-              "expectedValueOfRootNode": 556953.98523267184
-            }
-          },
-          {
-            "incidentId": "413f3b759eaa97e2fb39f46b08f5fab4-174f60ed000",
-            "startTime": "2020-10-05T00:00:00Z",
-            "lastTime": "2020-10-05T00:00:00Z",
-            "rootNode": {
-              "dimension": {
-                "city": "Delhi",
+                "region": "Delhi",
                 "category": "Handmade"
               }
             },
             "property": {
               "maxSeverity": "Medium",
               "incidentStatus": "Active",
-              "valueOfRootNode": 671330.0,
-              "expectedValueOfRootNode": 642187.698892426
+              "valueOfRootNode": 403239.4,
+              "expectedValueOfRootNode": 371195.56461037876
             }
           },
           {
-            "incidentId": "c1950fdf88124ce07d795a142fd7edcb-174f60ed000",
-            "startTime": "2020-10-05T00:00:00Z",
-            "lastTime": "2020-10-05T00:00:00Z",
+            "incidentId": "5dd4e2ae7218115fea669ce9d33161a6-17c9aff6000",
+            "startTime": "2021-10-19T00:00:00Z",
+            "lastTime": "2021-10-20T00:00:00Z",
             "rootNode": {
               "dimension": {
-                "city": "Kolkata",
-                "category": "Home \u0026 Garden"
+                "region": "Delhi",
+                "category": "Handmade"
               }
             },
             "property": {
-              "maxSeverity": "Low",
+              "maxSeverity": "Medium",
               "incidentStatus": "Active",
-              "valueOfRootNode": 686.4,
-              "expectedValueOfRootNode": 792.75226298181769
+              "valueOfRootNode": 585573.4,
+              "expectedValueOfRootNode": 588198.1834146369
             }
           }
         ]
@@ -187,7 +88,7 @@
     }
   ],
   "Variables": {
-    "METRICSADVISOR_ACCOUNT_NAME": "js-metrics-advisor",
+    "METRICSADVISOR_ACCOUNT_NAME": "ga-metrics-advisor",
     "METRICSADVISOR_ENDPOINT_SUFFIX": null,
     "METRICSADVISOR_PRIMARY_API_KEY": "Sanitized",
     "METRICSADVISOR_SUBSCRIPTION_KEY": "Sanitized",

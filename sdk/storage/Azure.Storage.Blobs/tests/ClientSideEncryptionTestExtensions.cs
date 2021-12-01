@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,9 +22,10 @@ namespace Azure.Storage.Blobs.Tests
 
         public static Mock<IKeyEncryptionKey> GetIKeyEncryptionKey(
             this RecordedTestBase testBase,
+            CancellationToken? expectedCancellationToken,
             byte[] userKeyBytes = default,
             string keyId = default,
-            CancellationToken? expectedCancellationToken = default)
+            TimeSpan optionalDelay = default)
         {
             if (userKeyBytes == default)
             {
@@ -39,16 +41,32 @@ namespace Azure.Storage.Blobs.Tests
             if (testBase.IsAsync)
             {
                 keyMock.Setup(k => k.WrapKeyAsync(s_algorithmName, It.IsNotNull<ReadOnlyMemory<byte>>(), expectedCancellationToken ?? It.IsAny<CancellationToken>()))
-                    .Returns<string, ReadOnlyMemory<byte>, CancellationToken>((algorithm, key, cancellationToken) => Task.FromResult(Xor(userKeyBytes, key.ToArray())));
+                    .Returns<string, ReadOnlyMemory<byte>, CancellationToken>(async (algorithm, key, cancellationToken) =>
+                    {
+                        await Task.Delay(optionalDelay);
+                        return Xor(userKeyBytes, key.ToArray());
+                    });
                 keyMock.Setup(k => k.UnwrapKeyAsync(s_algorithmName, It.IsNotNull<ReadOnlyMemory<byte>>(), expectedCancellationToken ?? It.IsAny<CancellationToken>()))
-                    .Returns<string, ReadOnlyMemory<byte>, CancellationToken>((algorithm, wrappedKey, cancellationToken) => Task.FromResult(Xor(userKeyBytes, wrappedKey.ToArray())));
+                    .Returns<string, ReadOnlyMemory<byte>, CancellationToken>(async (algorithm, wrappedKey, cancellationToken) =>
+                    {
+                        await Task.Delay(optionalDelay);
+                        return Xor(userKeyBytes, wrappedKey.ToArray());
+                    });
             }
             else
             {
                 keyMock.Setup(k => k.WrapKey(s_algorithmName, It.IsNotNull<ReadOnlyMemory<byte>>(), expectedCancellationToken ?? It.IsAny<CancellationToken>()))
-                    .Returns<string, ReadOnlyMemory<byte>, CancellationToken>((algorithm, key, cancellationToken) => Xor(userKeyBytes, key.ToArray()));
+                    .Returns<string, ReadOnlyMemory<byte>, CancellationToken>((algorithm, key, cancellationToken) =>
+                    {
+                        Thread.Sleep(optionalDelay);
+                        return Xor(userKeyBytes, key.ToArray());
+                    });
                 keyMock.Setup(k => k.UnwrapKey(s_algorithmName, It.IsNotNull<ReadOnlyMemory<byte>>(), It.IsAny<CancellationToken>()))
-                    .Returns<string, ReadOnlyMemory<byte>, CancellationToken>((algorithm, wrappedKey, cancellationToken) => Xor(userKeyBytes, wrappedKey.ToArray()));
+                    .Returns<string, ReadOnlyMemory<byte>, CancellationToken>((algorithm, wrappedKey, cancellationToken) =>
+                    {
+                        Thread.Sleep(optionalDelay);
+                        return Xor(userKeyBytes, wrappedKey.ToArray());
+                    });
             }
 
             return keyMock;
@@ -56,19 +74,23 @@ namespace Azure.Storage.Blobs.Tests
 
         public static Mock<IKeyEncryptionKeyResolver> GetIKeyEncryptionKeyResolver(
             this RecordedTestBase testBase,
-            IKeyEncryptionKey iKey,
-            CancellationToken? expectedCancellationToken = default)
+            CancellationToken? expectedCancellationToken,
+            params IKeyEncryptionKey[] keys)
         {
+            IKeyEncryptionKey Resolve(string keyId, CancellationToken cancellationToken)
+                => keys.FirstOrDefault(k => k.KeyId == keyId) ?? throw new Exception("Mock resolver couldn't resolve key id.");
+
             var resolverMock = new Mock<IKeyEncryptionKeyResolver>(MockBehavior.Strict);
             if (testBase.IsAsync)
             {
                 resolverMock.Setup(r => r.ResolveAsync(It.IsNotNull<string>(), expectedCancellationToken ?? It.IsAny<CancellationToken>()))
-                    .Returns<string, CancellationToken>((keyId, cancellationToken) => iKey?.KeyId == keyId ? Task.FromResult(iKey) : throw new Exception("Mock resolver couldn't resolve key id."));
+                    .Returns<string, CancellationToken>((keyId, cancellationToken) => Task.FromResult(Resolve(keyId, cancellationToken)));
             }
             else
             {
                 resolverMock.Setup(r => r.Resolve(It.IsNotNull<string>(), expectedCancellationToken ?? It.IsAny<CancellationToken>()))
-                    .Returns<string, CancellationToken>((keyId, cancellationToken) => iKey?.KeyId == keyId ? iKey : throw new Exception("Mock resolver couldn't resolve key id."));
+                    .Returns<string, CancellationToken>(Resolve);
+                ;
             }
 
             return resolverMock;
