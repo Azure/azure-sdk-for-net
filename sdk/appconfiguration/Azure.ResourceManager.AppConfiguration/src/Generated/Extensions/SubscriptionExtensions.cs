@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.AppConfiguration
     /// <summary> A class to add extension methods to Subscription. </summary>
     public static partial class SubscriptionExtensions
     {
-        private static ConfigurationStoresRestOperations GetConfigurationStoresRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
+        private static ConfigurationStoresRestOperations GetConfigurationStoresRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
         {
-            return new ConfigurationStoresRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
+            return new ConfigurationStoresRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
         }
 
         /// <summary> Lists the ConfigurationStores for this <see cref="Subscription" />. </summary>
@@ -36,14 +36,14 @@ namespace Azure.ResourceManager.AppConfiguration
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetConfigurationStoresRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                var restOperations = GetConfigurationStoresRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                 async Task<Page<ConfigurationStore>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetConfigurationStores");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.ListAsync(skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListAsync(subscription.Id.SubscriptionId, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new ConfigurationStore(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.AppConfiguration
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.ListNextPageAsync(nextLink, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListNextPageAsync(nextLink, subscription.Id.SubscriptionId, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new ConfigurationStore(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -82,14 +82,14 @@ namespace Azure.ResourceManager.AppConfiguration
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetConfigurationStoresRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                var restOperations = GetConfigurationStoresRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                 Page<ConfigurationStore> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetConfigurationStores");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.List(skipToken, cancellationToken: cancellationToken);
+                        var response = restOperations.List(subscription.Id.SubscriptionId, skipToken, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new ConfigurationStore(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppConfiguration
                     scope.Start();
                     try
                     {
-                        var response = restOperations.ListNextPage(nextLink, skipToken, cancellationToken: cancellationToken);
+                        var response = restOperations.ListNextPage(nextLink, subscription.Id.SubscriptionId, skipToken, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new ConfigurationStore(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
