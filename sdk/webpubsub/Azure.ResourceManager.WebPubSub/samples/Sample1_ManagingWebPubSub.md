@@ -37,7 +37,7 @@ Now that we have the resource group created, we can manage the WebPubSub inside 
 ***Create a WebPubSub***
 
 ```C# Snippet:Managing_WebPubSub_CreateWebPubSub
-WebPubSubResourceCollection webPubSubResourceCollection = resourceGroup.GetWebPubSubResources();
+WebPubSubCollection WebPubSubColletion = resourceGroup.GetWebPubSubs();
 
 string webPubSubName = "myWebPubSubName";
 
