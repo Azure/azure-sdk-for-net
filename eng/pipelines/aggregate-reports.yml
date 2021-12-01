@@ -22,20 +22,15 @@ stages:
       - job: GenerateReports
         timeoutInMinutes: 120
         steps:
-          - template: /eng/pipelines/templates/steps/install-dotnet.yml
+          - task: PowerShell@2
+            displayName: Download Latest Dev Packages
+            inputs:
+              pwsh: true
+              filePath: 'eng/scripts/DownloadDevPackages.ps1'
+              arguments: >
+                -WorkingDirectory '$(Build.ArtifactStagingDirectory)'
+                -NupkgDestination 'nupkgFiles'
 
-          - script: >-
-              dotnet pack eng/service.proj -warnaserror
-              /p:SDKType=all
-              /p:ServiceDirectory=*
-              /p:IncludeTests=false
-              /p:PublicSign=false
-              /p:OfficialBuildId=$(OfficialBuildId)
-              /p:SkipDevBuildNumber=true
-              /p:Configuration=$(BuildConfiguration)
-              /p:CommitSHA=$(Build.SourceVersion)
-              /p:ArtifactsPackagesDir=$(Build.ArtifactStagingDirectory)
-            displayName: "Build and Package"
           - pwsh: |
               npx cspell lint `
                 --config ./.vscode/cspell.json `
@@ -53,11 +48,8 @@ stages:
               CheckLinkGuidance: $true
 
           - pwsh: |
-              $nugetPackages = Get-ChildItem -Path '$(Build.ArtifactStagingDirectory)' -Include Azure.*.nupkg -Exclude *.symbols.nupkg -Recurse
-              New-Item -Path '$(Build.ArtifactStagingDirectory)' -Name 'nugetPackages' -ItemType 'directory'
               New-Item -Path '$(Build.ArtifactStagingDirectory)' -Name 'reports' -ItemType 'directory'
-              $nugetPackages | Copy-Item -Destination '$(Build.ArtifactStagingDirectory)/nugetPackages'
-            displayName: Isolate Nuget Packages to Process and Create Reports Directory
+            displayName: Create Directory for Aggregate Reports
 
           - task: PowerShell@2
             displayName: Generate Dependency Report
@@ -65,7 +57,7 @@ stages:
               pwsh: true
               filePath: 'eng/scripts/dependencies/AnalyzeDeps.ps1'
               arguments: >
-                -PackagesPath '$(Build.ArtifactStagingDirectory)/nugetPackages'
+                -PackagesPath '$(Build.ArtifactStagingDirectory)/nupkgFiles'
                 -LockfilePath '$(Build.SourcesDirectory)/eng/Packages.Data.props'
                 -OutPath '$(Build.ArtifactStagingDirectory)/reports/dependencies.html'
                 -DumpPath '$(Build.ArtifactStagingDirectory)/reports'
@@ -76,7 +68,7 @@ stages:
               pwsh: true
               filePath: 'eng/scripts/dependencies/generate-deps.ps1'
               arguments: >
-                -PackagesPath '$(Build.ArtifactStagingDirectory)/nugetPackages'
+                -PackagesPath '$(Build.ArtifactStagingDirectory)/nupkgFiles'
                 -DepsOutputFile '$(Build.ArtifactStagingDirectory)/reports/azure-sdk.deps.json'
                 -ProjectRefPath '$(Build.ArtifactStagingDirectory)/reports'
 
