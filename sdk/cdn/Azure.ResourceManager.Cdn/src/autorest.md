@@ -206,6 +206,7 @@ directive:
   - remove-operation: AFDProfiles_CheckHostNameAvailability
   - remove-operation: Secrets_Update
   - remove-operation: Validate_Secret
+  - remove-operation: CheckNameAvailability
   - from: swagger-document
     where: $.definitions.AFDEndpointProtocols
     transform: >
