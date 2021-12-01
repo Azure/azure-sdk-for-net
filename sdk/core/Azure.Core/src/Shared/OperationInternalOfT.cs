@@ -174,6 +174,10 @@ namespace Azure.Core
         /// <param name="state">The <see cref="OperationState{T}"/> used to set <see cref="OperationInternalBase.HasCompleted"/> and other members.</param>
         public void SetState(OperationState<T> state)
         {
+            if (state.HasCompleted && state.HasSucceeded)
+            {
+                Value = state.Value!;
+            }
             ApplyStateAsync(false, state.RawResponse, state.HasCompleted, state.HasSucceeded, state.OperationFailedException).EnsureCompleted();
         }
 
