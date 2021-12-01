@@ -80,15 +80,15 @@ namespace Azure.Core
         /// </summary>
         public TimeSpan? NetworkTimeout { get; set; }
 
-        internal void AddPolicies(RequestContext context)
+        internal void AddPolicies(RequestOptions options)
         {
-            if (context == null || context.Policies == null || context.Policies.Count == 0)
+            if (options == null || options.Policies == null || options.Policies.Count == 0)
             {
                 return;
             }
 
-            Policies ??= new(context.Policies.Count);
-            Policies.AddRange(context.Policies);
+            Policies ??= new(options.Policies.Count);
+            Policies.AddRange(options.Policies);
         }
 
         internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; set; }

@@ -30,13 +30,13 @@ namespace Azure.Core.Pipeline
 
         /// <summary>
         /// The pipeline index where <see cref="HttpPipelinePosition.PerCall"/> policies will be added,
-        /// if any are specified using <see cref="RequestContext.AddPolicy(HttpPipelinePolicy, HttpPipelinePosition)"/>.
+        /// if any are specified using <see cref="RequestOptions.AddPolicy(HttpPipelinePolicy, HttpPipelinePosition)"/>.
         /// </summary>
         private readonly int _perCallIndex;
 
         /// <summary>
         /// The pipeline index where <see cref="HttpPipelinePosition.PerRetry"/> policies will be added,
-        /// if any are specified using <see cref="RequestContext.AddPolicy(HttpPipelinePolicy, HttpPipelinePosition)"/>.
+        /// if any are specified using <see cref="RequestOptions.AddPolicy(HttpPipelinePolicy, HttpPipelinePosition)"/>.
         /// </summary>
         private readonly int _perRetryIndex;
 
@@ -99,12 +99,12 @@ namespace Azure.Core.Pipeline
         /// <summary>
         /// Creates a new <see cref="HttpMessage"/> instance.
         /// </summary>
-        /// <param name="context">Context specifying the message options.</param>
+        /// <param name="options">The message options.</param>
         /// <returns>The message.</returns>
-        public HttpMessage CreateMessage(RequestContext context)
+        public HttpMessage CreateMessage(RequestOptions options)
         {
             var message = CreateMessage();
-            message.AddPolicies(context);
+            message.AddPolicies(options);
             return message;
         }
 
