@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider "keyvault/resource-manager" -AutoRestVersion "v2" -SdkGenerationDirectory "$PSScriptRoot\Generated" -ConfigFileTag "package-preview-2020-04"
+Start-AutoRestCodeGeneration -ResourceProvider "keyvault/resource-manager" -AutoRestVersion "v2" -SdkGenerationDirectory "$PSScriptRoot\Generated" -ConfigFileTag "package-preview-2021-06"

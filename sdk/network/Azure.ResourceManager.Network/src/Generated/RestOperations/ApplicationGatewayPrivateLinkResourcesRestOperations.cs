@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateGetAllRequest(string resourceGroupName, string applicationGatewayName)
+        internal HttpMessage CreateListRequest(string resourceGroupName, string applicationGatewayName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="applicationGatewayName"> The name of the application gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="applicationGatewayName"/> is null. </exception>
-        public async Task<Response<ApplicationGatewayPrivateLinkResourceListResult>> GetAllAsync(string resourceGroupName, string applicationGatewayName, CancellationToken cancellationToken = default)
+        public async Task<Response<ApplicationGatewayPrivateLinkResourceListResult>> ListAsync(string resourceGroupName, string applicationGatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(applicationGatewayName));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName, applicationGatewayName);
+            using var message = CreateListRequest(resourceGroupName, applicationGatewayName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="applicationGatewayName"> The name of the application gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="applicationGatewayName"/> is null. </exception>
-        public Response<ApplicationGatewayPrivateLinkResourceListResult> GetAll(string resourceGroupName, string applicationGatewayName, CancellationToken cancellationToken = default)
+        public Response<ApplicationGatewayPrivateLinkResourceListResult> List(string resourceGroupName, string applicationGatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(applicationGatewayName));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName, applicationGatewayName);
+            using var message = CreateListRequest(resourceGroupName, applicationGatewayName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateGetAllNextPageRequest(string nextLink, string resourceGroupName, string applicationGatewayName)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string resourceGroupName, string applicationGatewayName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="applicationGatewayName"> The name of the application gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="applicationGatewayName"/> is null. </exception>
-        public async Task<Response<ApplicationGatewayPrivateLinkResourceListResult>> GetAllNextPageAsync(string nextLink, string resourceGroupName, string applicationGatewayName, CancellationToken cancellationToken = default)
+        public async Task<Response<ApplicationGatewayPrivateLinkResourceListResult>> ListNextPageAsync(string nextLink, string resourceGroupName, string applicationGatewayName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(applicationGatewayName));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, applicationGatewayName);
+            using var message = CreateListNextPageRequest(nextLink, resourceGroupName, applicationGatewayName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="applicationGatewayName"> The name of the application gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="applicationGatewayName"/> is null. </exception>
-        public Response<ApplicationGatewayPrivateLinkResourceListResult> GetAllNextPage(string nextLink, string resourceGroupName, string applicationGatewayName, CancellationToken cancellationToken = default)
+        public Response<ApplicationGatewayPrivateLinkResourceListResult> ListNextPage(string nextLink, string resourceGroupName, string applicationGatewayName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(applicationGatewayName));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, applicationGatewayName);
+            using var message = CreateListNextPageRequest(nextLink, resourceGroupName, applicationGatewayName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

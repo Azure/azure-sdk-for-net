@@ -19,9 +19,9 @@ namespace Azure.AI.Language.Conversations
         /// <param name="text"> The predicted entity text. </param>
         /// <param name="offset"> The starting index of this entity in the query. </param>
         /// <param name="length"> The length of the text. </param>
-        /// <param name="confidenceScore"> The entity confidence score. </param>
+        /// <param name="confidence"> The entity confidence score. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="category"/> or <paramref name="text"/> is null. </exception>
-        internal ConversationEntity(string category, string text, int offset, int length, float confidenceScore)
+        internal ConversationEntity(string category, string text, int offset, int length, float confidence)
         {
             if (category == null)
             {
@@ -36,7 +36,7 @@ namespace Azure.AI.Language.Conversations
             Text = text;
             Offset = offset;
             Length = length;
-            ConfidenceScore = confidenceScore;
+            Confidence = confidence;
             ListKeys = new ChangeTrackingList<string>();
         }
 
@@ -45,15 +45,15 @@ namespace Azure.AI.Language.Conversations
         /// <param name="text"> The predicted entity text. </param>
         /// <param name="offset"> The starting index of this entity in the query. </param>
         /// <param name="length"> The length of the text. </param>
-        /// <param name="confidenceScore"> The entity confidence score. </param>
+        /// <param name="confidence"> The entity confidence score. </param>
         /// <param name="listKeys"> List of keys. </param>
-        internal ConversationEntity(string category, string text, int offset, int length, float confidenceScore, IReadOnlyList<string> listKeys)
+        internal ConversationEntity(string category, string text, int offset, int length, float confidence, IReadOnlyList<string> listKeys)
         {
             Category = category;
             Text = text;
             Offset = offset;
             Length = length;
-            ConfidenceScore = confidenceScore;
+            Confidence = confidence;
             ListKeys = listKeys;
         }
 
@@ -66,7 +66,7 @@ namespace Azure.AI.Language.Conversations
         /// <summary> The length of the text. </summary>
         public int Length { get; }
         /// <summary> The entity confidence score. </summary>
-        public float ConfidenceScore { get; }
+        public float Confidence { get; }
         /// <summary> List of keys. </summary>
         public IReadOnlyList<string> ListKeys { get; }
     }

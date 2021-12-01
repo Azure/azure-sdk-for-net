@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateGetAllRequest(string resourceGroupName, string templateSpecName)
+        internal Azure.Core.HttpMessage CreateListRequest(string resourceGroupName, string templateSpecName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="templateSpecName"/> is null. </exception>
-        public async Task<Response<TemplateSpecVersionsListResult>> GetAllAsync(string resourceGroupName, string templateSpecName, CancellationToken cancellationToken = default)
+        public async Task<Response<TemplateSpecVersionsListResult>> ListAsync(string resourceGroupName, string templateSpecName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -490,7 +490,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(templateSpecName));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName, templateSpecName);
+            using var message = CreateListRequest(resourceGroupName, templateSpecName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="templateSpecName"/> is null. </exception>
-        public Response<TemplateSpecVersionsListResult> GetAll(string resourceGroupName, string templateSpecName, CancellationToken cancellationToken = default)
+        public Response<TemplateSpecVersionsListResult> List(string resourceGroupName, string templateSpecName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(templateSpecName));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName, templateSpecName);
+            using var message = CreateListRequest(resourceGroupName, templateSpecName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateGetAllNextPageRequest(string nextLink, string resourceGroupName, string templateSpecName)
+        internal Azure.Core.HttpMessage CreateListNextPageRequest(string nextLink, string resourceGroupName, string templateSpecName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -558,7 +558,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="templateSpecName"/> is null. </exception>
-        public async Task<Response<TemplateSpecVersionsListResult>> GetAllNextPageAsync(string nextLink, string resourceGroupName, string templateSpecName, CancellationToken cancellationToken = default)
+        public async Task<Response<TemplateSpecVersionsListResult>> ListNextPageAsync(string nextLink, string resourceGroupName, string templateSpecName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(templateSpecName));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, templateSpecName);
+            using var message = CreateListNextPageRequest(nextLink, resourceGroupName, templateSpecName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -595,7 +595,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="templateSpecName"/> is null. </exception>
-        public Response<TemplateSpecVersionsListResult> GetAllNextPage(string nextLink, string resourceGroupName, string templateSpecName, CancellationToken cancellationToken = default)
+        public Response<TemplateSpecVersionsListResult> ListNextPage(string nextLink, string resourceGroupName, string templateSpecName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -610,7 +610,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(templateSpecName));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, templateSpecName);
+            using var message = CreateListNextPageRequest(nextLink, resourceGroupName, templateSpecName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

@@ -33,5 +33,7 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         public const string Restore = "restore";
         public const string Recover = "recover";
         public const string Purge = "purge";
+        public const string Release = "release";
+        public const string Rotate = "rotate";
     }
 }

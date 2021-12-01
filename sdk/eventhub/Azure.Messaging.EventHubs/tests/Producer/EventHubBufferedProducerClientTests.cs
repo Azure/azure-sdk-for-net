@@ -1813,16 +1813,26 @@ namespace Azure.Messaging.EventHubs.Tests
 
             try
             {
-                await mockBufferedProducer.Object.EnqueueEventsAsync(events, cancellationSource.Token);
+                var enqueuedCount = await mockBufferedProducer.Object.EnqueueEventsAsync(events, cancellationSource.Token);
                 Assert.That(mockBufferedProducer.Object.ActivePartitionStateMap.TryGetValue(partitionId, out var partitionPublisher), Is.True, "A publisher should have been registered for the partition.");
+
+                Assert.That(enqueuedCount, Is.EqualTo(events.Length), "The return value should indicate that the correct number of events were enqueued.");
+                Assert.That(mockBufferedProducer.Object.TotalBufferedEventCount, Is.EqualTo(events.Length), "The total event count should indicate that the correct number of events were enqueued.");
+                Assert.That(mockBufferedProducer.Object.GetBufferedEventCount(partitionId), Is.EqualTo(events.Length), "The partition event count should indicate that the correct number of events were enqueued.");
 
                 var readEventCount = 0;
 
-                while (partitionPublisher.TryReadEvent(out var readEvent))
+                while (readEventCount < events.Length)
                 {
-                    ++readEventCount;
-                    Assert.That(events.SingleOrDefault(item => item.EventBody.ToString() == readEvent.EventBody.ToString()), Is.Not.Null, $"The event with body: [{ readEvent.EventBody }] was not in the source.");
-                    Assert.That(readEvent.GetRawAmqpMessage().GetPartitionKey(null), Is.Null, $"The partition key should not have been set for the event with body: [{ readEvent.EventBody }].");
+                    if (partitionPublisher.TryReadEvent(out var readEvent))
+                    {
+                        ++readEventCount;
+
+                        Assert.That(events.SingleOrDefault(item => item.EventBody.ToString() == readEvent.EventBody.ToString()), Is.Not.Null, $"The event with body: [{ readEvent.EventBody }] was not in the source.");
+                        Assert.That(readEvent.GetRawAmqpMessage().GetPartitionKey(null), Is.Null, $"The partition key should not have been set for the event with body: [{ readEvent.EventBody }].");
+                    }
+
+                    await Task.Delay(10, cancellationSource.Token);
                 }
 
                 Assert.That(readEventCount, Is.EqualTo(events.Length), "The number of events read should match the source length.");
@@ -1881,17 +1891,26 @@ namespace Azure.Messaging.EventHubs.Tests
             try
             {
                 var options = new EnqueueEventOptions { PartitionKey = partitionKey };
-                await mockBufferedProducer.Object.EnqueueEventsAsync(events, options, cancellationSource.Token);
+                var enqueuedCount = await mockBufferedProducer.Object.EnqueueEventsAsync(events, options, cancellationSource.Token);
 
                 Assert.That(mockBufferedProducer.Object.ActivePartitionStateMap.TryGetValue(partitionId, out var partitionPublisher), Is.True, "A publisher should have been registered for the partition.");
+                Assert.That(enqueuedCount, Is.EqualTo(events.Length), "The return value should indicate that the correct number of events were enqueued.");
+                Assert.That(mockBufferedProducer.Object.TotalBufferedEventCount, Is.EqualTo(events.Length), "The total event count should indicate that the correct number of events were enqueued.");
+                Assert.That(mockBufferedProducer.Object.GetBufferedEventCount(partitionId), Is.EqualTo(events.Length), "The partition event count should indicate that the correct number of events were enqueued.");
 
                 var readEventCount = 0;
 
-                while (partitionPublisher.TryReadEvent(out var readEvent))
+                while (readEventCount < events.Length)
                 {
-                    ++readEventCount;
-                    Assert.That(events.SingleOrDefault(item => item.EventBody.ToString() == readEvent.EventBody.ToString()), Is.Not.Null, $"The event with body: [{ readEvent.EventBody }] was not in the source.");
-                    Assert.That(readEvent.GetRawAmqpMessage().GetPartitionKey(null), Is.EqualTo(partitionKey), $"The partition key should have been preserved for the event with body: [{ readEvent.EventBody }].");
+                    if (partitionPublisher.TryReadEvent(out var readEvent))
+                    {
+                        ++readEventCount;
+
+                        Assert.That(events.SingleOrDefault(item => item.EventBody.ToString() == readEvent.EventBody.ToString()), Is.Not.Null, $"The event with body: [{ readEvent.EventBody }] was not in the source.");
+                        Assert.That(readEvent.GetRawAmqpMessage().GetPartitionKey(null), Is.EqualTo(partitionKey), $"The partition key should have been preserved for the event with body: [{ readEvent.EventBody }].");
+                    }
+
+                    await Task.Delay(10, cancellationSource.Token);
                 }
 
                 Assert.That(readEventCount, Is.EqualTo(events.Length), "The number of events read should match the source length.");
@@ -1941,17 +1960,26 @@ namespace Azure.Messaging.EventHubs.Tests
             try
             {
                 var options = new EnqueueEventOptions { PartitionId = partitionId };
-                await mockBufferedProducer.Object.EnqueueEventsAsync(events, options, cancellationSource.Token);
+                var enqueuedCount = await mockBufferedProducer.Object.EnqueueEventsAsync(events, options, cancellationSource.Token);
 
                 Assert.That(mockBufferedProducer.Object.ActivePartitionStateMap.TryGetValue(partitionId, out var partitionPublisher), Is.True, "A publisher should have been registered for the partition.");
+                Assert.That(enqueuedCount, Is.EqualTo(events.Length), "The return value should indicate that the correct number of events were enqueued.");
+                Assert.That(mockBufferedProducer.Object.TotalBufferedEventCount, Is.EqualTo(events.Length), "The total event count should indicate that the correct number of events were enqueued.");
+                Assert.That(mockBufferedProducer.Object.GetBufferedEventCount(partitionId), Is.EqualTo(events.Length), "The partition event count should indicate that the correct number of events were enqueued.");
 
                 var readEventCount = 0;
 
-                while (partitionPublisher.TryReadEvent(out var readEvent))
+                while (readEventCount < events.Length)
                 {
-                    ++readEventCount;
-                    Assert.That(events.SingleOrDefault(item => item.EventBody.ToString() == readEvent.EventBody.ToString()), Is.Not.Null, $"The event with body: [{ readEvent.EventBody }] was not in the source.");
-                    Assert.That(readEvent.GetRawAmqpMessage().GetPartitionKey(null), Is.Null, $"The partition key should not have been set for the event with body: [{ readEvent.EventBody }].");
+                    if (partitionPublisher.TryReadEvent(out var readEvent))
+                    {
+                        ++readEventCount;
+
+                        Assert.That(events.SingleOrDefault(item => item.EventBody.ToString() == readEvent.EventBody.ToString()), Is.Not.Null, $"The event with body: [{ readEvent.EventBody }] was not in the source.");
+                        Assert.That(readEvent.GetRawAmqpMessage().GetPartitionKey(null), Is.Null, $"The partition key should not have been set for the event with body: [{ readEvent.EventBody }].");
+                    }
+
+                    await Task.Delay(10, cancellationSource.Token);
                 }
 
                 Assert.That(readEventCount, Is.EqualTo(events.Length), "The number of events read should match the source length.");
@@ -2032,8 +2060,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         Assert.That(readEvent.GetRawAmqpMessage().GetPartitionKey(null), Is.Null, $"The partition key should not have been set for the event with body: [{ readEvent.EventBody }].");
                     }
 
-                    cancellationSource.Token.ThrowIfCancellationRequested();
-                    await Task.Delay(50);
+                    await Task.Delay(10, cancellationSource.Token);
                 }
 
                 await enqueueTask;
@@ -2550,21 +2577,38 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(producer => producer.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
                 .ReturnsAsync(partitions);
 
+            mockBufferedProducer
+                .Setup(producer => producer.PublishBatchToPartition(
+                    It.IsAny<EventHubBufferedProducerClient.PartitionPublishingState>(),
+                    It.IsAny<bool>(),
+                    It.IsAny<CancellationToken>()))
+                .Returns(Task.CompletedTask);
+
             mockBufferedProducer.Object.PartitionResolver = mockPartitionResolver.Object;
             mockBufferedProducer.Object.SendEventBatchFailedAsync += args => Task.CompletedTask;
 
             try
             {
-                await mockBufferedProducer.Object.EnqueueEventAsync(expectedEvent, cancellationSource.Token);
+                var enqueuedCount = await mockBufferedProducer.Object.EnqueueEventAsync(expectedEvent, cancellationSource.Token);
                 Assert.That(mockBufferedProducer.Object.ActivePartitionStateMap.TryGetValue(partitionId, out var partitionPublisher), Is.True, "A publisher should have been registered for the partition.");
+
+                Assert.That(enqueuedCount, Is.EqualTo(1), "The return value should indicate that a single event was enqueued.");
+                Assert.That(mockBufferedProducer.Object.TotalBufferedEventCount, Is.EqualTo(1), "The total event count should indicate that a single event was enqueued.");
+                Assert.That(mockBufferedProducer.Object.GetBufferedEventCount(partitionId), Is.EqualTo(1), "The partition event count should indicate that a single event was enqueued.");
 
                 var readEventCount = 0;
 
-                while (partitionPublisher.TryReadEvent(out var readEvent))
+                while (readEventCount < 1)
                 {
-                    ++readEventCount;
-                    Assert.That(expectedEvent.EventBody.ToString(), Is.EqualTo(readEvent.EventBody.ToString()), $"The event with body: [{ readEvent.EventBody }] was not enqueued.");
-                    Assert.That(readEvent.GetRawAmqpMessage().GetPartitionKey(null), Is.Null, $"The partition key should not have been set for the event with body: [{ readEvent.EventBody }].");
+                    if (partitionPublisher.TryReadEvent(out var readEvent))
+                    {
+                        ++readEventCount;
+
+                        Assert.That(expectedEvent.EventBody.ToString(), Is.EqualTo(readEvent.EventBody.ToString()), $"The event with body: [{ readEvent.EventBody }] was not enqueued.");
+                        Assert.That(readEvent.GetRawAmqpMessage().GetPartitionKey(null), Is.Null, $"The partition key should not have been set for the event with body: [{ readEvent.EventBody }].");
+                    }
+
+                    await Task.Delay(10, cancellationSource.Token);
                 }
 
                 Assert.That(readEventCount, Is.EqualTo(1), "A single event should have been enqueued.");
@@ -2623,17 +2667,26 @@ namespace Azure.Messaging.EventHubs.Tests
             try
             {
                 var options = new EnqueueEventOptions { PartitionKey = partitionKey };
-                await mockBufferedProducer.Object.EnqueueEventAsync(expectedEvent, options, cancellationSource.Token);
+                var enqueuedCount = await mockBufferedProducer.Object.EnqueueEventAsync(expectedEvent, options, cancellationSource.Token);
 
                 Assert.That(mockBufferedProducer.Object.ActivePartitionStateMap.TryGetValue(partitionId, out var partitionPublisher), Is.True, "A publisher should have been registered for the partition.");
+                Assert.That(enqueuedCount, Is.EqualTo(1), "The return value should indicate that a single event was enqueued.");
+                Assert.That(mockBufferedProducer.Object.TotalBufferedEventCount, Is.EqualTo(1), "The total event count should indicate that a single event was enqueued.");
+                Assert.That(mockBufferedProducer.Object.GetBufferedEventCount(partitionId), Is.EqualTo(1), "The partition event count should indicate that a single event was enqueued.");
 
                 var readEventCount = 0;
 
-                while (partitionPublisher.TryReadEvent(out var readEvent))
+                while (readEventCount < 1)
                 {
-                    ++readEventCount;
-                    Assert.That(expectedEvent.EventBody.ToString(), Is.EqualTo(readEvent.EventBody.ToString()), $"The event with body: [{ readEvent.EventBody }] was not enqueued.");
-                    Assert.That(readEvent.GetRawAmqpMessage().GetPartitionKey(null), Is.EqualTo(partitionKey), $"The partition key should have been preserved for the event with body: [{ readEvent.EventBody }].");
+                    if (partitionPublisher.TryReadEvent(out var readEvent))
+                    {
+                        ++readEventCount;
+
+                        Assert.That(expectedEvent.EventBody.ToString(), Is.EqualTo(readEvent.EventBody.ToString()), $"The event with body: [{ readEvent.EventBody }] was not enqueued.");
+                        Assert.That(readEvent.GetRawAmqpMessage().GetPartitionKey(null), Is.EqualTo(partitionKey), $"The partition key should have been preserved for the event with body: [{ readEvent.EventBody }].");
+                    }
+
+                    await Task.Delay(10, cancellationSource.Token);
                 }
 
                 Assert.That(readEventCount, Is.EqualTo(1), "A single event should have been enqueued.");
@@ -2683,17 +2736,26 @@ namespace Azure.Messaging.EventHubs.Tests
             try
             {
                 var options = new EnqueueEventOptions { PartitionId = partitionId };
-                await mockBufferedProducer.Object.EnqueueEventAsync(expectedEvent, options, cancellationSource.Token);
+                var enqueuedCount = await mockBufferedProducer.Object.EnqueueEventAsync(expectedEvent, options, cancellationSource.Token);
 
                 Assert.That(mockBufferedProducer.Object.ActivePartitionStateMap.TryGetValue(partitionId, out var partitionPublisher), Is.True, "A publisher should have been registered for the partition.");
+                Assert.That(enqueuedCount, Is.EqualTo(1), "The return value should indicate that a single event was enqueued.");
+                Assert.That(mockBufferedProducer.Object.TotalBufferedEventCount, Is.EqualTo(1), "The total event count should indicate that a single event was enqueued.");
+                Assert.That(mockBufferedProducer.Object.GetBufferedEventCount(partitionId), Is.EqualTo(1), "The partition event count should indicate that a single event was enqueued.");
 
                 var readEventCount = 0;
 
-                while (partitionPublisher.TryReadEvent(out var readEvent))
+                while (readEventCount < 1)
                 {
-                    ++readEventCount;
-                    Assert.That(expectedEvent.EventBody.ToString(), Is.EqualTo(readEvent.EventBody.ToString()), $"The event with body: [{ readEvent.EventBody }] was not enqueued.");
-                    Assert.That(readEvent.GetRawAmqpMessage().GetPartitionKey(null), Is.Null, $"The partition key should not have been set for the event with body: [{ readEvent.EventBody }].");
+                    if (partitionPublisher.TryReadEvent(out var readEvent))
+                    {
+                        ++readEventCount;
+
+                        Assert.That(expectedEvent.EventBody.ToString(), Is.EqualTo(readEvent.EventBody.ToString()), $"The event with body: [{ readEvent.EventBody }] was not enqueued.");
+                        Assert.That(readEvent.GetRawAmqpMessage().GetPartitionKey(null), Is.Null, $"The partition key should not have been set for the event with body: [{ readEvent.EventBody }].");
+                    }
+
+                    await Task.Delay(10, cancellationSource.Token);
                 }
 
                 Assert.That(readEventCount, Is.EqualTo(1), "A single event should have been enqueued.");
@@ -2763,9 +2825,22 @@ namespace Azure.Messaging.EventHubs.Tests
                 Assert.That(partitionPublisher.TryReadEvent(out var readBlockerEvent), Is.True, "The blocking event should be available to read immediately.");
                 Assert.That(blockerEvent.EventBody.ToString(), Is.EqualTo(readBlockerEvent.EventBody.ToString()), $"The event with body: [{ readBlockerEvent.EventBody }] was not enqueued.");
 
-                Assert.That(partitionPublisher.TryReadEvent(out var readEvent), Is.True, "An event is expected to be available to read.");
-                Assert.That(expectedEvent.EventBody.ToString(), Is.EqualTo(readEvent.EventBody.ToString()), $"The event with body: [{ readEvent.EventBody }] was not enqueued.");
-                Assert.That(readEvent.GetRawAmqpMessage().GetPartitionKey(null), Is.Null, $"The partition key should not have been set for the event with body: [{ readEvent.EventBody }].");
+                var readEventCount = 0;
+
+                while (readEventCount < 1)
+                {
+                    if (partitionPublisher.TryReadEvent(out var readEvent))
+                    {
+                        ++readEventCount;
+
+                        Assert.That(expectedEvent.EventBody.ToString(), Is.EqualTo(readEvent.EventBody.ToString()), $"The event with body: [{ readEvent.EventBody }] was not enqueued.");
+                        Assert.That(readEvent.GetRawAmqpMessage().GetPartitionKey(null), Is.Null, $"The partition key should not have been set for the event with body: [{ readEvent.EventBody }].");
+                    }
+
+                    await Task.Delay(10, cancellationSource.Token);
+                }
+
+                Assert.That(readEventCount, Is.EqualTo(1), "An event should have been available to read.");
 
                 await enqueueTask;
                 Assert.That(partitionPublisher.TryReadEvent(out _), Is.False, "Other than the blocker, a single event should have been enqueued.");

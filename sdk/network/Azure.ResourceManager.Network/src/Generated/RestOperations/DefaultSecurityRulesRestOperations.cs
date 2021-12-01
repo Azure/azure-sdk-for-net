@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateGetAllRequest(string resourceGroupName, string networkSecurityGroupName)
+        internal HttpMessage CreateListRequest(string resourceGroupName, string networkSecurityGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkSecurityGroupName"> The name of the network security group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkSecurityGroupName"/> is null. </exception>
-        public async Task<Response<SecurityRuleListResult>> GetAllAsync(string resourceGroupName, string networkSecurityGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<SecurityRuleListResult>> ListAsync(string resourceGroupName, string networkSecurityGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(networkSecurityGroupName));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName, networkSecurityGroupName);
+            using var message = CreateListRequest(resourceGroupName, networkSecurityGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkSecurityGroupName"> The name of the network security group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkSecurityGroupName"/> is null. </exception>
-        public Response<SecurityRuleListResult> GetAll(string resourceGroupName, string networkSecurityGroupName, CancellationToken cancellationToken = default)
+        public Response<SecurityRuleListResult> List(string resourceGroupName, string networkSecurityGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(networkSecurityGroupName));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName, networkSecurityGroupName);
+            using var message = CreateListRequest(resourceGroupName, networkSecurityGroupName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -183,6 +183,8 @@ namespace Azure.ResourceManager.Network
                         value = SecurityRuleData.DeserializeSecurityRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((SecurityRuleData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -220,12 +222,14 @@ namespace Azure.ResourceManager.Network
                         value = SecurityRuleData.DeserializeSecurityRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((SecurityRuleData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateGetAllNextPageRequest(string nextLink, string resourceGroupName, string networkSecurityGroupName)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string resourceGroupName, string networkSecurityGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -245,7 +249,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkSecurityGroupName"> The name of the network security group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="networkSecurityGroupName"/> is null. </exception>
-        public async Task<Response<SecurityRuleListResult>> GetAllNextPageAsync(string nextLink, string resourceGroupName, string networkSecurityGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<SecurityRuleListResult>> ListNextPageAsync(string nextLink, string resourceGroupName, string networkSecurityGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -260,7 +264,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(networkSecurityGroupName));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, networkSecurityGroupName);
+            using var message = CreateListNextPageRequest(nextLink, resourceGroupName, networkSecurityGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -282,7 +286,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkSecurityGroupName"> The name of the network security group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="networkSecurityGroupName"/> is null. </exception>
-        public Response<SecurityRuleListResult> GetAllNextPage(string nextLink, string resourceGroupName, string networkSecurityGroupName, CancellationToken cancellationToken = default)
+        public Response<SecurityRuleListResult> ListNextPage(string nextLink, string resourceGroupName, string networkSecurityGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -297,7 +301,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(networkSecurityGroupName));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, networkSecurityGroupName);
+            using var message = CreateListNextPageRequest(nextLink, resourceGroupName, networkSecurityGroupName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

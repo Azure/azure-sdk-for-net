@@ -83,7 +83,15 @@ namespace Azure.Core.Pipeline
                 }
                 else
                 {
-                    request.ContentLength = 0;
+                    // match the behavior of HttpClient
+                    if (message.Request.Method != RequestMethod.Head &&
+                         message.Request.Method != RequestMethod.Get &&
+                         message.Request.Method != RequestMethod.Delete)
+                    {
+                        request.ContentLength = 0;
+                    }
+
+                    request.ContentType = null;
                 }
 
                 WebResponse webResponse;

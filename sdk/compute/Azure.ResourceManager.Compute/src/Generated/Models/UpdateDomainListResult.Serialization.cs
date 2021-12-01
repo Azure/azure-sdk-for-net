@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -16,16 +15,16 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static UpdateDomainListResult DeserializeUpdateDomainListResult(JsonElement element)
         {
-            IReadOnlyList<UpdateDomainData> value = default;
+            IReadOnlyList<UpdateDomain> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<UpdateDomainData> array = new List<UpdateDomainData>();
+                    List<UpdateDomain> array = new List<UpdateDomain>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UpdateDomainData.DeserializeUpdateDomainData(item));
+                        array.Add(UpdateDomain.DeserializeUpdateDomain(item));
                     }
                     value = array;
                     continue;

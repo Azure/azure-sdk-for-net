@@ -490,6 +490,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 {
                     Assert.AreEqual(messageList[i].MessageId, deferredMessages[i].MessageId);
                     Assert.AreEqual(messageList[i].Body.ToArray(), deferredMessages[i].Body.ToArray());
+                    Assert.AreEqual(ServiceBusMessageState.Deferred, deferredMessages[i].State);
                 }
 
                 // verify that looking up a non-existent sequence number will throw
@@ -544,6 +545,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 {
                     Assert.AreEqual(messageList[i].MessageId, deferredMessages[i].MessageId);
                     Assert.AreEqual(messageList[i].Body.ToArray(), deferredMessages[i].Body.ToArray());
+                    Assert.AreEqual(ServiceBusMessageState.Deferred, deferredMessages[i].State);
                 }
 
                 // verify that an empty array can be passed
@@ -600,6 +602,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 {
                     Assert.AreEqual(messageList[i].MessageId, deferredMessages[i].MessageId);
                     Assert.AreEqual(messageList[i].Body.ToArray(), deferredMessages[i].Body.ToArray());
+                    Assert.AreEqual(ServiceBusMessageState.Deferred, deferredMessages[i].State);
                 }
 
                 // verify that an empty enumerable can be passed
@@ -626,10 +629,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 var peekedMsg = await receiver.PeekMessageAsync();
                 Assert.AreEqual(receivedMsg.MessageId, peekedMsg.MessageId);
                 Assert.AreEqual(receivedMsg.SequenceNumber, peekedMsg.SequenceNumber);
+                Assert.AreEqual(ServiceBusMessageState.Deferred, peekedMsg.State);
 
                 var deferredMsg = await receiver.ReceiveDeferredMessageAsync(peekedMsg.SequenceNumber);
                 Assert.AreEqual(peekedMsg.MessageId, deferredMsg.MessageId);
                 Assert.AreEqual(peekedMsg.SequenceNumber, deferredMsg.SequenceNumber);
+                Assert.AreEqual(peekedMsg.State, deferredMsg.State);
             }
         }
 

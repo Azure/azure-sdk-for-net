@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateGetAllRequest(string filter)
+        internal HttpMessage CreateListRequest(string filter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -65,9 +65,9 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Gets the list of Microsoft.Compute SKUs available for your Subscription. </summary>
         /// <param name="filter"> The filter to apply on the operation. Only **location** filter is supported currently. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<ResourceSkusResult>> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ResourceSkusResult>> ListAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetAllRequest(filter);
+            using var message = CreateListRequest(filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -86,9 +86,9 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Gets the list of Microsoft.Compute SKUs available for your Subscription. </summary>
         /// <param name="filter"> The filter to apply on the operation. Only **location** filter is supported currently. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<ResourceSkusResult> GetAll(string filter = null, CancellationToken cancellationToken = default)
+        public Response<ResourceSkusResult> List(string filter = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetAllRequest(filter);
+            using var message = CreateListRequest(filter);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateGetAllNextPageRequest(string nextLink, string filter)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string filter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -123,14 +123,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="filter"> The filter to apply on the operation. Only **location** filter is supported currently. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<ResourceSkusResult>> GetAllNextPageAsync(string nextLink, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ResourceSkusResult>> ListNextPageAsync(string nextLink, string filter = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, filter);
+            using var message = CreateListNextPageRequest(nextLink, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -151,14 +151,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="filter"> The filter to apply on the operation. Only **location** filter is supported currently. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<ResourceSkusResult> GetAllNextPage(string nextLink, string filter = null, CancellationToken cancellationToken = default)
+        public Response<ResourceSkusResult> ListNextPage(string nextLink, string filter = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, filter);
+            using var message = CreateListNextPageRequest(nextLink, filter);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

@@ -4,6 +4,10 @@
 
 ### Features Added
 
+- Added `AddPolicies` method to `RequestContext`.  This allows policies to be added to the pipeline when calling protocol methods.
+- Added `IsError` property to `Response`.  This will indicate whether the message's `ResponseClassifier` considers the response to be an error.
+- Added `RequestFailedException` constructor that takes a `Response`.
+
 ### Breaking Changes
 
 - Added logging of `api-version` query parameter by default. In order to redact this, you can do the following:
