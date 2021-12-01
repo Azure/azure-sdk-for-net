@@ -189,13 +189,11 @@ namespace Azure
         public System.DateTimeOffset? IfModifiedSince { get { throw null; } set { } }
         public System.DateTimeOffset? IfUnmodifiedSince { get { throw null; } set { } }
     }
-    public partial class RequestContext
+    public partial class RequestContext : Azure.RequestOptions
     {
         public RequestContext() { }
         public System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
-        public Azure.ErrorOptions ErrorOptions { get { throw null; } set { } }
-        public void AddPolicy(Azure.Core.Pipeline.HttpPipelinePolicy policy, Azure.Core.HttpPipelinePosition position) { }
-        public static implicit operator Azure.RequestContext (Azure.ErrorOptions options) { throw null; }
+        public static new implicit operator Azure.RequestContext (Azure.ErrorOptions options) { throw null; }
     }
     public partial class RequestFailedException : System.Exception, System.Runtime.Serialization.ISerializable
     {
@@ -209,6 +207,13 @@ namespace Azure
         public string? ErrorCode { get { throw null; } }
         public int Status { get { throw null; } }
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
+    }
+    public partial class RequestOptions
+    {
+        public RequestOptions() { }
+        public Azure.ErrorOptions ErrorOptions { get { throw null; } set { } }
+        public void AddPolicy(Azure.Core.Pipeline.HttpPipelinePolicy policy, Azure.Core.HttpPipelinePosition position) { }
+        public static implicit operator Azure.RequestOptions (Azure.ErrorOptions options) { throw null; }
     }
     public abstract partial class Response : System.IDisposable
     {
@@ -767,7 +772,7 @@ namespace Azure.Core.Pipeline
         public static System.IDisposable CreateClientRequestIdScope(string? clientRequestId) { throw null; }
         public static System.IDisposable CreateHttpMessagePropertiesScope(System.Collections.Generic.IDictionary<string, object?> messageProperties) { throw null; }
         public Azure.Core.HttpMessage CreateMessage() { throw null; }
-        public Azure.Core.HttpMessage CreateMessage(Azure.RequestContext context) { throw null; }
+        public Azure.Core.HttpMessage CreateMessage(Azure.RequestOptions options) { throw null; }
         public Azure.Core.Request CreateRequest() { throw null; }
         public void Send(Azure.Core.HttpMessage message, System.Threading.CancellationToken cancellationToken) { }
         public System.Threading.Tasks.ValueTask SendAsync(Azure.Core.HttpMessage message, System.Threading.CancellationToken cancellationToken) { throw null; }
