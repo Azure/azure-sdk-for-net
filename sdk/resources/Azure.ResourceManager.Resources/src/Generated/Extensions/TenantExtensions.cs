@@ -29,9 +29,9 @@ namespace Azure.ResourceManager.Resources
         }
         #endregion
 
-        private static DeploymentsRestOperations GetDeploymentsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
+        private static DeploymentsRestOperations GetDeploymentsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
         {
-            return new DeploymentsRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
+            return new DeploymentsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
         }
 
         /// <summary> Calculate the hash of the given template. </summary>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Resources
                 scope.Start();
                 try
                 {
-                    var restOperations = GetDeploymentsRestOperations(clientDiagnostics, credential, options, pipeline, tenant.Id.SubscriptionId, baseUri);
+                    var restOperations = GetDeploymentsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                     var response = await restOperations.CalculateTemplateHashAsync(template, cancellationToken).ConfigureAwait(false);
                     return response;
                 }
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Resources
                 scope.Start();
                 try
                 {
-                    var restOperations = GetDeploymentsRestOperations(clientDiagnostics, credential, options, pipeline, tenant.Id.SubscriptionId, baseUri);
+                    var restOperations = GetDeploymentsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                     var response = restOperations.CalculateTemplateHash(template, cancellationToken);
                     return response;
                 }
