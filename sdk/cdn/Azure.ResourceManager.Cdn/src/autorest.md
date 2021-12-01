@@ -17,8 +17,22 @@ no-property-type-replacement:
   - ContinentsResponseContinentsItem
   - EndpointPropertiesUpdateParametersDefaultOriginGroup
   - EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink
-  - AFDDomainHttpsParametersSecret
+  - AfdCustomDomainHttpsParametersSecret
 directive:
+  - from: swagger-document
+    where: $.definitions
+    transform: >
+        for (var key in $) {
+            if (key === 'AFDDomainHttpsParameters')
+            {
+                const newKey = 'AfdCustomDomainHttpsParameters'
+                $[newKey] = $[key]
+                delete $[key]
+            }
+        }
+  - from: swagger-document
+    where: $.definitions.AFDDomainUpdatePropertiesParameters.properties.tlsSettings
+    transform: $['$ref'] = '#/definitions/AfdCustomDomainHttpsParameters'
   - from: swagger-document
     where: $.definitions.EndpointPropertiesUpdateParameters.properties
     transform: >
@@ -33,7 +47,7 @@ directive:
             }
         }
   - from: swagger-document
-    where: $.definitions.AFDDomainHttpsParameters.properties
+    where: $.definitions.AfdCustomDomainHttpsParameters.properties
     transform: >
         $.secret = {
             "description": "Resource reference to the secret. ie. subs/rg/profile/secret",
@@ -151,7 +165,7 @@ directive:
     where: $.definitions.WafMetricsResponse.properties.series.items.properties.groups
     transform: $['x-nullable'] = true
   - from: swagger-document
-    where: $.definitions.AFDDomainHttpsParameters.properties.secret
+    where: $.definitions.AfdCustomDomainHttpsParameters.properties.secret
     transform: $['x-nullable'] = true
   - from: afdx.json
     where: $.definitions.*.properties.priority

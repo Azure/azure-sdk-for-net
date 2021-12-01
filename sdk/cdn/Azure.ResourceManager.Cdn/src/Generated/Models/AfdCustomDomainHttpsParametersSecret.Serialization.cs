@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class AFDDomainHttpsParametersSecret : IUtf8JsonSerializable
+    public partial class AfdCustomDomainHttpsParametersSecret : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteEndObject();
         }
 
-        internal static AFDDomainHttpsParametersSecret DeserializeAFDDomainHttpsParametersSecret(JsonElement element)
+        internal static AfdCustomDomainHttpsParametersSecret DeserializeAfdCustomDomainHttpsParametersSecret(JsonElement element)
         {
             Optional<string> id = default;
             foreach (var property in element.EnumerateObject())
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new AFDDomainHttpsParametersSecret(id.Value);
+            return new AfdCustomDomainHttpsParametersSecret(id.Value);
         }
     }
 }

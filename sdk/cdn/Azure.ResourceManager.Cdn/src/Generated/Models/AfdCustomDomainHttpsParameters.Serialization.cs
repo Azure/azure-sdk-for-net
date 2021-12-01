@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             AfdCertificateType certificateType = default;
             Optional<AfdMinimumTlsVersion> minimumTlsVersion = default;
-            Optional<AFDDomainHttpsParametersSecret> secret = default;
+            Optional<AfdCustomDomainHttpsParametersSecret> secret = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("certificateType"))
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         secret = null;
                         continue;
                     }
-                    secret = AFDDomainHttpsParametersSecret.DeserializeAFDDomainHttpsParametersSecret(property.Value);
+                    secret = AfdCustomDomainHttpsParametersSecret.DeserializeAfdCustomDomainHttpsParametersSecret(property.Value);
                     continue;
                 }
             }

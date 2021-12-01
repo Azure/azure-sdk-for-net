@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="certificateType"> Defines the source of the SSL certificate. </param>
         /// <param name="minimumTlsVersion"> TLS protocol version that will be used for Https. </param>
         /// <param name="secret"> Resource reference to the secret. ie. subs/rg/profile/secret. </param>
-        internal AfdCustomDomainHttpsParameters(AfdCertificateType certificateType, AfdMinimumTlsVersion? minimumTlsVersion, AFDDomainHttpsParametersSecret secret)
+        internal AfdCustomDomainHttpsParameters(AfdCertificateType certificateType, AfdMinimumTlsVersion? minimumTlsVersion, AfdCustomDomainHttpsParametersSecret secret)
         {
             CertificateType = certificateType;
             MinimumTlsVersion = minimumTlsVersion;
@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> TLS protocol version that will be used for Https. </summary>
         public AfdMinimumTlsVersion? MinimumTlsVersion { get; set; }
         /// <summary> Resource reference to the secret. ie. subs/rg/profile/secret. </summary>
-        public AFDDomainHttpsParametersSecret Secret { get; set; }
+        public AfdCustomDomainHttpsParametersSecret Secret { get; set; }
     }
 }

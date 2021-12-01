@@ -8,16 +8,16 @@
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Resource reference to the secret. ie. subs/rg/profile/secret. </summary>
-    public partial class AFDDomainHttpsParametersSecret
+    public partial class AfdCustomDomainHttpsParametersSecret
     {
-        /// <summary> Initializes a new instance of AFDDomainHttpsParametersSecret. </summary>
-        public AFDDomainHttpsParametersSecret()
+        /// <summary> Initializes a new instance of AfdCustomDomainHttpsParametersSecret. </summary>
+        public AfdCustomDomainHttpsParametersSecret()
         {
         }
 
-        /// <summary> Initializes a new instance of AFDDomainHttpsParametersSecret. </summary>
+        /// <summary> Initializes a new instance of AfdCustomDomainHttpsParametersSecret. </summary>
         /// <param name="id"> Resource ID. </param>
-        internal AFDDomainHttpsParametersSecret(string id)
+        internal AfdCustomDomainHttpsParametersSecret(string id)
         {
             Id = id;
         }
