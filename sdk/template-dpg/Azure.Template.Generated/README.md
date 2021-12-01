@@ -41,7 +41,7 @@ If your library requires authentication for use, such as for Azure services, inc
 For example, include details on obtaining an account key and endpoint URI, setting environment variables for each, and initializing the client object.
 
 ```C# Snippet:TemplateServiceAuthenticate
-var serviceClient = new TemplateServiceClient(new DefaultAzureCredential(), new Uri(endpoint));
+var serviceClient = new TemplateServiceClient(new Uri(endpoint), new DefaultAzureCredential());
 ```
 
 ## Key concepts
@@ -101,7 +101,7 @@ The `Get` method retrieves a data from the service. The `id` parameter is the un
 
 ```C# Snippet:RetrieveResource
 var client = GetClient();
-var response = await client.GetTemplateServiceAsync("123");
+var response = await client.GetResourceAsync("123");
 using JsonDocument resourceJson = JsonDocument.Parse(response.Content.ToMemory());
 string resourceName = resourceJson.RootElement.GetProperty("name").ToString();
 string resourceId = resourceJson.RootElement.GetProperty("id").ToString();
