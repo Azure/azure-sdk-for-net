@@ -93,7 +93,7 @@ namespace Azure.Core.TestFramework
                 });
 
             int lines = 0;
-            while ((_proxyPortHttp == null || _proxyPortHttps == null) && lines++ < 20)
+            while ((_proxyPortHttp == null || _proxyPortHttps == null) && lines++ < 50)
             {
                 string outputLine = _testProxyProcess.StandardOutput.ReadLine();
                 // useful for debugging
