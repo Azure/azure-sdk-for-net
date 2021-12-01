@@ -31,10 +31,10 @@ namespace Azure.Storage.Blobs.Tests
             {
                 const int keySizeBits = 256;
                 var bytes = new byte[keySizeBits >> 3];
-                new RNGCryptoServiceProvider().GetBytes(bytes);
+                testBase.Recording.Random.NextBytes(bytes);
                 userKeyBytes = bytes;
             }
-            keyId ??= Guid.NewGuid().ToString();
+            keyId ??= testBase.Recording.Random.NewGuid().ToString();
 
             var keyMock = new Mock<IKeyEncryptionKey>(MockBehavior.Strict);
             keyMock.SetupGet(k => k.KeyId).Returns(keyId);
