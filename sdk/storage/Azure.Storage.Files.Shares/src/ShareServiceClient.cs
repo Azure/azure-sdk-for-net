@@ -122,9 +122,7 @@ namespace Azure.Storage.Files.Shares
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        public ShareServiceClient(
-            string connectionString,
-            ShareClientOptions options)
+        public ShareServiceClient(string connectionString, ShareClientOptions options)
         {
             options ??= new ShareClientOptions();
             var conn = StorageConnectionString.Parse(connectionString);
@@ -149,9 +147,7 @@ namespace Azure.Storage.Files.Shares
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        public ShareServiceClient(
-            Uri serviceUri,
-            ShareClientOptions options = default)
+        public ShareServiceClient(Uri serviceUri, ShareClientOptions options = default)
             : this(serviceUri, (HttpPipelinePolicy)null, options, null)
         {
         }
@@ -171,10 +167,7 @@ namespace Azure.Storage.Files.Shares
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        public ShareServiceClient(
-            Uri serviceUri,
-            StorageSharedKeyCredential credential,
-            ShareClientOptions options = default)
+        public ShareServiceClient(Uri serviceUri, StorageSharedKeyCredential credential, ShareClientOptions options = default)
             : this(serviceUri, credential.AsPolicy(), options, credential)
         {
         }
@@ -198,36 +191,9 @@ namespace Azure.Storage.Files.Shares
         /// <remarks>
         /// This constructor should only be used when shared access signature needs to be updated during lifespan of this client.
         /// </remarks>
-        public ShareServiceClient(
-            Uri serviceUri,
-            AzureSasCredential credential,
-            ShareClientOptions options = default)
+        public ShareServiceClient(Uri serviceUri, AzureSasCredential credential, ShareClientOptions options = default)
             : this(serviceUri, credential.AsPolicy<ShareUriBuilder>(serviceUri), options, null)
         {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ShareServiceClient"/>
-        /// class.
-        /// </summary>
-        /// <param name="serviceUri">
-        /// A <see cref="Uri"/> referencing the file service.
-        /// </param>
-        /// <param name="credential">
-        /// The token credential used to sign requests.
-        /// </param>
-        /// <param name="options">
-        /// Optional client options that define the transport pipeline
-        /// policies for authentication, retries, etc., that are applied to
-        /// every request.
-        /// </param>
-        public ShareServiceClient(
-            Uri serviceUri,
-            TokenCredential credential,
-            ShareClientOptions options = default)
-            : this(serviceUri, credential.AsPolicy(options), options ?? new ShareClientOptions())
-        {
-            Errors.VerifyHttpsTokenAuth(serviceUri);
         }
 
         /// <summary>
@@ -252,7 +218,7 @@ namespace Azure.Storage.Files.Shares
             Uri serviceUri,
             HttpPipelinePolicy authentication,
             ShareClientOptions options,
-            StorageSharedKeyCredential storageSharedKeyCredential = default)
+            StorageSharedKeyCredential storageSharedKeyCredential)
         {
             Argument.AssertNotNull(serviceUri, nameof(serviceUri));
             options ??= new ShareClientOptions();

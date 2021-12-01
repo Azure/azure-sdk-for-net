@@ -119,9 +119,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="shareName">
         /// The name of the share in the storage account to reference.
         /// </param>
-        public ShareClient(
-            string connectionString,
-            string shareName)
+        public ShareClient(string connectionString, string shareName)
             : this(connectionString, shareName, null)
         {
         }
@@ -147,10 +145,7 @@ namespace Azure.Storage.Files.Shares
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        public ShareClient(
-            string connectionString,
-            string shareName,
-            ShareClientOptions options)
+        public ShareClient(string connectionString, string shareName, ShareClientOptions options)
         {
             options ??= new ShareClientOptions();
             var conn = StorageConnectionString.Parse(connectionString);
@@ -177,9 +172,7 @@ namespace Azure.Storage.Files.Shares
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        public ShareClient(
-            Uri shareUri,
-            ShareClientOptions options = default)
+        public ShareClient(Uri shareUri, ShareClientOptions options = default)
             : this(shareUri, (HttpPipelinePolicy)null, options, null)
         {
         }
@@ -200,10 +193,7 @@ namespace Azure.Storage.Files.Shares
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        public ShareClient(
-            Uri shareUri,
-            StorageSharedKeyCredential credential,
-            ShareClientOptions options = default)
+        public ShareClient(Uri shareUri, StorageSharedKeyCredential credential, ShareClientOptions options = default)
             : this(shareUri, credential.AsPolicy(), options, credential)
         {
         }
@@ -228,37 +218,9 @@ namespace Azure.Storage.Files.Shares
         /// <remarks>
         /// This constructor should only be used when shared access signature needs to be updated during lifespan of this client.
         /// </remarks>
-        public ShareClient(
-            Uri shareUri,
-            AzureSasCredential credential,
-            ShareClientOptions options = default)
+        public ShareClient(Uri shareUri, AzureSasCredential credential, ShareClientOptions options = default)
             : this(shareUri, credential.AsPolicy<ShareUriBuilder>(shareUri), options, null)
         {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ShareClient"/>
-        /// class.
-        /// </summary>
-        /// <param name="shareUri">
-        /// A <see cref="Uri"/> referencing the share that includes the
-        /// name of the account and the name of the share.
-        /// </param>
-        /// <param name="credential">
-        /// The token credential used to sign requests.
-        /// </param>
-        /// <param name="options">
-        /// Optional client options that define the transport pipeline
-        /// policies for authentication, retries, etc., that are applied to
-        /// every request.
-        /// </param>
-        public ShareClient(
-            Uri shareUri,
-            TokenCredential credential,
-            ShareClientOptions options = default)
-            : this(shareUri, credential.AsPolicy(options), options ?? new ShareClientOptions())
-        {
-            Errors.VerifyHttpsTokenAuth(shareUri);
         }
 
         /// <summary>
@@ -284,7 +246,7 @@ namespace Azure.Storage.Files.Shares
             Uri shareUri,
             HttpPipelinePolicy authentication,
             ShareClientOptions options,
-            StorageSharedKeyCredential storageSharedKeyCredential = default)
+            StorageSharedKeyCredential storageSharedKeyCredential)
         {
             Argument.AssertNotNull(shareUri, nameof(shareUri));
             options ??= new ShareClientOptions();
