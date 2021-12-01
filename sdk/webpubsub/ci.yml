@@ -34,3 +34,5 @@ extends:
       safeName: MicrosoftAzureWebPubSubAspNetCore
     - name: Microsoft.Azure.WebPubSub.Common
       safeName: MicrosoftAzureWebPubSubCommon
+    - name: Azure.ResourceManager.WebPubSub
+      safeName: Azure.ResourceManager.WebPubSub   
