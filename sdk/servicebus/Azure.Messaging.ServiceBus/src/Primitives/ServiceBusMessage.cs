@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Text;
 using Azure.Core;
@@ -19,7 +20,7 @@ namespace Azure.Messaging.ServiceBus
     /// The message structure is discussed in detail in the
     /// <see href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-messages-payloads">product documentation</see>.
     /// </remarks>
-    public class ServiceBusMessage
+    public class ServiceBusMessage : MessageWithMetadata
     {
         /// <summary>
         /// Creates a new message.
@@ -155,6 +156,17 @@ namespace Azure.Messaging.ServiceBus
             {
                 AmqpMessage.Body = new AmqpMessageBody(MessageBody.FromReadOnlyMemorySegment(value));
             }
+        }
+
+        /// <summary>
+        /// Hidden property that shadows the <see cref="Body"/> property. This is added
+        /// in order to inherit from <see cref="MessageWithMetadata"/>.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override BinaryData Data
+        {
+            get => Body;
+            set => Body = value;
         }
 
         /// <summary>
@@ -349,7 +361,7 @@ namespace Azure.Messaging.ServiceBus
         /// Optionally describes the payload of the message, with a descriptor following the format of
         /// RFC2045, Section 5, for example "application/json".
         /// </remarks>
-        public string ContentType
+        public override string ContentType
         {
             get
             {

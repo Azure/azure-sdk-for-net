@@ -94,3 +94,12 @@ namespace Azure.Messaging
         System.BinaryData Data { get; set; }
     }
 }
+namespace Azure.Messaging
+{
+    public abstract partial class MessageWithMetadata
+    {
+        protected MessageWithMetadata() { }
+        public abstract string ContentType { get; set; }
+        public abstract System.BinaryData Data { get; set; }
+    }
+}
