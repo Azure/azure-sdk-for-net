@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network
         internal SubnetCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _subnetsRestClient = new SubnetsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _subnetsRestClient = new SubnetsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -66,8 +66,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _subnetsRestClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, subnetName, subnetParameters, cancellationToken);
-                var operation = new SubnetCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _subnetsRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, subnetName, subnetParameters).Request, response);
+                var response = _subnetsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subnetName, subnetParameters, cancellationToken);
+                var operation = new SubnetCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _subnetsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subnetName, subnetParameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -100,8 +100,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _subnetsRestClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, subnetName, subnetParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new SubnetCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _subnetsRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, subnetName, subnetParameters).Request, response);
+                var response = await _subnetsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subnetName, subnetParameters, cancellationToken).ConfigureAwait(false);
+                var operation = new SubnetCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _subnetsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subnetName, subnetParameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _subnetsRestClient.Get(Id.ResourceGroupName, Id.Name, subnetName, expand, cancellationToken);
+                var response = _subnetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subnetName, expand, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new Subnet(Parent, response.Value), response.GetRawResponse());
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _subnetsRestClient.GetAsync(Id.ResourceGroupName, Id.Name, subnetName, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _subnetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subnetName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new Subnet(Parent, response.Value), response.GetRawResponse());
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _subnetsRestClient.Get(Id.ResourceGroupName, Id.Name, subnetName, expand, cancellationToken: cancellationToken);
+                var response = _subnetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subnetName, expand, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<Subnet>(null, response.GetRawResponse())
                     : Response.FromValue(new Subnet(this, response.Value), response.GetRawResponse());
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _subnetsRestClient.GetAsync(Id.ResourceGroupName, Id.Name, subnetName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _subnetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subnetName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<Subnet>(null, response.GetRawResponse())
                     : Response.FromValue(new Subnet(this, response.Value), response.GetRawResponse());
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _subnetsRestClient.List(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _subnetsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new Subnet(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _subnetsRestClient.ListNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _subnetsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new Subnet(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _subnetsRestClient.ListAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _subnetsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new Subnet(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _subnetsRestClient.ListNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _subnetsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new Subnet(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

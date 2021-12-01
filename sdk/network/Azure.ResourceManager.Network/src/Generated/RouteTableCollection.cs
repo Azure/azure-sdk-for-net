@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network
         internal RouteTableCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _routeTablesRestClient = new RouteTablesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _routeTablesRestClient = new RouteTablesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -67,8 +67,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _routeTablesRestClient.CreateOrUpdate(Id.ResourceGroupName, routeTableName, parameters, cancellationToken);
-                var operation = new RouteTableCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _routeTablesRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, routeTableName, parameters).Request, response);
+                var response = _routeTablesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, routeTableName, parameters, cancellationToken);
+                var operation = new RouteTableCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _routeTablesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, routeTableName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -101,8 +101,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _routeTablesRestClient.CreateOrUpdateAsync(Id.ResourceGroupName, routeTableName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new RouteTableCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _routeTablesRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, routeTableName, parameters).Request, response);
+                var response = await _routeTablesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, routeTableName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new RouteTableCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _routeTablesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, routeTableName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _routeTablesRestClient.Get(Id.ResourceGroupName, routeTableName, expand, cancellationToken);
+                var response = _routeTablesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, routeTableName, expand, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new RouteTable(Parent, response.Value), response.GetRawResponse());
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _routeTablesRestClient.GetAsync(Id.ResourceGroupName, routeTableName, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _routeTablesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, routeTableName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new RouteTable(Parent, response.Value), response.GetRawResponse());
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _routeTablesRestClient.Get(Id.ResourceGroupName, routeTableName, expand, cancellationToken: cancellationToken);
+                var response = _routeTablesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, routeTableName, expand, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<RouteTable>(null, response.GetRawResponse())
                     : Response.FromValue(new RouteTable(this, response.Value), response.GetRawResponse());
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _routeTablesRestClient.GetAsync(Id.ResourceGroupName, routeTableName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _routeTablesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, routeTableName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<RouteTable>(null, response.GetRawResponse())
                     : Response.FromValue(new RouteTable(this, response.Value), response.GetRawResponse());
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _routeTablesRestClient.List(Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _routeTablesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new RouteTable(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _routeTablesRestClient.ListNextPage(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _routeTablesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new RouteTable(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _routeTablesRestClient.ListAsync(Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _routeTablesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new RouteTable(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _routeTablesRestClient.ListNextPageAsync(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _routeTablesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new RouteTable(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

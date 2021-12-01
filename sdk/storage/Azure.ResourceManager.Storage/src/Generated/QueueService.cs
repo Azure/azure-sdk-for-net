@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Storage
             _data = resource;
             Parent = options;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _queueServicesRestClient = new QueueServicesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _queueServicesRestClient = new QueueServicesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="QueueService"/> class. </summary>
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Storage
         {
             Parent = options;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _queueServicesRestClient = new QueueServicesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _queueServicesRestClient = new QueueServicesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="QueueService"/> class. </summary>
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Storage
         internal QueueService(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _queueServicesRestClient = new QueueServicesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _queueServicesRestClient = new QueueServicesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = await _queueServicesRestClient.GetServicePropertiesAsync(Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _queueServicesRestClient.GetServicePropertiesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new QueueService(this, response.Value), response.GetRawResponse());
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = _queueServicesRestClient.GetServiceProperties(Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
+                var response = _queueServicesRestClient.GetServiceProperties(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new QueueService(this, response.Value), response.GetRawResponse());
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = await _queueServicesRestClient.SetServicePropertiesAsync(Id.ResourceGroupName, Id.Parent.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var response = await _queueServicesRestClient.SetServicePropertiesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, parameters, cancellationToken).ConfigureAwait(false);
                 var operation = new QueueServiceSetServicePropertiesOperation(this, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = _queueServicesRestClient.SetServiceProperties(Id.ResourceGroupName, Id.Parent.Name, parameters, cancellationToken);
+                var response = _queueServicesRestClient.SetServiceProperties(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, parameters, cancellationToken);
                 var operation = new QueueServiceSetServicePropertiesOperation(this, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);

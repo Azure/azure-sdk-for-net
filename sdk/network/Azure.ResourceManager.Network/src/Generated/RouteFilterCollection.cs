@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network
         internal RouteFilterCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _routeFiltersRestClient = new RouteFiltersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _routeFiltersRestClient = new RouteFiltersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -67,8 +67,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _routeFiltersRestClient.CreateOrUpdate(Id.ResourceGroupName, routeFilterName, routeFilterParameters, cancellationToken);
-                var operation = new RouteFilterCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _routeFiltersRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, routeFilterName, routeFilterParameters).Request, response);
+                var response = _routeFiltersRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, routeFilterName, routeFilterParameters, cancellationToken);
+                var operation = new RouteFilterCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _routeFiltersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, routeFilterName, routeFilterParameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -101,8 +101,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _routeFiltersRestClient.CreateOrUpdateAsync(Id.ResourceGroupName, routeFilterName, routeFilterParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new RouteFilterCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _routeFiltersRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, routeFilterName, routeFilterParameters).Request, response);
+                var response = await _routeFiltersRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, routeFilterName, routeFilterParameters, cancellationToken).ConfigureAwait(false);
+                var operation = new RouteFilterCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _routeFiltersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, routeFilterName, routeFilterParameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _routeFiltersRestClient.Get(Id.ResourceGroupName, routeFilterName, expand, cancellationToken);
+                var response = _routeFiltersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, routeFilterName, expand, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new RouteFilter(Parent, response.Value), response.GetRawResponse());
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _routeFiltersRestClient.GetAsync(Id.ResourceGroupName, routeFilterName, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _routeFiltersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, routeFilterName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new RouteFilter(Parent, response.Value), response.GetRawResponse());
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _routeFiltersRestClient.Get(Id.ResourceGroupName, routeFilterName, expand, cancellationToken: cancellationToken);
+                var response = _routeFiltersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, routeFilterName, expand, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<RouteFilter>(null, response.GetRawResponse())
                     : Response.FromValue(new RouteFilter(this, response.Value), response.GetRawResponse());
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _routeFiltersRestClient.GetAsync(Id.ResourceGroupName, routeFilterName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _routeFiltersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, routeFilterName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<RouteFilter>(null, response.GetRawResponse())
                     : Response.FromValue(new RouteFilter(this, response.Value), response.GetRawResponse());
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _routeFiltersRestClient.ListByResourceGroup(Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _routeFiltersRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new RouteFilter(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _routeFiltersRestClient.ListByResourceGroupNextPage(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _routeFiltersRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new RouteFilter(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _routeFiltersRestClient.ListByResourceGroupAsync(Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _routeFiltersRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new RouteFilter(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _routeFiltersRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _routeFiltersRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new RouteFilter(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

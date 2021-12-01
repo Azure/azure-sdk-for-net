@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _virtualRouterPeeringsRestClient = new VirtualRouterPeeringsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _virtualRouterPeeringsRestClient = new VirtualRouterPeeringsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="VirtualRouterPeering"/> class. </summary>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network
         internal VirtualRouterPeering(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _virtualRouterPeeringsRestClient = new VirtualRouterPeeringsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _virtualRouterPeeringsRestClient = new VirtualRouterPeeringsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="VirtualRouterPeering"/> class. </summary>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network
         internal VirtualRouterPeering(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _virtualRouterPeeringsRestClient = new VirtualRouterPeeringsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _virtualRouterPeeringsRestClient = new VirtualRouterPeeringsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _virtualRouterPeeringsRestClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _virtualRouterPeeringsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new VirtualRouterPeering(this, response.Value), response.GetRawResponse());
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _virtualRouterPeeringsRestClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _virtualRouterPeeringsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new VirtualRouterPeering(this, response.Value), response.GetRawResponse());
@@ -149,8 +149,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _virtualRouterPeeringsRestClient.DeleteAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualRouterPeeringDeleteOperation(_clientDiagnostics, Pipeline, _virtualRouterPeeringsRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = await _virtualRouterPeeringsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new VirtualRouterPeeringDeleteOperation(_clientDiagnostics, Pipeline, _virtualRouterPeeringsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -171,8 +171,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _virtualRouterPeeringsRestClient.Delete(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new VirtualRouterPeeringDeleteOperation(_clientDiagnostics, Pipeline, _virtualRouterPeeringsRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = _virtualRouterPeeringsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new VirtualRouterPeeringDeleteOperation(_clientDiagnostics, Pipeline, _virtualRouterPeeringsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

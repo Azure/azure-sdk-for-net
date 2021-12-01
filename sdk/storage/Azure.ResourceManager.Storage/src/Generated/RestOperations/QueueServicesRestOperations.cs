@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.Storage
 {
     internal partial class QueueServicesRestOperations
     {
-        private string subscriptionId;
         private Uri endpoint;
         private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
@@ -30,13 +29,11 @@ namespace Azure.ResourceManager.Storage
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="options"> The client options used to construct the current client. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
-        public QueueServicesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null, string apiVersion = "2021-04-01")
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        public QueueServicesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, Uri endpoint = null, string apiVersion = "2021-04-01")
         {
-            this.subscriptionId = subscriptionId ?? throw new ArgumentNullException(nameof(subscriptionId));
             this.endpoint = endpoint ?? new Uri("https://management.azure.com");
             this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
             _clientDiagnostics = clientDiagnostics;
@@ -44,7 +41,7 @@ namespace Azure.ResourceManager.Storage
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateListRequest(string resourceGroupName, string accountName)
+        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string accountName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -66,12 +63,17 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> List all queue services for the storage account. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
-        public async Task<Response<ListQueueServices>> ListAsync(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="accountName"/> is null. </exception>
+        public async Task<Response<ListQueueServices>> ListAsync(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -81,7 +83,7 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentNullException(nameof(accountName));
             }
 
-            using var message = CreateListRequest(resourceGroupName, accountName);
+            using var message = CreateListRequest(subscriptionId, resourceGroupName, accountName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -98,12 +100,17 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> List all queue services for the storage account. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
-        public Response<ListQueueServices> List(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="accountName"/> is null. </exception>
+        public Response<ListQueueServices> List(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -113,7 +120,7 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentNullException(nameof(accountName));
             }
 
-            using var message = CreateListRequest(resourceGroupName, accountName);
+            using var message = CreateListRequest(subscriptionId, resourceGroupName, accountName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -129,7 +136,7 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        internal HttpMessage CreateSetServicePropertiesRequest(string resourceGroupName, string accountName, QueueServiceData parameters)
+        internal HttpMessage CreateSetServicePropertiesRequest(string subscriptionId, string resourceGroupName, string accountName, QueueServiceData parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -156,13 +163,18 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Sets the properties of a storage account’s Queue service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="parameters"> The properties of a storage account’s Queue service, only properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules can be specified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response<QueueServiceData>> SetServicePropertiesAsync(string resourceGroupName, string accountName, QueueServiceData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="parameters"/> is null. </exception>
+        public async Task<Response<QueueServiceData>> SetServicePropertiesAsync(string subscriptionId, string resourceGroupName, string accountName, QueueServiceData parameters, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -176,7 +188,7 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var message = CreateSetServicePropertiesRequest(resourceGroupName, accountName, parameters);
+            using var message = CreateSetServicePropertiesRequest(subscriptionId, resourceGroupName, accountName, parameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -193,13 +205,18 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Sets the properties of a storage account’s Queue service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="parameters"> The properties of a storage account’s Queue service, only properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules can be specified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response<QueueServiceData> SetServiceProperties(string resourceGroupName, string accountName, QueueServiceData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="parameters"/> is null. </exception>
+        public Response<QueueServiceData> SetServiceProperties(string subscriptionId, string resourceGroupName, string accountName, QueueServiceData parameters, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -213,7 +230,7 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var message = CreateSetServicePropertiesRequest(resourceGroupName, accountName, parameters);
+            using var message = CreateSetServicePropertiesRequest(subscriptionId, resourceGroupName, accountName, parameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -229,7 +246,7 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        internal HttpMessage CreateGetServicePropertiesRequest(string resourceGroupName, string accountName)
+        internal HttpMessage CreateGetServicePropertiesRequest(string subscriptionId, string resourceGroupName, string accountName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -252,12 +269,17 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Gets the properties of a storage account’s Queue service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
-        public async Task<Response<QueueServiceData>> GetServicePropertiesAsync(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="accountName"/> is null. </exception>
+        public async Task<Response<QueueServiceData>> GetServicePropertiesAsync(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -267,7 +289,7 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentNullException(nameof(accountName));
             }
 
-            using var message = CreateGetServicePropertiesRequest(resourceGroupName, accountName);
+            using var message = CreateGetServicePropertiesRequest(subscriptionId, resourceGroupName, accountName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -286,12 +308,17 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Gets the properties of a storage account’s Queue service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
-        public Response<QueueServiceData> GetServiceProperties(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="accountName"/> is null. </exception>
+        public Response<QueueServiceData> GetServiceProperties(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -301,7 +328,7 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentNullException(nameof(accountName));
             }
 
-            using var message = CreateGetServicePropertiesRequest(resourceGroupName, accountName);
+            using var message = CreateGetServicePropertiesRequest(subscriptionId, resourceGroupName, accountName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

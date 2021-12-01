@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network
         internal NetworkProfileCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _networkProfilesRestClient = new NetworkProfilesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _networkProfilesRestClient = new NetworkProfilesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _networkProfilesRestClient.CreateOrUpdate(Id.ResourceGroupName, networkProfileName, parameters, cancellationToken);
+                var response = _networkProfilesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, networkProfileName, parameters, cancellationToken);
                 var operation = new NetworkProfileCreateOrUpdateOperation(Parent, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _networkProfilesRestClient.CreateOrUpdateAsync(Id.ResourceGroupName, networkProfileName, parameters, cancellationToken).ConfigureAwait(false);
+                var response = await _networkProfilesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, networkProfileName, parameters, cancellationToken).ConfigureAwait(false);
                 var operation = new NetworkProfileCreateOrUpdateOperation(Parent, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _networkProfilesRestClient.Get(Id.ResourceGroupName, networkProfileName, expand, cancellationToken);
+                var response = _networkProfilesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, networkProfileName, expand, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new NetworkProfile(Parent, response.Value), response.GetRawResponse());
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _networkProfilesRestClient.GetAsync(Id.ResourceGroupName, networkProfileName, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _networkProfilesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, networkProfileName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new NetworkProfile(Parent, response.Value), response.GetRawResponse());
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _networkProfilesRestClient.Get(Id.ResourceGroupName, networkProfileName, expand, cancellationToken: cancellationToken);
+                var response = _networkProfilesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, networkProfileName, expand, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<NetworkProfile>(null, response.GetRawResponse())
                     : Response.FromValue(new NetworkProfile(this, response.Value), response.GetRawResponse());
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _networkProfilesRestClient.GetAsync(Id.ResourceGroupName, networkProfileName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _networkProfilesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, networkProfileName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<NetworkProfile>(null, response.GetRawResponse())
                     : Response.FromValue(new NetworkProfile(this, response.Value), response.GetRawResponse());
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _networkProfilesRestClient.List(Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _networkProfilesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new NetworkProfile(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _networkProfilesRestClient.ListNextPage(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _networkProfilesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new NetworkProfile(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _networkProfilesRestClient.ListAsync(Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _networkProfilesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new NetworkProfile(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _networkProfilesRestClient.ListNextPageAsync(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _networkProfilesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new NetworkProfile(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

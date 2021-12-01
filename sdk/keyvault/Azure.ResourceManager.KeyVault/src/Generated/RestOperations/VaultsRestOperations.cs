@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.KeyVault
 {
     internal partial class VaultsRestOperations
     {
-        private string subscriptionId;
         private Uri endpoint;
         private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
@@ -30,13 +29,11 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="options"> The client options used to construct the current client. </param>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
-        public VaultsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null, string apiVersion = "2021-04-01-preview")
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        public VaultsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, Uri endpoint = null, string apiVersion = "2021-04-01-preview")
         {
-            this.subscriptionId = subscriptionId ?? throw new ArgumentNullException(nameof(subscriptionId));
             this.endpoint = endpoint ?? new Uri("https://management.azure.com");
             this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
             _clientDiagnostics = clientDiagnostics;
@@ -44,7 +41,7 @@ namespace Azure.ResourceManager.KeyVault
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string vaultName, VaultCreateOrUpdateParameters parameters)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string vaultName, VaultCreateOrUpdateParameters parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -69,13 +66,18 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Create or update a key vault in the specified subscription. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the Resource Group to which the server belongs. </param>
         /// <param name="vaultName"> Name of the vault. </param>
         /// <param name="parameters"> Parameters to create or update the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string vaultName, VaultCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, or <paramref name="parameters"/> is null. </exception>
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string vaultName, VaultCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -89,7 +91,7 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var message = CreateCreateOrUpdateRequest(resourceGroupName, vaultName, parameters);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, vaultName, parameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -102,13 +104,18 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Create or update a key vault in the specified subscription. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the Resource Group to which the server belongs. </param>
         /// <param name="vaultName"> Name of the vault. </param>
         /// <param name="parameters"> Parameters to create or update the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response CreateOrUpdate(string resourceGroupName, string vaultName, VaultCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, or <paramref name="parameters"/> is null. </exception>
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string vaultName, VaultCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -122,7 +129,7 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var message = CreateCreateOrUpdateRequest(resourceGroupName, vaultName, parameters);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, vaultName, parameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -134,7 +141,7 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string resourceGroupName, string vaultName, VaultPatchParameters parameters)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string vaultName, VaultPatchParameters parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -159,13 +166,18 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Update a key vault in the specified subscription. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the Resource Group to which the server belongs. </param>
         /// <param name="vaultName"> Name of the vault. </param>
         /// <param name="parameters"> Parameters to patch the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response<VaultData>> UpdateAsync(string resourceGroupName, string vaultName, VaultPatchParameters parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, or <paramref name="parameters"/> is null. </exception>
+        public async Task<Response<VaultData>> UpdateAsync(string subscriptionId, string resourceGroupName, string vaultName, VaultPatchParameters parameters, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -179,7 +191,7 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var message = CreateUpdateRequest(resourceGroupName, vaultName, parameters);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, vaultName, parameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -197,13 +209,18 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Update a key vault in the specified subscription. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the Resource Group to which the server belongs. </param>
         /// <param name="vaultName"> Name of the vault. </param>
         /// <param name="parameters"> Parameters to patch the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response<VaultData> Update(string resourceGroupName, string vaultName, VaultPatchParameters parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, or <paramref name="parameters"/> is null. </exception>
+        public Response<VaultData> Update(string subscriptionId, string resourceGroupName, string vaultName, VaultPatchParameters parameters, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -217,7 +234,7 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var message = CreateUpdateRequest(resourceGroupName, vaultName, parameters);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, vaultName, parameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -234,7 +251,7 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string resourceGroupName, string vaultName)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string vaultName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -255,12 +272,17 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Deletes the specified Azure key vault. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the Resource Group to which the vault belongs. </param>
         /// <param name="vaultName"> The name of the vault to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is null. </exception>
-        public async Task<Response> DeleteAsync(string resourceGroupName, string vaultName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="vaultName"/> is null. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string vaultName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -270,7 +292,7 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentNullException(nameof(vaultName));
             }
 
-            using var message = CreateDeleteRequest(resourceGroupName, vaultName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, vaultName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -283,12 +305,17 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Deletes the specified Azure key vault. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the Resource Group to which the vault belongs. </param>
         /// <param name="vaultName"> The name of the vault to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is null. </exception>
-        public Response Delete(string resourceGroupName, string vaultName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="vaultName"/> is null. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string vaultName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -298,7 +325,7 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentNullException(nameof(vaultName));
             }
 
-            using var message = CreateDeleteRequest(resourceGroupName, vaultName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, vaultName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -310,7 +337,7 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        internal HttpMessage CreateGetRequest(string resourceGroupName, string vaultName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string vaultName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -331,12 +358,17 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Gets the specified Azure key vault. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the Resource Group to which the vault belongs. </param>
         /// <param name="vaultName"> The name of the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is null. </exception>
-        public async Task<Response<VaultData>> GetAsync(string resourceGroupName, string vaultName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="vaultName"/> is null. </exception>
+        public async Task<Response<VaultData>> GetAsync(string subscriptionId, string resourceGroupName, string vaultName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -346,7 +378,7 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentNullException(nameof(vaultName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, vaultName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, vaultName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -365,12 +397,17 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Gets the specified Azure key vault. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the Resource Group to which the vault belongs. </param>
         /// <param name="vaultName"> The name of the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is null. </exception>
-        public Response<VaultData> Get(string resourceGroupName, string vaultName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="vaultName"/> is null. </exception>
+        public Response<VaultData> Get(string subscriptionId, string resourceGroupName, string vaultName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -380,7 +417,7 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentNullException(nameof(vaultName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, vaultName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, vaultName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -398,7 +435,7 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        internal HttpMessage CreateUpdateAccessPolicyRequest(string resourceGroupName, string vaultName, AccessPolicyUpdateKind operationKind, VaultAccessPolicyParameters parameters)
+        internal HttpMessage CreateUpdateAccessPolicyRequest(string subscriptionId, string resourceGroupName, string vaultName, AccessPolicyUpdateKind operationKind, VaultAccessPolicyParameters parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -425,14 +462,19 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Update access policies in a key vault in the specified subscription. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the Resource Group to which the vault belongs. </param>
         /// <param name="vaultName"> Name of the vault. </param>
         /// <param name="operationKind"> Name of the operation. </param>
         /// <param name="parameters"> Access policy to merge into the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response<VaultAccessPolicyParameters>> UpdateAccessPolicyAsync(string resourceGroupName, string vaultName, AccessPolicyUpdateKind operationKind, VaultAccessPolicyParameters parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, or <paramref name="parameters"/> is null. </exception>
+        public async Task<Response<VaultAccessPolicyParameters>> UpdateAccessPolicyAsync(string subscriptionId, string resourceGroupName, string vaultName, AccessPolicyUpdateKind operationKind, VaultAccessPolicyParameters parameters, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -446,7 +488,7 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var message = CreateUpdateAccessPolicyRequest(resourceGroupName, vaultName, operationKind, parameters);
+            using var message = CreateUpdateAccessPolicyRequest(subscriptionId, resourceGroupName, vaultName, operationKind, parameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -464,14 +506,19 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Update access policies in a key vault in the specified subscription. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the Resource Group to which the vault belongs. </param>
         /// <param name="vaultName"> Name of the vault. </param>
         /// <param name="operationKind"> Name of the operation. </param>
         /// <param name="parameters"> Access policy to merge into the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response<VaultAccessPolicyParameters> UpdateAccessPolicy(string resourceGroupName, string vaultName, AccessPolicyUpdateKind operationKind, VaultAccessPolicyParameters parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, or <paramref name="parameters"/> is null. </exception>
+        public Response<VaultAccessPolicyParameters> UpdateAccessPolicy(string subscriptionId, string resourceGroupName, string vaultName, AccessPolicyUpdateKind operationKind, VaultAccessPolicyParameters parameters, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -485,7 +532,7 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var message = CreateUpdateAccessPolicyRequest(resourceGroupName, vaultName, operationKind, parameters);
+            using var message = CreateUpdateAccessPolicyRequest(subscriptionId, resourceGroupName, vaultName, operationKind, parameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -502,7 +549,7 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        internal HttpMessage CreateListByResourceGroupRequest(string resourceGroupName, int? top)
+        internal HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -526,18 +573,23 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> The List operation gets information about the vaults associated with the subscription and within the specified resource group. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the Resource Group to which the vault belongs. </param>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<VaultListResult>> ListByResourceGroupAsync(string resourceGroupName, int? top = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        public async Task<Response<VaultListResult>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, int? top = null, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateListByResourceGroupRequest(resourceGroupName, top);
+            using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -554,18 +606,23 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> The List operation gets information about the vaults associated with the subscription and within the specified resource group. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the Resource Group to which the vault belongs. </param>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<VaultListResult> ListByResourceGroup(string resourceGroupName, int? top = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        public Response<VaultListResult> ListByResourceGroup(string subscriptionId, string resourceGroupName, int? top = null, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateListByResourceGroupRequest(resourceGroupName, top);
+            using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName, top);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -581,7 +638,7 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        internal HttpMessage CreateListBySubscriptionRequest(int? top)
+        internal HttpMessage CreateListBySubscriptionRequest(string subscriptionId, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -603,11 +660,18 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> The List operation gets information about the vaults associated with the subscription. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<VaultListResult>> ListBySubscriptionAsync(int? top = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        public async Task<Response<VaultListResult>> ListBySubscriptionAsync(string subscriptionId, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListBySubscriptionRequest(top);
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+
+            using var message = CreateListBySubscriptionRequest(subscriptionId, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -624,11 +688,18 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> The List operation gets information about the vaults associated with the subscription. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<VaultListResult> ListBySubscription(int? top = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        public Response<VaultListResult> ListBySubscription(string subscriptionId, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListBySubscriptionRequest(top);
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+
+            using var message = CreateListBySubscriptionRequest(subscriptionId, top);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -644,7 +715,7 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        internal HttpMessage CreateListDeletedRequest()
+        internal HttpMessage CreateListDeletedRequest(string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -662,10 +733,17 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Gets information about the deleted vaults in a subscription. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<DeletedVaultListResult>> ListDeletedAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        public async Task<Response<DeletedVaultListResult>> ListDeletedAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListDeletedRequest();
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+
+            using var message = CreateListDeletedRequest(subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -682,10 +760,17 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Gets information about the deleted vaults in a subscription. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<DeletedVaultListResult> ListDeleted(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        public Response<DeletedVaultListResult> ListDeleted(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListDeletedRequest();
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+
+            using var message = CreateListDeletedRequest(subscriptionId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -701,7 +786,7 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        internal HttpMessage CreateGetDeletedRequest(string location, string vaultName)
+        internal HttpMessage CreateGetDeletedRequest(string subscriptionId, string location, string vaultName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -722,12 +807,17 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Gets the deleted Azure key vault. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="location"> The location of the deleted vault. </param>
         /// <param name="vaultName"> The name of the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="vaultName"/> is null. </exception>
-        public async Task<Response<DeletedVaultData>> GetDeletedAsync(string location, string vaultName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/>, or <paramref name="vaultName"/> is null. </exception>
+        public async Task<Response<DeletedVaultData>> GetDeletedAsync(string subscriptionId, string location, string vaultName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
@@ -737,7 +827,7 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentNullException(nameof(vaultName));
             }
 
-            using var message = CreateGetDeletedRequest(location, vaultName);
+            using var message = CreateGetDeletedRequest(subscriptionId, location, vaultName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -756,12 +846,17 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Gets the deleted Azure key vault. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="location"> The location of the deleted vault. </param>
         /// <param name="vaultName"> The name of the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="vaultName"/> is null. </exception>
-        public Response<DeletedVaultData> GetDeleted(string location, string vaultName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/>, or <paramref name="vaultName"/> is null. </exception>
+        public Response<DeletedVaultData> GetDeleted(string subscriptionId, string location, string vaultName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
@@ -771,7 +866,7 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentNullException(nameof(vaultName));
             }
 
-            using var message = CreateGetDeletedRequest(location, vaultName);
+            using var message = CreateGetDeletedRequest(subscriptionId, location, vaultName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -789,7 +884,7 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        internal HttpMessage CreatePurgeDeletedRequest(string location, string vaultName)
+        internal HttpMessage CreatePurgeDeletedRequest(string subscriptionId, string location, string vaultName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -811,12 +906,17 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Permanently deletes the specified vault. aka Purges the deleted Azure key vault. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="location"> The location of the soft-deleted vault. </param>
         /// <param name="vaultName"> The name of the soft-deleted vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="vaultName"/> is null. </exception>
-        public async Task<Response> PurgeDeletedAsync(string location, string vaultName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/>, or <paramref name="vaultName"/> is null. </exception>
+        public async Task<Response> PurgeDeletedAsync(string subscriptionId, string location, string vaultName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
@@ -826,7 +926,7 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentNullException(nameof(vaultName));
             }
 
-            using var message = CreatePurgeDeletedRequest(location, vaultName);
+            using var message = CreatePurgeDeletedRequest(subscriptionId, location, vaultName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -839,12 +939,17 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Permanently deletes the specified vault. aka Purges the deleted Azure key vault. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="location"> The location of the soft-deleted vault. </param>
         /// <param name="vaultName"> The name of the soft-deleted vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="vaultName"/> is null. </exception>
-        public Response PurgeDeleted(string location, string vaultName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/>, or <paramref name="vaultName"/> is null. </exception>
+        public Response PurgeDeleted(string subscriptionId, string location, string vaultName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
@@ -854,7 +959,7 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentNullException(nameof(vaultName));
             }
 
-            using var message = CreatePurgeDeletedRequest(location, vaultName);
+            using var message = CreatePurgeDeletedRequest(subscriptionId, location, vaultName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -866,7 +971,7 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        internal HttpMessage CreateCheckNameAvailabilityRequest(VaultCheckNameAvailabilityParameters vaultName)
+        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, VaultCheckNameAvailabilityParameters vaultName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -888,17 +993,22 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Checks that the vault name is valid and is not already in use. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="vaultName"> The name of the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
-        public async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityAsync(VaultCheckNameAvailabilityParameters vaultName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="vaultName"/> is null. </exception>
+        public async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityAsync(string subscriptionId, VaultCheckNameAvailabilityParameters vaultName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (vaultName == null)
             {
                 throw new ArgumentNullException(nameof(vaultName));
             }
 
-            using var message = CreateCheckNameAvailabilityRequest(vaultName);
+            using var message = CreateCheckNameAvailabilityRequest(subscriptionId, vaultName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -915,17 +1025,22 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Checks that the vault name is valid and is not already in use. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="vaultName"> The name of the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
-        public Response<CheckNameAvailabilityResult> CheckNameAvailability(VaultCheckNameAvailabilityParameters vaultName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="vaultName"/> is null. </exception>
+        public Response<CheckNameAvailabilityResult> CheckNameAvailability(string subscriptionId, VaultCheckNameAvailabilityParameters vaultName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (vaultName == null)
             {
                 throw new ArgumentNullException(nameof(vaultName));
             }
 
-            using var message = CreateCheckNameAvailabilityRequest(vaultName);
+            using var message = CreateCheckNameAvailabilityRequest(subscriptionId, vaultName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -941,7 +1056,7 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string resourceGroupName, int? top)
+        internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -957,22 +1072,27 @@ namespace Azure.ResourceManager.KeyVault
 
         /// <summary> The List operation gets information about the vaults associated with the subscription and within the specified resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the Resource Group to which the vault belongs. </param>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<VaultListResult>> ListByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, int? top = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="resourceGroupName"/> is null. </exception>
+        public async Task<Response<VaultListResult>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateListByResourceGroupNextPageRequest(nextLink, resourceGroupName, top);
+            using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -990,22 +1110,27 @@ namespace Azure.ResourceManager.KeyVault
 
         /// <summary> The List operation gets information about the vaults associated with the subscription and within the specified resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the Resource Group to which the vault belongs. </param>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<VaultListResult> ListByResourceGroupNextPage(string nextLink, string resourceGroupName, int? top = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="resourceGroupName"/> is null. </exception>
+        public Response<VaultListResult> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateListByResourceGroupNextPageRequest(nextLink, resourceGroupName, top);
+            using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, top);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1021,7 +1146,7 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        internal HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink, int? top)
+        internal HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink, string subscriptionId, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1037,17 +1162,22 @@ namespace Azure.ResourceManager.KeyVault
 
         /// <summary> The List operation gets information about the vaults associated with the subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<VaultListResult>> ListBySubscriptionNextPageAsync(string nextLink, int? top = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
+        public async Task<Response<VaultListResult>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
 
-            using var message = CreateListBySubscriptionNextPageRequest(nextLink, top);
+            using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1065,17 +1195,22 @@ namespace Azure.ResourceManager.KeyVault
 
         /// <summary> The List operation gets information about the vaults associated with the subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<VaultListResult> ListBySubscriptionNextPage(string nextLink, int? top = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
+        public Response<VaultListResult> ListBySubscriptionNextPage(string nextLink, string subscriptionId, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
 
-            using var message = CreateListBySubscriptionNextPageRequest(nextLink, top);
+            using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId, top);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1091,7 +1226,7 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        internal HttpMessage CreateListDeletedNextPageRequest(string nextLink)
+        internal HttpMessage CreateListDeletedNextPageRequest(string nextLink, string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1107,16 +1242,21 @@ namespace Azure.ResourceManager.KeyVault
 
         /// <summary> Gets information about the deleted vaults in a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<DeletedVaultListResult>> ListDeletedNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
+        public async Task<Response<DeletedVaultListResult>> ListDeletedNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
 
-            using var message = CreateListDeletedNextPageRequest(nextLink);
+            using var message = CreateListDeletedNextPageRequest(nextLink, subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1134,16 +1274,21 @@ namespace Azure.ResourceManager.KeyVault
 
         /// <summary> Gets information about the deleted vaults in a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<DeletedVaultListResult> ListDeletedNextPage(string nextLink, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
+        public Response<DeletedVaultListResult> ListDeletedNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
 
-            using var message = CreateListDeletedNextPageRequest(nextLink);
+            using var message = CreateListDeletedNextPageRequest(nextLink, subscriptionId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
