@@ -14,19 +14,19 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Enable https delivery of the custom domain. </summary>
-    public partial class CustomDomainEnableCustomHttpsOperation : Operation
+    /// <summary> Deletes an existing CDN endpoint with the specified endpoint name under the specified subscription, resource group and profile. </summary>
+    public partial class CdnEndpointDeleteOperation : Operation
     {
         private readonly OperationInternals _operation;
 
-        /// <summary> Initializes a new instance of CustomDomainEnableCustomHttpsOperation for mocking. </summary>
-        protected CustomDomainEnableCustomHttpsOperation()
+        /// <summary> Initializes a new instance of CdnEndpointDeleteOperation for mocking. </summary>
+        protected CdnEndpointDeleteOperation()
         {
         }
 
-        internal CustomDomainEnableCustomHttpsOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal CdnEndpointDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "CustomDomainEnableCustomHttpsOperation");
+            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "CdnEndpointDeleteOperation");
         }
 
         /// <inheritdoc />

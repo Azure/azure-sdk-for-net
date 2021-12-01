@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Cdn
     public partial class CdnOriginGroup : ArmResource
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly OriginGroupsRestOperations _originGroupsRestClient;
+        private readonly CdnOriginGroupsRestOperations _cdnOriginGroupsRestClient;
         private readonly CdnOriginGroupData _data;
 
         /// <summary> Initializes a new instance of the <see cref="CdnOriginGroup"/> class for mocking. </summary>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Cdn
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _originGroupsRestClient = new OriginGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _cdnOriginGroupsRestClient = new CdnOriginGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="CdnOriginGroup"/> class. </summary>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Cdn
         internal CdnOriginGroup(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _originGroupsRestClient = new OriginGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _cdnOriginGroupsRestClient = new CdnOriginGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="CdnOriginGroup"/> class. </summary>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Cdn
         internal CdnOriginGroup(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _originGroupsRestClient = new OriginGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _cdnOriginGroupsRestClient = new CdnOriginGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = await _originGroupsRestClient.GetAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _cdnOriginGroupsRestClient.GetAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new CdnOriginGroup(this, response.Value), response.GetRawResponse());
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = _originGroupsRestClient.Get(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _cdnOriginGroupsRestClient.Get(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CdnOriginGroup(this, response.Value), response.GetRawResponse());
@@ -143,14 +143,14 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Deletes an existing origin group within an endpoint. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<OriginGroupDeleteOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<CdnOriginGroupDeleteOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("CdnOriginGroup.Delete");
             scope.Start();
             try
             {
-                var response = await _originGroupsRestClient.DeleteAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new OriginGroupDeleteOperation(_clientDiagnostics, Pipeline, _originGroupsRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
+                var response = await _cdnOriginGroupsRestClient.DeleteAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnOriginGroupDeleteOperation(_clientDiagnostics, Pipeline, _cdnOriginGroupsRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -165,14 +165,14 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Deletes an existing origin group within an endpoint. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual OriginGroupDeleteOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual CdnOriginGroupDeleteOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("CdnOriginGroup.Delete");
             scope.Start();
             try
             {
-                var response = _originGroupsRestClient.Delete(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new OriginGroupDeleteOperation(_clientDiagnostics, Pipeline, _originGroupsRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
+                var response = _cdnOriginGroupsRestClient.Delete(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new CdnOriginGroupDeleteOperation(_clientDiagnostics, Pipeline, _cdnOriginGroupsRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="originGroupUpdateProperties"/> is null. </exception>
-        public async virtual Task<OriginGroupUpdateOperation> UpdateAsync(OriginGroupUpdateOptions originGroupUpdateProperties, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<CdnOriginGroupUpdateOperation> UpdateAsync(OriginGroupUpdateOptions originGroupUpdateProperties, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (originGroupUpdateProperties == null)
             {
@@ -200,8 +200,8 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = await _originGroupsRestClient.UpdateAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, originGroupUpdateProperties, cancellationToken).ConfigureAwait(false);
-                var operation = new OriginGroupUpdateOperation(this, _clientDiagnostics, Pipeline, _originGroupsRestClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, originGroupUpdateProperties).Request, response);
+                var response = await _cdnOriginGroupsRestClient.UpdateAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, originGroupUpdateProperties, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnOriginGroupUpdateOperation(this, _clientDiagnostics, Pipeline, _cdnOriginGroupsRestClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, originGroupUpdateProperties).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="originGroupUpdateProperties"/> is null. </exception>
-        public virtual OriginGroupUpdateOperation Update(OriginGroupUpdateOptions originGroupUpdateProperties, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual CdnOriginGroupUpdateOperation Update(OriginGroupUpdateOptions originGroupUpdateProperties, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (originGroupUpdateProperties == null)
             {
@@ -229,8 +229,8 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = _originGroupsRestClient.Update(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, originGroupUpdateProperties, cancellationToken);
-                var operation = new OriginGroupUpdateOperation(this, _clientDiagnostics, Pipeline, _originGroupsRestClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, originGroupUpdateProperties).Request, response);
+                var response = _cdnOriginGroupsRestClient.Update(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, originGroupUpdateProperties, cancellationToken);
+                var operation = new CdnOriginGroupUpdateOperation(this, _clientDiagnostics, Pipeline, _cdnOriginGroupsRestClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, originGroupUpdateProperties).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

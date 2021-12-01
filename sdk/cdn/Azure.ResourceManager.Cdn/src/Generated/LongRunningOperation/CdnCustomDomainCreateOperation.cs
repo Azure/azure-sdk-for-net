@@ -18,20 +18,20 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Creates a new custom domain within an endpoint. </summary>
-    public partial class CustomDomainCreateOperation : Operation<CdnCustomDomain>, IOperationSource<CdnCustomDomain>
+    public partial class CdnCustomDomainCreateOperation : Operation<CdnCustomDomain>, IOperationSource<CdnCustomDomain>
     {
         private readonly OperationInternals<CdnCustomDomain> _operation;
 
         private readonly ArmResource _operationBase;
 
-        /// <summary> Initializes a new instance of CustomDomainCreateOperation for mocking. </summary>
-        protected CustomDomainCreateOperation()
+        /// <summary> Initializes a new instance of CdnCustomDomainCreateOperation for mocking. </summary>
+        protected CdnCustomDomainCreateOperation()
         {
         }
 
-        internal CustomDomainCreateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal CdnCustomDomainCreateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<CdnCustomDomain>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "CustomDomainCreateOperation");
+            _operation = new OperationInternals<CdnCustomDomain>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "CdnCustomDomainCreateOperation");
             _operationBase = operationsBase;
         }
 

@@ -15,18 +15,18 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Deletes an existing origin within an endpoint. </summary>
-    public partial class OriginDeleteOperation : Operation
+    public partial class CdnOriginDeleteOperation : Operation
     {
         private readonly OperationInternals _operation;
 
-        /// <summary> Initializes a new instance of OriginDeleteOperation for mocking. </summary>
-        protected OriginDeleteOperation()
+        /// <summary> Initializes a new instance of CdnOriginDeleteOperation for mocking. </summary>
+        protected CdnOriginDeleteOperation()
         {
         }
 
-        internal OriginDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal CdnOriginDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "OriginDeleteOperation");
+            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "CdnOriginDeleteOperation");
         }
 
         /// <inheritdoc />

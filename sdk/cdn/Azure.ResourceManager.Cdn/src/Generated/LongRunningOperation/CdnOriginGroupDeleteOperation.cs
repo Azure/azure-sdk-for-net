@@ -14,19 +14,19 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Removes a content from CDN. </summary>
-    public partial class EndpointPurgeContentOperation : Operation
+    /// <summary> Deletes an existing origin group within an endpoint. </summary>
+    public partial class CdnOriginGroupDeleteOperation : Operation
     {
         private readonly OperationInternals _operation;
 
-        /// <summary> Initializes a new instance of EndpointPurgeContentOperation for mocking. </summary>
-        protected EndpointPurgeContentOperation()
+        /// <summary> Initializes a new instance of CdnOriginGroupDeleteOperation for mocking. </summary>
+        protected CdnOriginGroupDeleteOperation()
         {
         }
 
-        internal EndpointPurgeContentOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal CdnOriginGroupDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "EndpointPurgeContentOperation");
+            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "CdnOriginGroupDeleteOperation");
         }
 
         /// <inheritdoc />

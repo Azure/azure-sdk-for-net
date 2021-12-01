@@ -1,0 +1,18 @@
+{
+  "OutputFolder": ".",
+  "Namespace": "Azure.ResourceManager.Cdn",
+  "LibraryName": "Cdn",
+  "SharedSourceFolders": [
+    "..\\..\\..\\..\\core\\Azure.Core\\src\\Shared\\",
+    "C:\\Users\\yaokou\\.nuget\\packages\\microsoft.azure.autorest.csharp\\3.0.0-beta.20211123.1\\content\\Generator.Shared\\"
+  ],
+  "azure-arm": true,
+  "public-clients": true,
+  "head-as-boolean": true,
+  "NoPropertyTypeReplacement": [
+    "ContinentsResponseContinentsItem",
+    "EndpointPropertiesUpdateParametersDefaultOriginGroup",
+    "EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink",
+    "AFDDomainHttpsParametersSecret"
+  ]
+}

@@ -14,19 +14,19 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Disable https delivery of the custom domain. </summary>
-    public partial class CustomDomainDisableCustomHttpsOperation : Operation
+    /// <summary> Removes a content from CDN. </summary>
+    public partial class CdnEndpointPurgeContentOperation : Operation
     {
         private readonly OperationInternals _operation;
 
-        /// <summary> Initializes a new instance of CustomDomainDisableCustomHttpsOperation for mocking. </summary>
-        protected CustomDomainDisableCustomHttpsOperation()
+        /// <summary> Initializes a new instance of CdnEndpointPurgeContentOperation for mocking. </summary>
+        protected CdnEndpointPurgeContentOperation()
         {
         }
 
-        internal CustomDomainDisableCustomHttpsOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal CdnEndpointPurgeContentOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "CustomDomainDisableCustomHttpsOperation");
+            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "CdnEndpointPurgeContentOperation");
         }
 
         /// <inheritdoc />

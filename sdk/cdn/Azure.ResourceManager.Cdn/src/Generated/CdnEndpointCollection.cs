@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Cdn
 
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly EndpointsRestOperations _endpointsRestClient;
+        private readonly CdnEndpointsRestOperations _cdnEndpointsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="CdnEndpointCollection"/> class for mocking. </summary>
         protected CdnEndpointCollection()
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Cdn
         internal CdnEndpointCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _endpointsRestClient = new EndpointsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _cdnEndpointsRestClient = new CdnEndpointsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> or <paramref name="endpointInput"/> is null. </exception>
-        public virtual EndpointCreateOperation CreateOrUpdate(string endpointName, CdnEndpointData endpointInput, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual CdnEndpointCreateOperation CreateOrUpdate(string endpointName, CdnEndpointData endpointInput, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (endpointName == null)
             {
@@ -66,8 +66,8 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = _endpointsRestClient.Create(Id.ResourceGroupName, Id.Name, endpointName, endpointInput, cancellationToken);
-                var operation = new EndpointCreateOperation(Parent, _clientDiagnostics, Pipeline, _endpointsRestClient.CreateCreateRequest(Id.ResourceGroupName, Id.Name, endpointName, endpointInput).Request, response);
+                var response = _cdnEndpointsRestClient.Create(Id.ResourceGroupName, Id.Name, endpointName, endpointInput, cancellationToken);
+                var operation = new CdnEndpointCreateOperation(Parent, _clientDiagnostics, Pipeline, _cdnEndpointsRestClient.CreateCreateRequest(Id.ResourceGroupName, Id.Name, endpointName, endpointInput).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> or <paramref name="endpointInput"/> is null. </exception>
-        public async virtual Task<EndpointCreateOperation> CreateOrUpdateAsync(string endpointName, CdnEndpointData endpointInput, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<CdnEndpointCreateOperation> CreateOrUpdateAsync(string endpointName, CdnEndpointData endpointInput, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (endpointName == null)
             {
@@ -100,8 +100,8 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = await _endpointsRestClient.CreateAsync(Id.ResourceGroupName, Id.Name, endpointName, endpointInput, cancellationToken).ConfigureAwait(false);
-                var operation = new EndpointCreateOperation(Parent, _clientDiagnostics, Pipeline, _endpointsRestClient.CreateCreateRequest(Id.ResourceGroupName, Id.Name, endpointName, endpointInput).Request, response);
+                var response = await _cdnEndpointsRestClient.CreateAsync(Id.ResourceGroupName, Id.Name, endpointName, endpointInput, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnEndpointCreateOperation(Parent, _clientDiagnostics, Pipeline, _cdnEndpointsRestClient.CreateCreateRequest(Id.ResourceGroupName, Id.Name, endpointName, endpointInput).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = _endpointsRestClient.Get(Id.ResourceGroupName, Id.Name, endpointName, cancellationToken);
+                var response = _cdnEndpointsRestClient.Get(Id.ResourceGroupName, Id.Name, endpointName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CdnEndpoint(Parent, response.Value), response.GetRawResponse());
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = await _endpointsRestClient.GetAsync(Id.ResourceGroupName, Id.Name, endpointName, cancellationToken).ConfigureAwait(false);
+                var response = await _cdnEndpointsRestClient.GetAsync(Id.ResourceGroupName, Id.Name, endpointName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new CdnEndpoint(Parent, response.Value), response.GetRawResponse());
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = _endpointsRestClient.Get(Id.ResourceGroupName, Id.Name, endpointName, cancellationToken: cancellationToken);
+                var response = _cdnEndpointsRestClient.Get(Id.ResourceGroupName, Id.Name, endpointName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<CdnEndpoint>(null, response.GetRawResponse())
                     : Response.FromValue(new CdnEndpoint(this, response.Value), response.GetRawResponse());
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = await _endpointsRestClient.GetAsync(Id.ResourceGroupName, Id.Name, endpointName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _cdnEndpointsRestClient.GetAsync(Id.ResourceGroupName, Id.Name, endpointName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<CdnEndpoint>(null, response.GetRawResponse())
                     : Response.FromValue(new CdnEndpoint(this, response.Value), response.GetRawResponse());
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Cdn
                 scope.Start();
                 try
                 {
-                    var response = _endpointsRestClient.ListByProfile(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _cdnEndpointsRestClient.ListByProfile(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new CdnEndpoint(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Cdn
                 scope.Start();
                 try
                 {
-                    var response = _endpointsRestClient.ListByProfileNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _cdnEndpointsRestClient.ListByProfileNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new CdnEndpoint(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Cdn
                 scope.Start();
                 try
                 {
-                    var response = await _endpointsRestClient.ListByProfileAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _cdnEndpointsRestClient.ListByProfileAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new CdnEndpoint(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Cdn
                 scope.Start();
                 try
                 {
-                    var response = await _endpointsRestClient.ListByProfileNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _cdnEndpointsRestClient.ListByProfileNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new CdnEndpoint(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

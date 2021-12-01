@@ -14,19 +14,19 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Pre-loads a content to CDN. Available for Verizon Profiles. </summary>
-    public partial class EndpointLoadContentOperation : Operation
+    /// <summary> Deletes an existing custom domain within an endpoint. </summary>
+    public partial class CdnCustomDomainDeleteOperation : Operation
     {
         private readonly OperationInternals _operation;
 
-        /// <summary> Initializes a new instance of EndpointLoadContentOperation for mocking. </summary>
-        protected EndpointLoadContentOperation()
+        /// <summary> Initializes a new instance of CdnCustomDomainDeleteOperation for mocking. </summary>
+        protected CdnCustomDomainDeleteOperation()
         {
         }
 
-        internal EndpointLoadContentOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal CdnCustomDomainDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "EndpointLoadContentOperation");
+            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "CdnCustomDomainDeleteOperation");
         }
 
         /// <inheritdoc />

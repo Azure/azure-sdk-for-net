@@ -14,19 +14,19 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Deletes an existing origin group within an endpoint. </summary>
-    public partial class OriginGroupDeleteOperation : Operation
+    /// <summary> Pre-loads a content to CDN. Available for Verizon Profiles. </summary>
+    public partial class CdnEndpointLoadContentOperation : Operation
     {
         private readonly OperationInternals _operation;
 
-        /// <summary> Initializes a new instance of OriginGroupDeleteOperation for mocking. </summary>
-        protected OriginGroupDeleteOperation()
+        /// <summary> Initializes a new instance of CdnEndpointLoadContentOperation for mocking. </summary>
+        protected CdnEndpointLoadContentOperation()
         {
         }
 
-        internal OriginGroupDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal CdnEndpointLoadContentOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "OriginGroupDeleteOperation");
+            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "CdnEndpointLoadContentOperation");
         }
 
         /// <inheritdoc />

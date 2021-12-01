@@ -17,18 +17,18 @@ using Azure.ResourceManager.Cdn;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Stops an existing running CDN endpoint. </summary>
-    public partial class EndpointStopOperation : Operation<CdnEndpointData>, IOperationSource<CdnEndpointData>
+    public partial class CdnEndpointStopOperation : Operation<CdnEndpointData>, IOperationSource<CdnEndpointData>
     {
         private readonly OperationInternals<CdnEndpointData> _operation;
 
-        /// <summary> Initializes a new instance of EndpointStopOperation for mocking. </summary>
-        protected EndpointStopOperation()
+        /// <summary> Initializes a new instance of CdnEndpointStopOperation for mocking. </summary>
+        protected CdnEndpointStopOperation()
         {
         }
 
-        internal EndpointStopOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal CdnEndpointStopOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<CdnEndpointData>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "EndpointStopOperation");
+            _operation = new OperationInternals<CdnEndpointData>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "CdnEndpointStopOperation");
         }
 
         /// <inheritdoc />

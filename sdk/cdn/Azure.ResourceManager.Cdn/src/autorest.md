@@ -263,6 +263,13 @@ directive:
                   const newOperationId = 'Afd' + oldOperationId
                   $[key][method]['operationId'] = newOperationId
               }
+              if (oldOperationId.startsWith('Endpoint') || oldOperationId.startsWith('Origin') || oldOperationId.startsWith('OriginGroup') || oldOperationId.startsWith('CustomDomain')) {
+                  const newOperationId = 'Cdn' + oldOperationId
+                  $[key][method]['operationId'] = newOperationId
+              }
           }
       }
+  - from: swagger-document
+    where: $.definitions.AFDDomainHttpsParameters.properties.secret
+    transform: $['x-ms-client-name'] = 'AfdCustomDomainHttpsParametersSecret'
 ```

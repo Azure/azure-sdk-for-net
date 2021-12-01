@@ -17,21 +17,21 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Creates a new CDN endpoint with the specified endpoint name under the specified subscription, resource group and profile. </summary>
-    public partial class EndpointCreateOperation : Operation<CdnEndpoint>, IOperationSource<CdnEndpoint>
+    /// <summary> Updates an existing CDN endpoint with the specified endpoint name under the specified subscription, resource group and profile. Only tags can be updated after creating an endpoint. To update origins, use the Update Origin operation. To update origin groups, use the Update Origin group operation. To update custom domains, use the Update Custom Domain operation. </summary>
+    public partial class CdnEndpointUpdateOperation : Operation<CdnEndpoint>, IOperationSource<CdnEndpoint>
     {
         private readonly OperationInternals<CdnEndpoint> _operation;
 
         private readonly ArmResource _operationBase;
 
-        /// <summary> Initializes a new instance of EndpointCreateOperation for mocking. </summary>
-        protected EndpointCreateOperation()
+        /// <summary> Initializes a new instance of CdnEndpointUpdateOperation for mocking. </summary>
+        protected CdnEndpointUpdateOperation()
         {
         }
 
-        internal EndpointCreateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal CdnEndpointUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<CdnEndpoint>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "EndpointCreateOperation");
+            _operation = new OperationInternals<CdnEndpoint>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.OriginalUri, "CdnEndpointUpdateOperation");
             _operationBase = operationsBase;
         }
 

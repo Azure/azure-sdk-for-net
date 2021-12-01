@@ -18,20 +18,20 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Creates a new origin within the specified endpoint. </summary>
-    public partial class OriginCreateOperation : Operation<CdnOrigin>, IOperationSource<CdnOrigin>
+    public partial class CdnOriginCreateOperation : Operation<CdnOrigin>, IOperationSource<CdnOrigin>
     {
         private readonly OperationInternals<CdnOrigin> _operation;
 
         private readonly ArmResource _operationBase;
 
-        /// <summary> Initializes a new instance of OriginCreateOperation for mocking. </summary>
-        protected OriginCreateOperation()
+        /// <summary> Initializes a new instance of CdnOriginCreateOperation for mocking. </summary>
+        protected CdnOriginCreateOperation()
         {
         }
 
-        internal OriginCreateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal CdnOriginCreateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<CdnOrigin>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "OriginCreateOperation");
+            _operation = new OperationInternals<CdnOrigin>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "CdnOriginCreateOperation");
             _operationBase = operationsBase;
         }
 

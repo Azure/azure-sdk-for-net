@@ -18,20 +18,20 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Updates an existing origin group within an endpoint. </summary>
-    public partial class OriginGroupUpdateOperation : Operation<CdnOriginGroup>, IOperationSource<CdnOriginGroup>
+    public partial class CdnOriginGroupUpdateOperation : Operation<CdnOriginGroup>, IOperationSource<CdnOriginGroup>
     {
         private readonly OperationInternals<CdnOriginGroup> _operation;
 
         private readonly ArmResource _operationBase;
 
-        /// <summary> Initializes a new instance of OriginGroupUpdateOperation for mocking. </summary>
-        protected OriginGroupUpdateOperation()
+        /// <summary> Initializes a new instance of CdnOriginGroupUpdateOperation for mocking. </summary>
+        protected CdnOriginGroupUpdateOperation()
         {
         }
 
-        internal OriginGroupUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal CdnOriginGroupUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<CdnOriginGroup>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.OriginalUri, "OriginGroupUpdateOperation");
+            _operation = new OperationInternals<CdnOriginGroup>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.OriginalUri, "CdnOriginGroupUpdateOperation");
             _operationBase = operationsBase;
         }
 
