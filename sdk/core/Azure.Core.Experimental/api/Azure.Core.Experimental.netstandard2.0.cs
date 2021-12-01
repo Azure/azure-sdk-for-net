@@ -86,3 +86,13 @@ namespace Azure.Core
         public System.Threading.Tasks.Task<long> WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
 }
+namespace Azure.Messaging
+{
+    public abstract partial class MessageWithMetadata
+    {
+        protected MessageWithMetadata() { }
+        public abstract string ContentType { get; set; }
+        public abstract System.BinaryData Data { get; set; }
+        public abstract bool IsReadOnly { get; }
+    }
+}
