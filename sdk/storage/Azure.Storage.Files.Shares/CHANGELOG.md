@@ -1,6 +1,16 @@
 # Release History
 
-## 12.9.0-beta.2 (2021-11-29)
+## 12.9.0-beta.3 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 12.9.0-beta.2 (2021-11-30)
 - Added support for service version 2021-02-12.
 - Added support for premium file share ProvisionedBandwidthMiBps property.
 
