@@ -144,26 +144,26 @@ namespace Azure.Storage.Test.Shared
             TResourceClient client = GetResourceClient(disposingContainer.Container);
             await InitializeResourceAsync(client);
 
-            Stream stream = await OpenWriteAsync(client, overwrite: true, bufferSize: bufferSize);
-
             byte[] data = GetRandomBuffer(size);
-
-            // Act
-            await stream.WriteAsync(data, 0, 512);
-            await stream.WriteAsync(data, 512, 1024);
-            await stream.WriteAsync(data, 1536, 2048);
-            await stream.WriteAsync(data, 3584, 77);
-            await stream.WriteAsync(data, 3661, 2066);
-            await stream.WriteAsync(data, 5727, 4096);
-            await stream.WriteAsync(data, 9823, 6561);
-            await stream.FlushAsync();
+            using (Stream stream = await OpenWriteAsync(client, overwrite: true, bufferSize: bufferSize))
+            {
+                // Act
+                await stream.WriteAsync(data, 0, 512);
+                await stream.WriteAsync(data, 512, 1024);
+                await stream.WriteAsync(data, 1536, 2048);
+                await stream.WriteAsync(data, 3584, 77);
+                await stream.WriteAsync(data, 3661, 2066);
+                await stream.WriteAsync(data, 5727, 4096);
+                await stream.WriteAsync(data, 9823, 6561);
+                await stream.FlushAsync();
+            }
 
             // Assert
             byte[] dataResult = (await DownloadAsync(client)).ToArray();
             Assert.AreEqual(data.Length, dataResult.Length);
             TestHelper.AssertSequenceEqual(data, dataResult);
 
-            await AdditionalAssertions?.Invoke(client);
+            await (AdditionalAssertions?.Invoke(client) ?? Task.CompletedTask);
         }
 
         [RecordedTest]
@@ -193,11 +193,11 @@ namespace Azure.Storage.Test.Shared
             byte[] dataResult = (await DownloadAsync(client)).ToArray();
             Assert.AreEqual(new string('A', 100) + new string('B', 50) + new string('C', 25), Encoding.ASCII.GetString(dataResult));
 
-            await AdditionalAssertions?.Invoke(client);
+            await (AdditionalAssertions?.Invoke(client) ?? Task.CompletedTask);
         }
 
         [RecordedTest]
-        public async Task OpenWriteAsync_NewBlob_WithMetadata()
+        public virtual async Task OpenWriteAsync_NewBlob_WithMetadata()
         {
             const int bufferSize = Constants.KB;
 
@@ -208,23 +208,24 @@ namespace Azure.Storage.Test.Shared
 
             Dictionary<string, string> metadata = new Dictionary<string, string>() { { "testkey", "testvalue" } };
 
-            Stream stream = await OpenWriteAsync(
+            using (Stream stream = await OpenWriteAsync(
                 client,
                 overwrite: true,
                 bufferSize: bufferSize,
-                metadata: metadata);
-
-            // Act
-            await stream.FlushAsync();
+                metadata: metadata))
+            {
+                // Act
+                await stream.FlushAsync();
+            }
 
             // Assert
             CollectionAssert.AreEqual(metadata, await GetMetadataAsync(client));
 
-            await AdditionalAssertions?.Invoke(client);
+            await (AdditionalAssertions?.Invoke(client) ?? Task.CompletedTask);
         }
 
         [RecordedTest]
-        public async Task OpenWriteAsync_CreateEmptyBlob_WithMetadata()
+        public virtual async Task OpenWriteAsync_CreateEmptyBlob_WithMetadata()
         {
             const int bufferSize = Constants.KB;
 
@@ -236,16 +237,18 @@ namespace Azure.Storage.Test.Shared
             Dictionary<string, string> metadata = new Dictionary<string, string>() { { "testkey", "testvalue" } };
 
             // Act
-            Stream stream = await OpenWriteAsync(
+            using (Stream stream = await OpenWriteAsync(
                 client,
                 overwrite: true,
                 bufferSize: bufferSize,
-                metadata: metadata);
+                metadata: metadata))
+            {
+            }
 
             // Assert
             CollectionAssert.AreEqual(metadata, await GetMetadataAsync(client));
 
-            await AdditionalAssertions?.Invoke(client);
+            await (AdditionalAssertions?.Invoke(client) ?? Task.CompletedTask);
         }
 
         [RecordedTest]
@@ -265,14 +268,15 @@ namespace Azure.Storage.Test.Shared
                 ContentLanguage = "en",
             };
 
-            Stream stream = await OpenWriteAsync(
+            using (Stream stream = await OpenWriteAsync(
                 client,
                 overwrite: true,
                 bufferSize: bufferSize,
-                httpHeaders: headers);
-
-            // Act
-            await stream.FlushAsync();
+                httpHeaders: headers))
+            {
+                // Act
+                await stream.FlushAsync();
+            }
 
             // Assert
             Response response = await GetPropertiesAsync(client);
@@ -281,7 +285,7 @@ namespace Azure.Storage.Test.Shared
             Assert.IsTrue(response.Headers.TryGetValue("Content-Language", out string downloadedContentLanguage));
             Assert.AreEqual(headers.ContentLanguage, downloadedContentLanguage);
 
-            await AdditionalAssertions?.Invoke(client);
+            await (AdditionalAssertions?.Invoke(client) ?? Task.CompletedTask);
         }
 
         [RecordedTest]
@@ -301,11 +305,13 @@ namespace Azure.Storage.Test.Shared
             };
 
             // Act
-            Stream stream = await OpenWriteAsync(
+            using (Stream stream = await OpenWriteAsync(
                 client,
                 overwrite: true,
                 bufferSize: bufferSize,
-                httpHeaders: headers);
+                httpHeaders: headers))
+            {
+            }
 
             // Assert
             Response response = await GetPropertiesAsync(client);
@@ -314,7 +320,7 @@ namespace Azure.Storage.Test.Shared
             Assert.IsTrue(response.Headers.TryGetValue("Content-Language", out string downloadedContentLanguage));
             Assert.AreEqual(headers.ContentLanguage, downloadedContentLanguage);
 
-            await AdditionalAssertions?.Invoke(client);
+            await (AdditionalAssertions?.Invoke(client) ?? Task.CompletedTask);
         }
 
         [RecordedTest]
@@ -349,7 +355,7 @@ namespace Azure.Storage.Test.Shared
             Assert.AreEqual(data.Length, dataResult.Length);
             TestHelper.AssertSequenceEqual(data, dataResult);
 
-            await AdditionalAssertions?.Invoke(client);
+            await (AdditionalAssertions?.Invoke(client) ?? Task.CompletedTask);
         }
 
         [RecordedTest]
@@ -369,18 +375,20 @@ namespace Azure.Storage.Test.Shared
             using Stream newStream = new MemoryStream(newData);
 
             // Act
-            Stream openWriteStream = await OpenWriteAsync(
+            using (Stream openWriteStream = await OpenWriteAsync(
                 client,
-                overwrite: true);
-            await newStream.CopyToAsync(openWriteStream);
-            await openWriteStream.FlushAsync();
+                overwrite: true))
+            {
+                await newStream.CopyToAsync(openWriteStream);
+                await openWriteStream.FlushAsync();
+            }
 
             // Assert
             byte[] dataResult = (await DownloadAsync(client)).ToArray();
             Assert.AreEqual(newData.Length, dataResult.Length);
             TestHelper.AssertSequenceEqual(newData, dataResult);
 
-            await AdditionalAssertions?.Invoke(client);
+            await (AdditionalAssertions?.Invoke(client) ?? Task.CompletedTask);
         }
 
         [RecordedTest]
@@ -401,20 +409,22 @@ namespace Azure.Storage.Test.Shared
             Array.Copy(data1, 0, expectedData, 512, 512);
 
             // Act
-            Stream writeStream = await OpenWriteAsync(
+            using (Stream writeStream = await OpenWriteAsync(
                 client,
-                overwrite: true);
-            await dataStream0.CopyToAsync(writeStream);
-            await writeStream.FlushAsync();
-            await dataStream1.CopyToAsync(writeStream);
-            await writeStream.FlushAsync();
+                overwrite: true))
+            {
+                await dataStream0.CopyToAsync(writeStream);
+                await writeStream.FlushAsync();
+                await dataStream1.CopyToAsync(writeStream);
+                await writeStream.FlushAsync();
+            }
 
             // Assert
             byte[] dataResult = (await DownloadAsync(client)).ToArray();
             Assert.AreEqual(expectedData.Length, dataResult.Length);
             TestHelper.AssertSequenceEqual(expectedData, dataResult);
 
-            await AdditionalAssertions?.Invoke(client);
+            await (AdditionalAssertions?.Invoke(client) ?? Task.CompletedTask);
         }
 
         [RecordedTest]
@@ -461,13 +471,20 @@ namespace Azure.Storage.Test.Shared
 
             await stream.CopyToAsync(openWriteStream);
 
+            async Task CloseStream()
+            {
+                await openWriteStream.FlushAsync();
+                // dispose necessary for some stream implementations
+                openWriteStream.Dispose();
+            }
+
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                openWriteStream.FlushAsync(),
+                CloseStream(),
                 e => Assert.AreEqual(ConditionNotMetErrorCode, e.ErrorCode));
         }
 
         [RecordedTest]
-        public async Task OpenWriteAsync_ProgressReporting()
+        public virtual async Task OpenWriteAsync_ProgressReporting()
         {
             const int bufferSize = 256;
 
@@ -481,19 +498,21 @@ namespace Azure.Storage.Test.Shared
             TestProgress progress = new TestProgress();
 
             // Act
-            Stream openWriteStream = await OpenWriteAsync(
+            using (Stream openWriteStream = await OpenWriteAsync(
                 client,
                 overwrite: true,
                 bufferSize: bufferSize,
-                progressHandler: progress);
-            await stream.CopyToAsync(openWriteStream);
-            await openWriteStream.FlushAsync();
+                progressHandler: progress))
+            {
+                await stream.CopyToAsync(openWriteStream);
+                await openWriteStream.FlushAsync();
+            }
 
             // Assert
             Assert.IsTrue(progress.List.Count > 0);
             Assert.AreEqual(Constants.KB, progress.List[progress.List.Count - 1]);
 
-            await AdditionalAssertions?.Invoke(client);
+            await (AdditionalAssertions?.Invoke(client) ?? Task.CompletedTask);
         }
 
         [RecordedTest]
@@ -515,19 +534,21 @@ namespace Azure.Storage.Test.Shared
                 using Stream stream = new MemoryStream(data);
 
                 // Act
-                Stream openWriteStream = await OpenWriteAsync(
+                using (Stream openWriteStream = await OpenWriteAsync(
                     client,
                     overwrite: true,
-                    conditions: accessConditions);
-                await stream.CopyToAsync(openWriteStream);
-                await openWriteStream.FlushAsync();
+                    conditions: accessConditions))
+                {
+                    await stream.CopyToAsync(openWriteStream);
+                    await openWriteStream.FlushAsync();
+                }
 
                 // Assert
                 byte[] dataResult = (await DownloadAsync(client)).ToArray();
                 Assert.AreEqual(data.Length, dataResult.Length);
                 TestHelper.AssertSequenceEqual(data, dataResult);
 
-                await AdditionalAssertions?.Invoke(client);
+                await (AdditionalAssertions?.Invoke(client) ?? Task.CompletedTask);
             }
         }
 

@@ -2740,7 +2740,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Stream> OpenWriteInternal(
+        internal async Task<Stream> OpenWriteInternal(
             bool overwrite,
             BlockBlobOpenWriteOptions options,
             bool async,

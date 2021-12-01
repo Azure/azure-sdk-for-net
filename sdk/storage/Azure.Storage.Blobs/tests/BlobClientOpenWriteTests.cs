@@ -10,14 +10,21 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Test.Shared;
+using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Tests
 {
     public class BlobClientOpenWriteTests : BlobBaseClientOpenWriteTests<BlobClient>
     {
         public BlobClientOpenWriteTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
-            : base(async, serviceVersion, RecordedTestMode.Live /* RecordedTestMode.Record /* to re-record */)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
+            // Validate every test didn't accidentally use client-side encryption when writing a blob.
+            AdditionalAssertions += async (client) =>
+            {
+                IDictionary<string, string> metadata = (await client.GetPropertiesAsync()).Value.Metadata;
+                Assert.IsFalse(metadata.ContainsKey(Constants.ClientSideEncryption.EncryptionDataKey));
+            };
         }
 
         /// <summary>

@@ -1741,10 +1741,11 @@ namespace Azure.Storage.Blobs
             bool overwrite,
             BlobOpenWriteOptions options = default,
             CancellationToken cancellationToken = default)
-            => BlockBlobClient.OpenWrite(
-                overwrite: overwrite,
-                options: options.ToBlockBlobOpenWriteOptions(),
-                cancellationToken: cancellationToken);
+            => OpenWriteInternal(
+                overwrite,
+                options,
+                async: false,
+                cancellationToken).EnsureCompleted();
 
         /// <summary>
         /// Opens a stream for writing to the blob.  If the blob exists,
@@ -1773,11 +1774,40 @@ namespace Azure.Storage.Blobs
             bool overwrite,
             BlobOpenWriteOptions options = default,
             CancellationToken cancellationToken = default)
-            => await BlockBlobClient.OpenWriteAsync(
-                overwrite: overwrite,
-                options: options.ToBlockBlobOpenWriteOptions(),
-                cancellationToken: cancellationToken)
-                .ConfigureAwait(false);
+            => await OpenWriteInternal(
+                overwrite,
+                options,
+                async: true,
+                cancellationToken).ConfigureAwait(false);
+
+        internal async Task<Stream> OpenWriteInternal(
+            bool overwrite,
+            BlobOpenWriteOptions options,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            if (UsingClientSideEncryption)
+            {
+                if (UsingClientSideEncryption && options.TransactionalHashingOptions != default)
+                {
+                    throw Errors.TransactionalHashingNotSupportedWithClientSideEncryption();
+                }
+
+                return await new BlobClientSideEncryptor(new ClientSideEncryptor(ClientSideEncryption))
+                    .ClientSideEncryptionOpenWriteInternal(
+                        BlockBlobClient,
+                        overwrite,
+                        options.ToBlockBlobOpenWriteOptions(),
+                        async,
+                        cancellationToken).ConfigureAwait(false);
+            }
+
+            return await BlockBlobClient.OpenWriteInternal(
+                overwrite,
+                options.ToBlockBlobOpenWriteOptions(),
+                async,
+                cancellationToken).ConfigureAwait(false);
+        }
         #endregion
 
         private BlockBlobClient _blockBlobClient;
