@@ -1,0 +1,42 @@
+parameters:
+  - name: Daily
+    type: boolean
+    default: true
+  - name: Artifact
+    type: object
+    default: {}
+  - name: ArtifactName
+    type: string
+    default: ""
+  - name: TimeoutInMinutes
+    type: number
+    default: 60
+
+jobs:
+  - job: SmokeTest
+    steps:
+      - ${{ if eq(parameters.Daily, true) }}:
+        - task: PowerShell@2
+          displayName: Building Package Info
+          inputs:
+            targetType: filePath
+            filePath: ./eng/scripts/smoketest/Save-Package-Properties.ps1
+            arguments: -outDirectory PackageInfo
+            workingDirectory: common/SmokeTests/SmokeTest
+            pwsh: true
+
+        - template: /eng/pipelines/templates/steps/BuildSmokeTestProject.yml
+          parameters:
+            PackageInfoDir: common/SmokeTests/SmokeTest/PackageInfo
+      
+      - ${{ if eq(parameters.Daily, false) }}:
+        - download: current
+          artifact: ${{parameters.ArtifactName}}-signed
+        - template: /eng/pipelines/templates/steps/BuildSmokeTestProject.yml
+          parameters:
+            PackageInfoDir: $(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/PackageInfo
+
+      - template: /eng/common/TestResources/remove-test-resources.yml
+        parameters:
+          ServiceDirectory: '$(Build.SourcesDirectory)/common/SmokeTests/'
+          SubscriptionConfiguration: $(SubscriptionConfiguration)
