@@ -172,9 +172,6 @@ directive:
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}'].put.parameters[3]
     transform: $['x-ms-client-name'] = 'endpointInput'
   - rename-operation:
-      from: AFDProfiles_ListResourceUsage
-      to: AfdProfiles_ListResourceUsage
-  - rename-operation:
       from: LogAnalytics_GetLogAnalyticsMetrics
       to: AfdProfiles_GetLogAnalyticsMetrics
   - rename-operation:
@@ -192,6 +189,9 @@ directive:
   - rename-operation:
       from: LogAnalytics_GetWafLogAnalyticsRankings
       to: AfdProfiles_GetWafLogAnalyticsRankings
+  - remove-operation: AFDProfiles_CheckHostNameAvailability
+  - remove-operation: Secrets_Update
+  - remove-operation: Validate_Secret
   - from: swagger-document
     where: $.definitions
     transform: >
@@ -249,7 +249,20 @@ directive:
   - from: swagger-document
     where: $.definitions.Sku
     transform: $['x-ms-client-name'] = 'ProfileSku'
-  - remove-operation: AFDProfiles_CheckHostNameAvailability
-  - remove-operation: Secrets_Update
-  - remove-operation: Validate_Secret
+  - from: swagger-document
+    where: $.paths
+    transform: >
+      for (var key in $) {
+          for (var method in $[key]) {
+              const oldOperationId = $[key][method]['operationId']
+              if (oldOperationId.startsWith('AFD')) {
+                  const newOperationId = oldOperationId.replace('AFD', 'Afd')
+                  $[key][method]['operationId'] = newOperationId
+              }
+              if (oldOperationId.startsWith('Routes') || oldOperationId.startsWith('RuleSets') || oldOperationId.startsWith('Rules') || oldOperationId.startsWith('SecurityPolicies') || oldOperationId.startsWith('Secrets')) {
+                  const newOperationId = 'Afd' + oldOperationId
+                  $[key][method]['operationId'] = newOperationId
+              }
+          }
+      }
 ```
