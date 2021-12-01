@@ -15,6 +15,7 @@ namespace Azure.Core.TestFramework.Models
         {
             SanitizerType.BodyKeySanitizer => "BodyKeySanitizer",
             SanitizerType.HeaderRegexSanitizer => "HeaderRegexSanitizer",
+            SanitizerType.UriRegexSanitizer => "UriRegexSanitizer",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SanitizerType value.")
         };
 
@@ -22,6 +23,7 @@ namespace Azure.Core.TestFramework.Models
         {
             if (string.Equals(value, "BodyKeySanitizer", StringComparison.InvariantCultureIgnoreCase)) return SanitizerType.BodyKeySanitizer;
             if (string.Equals(value, "HeaderRegexSanitizer", StringComparison.InvariantCultureIgnoreCase)) return SanitizerType.HeaderRegexSanitizer;
+            if (string.Equals(value, "UriRegexSanitizer", StringComparison.InvariantCultureIgnoreCase)) return SanitizerType.UriRegexSanitizer;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SanitizerType value.");
         }
     }

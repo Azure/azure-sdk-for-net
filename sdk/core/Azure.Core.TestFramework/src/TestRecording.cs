@@ -87,7 +87,7 @@ namespace Azure.Core.TestFramework
                             playbackResponse = _proxy.Client.StartPlayback(_sessionFile);
                         }
                         catch (RequestFailedException ex)
-                            when (ex.Status == 500)
+                            when (ex.Status == 404)
                         {
                             throw new TestRecordingMismatchException(ex.Message, ex);
                         }
@@ -117,6 +117,11 @@ namespace Azure.Core.TestFramework
             foreach (string jsonPath in _sanitizer.JsonPathSanitizers.Select(s => s.JsonPath))
             {
                 _proxy.Client.AddBodyKeySanitizer(new BodyKeySanitizer(Sanitized) { JsonPath = jsonPath }, RecordingId);
+            }
+
+            foreach (UriRegexSanitizer sanitizer in _sanitizer.UriRegexSanitizers)
+            {
+                _proxy.Client.AddUriSanitizer(sanitizer, RecordingId);
             }
         }
 

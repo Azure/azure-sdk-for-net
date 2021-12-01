@@ -285,6 +285,60 @@
         }
       }
     },
+    "/admin/addsanitizer?overload=UriRegexSanitizer": {
+      "post": {
+        "summary": "Add a sanitizer.",
+        "operationId": "TestProxy_AddUriSanitizer",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "x-abstraction-identifier",
+            "in": "header",
+            "description": "The type of sanitizer.",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "UriRegexSanitizer"
+            ],
+            "x-ms-enum": {
+              "name": "SanitizerType",
+              "modelAsString": false
+            }
+          },
+          {
+            "name": "x-recording-id",
+            "in": "header",
+            "description": "The recording ID to apply the sanitizer to.",
+            "type": "string"
+          },
+          {
+            "name": "sanitizer",
+            "in": "body",
+            "description": "The body for a URI regex sanitizer.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UriRegexSanitizer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "default": {
+            "description": "An error response received from the Test Proxy.",
+            "headers": {
+              "x-ms-error-code": {
+                "type": "string",
+                "description": "Error code for specific error that occurred."
+              }
+            }
+          }
+        }
+      }
+    },
     "/admin/addsanitizer?overload=BodyRegexSanitizer": {
       "post": {
         "summary": "Add a sanitizer.",
@@ -441,7 +495,8 @@
       "type": "string",
       "enum": [
         "BodyKeySanitizer",
-        "HeaderRegexSanitizer"
+        "HeaderRegexSanitizer",
+        "UriRegexSanitizer"
       ],
       "x-ms-enum": {
         "name": "SanitizerType",
@@ -533,6 +588,25 @@
       },
       "required": [
         "key",
+        "value"
+      ]
+    },
+    "UriRegexSanitizer": {
+      "type": "object",
+      "description": "Sanitizer for a request URI",
+      "properties": {
+        "regex": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        },
+        "groupForReplace": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "regex",
         "value"
       ]
     }

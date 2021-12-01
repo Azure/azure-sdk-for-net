@@ -441,6 +441,73 @@ namespace Azure.Core.TestFramework
             }
         }
 
+        internal HttpMessage CreateAddUriSanitizerRequest(UriRegexSanitizer sanitizer, string xRecordingId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/admin/addsanitizer", false);
+            request.Uri = uri;
+            request.Headers.Add("x-abstraction-identifier", "UriRegexSanitizer");
+            if (xRecordingId != null)
+            {
+                request.Headers.Add("x-recording-id", xRecordingId);
+            }
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(sanitizer);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Add a sanitizer. </summary>
+        /// <param name="sanitizer"> The body for a URI regex sanitizer. </param>
+        /// <param name="xRecordingId"> The recording ID to apply the sanitizer to. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sanitizer"/> is null. </exception>
+        public async Task<Response> AddUriSanitizerAsync(UriRegexSanitizer sanitizer, string xRecordingId = null, CancellationToken cancellationToken = default)
+        {
+            if (sanitizer == null)
+            {
+                throw new ArgumentNullException(nameof(sanitizer));
+            }
+
+            using var message = CreateAddUriSanitizerRequest(sanitizer, xRecordingId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Add a sanitizer. </summary>
+        /// <param name="sanitizer"> The body for a URI regex sanitizer. </param>
+        /// <param name="xRecordingId"> The recording ID to apply the sanitizer to. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sanitizer"/> is null. </exception>
+        public Response AddUriSanitizer(UriRegexSanitizer sanitizer, string xRecordingId = null, CancellationToken cancellationToken = default)
+        {
+            if (sanitizer == null)
+            {
+                throw new ArgumentNullException(nameof(sanitizer));
+            }
+
+            using var message = CreateAddUriSanitizerRequest(sanitizer, xRecordingId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
         internal HttpMessage CreateAddBodyRegexSanitizerRequest(BodyRegexSanitizer sanitizer, string xRecordingId)
         {
             var message = _pipeline.CreateMessage();

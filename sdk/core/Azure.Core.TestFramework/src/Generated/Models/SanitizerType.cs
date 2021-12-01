@@ -13,6 +13,8 @@ namespace Azure.Core.TestFramework.Models
         /// <summary> BodyKeySanitizer. </summary>
         BodyKeySanitizer,
         /// <summary> HeaderRegexSanitizer. </summary>
-        HeaderRegexSanitizer
+        HeaderRegexSanitizer,
+        /// <summary> UriRegexSanitizer. </summary>
+        UriRegexSanitizer
     }
 }
