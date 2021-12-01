@@ -3,7 +3,7 @@ namespace Azure.Template.Generated
     public partial class TemplateServiceClient
     {
         protected TemplateServiceClient() { }
-        public TemplateServiceClient(Azure.Core.TokenCredential credential, System.Uri endpoint = null, Azure.Template.Generated.TemplateServiceClientOptions options = null) { }
+        public TemplateServiceClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Template.Generated.TemplateServiceClientOptions options = null) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response Create(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }

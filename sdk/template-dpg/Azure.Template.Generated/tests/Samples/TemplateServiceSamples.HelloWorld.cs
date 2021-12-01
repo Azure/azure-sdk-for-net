@@ -18,7 +18,7 @@ namespace Azure.Template.Generated.Tests.Samples
             var endpoint = TestEnvironment.Endpoint;
 
             #region Snippet:TemplateServiceAuthenticate
-            var serviceClient = new TemplateServiceClient(new DefaultAzureCredential(), new Uri(endpoint));
+            var serviceClient = new TemplateServiceClient(new Uri(endpoint), new DefaultAzureCredential());
             #endregion
 
             return serviceClient;

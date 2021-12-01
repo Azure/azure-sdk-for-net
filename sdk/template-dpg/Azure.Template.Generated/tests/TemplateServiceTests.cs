@@ -21,7 +21,7 @@ namespace Azure.Template.Generated.Tests
                 Transport = transport
             };
 
-            return new TemplateServiceClient(new MockCredential(), _url , options);
+            return new TemplateServiceClient(_url, new MockCredential(), options);
         }
 
         // Add unit tests here

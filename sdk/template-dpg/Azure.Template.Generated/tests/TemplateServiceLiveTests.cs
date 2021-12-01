@@ -17,8 +17,8 @@ namespace Azure.Template.Generated.Tests
         private TemplateServiceClient CreateClient()
         {
             return InstrumentClient(new TemplateServiceClient(
-                TestEnvironment.Credential,
                 new Uri(TestEnvironment.Endpoint),
+                TestEnvironment.Credential,
                 InstrumentClientOptions(new TemplateServiceClientOptions())
             ));
         }
